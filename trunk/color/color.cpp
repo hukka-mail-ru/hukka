@@ -4,6 +4,9 @@ using namespace std;
 
 string color(int color)
 {
+    if(!EnableColorLog)
+        return ""; 
+
 	char command[13];
 
     if(color != UNDEFINED)
