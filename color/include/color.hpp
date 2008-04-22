@@ -21,6 +21,7 @@
 #define	WHITE		7
 #define	UNDEFINED	777
 
+bool EnableColorLog = false;
 
 std::string color(int color = UNDEFINED);
 
