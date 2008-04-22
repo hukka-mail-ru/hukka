@@ -13,6 +13,8 @@ bool MessagesError = true;
 #include <string>
 #include <memory>
 
+#include <color.hpp>
+
 // --------------------------------------------------------------------------------
 //  4 Message Levels
 // --------------------------------------------------------------------------------
@@ -59,7 +61,7 @@ std::auto_ptr<MessageHeader> HDR(const char* str)
 //                     BAD001E [file.cpp; line 100] Can't fuck the brain
 // --------------------------------------------------------------------------------
 #define BIG_HDR(str) \
-  HDR(str) << "[" << __FILE__ << "; line: " << __LINE__ << "] "
+  HDR(str) << "[" << __FILE__ << "; line: " << __LINE__ << "] " 
 
 
 // --------------------------------------------------------------------------------
@@ -75,32 +77,7 @@ class MessagePrinter
         {}
 	
 	// Print header only if type = MessageHeader
-	MessagePrinter& operator << (std::auto_ptr<MessageHeader> header)
-	{
-	       switch(mLevel)
-	       {
-		   case Debug:
-		       if(MessagesDebug)
-			   std::cout << header->getHeader() << "D ";
-		       break;
-		   case Info:
-		       if(MessagesInfo)
-			   std::cout << header->getHeader() << "I ";
-		       break;
-		   case Warning:
-		       if(MessagesWarning)
-			   std::cout << header->getHeader() << "W ";
-		       break;
-		   case Error:
-		       if(MessagesError)
-			   std::cout << header->getHeader() << "E ";
-		       break;
-		   default:
-		       std::cerr << "Logic error" << std::endl;
-		       break;
-	       }
-	       return *this;
-        }
+	MessagePrinter& operator << (std::auto_ptr<MessageHeader> header);
 
 	// Print other staff
         template<class T>
