@@ -1,0 +1,122 @@
+SHELL := /bin/sh -c
+HOSTNAME = /bin/hostname
+CC =  gcc
+CXX = g++
+LINKER = $(FILTER) gcc 
+MV = /bin/mv
+CP = /bin/cp
+RM = /bin/rm -f
+MAKEDEPEND = makedepend
+ECHO = echo
+WC = wc
+TOUCH = touch
+FLEX = flex 
+SWIG = swig
+YACC = bison
+BISON = bison
+MKDIRHIER = mkdir -p
+TAR = tar
+GZIP = gzip
+AR = ar
+MCOPY = mcopy
+CPROTO = cproto
+CTAGS = ctags
+ETAGS = etags
+DATE = date
+
+mEMPTY :=
+mSPACE :=$(mEMPTY) $(mEMPTY)
+mDASH  :=$(mEMPTY)-$(mEMPTY)
+mCOMMA :=$(mEMPTY),$(mEMPTY)
+mUNDERSCORE :=$(mEMPTY)_$(mEMPTY)
+mDOT   :=$(mEMPTY).$(mEMPTY)
+mSLASH :=$(mEMPTY)/$(mEMPTY)
+
+
+# Variables used by the make system
+mTARGET=$(subst $(mDASH),$(mSPACE),$(MTARGET))
+mOSNAME = $(word 1, $(mTARGET))
+mOSMAJORVER = $(word 2, $(mTARGET))
+mOSMINORVER = $(word 3, $(mTARGET))
+mOSVER = $(mOSMAJORVER)-$(mOSMINORVER)
+mARCH = $(word 4, $(mTARGET))
+mTHREADING = $(word, 4, $(mTARGET))
+mCOMPILER = $(word 5, $(mTARGET))
+mCOMPVER = $(word 6, $(mTARGET))
+mOSCLASS = "unix"
+
+DLL_MAJOR=1
+DLL_MINOR=0
+
+# Set the directory structure up
+SRCDIR = $(SRCROOT)/src
+ifeq "$(BLDROOT)" ""
+    BLDDIR = $(SRCROOT)/bld
+else
+    BLDDIR = $(BLDROOT)
+endif
+
+BLDTARGET = $(BLDDIR)/$(mOSNAME)-$(mOSVER)-$(mARCH)-$(mCOMPILER)-$(mCOMPVER)
+EXEDIR = $(BLDTARGET)/bin
+TESTS_EXEDIR = $(BLDTARGET)/tests_bin
+OBJDIR = $(BLDTARGET)/obj
+LIBDIR = $(BLDTARGET)/lib
+DLLDIR = $(BLDTARGET)/lib
+SUPPORTDIR = $(SRCROOT)/support
+CONFDIR = $(BLDTARGET)/etc
+CONFROOT = $(BLDTARGET)/
+
+# Various file locations
+CTAGSFILE = CTAGS
+ETAGSFILE = ETAGS
+CTAGSFLAGS=--c-types=cdefgmnpstuvxC --file-tags=yes
+DEPFILENAME = dependencies
+DEPFILE = $(OBJDIR)/$(DIR)/$(DEPFILENAME)
+DEP_FLAGS = -MD
+TMP = /tmp
+MAKEFILENAME = makefile
+
+# Flags and paths
+XLIBPATH = 
+DEPINCLUDES = -I/usr/include/gcc
+DEPFLAGS = -D__i386__=1  -D__cplusplus
+#CFLAGS = -Wall -ansi -pedantic -g $(PICFLAGS)
+CFLAGS = -Wall -g $(PICFLAGS)
+CXXFLAGS = -g -Wall -Wno-long-long $(PICFLAGS)
+EXTRA_FLAGS = 
+EXTRA_DEFINES = 
+LDFLAGS = 
+LIBPATH =
+EXTRA_LINK_LIBS = 
+SYS_LINK_LIBS = 
+DEFAULT_INCLUDES = -I$(MAKE_HOME)
+PICFLAGS = -fPIC
+
+#CFILTER=colorgcc
+#CXXFILTER=colorgcc
+
+#include other makefiles
+-include $(MAKE_HOME)/makefile.$(mARCH)
+-include $(MAKE_HOME)/makefile.$(mARCH)-$(mOSNAME)
+-include $(MAKE_HOME)/makefile.$(mARCH)-$(mOSNAME)-$(mOSVER)
+-include $(MAKE_HOME)/makefile.$(mOSNAME)
+-include $(MAKE_HOME)/makefile.$(mOSNAME)-$(mOSVER)
+-include $(MAKE_HOME)/makefile.$(mCOMPILER)
+-include $(MAKE_HOME)/makefile.$(mCOMPILER)-$(mCOMPVER)
+
+# Do the shell stuff here
+mHOSTNAME = $(shell $(HOSTNAME))
+-include $(MAKE_HOME)/makefile.$(mHOSTNAME)
+-include $(MAKE_HOME)/makefile.$(USER)
+
+ifeq "$(AL_COMMON_REVISION)" ""
+AL_COMMON_REVISION=common
+endif
+
+ifeq "$(AL_SERVER_REVISION)" ""
+AL_SERVER_REVISION=server
+endif
+
+ifeq "$(AL_LM_REVISION)" ""
+AL_LM_REVISION=lm
+endif

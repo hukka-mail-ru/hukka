@@ -1,0 +1,422 @@
+#!/bin/sh
+#
+# makeso -- build a shared library
+#
+# Usage:  makeso library major minor syslibs obj1.o [obj2.o [...]]
+#
+# This script references the MTARGET environment variable
+# to determine the OS and compiler.
+#
+
+#
+# Commands for the various systems.  These were compiled from the
+# mklib.* scripts from the Mesa 2.6 distribution and the ltconfig
+# script from libtool 1.2.
+#
+# AIX 4.2
+#	May be able to use ld directly without all the nonsense
+#	required in previous versions -- needs further investigation.
+#
+# AIX (with g++)
+#	Too detailed to list here -- see below
+#
+# AIX (with xlC)
+#	makeC++SharedLib -o /PATH/libNAME.a *.o
+#
+# FreeBSD 3.x
+#	g++ -shared -o /PATH/libNAME.so.X.Y *.o
+#	ln -s libNAME.so.X.Y /PATH/libNAME.so
+#
+# FreeBSD 2.2.x
+#	ld -Bshareable -o /PATH/libNAME.so.X.Y *.o /usr/lib/c++rt0.o
+#	ln -s libNAME.so.X.Y /PATH/libNAME.so
+#
+# FreeBSD 2.[01].x
+#	ld -Bshareable -o /PATH/libNAME.so.X.Y *.o
+#	ln -s libNAME.so.X.Y /PATH/libNAME.so
+#
+# HP-UX 9.x
+#	ld -b [+s] -o /PATH/libNAME.X *.o
+#	ln -s libNAME.X /PATH/libNAME.sl
+#
+# HP-UX 10.x, 11.x (with g++)
+#	g++ -shared -fPIC [-Wl,+s] -Wl,+h,libNAME.X -o /PATH/libNAME.X *.o
+#	ln -s libNAME.X /PATH/libNAME.sl
+#
+# HP-UX 10.x, 11.x (with aCC)
+#	aCC -b -o /PATH/libNAME.X *.o
+#	ln -s libNAME.X /PATH/libNAME.sl
+#
+#       Note: must use aCC as the linker otherwise static objects do not
+#       construct.
+#
+# IRIX (with g++)	??? Need to verify ???
+#	g++ -shared -Wl,-soname,libNAME.so -Wl,-set_version,X.Y \
+#		-o /PATH/libNAME.so.X *.o
+#	ln -s libNAME.so.X /PATH/libNAME.so
+#    or
+#	g++ -shared -Wl,-all -Wl,-soname,libNAME.so -Wl,-set_version,X.Y \
+#		-o /PATH/libNAME.so.X libNAME.a
+#	ln -s libNAME.so.X /PATH/libNAME.so
+#
+# IRIX (with CC)	??? Need to verify ???
+#	CC -shared -soname libNAME.so -set_version X.Y \
+#		-o /PATH/libNAME.so.X *.o
+#	ln -s libNAME.so.X /PATH/libNAME.so
+#    or
+#	CC -shared -all -soname libNAME.so -set_version X.Y \
+#		-o /PATH/libNAME.so.X libNAME.a
+#	ln -s libNAME.so.X /PATH/libNAME.so
+#
+# Linux
+#	g++ -shared -Wl,-soname,libNAME.so.X -o /PATH/libNAME.so.X.Y *.o
+#	ln -s libNAME.so.X.Y /PATH/libNAME.so.X
+#	ln -s libNAME.so.X /PATH/libNAME.so
+#
+# NetBSD
+#	ld -Bshareable -o /PATH/libNAME.so.X.Y *.o
+#    or
+#	ld -Bshareable -Bforcearchive -o /PATH/libNAME.so.X.Y libNAME_pic.a
+#
+# OpenBSD
+#	ld -Bshareable -o /PATH/libNAME.so.X.Y *.o
+#    or
+#	ld -Bshareable -Bforcearchive -o /PATH/libNAME.so.X.Y libNAME_pic.a
+#
+# OSF
+#	ld -shared -no_archive -set_version X.Y -soname libNAME.so \
+#		-expect_unresolved \* -o /PATH/libNAME.so *.o
+#    or
+#	ld -shared -no_archive -set_version X.Y -soname libNAME.so \
+#		-expect_unresolved \* -all -o /PATH/libNAME.so libNAME.a
+#
+#
+# SCO
+#	ld -G -o /PATH/libNAME.so.X *.o
+#	ln -s libNAME.so.X /PATH/libNAME.so.X.Y
+#	ln -s libNAME.so.X /PATH/libNAME.so
+#
+# SINIX (with g++)
+#	??? Need information ???
+#
+# SINIX (with CC)
+#	CC -G -h libNAME.so -o /PATH/libNAME.so.X.Y *.o
+#	ln /PATH/libNAME.so.X.Y /PATH/libNAME.so
+#
+# Solaris
+#	ld -G [-z text] -o /PATH/libNAME.so.X.Y *.o
+#	ln -s libNAME.so.X.Y /PATH/libNAME.so.X
+#	ln -s libNAME.so.X /PATH/libNAME.so
+#       
+#       In order to get static constructors to fire on Solaris when using the
+#       Sunpro compiler, CC must be used instead of ld; Not that this little
+#       known fact is documented anywhere. I found the information from the
+#       following Purify error message
+#
+#       Warning: The .init section of the shared object is not recorded
+#       in the DT_INIT field of the dynamic structure of the file.
+#       Any static constructors or initializers in the file
+#       will not be executed.
+#       This is probably due to building the file with a direct
+#       call to the linker instead of a command line like
+#       $(CC) -G -o libxyz.so.4.0 ...
+#
+#       Also the -G option for CC passes -dy -G -z text to the linker
+#
+# SunOS
+#	ld -assert pure-text -o /PATH/libNAME.so *.o
+#
+# At the present time (11 May 1998), the following systems have
+# been tested:
+#
+#     AIX      4.1, 4.2
+#     HP-UX    10.20, 11.0
+#     Linux    2.0.x
+#     OSF/1    3.2
+#     SINIX    5.42
+#     Solaris  2.5
+#
+# The following systems have implementations in this script,
+# but they have not been tested (either the system or a C++
+# compiler is not available):
+#
+#     FreeBSD
+#     IRIX
+#     SCO
+#     SunOS
+#
+
+if [ "$MTARGET" = "" ] ; then
+   echo "MTARGET not set -- bailing out ..."
+   exit 1
+elif [ $# -lt 5 ] ; then
+    echo "usage: `basename $0` library major minor syslibs obj1.o [obj2.o [...]]"
+    exit 1
+fi
+
+OS=`echo $MTARGET | cut -d- -f1`
+OSVER_MAJOR=`echo $MTARGET | cut -d- -f2`
+OSVER_MINOR=`echo $MTARGET | cut -d- -f3`
+COMPILER=`echo $MTARGET | cut -d- -f5`
+COMPILER_VER=`echo $MTARGET | cut -d- -f6`
+ARCH=`echo $MTARGET | cut -d- -f4`
+OPTIONS=`echo $MTARGET | cut -d- -f7`
+if [ "`echo $OPTIONS|grep 64bits`" != "" ] ; then
+    ARCHBITS="64bits"
+fi
+
+if [ "`echo $OPTIONS|grep nothreads`" != "" ] ; then
+    THREADED="nothreads"
+else
+    THREADED="threads"
+fi
+
+LIBRARY=$1
+LIBNAME=`basename $LIBRARY`
+shift 1
+
+MAJOR=$1
+shift 1
+
+MINOR=$1
+shift 1
+
+LIBS=$1
+shift 1
+
+OBJECTS=$*
+
+echo "Building $LIBNAME for $OS v${OSVER_MAJOR}.${OSVER_MINOR} with $COMPILER"
+
+case $OS in
+    aix )
+	if [ "$COMPILER" = "gxx" ] ; then
+	    # Pick an entry point based on the OS version
+	    case $OSVER_MAJOR in
+		# We must use -Wl because the entry point option
+		# is passed thru g++ and not directly to ld
+		3 ) EP="-Wl,-e,_nostart";;
+		4 ) EP="-Wl,-bnoentry";;
+		* ) echo "$OS v${OSVER_MAJOR}.${OSVER_MINOR} not supported ... please feed me."
+		    exit 1
+	    esac
+
+	    NM="/bin/nm -eC"
+	    EXPORTS="`dirname $LIBRARY`/`basename $LIBRARY .a`.exp"
+
+	    # Create the exports file
+	    echo "#! $LIBNAME" > $EXPORTS
+	    case $OSVER_MAJOR in
+		3 )
+		    $NM $OBJECTS | awk -F'|' '{
+			if ($3 != "extern" || substr($7,1,1) == ' ') continue
+			sub ("  *", "", $1); sub ("  *", "", $7)
+			if ( (($7 == ".text") || ($7 == ".data") || ($7 == ".bss")) && ( substr($1,1,1) != ".")) {
+			    if (substr ($1, 1, 7) != "__sinit" && substr ($1, 1, 7) != "__sterm") {
+				if (substr ($1, 1, 5) == "__tf1")
+				    print (substr ($1, 7))
+				else if (substr ($1, 1, 5) == "__tf9")
+				    print (substr ($1, 15))
+				else
+				    print $1
+			    }
+			}
+		    }' | sort -u >> $EXPORTS
+		    ;;
+
+		4 )
+		    $NM $OBJECTS | awk '{
+			if ((($2 == "T") || ($2 == "D") || ($2 == "B")) && ( substr($1,1,1) != ".")) {
+			    if (substr ($1, 1, 7) != "__sinit" && substr ($1, 1, 7) != "__sterm") {
+
+				if (substr ($1, 1, 5) == "__tf1")
+				    print (substr ($1, 7))
+				else if (substr ($1, 1, 5) == "__tf9")
+				    print (substr ($1, 15))
+				else
+				    print $1
+			    }
+			}
+		    }' | sort -u >> $EXPORTS
+		    ;;
+
+		* )
+		    echo "Should not get here ... help!"
+		    ;;
+	    esac
+
+	    # Create the shared library
+	    g++ -o $LIBRARY $EP -Wl,-bE:$EXPORTS -Wl,-bM:SRE $OBJECTS $LIBS
+	    RC=$?
+
+	    # Clean up
+	    rm -f $EXPORTS
+	else
+	    # xlC
+	    if [ "$ARCHBITS" = "64bits" ] ; then
+		export OBJECT_MODE=64
+	    fi
+	    # If using the CSet++ compiler, the script is located in
+	    # /usr/lpp/xlC/bin.  However, the IBM C++ compiler keeps
+	    # the script in /usr/ibmcxx/bin.
+	    if [ "$COMPILER" = "cset" ] ; then
+		/usr/lpp/xlC/bin/makeC++SharedLib_r -p 0 -o $LIBRARY $OBJECTS $LIBS
+	    else
+		/usr/ibmcxx/bin/makeC++SharedLib_r -p 0 -o $LIBRARY $OBJECTS $LIBS
+	    fi
+	    RC=$?
+	fi
+	;;
+
+    freebsd )
+	VERSION="${MAJOR}.${MINOR}"
+	if [ $OSVER_MAJOR -ge 3 ] ; then
+	    g++ -shared -o ${LIBRARY}.${VERSION} $OBJECTS
+	elif [ $OSVER_MAJOR -eq 2 ] ; then
+	    if [ $OSVER_MINOR -ge 2 ] ; then
+		ld -Bshareable -o ${LIBRARY}.${VERSION} /usr/lib/c++rt0.o \
+			$OBJECTS $LIBS
+	    else
+		ld -Bshareable -o ${LIBRARY}.${VERSION} $OBJECTS $LIBS
+	    fi
+	else
+	    echo "$OS v${OSVER_MAJOR}.${OSVER_MINOR} is too ancient ... please upgrade."
+	    exit 1
+	fi
+	RC=$?
+	ln -s ${LIBNAME}.${VERSION} $LIBRARY
+	;;
+    
+    MacOSX )
+	VERSION="${MAJOR}.${MINOR}"
+#    echo "g++ -dynamiclib -o ${LIBRARY}.${VERSION} $OBJECTS $LIBS -shared-libgcc"
+    echo "g++ -dynamiclib -flat_namespace -undefined suppress -o ${LIBRARY}.${VERSION} $OBJECTS $LIBS"
+    g++ -dynamiclib -flat_namespace -undefined suppress -o ${LIBRARY}.${VERSION} $OBJECTS $LIBS
+#	echo "ld -dylib -o ${LIBRARY}.${VERSION} $LIBS $OBJECTS" 
+#	ld -dylib -o ${LIBRARY}.${VERSION} $LIBS $OBJECTS
+	RC=$?
+	ln -s ${LIBNAME}.${VERSION} $LIBRARY
+	;;
+
+    hpux )
+	LIBNAME_BASE=`basename $LIBNAME .sl`
+	LIBRARY_BASE=`dirname $LIBRARY`/`basename $LIBRARY .sl`
+	if [ "$COMPILER" = "gxx" ] ; then
+	    if [ $COMPILER_VER -ge 280 ] ; then
+		if [ $OSVER_MAJOR -ge 10 ] ; then
+		    g++ -shared -fPIC -Wl,+s -Wl,+h,${LIBNAME_BASE}.${MAJOR} \
+			-o ${LIBRARY_BASE}.${MAJOR} $OBJECTS $LIBS
+		else
+		    g++ -shared -fPIC -o ${LIBRARY_BASE}.${MAJOR} \
+			$OBJECTS $LIBS
+		fi
+	    else
+	        echo "g++ versions older than 2.8.0 don't build shared libraries properly."
+		exit 1
+	    fi
+	elif [ "$COMPILER" = "acc" ] ; then
+	    if [ "$ARCH" = "pa20" -a $OSVER_MAJOR -ge 11 ] ; then
+		if [ "$ARCHBITS" = "64bits" ] ; then
+		    DA_FLAGS="+DA2.0W"
+		else
+		    DA_FLAGS="+DA2.0N"
+		fi
+	    else
+		DA_FLAGS=""
+            fi
+	    aCC ${DA_FLAGS} -b -o ${LIBRARY_BASE}.${MAJOR} -Wl,+s -Wl,+h${LIBNAME_BASE}.sl $OBJECTS $LIBS
+        else 
+            if [ $OSVER_MAJOR -ge 10 ] ; then
+               ld -b +s +h ${LIBNAME_BASE}.${MAJOR} \
+                       -o ${LIBRARY_BASE}.${MAJOR} $OBJECTS $LIBS
+            else
+               ld -b +s -o ${LIBRARY_BASE}.${MAJOR} $OBJECTS $LIBS
+            fi
+	fi
+	RC=$?
+	ln -s ${LIBNAME_BASE}.${MAJOR} $LIBRARY
+	;;
+
+    irix )
+	if [ "$COMPILER" = "gxx" ] ; then
+	    g++ -shared -Wl,-soname,$LIBNAME -Wl,-set_version,$VERSION \
+		    -o ${LIBRARY}.${MAJOR} $OBJECTS $LIBS
+	else
+	    CC -shared -soname $LIBNAME -set_version $VERSION \
+		    -o ${LIBRARY}.${MAJOR} $OBJECTS $LIBS
+	fi
+	RC=$?
+	ln -s ${LIBNAME}.${MAJOR} $LIBRARY
+	;;
+
+    linux )
+	VERSION="${MAJOR}.${MINOR}"
+	g++ -shared -Wl,-znow -Wl,-soname,${LIBNAME}.${MAJOR} -o ${LIBRARY}.${VERSION} \
+		$OBJECTS $LIBS
+	RC=$?
+	ln -sf ${LIBNAME}.${VERSION} ${LIBRARY}.${MAJOR}
+	ln -sf ${LIBNAME}.${MAJOR} $LIBRARY
+	;;
+
+    osf1 )
+	VERSION="${MAJOR}.${MINOR}"
+	if [ "$COMPILER" = "gxx" ] ; then
+	    g++ -shared -Wl,-set_version,${VERSION},-soname,${LIBNAME} \
+		-o ${LIBRARY} $OBJECTS $LIBS
+	else
+	    ld -shared -set_version $VERSION -soname $LIBNAME \
+		-expect_unresolved \* -o $LIBRARY -L/usr/lib/cmplrs/cxx \
+		-rpath /usr/lib/cmplrs/cxx -g0 -O1 $OBJECTS \
+		-lcxxstd -lcxx -lexc -lots $LIBS -lc
+	fi
+	RC=$?
+	;;
+
+    sco )
+	if [ $OSVER_MAJOR -ge 5 ] ; then
+	    VERSION="${MAJOR}.${MINOR}"
+	    ld -G -o ${LIBRARY}.${MAJOR} $OBJECTS $LIBS
+	    RC=$?
+	    ln -s ${LIBNAME}.${MAJOR} ${LIBRARY}.${VERSION}
+	    ln -s ${LIBNAME}.${MAJOR} $LIBRARY
+	else
+	    echo "$OS v${OSVER_MAJOR}.${OSVER_MINOR} not supported."
+	    exit 1
+	fi
+	;;
+
+    sinix )
+	if [ "$COMPILER" = "gxx" ] ; then
+	    echo "I don't know about g++ on $OS ... help."
+	    exit 1
+	else
+	    CC -G -h $LIBNAME -o ${LIBRARY}.${VERSION} $OBJECTS $LIBS
+	fi
+	ln ${LIBRARY}.${VERSION} $LIBRARY
+	;;
+
+    solaris )
+	VERSION="${MAJOR}.${MINOR}"
+	if [ "$COMPILER" = "sunpro" ] ; then
+	   CC -G -o ${LIBRARY}.${VERSION} $OBJECTS $LIBS
+        else
+	   ld -G -z text -o ${LIBRARY}.${VERSION} $OBJECTS $LIBS
+        fi
+	RC=$?
+	ln -s ${LIBNAME}.${VERSION} ${LIBRARY}.${MAJOR}
+	ln -s ${LIBNAME}.${MAJOR} $LIBRARY
+	;;
+
+    sunos )
+	ld -assert pure-text -o $LIBRARY $OBJECTS $LIBS
+	RC=$?
+	;;
+
+    * )
+	echo "$OS not working ... please fix me."
+	exit 1
+	;;
+
+esac
+
+exit $RC

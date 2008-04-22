@@ -1,24 +1,14 @@
 
-PROG = speed
-SRC = /home/sadovnikov/$(PROG)
-LIB = # -shared -fPIC  # set DLL = -shared -fPIC if you want to build a DLL
+DIR = speed
+EXE = speed
+SRCS = 	speed.cpp \
+	ping.cpp 
 
-EXTRA_INCLUDES += -I$(SRC)/include \
+EXTRA_INCLUDES 	+= -Iinclude 
 
-
-
-BLD = $(SRC)/bld
-
-$(PROG) : $(PROG).o ping.o
-	g++ $(LIB) -o $(BLD)/bin/$(PROG) $(BLD)/obj/$(PROG).o $(BLD)/obj/ping.o
+EXTRALIBPATHS	+= $(BLDROOT)/$(MTARGET)/lib 
 
 
-$(PROG).o : $(PROG).cpp 
-	g++ -g -Wall -Wno-long-long -fPIC -DLINUX -Wall -Wno-invalid-offsetof $(EXTRA_INCLUDES) -c $(PROG).cpp -o $(BLD)/obj/$(PROG).o
+include $(MAKE_HOME)/makefile.incl
+include $(MAKE_HOME)/makefile.exec
 
-ping.o : ping.cpp
-	g++ -g -Wall -Wno-long-long -fPIC -DLINUX -Wall -Wno-invalid-offsetof $(EXTRA_INCLUDES) -c ping.cpp -o $(BLD)/obj/ping.o
-
-
-clean: 
-	rm $(BLD)/obj/$(PROG).o $(BLD)/obj/ping.o $(BLD)/bin/$(PROG)

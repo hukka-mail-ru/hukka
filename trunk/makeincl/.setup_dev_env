@@ -1,0 +1,13 @@
+export MTARGET=linux-2-6-x86-threaded-gcc
+export BLDROOT=/home/cchurch/bld
+export SRCROOT=/home/cchurch/src/svn
+export MAKE_HOME=/home/cchurch/src/svn/makeincl
+
+export PATH=$PATH:$BLDROOT/$MTARGET/bin
+export CONFDIR=$BLDROOT/$MTARGET/etc
+
+export SYSPERL=/usr/lib/perl/5.8.8/
+export LD_LIBRARY_PATH=$LD_LIBRARY_PATH:$BLDROOT/$MTARGET/lib:$BLDROOT/$MTARGET/lib/mysql
+export PERL5LIB=$PERL5LIB:$BLDROOT/$MTARGET/lib/perl5/site_perl:$BLDROOT/$MTARGET/share/perl/5.8.8/
+export SSDL_ROOT=/var/alertlogic
+export SSDL_LIB_TARGET=$SSDL_ROOT/ssdl/lib

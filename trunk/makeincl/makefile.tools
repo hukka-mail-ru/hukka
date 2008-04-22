@@ -1,0 +1,154 @@
+#VPATH=$(OBJDIR)/$(DIR)
+vpath %.c $(OBJDIR)/$(DIR)
+vpath %.cpp $(OBJDIR)/$(DIR)
+
+$(OBJDIR)/$(DIR)/%.o: %.c
+	$(CFILTER) $(CC) $(CFLAGS) $(EXTRA_FLAGS) $(EXTRA_DEFINES) $(DEFAULT_INCLUDES) $(EXTRA_INCLUDES) $(DEP_FLAGS) -c $< -o $@
+
+$(OBJDIR)/$(DIR)/%.o: %.cpp
+	$(CXXFILTER) $(CXX) $(CXXFLAGS) $(EXTRA_FLAGS) $(EXTRA_DEFINES) $(DEFAULT_INCLUDES) $(EXTRA_INCLUDES) $(DEP_FLAGS) -c $< -o $@
+
+# Convert .s file to a .o file
+$(OBJDIR)/%.o: %$(ASM_EXT)
+	$(AS) $(mASFLAGS) -o $@ -c $<
+
+#######################################################################
+# rules for zeroc ICE communications library slice code generator
+#
+# RULES commented are for object directory code gen
+#$(OBJDIR)/$(DIR)/%.cpp: %.ice
+#	$(SLICE2CPP) --output-dir $(OBJDIR)/$(DIR) $<
+#ifneq ("$(SRCS)","")
+#mTMP_ICE_SRCS = $(strip $(patsubst %.ice,$(OBJDIR)/$(DIR)/%.cpp, $(filter %.ice, $(SRCS))) $(patsubst %.ice,$(OBJDIR)/$(DIR)/%.h, $(filter %.ice, $(SRCS))) )
+#ifneq ("$(mTMP_ICE_SRCS)","")
+#.SECONDARY : $(mTMP_ICE_SRCS)
+#endif
+
+ifneq ("$(SRCS)","")
+mTMP_ICE_SRCS = $(strip $(patsubst %.ice,%.cpp, $(filter %.ice, $(SRCS))) $(patsubst %.ice,%.h, $(filter %.ice, $(SRCS))) )
+ifneq ("$(mTMP_ICE_SRCS)","")
+.SECONDARY : $(mTMP_ICE_SRCS)
+endif
+
+EXTRATOCLEAN += $(mTMP_ICE_SRCS)
+endif
+%.cpp: %.ice
+	$(SLICE2CPP) $<
+
+#######################################################################
+# rules for flex and bison files
+# 
+mYACC_FLAGS = -d -v
+
+ifneq ("$(SRCS)","")
+mTMP_LEX_YACC_SRCS = $(strip $(patsubst %.l,$(OBJDIR)/$(DIR)/%_lex.c, $(filter %.l, $(SRCS))) $(patsubst %.y,$(OBJDIR)/$(DIR)/%_yacc.c, $(filter %.y, $(SRCS))) $(patsubst %.y,$(OBJDIR)/$(DIR)/%_yacc.h, $(filter %.y, $(SRCS))) $(patsubst %.ypp,$(OBJDIR)/$(DIR)/%_yacc.h, $(filter %.ypp, $(SRCS)))) 
+ifneq ("$(mTMP_LEX_YACC_SRCS)","")
+.SECONDARY : $(mTMP_LEX_YACC_SRCS)
+endif
+
+EXTRATOCLEAN += $(mTMP_LEX_YACC_SRCS)
+endif
+
+$(OBJDIR)/$(DIR)/%_lex.c: %.l
+	$(FLEX) $(mLEX_FLAGS) -o$@ $(patsubst %,-P%,$(strip $(word 1,$(strip $($(patsubst %.l,%_LEX_PREFIX,$(notdir $<))) $($(patsubst %.l,%_PARSER_PREFIX,$(notdir $<))))))) $<
+
+$(OBJDIR)/$(DIR)/%_yacc.c: %.y
+	$(YACC) $(mYACC_FLAGS) -o $@ $(patsubst %,-p %, $(strip $(word 1,$(strip $($(patsubst %.y,%_YACC_PREFIX,$(notdir $<))) $($(patsubst %.y,%_PARSER_PREFIX,$(notdir $<))))))) $<
+
+$(OBJDIR)/$(DIR)/%_yacc.cpp: %.ypp
+	$(YACC) $(mYACC_FLAGS) -o $(patsubst %.o,%.cpp,$@) $(patsubst %,-p %, $(strip $(word 1,$(strip $($(patsubst %.ypp,%_YACC_PREFIX,$(notdir %$<))) $($(patsubst %.ypp,%_PARSER_PREFIX,$(notdir $<))))))) $<
+	$(MV) $(patsubst %.o,%.cpp.h,$@) $(OBJDIR)/$(patsubst $(OBJDIR)/%.o,%.h,$@)
+
+###########################################################################
+
+# build dependencies
+.PHONY: makedependdir depend clean clean-depend
+makedependdir:
+	-@$(MKDIRHIER) $(OBJDIR)/$(DIR)
+
+depend: makedependdir
+	@$(TOUCH) $(DEPFILE)
+	$(MAKEDEPEND) -f $(DEPFILE) -p$(OBJDIR)/$(DIR)/ $(DEFAULT_INCLUDES) $(DEPFLAGS) $(EXTRA_INCLUDES) $(DEPINCLUDES) $(SRCS)
+
+clean-depend:
+	-$(RM) $(DEPFILE)
+
+-include $(DEPFILE)
+
+# clean
+clean:
+	-$(RM) $(OBJDIR)/$(DIR)/*.o $(OBJDIR)/$(DIR)/*.d $(EXTRATOCLEAN)
+
+# preprocess file
+%.i: %.c
+	$(CC) -E -I$(MAKE_HOME) $(INCLUDE) -c $<
+%.i: %.cpp
+	$(CXX) -E -I$(MAKE_HOME) $(INCLUDE) -c $<
+
+# extract prototypes
+%.cproto: %.c
+	@$(CPROTO) -f2 -e -c $(CPROTO_EXTRA) $(DEFAULT_INCLUDES) $<
+
+#########################################################################
+# Rules to generate CTAGS/ETAGS files
+#
+SRCS_WITH_DIR = $(patsubst %,$(SRCDIR)/$(DIR)/%, $(SRCS))
+HDRS_WITH_DIR = $(SRCDIR)/$(DIR)/*.h
+CTAGS_INFILES = $(SRCS_WITH_DIR) $(HDRS_WITH_DIR)
+.PHONY: ctags
+
+CTAGSFLAGS=--c-types=cdefgmnpstuvxC --file-tags=yes
+ctags:
+	$(CTAGS) -f $(SRCDIR)/$(CTAGSFILE) -a $(CTAGSFLAGS)  $(CTAGS_INFILES)
+	-@$(RM) ./$(CTAGSFILE)
+	$(CTAGS) -f $(CTAGSFILE) $(CTAGSFLAGS)  $(CTAGS_INFILES)
+
+clean-ctags:
+	-$(RM) ./$(CTAGSFILE)
+
+etags:
+	$(ETAGS) -o $(ETAGSFILE) -atTSd $(SRCS_WITH_DIR)
+
+clean-etags:
+	-$(RM) ./$(ETAGSFILE)
+
+clean-tags: clean-ctags clean-etags
+
+
+
+#########################################################################
+# Rules to generate tests 
+#
+.PHONY: unit_tests unit_tests_clean
+
+unit_tests:
+ifneq ("$(TEST_DIR)","")
+	@echo "#### Building tests for $(DIR)"
+	$(MAKE) -C $(SRCROOT)/$(TEST_DIR)
+else
+	@echo "#### $(DIR) does not contain tests. Skipping..."
+endif
+
+unit_tests_clean:
+ifneq ("$(TEST_DIR)","")
+	@echo "#### Cleaning tests for $(DIR)"
+	$(MAKE) clean -C $(SRCROOT)/$(TEST_DIR)
+else
+	@echo "#### $(DIR) does not contain tests. Skipping..."
+endif
+
+run_tests:
+ifneq ("$(T_EXE)","")
+	@$(ECHO) ""
+	@$(ECHO) "#### Running $(T_EXE)..."
+	@$(TESTS_EXEDIR)/$(T_EXE)
+else
+ifneq ("$(TEST_DIR)","")
+	@echo "#### Running tests for $(DIR)"
+	$(MAKE) $@ -C $(SRCROOT)/$(TEST_DIR)
+else
+	@echo "#### $(DIR) does not contain tests. Skipping..."
+endif
+endif
+
+include $(MAKE_HOME)/makefile.vars

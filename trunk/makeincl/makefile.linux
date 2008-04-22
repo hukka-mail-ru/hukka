@@ -1,0 +1,181 @@
+
+CC =  gcc
+CXX =  g++
+CFLAGS += -DLINUX
+CXXFLAGS += -DLINUX -Wall -Wno-invalid-offsetof
+LINKER = $(FILTER) g++
+SYSLIBS = pthread rt dl
+
+ifeq "$(THIRD_PARTY_ROOT)" ""
+    THIRD_PARTY_ROOT := $(BLDROOT)/$(MTARGET)
+endif
+
+ifneq "$(REQUIRE_BZ2)" ""
+    REQUIRE_THIRD_PARTY = 1
+    ifeq "$(BZ2_ROOT)" "" 
+        BZ2_ROOT := /var/alertlogic
+    endif
+    
+    EXTRA_INCLUDES += -I$(BZ2_ROOT)/include
+    ifneq "$(BZ2_ROOT)" "$(THIRD_PARTY_ROOT)"
+        EXTRALIBPATHS += $(BZ2_ROOT)/lib
+    endif
+    EXTRALIBS += bz2
+endif
+
+
+ifneq "$(REQUIRE_CPPUNIT)" ""
+    REQUIRE_THIRD_PARTY = 1
+    ifeq "$(CPPUNIT_ROOT)" "" 
+        CPPUNIT_ROOT := $(THIRD_PARTY_ROOT)
+    endif
+    
+    EXTRA_INCLUDES += -I$(CPPUNIT_ROOT)/cppunit/include
+    ifneq "$(CPPUNIT_ROOT)" "$(THIRD_PARTY_ROOT)"
+        EXTRALIBPATHS += $(CPPUNIT_ROOT)/lib
+    endif
+    3RDPARTYLIBS += cppunit
+endif
+
+ifneq "$(REQUIRE_MYSQL)" ""
+    REQUIRE_THIRD_PARTY = 1
+    ifeq "$(MYSQL_ROOT)" ""
+        MYSQL_ROOT := $(THIRD_PARTY_ROOT)
+    endif
+    
+    ifneq "$(MYSQL_ROOT)" "$(THIRD_PARTY_ROOT)"
+        EXTRA_INCLUDES += -I$(MYSQL_ROOT)/include
+    endif
+    EXTRA_INCLUDES += -I$(MYSQL_ROOT)/include/mysql
+    EXTRALIBPATHS += $(MYSQL_ROOT)/lib
+    3RDPARTYLIBS += almysqlclient_r z
+endif
+
+ifneq "$(REQUIRE_MYSQL_PP)" ""
+    REQUIRE_THIRD_PARTY = 1
+    ifeq "$(MYSQL_ROOT_PP)" ""
+        MYSQL_ROOT_PP := $(THIRD_PARTY_ROOT)
+    endif
+    
+    ifneq "$(MYSQL_ROOT_PP)" "$(THIRD_PARTY_ROOT)"
+        EXTRA_INCLUDES += -I$(MYSQL_ROOT_PP)/include
+        EXTRALIBPATHS += $(MYSQL_ROOT_PP)/lib
+    endif
+    3RDPARTYLIBS += mysqlpp 
+endif
+
+
+ifneq "$(REQUIRE_LIBEVENT)" ""
+    REQUIRE_THIRD_PARTY = 1
+    ifeq "$(LIBEVENT_ROOT)" ""
+        LIBEVENT_ROOT := $(THIRD_PARTY_ROOT)
+    endif
+    
+    ifneq "$(LIBEVENT_ROOT)" "$(THIRD_PARTY_ROOT)"
+        EXTRA_INCLUDES += -I$(LIBEVENT_ROOT)/include
+        EXTRALIBPATHS += $(LIBEVENT_ROOT)/lib
+    endif
+    3RDPARTYLIBS += event 
+endif
+
+
+ifneq "$(REQUIRE_CLUCENE)" ""
+    REQUIRE_THIRD_PARTY = 1
+    ifeq "$(CLUCENE_ROOT)" ""
+        CLUCENE_ROOT := $(THIRD_PARTY_ROOT)
+    endif
+    
+    ifneq "$(CLUCENE_ROOT)" "$(THIRD_PARTY_ROOT)"
+        EXTRA_INCLUDES += -I$(CLUCENE_ROOT)/include
+        EXTRALIBPATHS += $(CLUCENE_ROOT)/lib
+    endif
+    EXTRA_INCLUDES += -I$(CLUCENE_ROOT)/include/CLucene -I$(CLUCENE_ROOT)/lib
+    3RDPARTYLIBS += clucene
+endif
+
+
+ifneq "$(REQUIRE_LIBXML2)" ""
+    REQUIRE_THIRD_PARTY = 1
+    ifeq "$(LIBXML2_ROOT)" ""
+        LIBXML2_ROOT := /usr
+    endif
+
+    ifneq "$(LIBXML2_ROOT)" "$(THIRD_PARTY_ROOT)"
+        ifneq "$(LIBXML2_ROOT)" "/usr"
+        EXTRALIBPATHS += $(LIBXML2_ROOT)/lib
+        endif
+    endif
+    EXTRA_INCLUDES += -I$(LIBXML2_ROOT)/include/libxml2
+    3RDPARTYLIBS += xml2 
+endif
+
+ifneq "$(REQUIRE_MDNS)" ""
+    REQUIRE_THIRD_PARTY = 1
+    ifeq "$(MDNS_ROOT)" ""
+        MDNS_ROOT := $(THIRD_PARTY_ROOT)
+    endif
+
+    ifneq "$(MDNS_ROOT)" "$(THIRD_PARTY_ROOT)"
+        EXTRALIBPATHS += $(MDNS_ROOT)/lib
+    endif
+    EXTRA_INCLUDES += -I$(MDNS_ROOT)/include/mDNS
+    3RDPARTYLIBS += dns_sd
+endif
+
+ifneq "$(REQUIRE_PCRE)" ""
+    REQUIRE_THIRD_PARTY = 1
+    ifeq "$(PCRE_ROOT)" ""
+        PCRE_ROOT := /usr
+    endif
+
+    ifneq "$(PCRE_ROOT)" "$(THIRD_PARTY_ROOT)"
+        ifneq "$(PCRE_ROOT)" "/usr"
+        EXTRALIBPATHS += $(PCRE_ROOT)/lib
+        endif
+    endif
+    EXTRA_INCLUDES += -I$(PCRE_ROOT)/include
+    3RDPARTYLIBS += pcreposix pcrecpp pcre
+endif
+
+ifneq "$(REQUIRE_UUID)" ""
+    REQUIRE_THIRD_PARTY = 1
+    ifeq "$(UUID_ROOT)" ""
+        UUID_ROOT := $(THIRD_PARTY_ROOT)
+    endif
+
+    ifneq "$(UUID_ROOT)" "$(THIRD_PARTY_ROOT)"
+        EXTRALIBPATHS += $(UUID_ROOT)/lib
+    endif
+    3RDPARTYLIBS += uuid
+endif
+
+ifneq "$(REQUIRE_PHP)" ""
+    REQUIRE_THIRD_PARTY = 1
+    ifeq "$(PHP_ROOT)" ""
+#        PHP_ROOT := $(THIRD_PARTY_ROOT)/include/php
+        PHP_ROOT := /usr/include/php5
+    endif
+
+#    ifneq "$(PHP_ROOT)" "$(THIRD_PARTY_ROOT)"
+#        EXTRALIBPATHS += $(PHP_ROOT)/lib
+#    endif
+    EXTRA_INCLUDES += -I$(PHP_ROOT) -I$(PHP_ROOT)/regex -I$(PHP_ROOT)/Zend -I$(PHP_ROOT)/main -I$(PHP_ROOT)/TSRM
+endif
+
+ifneq "$(REQUIRE_EFENCE)" ""
+  3RDPARTYLIBS += efence
+endif
+
+ifneq "$(REQUIRE_OPSEC)" ""
+    REQUIRE_THIRD_PARTY = 1
+    ifeq "$(OPSEC_ROOT)" ""
+        OPSEC_ROOT := $(THIRD_PARTY_ROOT)
+    endif
+    EXTRALIBPATHS += $(OPSEC_ROOT)/lib/opsec
+    3RDPARTYLIBS += opsec
+endif
+
+ifneq "$(REQUIRE_THIRD_PARTY)" ""
+    EXTRA_INCLUDES += -I$(THIRD_PARTY_ROOT)/include
+    EXTRALIBPATHS += $(THIRD_PARTY_ROOT)/lib
+endif

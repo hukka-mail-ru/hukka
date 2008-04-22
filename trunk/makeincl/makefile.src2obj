@@ -1,0 +1,13 @@
+mTMP_C_OBJS = $(patsubst %.c,$(OBJDIR)/$(DIR)/%.o,$(filter %.c,$(SRCS)))
+
+mTMP_CPP_OBJS = $(patsubst %.cpp,$(OBJDIR)/$(DIR)/%.o,$(filter %.cpp,$(SRCS)))
+
+mTMP_SLICE_OBJS = $(patsubst %.ice,$(OBJDIR)/$(DIR)/%.o,$(filter %.ice,$(SRCS)))
+
+mTMP_LEX_OBJS = $(patsubst %.l,$(OBJDIR)/$(DIR)/%_lex.o,$(filter %.l,$(SRCS)))
+
+mTMP_YACC_OBJS = $(patsubst %.y,$(OBJDIR)/$(DIR)/%_yacc.o,$(filter %.y,$(SRCS))) $(patsubst %.ypp,$(OBJDIR)/$(DIR)/%_yacc.o,$(filter %%.ypp,$(SRCS)))
+
+mTMP_ASM_OBJS = $(patsubst %.s,$(OBJDIR)/$(DIR)/%.o,$(filter %.s,$(SRCS)))
+
+OBJS_WITH_DIR = $(mTMP_YACC_OBJS) $(mTMP_LEX_OBJS) $(mTMP_CPP_OBJS) $(mTMP_C_OBJS) $(mTMP_SLICE_OBJS) $(mTMP_ASM_OBJS)
