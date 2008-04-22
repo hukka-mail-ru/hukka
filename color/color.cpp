@@ -2,6 +2,8 @@
 
 using namespace std;
 
+bool EnableColorLog = false;
+
 string color(int color)
 {
     if(!EnableColorLog)

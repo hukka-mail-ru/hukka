@@ -4,10 +4,10 @@
 // --------------------------------------------------------------------------------
 //  CHANGE THE BOOLEANS BELOW TO SWITCH LOGGING ON/OFF:
 // -------------------------------------------------------------------------------
-bool MessagesDebug = true;
-bool MessagesInfo = true;
-bool MessagesWarning = true;
-bool MessagesError = true;
+extern bool MessagesDebug;
+extern bool MessagesInfo;
+extern bool MessagesWarning;
+extern bool MessagesError;
 
 #include <iostream>
 #include <string>
@@ -46,12 +46,8 @@ class MessageHeader
 //            Result:
 //                     BAD001E Can't fuck the brain
 // --------------------------------------------------------------------------------
-std::auto_ptr<MessageHeader> HDR(const char* str)
-{
-    std::auto_ptr<MessageHeader> head(new MessageHeader());
-    head->setHeader(str);
-    return head;
-}
+extern std::auto_ptr<MessageHeader> HDR(const char* str);
+
 
 // --------------------------------------------------------------------------------
 //  BIG MESSAGE HEADER.
@@ -119,10 +115,10 @@ class MessagePrinter
 //  Example of usage:
 //                    debug << "Debug message" << endl;
 // --------------------------------------------------------------------------------
-MessagePrinter debug(Debug);
-MessagePrinter info(Info);
-MessagePrinter warning(Warning);
-MessagePrinter error(Error);
+extern MessagePrinter debug;
+extern MessagePrinter info;
+extern MessagePrinter warning;
+extern MessagePrinter error;
 
 
 #endif

@@ -1,5 +1,7 @@
-#ifndef color_hpp
-#define color_hpp
+#ifndef __color_hpp__
+#define __color_hpp__
+
+extern bool EnableColorLog;
 
 #include <string>
 
@@ -21,7 +23,6 @@
 #define	WHITE		7
 #define	UNDEFINED	777
 
-bool EnableColorLog = false;
 
 std::string color(int color = UNDEFINED);
 
