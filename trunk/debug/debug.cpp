@@ -1,5 +1,22 @@
 #include <debug.hpp>
 
+bool MessagesDebug = true;
+bool MessagesInfo = true;
+bool MessagesWarning = true;
+bool MessagesError = true;
+
+MessagePrinter debug(Debug);
+MessagePrinter info(Info);
+MessagePrinter warning(Warning);
+MessagePrinter error(Error);
+
+std::auto_ptr<MessageHeader> HDR(const char* str)
+{
+    std::auto_ptr<MessageHeader> head(new MessageHeader());
+    head->setHeader(str);
+    return head;
+}
+
 // --------------------------------------------------------------------------------
 //	
 // Print header only if type = MessageHeader

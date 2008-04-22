@@ -8,9 +8,9 @@ EXTRA_INCLUDES 	+= -Iinclude \
 			-I$(SRCROOT)/debug/include \
 			-I$(SRCROOT)/color/include
 
-EXTRALIBPATHS	+= $(BLDROOT)/$(MTARGET)/lib 
+LIBPATHS	+= $(BLDROOT)/$(MTARGET)/lib 
 
-EXTRALIBS += debug color
+LIBS += debug color
 
 
 include $(MAKE_HOME)/makefile.incl
