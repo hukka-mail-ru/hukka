@@ -1,0 +1,24 @@
+include $(MAKE_HOME)/makefile.src2obj
+LIBNAME = lib$(LIB).a
+EXTRATOCLEAN += $(LIBDIR)/$(LIBNAME) $(DEPFILE)
+
+all: scan makedirs lib
+
+.SUFFIXES:
+.PHONY: scan
+scan:
+	@$(foreach dir,$(DIRS), $(MAKE) -k -C $(TOP)/$(dir); )
+
+makedirs:
+	-@$(MKDIRHIER) $(OBJDIR)/$(DIR)
+	-@$(MKDIRHIER) $(LIBDIR)
+
+lib: $(LIBDIR)/$(LIBNAME)
+	@$(ECHO) "==== $(LIBDIR)/$(LIBNAME) is upto date"
+
+$(LIBDIR)/$(LIBNAME): $(OBJS_WITH_DIR)
+	$(AR) -crv $(LIBDIR)/$(LIBNAME) $(OBJS_WITH_DIR)
+
+include $(MAKE_HOME)/makefile.tools
+
+-include $(OBJDIR)/$(DIR)/*.d

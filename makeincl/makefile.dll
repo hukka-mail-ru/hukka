@@ -1,0 +1,57 @@
+include $(MAKE_HOME)/makefile.src2obj
+
+DEPENDLIBS = $(patsubst %,$(LIBDIR)/$(LIB_PREFIX)%.a, $(LIBS))
+DLLNAME = lib$(DLL).so
+LIBNAME = lib$(LIB).a
+EXTRATOCLEAN += $(DLLDIR)/$(DLLNAME) $(DEPFILE)
+
+
+#SRCS += dllversion.c
+#dllversion_DEFINES = -DMODULE_NAME=$(LIB)
+
+EXTRATOCLEAN += $(LIBDIR)/$(LIBNAME) $(DLLDIR)/$(DLLNAME).$(DLL_MAJOR) \
+		$(DLLDIR)/$(DLLNAME).$(DLL_MAJOR).$(DLL_MINOR)
+
+# This is a kludge to make sure that the $(OBJDIR) is created
+thisIsTheObjdirDirKludge := $(shell $(MKDIRHIER) $(OBJDIR))
+thisIsTheObjdirDirDirKludge := $(shell $(MKDIRHIER) $(OBJDIR)/$(DIR))
+
+all: scan makedirs pre_target dll post_target
+
+.SUFFIXES:
+.PHONY: scan makedirs pre_target dll post_target clean
+scan: 
+	@$(foreach dir,$(DIRS), $(MAKE) -k -C $(TOP)/$(dir); )
+
+makedirs:
+	-@$(MKDIRHIER) $(patsubst %/,%,$(OBJDIR)/$(DIR))
+	-@$(MKDIRHIER) $(patsubst %/,%,$(DLLDIR))
+	-@$(MKDIRHIER) $(patsubst %/,%,$(LIBDIR))
+	-@$(MKDIRHIER) $(CONFDIR)
+
+dll: $(DLLDIR)/$(DLLNAME)
+	@$(ECHO) "==== $(DLLDIR)/$(DLLNAME) is upto date"
+
+
+# Build the link line, prepend -l to each library
+LINKLIBS = $(patsubst %,-l%, $(LIBS))
+LINKEXTRALIBS = $(patsubst %,-l%, $(EXTRALIBS))
+LINKSYSLIBS = $(patsubst %,-l%, $(SYSLIBS))
+LINK3RDPARTYLIBS = $(patsubst %,-l%, $(3RDPARTYLIBS))
+LINKLIBPATH = $(patsubst %,-L%,$(LIBPATH)) 
+ifneq ("$(m3RDPARTYLIB)", "")
+   LINKLIBPATH += -L$(m3RDPARTYLIB)
+endif
+LINKEXTRALIBPATHS = $(patsubst %, -L%, $(EXTRALIBPATHS))
+
+$(DLLDIR)/$(DLLNAME): $(OBJS_WITH_DIR)
+	$(MAKE_HOME)/makeso $@ $(DLL_MAJOR) $(DLL_MINOR) -L$(LIBDIR) $(LINKLIBPATH) $(LINKEXTRALIBPATHS) $(LINKLIBS) $(LINKEXTRALIBS) $(LINK3RDPARTYLIBS) $(LINKSYSLIBS) $(OBJS_WITH_DIR)
+
+#dllversion.c: $(TOP)/bldnum/dllversion.c
+#	$(CP) $(TOP)/bldnum/dllversion.c $(TOP)/$(DIR)
+
+#EXTRATOCLEAN += $(TOP)/$(DIR)/dllversion.c
+
+include $(MAKE_HOME)/makefile.tools
+
+-include $(OBJDIR)/$(DIR)/*.d

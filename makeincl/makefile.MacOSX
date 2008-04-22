@@ -1,0 +1,86 @@
+
+CC =  gcc
+CXX = g++
+CFLAGS += -fno-common -DAPPLE
+CXXFLAGS += -fexceptions -flat_namespace -DAPPLE
+
+LINKER = $(FILTER) g++
+SYSLIBS = gcc stdc++ pthread
+
+ifeq "$(THIRD_PARTY_ROOT)" ""
+    THIRD_PARTY_ROOT := $(BLDROOT)/$(MTARGET)
+endif
+
+ifneq "$(REQUIRE_CPPUNIT)" ""
+    REQUIRE_THIRD_PARTY = 1
+    ifeq "$(CPPUNIT_ROOT)" "" 
+        CPPUNIT_ROOT := $(THIRD_PARTY_ROOT)
+    endif
+    
+    EXTRA_INCLUDES += -I$(CPPUNIT_ROOT)/cppunit/include
+    ifneq "$(CPPUNIT_ROOT)" "$(THIRD_PARTY_ROOT)"
+        EXTRALIBPATHS += $(CPPUNIT_ROOT)/lib
+    endif
+    3RDPARTYLIBS += cppunit
+endif
+
+ifneq "$(REQUIRE_MYSQL)" ""
+    REQUIRE_THIRD_PARTY = 1
+    ifeq "$(MYSQL_ROOT)" ""
+        MYSQL_ROOT := $(THIRD_PARTY_ROOT)
+    endif
+    
+    ifneq "$(MYSQL_ROOT)" "$(THIRD_PARTY_ROOT)"
+        EXTRA_INCLUDES += -I$(MYSQL_ROOT)/include
+    endif
+    EXTRA_INCLUDES += -I$(MYSQL_ROOT)/include/mysql
+    EXTRALIBPATHS += $(MYSQL_ROOT)/lib/mysql
+    3RDPARTYLIBS += mysqlclient
+endif
+
+ifneq "$(REQUIRE_MYSQL_PP)" ""
+    REQUIRE_THIRD_PARTY = 1
+    ifeq "$(MYSQL_ROOT_PP)" ""
+        MYSQL_ROOT_PP := $(THIRD_PARTY_ROOT)
+    endif
+    
+    ifneq "$(MYSQL_ROOT_PP)" "$(THIRD_PARTY_ROOT)"
+        EXTRA_INCLUDES += -I$(MYSQL_ROOT_PP)/include
+        EXTRALIBPATHS += $(MYSQL_ROOT_PP)/lib
+    endif
+    3RDPARTYLIBS += mysqlpp 
+endif
+
+
+ifneq "$(REQUIRE_CLUCENE)" ""
+    REQUIRE_THIRD_PARTY = 1
+    ifeq "$(CLUCENE_ROOT)" ""
+        CLUCENE_ROOT := $(THIRD_PARTY_ROOT)
+    endif
+    
+    ifneq "$(CLUCENE_ROOT)" "$(THIRD_PARTY_ROOT)"
+        EXTRA_INCLUDES += -I$(CLUCENE_ROOT)/include
+        EXTRALIBPATHS += $(CLUCENE_ROOT)/lib
+    endif
+    EXTRA_INCLUDES += -I$(CLUCENE_ROOT)/include/CLucene -I$(CLUCENE_ROOT)/lib
+    3RDPARTYLIBS += clucene
+endif
+
+
+ifneq "$(REQUIRE_LIBXML2)" ""
+    REQUIRE_THIRD_PARTY = 1
+    ifeq "$(LIBXML2_ROOT)" ""
+        LIBXML2_ROOT := $(THIRD_PARTY_ROOT)
+    endif
+
+    ifneq "$(LIBXML2_ROOT)" "$(THIRD_PARTY_ROOT)"
+        EXTRALIBPATHS += $(LIBXML2_ROOT)/lib
+    endif
+    EXTRA_INCLUDES += -I$(LIBXML2_ROOT)/include/libxml2
+    3RDPARTYLIBS += xml2 
+endif
+
+ifneq "$(REQUIRE_THIRD_PARTY)" ""
+    EXTRA_INCLUDES += -I$(THIRD_PARTY_ROOT)/include
+    EXTRALIBPATHS += $(THIRD_PARTY_ROOT)/lib
+endif

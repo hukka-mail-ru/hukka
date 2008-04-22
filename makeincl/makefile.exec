@@ -1,0 +1,64 @@
+include $(MAKE_HOME)/makefile.src2obj
+# Build the link line, prepend -l to each library
+LINKLIBS = $(patsubst %,-l%, $(LIBS))
+LINKEXTRALIBS = $(patsubst %,-l%, $(EXTRALIBS))
+LINK3RDPARTYLIBS = $(patsubst %,-l%, $(3RDPARTYLIBS))
+LINKEXTRALIBPATHS = $(patsubst %, -L%, $(EXTRALIBPATHS))
+COMMA=,
+LINKLDFLAGS = $(patsubst %, -Wl$(COMMA)%, $(LDFLAGS))
+LINKSYSLIBS = $(patsubst %,-l%, $(SYSLIBS))
+LINKLIBPATH = $(patsubst %,-L%, $(LIBPATH)) 
+
+DEPENDLIBS = $(patsubst %,$(LIBDIR)/lib%.a, $(LIBS))
+
+ifneq ("$(T_EXE)","")
+   EXE = $(T_EXE)
+   EXEDIR = $(TESTS_EXEDIR)
+endif
+
+# We want to clean the execuatable too
+EXTRATOCLEAN += $(EXEDIR)/$(EXE) $(DEPFILE)
+
+# This is a kludge to make sure that the $(OBJDIR) is created
+thisIsTheObjdirDirKludge := $(shell $(MKDIRHIER) $(OBJDIR))
+thisIsTheObjdirDirDirKludge := $(shell $(MKDIRHIER) $(OBJDIR)/$(DIR))
+
+CONFIG := $(wildcard *.conf)
+ifneq ("$(CONFIG)","")
+COPYCONFIG = cp -p $(CONFIG) $(CONFDIR)
+endif
+
+all: scan makedirs pre_target exe post_target
+
+.SUFFIXES:
+.PHONY: scan makedirs pre_target exe post_target
+scan:
+	@$(foreach dir,$(DIRS), $(MAKE) -k -C $(MAKE_HOME)/$(dir); )
+
+makedirs:
+	-@$(MKDIRHIER) $(OBJDIR)/$(DIR)
+	-@$(MKDIRHIER) $(EXEDIR)
+	-@$(MKDIRHIER) $(CONFDIR)
+
+exe: $(EXEDIR)/$(EXE)
+	@$(ECHO) $(DEFAULT_INCLUDES)
+	@$(ECHO) "#### $(EXEDIR)/$(EXE) is upto date"
+	$(COPYCONFIG)
+
+#run:
+#	@$(ECHO) "#### Runnung $(EXEDIR)/$(EXE)"
+#@$(EXEDIR)/$(EXE)
+#endif
+
+
+ifeq ($(LINKTYPE),static)
+   STATIC_LINK_FLAGS=-static  -static-libgcc
+endif
+
+$(EXEDIR)/$(EXE): $(OBJS_WITH_DIR) $(DEPENDLIBS)
+	$(LINKER) $(STATIC_LINK_FLAGS) $(LINKLDFLAGS) $(EXTRA_FLAGS) $(OBJS_WITH_DIR) -o $(EXEDIR)/$(EXE) -L$(LIBDIR) -L$(SUPPORTDIR)/lib $(LINKLIBPATH) $(LINKLIBS) $(LINKEXTRALIBPATHS) $(LINKEXTRALIBS) $(LINK3RDPARTYLIBS) $(LINKSYSLIBS)
+
+
+include $(MAKE_HOME)/makefile.tools
+
+-include $(OBJDIR)/$(DIR)/*.d

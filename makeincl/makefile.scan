@@ -1,0 +1,38 @@
+
+.SUFFIXES:
+default:
+	@$(foreach dir,$(DIRS), $(MAKE) -C $(TOP)/$(DIR)/$(dir) && ) true
+
+clean:
+	@$(foreach dir,$(DIRS), $(MAKE) $@ -C $(TOP)/$(DIR)/$(dir) && ) true
+
+unit_tests:
+	@$(foreach dir,$(DIRS), $(MAKE) $@ -C $(TOP)/$(DIR)/$(dir) && ) true
+
+unit_tests_clean:
+	@$(foreach dir,$(DIRS), $(MAKE) $@ -C $(TOP)/$(DIR)/$(dir) && ) true
+
+run_tests:
+	@$(foreach dir,$(DIRS), $(MAKE) $@ -C $(TOP)/$(DIR)/$(dir) && ) true
+
+real_clean: clean unit_tests_clean
+
+depend:
+	@$(foreach dir,$(DIRS), $(MAKE) $@ -C $(TOP)/$(DIR)/$(dir) && ) true
+
+ctags: remove_ctags_file_hook
+	@$(foreach dir,$(DIRS), $(MAKE) $@ -C $(TOP)/$(DIR)/$(dir) && ) true
+
+etags: remove_etags_file_hook
+	@$(foreach dir,$(DIRS), $(MAKE) $@ -C $(TOP)/$(DIR)/$(dir) && ) true
+
+clean-tags: remove_ctags_file_hook remove_etags_file_hook
+	@$(foreach dir,$(DIRS), $(MAKE) $@ -C $(TOP)/$(DIR)/$(dir) && ) true
+
+remove_ctags_file_hook:
+remove_etags_file_hook:
+
+.PHONY: default clean unit_tests unit_tests_clean real_clean depend ctags etags clean-ctags
+
+include $(MAKE_HOME)/makefile.vars
+
