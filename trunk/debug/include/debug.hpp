@@ -4,10 +4,10 @@
 // --------------------------------------------------------------------------------
 //  CHANGE THE BOOLEANS BELOW TO SWITCH LOGGING ON/OFF:
 // -------------------------------------------------------------------------------
-extern bool MessagesDebug;
-extern bool MessagesInfo;
-extern bool MessagesWarning;
-extern bool MessagesError;
+extern bool EnableDebugLog;
+extern bool EnableInfoLog;
+extern bool EnableWarningLog;
+extern bool EnableErrorLog;
 
 #include <iostream>
 #include <string>
@@ -82,19 +82,19 @@ class MessagePrinter
 	    switch(mLevel)
 	    {
 		case Debug:
-		    if(MessagesDebug)
+		    if(EnableDebugLog)
 			std::cout << val;
 		    break;
 		case Info:
-		    if(MessagesInfo)
+		    if(EnableInfoLog)
 			std::cout << val;
 		    break;
 		case Warning:
-		    if(MessagesWarning)
+		    if(EnableWarningLog)
 			std::cout << val;
 		    break;
 		case Error:
-		    if(MessagesError)
+		    if(EnableErrorLog)
 			std::cout << val;
 		    break;
 		default:
