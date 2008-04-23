@@ -19,6 +19,22 @@ std::auto_ptr<MessageHeader> HDR(const char* str)
 
 // --------------------------------------------------------------------------------
 //	
+// For std::endl
+//
+// --------------------------------------------------------------------------------
+MessagePrinter&
+MessagePrinter::operator << (std::ostream& (*f)(std::ostream&) )
+{
+    if(mLevel == Error)
+	std::cerr << std::endl;
+    else
+	std::cout << std::endl;
+	    
+    return *this;
+}
+
+// --------------------------------------------------------------------------------
+//	
 // Print header only if type = MessageHeader
 //
 // --------------------------------------------------------------------------------
