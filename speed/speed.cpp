@@ -7,8 +7,7 @@ using namespace std;
 
 void PingIP(const char* ip)
 {
-    Pinger pinger;
-    
+    Pinger pinger;    
     info << "Ping " << ip << endl;
 
     switch(pinger.ping(ip))
