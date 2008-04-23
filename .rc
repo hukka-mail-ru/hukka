@@ -5,5 +5,6 @@ export BLDROOT=$SRCROOT/bld
 export MTARGET=linux-2-6-x86-threaded-gcc
 export MAKE_HOME=$SRCROOT/makeincl
 
+
 export LD_LIBRARY_PATH=$BLDROOT/$MTARGET/lib
 PATH=$PATH:$BLDROOT/$MTARGET/bin
