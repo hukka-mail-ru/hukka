@@ -9,33 +9,33 @@ void PingIP(const char* ip)
 {
     Pinger pinger;
     
-    info << "Ping " << ip << "\n";
+    info << "Ping " << ip << endl;
 
     switch(pinger.ping(ip))
     {
         case ERROR:
-	    info << "Ping error.\n";
+	    error << "Ping error" << endl;
             break;
 
         case SILENCE:
 	    
-	    info << "Address doesn't respond.\n";
+	    info << "Address doesn't respond" << endl;
             break;
 			
 	case SUCCESS:
 		   
 	    info << "Elapsed time : " << pinger.getElapsedTime() << " microsec.\n";
-	    info << "Bytes : " << pinger.getBytes() << "\n";
+	    info << "Bytes : " << pinger.getBytes() << endl;
 	    info << "Speed : " << 1000*pinger.getBytes() / pinger.getElapsedTime()
-	        << " Kb/sec " << "\n";
+		    << " Kb/sec " << endl;
 	   break;
 
 	default:
 	       
-	    error << "Logic error" << "\n";
+	    error << "Logic error" << endl;
     }
 
-    info << "================================\n";
+    info << "================================" << endl;
 }
 
 

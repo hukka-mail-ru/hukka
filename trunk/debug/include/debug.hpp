@@ -71,7 +71,10 @@ class MessagePrinter
         MessagePrinter(MessageLevel level):
 	   mLevel(level)
         {}
-	
+
+	// Print 'std::endl' and staff like that
+	MessagePrinter& operator << (std::ostream& (*f)(std::ostream&) );
+
 	// Print header only if type = MessageHeader
 	MessagePrinter& operator << (std::auto_ptr<MessageHeader> header);
 
