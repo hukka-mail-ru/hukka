@@ -95,7 +95,7 @@ class MessagePrinter
 		    break;
 		case Error:
 		    if(EnableErrorLog)
-			std::cout << val;
+			std::cerr << val;
 		    break;
 		default:
 		    std::cerr << "Logic error" << std::endl;

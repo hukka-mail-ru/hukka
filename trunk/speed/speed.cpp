@@ -1,26 +1,41 @@
 
 #include <iostream>
 #include <ping.hpp>
-
+#include <debug.hpp>
 
 using namespace std;
 
-int PingIP(const char* ip)
+void PingIP(const char* ip)
 {
     Pinger pinger;
     
-    if(pinger.ping(ip) < 0)
-	return -1;
-    
-    cout << "Elapsed time : " << pinger.getElapsed() << " microsec" << endl;
-    cout << "Bytes : " << pinger.getBytes() << endl;
-    
-    cout << "Speed : " << 1000000*pinger.getBytes() / pinger.getElapsed()
-	    << " bytes/sec " << endl;
+    cout << "Ping " << ip << "\n";
+
+    switch(pinger.ping(ip))
+    {
+        case ERROR:
+	    cout << "Ping error" << endl;
+            break;
+
+        case SILENCE:
+	    
+	    cout << "Address doesn't respond" << endl;
+           break;
+			
+	case SUCCESS:
+		   
+	    cout << "Elapsed time : " << pinger.getElapsedTime() << " microsec" << endl;
+	    cout << "Bytes : " << pinger.getBytes() << endl;
+	    cout << "Speed : " << 1000000*pinger.getBytes() / pinger.getElapsedTime()
+	        << " bytes/sec " << endl;
+	   break;
+
+	default:
+	       
+	    cout << "Logic error" << endl;
+    }
 
     cout << "================================" << endl;
-    return 0;
-    
 }
 
 
@@ -28,8 +43,8 @@ int PingIP(const char* ip)
 
 int main()
 {
-    PingIP("192.168.148.103");
     PingIP("192.168.148.24");
+    PingIP("192.168.148.103");
     PingIP("127.0.0.1");
     
     return 0;
