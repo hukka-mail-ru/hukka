@@ -1,13 +1,22 @@
 #ifndef __PING_HPP__
 #define __PING_HPP__
 
+
+enum PingResult
+{
+    SUCCESS,
+    ERROR,
+    SILENCE
+};    
+    
+
 class Pinger
 {
 public:
 
-    int ping(const char* address);
+    PingResult ping(const char* address);
 
-    long long getElapsed() { return mElapsed; }
+    long long getElapsedTime() { return mElapsed; }
     long long getBytes() { return mBytes; }
 
 private:
