@@ -9,33 +9,33 @@ void PingIP(const char* ip)
 {
     Pinger pinger;
     
-    cout << "Ping " << ip << "\n";
+    info << "Ping " << ip << "\n";
 
     switch(pinger.ping(ip))
     {
         case ERROR:
-	    cout << "Ping error" << endl;
+	    info << "Ping error.\n";
             break;
 
         case SILENCE:
 	    
-	    cout << "Address doesn't respond" << endl;
-           break;
+	    info << "Address doesn't respond.\n";
+            break;
 			
 	case SUCCESS:
 		   
-	    cout << "Elapsed time : " << pinger.getElapsedTime() << " microsec" << endl;
-	    cout << "Bytes : " << pinger.getBytes() << endl;
-	    cout << "Speed : " << 1000000*pinger.getBytes() / pinger.getElapsedTime()
-	        << " bytes/sec " << endl;
+	    info << "Elapsed time : " << pinger.getElapsedTime() << " microsec.\n";
+	    info << "Bytes : " << pinger.getBytes() << "\n";
+	    info << "Speed : " << 1000*pinger.getBytes() / pinger.getElapsedTime()
+	        << " Kb/sec " << "\n";
 	   break;
 
 	default:
 	       
-	    cout << "Logic error" << endl;
+	    error << "Logic error" << "\n";
     }
 
-    cout << "================================" << endl;
+    info << "================================\n";
 }
 
 

@@ -132,7 +132,7 @@ PingResult Pinger::ping(const char* address)
     {
         // ---------------------------------------------------------------------------
 	// Use 'select' to define if socket is ready
-        // ---------------------------------------------------------------------------	
+        // ---------------------------------------------------------------------------
 	fd_set rfds; // this descriptor needs to be verified if it's ready for reading
 	FD_ZERO(&rfds);
 	FD_SET(socket_id, &rfds);
