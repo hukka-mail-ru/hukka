@@ -60,7 +60,7 @@ uint16_t in_cksum(uint16_t *addr, unsigned len)
 
 // --------------------------------------------------------------------------------
 //
-//  Ping
+//  Ping (send ICMP-packet and catch echo reply)
 //
 // --------------------------------------------------------------------------------
 
@@ -131,7 +131,7 @@ PingResult Pinger::ping(const char* address, unsigned time_limit)
     // --------------------------------------------------------------------------------
     // Listen to echo (several seconds)
     // --------------------------------------------------------------------------------  
-    for(int i=0; i<time_limit ;i++)
+    for(unsigned i=0; i<time_limit ;i++)
     {
         // ---------------------------------------------------------------------------
 	// Use 'select' to define if socket is ready

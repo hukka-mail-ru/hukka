@@ -10,7 +10,7 @@ void PingIP(const char* ip)
     Pinger pinger;    
     info << "Ping " << ip << endl;
 
-    switch(pinger.ping(ip))
+    switch(pinger.ping(ip, 3))
     {
         case ERROR:
 	    error << "Ping error" << endl;
@@ -43,7 +43,7 @@ void PingIP(const char* ip)
 int main()
 {
     PingIP("192.168.148.24");
-    PingIP("192.168.148.103",5);
+    PingIP("192.168.148.103");
     PingIP("127.0.0.1");
     
     return 0;
