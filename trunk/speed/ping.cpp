@@ -77,7 +77,7 @@ PingResult Pinger::ping(const char* address, unsigned time_limit)
     if (socket_id < 0)
     {
 	perror("Error calling function 'socket'");	/* probably not running as superuser */
-	return ERROR;
+	return PING_ERROR;
     }
     // --------------------------------------------------------------------------------
     // Create ICMP packet
@@ -104,7 +104,7 @@ PingResult Pinger::ping(const char* address, unsigned time_limit)
     if (to.sin_addr.s_addr < 0)
     {
 	error << BIG_HDR("")<< "Error calling function 'inet_addr'" << "\n";
-	return ERROR;
+	return PING_ERROR;
     }
 
     // --------------------------------------------------------------------------------
@@ -121,13 +121,13 @@ PingResult Pinger::ping(const char* address, unsigned time_limit)
     if (bytes_sent < 0)
     {
 	perror("Error calling function 'sendto'");
-	return ERROR;
+	return PING_ERROR;
     }
     debug << BIG_HDR("") << "sent " <<  bytes_sent*8 << " bits " << "\n";
     mBytes = bytes_sent;
 
 
-    PingResult res = SILENCE;
+    PingResult res = PING_SILENCE;
     // --------------------------------------------------------------------------------
     // Listen to echo (several seconds)
     // --------------------------------------------------------------------------------  
@@ -151,7 +151,7 @@ PingResult Pinger::ping(const char* address, unsigned time_limit)
 	if (ready < 0) 
 	{
 	    perror("Error calling function 'select'");
-	    return ERROR;
+	    return PING_ERROR;
 	}
 
         // ---------------------------------------------------------------------------
@@ -182,7 +182,7 @@ PingResult Pinger::ping(const char* address, unsigned time_limit)
 	    if(bytes_read < 0)
 	    {
 		perror("Error calling function 'recvfrom'");
-		return ERROR;
+		return PING_ERROR;
 	    }
 	    debug << BIG_HDR("") << "read " <<  bytes_read*8 << " bits \n";
 
@@ -194,7 +194,7 @@ PingResult Pinger::ping(const char* address, unsigned time_limit)
 	    if (static_cast<unsigned>(bytes_read) < (sizeof(ip_header) + ICMP_MINLEN))
 	    {
 		error << "packet too short (" << bytes_read*8  << " bits) from " << address << "\n";;
-		return ERROR;
+		return PING_ERROR;
 	    }
 	    
 	    mBytes += bytes_read;
@@ -214,7 +214,7 @@ PingResult Pinger::ping(const char* address, unsigned time_limit)
 		    debug << BIG_HDR("") << "ERR: received id " << icmp_header->icmp_id << "\n";
 		    continue;
 		}
-		res = SUCCESS;		
+		res = PING_SUCCESS;
 		break; 
 	    }
 	    else

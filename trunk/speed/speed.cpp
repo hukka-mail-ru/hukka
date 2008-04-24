@@ -6,6 +6,11 @@
 
 using namespace std;
 
+// --------------------------------------------------------------------------------
+//
+//  Ping 
+//
+// --------------------------------------------------------------------------------
 void PingIP(const char* ip)
 {
     Pinger pinger;    
@@ -13,16 +18,16 @@ void PingIP(const char* ip)
 
     switch(pinger.ping(ip, 3))
     {
-        case ERROR:
+        case PING_ERROR:
 	    error << "Ping error" << endl;
             break;
 
-        case SILENCE:
+	case PING_SILENCE:
 	    
 	    info << "Address doesn't respond" << endl;
             break;
 			
-	case SUCCESS:
+	case PING_SUCCESS:
 		   
 	    info << "Elapsed time : " << pinger.getElapsedTime() << " microsec.\n";
 	    info << "Bytes : " << pinger.getBytes() << endl;
@@ -38,6 +43,24 @@ void PingIP(const char* ip)
     info << "================================" << endl;
 }
 
+// --------------------------------------------------------------------------------
+//
+//  Query Interface
+//
+// --------------------------------------------------------------------------------
+void Query(const char* interface)
+{
+    IPConfig ipconfig;
+
+    if(ipconfig.queryInterface(interface) >= 0)
+    {    
+	info << "IP address  : " << ipconfig.getAddress() << endl;
+	info << "Network mask: " << ipconfig.getMask() << endl;
+	info << "MAC address : " << ipconfig.getMacAddress() << endl;
+    }
+    else
+	error << "Error quering " << interface << endl;
+ }
 
 
 
@@ -47,10 +70,8 @@ int main()
  //   PingIP("192.168.148.103");
   //  PingIP("127.0.0.1");
 
-    IPConfig ipconfig;
-    info << "IP address  : " << ipconfig.getAddress() << endl;
-    info << "Network mask: " << ipconfig.getMask() << endl;
-    
+    Query("eth0");
+   
     return 0;
 }
 
