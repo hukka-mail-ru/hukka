@@ -11,8 +11,8 @@ class IPConfig
 	int queryInterface(const char* interface);
 	
 	const std::string& getAddress()    { return mAddress; }
-	std::string& getMask()       { return mMask; }
-	std::string& getMacAddress() { return mMacAddress; }
+	const std::string& getMask()       { return mMask; }
+	const std::string& getMacAddress() { return mMacAddress; }
 
     private:
 
