@@ -5,9 +5,9 @@
 
 enum PingResult
 {
-    SUCCESS,
-    ERROR,
-    SILENCE
+    PING_SUCCESS,
+    PING_ERROR,
+    PING_SILENCE
 };    
     
 
