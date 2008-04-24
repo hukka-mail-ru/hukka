@@ -2,7 +2,8 @@
 DIR = speed
 EXE = speed
 SRCS = 	speed.cpp \
-	ping.cpp 
+	ping.cpp \
+	ipconfig.cpp
 
 EXTRA_INCLUDES 	+= -Iinclude \
 			-I$(SRCROOT)/debug/include \
