@@ -19,7 +19,7 @@ const unsigned	MAXIPLEN = 60;
 const unsigned	ICMP_MAXLEN = 65536 - MAXIPLEN - ICMP_MINLEN;
 
 const int SEQUENCE = 12345;
-const int PING_LIMIT = 3; // attempts to ping
+const int DEFAULT_TIME_LIMIT = 10; // ping max time, in seconds
 
 // --------------------------------------------------------------------------------
 //
@@ -64,9 +64,12 @@ uint16_t in_cksum(uint16_t *addr, unsigned len)
 //
 // --------------------------------------------------------------------------------
 
-PingResult Pinger::ping(const char* address)
+PingResult Pinger::ping(const char* address, unsigned time_limit)
 {
-   
+
+    if(!time_limit)
+	time_limit = DEFAULT_TIME_LIMIT;
+    
     // --------------------------------------------------------------------------------
     // Open raw socket
     // --------------------------------------------------------------------------------
@@ -128,7 +131,7 @@ PingResult Pinger::ping(const char* address)
     // --------------------------------------------------------------------------------
     // Listen to echo (several seconds)
     // --------------------------------------------------------------------------------  
-    for(int i=0; i<PING_LIMIT ;i++)
+    for(int i=0; i<time_limit ;i++)
     {
         // ---------------------------------------------------------------------------
 	// Use 'select' to define if socket is ready
@@ -145,7 +148,7 @@ PingResult Pinger::ping(const char* address)
         // ---------------------------------------------------------------------------
 	// 'select' error
         // ---------------------------------------------------------------------------
-	if (ready < 0) // ready for reading ?
+	if (ready < 0) 
 	{
 	    perror("Error calling function 'select'");
 	    return ERROR;
@@ -193,6 +196,8 @@ PingResult Pinger::ping(const char* address)
 		error << "packet too short (" << bytes_read*8  << " bits) from " << address << "\n";;
 		return ERROR;
 	    }
+	    
+	    mBytes += bytes_read;
 	    // --------------------------------------------------------------------------------
             // Now the ICMP part 
     	    // -------------------------------------------------------------------------------- 
@@ -209,16 +214,14 @@ PingResult Pinger::ping(const char* address)
 		    debug << BIG_HDR("") << "ERR: received id " << icmp_header->icmp_id << "\n";
 		    continue;
 		}
-
-		res = SUCCESS;
-		i = PING_LIMIT; // quit condition
+		res = SUCCESS;		
+		break; 
 	    }
 	    else
 	    {
 		debug << BIG_HDR("") << "ERR: not an echo reply" << "\n";
 		continue;
-	    }
-	    mBytes += bytes_read;
+	    }	    
 	}
     }
     // --------------------------------------------------------------------------------

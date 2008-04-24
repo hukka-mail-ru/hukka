@@ -14,7 +14,7 @@ class Pinger
 {
 public:
 
-    PingResult ping(const char* address);
+    PingResult ping(const char* address, unsigned time_limit = 0);
 
     long long getElapsedTime() { return mElapsed; }
     long long getBytes() { return mBytes; }
