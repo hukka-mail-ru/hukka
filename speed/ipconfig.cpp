@@ -1,4 +1,5 @@
 #include <sstream>
+#include <iomanip>
 
 #include <arpa/inet.h>
 #include <sys/types.h>
@@ -63,20 +64,15 @@ IPConfig::queryInterface(const char* interface)
     }
 
     ostringstream stream;
-  //  stream.setf(ios::hex);
-    
-   // cout << hex << (unsigned char)ifr.ifr_hwaddr.sa_data[0];
-   // cout << hex << (unsigned char)ifr.ifr_hwaddr.sa_data[1];
-   // cout << hex << (unsigned char)ifr.ifr_hwaddr.sa_data[2];
-    /*
-           (unsigned char)ifr.ifr_hwaddr.sa_data[0] <<
-	   (unsigned char)ifr.ifr_hwaddr.sa_data[1] <<
-	   (unsigned char)ifr.ifr_hwaddr.sa_data[2] <<
-	   (unsigned char)ifr.ifr_hwaddr.sa_data[3] <<
-	   (unsigned char)ifr.ifr_hwaddr.sa_data[4] <<
-	   (unsigned char)ifr.ifr_hwaddr.sa_data[5];
-    stream << "test";
-*/
+    stream.setf(ios::hex,ios::basefield); // clean format and set 'hex' only
+    stream << setw(2) <<
+	    (int)(unsigned char)ifr.ifr_hwaddr.sa_data[0] << ":" <<
+	    (int)(unsigned char)ifr.ifr_hwaddr.sa_data[1] << ":" <<
+	    (int)(unsigned char)ifr.ifr_hwaddr.sa_data[2] << ":" <<
+	    (int)(unsigned char)ifr.ifr_hwaddr.sa_data[3] << ":" <<
+	    (int)(unsigned char)ifr.ifr_hwaddr.sa_data[4] << ":" <<
+	    (int)(unsigned char)ifr.ifr_hwaddr.sa_data[5];
+	    
     mMacAddress = stream.str();
 
     
