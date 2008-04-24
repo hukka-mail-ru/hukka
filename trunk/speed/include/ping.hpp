@@ -2,6 +2,7 @@
 #define __PING_HPP__
 
 
+
 enum PingResult
 {
     SUCCESS,
@@ -9,6 +10,12 @@ enum PingResult
     SILENCE
 };    
     
+
+// --------------------------------------------------------------------------------
+//
+// This class operates in the 3-rd (Network) level of OSI
+//
+// --------------------------------------------------------------------------------  
 
 class Pinger
 {
