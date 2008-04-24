@@ -2,6 +2,7 @@
 #include <iostream>
 #include <ping.hpp>
 #include <debug.hpp>
+#include <ipconfig.hpp>
 
 using namespace std;
 
@@ -42,9 +43,13 @@ void PingIP(const char* ip)
 
 int main()
 {
-    PingIP("192.168.148.24");
-    PingIP("192.168.148.103");
-    PingIP("127.0.0.1");
+  //  PingIP("192.168.148.24");
+ //   PingIP("192.168.148.103");
+  //  PingIP("127.0.0.1");
+
+    IPConfig ipconfig;
+    info << "IP address  : " << ipconfig.getAddress() << endl;
+    info << "Network mask: " << ipconfig.getMask() << endl;
     
     return 0;
 }
