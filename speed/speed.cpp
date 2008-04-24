@@ -53,7 +53,8 @@ void Query(const char* interface)
     IPConfig ipconfig;
 
     if(ipconfig.queryInterface(interface) >= 0)
-    {    
+    {
+	string s= ipconfig.getAddress();
 	info << "IP address  : " << ipconfig.getAddress() << endl;
 	info << "Network mask: " << ipconfig.getMask() << endl;
 	info << "MAC address : " << ipconfig.getMacAddress() << endl;
