@@ -52,14 +52,16 @@ void Query(const char* interface)
 {
     IPConfig ipconfig;
 
-    if(ipconfig.queryInterface(interface) >= 0)
+    if(ipconfig.queryInterfaces() >= 0)
     {
+	/*
 	info << "IP address  : " << ipconfig.getAddress() << endl;
 	info << "Network mask: " << ipconfig.getMask() << endl;
 	info << "MAC address : " << ipconfig.getMacAddress() << endl;
+	*/
     }
     else
-	error << "Error quering " << interface << endl;
+	error << "Error quering interfaces" << endl;
  }
 
 
