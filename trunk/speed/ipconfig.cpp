@@ -65,13 +65,15 @@ IPConfig::queryInterface(const char* interface)
 
     ostringstream stream;
     stream.setf(ios::hex,ios::basefield); // clean format and set 'hex' only
-    stream << setw(2) <<
-	    (int)(unsigned char)ifr.ifr_hwaddr.sa_data[0] << ":" <<
-	    (int)(unsigned char)ifr.ifr_hwaddr.sa_data[1] << ":" <<
-	    (int)(unsigned char)ifr.ifr_hwaddr.sa_data[2] << ":" <<
-	    (int)(unsigned char)ifr.ifr_hwaddr.sa_data[3] << ":" <<
-	    (int)(unsigned char)ifr.ifr_hwaddr.sa_data[4] << ":" <<
-	    (int)(unsigned char)ifr.ifr_hwaddr.sa_data[5];
+    stream.setf(ios::uppercase);
+    stream.fill('0');  // 00 instead of 0
+    stream << setw(2) << 
+	    (short)(unsigned char)ifr.ifr_hwaddr.sa_data[0] << ":" <<
+	    (short)(unsigned char)ifr.ifr_hwaddr.sa_data[1] << ":" <<
+	    (short)(unsigned char)ifr.ifr_hwaddr.sa_data[2] << ":" <<
+	    (short)(unsigned char)ifr.ifr_hwaddr.sa_data[3] << ":" <<
+	    (short)(unsigned char)ifr.ifr_hwaddr.sa_data[4] << ":" <<
+	    (short)(unsigned char)ifr.ifr_hwaddr.sa_data[5];
 	    
     mMacAddress = stream.str();
 
