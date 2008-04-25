@@ -7,7 +7,8 @@ SRCS = 	speed.cpp \
 
 EXTRA_INCLUDES 	+= -Iinclude \
 			-I$(SRCROOT)/debug/include \
-			-I$(SRCROOT)/color/include
+			-I$(SRCROOT)/color/include \
+			-I$(SRCROOT)/third_party/boost
 
 LIBPATHS	+= $(BLDROOT)/$(MTARGET)/lib 
 
