@@ -11,10 +11,10 @@ using namespace std;
 //  Ping 
 //
 // --------------------------------------------------------------------------------
-void PingIP(const char* ip)
+void Ping(const char* ip)
 {
     Pinger pinger;    
-    info << "Ping " << ip << endl;
+    debug << "Ping " << ip << endl;
 
     switch(pinger.ping(ip, 3))
     {
@@ -28,10 +28,10 @@ void PingIP(const char* ip)
             break;
 			
 	case PING_SUCCESS:
-		   
-	    info << "Elapsed time : " << pinger.getElapsedTime() << " microsec.\n";
-	    info << "Bytes : " << pinger.getBytes() << endl;
-	    info << "Speed : " << 1000*pinger.getBytes() / pinger.getElapsedTime()
+
+	    info << "Ping time   : " << pinger.getElapsedTime() << " microsec." << endl;
+	    info << "Bytes (ICMP): " << pinger.getBytes() << endl;
+	    info << "Speed       : " << 1000*pinger.getBytes() / pinger.getElapsedTime()
 		    << " Kb/sec " << endl;
 	   break;
 
@@ -40,30 +40,32 @@ void PingIP(const char* ip)
 	    error << "Logic error" << endl;
     }
 
-    info << "================================" << endl;
 }
 
 // --------------------------------------------------------------------------------
 //
-//  Query Interface
+//  Query Interfaces
 //
 // --------------------------------------------------------------------------------
-void Query(const char* interface)
+void QueryInterfaces()
 {
-    IPConfig ipconfig;
+    NetInterfaces interfaces;
 
-    if(ipconfig.queryInterfaces() >= 0)
+    if(interfaces.query() >= 0)
     {
-	Interface* iface = ipconfig.getFirst();
+	Interface* iface = interfaces.getFirst();
 	while(iface)
 	{
 	    info << "Name        : " << iface->mName << endl;
 	    info << "IP address  : " << iface->mAddress << endl;
 	    info << "Network mask: " << iface->mMask << endl;
 	    info << "MAC address : " << iface->mMacAddress << endl;
+
+	    Ping(iface->mAddress.c_str());
+	    
 	    info << "==============================" << endl;
 
-	    iface = ipconfig.getNext();
+	    iface = interfaces.getNext();
 	}	    
     }
     else
@@ -74,11 +76,11 @@ void Query(const char* interface)
 
 int main()
 {
-  //  PingIP("192.168.148.24");
- //   PingIP("192.168.148.103");
-  //  PingIP("127.0.0.1");
+ //   Ping("192.168.148.24");
+ //   Ping("192.168.148.103");
+ //   Ping("127.0.0.1");
 
-    Query("eth0");
+    QueryInterfaces();
    
     return 0;
 }
