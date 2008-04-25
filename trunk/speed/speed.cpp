@@ -54,11 +54,17 @@ void Query(const char* interface)
 
     if(ipconfig.queryInterfaces() >= 0)
     {
-	/*
-	info << "IP address  : " << ipconfig.getAddress() << endl;
-	info << "Network mask: " << ipconfig.getMask() << endl;
-	info << "MAC address : " << ipconfig.getMacAddress() << endl;
-	*/
+	Interface* iface = ipconfig.getFirst();
+	while(iface)
+	{
+	    info << "Name        : " << iface->mName << endl;
+	    info << "IP address  : " << iface->mAddress << endl;
+	    info << "Network mask: " << iface->mMask << endl;
+	    info << "MAC address : " << iface->mMacAddress << endl;
+	    info << "==============================" << endl;
+
+	    iface = ipconfig.getNext();
+	}	    
     }
     else
 	error << "Error quering interfaces" << endl;
