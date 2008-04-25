@@ -21,7 +21,20 @@ class IPConfig
 {
     public:
 
+	IPConfig(): mCurrent(0) {}
+
 	int queryInterfaces();
+
+	Interface* getFirst()
+	{
+	    mCurrent = 0;
+	    return mInterfaces[mCurrent].get();
+	}
+	Interface* getNext()
+	{
+	    mCurrent++;
+	    return mInterfaces[mCurrent].get();
+	}
 	
 	/*
 	const std::string& getAddress()    { return mAddress; }
@@ -31,7 +44,7 @@ class IPConfig
     private:
 
 	std::vector<boost::shared_ptr<Interface> > mInterfaces;
-
+        int mCurrent;
 };
 
 #endif
