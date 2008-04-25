@@ -51,26 +51,27 @@ void QueryInterfaces()
 {
     NetInterfaces interfaces;
 
-    if(interfaces.query() >= 0)
+    if(interfaces.query() < 0)
     {
-	Interface* iface = interfaces.getFirst();
-	while(iface)
-	{
-	    info << "Name        : " << iface->mName << endl;
-	    info << "IP address  : " << iface->mAddress << endl;
-	    info << "Network mask: " << iface->mMask << endl;
-	    info << "MAC address : " << iface->mMacAddress << endl;
-
-	    Ping(iface->mAddress.c_str());
-	    
-	    info << "==============================" << endl;
-
-	    iface = interfaces.getNext();
-	}	    
-    }
-    else
 	error << "Error quering interfaces" << endl;
- }
+	return;
+    }
+    
+    Interface* iface = interfaces.getFirst();
+    while(iface)
+    {
+	info << "Name        : " << iface->mName << endl;
+	info << "IP address  : " << iface->mAddress << endl;
+	info << "Network mask: " << iface->mMask << endl;
+	info << "MAC address : " << iface->mMacAddress << endl;
+
+	Ping(iface->mAddress.c_str());
+
+	info << "==============================" << endl;
+
+	iface = interfaces.getNext();
+    }
+}
 
 
 

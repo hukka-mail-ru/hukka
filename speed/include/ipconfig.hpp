@@ -39,7 +39,7 @@ class NetInterfaces
     private:
 
 	std::vector<boost::shared_ptr<Interface> > mInterfaces;
-        int mCurrent;
+        int mCurrent; // counter
 };
 
 #endif
