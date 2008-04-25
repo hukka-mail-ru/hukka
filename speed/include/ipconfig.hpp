@@ -17,13 +17,13 @@ struct Interface
 
 
 
-class IPConfig
+class NetInterfaces
 {
     public:
 
-	IPConfig(): mCurrent(0) {}
+	NetInterfaces(): mCurrent(0) {}
 
-	int queryInterfaces();
+	int query();
 
 	Interface* getFirst()
 	{

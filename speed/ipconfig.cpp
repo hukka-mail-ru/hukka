@@ -16,7 +16,7 @@ using namespace std;
 using namespace boost;
 
 int
-IPConfig::queryInterfaces()
+NetInterfaces::query()
 {
     // --------------------------------------------------------------------------------
     // Open socket

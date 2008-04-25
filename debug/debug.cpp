@@ -1,6 +1,6 @@
 #include <debug.hpp>
 
-bool EnableDebugLog = true;
+bool EnableDebugLog = false;
 bool EnableInfoLog = true;
 bool EnableWarningLog = true;
 bool EnableErrorLog = true;
@@ -25,10 +25,13 @@ std::auto_ptr<MessageHeader> HDR(const char* str)
 MessagePrinter&
 MessagePrinter::operator << (std::ostream& (*f)(std::ostream&) )
 {
-    if(mLevel == Error)
+    if(mLevel == Error && EnableErrorLog)
 	std::cerr << std::endl;
     else
-	std::cout << std::endl;
+	if((mLevel == Debug && EnableDebugLog) ||
+	(mLevel == Warning && EnableWarningLog) ||
+	(mLevel == Info && EnableInfoLog))
+		std::cout << std::endl;
 	    
     return *this;
 }
