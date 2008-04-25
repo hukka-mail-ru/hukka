@@ -32,9 +32,9 @@ IPConfig::queryInterfaces()
     // Obtain interfaces names
     // -------------------------------------------------------------------------------- 
     ifconf ifc;
-    ifreq  buf[MAX_NUM_IFREQ];
-    ifc.ifc_len = sizeof(buf);
-    ifc.ifc_buf = (char *)buf;
+    ifreq  buffer[MAX_NUM_IFREQ];
+    ifc.ifc_len = sizeof(buffer);
+    ifc.ifc_buf = reinterpret_cast<char*>(buffer);
     
     if ( ioctl(socket_id, SIOCGIFCONF, &ifc) < 0)
     {
@@ -42,9 +42,9 @@ IPConfig::queryInterfaces()
 	return -1;
     }
        
-    int num_ifreq = ifc.ifc_len / sizeof(ifreq);
+    int inum = ifc.ifc_len / sizeof(ifreq); // number of interfaces
     ifreq* pIfr = ifc.ifc_req;
-    for (int i = 0 ; i < num_ifreq; pIfr++, i++ )
+    for (int i = 0 ; i < inum; pIfr++, i++ )
     {
 	if (pIfr->ifr_addr.sa_family != AF_INET) // I want only inet interfaces
 	    continue;
@@ -98,14 +98,15 @@ IPConfig::queryInterfaces()
 	ostringstream stream;
 	stream.setf(ios::hex,ios::basefield); // clean format and set 'hex' only
 	stream.setf(ios::uppercase);
+	stream.fill('0');
 
-	stream << setw(2) << setfill('0') <<
-		(short)(unsigned char)ifr.ifr_hwaddr.sa_data[0] << ":" <<
-		(short)(unsigned char)ifr.ifr_hwaddr.sa_data[1] << ":" <<
-		(short)(unsigned char)ifr.ifr_hwaddr.sa_data[2] << ":" <<
-		(short)(unsigned char)ifr.ifr_hwaddr.sa_data[3] << ":" <<
-		(short)(unsigned char)ifr.ifr_hwaddr.sa_data[4] << ":" <<
-		(short)(unsigned char)ifr.ifr_hwaddr.sa_data[5];
+	stream << 
+		setw(2) << (short)(unsigned char)ifr.ifr_hwaddr.sa_data[0] << ":" << 
+		setw(2) << (short)(unsigned char)ifr.ifr_hwaddr.sa_data[1] << ":" << 
+		setw(2) << (short)(unsigned char)ifr.ifr_hwaddr.sa_data[2] << ":" << 
+		setw(2) << (short)(unsigned char)ifr.ifr_hwaddr.sa_data[3] << ":" << 
+		setw(2) << (short)(unsigned char)ifr.ifr_hwaddr.sa_data[4] << ":" << 
+		setw(2) << (short)(unsigned char)ifr.ifr_hwaddr.sa_data[5];
  	
 	mInterfaces[i]->mMacAddress = stream.str();
     }

@@ -36,11 +36,6 @@ class IPConfig
 	    return mInterfaces[mCurrent].get();
 	}
 	
-	/*
-	const std::string& getAddress()    { return mAddress; }
-	const std::string& getMask()       { return mMask; }
-	const std::string& getMacAddress() { return mMacAddress; }
-*/
     private:
 
 	std::vector<boost::shared_ptr<Interface> > mInterfaces;
