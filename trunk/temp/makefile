@@ -1,4 +1,3 @@
-
 DIR = temp
 EXE = temp
 SRCS = 	temp.cpp 
