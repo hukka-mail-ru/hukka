@@ -57,7 +57,6 @@ void CheckVariables(LinesVector& lines)
         
         // Then, it's a variable! Check it.
         lines[i]->check = true;
-        cout << "Checked: " << text << endl;
        
         // Can't move up
         if(i == 0)
@@ -79,7 +78,6 @@ void CheckVariables(LinesVector& lines)
                text[first] == '*')               
             {
                 lines[j]->check = true; // Check the comment.
-                cout << "Checked: " << text << endl;
             }
             else
             {
@@ -95,24 +93,20 @@ bool checked(shared_ptr<Line> line)
    return line->check; 
 }
 
-
 void MoveChecked(LinesVector& src, LinesVector& dst)
 {
+
     for(unsigned i=0; i<src.size(); ++i) // change to algorithm!
     {
         if(src[i]->check)
         {
-            cout << "!" << endl;
             dst.push_back(src[i]);
         }
     }
 
     src.erase ( remove_if(src.begin(), src.end(), checked),
                 src.end() );
-
-
 }
-
 
 
 //-------------------------------------------------
