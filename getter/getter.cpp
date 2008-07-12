@@ -1,6 +1,7 @@
 #include <iostream>
 #include <fstream>
 #include <vector>
+#include <algorithm>
 #include <boost/shared_ptr.hpp>
 
 using namespace std;
@@ -21,31 +22,23 @@ typedef vector<shared_ptr<Line> > LinesVector;
 
 //-------------------------------------------------
 
-void CheckPublicVariables(LinesVector& lines)
+void Print(const LinesVector& lines)
 {
-    bool public_found = false;
- 
+    for(unsigned i = 0; i<lines.size(); i++)
+    {
+        cout << lines[i]->text.c_str() << endl;
+    }
+    cout << " ==========================================" << endl;
+}
+//-------------------------------------------------
+
+void CheckVariables(LinesVector& lines)
+{
+    
     for(unsigned i = 0; i<lines.size(); ++i)
     {
         string& text = lines[i]->text;
         
-        // Move from "public:"
-        if(!public_found)
-        {
-           if(text.find("public:") != string::npos)
-           {
-               public_found = true;
-           }
-           continue;
-        }
-
-        // To "private:" or end-of-class
-        if(text.find("private:")  != string::npos ||
-           text.find("};") != string::npos )
-        {
-            break;
-        }
-
         // No comments
         size_t first = text.find_first_not_of(" ");
         if(first == string::npos ||
@@ -62,12 +55,17 @@ void CheckPublicVariables(LinesVector& lines)
             continue;
         }
         
-        // Then, it's a variable!
+        // Then, it's a variable! Check it.
         lines[i]->check = true;
+        cout << "Checked: " << text << endl;
+       
+        // Can't move up
+        if(i == 0)
+            continue;
 
-        // Move up and find its comment
-        for(unsigned j = i-1; ; --j)
-        {
+         // Move up and find its comment
+        for(unsigned j = i-1; j>0; --j)
+        {    
             string& text = lines[j]->text;
 
             size_t first = text.find_first_not_of(" ");
@@ -75,12 +73,13 @@ void CheckPublicVariables(LinesVector& lines)
             {
                 continue;
             }
-
+            
             // is it a comment ?
             if(text.find("/*") != string::npos ||
                text[first] == '*')               
             {
-                lines[j]->check = true;
+                lines[j]->check = true; // Check the comment.
+                cout << "Checked: " << text << endl;
             }
             else
             {
@@ -91,71 +90,102 @@ void CheckPublicVariables(LinesVector& lines)
 }
 //-------------------------------------------------
 
-void MoveToPrivate(LinesVector& lines)
+bool checked(shared_ptr<Line> line)
 {
-    LinesVector temp;
-    bool private_found = false;
+   return line->check; 
+}
 
+
+void MoveChecked(LinesVector& src, LinesVector& dst)
+{
+    for(unsigned i=0; i<src.size(); ++i) // change to algorithm!
+    {
+        if(src[i]->check)
+        {
+            cout << "!" << endl;
+            dst.push_back(src[i]);
+        }
+    }
+
+    src.erase ( remove_if(src.begin(), src.end(), checked),
+                src.end() );
+
+
+}
+
+
+
+//-------------------------------------------------
+enum Section
+{
+    HEAD,
+    PUBLIC,
+    PRIVATE,
+    TAIL
+};
+
+
+//-------------------------------------------------
+void Divide(const LinesVector& lines,
+            LinesVector& head,
+            LinesVector& pub,
+            LinesVector& prv,
+            LinesVector& tail)
+{
+ 
+    Section section = HEAD;
     for(unsigned i = 0; i<lines.size(); ++i)
     {
         string& text = lines[i]->text;
 
-
-        // To "private:" or end-of-class
-        if(text.find("private") != string::npos)
+        switch(section)
         {
-            private_found = true;
-        }
-
-        // Insert checked lines before the end of class
-        if(text.find("};") != string::npos)
-        {
-            if(!private_found) // also insert "private:" if it's missing
+        case HEAD:
+            if(text.find("public:") != string::npos)
             {
-                shared_ptr<Line> line( new Line("private:") );
-                temp.push_back(line);
+                section = PUBLIC;
             }
-
-            // now the checked lines...
-            for(unsigned j = 0; j<lines.size(); ++j)
+            else // still in head
             {
-                if(lines[j]->check == true)
-                {
-                    temp.push_back(lines[j]);
-                }
+                head.push_back(lines[i]);
             }
+            break;
 
-            // Add };
-            shared_ptr<Line> line( new Line("};") );
-            temp.push_back(line);
-        }
-        else // if it's still not the end of class
-        {
-            if(lines[i]->check == false)
+        case PUBLIC:
+            if(text.find("private:") != string::npos)
             {
-                temp.push_back(lines[i]);
+                section = PRIVATE;
             }
+            else if(text.find("};") != string::npos) // no private at all
+            {
+                section = TAIL;
+            }
+            else // still in public
+            {
+                pub.push_back(lines[i]);
+            }        
+            break;
+
+        case PRIVATE:
+            if(text.find("};") != string::npos) // no private at all
+            {
+                section = TAIL;
+            }
+            else // still in private
+            {
+                prv.push_back(lines[i]);
+            }       
+            break;
+
+        case TAIL:
+            tail.push_back(lines[i]);
+            break;
         }
     }
 
-    lines = temp; // write result to main vector
 
-}
+ }
 
-
-//-------------------------------------------------
-
-void MakePrivate(LinesVector& lines)
-{
-    CheckPublicVariables(lines);
-    MoveToPrivate(lines);
-
-    for(unsigned i = 0; i<lines.size(); ++i)
-    {
-        cout << lines[i]->text << endl;
-    }
-
-}
 
 //-------------------------------------------------
 
@@ -173,11 +203,26 @@ int main()
 
     }
 
+    LinesVector head;
+    LinesVector prv;
+    LinesVector pub;
+    LinesVector tail;
 
-    for(unsigned i = 0; i<lines.size(); i++)
-        cout << lines[i]->text.c_str() << endl;
+    Divide(lines, head, pub, prv, tail);
 
-    MakePrivate(lines);
+    CheckVariables(pub);
+    MoveChecked(pub, prv);
+
+
+    // OUTPUT
+    Print(head);
+    cout << "public:" << endl;
+    Print(pub);
+    cout << "private:" << endl;
+    Print(prv);
+    cout << "};" << endl;
+    Print(tail);
+
 
     return 0;
 }
