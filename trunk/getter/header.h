@@ -19,7 +19,6 @@ class Fucker
  */
     int myVariable1;
 
- private:
 /*
  * The function2 comment
  */
