@@ -3,6 +3,7 @@
 #include <vector>
 #include <algorithm>
 #include <boost/shared_ptr.hpp>
+#include <ctype.h>
 
 using namespace std;
 using namespace boost;
@@ -111,7 +112,6 @@ void uncheck(shared_ptr<Line>& line)
 
 void MoveChecked(LinesVector& src, LinesVector& dst)
 {
-
     remove_copy_if(src.begin(), src.end(), back_inserter(dst),
                    unchecked);
 
@@ -119,7 +119,14 @@ void MoveChecked(LinesVector& src, LinesVector& dst)
                                checked),  src.end() ); 
 
     for_each(dst.begin(), dst.end(), uncheck);
+}
 
+void CopyChecked(LinesVector& src, LinesVector& dst)
+{
+    remove_copy_if(src.begin(), src.end(), back_inserter(dst),
+                   unchecked);
+
+    for_each(dst.begin(), dst.end(), uncheck);
 }
 
 void CheckAll(LinesVector& lines)
@@ -200,7 +207,14 @@ void Divide(const LinesVector& lines,
  }
 
 
-void MakeGetters(const LinesVector& vars, LinesVector& getters)
+void Push(LinesVector& lines, string str)
+{
+     shared_ptr<Line> line( new Line(str) ); 
+     lines.push_back(line);
+}
+
+
+void MakeGetSet(const LinesVector& vars, LinesVector& getters, LinesVector& setters)
 {
     for(unsigned i = 0; i<vars.size(); ++i)
     { 
@@ -210,16 +224,41 @@ void MakeGetters(const LinesVector& vars, LinesVector& getters)
         size_t begin = var.find_first_not_of(" ");
         var = var.substr(begin, var.length() - begin); 
 
-        // Get first word as "type"
+        // Get first word as "type", secord word as name (without ';')
         size_t end = var.find_first_of(" ");
-        string type = var.substr(0, end);
-        string name = var.substr(end, var.length());
-
-
-        cout << "type: " << type << " name: " << name << endl;
+        string type = var.substr(0, end); 
+        string name = var.substr(end + 1, var.length()); // end + 1 is dangerous here. Need to trim
+        name.erase(remove(name.begin(), name.end(), ';'), name.end());
 
         
+        string func_name = name; 
+        func_name[0]= toupper(func_name[0]);
+        string getter_name = "get" + func_name;
+        string setter_name = "set" + func_name;
 
+        cout << "type: '" << type << "' name: '" 
+             << name <<  "' setter '" << setter_name << "'" << endl;
+
+      
+        Push(setters, "/*");
+        Push(setters, " * @brief Set value of " + name);
+        Push(setters, " * @param[in] " + name);
+        Push(setters, " */");
+        Push(setters, "void " + setter_name + "(" + type + " " + name + ")");
+        Push(setters, "{"); 
+        Push(setters, "    this->" + name + " = " + name + ";");
+        Push(setters, "}");  
+        Push(setters, " ");   
+
+        Push(getters, "/*");
+        Push(getters, " * @brief Get value of " + name);
+        Push(getters, " * @return " + type);
+        Push(getters, " */");
+        Push(getters, type + " " + getter_name + "()");
+        Push(getters, "{"); 
+        Push(getters, "    return " + name+ ";");
+        Push(getters, "}");  
+        Push(getters, " ");  
 
     }
 
@@ -237,9 +276,7 @@ int main()
     string str;
     while(getline(file, str))
     {
-        shared_ptr<Line> line( new Line(str) ); 
-        lines.push_back(line);
-
+        Push(lines, str);
     }
 
     LinesVector head;
@@ -256,13 +293,13 @@ int main()
     // Collect variables without comments
     LinesVector vars; 
     CheckVariables(prv, false); 
-    MoveChecked(prv, vars);
+    CopyChecked(prv, vars);
     
+
     // Form getters and setters on the base of the "var"
     LinesVector setters;
     LinesVector getters;
-    MakeGetters(vars, setters); // different comments!
-//    MakeSetters(vars, getters);
+    MakeGetSet(vars, getters, setters); // different comments!
 
     // Move getters/setters to public
     CheckAll(setters);
@@ -271,7 +308,7 @@ int main()
     MoveChecked(getters, pub);
     MoveChecked(setters, pub);
 
-    
+
 
     Print(head);
     cout << "public:" << endl;

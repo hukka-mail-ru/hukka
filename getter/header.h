@@ -13,12 +13,14 @@ class Fucker
  */
     int Function1(int h);
 
+ 
 
 /*
  * The var 1 comment
  */
     int myVariable1;
 
+ private:
 /*
  * The function2 comment
  */
