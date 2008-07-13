@@ -29,8 +29,17 @@ void Print(const LinesVector& lines)
     {
         cout << lines[i]->text.c_str() << endl;
     }
-    cout << " ==========================================" << endl;
+    //   cout << " ==========================================" << endl;
 }
+
+//-------------------------------------------------
+
+void Push(LinesVector& lines, string str)
+{
+     shared_ptr<Line> line( new Line(str) ); 
+     lines.push_back(line);
+}
+
 
 //-------------------------------------------------
 
@@ -86,6 +95,7 @@ bool CheckFunction(LinesVector& lines, const string& name)
         {
             if(text.find(name) != string::npos)
             {
+                // The desired function found!
                 res = true;
 
                 lines[i]->check = true;
@@ -108,7 +118,7 @@ bool CheckFunction(LinesVector& lines, const string& name)
 //-------------------------------------------------
 
 
-void CheckVariables(LinesVector& lines, bool with_comments = true)
+void CheckVariables(LinesVector& lines, bool with_comments = true, bool replace_ptr = false)
 {
     
     for(unsigned i = 0; i<lines.size(); ++i)
@@ -133,8 +143,16 @@ void CheckVariables(LinesVector& lines, bool with_comments = true)
         
         // Then, it's a variable! Check it.
         lines[i]->check = true;
-       
+        
+        // Replace * by Ptr
+        if(replace_ptr && text.find("*") != string::npos)
+        {
+            const string ptr = "Ptr";
 
+            text.replace(text.find("*"), size_t(1), ptr);
+        }
+       
+        // Check comments
         if(i > 0 && with_comments)
         {
             CheckComments(lines, i-1);
@@ -179,8 +197,13 @@ void MoveChecked(LinesVector& src, LinesVector& dst)
 
 void CopyChecked(LinesVector& src, LinesVector& dst)
 {
-    remove_copy_if(src.begin(), src.end(), back_inserter(dst),
-                   unchecked);
+    for(unsigned i = 0; i<src.size(); ++i)
+    {
+        if(src[i]->check)
+        {
+            Push(dst, src[i]->text);
+        }
+    }
 
     for_each(dst.begin(), dst.end(), uncheck);
 }
@@ -263,13 +286,6 @@ void Divide(const LinesVector& lines,
  }
 
 
-void Push(LinesVector& lines, string str)
-{
-     shared_ptr<Line> line( new Line(str) ); 
-     lines.push_back(line);
-}
-
-
 void MakeGetSet(const LinesVector& vars, LinesVector& pub,
                 LinesVector& getters, LinesVector& setters)
 {
@@ -311,11 +327,11 @@ void MakeGetSet(const LinesVector& vars, LinesVector& pub,
         }
         else
         {
-            Push(getters, "/*");
-            Push(getters, " * @brief Get value of " + name);
-            Push(getters, " * @return " + type);
-            Push(getters, " */");
-            Push(getters, "    " + type + " " + getter_name + "()");
+            Push(getters, "    /*");
+            Push(getters, "     * @brief Get value of " + name);
+            Push(getters, "     * @return " + type);
+            Push(getters, "     */");
+            Push(getters, "    " + type + " " + getter_name + "() const");
             Push(getters, "    {"); 
             Push(getters, "        return " + name+ ";");
             Push(getters, "    }");  
@@ -329,11 +345,11 @@ void MakeGetSet(const LinesVector& vars, LinesVector& pub,
         }
         else
         {             
-            Push(setters, "/*");
-            Push(setters, " * @brief Set value of " + name);
-            Push(setters, " * @param[in] " + name);
-            Push(setters, " */");
-            Push(setters, "    void " + setter_name + "(" + type + " " + name + ")");
+            Push(setters, "    /*");
+            Push(setters, "     * @brief Set value of " + name);
+            Push(setters, "     * @param[in] " + name);
+            Push(setters, "     */");
+            Push(setters, "    void " + setter_name + "(const " + type + " " + name + ")");
             Push(setters, "    {"); 
             Push(setters, "        this->" + name + " = " + name + ";");
             Push(setters, "    }");  
@@ -370,12 +386,12 @@ int main()
     CheckVariables(pub);
     MoveChecked(pub, prv);
 
-    // Collect variables without comments
+
+    // Collect variables without comments and 'Ptr' instead of '*'
     LinesVector vars; 
-    CheckVariables(prv, false); 
+    CheckVariables(prv, false, true); 
     CopyChecked(prv, vars);
     
-
     // Form getters and setters on the base of the "var"
     LinesVector setters;
     LinesVector getters;
