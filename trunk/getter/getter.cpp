@@ -363,12 +363,20 @@ void MakeGetSet(const LinesVector& vars, LinesVector& pub,
 
 //-------------------------------------------------
 
-int main()
+int main(int argc, char** argv)
 {
+    if(argc < 2)
+    {
+        cerr << "Give me a filename," << endl;
+        cerr << "and don't fuck the brain!" << endl;
+        return 1;
+    }
+
+
     LinesVector lines;
 
     // Read form file
-    ifstream file("header.h");
+    ifstream file(argv[1]);
     string str;
     while(getline(file, str))
     {
