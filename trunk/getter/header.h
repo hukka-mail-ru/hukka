@@ -8,30 +8,32 @@ class Fucker
 {
  public:
 
-/*
- * The FunctionWithComment comment
- */
+    /*
+     * The FunctionWithComment comment
+     */
     int FunctionWithComment(int h);
 
     int myVariableWithoutComment;
  
-/*
- * The myVariableWithComment comment
- */
+    /*
+     * The myVariableWithComment comment
+     */
     int myVariableWithComment;
 
 
     int FunctionWithoutComment(int h);
 
-/*
- * Original myVariableWithComment getter
- */
+    /*
+     * Original myVariableWithComment getter
+     */
     int getMyVariableWithComment();
 
-/*
- * Original myVariableWithoutComment setter
- */
+    /*
+     * Original myVariableWithoutComment setter
+     */
     void setMyVariableWithoutComment(int i);
+
+    BigFucking* dick;
 
 };
 
