@@ -9,37 +9,30 @@ class Fucker
  public:
 
 /*
- * The function1 comment
+ * The FunctionWithComment comment
  */
-    int Function1(int h);
+    int FunctionWithComment(int h);
 
+    int myVariableWithoutComment;
  
-
 /*
- * The var 1 comment
+ * The myVariableWithComment comment
  */
-    int myVariable1;
-
- private:
-/*
- * The function2 comment
- */
-    int Function2(int h);
-
-/*
- * The var 2 comment
- */
-    int myVariable2;
+    int myVariableWithComment;
 
 
+    int FunctionWithoutComment(int h);
+
 /*
- * The var 3 comment
+ * Original myVariableWithComment getter
  */
-    int myVariable3;
+    int getMyVariableWithComment();
+
 /*
- * The function3 comment
+ * Original myVariableWithoutComment setter
  */
-    int Function3(int h);
+    void setMyVariableWithoutComment(int i);
+
 };
 
 

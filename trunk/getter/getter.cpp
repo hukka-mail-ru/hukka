@@ -31,7 +31,82 @@ void Print(const LinesVector& lines)
     }
     cout << " ==========================================" << endl;
 }
+
 //-------------------------------------------------
+
+void CheckComments(LinesVector& lines, int start)
+{
+
+    for(unsigned j = start; j>0; --j)
+    {    
+        string& text = lines[j]->text;
+        
+        size_t first = text.find_first_not_of(" ");
+        if(first == string::npos)
+        {
+            continue;
+        }
+        
+        // is it a comment ?
+        if(text.find("/*") != string::npos ||
+           text[first] == '*')               
+        {
+            lines[j]->check = true; // Check the comment.
+        }
+        else
+        {
+            break;
+        }
+    }
+
+}
+
+//-------------------------------------------------
+
+bool CheckFunction(LinesVector& lines, const string& name)
+{
+    bool res = false;
+
+    for(unsigned i = 0; i<lines.size(); ++i)
+    {
+        string& text = lines[i]->text;
+
+        // No comments
+        size_t first = text.find_first_not_of(" ");
+        if(first == string::npos ||
+           text[first] == '/' ||
+           text[first] == '*' ||
+           text[first] == '#')
+        {
+            continue;
+        }
+        
+        // Functions
+        if(text.find("(") != string::npos && text.find(")") != string::npos)
+        {
+            if(text.find(name) != string::npos)
+            {
+                res = true;
+
+                lines[i]->check = true;
+                if(i > 0)
+                {
+                    CheckComments(lines, i-1);
+                }
+            }
+            else
+            {
+                continue;
+            }
+        }
+        
+    }
+
+    return res;
+
+}
+//-------------------------------------------------
+
 
 void CheckVariables(LinesVector& lines, bool with_comments = true)
 {
@@ -59,35 +134,16 @@ void CheckVariables(LinesVector& lines, bool with_comments = true)
         // Then, it's a variable! Check it.
         lines[i]->check = true;
        
-        // Can't move up or comments not needed
-        if(i == 0 || !with_comments)
-            continue;
 
-         // Move up and find its comment
-        for(unsigned j = i-1; j>0; --j)
-        {    
-            string& text = lines[j]->text;
-
-            size_t first = text.find_first_not_of(" ");
-            if(first == string::npos)
-            {
-                continue;
-            }
-            
-            // is it a comment ?
-            if(text.find("/*") != string::npos ||
-               text[first] == '*')               
-            {
-                lines[j]->check = true; // Check the comment.
-            }
-            else
-            {
-                break;
-            }
+        if(i > 0 && with_comments)
+        {
+            CheckComments(lines, i-1);
         }
+
     }
 }
 //-------------------------------------------------
+
 
 bool checked(const shared_ptr<Line>& line)
 {
@@ -214,8 +270,17 @@ void Push(LinesVector& lines, string str)
 }
 
 
-void MakeGetSet(const LinesVector& vars, LinesVector& getters, LinesVector& setters)
+void MakeGetSet(const LinesVector& vars, LinesVector& pub,
+                LinesVector& getters, LinesVector& setters)
 {
+    Push(getters, " ");
+    Push(getters, "// =======  GETTERS ========= ");
+    Push(getters, " ");
+
+    Push(setters, " ");
+    Push(setters, "// =======  SETTERS ========= ");
+    Push(setters, " ");
+
     for(unsigned i = 0; i<vars.size(); ++i)
     { 
         string& var = vars[i]->text;
@@ -227,7 +292,7 @@ void MakeGetSet(const LinesVector& vars, LinesVector& getters, LinesVector& sett
         // Get first word as "type", secord word as name (without ';')
         size_t end = var.find_first_of(" ");
         string type = var.substr(0, end); 
-        string name = var.substr(end + 1, var.length()); // end + 1 is dangerous here. Need to trim
+        string name = var.substr(end + 1, var.length()); // end + 1 is dangerous. Need to trim
         name.erase(remove(name.begin(), name.end(), ';'), name.end());
 
         
@@ -236,29 +301,44 @@ void MakeGetSet(const LinesVector& vars, LinesVector& getters, LinesVector& sett
         string getter_name = "get" + func_name;
         string setter_name = "set" + func_name;
 
-        cout << "type: '" << type << "' name: '" 
-             << name <<  "' setter '" << setter_name << "'" << endl;
+//        cout << "type: '" << type << "' name: '" 
+//            << name <<  "' setter '" << setter_name << "'" << endl;
 
-      
-        Push(setters, "/*");
-        Push(setters, " * @brief Set value of " + name);
-        Push(setters, " * @param[in] " + name);
-        Push(setters, " */");
-        Push(setters, "void " + setter_name + "(" + type + " " + name + ")");
-        Push(setters, "{"); 
-        Push(setters, "    this->" + name + " = " + name + ";");
-        Push(setters, "}");  
-        Push(setters, " ");   
-
-        Push(getters, "/*");
-        Push(getters, " * @brief Get value of " + name);
-        Push(getters, " * @return " + type);
-        Push(getters, " */");
-        Push(getters, type + " " + getter_name + "()");
-        Push(getters, "{"); 
-        Push(getters, "    return " + name+ ";");
-        Push(getters, "}");  
-        Push(getters, " ");  
+        // Make getter if it doesn't exist
+        if(CheckFunction(pub, getter_name))
+        {
+            MoveChecked(pub, getters);
+        }
+        else
+        {
+            Push(getters, "/*");
+            Push(getters, " * @brief Get value of " + name);
+            Push(getters, " * @return " + type);
+            Push(getters, " */");
+            Push(getters, "    " + type + " " + getter_name + "()");
+            Push(getters, "    {"); 
+            Push(getters, "        return " + name+ ";");
+            Push(getters, "    }");  
+            Push(getters, " "); 
+        }
+        
+         // Make setter if it doesn't exist
+        if(CheckFunction(pub, setter_name))
+        {
+            MoveChecked(pub, setters);
+        }
+        else
+        {             
+            Push(setters, "/*");
+            Push(setters, " * @brief Set value of " + name);
+            Push(setters, " * @param[in] " + name);
+            Push(setters, " */");
+            Push(setters, "    void " + setter_name + "(" + type + " " + name + ")");
+            Push(setters, "    {"); 
+            Push(setters, "        this->" + name + " = " + name + ";");
+            Push(setters, "    }");  
+            Push(setters, " ");   
+        }
 
     }
 
@@ -299,7 +379,7 @@ int main()
     // Form getters and setters on the base of the "var"
     LinesVector setters;
     LinesVector getters;
-    MakeGetSet(vars, getters, setters); // different comments!
+    MakeGetSet(vars, pub, getters, setters); // different comments!
 
     // Move getters/setters to public
     CheckAll(setters);
