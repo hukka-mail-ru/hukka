@@ -29,6 +29,7 @@ class Fucker
  */
     int myVariable2;
 
+
 /*
  * The var 3 comment
  */
