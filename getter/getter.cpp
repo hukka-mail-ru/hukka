@@ -93,8 +93,21 @@ bool checked(shared_ptr<Line> line)
    return line->check; 
 }
 
+
+bool unchecked(shared_ptr<Line> line)
+{
+   return !line->check; 
+}
+
 void MoveChecked(LinesVector& src, LinesVector& dst)
 {
+
+    remove_copy_if(src.begin(), src.end(), back_inserter(dst),
+                   unchecked);
+
+    src.erase ( remove_if(src.begin(), src.end(),
+                               checked),  src.end() ); 
+/*
 
     for(unsigned i=0; i<src.size(); ++i) // change to algorithm!
     {
@@ -106,6 +119,7 @@ void MoveChecked(LinesVector& src, LinesVector& dst)
 
     src.erase ( remove_if(src.begin(), src.end(), checked),
                 src.end() );
+*/
 }
 
 
