@@ -29,7 +29,7 @@ void Print(const LinesVector& lines)
     {
         cout << lines[i]->text.c_str() << endl;
     }
-    //   cout << " ==========================================" << endl;
+   //    cout << " ==========================================" << endl;
 }
 
 //-------------------------------------------------
@@ -58,6 +58,7 @@ void CheckComments(LinesVector& lines, int start)
         
         // is it a comment ?
         if(text.find("/*") != string::npos ||
+           text.find("*/") != string::npos ||
            text[first] == '*')               
         {
             lines[j]->check = true; // Check the comment.
@@ -70,6 +71,40 @@ void CheckComments(LinesVector& lines, int start)
 
 }
 
+//-------------------------------------------------
+
+void CheckBody(LinesVector& lines, int start)
+{
+
+    for(unsigned j = start; j>0; --j)
+    {    
+        string& text = lines[j]->text;
+        
+        size_t first = text.find_first_not_of(" ");
+        if(first == string::npos)
+        {
+            continue;
+        }
+        
+        // is it a body ?
+        if(text.find("{") != string::npos)
+        {
+            lines[j]->check = true; 
+            while(lines[j]->text.find("}") == string::npos)
+            {
+                lines[j]->check = true;
+                j++;
+            }
+            lines[j]->check = true;
+
+        }
+        else
+        {
+            break;
+        }
+    }
+
+}
 //-------------------------------------------------
 
 bool CheckFunction(LinesVector& lines, const string& name)
@@ -85,7 +120,7 @@ bool CheckFunction(LinesVector& lines, const string& name)
         if(first == string::npos ||
            text[first] == '/' ||
            text[first] == '*' ||
-           text[first] == '#')
+           text[first] == '#' )
         {
             continue;
         }
@@ -103,6 +138,12 @@ bool CheckFunction(LinesVector& lines, const string& name)
                 {
                     CheckComments(lines, i-1);
                 }
+                
+                if(i < lines.size() - 1)
+                {
+                    CheckBody(lines, i+1);
+                }
+
             }
             else
             {
@@ -125,21 +166,22 @@ void CheckVariables(LinesVector& lines, bool with_comments = true, bool replace_
     {
         string& text = lines[i]->text;
         
-        // No comments
+        // No functions, comments, bodies
         size_t first = text.find_first_not_of(" ");
         if(first == string::npos ||
            text[first] == '/' ||
            text[first] == '*' ||
-           text[first] == '#')
+           text[first] == '#' ||
+           text[first] == '{' ||
+           text[first] == '}' ||
+           text.find("return ") != string::npos ||
+           text.find("(")       != string::npos ||
+           text.find("=")       != string::npos
+           )
         {
             continue;
         }
-        
-        // No functions
-        if(text.find("(") != string::npos)
-        {
-            continue;
-        }
+
         
         // Then, it's a variable! Check it.
         lines[i]->check = true;
@@ -289,6 +331,7 @@ void Divide(const LinesVector& lines,
 void MakeGetSet(const LinesVector& vars, LinesVector& pub,
                 LinesVector& getters, LinesVector& setters)
 {
+
     Push(getters, " ");
     Push(getters, "// =======  GETTERS ========= ");
     Push(getters, " ");
@@ -323,6 +366,7 @@ void MakeGetSet(const LinesVector& vars, LinesVector& pub,
         // Make getter if it doesn't exist
         if(CheckFunction(pub, getter_name))
         {
+            cout << "move checked" << endl;
             MoveChecked(pub, getters);
         }
         else
@@ -399,7 +443,7 @@ int main(int argc, char** argv)
     LinesVector vars; 
     CheckVariables(prv, false, true); 
     CopyChecked(prv, vars);
-    
+      
     // Form getters and setters on the base of the "var"
     LinesVector setters;
     LinesVector getters;
@@ -411,7 +455,7 @@ int main(int argc, char** argv)
 
     MoveChecked(getters, pub);
     MoveChecked(setters, pub);
-
+    
 
 
     Print(head);
