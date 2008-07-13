@@ -32,7 +32,7 @@ void Print(const LinesVector& lines)
 }
 //-------------------------------------------------
 
-void CheckVariables(LinesVector& lines)
+void CheckVariables(LinesVector& lines, bool with_comments = true)
 {
     
     for(unsigned i = 0; i<lines.size(); ++i)
@@ -58,8 +58,8 @@ void CheckVariables(LinesVector& lines)
         // Then, it's a variable! Check it.
         lines[i]->check = true;
        
-        // Can't move up
-        if(i == 0)
+        // Can't move up or comments not needed
+        if(i == 0 || !with_comments)
             continue;
 
          // Move up and find its comment
@@ -99,6 +99,11 @@ bool unchecked(shared_ptr<Line> line)
    return !line->check; 
 }
 
+void uncheck(shared_ptr<Line> line)
+{
+   line->check = false; 
+}
+
 void MoveChecked(LinesVector& src, LinesVector& dst)
 {
 
@@ -107,19 +112,9 @@ void MoveChecked(LinesVector& src, LinesVector& dst)
 
     src.erase ( remove_if(src.begin(), src.end(),
                                checked),  src.end() ); 
-/*
 
-    for(unsigned i=0; i<src.size(); ++i) // change to algorithm!
-    {
-        if(src[i]->check)
-        {
-            dst.push_back(src[i]);
-        }
-    }
+    for_each(dst.begin(), dst.end(), uncheck);
 
-    src.erase ( remove_if(src.begin(), src.end(), checked),
-                src.end() );
-*/
 }
 
 
@@ -218,11 +213,26 @@ int main()
 
     Divide(lines, head, pub, prv, tail);
 
+    // Move public to private
     CheckVariables(pub);
     MoveChecked(pub, prv);
 
+    // Form getters and setters
+    LinesVector var; // collect variables
+    CheckVariables(prv, false); // without comments
+    MoveChecked(prv, var);
+    
+    //   MakeGetters(setters, var); // different comments!
+    //  MakeSetters(getters, var);
 
-    // OUTPUT
+    //CheckAll(setters);
+    //CheckAll(getters);
+
+    // MoveChecked(getters, pub);
+    // MoveChecked(setters, pub);
+
+    
+
     Print(head);
     cout << "public:" << endl;
     Print(pub);
