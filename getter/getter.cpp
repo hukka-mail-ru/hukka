@@ -88,18 +88,23 @@ void CheckVariables(LinesVector& lines, bool with_comments = true)
 }
 //-------------------------------------------------
 
-bool checked(shared_ptr<Line> line)
+bool checked(const shared_ptr<Line>& line)
 {
    return line->check; 
 }
 
 
-bool unchecked(shared_ptr<Line> line)
+bool unchecked(const shared_ptr<Line>& line)
 {
    return !line->check; 
 }
 
-void uncheck(shared_ptr<Line> line)
+void check(shared_ptr<Line>& line)
+{
+   line->check = true; 
+}
+
+void uncheck(shared_ptr<Line>& line)
 {
    line->check = false; 
 }
@@ -115,6 +120,11 @@ void MoveChecked(LinesVector& src, LinesVector& dst)
 
     for_each(dst.begin(), dst.end(), uncheck);
 
+}
+
+void CheckAll(LinesVector& lines)
+{     
+    for_each(lines.begin(), lines.end(), check);  
 }
 
 
@@ -190,6 +200,32 @@ void Divide(const LinesVector& lines,
  }
 
 
+void MakeGetters(const LinesVector& vars, LinesVector& getters)
+{
+    for(unsigned i = 0; i<vars.size(); ++i)
+    { 
+        string& var = vars[i]->text;
+
+        // Trim
+        size_t begin = var.find_first_not_of(" ");
+        var = var.substr(begin, var.length() - begin); 
+
+        // Get first word as "type"
+        size_t end = var.find_first_of(" ");
+        string type = var.substr(0, end);
+        string name = var.substr(end, var.length());
+
+
+        cout << "type: " << type << " name: " << name << endl;
+
+        
+
+
+    }
+
+
+}
+
 //-------------------------------------------------
 
 int main()
@@ -213,23 +249,27 @@ int main()
 
     Divide(lines, head, pub, prv, tail);
 
-    // Move public to private
+    // Move public vars to private
     CheckVariables(pub);
     MoveChecked(pub, prv);
 
-    // Form getters and setters
-    LinesVector var; // collect variables
-    CheckVariables(prv, false); // without comments
-    MoveChecked(prv, var);
+    // Collect variables without comments
+    LinesVector vars; 
+    CheckVariables(prv, false); 
+    MoveChecked(prv, vars);
     
-    //   MakeGetters(setters, var); // different comments!
-    //  MakeSetters(getters, var);
+    // Form getters and setters on the base of the "var"
+    LinesVector setters;
+    LinesVector getters;
+    MakeGetters(vars, setters); // different comments!
+//    MakeSetters(vars, getters);
 
-    //CheckAll(setters);
-    //CheckAll(getters);
+    // Move getters/setters to public
+    CheckAll(setters);
+    CheckAll(getters);
 
-    // MoveChecked(getters, pub);
-    // MoveChecked(setters, pub);
+    MoveChecked(getters, pub);
+    MoveChecked(setters, pub);
 
     
 
