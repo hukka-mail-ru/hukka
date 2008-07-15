@@ -9,6 +9,7 @@
 
 struct Class;
 struct Attribute;
+struct Variable;
 
 typedef std::vector<boost::shared_ptr<Class> >       VectorClass;
 typedef std::vector<boost::shared_ptr<Attribute> >   VectorAttr;
@@ -27,9 +28,9 @@ struct Class
 struct File
 {
     VectorString includes;
-    VectorString namespace;
-    std::string namespace;
-    Class class; 
+    VectorString comments;
+    std::string nameSpace;
+    Class theclass; 
 };
 
 
@@ -44,6 +45,7 @@ enum Storage
 
 enum Essence
 {
+    ES_UNDEF,
     ES_VARIABLE,
     ES_FUNCTION
 };
@@ -53,18 +55,18 @@ enum Essence
 struct Attribute
 {
     Attribute():
-        essence(Essence),
+        essence(ES_UNDEF),
         type(""),
         name(""),
         comment(""),
         storage(ST_PUBLIC),
-        constant(false),
         ptr(false),
         ref(false)
     {}
 
-    virtual ~Attribute() = 0;           
-
+    virtual ~Attribute() {}           
+ 
+    Essence essence;
     std::string type;
     std::string name;
     std::string comment;
@@ -73,7 +75,7 @@ struct Attribute
     bool ref;
 };
 
-Attribute::~Attribute() {}
+//Attribute::~Attribute() {}
 
 //-------------------------------------------------
 struct Variable: public Attribute

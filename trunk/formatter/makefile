@@ -1,9 +1,11 @@
 DIR = parser
 EXE = parser
-SRCS = 	parser.cpp 
+SRCS = 	parser.cpp \
+	formatter.cpp
 
 EXTRA_INCLUDES 	+= -Iinclude \
-	           -I$(SRCROOT)/third_party/boost
+	           -I$(SRCROOT)/third_party/boost \
+		   -I \
 
 LIBPATHS	+= $(BLDROOT)/$(MTARGET)/lib 		
 
