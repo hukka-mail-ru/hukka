@@ -9,21 +9,34 @@
 using namespace std;
 //using namespace boost;
 
-//-------------------------------------------------
 
-int main(int argc, char** argv)
+void cutToSymbol(std::string& name, const char ch)
 {
-/*
-    if(argc < 2)
+    size_t right = name.find(ch);
+    if(right != string::npos) 
     {
-        cerr << "Give me a filename," << endl;
-        cerr << "and don't fuck the brain!" << endl;
-        return 1;
+        name = name.substr(0, right);
     }
-
-    // Read form file
-    ifstream file(argv[1]);
-*/
-   
-    return 0;
 }
+
+bool Parser::getVarName(const std::string& line, std::string& name)
+{
+    name = line;
+
+    cutToSymbol(name, ';');
+    cutToSymbol(name, ',');
+    cutToSymbol(name, '=');
+
+    size_t right = name.find_last_not_of(' ');
+    name = name.substr(0, right + 1);
+
+    size_t left = name.find_last_of(' ');
+    name = name.substr(left + 1, name.size());
+
+        
+    return true;
+}
+
+
+
+
