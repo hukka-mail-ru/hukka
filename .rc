@@ -5,5 +5,5 @@ export BLDROOT=$SRCROOT/bld
 export MTARGET=linux-2-6-x86-threaded-gcc
 export MAKE_HOME=$SRCROOT/makeincl
 
-export LD_LIBRARY_PATH=$BLDROOT/$MTARGET/lib
-PATH=$PATH:$BLDROOT/$MTARGET/bin:/usr/include/qt4
+export LD_LIBRARY_PATH=$LD_LIBRARY_PATH:$BLDROOT/$MTARGET/lib
+export PATH=$PATH:$BLDROOT/$MTARGET/bin:/usr/include:/usr/include/qt4

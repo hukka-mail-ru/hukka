@@ -2,50 +2,85 @@
 #include <algorithm>
 #include <vector>
 #include <iterator>
+
+#include <pcreposix.h>
+
 using namespace std;
 
 
-// an unary function
-void Print(int i)
-{
-    cout << "Fuck " << i << endl;
-}
-
-// an unary function
-int Square(int i)
-{
-    return i*i;
-}
-
-// a binary function
-int Add(int i, int j)
-{
-    return i + j;
-}
 
 int main()
 {
-    vector<int> v;
+    vector<string> result;
+    const int MAX_TOKENS = 10;
 
-    v.push_back(1);
-    v.push_back(2);
-    v.push_back(3);
+    regex_t parsingRule;
 
-    for_each(v.begin(), v.end(), Print);
+    const char* pattern = " *([a-zA-Z]+).*";
+
+    int res = pcreposix_regcomp(&parsingRule, pattern, REG_EXTENDED);
+    if (res != 0) 
+    {
+        cout << "Err " << res << endl;
+        return -1;
+    }
 
 
-    vector<int> res(v.size()); // size fo "res" must be >= size of "v"
+    regmatch_t match[MAX_TOKENS];// array for results of searching. 
 
-	cout << "Squared:" << endl;
-    transform(v.begin(), v.end(), res.begin(), Square); // transform with unary function
-    for_each(res.begin(), res.end(), Print);
+    const char* str = "   const   int var ;";
+    if(pcreposix_regexec(&parsingRule, str, MAX_TOKENS, match, 0))
+    {
+        cerr << "Err pcreposix_regexec" << endl;
+        return -1;
+    }
 
-    vector<int> u;
-    u.push_back(1);
-    u.push_back(2);
-    u.push_back(3);
 
-    transform(v.begin(), v.end(), u.begin(), res.begin(), Add); // transform with binary functi
-    cout << "Added:" << endl;
-    for_each(res.begin(), res.end(), Print);
+    int start_ = -1;
+    int end_ = -1;
+
+    // Positions of the first and the last symbols of the found substring
+    // are in the first element off the array 'match'. 
+    // We don't need the match[0] because it contains
+    // result of matching of the whole regexp, so start with match[1].
+    for(int i = 1; i < MAX_TOKENS; i++)
+    {
+        const int start = match[i].rm_so; // beginning of the found substring
+        const int end = match[i].rm_eo;   // end of the found substring
+
+        /* last token */
+        if(start == -1 && end == -1)
+            break;
+
+        /* inbound token */
+        if (start >= start_ && end <= end_ && start != end_ ) 
+            continue;
+
+        start_ = start;
+        end_ = end;
+
+        if(end - start == 0)
+        {
+            result.push_back("");
+        }
+        else
+        {
+            string res(str);
+            res = res.substr(start, end);
+            result.push_back(res);
+        }
+
+    }
+
+
+    if(result.empty())
+        cout << "No matches found" << endl;
+
+    for(unsigned i = 0; i<result.size(); ++i)
+        cout << "'" << result[i]  << "'" << endl;
+
+
+    regfree(&parsingRule);
+
+
 }
