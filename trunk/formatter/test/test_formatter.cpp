@@ -16,6 +16,7 @@ using namespace std;
 class TestParser : public CppUnit::TestFixture 
 {
    CPPUNIT_TEST_SUITE(TestParser);
+//   CPPUNIT_TEST(testPregMatch);
    CPPUNIT_TEST(testGetVarName);
    CPPUNIT_TEST_SUITE_END();
          
@@ -23,7 +24,28 @@ class TestParser : public CppUnit::TestFixture
 public:         
     void setUp() {}
     void tearDown() {}
-         
+        
+
+    void testPregMatch() 
+    {
+        Parser parser;
+        vector<string> res;
+        parser.preg_match(" *([a-zA-Z]+) *;", "   const   int var ;", res);
+        CPPUNIT_ASSERT(res.size() == 1);
+        CPPUNIT_ASSERT(res[0] == "var");
+
+        res.clear();
+        parser.preg_match(" +([a-zA-Z]+) +([a-zA-Z]+) +([a-zA-Z]+) ([a-zA-Z]+) *", 
+                          " const long  int var ;", 
+                          res);
+        CPPUNIT_ASSERT(res.size() == 4);
+        CPPUNIT_ASSERT(res[0] == "const"); 
+        CPPUNIT_ASSERT(res[1] == "long");
+        CPPUNIT_ASSERT(res[2] == "int");
+        CPPUNIT_ASSERT(res[3] == "var");
+
+    }
+
     void testGetVarName() 
     {
         Parser parser;

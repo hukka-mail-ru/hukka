@@ -9,6 +9,7 @@ EXTRA_INCLUDES 	+= -Iinclude \
 
 LIBPATHS	+= $(BLDROOT)/$(MTARGET)/lib 		
 
+REQUIRE_PCRE = 1
 
 include $(MAKE_HOME)/makefile.incl
 include $(MAKE_HOME)/makefile.exec

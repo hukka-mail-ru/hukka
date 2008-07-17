@@ -13,6 +13,7 @@ LIBPATHS	+= $(BLDROOT)/$(MTARGET)/lib
 
 EXTRALIBS += cppunit dl		
 
+REQUIRE_PCRE = 1
 
 include $(MAKE_HOME)/makefile.incl
 include $(MAKE_HOME)/makefile.exec
