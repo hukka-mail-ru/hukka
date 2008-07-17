@@ -36,11 +36,11 @@ struct File
 
 //-------------------------------------------------
 
-enum Storage
+enum Access
 {
-    ST_PRIVATE,
-    ST_PROTECTED,
-    ST_PUBLIC
+    AC_PRIVATE,
+    AC_PROTECTED,
+    AC_PUBLIC
 };
 
 enum Essence
@@ -59,7 +59,7 @@ struct Attribute
         type(""),
         name(""),
         comment(""),
-        storage(ST_PUBLIC),
+        access(AC_PUBLIC),
         ptr(false),
         ref(false)
     {}
@@ -70,7 +70,7 @@ struct Attribute
     std::string type;
     std::string name;
     std::string comment;
-    Storage storage;
+    Access access;
     bool ptr;
     bool ref;
 };
@@ -87,6 +87,8 @@ struct Variable: public Attribute
 
     std::string value;
 };
+
+
 
 //-------------------------------------------------
 struct Function: public Attribute

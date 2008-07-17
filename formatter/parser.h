@@ -24,6 +24,9 @@ class Parser
 
     Parser& operator=(const Parser&);
 
+    bool preg_match(const std::string& pattern,
+                    const std::string& str,
+                    std::vector<std::string>& matches);
 
     bool defineEssence(const std::string& line, Essence essence);
     
