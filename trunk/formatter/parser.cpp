@@ -17,6 +17,7 @@ bool Parser::preg_match(const string& pattern,
                         const string& str,
                         vector<string>& matches)
 {
+    matches.clear();
     const int MAX_TOKENS = 100;
     regex_t parsingRule;
 
@@ -90,19 +91,29 @@ bool Parser::preg_match(const string& pattern,
 }
 
 
-
-
-bool Parser::getVarName(const std::string& line, std::string& name)
+bool Parser::preg_match(const string& pattern,
+                        const string& str,
+                        string& match)
 {
     vector<string> res;
-    if(!preg_match(" *([a-zA-Z]+) *[;,=]", line, res))
+    if(!preg_match(pattern, str, res))
     {
+        match = "";
         return false;
     }
 
-    name = res[0];
+    match = res[0];
         
-    return true;
+    return true;    
+
+}
+
+
+
+bool Parser::parseVar(const std::string& line, Variable& var)
+{
+    return preg_match(" *([a-zA-Z]+) *[;,=]", line, var.name);
+
 }
 
 
