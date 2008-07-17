@@ -16,7 +16,7 @@ int main()
 
     regex_t parsingRule;
 
-    const char* pattern = " *([a-zA-Z]+).*";
+    const char* pattern = " *([a-zA-Z]+) *[;]";
 
     int res = pcreposix_regcomp(&parsingRule, pattern, REG_EXTENDED);
     if (res != 0) 
@@ -54,7 +54,7 @@ int main()
 
         /* inbound token */
         if (start >= start_ && end <= end_ && start != end_ ) 
-            continue;
+             continue;
 
         start_ = start;
         end_ = end;
@@ -66,7 +66,7 @@ int main()
         else
         {
             string res(str);
-            res = res.substr(start, end);
+            res = res.substr(start, end - start);
             result.push_back(res);
         }
 
