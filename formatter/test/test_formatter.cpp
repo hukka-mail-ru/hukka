@@ -58,7 +58,7 @@ public:
         CPPUNIT_ASSERT(var.name == "lol");
         CPPUNIT_ASSERT(var.type == "const int");
 
-        CPPUNIT_ASSERT(parser.parseVar("volatile static float v,", var));
+        CPPUNIT_ASSERT(parser.parseVar("volatile static float v = 0,", var));
         CPPUNIT_ASSERT(var.name == "v");
         CPPUNIT_ASSERT(var.type == "volatile static float");
 

@@ -31,10 +31,14 @@ bool Parser::preg_match(const string& pattern,
 
     regmatch_t match[MAX_TOKENS];// array for results of searching. 
 
-    if(pcreposix_regexec(&parsingRule, str.c_str(), MAX_TOKENS, match, 0))
+	
+    if(int res = pcreposix_regexec(&parsingRule, str.c_str(), MAX_TOKENS, match, 0))
     {
-        cerr << "ERROR pcreposix_regexec: '" << 
+	if(res != REG_NOMATCH)
+	{
+            cerr << "ERROR pcreposix_regexec: '" << 
                  str.c_str() << "' against '" << pattern.c_str() << "'" << endl;
+        }
         return false;
     }
 
