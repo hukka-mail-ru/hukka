@@ -34,6 +34,9 @@ class Parser
 
     bool trim(std::string& str);
 
+    std::string getError(int err);
+
+
     bool defineEssence(const std::string& line, Essence essence);
     
 

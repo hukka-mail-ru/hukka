@@ -12,6 +12,43 @@ using namespace std;
 //using namespace boost;
 
 
+string Parser::getError(int err)
+{
+	switch(err)
+	{
+	case REG_BADRPT:
+	return  "Invalid use of repetition operators such as using `*' as the first character.";
+	case REG_BADBR:
+	return  "Invalid use of back reference operator. ";
+	case REG_EBRACE:
+	return  "Un-matched brace interval operators. ";
+	case REG_EBRACK:
+	return  "Un-matched bracket list operators. ";
+	case REG_ERANGE:
+	return "Invalid use of the range operator, eg. the ending point of the range occurs prior to the starting point. ";
+	case REG_ECTYPE:
+	return  "Unknown character class name. ";
+	case REG_ECOLLATE:
+	return "Invalid collating element. ";
+	case REG_EPAREN:
+	return "Un-matched parenthesis group operators. ";
+	case REG_ESUBREG:
+	return  "Invalid back reference to a subexpression. ";
+	case REG_EESCAPE:
+	return  "Trailing backslash. ";
+	case REG_BADPAT:
+	return  "Invalid use of pattern operators such as group or list. ";
+	case REG_ESIZE:
+	return  "Compiled regular expression requires a pattern buffer larger than 64Kb. This is not defined by POSIX.2. ";
+	case REG_ESPACE:
+	return  "The regex routines ran out of memory.";
+	default:
+	return  "Unknown error";
+	}
+}
+
+
+
 
 bool Parser::preg_match(const string& pattern,
                         const string& str,
@@ -24,7 +61,8 @@ bool Parser::preg_match(const string& pattern,
     int res = pcreposix_regcomp(&parsingRule, pattern.c_str(), REG_EXTENDED);
     if (res != 0) 
     {
-        cout << "Err " << res << endl;
+        cout << "ERROR pcreposix_regcomp: " << getError(res) << endl 
+	     << "Pattern '" << pattern.c_str() << "'" << endl;
         return false;
     }
 
@@ -36,8 +74,9 @@ bool Parser::preg_match(const string& pattern,
     {
 	if(res != REG_NOMATCH)
 	{
-            cerr << "ERROR pcreposix_regexec: '" << 
-                 str.c_str() << "' against '" << pattern.c_str() << "'" << endl;
+            cerr << "ERROR pcreposix_regexec: " << getError(res) << endl 
+                 << "String: '" << str.c_str() << "'" << endl
+	         << "Pattern '" << pattern.c_str() << "'" << endl;
         }
         return false;
     }
