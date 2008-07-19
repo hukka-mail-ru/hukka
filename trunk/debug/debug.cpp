@@ -1,5 +1,7 @@
 #include <debug.hpp>
 
+using namespace common;
+
 bool EnableDebugLog = false;
 bool EnableInfoLog = true;
 bool EnableWarningLog = true;

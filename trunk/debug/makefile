@@ -3,8 +3,8 @@ DIR = debug
 LIB = debug
 SRCS = 	debug.cpp 
 
-EXTRA_INCLUDES 	+= -Iinclude \
-			-I$(SRCROOT)/color/include
+EXTRA_INCLUDES 	+= -I$(SRCROOT)/color/include \
+	           -I.
 
 EXTRALIBPATHS	+= $(BLDROOT)/$(MTARGET)/lib 
 

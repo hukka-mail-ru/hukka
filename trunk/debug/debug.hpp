@@ -15,6 +15,9 @@ extern bool EnableErrorLog;
 
 #include <color.hpp>
 
+namespace common
+{
+
 // --------------------------------------------------------------------------------
 //  4 Message Levels
 // --------------------------------------------------------------------------------
@@ -123,5 +126,7 @@ extern MessagePrinter info;
 extern MessagePrinter warning;
 extern MessagePrinter error;
 
+
+} // eo namespace common
 
 #endif
