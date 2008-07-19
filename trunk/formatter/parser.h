@@ -32,16 +32,15 @@ class Parser
                     const std::string& str,
                     std::string& match);
 
+    bool trim(std::string& str);
+
     bool defineEssence(const std::string& line, Essence essence);
     
 
     bool parseVar(const std::string& line, Variable& var);
 
 
-    bool parseFunc(const std::string& line, Function& var)
-    {
-        return false;
-    }
+    bool parseFunc(const std::string& line, Function& var);
 
 
 };
