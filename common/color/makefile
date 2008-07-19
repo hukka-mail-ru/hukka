@@ -3,7 +3,7 @@ DIR = color
 DLL = color
 SRCS = 	color.cpp 
 
-EXTRA_INCLUDES 	+= -Iinclude 
+EXTRA_INCLUDES 	+= -I.
 
 EXTRALIBPATHS	+= $(BLDROOT)/$(MTARGET)/lib 
 

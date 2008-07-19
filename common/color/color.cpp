@@ -1,8 +1,9 @@
 #include <color.hpp>
 
 using namespace std;
+using namespace common;
 
-bool EnableColorLog = false;
+bool common::EnableColorLog = false;
 
 string color(int color)
 {
