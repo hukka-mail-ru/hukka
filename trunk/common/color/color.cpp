@@ -5,7 +5,7 @@ using namespace common;
 
 bool common::EnableColorLog = false;
 
-string color(int color)
+string common::color(int color)
 {
     if(!EnableColorLog)
         return ""; 

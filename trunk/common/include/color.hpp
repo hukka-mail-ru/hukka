@@ -30,7 +30,7 @@ extern bool EnableColorLog;
 #define	UNDEFINED	777
 
 
-std::string color(int color = UNDEFINED);
+extern std::string color(int color = UNDEFINED);
 
 }
 

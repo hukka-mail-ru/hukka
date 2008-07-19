@@ -7,9 +7,10 @@
 #include <pcreposix.h>
 #include "parser.h"
 #include "data.h"
+#include <debug.hpp>
 
 using namespace std;
-//using namespace boost;
+using namespace common;
 
 
 string Parser::getError(int err)
@@ -61,7 +62,7 @@ bool Parser::preg_match(const string& pattern,
     int res = pcreposix_regcomp(&parsingRule, pattern.c_str(), REG_EXTENDED);
     if (res != 0) 
     {
-        cout << "ERROR pcreposix_regcomp: " << getError(res) << endl 
+       error  << "ERROR pcreposix_regcomp: " << getError(res) << endl 
 	     << "Pattern '" << pattern.c_str() << "'" << endl;
         return false;
     }
@@ -74,7 +75,7 @@ bool Parser::preg_match(const string& pattern,
     {
 	if(res != REG_NOMATCH)
 	{
-            cerr << "ERROR pcreposix_regexec: " << getError(res) << endl 
+            error << "ERROR pcreposix_regexec: " << getError(res) << endl 
                  << "String: '" << str.c_str() << "'" << endl
 	         << "Pattern '" << pattern.c_str() << "'" << endl;
         }
