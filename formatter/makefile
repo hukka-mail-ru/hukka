@@ -5,9 +5,12 @@ SRCS = 	parser.cpp \
 
 EXTRA_INCLUDES 	+= -Iinclude \
 	           -I$(SRCROOT)/third_party/boost \
+	           -I$(SRCROOT)/common/include \
 		   -I \
 
 LIBPATHS	+= $(BLDROOT)/$(MTARGET)/lib 		
+
+EXTRALIBS += debug color
 
 REQUIRE_PCRE = 1
 

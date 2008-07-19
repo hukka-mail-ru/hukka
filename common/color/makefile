@@ -1,4 +1,3 @@
-
 DIR = color
 DLL = color
 SRCS = 	color.cpp 
