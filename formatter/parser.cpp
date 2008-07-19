@@ -33,7 +33,8 @@ bool Parser::preg_match(const string& pattern,
 
     if(pcreposix_regexec(&parsingRule, str.c_str(), MAX_TOKENS, match, 0))
     {
-        cerr << "ERROR pcreposix_regexec" << endl;
+        cerr << "ERROR pcreposix_regexec: '" << 
+                 str.c_str() << "' against '" << pattern.c_str() << "'" << endl;
         return false;
     }
 
@@ -103,8 +104,8 @@ bool Parser::preg_match(const string& pattern,
     }
 
     match = res[0];
-        
-    return true;    
+
+    return true;
 
 }
 
@@ -112,7 +113,44 @@ bool Parser::preg_match(const string& pattern,
 
 bool Parser::parseVar(const std::string& line, Variable& var)
 {
-    return preg_match(" *([a-zA-Z]+) *[;,=]", line, var.name);
+    // name
+    if(!preg_match(" +([a-zA-Z_][a-zA-Z_0-9]*) *[;,=].*", line, var.name))
+    {
+        return false;
+    }
+
+    // type
+    string dummy;
+    if(preg_match("(=)", line, dummy))
+    {	
+       if(!preg_match("(.+) +[a-zA-Z_][a-zA-Z_0-9]* *=", line, var.type))
+       {
+           return false;
+       }
+    }
+    else
+    {	
+       if(!preg_match("(.+) +[a-zA-Z_][a-zA-Z_0-9]* *[;,=]", line, var.type))
+       {
+           return false;
+       }
+    }
+
+    // trim
+    if(!preg_match("^ *([^ ]+.*)", var.type, var.type))
+    {
+        return false;
+    }
+
+    if(!preg_match("^(.*[^ ]) *", var.type, var.type))
+    {
+        return false;
+    }
+
+cout << "var.name '" << var.name << "'" << endl;
+cout << "var.type '" << var.type << "'" << endl;
+
+    return true;
 
 }
 
