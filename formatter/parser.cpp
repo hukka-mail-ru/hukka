@@ -59,6 +59,7 @@ bool Parser::preg_match(const string& pattern,
     const int MAX_TOKENS = 100;
     regex_t parsingRule;
 
+
     int res = pcreposix_regcomp(&parsingRule, pattern.c_str(), REG_EXTENDED);
     if (res != 0) 
     {
@@ -157,6 +158,9 @@ bool Parser::preg_match(const string& pattern,
 
 bool Parser::parseVar(const std::string& line, Variable& var)
 {
+
+
+
     // name
     if(!preg_match(" +([a-zA-Z_][a-zA-Z_0-9]*) *[;,=].*", line, var.name))
     {
