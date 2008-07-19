@@ -3,7 +3,8 @@ EXE = test_formatter
 SRCS = 	test_formatter.cpp \
 	../parser.cpp
 
-EXTRA_INCLUDES 	+= -Iinclude \
+EXTRA_INCLUDES 	+= -I$(SRCROOT)/common/include \
+                   -Iinclude \
 	           -I$(SRCROOT)/third_party/boost \
                    -I$(SRCROOT)/third_party/cppunit/include \
                    -I$(SRCROOT)/formatter
@@ -11,7 +12,7 @@ EXTRA_INCLUDES 	+= -Iinclude \
 
 LIBPATHS	+= $(BLDROOT)/$(MTARGET)/lib 
 
-EXTRALIBS += cppunit dl		
+EXTRALIBS += cppunit dl	color debug	
 
 REQUIRE_PCRE = 1
 
