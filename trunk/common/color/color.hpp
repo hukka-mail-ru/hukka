@@ -1,9 +1,15 @@
 #ifndef __color_hpp__
 #define __color_hpp__
 
-extern bool EnableColorLog;
 
 #include <string>
+
+
+namespace common
+{
+
+extern bool EnableColorLog;
+
 
 #define RESET		0
 #define BRIGHT 		1
@@ -26,5 +32,6 @@ extern bool EnableColorLog;
 
 std::string color(int color = UNDEFINED);
 
+}
 
 #endif
