@@ -74,8 +74,8 @@ bool Parser::preg_match(const string& pattern,
 	
     if(int res = pcreposix_regexec(&parsingRule, str.c_str(), MAX_TOKENS, match, 0))
     {
-	if(res != REG_NOMATCH)
-	{
+        if(res != REG_NOMATCH)
+        {
             error << "ERROR pcreposix_regexec: " << getError(res) << endl 
                  << "String: '" << str.c_str() << "'" << endl
 	         << "Pattern '" << pattern.c_str() << "'" << endl;
@@ -127,8 +127,8 @@ bool Parser::preg_match(const string& pattern,
          return false;
      }
 
-     //    for(unsigned i = 0; i<matches.size(); ++i)
-     //     cout << "'" << matches[i]  << "'" << endl;
+     //     for(unsigned i = 0; i<matches.size(); ++i)
+             //     cout << "'" << matches[i]  << "'" << endl;
 
 
     regfree(&parsingRule);
@@ -156,50 +156,21 @@ bool Parser::preg_match(const string& pattern,
 
 
 
-bool Parser::parseVar(const std::string& line, Variable& var)
+bool Parser::parseVar(const string& line, Variable& var)
 {
-
-
-
-    // name
-    if(!preg_match(" +([a-zA-Z_][a-zA-Z_0-9]*) *[;,=].*", line, var.name))
+    vector<string> res;
+    if(!preg_match("^\\s*(\\w.*\\w)\\s+(\\w+)\\s*[;,=]", line, res))
     {
         return false;
     }
 
-    // type
-    string dummy;
-    if(preg_match("(=)", line, dummy))
-    {	
-       if(!preg_match("(.+) +[a-zA-Z_][a-zA-Z_0-9]* *=", line, var.type))
-       {
-           return false;
-       }
-    }
-    else
-    {	
-       if(!preg_match("(.+) +[a-zA-Z_][a-zA-Z_0-9]* *[;,=]", line, var.type))
-       {
-           return false;
-       }
-    }
+    var.type = res[0];
+    var.name = res[1];
 
-    // trim
-    if(!preg_match("^ *([^ ]+.*)", var.type, var.type))
-    {
-        return false;
-    }
-
-    if(!preg_match("^(.*[^ ]) *", var.type, var.type))
-    {
-        return false;
-    }
-
-cout << "var.name '" << var.name << "'" << endl;
-cout << "var.type '" << var.type << "'" << endl;
+//cout << "var.name '" << var.name << "'" << endl;
+//cout << "var.type '" << var.type << "'" << endl;
 
     return true;
-
 }
 
 
