@@ -45,18 +45,28 @@ public:
 
     }
 
+    void testPregReplace() 
+    {
+//        Parser parser;
+//        parser.preg_replace_all("   this    is     test    ", " +", " ");
+//        CPPUNIT_ASSERT("this    is     test    "
+    }
+
     void testParseVar() 
     {
         Parser parser;
         Variable var;
-       
+        //  
         CPPUNIT_ASSERT(parser.parseVar("int var;", var) == true);
+
+     
+
         CPPUNIT_ASSERT(var.name == "var");
         CPPUNIT_ASSERT(var.type == "int");
 
-        CPPUNIT_ASSERT(parser.parseVar("const int lol   ;   ", var));
+        CPPUNIT_ASSERT(parser.parseVar("    const    int   lol   ;   ", var));
         CPPUNIT_ASSERT(var.name == "lol");
-        CPPUNIT_ASSERT(var.type == "const int");
+        CPPUNIT_ASSERT(var.type == "const    int");
 
         CPPUNIT_ASSERT(parser.parseVar("volatile static float v = 0,", var));
         CPPUNIT_ASSERT(var.name == "v");
