@@ -57,10 +57,7 @@ public:
         Parser parser;
         Variable var;
         //  
-        CPPUNIT_ASSERT(parser.parseVar("int var;", var) == true);
-
-     
-
+        CPPUNIT_ASSERT(parser.parseVar("int var;", var) == true);  
         CPPUNIT_ASSERT(var.name == "var");
         CPPUNIT_ASSERT(var.type == "int");
 
@@ -79,7 +76,11 @@ public:
         CPPUNIT_ASSERT(parser.parseVar("  const   unsigned int   zlo  = SOME_CONST ,", var));
         CPPUNIT_ASSERT(var.name == "zlo");
         CPPUNIT_ASSERT(var.type == "const   unsigned int");
-        
+ 
+        CPPUNIT_ASSERT(parser.parseVar(" const bool   _m_member01  = 0;", var) == true);  
+        CPPUNIT_ASSERT(var.type == "const bool");
+        CPPUNIT_ASSERT(var.name == "_m_member01");
+       
     }
 };
 
