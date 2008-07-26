@@ -25,8 +25,9 @@ class Parser
     Parser& operator=(const Parser&);
 
     bool preg_match(const std::string& pattern,
-                    const std::string& str,
-                    std::vector<std::string>& matches);
+                    std::string str,
+                    std::vector<std::string>& matches,
+                    bool all = false);
 
     bool preg_match(const std::string& pattern,
                     const std::string& str,
@@ -43,7 +44,7 @@ class Parser
     bool parseVar(const std::string& line, Variable& var);
 
 
-    bool parseFunc(const std::string& line, Function& var);
+    bool parseFunc(const std::string& line, Function& func);
 
 
 };
