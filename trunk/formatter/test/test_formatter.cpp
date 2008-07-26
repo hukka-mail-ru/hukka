@@ -18,6 +18,7 @@ class TestParser : public CppUnit::TestFixture
    CPPUNIT_TEST_SUITE(TestParser);
    CPPUNIT_TEST(testPregMatch);
    CPPUNIT_TEST(testParseVar);
+   CPPUNIT_TEST(testParseFunc);
    CPPUNIT_TEST_SUITE_END();
          
    
@@ -81,6 +82,27 @@ public:
         CPPUNIT_ASSERT(var.type == "const bool");
         CPPUNIT_ASSERT(var.name == "_m_member01");
        
+    }
+
+    void testParseFunc() 
+    {
+        Parser parser;
+        Function func;
+
+        CPPUNIT_ASSERT(parser.parseFunc("int func(float var0, bool var1); ", func) == true);
+
+        CPPUNIT_ASSERT(func.name == "func");
+        CPPUNIT_ASSERT(func.type == "int");
+
+        CPPUNIT_ASSERT(func.args.size() == 2);
+        
+        CPPUNIT_ASSERT(func.args[0]->name == "var0");
+        CPPUNIT_ASSERT(func.args[0]->type == "float");
+
+        CPPUNIT_ASSERT(func.args[1]->name == "var1");
+        CPPUNIT_ASSERT(func.args[1]->type == "bool");
+
+
     }
 };
 

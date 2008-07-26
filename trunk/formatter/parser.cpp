@@ -1,6 +1,7 @@
 #include <iostream>
 #include <fstream>
 #include <vector>
+#include <boost/shared_ptr.hpp>
 //#include <algorithm>
 //#include <ctype.h>
 
@@ -11,7 +12,7 @@
 
 using namespace std;
 using namespace common;
-
+using namespace boost;
 
 string Parser::getError(int err)
 {
@@ -52,10 +53,11 @@ string Parser::getError(int err)
 
 
 bool Parser::preg_match(const string& pattern,
-                        const string& str,
-                        vector<string>& matches)
+                        string str,
+                        vector<string>& matches,
+                        bool all)
 {
-    matches.clear();
+
     const int MAX_TOKENS = 100;
     regex_t parsingRule;
 
@@ -91,6 +93,10 @@ bool Parser::preg_match(const string& pattern,
     // are in the first element off the array 'match'. 
     // We don't need the match[0] because it contains
     // result of matching of the whole regexp, so start with match[1].
+
+    int last_end = 0;   // end of the found substring
+    bool found = false;
+
     for(int i = 1; i < MAX_TOKENS; i++)
     {
         const int start = match[i].rm_so; // beginning of the found substring
@@ -98,7 +104,10 @@ bool Parser::preg_match(const string& pattern,
 
         /* last token */
         if(start == -1 && end == -1)
+        {
+            last_end = match[i-1].rm_eo;
             break;
+        }
 
         /* inbound token */
         if (start >= start_ && end <= end_ && start != end_ ) 
@@ -116,24 +125,31 @@ bool Parser::preg_match(const string& pattern,
             string res(str);
             res = res.substr(start, end - start);
             matches.push_back(res);
+            cout << " >>>> " << res.c_str() << endl;
+            found = true;
         }
 
     }
 
 
-     if(matches.empty())
+     if(!found)
      {
          cerr << "No matches found" << endl;
+         regfree(&parsingRule);
          return false;
      }
 
-     //     for(unsigned i = 0; i<matches.size(); ++i)
-             //     cout << "'" << matches[i]  << "'" << endl;
+
+     if(all) // if preg_match_all
+     {
+         str = str.substr(last_end, str.length() - last_end);
+         preg_match(pattern, str, matches, true);
+     }
 
 
-    regfree(&parsingRule);
+     regfree(&parsingRule);
 
-    return true;
+     return true;
 }
 
 
@@ -156,6 +172,8 @@ bool Parser::preg_match(const string& pattern,
 
 
 
+
+
 bool Parser::parseVar(const string& line, Variable& var)
 {
     vector<string> res;
@@ -172,6 +190,59 @@ bool Parser::parseVar(const string& line, Variable& var)
 
     return true;
 }
+
+bool Parser::parseFunc(const string& line, Function& func)
+{
+
+    vector<string> res;
+    if(!preg_match("^\\s*(\\w.*\\w)\\s+(\\w+)\\s*(\\([^()]*\\))", line, res))
+    {
+        return false;
+    }
+
+    func.type   = res[0];
+    func.name   = res[1];
+
+
+
+    vector<string> args;
+    preg_match("^\\s*[(,]\\s*([^,)]+)\\s*[,)]", res[2], args, true);
+
+
+     for(uint i = 0; i < args.size(); i++)
+     {
+         args[i] += ";";
+         cout << "res2: " << args[i] << endl;
+
+         Variable var;
+
+
+         if(parseVar(args[i], var))
+         {
+             cout << "begin" << endl;
+
+             shared_ptr<Variable> v (new Variable);
+             v->name = var.name;
+             v->type = var.type;
+
+             func.args.push_back(v);
+//             func.args[i]->name = var.name;
+//             func.args[i]->type = var.type;
+             cout << "end" << endl;
+         }
+         else
+         {
+             cerr << "Unable to parse variable: '" << args[i] << "'" << endl;
+             return false;
+         }
+     }
+
+     
+
+    return true;
+}
+
+
 
 
 
