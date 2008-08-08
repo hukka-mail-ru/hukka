@@ -1,0 +1,18 @@
+#!/bin/bash
+
+PROGERS=( ssadovni npavlenk ocheredn dstotsky dhabrik defimov bbiberge hdenzel )
+
+#find . -name '*.h' | xargs svn blame >> huge
+#find . -name '*.cpp' | xargs svn blame >> huge
+
+echo  " "
+
+for ((i=0; i<${#PROGERS[*]}; i++))
+do
+   LINES=`cat huge | grep  ${PROGERS[$i]} | wc -l`
+   echo ${PROGERS[$i]}    $LINES
+done
+
+echo  " "
+
+#rm huge

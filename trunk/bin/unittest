@@ -1,0 +1,187 @@
+#!/usr/bin/perl
+
+# Usage : perl unit.pl [filename.h]
+
+$body = 0;
+$parenthess = 0;
+while ($line = <>) # read a file
+{ 
+    #skip comments
+    if($line =~ m/^\s*\/\*/) # meet '/*'
+    {
+        $comment = 1;
+    }
+
+    if($line =~ m/^\s*\*\//) # meet '*/'
+    {
+        $comment = 0;
+    }
+
+    if($comment == 1 || $line =~ m/^\s*\/\//) # inside of comment, or meet '//'
+    {
+        next;
+    }
+    
+
+    # class body starts
+    if($line =~ m/^\s*class\s*(\w+)\s*/)
+    {
+       $class = $1;
+       $body = 1;
+    }
+
+    # class body ends
+    if($line =~ m/^\s*};/)
+    {
+        $body = 0;
+    }
+
+    if($body == 1)
+    {
+        # skip implementations of functions
+        if($line =~ m/{/)
+        {
+            $parenthess++;
+        }
+
+        if($line =~ m/}/)
+        {
+            $parenthess--;
+        }
+
+        if($parenthess > 1) # skip implementations of functions
+        {
+            next;
+        }
+
+        #skip friends
+        if($line =~ m/^\s*friend\s+/)
+        {
+        next;
+        }
+
+        # get function as  '>..smth..NAME..('
+        if($line =~ m/^.*\S+\s+(\w+)\s*\(/)
+        {
+            $func = $1;
+
+            # try to get arguments as '>..(ARGS)'
+            if($line =~ m/^.*\((.*)\)/)
+            {
+               $args = $1;
+            }
+ 
+            if($func =~ m/$class/) # skip constructors and destructors
+            {
+                next;
+            }
+
+            @decl[$d++] = "        CPPUNIT_TEST(test_$func);\n";
+
+            @impl[$i++] = "        void test_$func()\n";
+            @impl[$i++] = "        { \n";
+            @impl[$i++] = "            std::cout << \"test_$class\::test_$func()\" << std::cout; \n\n";
+            @impl[$i++] = "            OBUError res = data->$func($args);\n";
+            @impl[$i++] = "            CPPUNIT_ASSERT(NO_ERROR == res);\n";
+            @impl[$i++] = "        } \n\n";
+
+            next; # if this is a function, it can't be a variable.
+        }
+
+        # get variable as '..TYPE..NAME..;..<'
+        if($line =~ m/\s*(\S+)\s+(\w+)\s*;\s*$/)
+        {
+             if($line =~ m/\)/) # no ')' in variable names; skip situations like 'void foo() const;'
+             {
+                 next;
+             }
+
+            $type = $1;
+            $Name = "\u$2"; # name in upper case
+
+            @decl[$d++] = "        CPPUNIT_TEST(test_getset$Name);\n";
+            
+            @impl[$i++] = "        void test_getset$Name()\n";
+            @impl[$i++] = "        { \n";
+            @impl[$i++] = "            std::cout << \"test_$class\::test_getset$Name\" << std::cout; \n\n";
+            @impl[$i++] = "            $type val = 15; \n";
+            @impl[$i++] = "            data->set$Name(val); \n";
+            @impl[$i++] = "            CPPUNIT_ASSERT(val == data->get$Name()); \n";
+            @impl[$i++] = "        } \n\n";
+        }
+    }
+   
+}
+
+
+#output the results
+
+print "/*\n";
+print " * Copyright (c) 2008 Satellic Traffic Management GmbH\n";
+print " * All Rights Reserved\n";
+print " *\n";
+print " * This software is the confidential and proprietary information of\n";
+print " * Satellic Traffic Management GmbH (\"Confidential Information\").\n";
+print " * You shall not disclose such Confidential Information and shall\n";
+print " * use it only in accordance with the terms of the license agreement\n";
+print " * you entered into with Satellic Traffic Management GmbH.\n";
+print " */\n\n";
+
+print "/* \n";
+print " * \$Id: test_$class.h 4291 2008-06-30 13:12:55Z ssadovni \$ \n";
+print " * \$HeadURL: test_$class.h \$ \n";
+print " */ \n\n";
+
+print "/** \n";
+print " * \@file test_$class.h \n";
+print " * \@author ssadovni \n";
+print " */ \n\n";
+
+print "#ifndef TEST_\U$class\_H \n";
+print "#define TEST_\U$class\_H \n\n";
+
+print "#include <iostream> \n";
+print "#include <cppunit/extensions/HelperMacros.h> \n";
+print "#include \"$class.h\" \n\n";
+
+print "namespace APPETC \n";
+print "{ \n";
+
+print "/**  \n";
+print " * \@class test_$class \n";
+print " * \@brief test suite for $class class \n";
+print " */ \n";
+
+# class
+print "class test_$class : public CppUnit::TestFixture \n";
+print "{ \n";
+print "    private:\n\n";
+
+# declarations
+print "        CPPUNIT_TEST_SUITE(test_$class);\n\n";
+print @decl;
+print "\n";
+print "        CPPUNIT_TEST_SUITE_END();\n\n";
+
+# implementations
+print "    public:\n\n";
+
+print "        void setUp()\n";
+print "        {\n";
+print "        }\n\n";
+
+print "        void tearDown()\n";
+print "        {\n";
+print "        }\n\n";
+
+print @impl;
+
+
+# EO class
+print "}; // EO class test_$class \n\n";
+
+print "CPPUNIT_TEST_SUITE_NAMED_REGISTRATION( test_$class, \"$class\" ); \n\n";
+
+print "} // EO namespace \n";
+
+
