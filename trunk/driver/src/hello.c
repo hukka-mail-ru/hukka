@@ -21,7 +21,9 @@ module_param(major, int, S_IRUGO);
 module_param(minor, int, S_IRUGO);
 
 // structures 
-struct semaphore sem;
+//struct semaphore sem;
+static DECLARE_MUTEX(sem);
+
 static struct cdev* my_cdev;
 
 // memory buffer
@@ -46,28 +48,39 @@ int hello_release(struct inode *inode, struct file *filp)
 ssize_t hello_write(struct file *filp, const char __user *buf, size_t count,
                     loff_t *f_pos) 
 {
+    int res = -ENOMEM;
     printk(KERN_WARNING "hello: syscall 'write'...\n");
+    
+    down(&sem);    
     
     // f_pos is ignored. The data is always written to the beginning of the 'memory'   
     kfree(memory);
     memory = kmalloc(count, GFP_KERNEL);
     if(!memory)
     {
-        return -ENOMEM;
+        res = -ENOMEM;
+        goto nax;
     }
     
     memset(memory, 0, count);
     
     if (copy_from_user (memory, buf, count)) 
     {
-        return -EFAULT;
+        res = -EFAULT;
+        goto nax;
     }
     
     mem_size = count;
     
     printk(KERN_WARNING "hello: wrote bytes: %d\n", count);
     
-    return count; // return as much as asked :)
+    res = count; // return as much as asked :)
+    
+    
+nax:
+    up(&sem);
+    return res;
+    
 }
 
 //////////////// READ ///////////////////////////////////////////
@@ -75,10 +88,14 @@ ssize_t hello_write(struct file *filp, const char __user *buf, size_t count,
 ssize_t hello_read(struct file *filp, char __user *buf, size_t count,
                    loff_t *f_pos)
 {
+    int res = -ENOMEM;
+    down(&sem); 
+    
     // EOF case
     if (*f_pos > mem_size)
     {
-        return 0; 
+        res = 0;
+        goto nax;
     }
     
     // UP-TO-EOF case
@@ -89,14 +106,19 @@ ssize_t hello_read(struct file *filp, char __user *buf, size_t count,
 
     if(copy_to_user(buf, memory + *f_pos, count))
     {
-        return -EFAULT;
+        res = -EFAULT;
+        goto nax;
     }
     
     *f_pos += count;
  
     printk(KERN_WARNING "hello: Read KU-KU! count=%d\n", count);
     
-    return count; // maybe we didn't read everything    
+    res = count; // maybe we didn't read everything    
+    
+nax:
+    up(&sem);
+    return res;
 }
 
 
