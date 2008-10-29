@@ -1,0 +1,7 @@
+ + 1. Create a simpliest driver: it just reads something, strores it in the internal memory and can output it to the console.
+
+2. Open a COM port, write something into it.
+
+3. Assemble a device with LED, that can be plugged into COM port, like a mouse.
+
+4. Assemble more complicated device (like a litte car) which can be managed by the driver.
