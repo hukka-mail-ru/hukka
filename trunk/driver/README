@@ -1,7 +1,11 @@
  + 1. Create a simpliest driver: it just reads something, strores it in the internal memory and can output it to the console.
 
+1a. Make an allocation of major-minor numbers
+
 2. Open a COM port, write something into it.
 
 3. Assemble a device with LED, that can be plugged into COM port, like a mouse.
+(In practice, you have to connect LEDs or a printer to the port to actually see the results of a digital I/O operation)
+
 
 4. Assemble more complicated device (like a litte car) which can be managed by the driver.
