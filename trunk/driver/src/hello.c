@@ -10,8 +10,14 @@
 #include <linux/fs.h>
 #include <linux/cdev.h>
 #include <linux/uaccess.h>
+#include <linux/ioport.h>
+#include <asm/system.h>
+#include <asm/io.h>
  
 MODULE_LICENSE("Dual BSD/GPL");
+
+#define SHORT_NR_PORTS  8   /* use 8 ports by default */
+static unsigned long lpt_port = 0x378;
 
 // program parameters
 static int major = 0;
@@ -74,8 +80,17 @@ ssize_t hello_write(struct file *filp, const char __user *buf, size_t count,
     
     printk(KERN_WARNING "hello: wrote bytes: %d\n", count);
     
+    // write to port
+    while (count--) 
+    {
+        outb(*(memory++), lpt_port);
+        wmb();
+    }
+    
     res = count; // return as much as asked :)
     
+    
+
     
 nax:
     up(&sem);
@@ -139,6 +154,13 @@ static int startup(void)
     
 
     printk(KERN_INFO "hello: startup\n");
+    
+    if (! request_region(lpt_port, SHORT_NR_PORTS, "LPT")) 
+    {
+        printk(KERN_INFO "hello: can't get I/O mem address 0x%lx\n", lpt_port);
+        return -ENODEV;
+    }
+    
   //  printk(KERN_INFO "The process is '%s' (pid %i)\n", current->comm, current->pid);
  //   printk(KERN_INFO "The kernel is %i\n", LINUX_VERSION_CODE);
     
@@ -181,6 +203,12 @@ static int startup(void)
     printk(KERN_WARNING "hello: got version %d:%d\n", major, minor);
     printk(KERN_WARNING "hello: my_cdev allocated\n");
     printk(KERN_WARNING "hello: my_cdev added\n");
+    
+    
+
+    
+    printk(KERN_WARNING "hello: request_mem_region done\n");
+    
 
     return 0;
 }
@@ -188,6 +216,8 @@ static int startup(void)
 static void kickoff(void)
 {
     dev_t dev = MKDEV(major, minor);
+    
+    release_region(lpt_port, SHORT_NR_PORTS);
     
     kfree(memory);
 

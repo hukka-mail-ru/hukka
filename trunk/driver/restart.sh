@@ -6,7 +6,7 @@ sudo /sbin/rmmod $module
 echo "OK"
 
 # insert module
-sudo /sbin/insmod ./src/$module.ko || exit 1
+sudo /sbin/insmod ./src/$module.ko major=0 minor=0 || exit 1
 
 # get version
 major=$(awk "\$2==\"$module\" {print \$1}" /proc/devices)
