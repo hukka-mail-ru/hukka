@@ -1,6 +1,6 @@
  + 1. Create a simpliest driver: it just reads something, strores it in the internal memory and can output it to the console.
 
-1a. Make an allocation of major-minor numbers
++ 1a. Make an allocation of major-minor numbers
 
 2. Open a COM port, write something into it.
 
