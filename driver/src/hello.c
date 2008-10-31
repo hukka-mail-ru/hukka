@@ -14,7 +14,7 @@
 MODULE_LICENSE("Dual BSD/GPL");
 
 // program parameters
-static int major = 70;
+static int major = 0;
 static int minor = 0;
 
 module_param(major, int, S_IRUGO);
@@ -135,18 +135,31 @@ static struct file_operations my_ops =
 static int startup(void)
 {
     dev_t dev = MKDEV(major, minor);
+    int result = 0;
     
 
     printk(KERN_INFO "hello: startup\n");
   //  printk(KERN_INFO "The process is '%s' (pid %i)\n", current->comm, current->pid);
  //   printk(KERN_INFO "The kernel is %i\n", LINUX_VERSION_CODE);
-
-    // get a device number
-    if (register_chrdev_region(dev, 1, "hello") < 0) // means 1 device named "hello"
+    
+    // get a driver number
+    if (major) 
     {
-       printk(KERN_WARNING "hello: can't get version %d:%d\n", major, minor);
-       return -1;
+        dev = MKDEV(major, minor);
+        result = register_chrdev_region(dev, 1, "hello");
+    } 
+    else 
+    {
+        result = alloc_chrdev_region(&dev, minor, 1, "hello");
+        major = MAJOR(dev);
     }
+    
+    if (result < 0) 
+    {
+        printk(KERN_WARNING "hello: can't get version %d:%d\n", major, minor);
+        return result;
+    }
+
        
     // Initialize the device.	
     my_cdev = cdev_alloc();
