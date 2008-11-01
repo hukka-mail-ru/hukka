@@ -55,7 +55,7 @@ ssize_t hello_write(struct file *filp, const char __user *buf, size_t count,
                     loff_t *f_pos) 
 {
     int res = -ENOMEM;
-    printk(KERN_WARNING "hello: syscall 'write'...\n");
+    printk(KERN_WARNING "hello: hello_write: started...\n");
     
     down(&sem);    
     
@@ -65,6 +65,7 @@ ssize_t hello_write(struct file *filp, const char __user *buf, size_t count,
     if(!memory)
     {
         res = -ENOMEM;
+        printk(KERN_WARNING "hello: hello_write: kmalloc() failed \n");
         goto nax;
     }
     
@@ -73,12 +74,16 @@ ssize_t hello_write(struct file *filp, const char __user *buf, size_t count,
     if (copy_from_user (memory, buf, count)) 
     {
         res = -EFAULT;
+        printk(KERN_WARNING "hello: hello_write: copy_from_user() failed \n");
         goto nax;
     }
     
     mem_size = count;
+    res = count; // return as much as asked :)
     
     printk(KERN_WARNING "hello: wrote bytes: %d\n", count);
+    
+    printk(KERN_WARNING "hello: writing to port...\n");
     
     // write to port
     while (count--) 
@@ -87,13 +92,9 @@ ssize_t hello_write(struct file *filp, const char __user *buf, size_t count,
         wmb();
     }
     
-    res = count; // return as much as asked :)
-    
-    
-
-    
 nax:
     up(&sem);
+    printk(KERN_WARNING "hello: hello_write finished. Return value: %d\n", res);
     return res;
     
 }
@@ -160,6 +161,7 @@ static int startup(void)
         printk(KERN_INFO "hello: can't get I/O mem address 0x%lx\n", lpt_port);
         return -ENODEV;
     }
+    printk(KERN_WARNING "hello: request_region: port 0x%lx hooked\n", lpt_port);
     
   //  printk(KERN_INFO "The process is '%s' (pid %i)\n", current->comm, current->pid);
  //   printk(KERN_INFO "The kernel is %i\n", LINUX_VERSION_CODE);
@@ -207,7 +209,7 @@ static int startup(void)
     
 
     
-    printk(KERN_WARNING "hello: request_mem_region done\n");
+
     
 
     return 0;
@@ -220,6 +222,7 @@ static void kickoff(void)
     release_region(lpt_port, SHORT_NR_PORTS);
     
     kfree(memory);
+    memory = NULL;
 
     cdev_del(my_cdev);
 
