@@ -93,6 +93,8 @@ ssize_t hello_write(struct file *filp, const char __user *buf, size_t count,
     }
     
 nax:
+    // kfree ???
+
     up(&sem);
     printk(KERN_WARNING "hello: hello_write finished. Return value: %d\n", res);
     return res;
