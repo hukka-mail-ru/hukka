@@ -1,22 +1,33 @@
+
+
+
+
+lines1=$(sudo wc -l /var/log/kern | awk "{print \$1}")
+
 module=hello
 
+for i in 1
+do
 # remove module
-echo "Remove '$module' module..."
+echo "Removing modules..."
 sudo /sbin/rmmod $module 
+sudo /sbin/rmmod parport_pc
+sudo /sbin/rmmod parport
 echo "OK"
 
 # insert module
-sudo /sbin/insmod ./src/$module.ko major=0 minor=0 || exit 1
+sudo /sbin/insmod ./src/$module.ko major=0 minor=0 || break
 
 # get version
 major=$(awk "\$2==\"$module\" {print \$1}" /proc/devices)
 minor=0
 
-
 # remove stale node, create a new one
 sudo rm -f /dev/$module 
-sudo mknod /dev/$module c $major $minor || exit 1
+
 echo "mknod /dev/$module c $major $minor"
+sudo mknod /dev/$module c $major $minor || break
+
 
 # change permissions
 group="staff"
@@ -24,12 +35,17 @@ grep -q '^staff:' /etc/group || group="wheel"
 sudo chgrp $group /dev/$module
 sudo chmod 666 /dev/$module
 
-# show logging
-DATE=`date`
-TIME=`expr substr "$DATE" 5 16`
 
 sleep 1
+done
+
+
+# END: show logging
+lines2=$(sudo wc -l /var/log/kern | awk "{print \$1}")
+
+lines=`expr $lines2 - $lines1` || lines=0
+
 echo ">>>>>>>>"
-sudo tail /var/log/kern
+sudo tail -n $lines /var/log/kern
 echo "<<<<<<<<"
-echo $TIME
+
