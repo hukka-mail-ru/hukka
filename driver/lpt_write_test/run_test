@@ -1,0 +1,41 @@
+i=0.2
+
+sudo ./333
+sleep $i
+sudo ./000
+sleep $i
+
+sudo ./333
+sleep $i
+sudo ./000
+sleep $i
+
+sudo ./222
+sleep $i
+sudo ./111
+sleep $i
+sudo ./222
+sleep $i
+sleep $i
+
+sudo ./111
+sleep $i
+sudo ./222
+sleep $i
+sudo ./111
+sleep $i
+sudo ./222
+sleep $i
+sudo ./000
+sleep 0.3
+
+
+sudo ./333
+sleep $i
+sudo ./000
+sleep 0.1
+
+sudo ./333
+sleep $i
+sudo ./000
+sleep $i
