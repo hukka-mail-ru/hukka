@@ -20,6 +20,6 @@ int main(int argc, char *argv[])
 
     iopl(3);
     outb(led, 0x378);
-    printf("%d\n", led);	
+//    printf("%d\n", led);	
     return 0;
 } 
