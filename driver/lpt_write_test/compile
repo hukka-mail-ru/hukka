@@ -1,2 +1,0 @@
-gcc -I/usr/src/linux-source-2.6.18/include -c -o 111.o 111.c
-gcc 111.o -o $1

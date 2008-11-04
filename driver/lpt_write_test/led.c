@@ -7,8 +7,19 @@
 //============================================================================
 
 #include <asm/io.h>
-int main()
+#include <stdio.h>
+#include <stdlib.h>
+int main(int argc, char *argv[])
 {
+    char led = 0;
+
+    if(argc > 1)
+    {
+	led = atoi(argv[1]);
+    }
+
     iopl(3);
-    outb(0x0,0x378);
+    outb(led, 0x378);
+    printf("%d\n", led);	
+    return 0;
 } 
