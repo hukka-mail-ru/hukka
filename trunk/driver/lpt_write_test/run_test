@@ -1,41 +1,42 @@
 i=0.2
 
-sudo ./333
+sudo ./led 3
 sleep $i
-sudo ./000
-sleep $i
-
-sudo ./333
-sleep $i
-sudo ./000
+sudo ./led 0
 sleep $i
 
-sudo ./222
+sudo ./led 3
 sleep $i
-sudo ./111
+sudo ./led 0
 sleep $i
-sudo ./222
+
+sudo ./led 2
+sleep $i
+sudo ./led 1
+sleep $i
+sudo ./led 2
 sleep $i
 sleep $i
 
-sudo ./111
+sudo ./led 1
 sleep $i
-sudo ./222
+sudo ./led 2
 sleep $i
-sudo ./111
+sudo ./led 1
 sleep $i
-sudo ./222
+sudo ./led 2
 sleep $i
-sudo ./000
-sleep 0.3
-
-
-sudo ./333
 sleep $i
-sudo ./000
+sudo ./led 0
 sleep 0.1
 
-sudo ./333
-sleep $i
-sudo ./000
+
+sudo ./led 3
+sleep 0.1
+sudo ./led 0
+sleep 0.1
+
+sudo ./led 3
+sleep 0.1
+sudo ./led 0
 sleep $i
