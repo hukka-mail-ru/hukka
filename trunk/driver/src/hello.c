@@ -154,12 +154,9 @@ static struct file_operations my_ops =
 
 
 //////////////// PROC ///////////////////////////////////////////
-/*
- * Actually create (and remove) the /proc file(s).
- */
 
 int hello_read_procmem(char *buf, char **start, off_t offset,
-                   int count, int *eof, void *data)
+                       int count, int *eof, void *data)
 {
     int len = 0;
 
@@ -175,12 +172,6 @@ int hello_read_procmem(char *buf, char **start, off_t offset,
     {
         len += sprintf(buf+len, "No memory in use\n");
     }
-        
-        
-    
-    //  printk(KERN_INFO "The process is '%s' (pid %i)\n", current->comm, current->pid);
-    //   printk(KERN_INFO "The kernel is %i\n", LINUX_VERSION_CODE);
-    
     
     up(&sem);
 
@@ -190,23 +181,16 @@ int hello_read_procmem(char *buf, char **start, off_t offset,
 
 static void hello_create_proc(void)
 {
-    struct proc_dir_entry *entry;
     create_proc_read_entry("hellomem", 0 /* default mode */,
             NULL /* parent dir */, hello_read_procmem,
             NULL /* client data */);
-    entry = create_proc_entry("helloseq", 0, NULL);
-    if (entry)
-    {
-        entry->proc_fops = &my_ops;
-    }
 }
 
 static void hello_remove_proc(void)
 {
-    /* no problem if it was not registered */
     remove_proc_entry("hellomem", NULL /* parent dir */);
-    remove_proc_entry("helloseq", NULL);
 }
+//////////////// EO PROC ///////////////////////////////////////////
 
 
 
