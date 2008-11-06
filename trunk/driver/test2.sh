@@ -7,7 +7,7 @@ do
 echo ">>>>>>>> $i"
 ls > /dev/hello
 cat /dev/hello
-sleep 1
+sleep 0.1
 done
 
 #lines2=$(sudo wc -l /var/log/kern | awk "{print \$1}")

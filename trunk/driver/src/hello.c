@@ -13,6 +13,7 @@
 #include <linux/ioport.h>
 #include <asm/system.h>
 #include <asm/io.h>
+#include <linux/proc_fs.h> // proc
  
 MODULE_LICENSE("Dual BSD/GPL");
 
@@ -49,11 +50,16 @@ int hello_release(struct inode *inode, struct file *filp)
     return 0;
 }
 
+
+
+
+
 //////////////// WRITE ///////////////////////////////////////////
 
 ssize_t hello_write(struct file *filp, const char __user *buf, size_t count,
                     loff_t *f_pos) 
 {
+    
     int res = -ENOMEM;
     printk(KERN_WARNING "hello: hello_write: started...\n");
     
@@ -83,22 +89,19 @@ ssize_t hello_write(struct file *filp, const char __user *buf, size_t count,
     
     printk(KERN_WARNING "hello: wrote bytes: %d\n", count);
     
-    printk(KERN_WARNING "hello: writing to port...\n");
-    
+/*
     // write to port
     while (count--) 
     {
         outb(*(memory++), lpt_port);
         wmb();
     }
-    
+   */ 
 nax:
-    // kfree ???
 
     up(&sem);
     printk(KERN_WARNING "hello: hello_write finished. Return value: %d\n", res);
     return res;
-    
 }
 
 //////////////// READ ///////////////////////////////////////////
@@ -150,24 +153,83 @@ static struct file_operations my_ops =
 };
 
 
+//////////////// PROC ///////////////////////////////////////////
+/*
+ * Actually create (and remove) the /proc file(s).
+ */
+
+int hello_read_procmem(char *buf, char **start, off_t offset,
+                   int count, int *eof, void *data)
+{
+    int len = 0;
+
+    down(&sem);
+
+    len += sprintf(buf+len, "The process is '%s' (pid %i)\n",
+                             current->comm, current->pid);
+    if(memory)
+    {
+        len += sprintf(buf+len, "Allocated %d bytes\n", mem_size);
+    }
+    else
+    {
+        len += sprintf(buf+len, "No memory in use\n");
+    }
+        
+        
+    
+    //  printk(KERN_INFO "The process is '%s' (pid %i)\n", current->comm, current->pid);
+    //   printk(KERN_INFO "The kernel is %i\n", LINUX_VERSION_CODE);
+    
+    
+    up(&sem);
+
+    *eof = 1;
+    return len;
+}
+
+static void hello_create_proc(void)
+{
+    struct proc_dir_entry *entry;
+    create_proc_read_entry("hellomem", 0 /* default mode */,
+            NULL /* parent dir */, hello_read_procmem,
+            NULL /* client data */);
+    entry = create_proc_entry("helloseq", 0, NULL);
+    if (entry)
+    {
+        entry->proc_fops = &my_ops;
+    }
+}
+
+static void hello_remove_proc(void)
+{
+    /* no problem if it was not registered */
+    remove_proc_entry("hellomem", NULL /* parent dir */);
+    remove_proc_entry("helloseq", NULL);
+}
+
+
+
+
+
 static int startup(void)
 {
     dev_t dev = MKDEV(major, minor);
     int result = 0;
+    memory = NULL;
     
 
     printk(KERN_INFO "hello: startup\n");
     
+    /*
     if (! request_region(lpt_port, SHORT_NR_PORTS, "LPT")) 
     {
         printk(KERN_INFO "hello: can't get I/O mem address 0x%lx\n", lpt_port);
         return -ENODEV;
     }
     printk(KERN_WARNING "hello: request_region: port 0x%lx hooked\n", lpt_port);
-    
-  //  printk(KERN_INFO "The process is '%s' (pid %i)\n", current->comm, current->pid);
- //   printk(KERN_INFO "The kernel is %i\n", LINUX_VERSION_CODE);
-    
+    */
+
     // get a driver number
     if (major) 
     {
@@ -203,6 +265,8 @@ static int startup(void)
        return -1;
     }
 
+    
+    hello_create_proc(); // proc debugging
 
     printk(KERN_WARNING "hello: got version %d:%d\n", major, minor);
     printk(KERN_WARNING "hello: my_cdev allocated\n");
@@ -221,12 +285,15 @@ static void kickoff(void)
 {
     dev_t dev = MKDEV(major, minor);
     
-    release_region(lpt_port, SHORT_NR_PORTS);
+    hello_remove_proc(); // proc debugging
+    
+    //release_region(lpt_port, SHORT_NR_PORTS);
     
     kfree(memory);
+    
     memory = NULL;
 
-    cdev_del(my_cdev);
+    cdev_del(my_cdev); // Denitialize the device
 
     unregister_chrdev_region(dev, 1); // we had only 1 device
 

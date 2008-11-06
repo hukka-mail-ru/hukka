@@ -11,8 +11,8 @@ do
 # remove module
 echo "Removing modules..."
 sudo /sbin/rmmod $module 
-sudo /sbin/rmmod parport_pc
-sudo /sbin/rmmod parport
+#sudo /sbin/rmmod parport_pc
+#sudo /sbin/rmmod parport
 echo "OK"
 
 # insert module
