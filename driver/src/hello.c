@@ -63,7 +63,11 @@ ssize_t hello_write(struct file *filp, const char __user *buf, size_t count,
     int res = -ENOMEM;
     printk(KERN_WARNING "hello: hello_write: started...\n");
     
-    down(&sem);    
+    if(down_interruptible(&sem))
+    {
+        return -ERESTARTSYS;
+    }
+        
     
     // f_pos is ignored. The data is always written to the beginning of the 'memory'   
     kfree(memory);
