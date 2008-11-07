@@ -5,7 +5,7 @@
 for ((i=1; i <= 100 ; i++))
 do
 echo ">>>>>>>> $i"
-ls > /dev/hello
+ls -l > /dev/hello
 cat /dev/hello
 sleep 0.1
 done
