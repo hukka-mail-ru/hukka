@@ -14,18 +14,29 @@
 #include <asm/system.h>
 #include <asm/io.h>
 #include <linux/proc_fs.h> // proc
+#include <linux/ioctl.h> /* needed for the _IOW etc stuff used later */
  
 MODULE_LICENSE("Dual BSD/GPL");
 
-#define SHORT_NR_PORTS  8   /* use 8 ports by default */
+// ioctl parameters
+/* Use 'h' as magic number */
+#define HELLO_IOC_MAGIC  'h'
+
+#define HELLO_IOCFORMAT _IOW(HELLO_IOC_MAGIC, 0, int)
+#define HELLO_IOCSTAT    _IO(HELLO_IOC_MAGIC, 0)
+
+// port parameters
+/* use 8 ports by default */
+#define SHORT_NR_PORTS  8  
 static unsigned long lpt_port = 0x378;
+
 
 // program parameters
 static int major = 0;
 static int minor = 0;
-
 module_param(major, int, S_IRUGO);
 module_param(minor, int, S_IRUGO);
+
 
 // structures 
 //struct semaphore sem;
@@ -56,8 +67,7 @@ int hello_release(struct inode *inode, struct file *filp)
 
 //////////////// WRITE ///////////////////////////////////////////
 
-ssize_t hello_write(struct file *filp, const char __user *buf, size_t count,
-                    loff_t *f_pos) 
+ssize_t hello_write(struct file *filp, const char __user *buf, size_t count, loff_t *f_pos) 
 {
     
     int res = -ENOMEM;
@@ -93,14 +103,14 @@ ssize_t hello_write(struct file *filp, const char __user *buf, size_t count,
     
     printk(KERN_WARNING "hello: wrote bytes: %d\n", count);
     
-/*
+
     // write to port
-    while (count--) 
-    {
-        outb(*(memory++), lpt_port);
-        wmb();
-    }
-   */ 
+   // while (count--) 
+   // {
+   //     outb(*(memory++), lpt_port);
+   //     wmb();
+  //  }
+   
 nax:
 
     up(&sem);
@@ -146,6 +156,56 @@ nax:
     return res;
 }
 
+//////////////// IOCTL ///////////////////////////////////////////
+int scull_ioctl(struct inode *inode, struct file *filp,
+                 unsigned int cmd, unsigned long arg)
+{
+    int retval = 0;
+    int err = 0;
+    /*
+     * extract the type and number bitfields, and don't decode
+     * wrong cmds: return ENOTTY (inappropriate ioctl) before access_ok()
+     */
+    if (_IOC_TYPE(cmd) != HELLO_IOC_MAGIC) 
+        return -ENOTTY;
+   
+    
+    /*
+     * the direction is a bitmask, and VERIFY_WRITE catches R/W
+     * transfers. `Type' is user-oriented, while
+     * access_ok is kernel-oriented, so the concept of "read" and
+     * "write" is reversed
+     */
+    if (_IOC_DIR(cmd) & _IOC_READ)
+        err = !access_ok(VERIFY_WRITE, (void __user *)arg, _IOC_SIZE(cmd));
+    else if (_IOC_DIR(cmd) & _IOC_WRITE)
+        err =  !access_ok(VERIFY_READ, (void __user *)arg, _IOC_SIZE(cmd));
+    if (err) 
+        return -EFAULT;
+    
+    switch(cmd) 
+    {
+
+    case HELLO_IOCFORMAT:
+        kfree(memory);
+        memory = NULL;
+        mem_size = 0;
+        break;
+        
+    case HELLO_IOCSTAT:
+        retval = mem_size;
+        break;
+        
+      default: 
+        return -ENOTTY;
+    }
+    
+    return retval;
+}
+
+
+
+//////////////// FILE OPERATIONS ///////////////////////////////////////////
 
 static struct file_operations my_ops = 
 {
