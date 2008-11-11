@@ -7,6 +7,8 @@
 
 #include <iostream>
 
+#include <hello.h>
+
 using namespace std;
 
 
@@ -48,11 +50,21 @@ int main()
     
     
     //ioctl
-    result = ioctl(fd, 12, param);
+    result = ioctl(fd, HELLO_IOCFORMAT, param);
+    if(result == -1)
     {
-        cout << "can't do ioctl for " << dev << endl;
+        cout << "can't do HELLO_IOCFORMAT for " << dev << endl;
         goto close;
     }    
+    
+    result = ioctl(fd, HELLO_IOCSTAT, param);
+    if(result == -1)
+    {
+        cout << "can't do HELLO_IOCSTAT for " << dev << endl;
+        goto close;
+    }    
+    cout << "memory size " << result << " bytes" << endl;
+        
     
     
 close:    

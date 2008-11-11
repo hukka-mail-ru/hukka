@@ -15,15 +15,11 @@
 #include <asm/io.h>
 #include <linux/proc_fs.h> // proc
 #include <linux/ioctl.h> /* needed for the _IOW etc stuff used later */
+
+#include "hello.h"
  
 MODULE_LICENSE("Dual BSD/GPL");
 
-// ioctl parameters
-/* Use 'h' as magic number */
-#define HELLO_IOC_MAGIC  'h'
-
-#define HELLO_IOCFORMAT _IOW(HELLO_IOC_MAGIC, 0, int)
-#define HELLO_IOCSTAT    _IO(HELLO_IOC_MAGIC, 0)
 
 // port parameters
 /* use 8 ports by default */
@@ -157,9 +153,12 @@ nax:
 }
 
 //////////////// IOCTL ///////////////////////////////////////////
-int scull_ioctl(struct inode *inode, struct file *filp,
+int hello_ioctl(struct inode *inode, struct file *filp,
                  unsigned int cmd, unsigned long arg)
 {
+
+    printk(KERN_WARNING "hello: ioctl started\n");
+    
     int retval = 0;
     int err = 0;
     /*
@@ -187,12 +186,21 @@ int scull_ioctl(struct inode *inode, struct file *filp,
     {
 
     case HELLO_IOCFORMAT:
+        
+        down(&sem);
+        
+        printk(KERN_WARNING "hello: ioctl HELLO_IOCFORMAT\n");
         kfree(memory);
         memory = NULL;
         mem_size = 0;
+        retval = 0;
+        
+        up(&sem);
+        
         break;
         
     case HELLO_IOCSTAT:
+        printk(KERN_WARNING "hello: ioctl HELLO_IOCSTAT\n");
         retval = mem_size;
         break;
         
@@ -213,7 +221,8 @@ static struct file_operations my_ops =
     .read       = hello_read,
     .write      = hello_write,
     .open       = hello_open,
-    .release    = hello_release
+    .release    = hello_release,
+    .ioctl      = hello_ioctl    
 };
 
 

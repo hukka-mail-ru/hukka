@@ -1,5 +1,7 @@
+
+
 #CXXFLAGS =	-O2 -g -Wall -fmessage-length=0 
-CXXFLAGS =-Wall
+CXXFLAGS =-Wall -I../src
 
 
 OBJS =		test.o
