@@ -39,6 +39,14 @@ int main()
         return close(fd);
     }
     
+    // ioctl stat
+    result = ioctl(fd, HELLO_IOCSTAT, param);
+    if(result == -1)
+    {
+        cout << "can't do HELLO_IOCSTAT for " << dev << endl;
+    }    
+    cout << "memory size " << result << " bytes" << endl;
+    
     // read
     res = read(fd, buf, size);
     if(res == -1)
@@ -49,21 +57,21 @@ int main()
     cout << "read " << size << " bytes: '" << buf  << "'" << endl;
     
     
-    //ioctl
+    //ioctl format
     result = ioctl(fd, HELLO_IOCFORMAT, param);
     if(result == -1)
     {
         cout << "can't do HELLO_IOCFORMAT for " << dev << endl;
-        goto close;
     }    
     
+    // ioctl stat
     result = ioctl(fd, HELLO_IOCSTAT, param);
     if(result == -1)
     {
         cout << "can't do HELLO_IOCSTAT for " << dev << endl;
-        goto close;
     }    
     cout << "memory size " << result << " bytes" << endl;
+
         
     
     
