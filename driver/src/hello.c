@@ -42,7 +42,7 @@ static struct cdev* my_cdev;
 
 // memory buffer
 static char* memory = NULL;
-static int mem_size = 0;
+static ssize_t mem_size = 0;
 
 
 // functions
@@ -201,7 +201,7 @@ int hello_ioctl(struct inode *inode, struct file *filp,
         
     case HELLO_IOCSTAT:
         printk(KERN_WARNING "hello: ioctl HELLO_IOCSTAT\n");
-        retval = put_user (mem_size, (void __user*)arg );
+        retval = __put_user (mem_size, (ssize_t __user*)arg ); // __put_user because access_ok
         break;
         
       default: 

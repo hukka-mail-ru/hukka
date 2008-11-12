@@ -44,11 +44,11 @@ int main()
         cout << "wrote " << res << " bytes" << endl;
         
         // ioctl stat
-        int param = 0;
-        if(ioctl(fd, HELLO_IOCSTAT, &param) < 0)
+        long mem_size = 0;
+        if(ioctl(fd, HELLO_IOCSTAT, &mem_size) < 0)
             throw IOCTL_ERROR;
             
-        cout << "memory size " << param << " bytes" << endl;
+        cout << "memory size " << mem_size << " bytes" << endl;
         
         // read
         res = read(fd, buf, size);
@@ -59,19 +59,17 @@ int main()
         
         
         //ioctl format
-        if(ioctl(fd, HELLO_IOCFORMAT, &param) < 0)
+        if(ioctl(fd, HELLO_IOCFORMAT, &mem_size) < 0)
             throw IOCTL_ERROR;
         
         // ioctl stat
-        if(ioctl(fd, HELLO_IOCSTAT, &param) < 0)
+        if(ioctl(fd, HELLO_IOCSTAT, &mem_size) < 0)
             throw IOCTL_ERROR;
         
-        cout << "memory size " << param << " bytes" << endl;
+        cout << "memory size " << mem_size << " bytes" << endl;
 
-        throw NO_ERROR; // close without error
-        
     }
-    catch(Error err)
+    catch(Error err) 
     {
         
         switch(err)
@@ -83,17 +81,18 @@ int main()
             case IOCTL_ERROR:  cout << "Can't perform ioctl for " << dev << endl; break;
             default: break;
         }
-
-        // close
-        if(fd < 0) // file was not open
-            return -1;
         
-        if(close(fd) < 0)
-        {
-            cout << "Can't close " << dev << endl;
-            return -1;
-        }        
     }
+
+    // close
+    if(fd < 0) // file was not open
+        return -1;
+    
+    if(close(fd) < 0)
+    {
+        cout << "Can't close " << dev << endl;
+        return -1;
+    }        
     
     cout << "ok" << endl;
     return 0;
