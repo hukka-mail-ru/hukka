@@ -11,78 +11,90 @@
 
 using namespace std;
 
+enum Error
+{
+    NO_ERROR,
+    OPEN_ERROR,
+    WRITE_ERROR,
+    READ_ERROR,
+    IOCTL_ERROR
+};
 
 int main()
 {
     const char* dev = "/dev/hello";
     cout << "test" << endl;
+    int fd = 0; // file descriptor
 
-    // open
-    int fd = open(dev, O_RDWR);    
-    if(fd == -1)
+    try
     {
-        cout << "can't open " << dev << endl;
-        return -1;
-    }
-    
-    // write
-    const int size = 5;
-    char buf[1024] = {'\0'};
-    long param = 0;
-    int result = 0;
-    
-    ssize_t res = write(fd, "Hukka", size);    
-    cout << "wrote " << res << " bytes" << endl;
-    if(res == -1)
-    {
-        cout << "can't write to " << dev << endl;
-        return close(fd);
-    }
-    
-    // ioctl stat
-    result = ioctl(fd, HELLO_IOCSTAT, param);
-    if(result == -1)
-    {
-        cout << "can't do HELLO_IOCSTAT for " << dev << endl;
-    }    
-    cout << "memory size " << result << " bytes" << endl;
-    
-    // read
-    res = read(fd, buf, size);
-    if(res == -1)
-    {
-        cout << "can't read from " << dev << endl;
-        goto close;
-    }    
-    cout << "read " << size << " bytes: '" << buf  << "'" << endl;
-    
-    
-    //ioctl format
-    result = ioctl(fd, HELLO_IOCFORMAT, param);
-    if(result == -1)
-    {
-        cout << "can't do HELLO_IOCFORMAT for " << dev << endl;
-    }    
-    
-    // ioctl stat
-    result = ioctl(fd, HELLO_IOCSTAT, param);
-    if(result == -1)
-    {
-        cout << "can't do HELLO_IOCSTAT for " << dev << endl;
-    }    
-    cout << "memory size " << result << " bytes" << endl;
-
+        // open
+        fd = open(dev, O_RDWR);    
+        if(fd < 0)
+            throw OPEN_ERROR;
         
-    
-    
-close:    
-    // close
-    if(close(fd) == -1)
-    {
-        cout << "can't close " << dev << endl;
-        return -1;
+        // write
+        const int size = 5;
+        char buf[1024] = {'\0'};
+                
+        ssize_t res = write(fd, "Hukka", size);    
+        if(res < 0)
+            throw WRITE_ERROR;
+
+        cout << "wrote " << res << " bytes" << endl;
+        
+        // ioctl stat
+        int param = 0;
+        if(ioctl(fd, HELLO_IOCSTAT, &param) < 0)
+            throw IOCTL_ERROR;
+            
+        cout << "memory size " << param << " bytes" << endl;
+        
+        // read
+        res = read(fd, buf, size);
+        if(res < 0)
+            throw READ_ERROR;
+        
+        cout << "read " << size << " bytes: '" << buf  << "'" << endl;
+        
+        
+        //ioctl format
+        if(ioctl(fd, HELLO_IOCFORMAT, &param) < 0)
+            throw IOCTL_ERROR;
+        
+        // ioctl stat
+        if(ioctl(fd, HELLO_IOCSTAT, &param) < 0)
+            throw IOCTL_ERROR;
+        
+        cout << "memory size " << param << " bytes" << endl;
+
+        throw NO_ERROR; // close without error
+        
     }
-    cout << "ok" << endl;
+    catch(Error err)
+    {
+        
+        switch(err)
+        {
+            case NO_ERROR:     break; 
+            case OPEN_ERROR:   cout << "Can't open " << dev << endl; break;
+            case WRITE_ERROR:  cout << "Can't write to " << dev << endl; break;
+            case READ_ERROR:   cout << "Can't read from " << dev << endl; break;
+            case IOCTL_ERROR:  cout << "Can't perform ioctl for " << dev << endl; break;
+            default: break;
+        }
+
+        // close
+        if(fd < 0) // file was not open
+            return -1;
+        
+        if(close(fd) < 0)
+        {
+            cout << "Can't close " << dev << endl;
+            return -1;
+        }        
+    }
     
+    cout << "ok" << endl;
     return 0;
 }

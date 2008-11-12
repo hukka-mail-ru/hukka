@@ -24,7 +24,7 @@ MODULE_LICENSE("Dual BSD/GPL");
 // port parameters
 /* use 8 ports by default */
 #define SHORT_NR_PORTS  8  
-static unsigned long lpt_port = 0x378;
+//static unsigned long lpt_port = 0x378;
 
 
 // program parameters
@@ -42,7 +42,7 @@ static struct cdev* my_cdev;
 
 // memory buffer
 static char* memory = NULL;
-static size_t mem_size = 0;
+static int mem_size = 0;
 
 
 // functions
@@ -156,11 +156,11 @@ nax:
 int hello_ioctl(struct inode *inode, struct file *filp,
                  unsigned int cmd, unsigned long arg)
 {
+    int retval = 0;
+    int err = 0;
 
     printk(KERN_WARNING "hello: ioctl started\n");
     
-    int retval = 0;
-    int err = 0;
     /*
      * extract the type and number bitfields, and don't decode
      * wrong cmds: return ENOTTY (inappropriate ioctl) before access_ok()
@@ -201,7 +201,7 @@ int hello_ioctl(struct inode *inode, struct file *filp,
         
     case HELLO_IOCSTAT:
         printk(KERN_WARNING "hello: ioctl HELLO_IOCSTAT\n");
-        retval = mem_size;
+        retval = put_user (mem_size, (void __user*)arg );
         break;
         
       default: 
