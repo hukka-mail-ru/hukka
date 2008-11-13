@@ -101,11 +101,13 @@ ssize_t hello_write(struct file *filp, const char __user *buf, size_t count, lof
     
 
     // write to port
-   // while (count--) 
-   // {
-   //     outb(*(memory++), lpt_port);
-   //     wmb();
-  //  }
+ 
+    /*
+    while (count--) 
+    {
+        outb(*(memory++), lpt_port);
+        wmb();
+    }*/
    
 nax:
 
