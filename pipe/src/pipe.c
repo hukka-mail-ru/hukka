@@ -34,18 +34,32 @@ module_param(minor, int, S_IRUGO);
 
 
 // structures 
-//struct semaphore sem;
+
 static DECLARE_MUTEX(sem);
+static DECLARE_WAIT_QUEUE_HEAD(inq);
+static DECLARE_WAIT_QUEUE_HEAD(outq);
+
+
 
 static struct cdev* my_cdev;
 
 // memory buffer
-static char* memory = NULL;
-static ssize_t mem_size = 0;
+#define BUF_SIZE 1024
+char buf[BUF_SIZE];
+
+
+char* buffer = buf;   
+char* end = buf + BUF_SIZE;                 /* begin of buf, end of buf */
+
+int buffersize = BUF_SIZE;           /* used in pointer arithmetic */
+
+char* rp = buf;
+char* wp = buf;                     /* where to read, where to write */
+
+
 
 
 // functions
-
 int pipe_open(struct inode *inode, struct file *filp)
 {
     return 0;          /* success */
@@ -56,32 +70,119 @@ int pipe_release(struct inode *inode, struct file *filp)
     return 0;
 }
 
+//////////////// READ ///////////////////////////////////////////
 
-static DECLARE_WAIT_QUEUE_HEAD(wq);
-int flag = 0;
+ssize_t pipe_read(struct file *filp, char __user *buf, size_t count,
+           loff_t *f_pos)
+{
+    if (down_interruptible(&sem))
+        return -ERESTARTSYS;
+
+    // BLOCK
+    while (rp == wp) // nothing to read
+    { 
+        up(&sem); // release the lock 
+        
+        if (filp->f_flags & O_NONBLOCK)
+            return -EAGAIN;
+        
+        printk("\"%s\" reading: going to sleep\n", current->comm);
+        
+        if (wait_event_interruptible(inq, (rp != wp)))
+            return -ERESTARTSYS; // signal: tell the fs layer to handle it 
+        
+        /* otherwise loop, but first reacquire the lock */
+        if (down_interruptible(&sem))
+            return -ERESTARTSYS;
+    }
+    
+    
+    // RETURN DATA
+    if (wp > rp)
+        count = min(count, (size_t)(wp - rp));
+    else /* the write pointer has wrapped, return data up to dev->end */
+        count = min(count, (size_t)(end - rp));
+    
+    if (copy_to_user(buf, rp, count)) 
+    {
+        up (&sem);
+        return -EFAULT;
+    }
+    
+    rp += count; // increment and wrap
+    if (rp == end)
+        rp = buffer; 
+    
+    up (&sem);
+
+    
+    // AWAKE WRITERS
+    wake_up_interruptible(&outq);
+    printk("\"%s\" did read %li bytes\n",current->comm, (long)count);
+    return count;
+}
+
+
+static int spacefree(void)
+{
+    if (rp == wp)
+        return buffersize - 1;
+    return ((rp + buffersize - wp) % buffersize) - 1;
+}
 
 //////////////// WRITE ///////////////////////////////////////////
 
 ssize_t pipe_write(struct file *filp, const char __user *buf, size_t count, loff_t *f_pos) 
 {
+    int result = 0;
+    if (down_interruptible(&sem))
+        return -ERESTARTSYS;
+
+    // Make sure there's space to write 
+    while (spacefree() == 0) // full  
+    { 
+        
+        up(&sem);
+        if (filp->f_flags & O_NONBLOCK)
+            return -EAGAIN;
+        
+        if (wait_event_interruptible(inq, (rp != wp)))
+            return -ERESTARTSYS; // signal: tell the fs layer to handle it 
+        
+        if (down_interruptible(&sem))
+            return -ERESTARTSYS;
+    }
+ 
+    if (result)
+        return result; // scull_getwritespace called up(&dev->sem) 
+
+    // ok, space is there, accept something 
+    count = min(count, (size_t)spacefree());
+    
+    if (wp >= rp)
+        count = min(count, (size_t)(end - wp)); // to end-of-buf 
+    else // the write pointer has wrapped, fill up to rp-1 
+        count = min(count, (size_t)(rp - wp - 1));
+    
+    printk("Going to accept %li bytes to %p from %p\n", (long)count, wp, buf);
+    if (copy_from_user(wp, buf, count)) 
+    {
+        up (&sem);
+        return -EFAULT;
+    }
+    
+    wp += count;
+    if (wp == end)
+        wp = buffer; // wrapped 
+    
+    up(&sem);
+
     printk(KERN_DEBUG "process %i (%s) awakening the readers...\n",
 	   current->pid, current->comm);
-    flag = 1;
-    wake_up_interruptible(&wq);
+
+    wake_up_interruptible(&inq);
     return count; /* succeed, to avoid retrial */
-}
-
-//////////////// READ ///////////////////////////////////////////
-
-ssize_t pipe_read(struct file *filp, char __user *buf, size_t count,
-		   loff_t *f_pos)
-{
-    printk(KERN_DEBUG "process %i (%s) going to sleep\n",
-	   current->pid, current->comm);
-    wait_event_interruptible(wq, flag != 0);
-    flag = 0;
-    printk(KERN_DEBUG "awoken %i (%s)\n", current->pid, current->comm);
-    return 0; /* EOF */
+    
 }
 
 //////////////// IOCTL ///////////////////////////////////////////
@@ -115,16 +216,17 @@ int pipe_read_procmem(char *buf, char **start, off_t offset,
 
     down(&sem);
 
+    /*
     len += sprintf(buf+len, "The process is '%s' (pid %i)\n",
 		   current->comm, current->pid);
     if(memory)
     {
-	len += sprintf(buf+len, "Allocated %d bytes\n", mem_size);
+        len += sprintf(buf+len, "Allocated %d bytes\n", mem_size);
     }
     else
     {
-	len += sprintf(buf+len, "No memory in use\n");
-    }
+        len += sprintf(buf+len, "No memory in use\n");
+    }*/
     
     up(&sem);
 
@@ -153,19 +255,9 @@ static int startup(void)
 {
     dev_t dev = MKDEV(major, minor);
     int result = 0;
-    memory = NULL;
-    
 
     printk(KERN_INFO "pipe: startup\n");
-    
-    /*
-    if (! request_region(lpt_port, SHORT_NR_PORTS, "LPT")) 
-    {
-    printk(KERN_INFO "pipe: can't get I/O mem address 0x%lx\n", lpt_port);
-    return -ENODEV;
-}
-    printk(KERN_WARNING "pipe: request_region: port 0x%lx hooked\n", lpt_port);
-    */
+
 
     // get a driver number
     if (major) 
@@ -224,12 +316,6 @@ static void kickoff(void)
     
     pipe_remove_proc(); // proc debugging
     
-    //release_region(lpt_port, SHORT_NR_PORTS);
-    
-    kfree(memory);
-    
-    memory = NULL;
-
     cdev_del(my_cdev); // Denitialize the device
 
     unregister_chrdev_region(dev, 1); // we had only 1 device
