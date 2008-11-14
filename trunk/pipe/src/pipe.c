@@ -37,8 +37,6 @@ module_param(minor, int, S_IRUGO);
 
 static DECLARE_MUTEX(sem);
 static DECLARE_WAIT_QUEUE_HEAD(inq);
-static DECLARE_WAIT_QUEUE_HEAD(outq);
-
 
 
 static struct cdev* my_cdev;
@@ -113,14 +111,6 @@ ssize_t pipe_read(struct file *filp, char __user *buf, size_t count,
     
     res = count; // maybe we didn't read everything    
 
-    up(&sem);
-    
-    // AWAKE WRITERS
-    wake_up_interruptible(&outq);
-    printk("\"%s\" did read %li bytes\n",current->comm, (long)count);
-    return count;
-    
-    
 nax:
     up(&sem);
     return count;
