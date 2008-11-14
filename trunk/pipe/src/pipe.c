@@ -44,18 +44,8 @@ static DECLARE_WAIT_QUEUE_HEAD(outq);
 static struct cdev* my_cdev;
 
 // memory buffer
-#define BUF_SIZE 1024
-char buf[BUF_SIZE];
-
-
-char* buffer = buf;   
-char* end = buf + BUF_SIZE;                 /* begin of buf, end of buf */
-
-int buffersize = BUF_SIZE;           /* used in pointer arithmetic */
-
-char* rp = buf;
-char* wp = buf;                     /* where to read, where to write */
-
+static char* memory = NULL;
+static ssize_t mem_size = 0;
 
 
 
@@ -75,11 +65,12 @@ int pipe_release(struct inode *inode, struct file *filp)
 ssize_t pipe_read(struct file *filp, char __user *buf, size_t count,
            loff_t *f_pos)
 {
+    int res = -ENOMEM;
     if (down_interruptible(&sem))
         return -ERESTARTSYS;
 
     // BLOCK
-    while (rp == wp) // nothing to read
+    while (mem_size == 0) // nothing to read
     { 
         up(&sem); // release the lock 
         
@@ -88,7 +79,7 @@ ssize_t pipe_read(struct file *filp, char __user *buf, size_t count,
         
         printk("\"%s\" reading: going to sleep\n", current->comm);
         
-        if (wait_event_interruptible(inq, (rp != wp)))
+        if (wait_event_interruptible(inq, (mem_size != 0)))
             return -ERESTARTSYS; // signal: tell the fs layer to handle it 
         
         /* otherwise loop, but first reacquire the lock */
@@ -97,83 +88,81 @@ ssize_t pipe_read(struct file *filp, char __user *buf, size_t count,
     }
     
     
-    // RETURN DATA
-    if (wp > rp)
-        count = min(count, (size_t)(wp - rp));
-    else /* the write pointer has wrapped, return data up to dev->end */
-        count = min(count, (size_t)(end - rp));
-    
-    if (copy_to_user(buf, rp, count)) 
+    // EOF case
+    if (*f_pos > mem_size)
     {
-        up (&sem);
-        return -EFAULT;
+        res = 0;
+        goto nax;
     }
     
-    rp += count; // increment and wrap
-    if (rp == end)
-        rp = buffer; 
-    
-    up (&sem);
+    // UP-TO-EOF case
+    if (*f_pos + count > mem_size)
+    {
+        count = mem_size - *f_pos; 
+    }
 
+    if(copy_to_user(buf, memory + *f_pos, count))
+    {
+        res = -EFAULT;
+        goto nax;
+    }
+    
+    *f_pos += count;
+ 
+    printk(KERN_WARNING "hello: Read KU-KU! count=%d\n", count);
+    
+    res = count; // maybe we didn't read everything    
+
+    up(&sem);
     
     // AWAKE WRITERS
     wake_up_interruptible(&outq);
     printk("\"%s\" did read %li bytes\n",current->comm, (long)count);
     return count;
+    
+    
+nax:
+    up(&sem);
+    return count;
 }
 
-
-static int spacefree(void)
-{
-    if (rp == wp)
-        return buffersize - 1;
-    return ((rp + buffersize - wp) % buffersize) - 1;
-}
 
 //////////////// WRITE ///////////////////////////////////////////
 
 ssize_t pipe_write(struct file *filp, const char __user *buf, size_t count, loff_t *f_pos) 
 {
-    int result = 0;
-    if (down_interruptible(&sem))
-        return -ERESTARTSYS;
-
-    // Make sure there's space to write 
-    while (spacefree() == 0) // full  
-    { 
-        
-        up(&sem);
-        if (filp->f_flags & O_NONBLOCK)
-            return -EAGAIN;
-        
-        if (wait_event_interruptible(inq, (rp != wp)))
-            return -ERESTARTSYS; // signal: tell the fs layer to handle it 
-        
-        if (down_interruptible(&sem))
-            return -ERESTARTSYS;
-    }
- 
-    if (result)
-        return result; // scull_getwritespace called up(&dev->sem) 
-
-    // ok, space is there, accept something 
-    count = min(count, (size_t)spacefree());
+    int res = -ENOMEM;
+    printk(KERN_WARNING "hello: hello_write: started...\n");
     
-    if (wp >= rp)
-        count = min(count, (size_t)(end - wp)); // to end-of-buf 
-    else // the write pointer has wrapped, fill up to rp-1 
-        count = min(count, (size_t)(rp - wp - 1));
-    
-    printk("Going to accept %li bytes to %p from %p\n", (long)count, wp, buf);
-    if (copy_from_user(wp, buf, count)) 
+    if(down_interruptible(&sem))
     {
-        up (&sem);
-        return -EFAULT;
+        return -ERESTARTSYS;
+    }
+        
+    
+    // f_pos is ignored. The data is always written to the beginning of the 'memory'   
+    kfree(memory);
+    memory = kmalloc(count, GFP_KERNEL);
+    if(!memory)
+    {
+        res = -ENOMEM;
+        printk(KERN_WARNING "hello: hello_write: kmalloc() failed \n");
+        goto nax;
     }
     
-    wp += count;
-    if (wp == end)
-        wp = buffer; // wrapped 
+    memset(memory, 0, count);
+    
+    if (copy_from_user (memory, buf, count)) 
+    {
+        res = -EFAULT;
+        printk(KERN_WARNING "hello: hello_write: copy_from_user() failed \n");
+        goto nax;
+    }
+    
+    mem_size = count;
+    res = count; // return as much as asked :)
+    
+    printk(KERN_WARNING "hello: wrote bytes: %d\n", count);
     
     up(&sem);
 
@@ -183,6 +172,11 @@ ssize_t pipe_write(struct file *filp, const char __user *buf, size_t count, loff
     wake_up_interruptible(&inq);
     return count; /* succeed, to avoid retrial */
     
+nax:
+
+    up(&sem);
+    printk(KERN_WARNING "hello: hello_write finished. Return value: %d\n", res);
+    return count;
 }
 
 //////////////// IOCTL ///////////////////////////////////////////
@@ -314,7 +308,10 @@ static void kickoff(void)
 {
     dev_t dev = MKDEV(major, minor);
     
-    pipe_remove_proc(); // proc debugging
+    pipe_remove_proc(); // proc debugging    
+    
+    kfree(memory);    
+    memory = NULL;
     
     cdev_del(my_cdev); // Denitialize the device
 
