@@ -95,7 +95,10 @@ DECLARE_TASKLET(short_tasklet, short_do_tasklet, 0);
  */
 static inline void short_incr_bp(volatile unsigned long *index, int delta)
 {
+    
+    
 	unsigned long new = *index + delta;
+	printk("short_incr_bp\n");
 	barrier();  /* Don't optimize these two together */
 	*index = (new >= (short_buffer + PAGE_SIZE)) ? short_buffer : new;
 }
@@ -113,8 +116,12 @@ static inline void short_incr_bp(volatile unsigned long *index, int delta)
 
 int short_open (struct inode *inode, struct file *filp)
 {
+	
+    
 	extern struct file_operations short_i_fops;
 
+	printk("short_open\n");
+	
 	if (iminor (inode) & 0x80)
 		filp->f_op = &short_i_fops; /* the interrupt-driven node */
 	return 0;
@@ -123,6 +130,8 @@ int short_open (struct inode *inode, struct file *filp)
 
 int short_release (struct inode *inode, struct file *filp)
 {
+    
+	printk("short_release\n");
 	return 0;
 }
 
@@ -134,12 +143,15 @@ enum short_modes {SHORT_DEFAULT=0, SHORT_PAUSE, SHORT_STRING, SHORT_MEMORY};
 ssize_t do_short_read (struct inode *inode, struct file *filp, char __user *buf,
 		size_t count, loff_t *f_pos)
 {
+	
 	int retval = count, minor = iminor (inode);
 	unsigned long port = short_base + (minor&0x0f);
 	void *address = (void *) short_base + (minor&0x0f);
 	int mode = (minor&0x70) >> 4;
 	unsigned char *kbuf = kmalloc(count, GFP_KERNEL), *ptr;
     
+	printk("do_short_read\n");
+	
 	if (!kbuf)
 		return -ENOMEM;
 	ptr = kbuf;
@@ -189,6 +201,7 @@ ssize_t do_short_read (struct inode *inode, struct file *filp, char __user *buf,
  */
 ssize_t short_read(struct file *filp, char __user *buf, size_t count, loff_t *f_pos)
 {
+	printk("short_read\n");
 	return do_short_read(filp->f_dentry->d_inode, filp, buf, count, f_pos);
 }
 
@@ -197,12 +210,17 @@ ssize_t short_read(struct file *filp, char __user *buf, size_t count, loff_t *f_
 ssize_t do_short_write (struct inode *inode, struct file *filp, const char __user *buf,
 		size_t count, loff_t *f_pos)
 {
+	
+    
 	int retval = count, minor = iminor(inode);
 	unsigned long port = short_base + (minor&0x0f);
 	void *address = (void *) short_base + (minor&0x0f);
 	int mode = (minor&0x70) >> 4;
 	unsigned char *kbuf = kmalloc(count, GFP_KERNEL), *ptr;
 
+	
+	printk("do_short_write\n");
+	
 	if (!kbuf)
 		return -ENOMEM;
 	if (copy_from_user(kbuf, buf, count))
@@ -214,6 +232,7 @@ ssize_t do_short_write (struct inode *inode, struct file *filp, const char __use
 
 	switch(mode) {
 	case SHORT_PAUSE:
+		printk("SHORT_PAUSE\n");
 		while (count--) {
 			outb_p(*(ptr++), port);
 			wmb();
@@ -221,18 +240,24 @@ ssize_t do_short_write (struct inode *inode, struct file *filp, const char __use
 		break;
 
 	case SHORT_STRING:
+		printk("SHORT_STRING\n");
 		outsb(port, ptr, count);
 		wmb();
 		break;
 
 	case SHORT_DEFAULT:
+		printk("SHORT_DEFAULT\n");
+		
 		while (count--) {
+			printk(">> %c  %d\n", *(ptr++), (long)(*(ptr++)));
 			outb(*(ptr++), port);
 			wmb();
 		}
+		
 		break;
 
 	case SHORT_MEMORY:
+		printk("SHORT_MEMORY\n");
 		while (count--) {
 			iowrite8(*ptr++, address);
 			wmb();
@@ -243,6 +268,7 @@ ssize_t do_short_write (struct inode *inode, struct file *filp, const char __use
 		retval = -EINVAL;
 		break;
 	}
+	printk("do_short_write ends\n");
 	kfree(kbuf);
 	return retval;
 }
@@ -251,6 +277,7 @@ ssize_t do_short_write (struct inode *inode, struct file *filp, const char __use
 ssize_t short_write(struct file *filp, const char __user *buf, size_t count,
 		loff_t *f_pos)
 {
+	printk("short_write\n");
 	return do_short_write(filp->f_dentry->d_inode, filp, buf, count, f_pos);
 }
 
@@ -259,6 +286,7 @@ ssize_t short_write(struct file *filp, const char __user *buf, size_t count,
 
 unsigned int short_poll(struct file *filp, poll_table *wait)
 {
+	printk("short_poll\n");
 	return POLLIN | POLLRDNORM | POLLOUT | POLLWRNORM;
 }
 
@@ -280,9 +308,12 @@ struct file_operations short_fops = {
 
 ssize_t short_i_read (struct file *filp, char __user *buf, size_t count, loff_t *f_pos)
 {
+	
 	int count0;
 	DEFINE_WAIT(wait);
 
+	printk("short_i_read\n");
+	
 	while (short_head == short_tail) {
 		prepare_to_wait(&short_queue, &wait, TASK_INTERRUPTIBLE);
 		if (short_head == short_tail)
@@ -306,10 +337,13 @@ ssize_t short_i_read (struct file *filp, char __user *buf, size_t count, loff_t 
 ssize_t short_i_write (struct file *filp, const char __user *buf, size_t count,
 		loff_t *f_pos)
 {
+	
 	int written = 0, odd = *f_pos & 1;
 	unsigned long port = short_base; /* output to the parallel data latch */
 	void *address = (void *) short_base;
 
+	printk("short_i_write\n");
+	
 	if (use_mem) {
 		while (written < count)
 			iowrite8(0xff * ((++written + odd) & 1), address);
@@ -333,11 +367,14 @@ struct file_operations short_i_fops = {
 	.release = short_release,
 };
 
-irqreturn_t short_interrupt(int irq, void *dev_id, struct pt_regs *regs)
+irqreturn_t short_interrupt(int irq, void *dev_id)
 {
+	
 	struct timeval tv;
 	int written;
 
+	printk("short_interrupt\n");
+	
 	do_gettimeofday(&tv);
 
 	    /* Write a 16 byte record. Assume PAGE_SIZE is a multiple of 16 */
@@ -371,6 +408,7 @@ int short_wq_count = 0;
  */
 static inline void short_incr_tv(volatile struct timeval **tvp)
 {
+	printk("short_incr_tv\n");
 	if (*tvp == (tv_data + NR_TIMEVAL - 1))
 		*tvp = tv_data;	 /* Wrap */
 	else
@@ -381,6 +419,7 @@ static inline void short_incr_tv(volatile struct timeval **tvp)
 
 void short_do_tasklet (unsigned long unused)
 {
+	
 	int savecount = short_wq_count, written;
 	short_wq_count = 0; /* we have already been removed from the queue */
 	/*
@@ -388,6 +427,7 @@ void short_do_tasklet (unsigned long unused)
 	 * and prints it to the circular text buffer, which is then consumed
 	 * by reading processes
 	 */
+	printk("short_do_tasklet\n");
 
 	/* First write the number of interrupts that occurred before this bh */
 	written = sprintf((char *)short_head,"bh after %6i\n",savecount);
@@ -410,8 +450,9 @@ void short_do_tasklet (unsigned long unused)
 }
 
 
-irqreturn_t short_wq_interrupt(int irq, void *dev_id, struct pt_regs *regs)
+irqreturn_t short_wq_interrupt(int irq, void *dev_id)
 {
+	printk("short_wq_interrupt\n");
 	/* Grab the current time information. */
 	do_gettimeofday((struct timeval *) tv_head);
 	short_incr_tv(&tv_head);
@@ -428,8 +469,9 @@ irqreturn_t short_wq_interrupt(int irq, void *dev_id, struct pt_regs *regs)
  * Tasklet top half
  */
 
-irqreturn_t short_tl_interrupt(int irq, void *dev_id, struct pt_regs *regs)
+irqreturn_t short_tl_interrupt(int irq, void *dev_id)
 {
+	printk("short_tl_interrupt\n");
 	do_gettimeofday((struct timeval *) tv_head); /* cast to stop 'volatile' warning */
 	short_incr_tv(&tv_head);
 	tasklet_schedule(&short_tasklet);
@@ -440,11 +482,14 @@ irqreturn_t short_tl_interrupt(int irq, void *dev_id, struct pt_regs *regs)
 
 
 
-irqreturn_t short_sh_interrupt(int irq, void *dev_id, struct pt_regs *regs)
+irqreturn_t short_sh_interrupt(int irq, void *dev_id)
 {
+	
 	int value, written;
 	struct timeval tv;
 
+	printk("short_sh_interrupt\n");
+	
 	/* If it wasn't short, return immediately */
 	value = inb(short_base);
 	if (!(value & 0x80))
@@ -465,7 +510,10 @@ irqreturn_t short_sh_interrupt(int irq, void *dev_id, struct pt_regs *regs)
 
 void short_kernelprobe(void)
 {
+	
+	
 	int count = 0;
+	printk("short_kernelprobe\n");
 	do {
 		unsigned long mask;
 
@@ -491,8 +539,9 @@ void short_kernelprobe(void)
 		printk("short: probe failed %i times, giving up\n", count);
 }
 
-irqreturn_t short_probing(int irq, void *dev_id, struct pt_regs *regs)
+irqreturn_t short_probing(int irq, void *dev_id)
 {
+	printk("short_probing\n");
 	if (short_irq == 0) short_irq = irq;	/* found */
 	if (short_irq != irq) short_irq = -irq; /* ambiguous */
 	return IRQ_HANDLED;
@@ -500,10 +549,13 @@ irqreturn_t short_probing(int irq, void *dev_id, struct pt_regs *regs)
 
 void short_selfprobe(void)
 {
+	
 	int trials[] = {3, 5, 7, 9, 0};
 	int tried[]  = {0, 0, 0, 0, 0};
 	int i, count = 0;
 
+	printk("short_selfprobe\n");
+	
 	/*
 	 * install the probing handler for all possible lines. Remember
 	 * the result (0 for success, or -EBUSY) in order to only free
@@ -547,8 +599,10 @@ void short_selfprobe(void)
 
 int short_init(void)
 {
+	
 	int result;
 
+	printk("short_init\n");
 	/*
 	 * first, sort out the base/short_base ambiguity: we'd better
 	 * use short_base in the code, for clarity, but allow setting
@@ -559,6 +613,7 @@ int short_init(void)
 
 	/* Get our needed resources. */
 	if (!use_mem) {
+		printk("request_region\n");
 		if (! request_region(short_base, SHORT_NR_PORTS, "short")) {
 			printk(KERN_INFO "short: can't get I/O port address 0x%lx\n",
 					short_base);
@@ -566,6 +621,7 @@ int short_init(void)
 		}
 
 	} else {
+		printk("request_mem_region\n");
 		if (! request_mem_region(short_base, SHORT_NR_PORTS, "short")) {
 			printk(KERN_INFO "short: can't get I/O mem address 0x%lx\n",
 					short_base);
@@ -668,6 +724,7 @@ int short_init(void)
 
 void short_cleanup(void)
 {
+	printk("short_cleanup\n");
 	if (short_irq >= 0) {
 		outb(0x0, short_base + 2);   /* disable the interrupt */
 		if (!share) free_irq(short_irq, NULL);
