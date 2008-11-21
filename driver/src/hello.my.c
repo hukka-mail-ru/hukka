@@ -15,6 +15,7 @@
 #include <asm/io.h>
 #include <linux/proc_fs.h> // proc
 #include <linux/ioctl.h> /* needed for the _IOW etc stuff used later */
+#include <linux/parport.h>
 
 #include "hello.h"
  
@@ -37,7 +38,6 @@ module_param(minor, int, S_IRUGO);
 // structures 
 //struct semaphore sem;
 static DECLARE_MUTEX(sem);
-static DECLARE_WAIT_QUEUE_HEAD(queue);
 
 static struct cdev* my_cdev;
 
@@ -70,13 +70,26 @@ ssize_t hello_write(struct file *filp, const char __user *buf, size_t count, lof
     int res = -ENOMEM;
     printk(KERN_WARNING "hello: hello_write: started...\n");
     
+    res = check_region(lpt_port, SHORT_NR_PORTS);
+    if(res < 0)
+    {
+	printk(KERN_WARNING "hello: check_region failed!...\n");
+	return res;
+    }
+    
+    
+    if(down_interruptible(&sem))
+    {
+        return -ERESTARTSYS;
+    }
+        
 
-    // write to port
- 
-        outb(0x3, lpt_port);
+	outb(1, lpt_port);
         wmb();
 
-	return count;
+    up(&sem);
+    printk(KERN_WARNING "hello: hello_write finished. Return value: %d\n", res);
+    return res;
 }
 
 //////////////// READ ///////////////////////////////////////////
@@ -238,22 +251,40 @@ static int startup(void)
 {
     dev_t dev = MKDEV(major, minor);
     int result = 0;
+    struct parport *p;
+    struct parport_operations *ops;
+
     memory = NULL;
-    
 
     printk(KERN_INFO "hello: startup\n");
+
     
-    if (! request_region(lpt_port, SHORT_NR_PORTS, "MY_LPT")) 
-    {
-        printk(KERN_INFO "hello: can't get I/O mem address 0x%lx\n", lpt_port);
-        return -ENODEV;
+    
+    ops = kmalloc(sizeof (struct parport_operations), GFP_KERNEL);
+    if (!ops){
+	printk(KERN_INFO "hello: kmalloc(parport_operations) failed\n");
+	return -ENODEV;
+    }
+
+    p = parport_register_port(lpt_port, -1, -1, ops);
+    if (!p) {
+	printk(KERN_INFO "hello: parport_register_port) failed\n");
+	return -ENODEV;
+    }
+    
+    if (! request_region(lpt_port, SHORT_NR_PORTS, "LPT")) {
+	printk(KERN_INFO "hello: can't get I/O mem address 0x%lx\n", lpt_port);
+	return -ENODEV;
     }
     printk(KERN_WARNING "hello: request_region: port 0x%lx hooked\n", lpt_port);
+    
+    
+    
 
     // get a driver number
     if (major) 
     {
-        dev = MKDEV(major, minor);
+	dev = MKDEV(major, minor);
         result = register_chrdev_region(dev, 1, "hello");
     } 
     else 
@@ -285,6 +316,10 @@ static int startup(void)
        return -1;
     }
 
+
+    
+    
+    
     
     hello_create_proc(); // proc debugging
 

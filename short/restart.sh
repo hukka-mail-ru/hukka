@@ -4,19 +4,17 @@
 
 lines1=$(sudo wc -l /var/log/kern | awk "{print \$1}")
 
-module=hello
+module=short
 
 for i in 1
 do
 # remove module
 echo "Removing modules..."
 sudo /sbin/rmmod $module 
-#sudo /sbin/rmmod parport_pc
-#sudo /sbin/rmmod parport
 echo "OK"
 
 # insert module
-sudo /sbin/insmod ./src/$module.ko major=0 minor=0 || break
+sudo /sbin/insmod ./src/$module.ko major=0 || break
 
 # get version
 major=$(awk "\$2==\"$module\" {print \$1}" /proc/devices)
