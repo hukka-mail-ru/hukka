@@ -73,8 +73,8 @@ ssize_t hello_write(struct file *filp, const char __user *buf, size_t count, lof
 
     // write to port
  
-        outb(0x3, lpt_port);
-        wmb();
+    outb(0x3, lpt_port);
+    wmb();
 
 	return count;
 }
@@ -128,7 +128,7 @@ int hello_ioctl(struct inode *inode, struct file *filp,
      * wrong cmds: return ENOTTY (inappropriate ioctl) before access_ok()
      */
     if (_IOC_TYPE(cmd) != HELLO_IOC_MAGIC) 
-        return -ENOTTY;
+            return -ENOTTY;
    
     
     /*
@@ -138,34 +138,34 @@ int hello_ioctl(struct inode *inode, struct file *filp,
      * "write" is reversed
      */
     if (_IOC_DIR(cmd) & _IOC_READ)
-        err = !access_ok(VERIFY_WRITE, (void __user *)arg, _IOC_SIZE(cmd));
+            err = !access_ok(VERIFY_WRITE, (void __user *)arg, _IOC_SIZE(cmd));
     else if (_IOC_DIR(cmd) & _IOC_WRITE)
-        err =  !access_ok(VERIFY_READ, (void __user *)arg, _IOC_SIZE(cmd));
+            err =  !access_ok(VERIFY_READ, (void __user *)arg, _IOC_SIZE(cmd));
     if (err) 
-        return -EFAULT;
+            return -EFAULT;
     
     switch(cmd) {
-    case HELLO_IOCFORMAT:
+        case HELLO_IOCFORMAT:
         
-        down(&sem);
+            down(&sem);
         
-        printk(KERN_WARNING "hello: ioctl HELLO_IOCFORMAT\n");
-        kfree(memory);
-        memory = NULL;
-        mem_size = 0;
-        retval = 0;
+            printk(KERN_WARNING "hello: ioctl HELLO_IOCFORMAT\n");
+            kfree(memory);
+            memory = NULL;
+            mem_size = 0;
+            retval = 0;
         
-        up(&sem);
+            up(&sem);
         
-        break;
+            break;
         
-    case HELLO_IOCSTAT:
-        printk(KERN_WARNING "hello: ioctl HELLO_IOCSTAT\n");
-        retval = __put_user (mem_size, (ssize_t __user*)arg ); // __put_user because access_ok
-        break;
+        case HELLO_IOCSTAT:
+            printk(KERN_WARNING "hello: ioctl HELLO_IOCSTAT\n");
+            retval = __put_user (mem_size, (ssize_t __user*)arg ); // __put_user because access_ok
+            break;
         
-      default: 
-        return -ENOTTY;
+        default: 
+            return -ENOTTY;
     }
     
     return retval;
