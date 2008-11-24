@@ -88,22 +88,19 @@ ssize_t hello_read(struct file *filp, char __user *buf, size_t count,
     down(&sem); 
     
     // EOF case
-    if (*f_pos > mem_size)
-    {
-        res = 0;
-        goto nax;
+    if (*f_pos > mem_size) {
+            res = 0;
+            goto nax;
     }
     
     // UP-TO-EOF case
-    if (*f_pos + count > mem_size)
-    {
-        count = mem_size - *f_pos; 
+    if (*f_pos + count > mem_size) {
+            count = mem_size - *f_pos; 
     }
 
-    if(copy_to_user(buf, memory + *f_pos, count))
-    {
-        res = -EFAULT;
-        goto nax;
+    if(copy_to_user(buf, memory + *f_pos, count)) {
+            res = -EFAULT;
+            goto nax;
     }
     
     *f_pos += count;
@@ -147,9 +144,7 @@ int hello_ioctl(struct inode *inode, struct file *filp,
     if (err) 
         return -EFAULT;
     
-    switch(cmd) 
-    {
-
+    switch(cmd) {
     case HELLO_IOCFORMAT:
         
         down(&sem);
@@ -203,13 +198,9 @@ int hello_read_procmem(char *buf, char **start, off_t offset,
     len += sprintf(buf+len, "The process is '%s' (pid %i)\n",
                              current->comm, current->pid);
     if(memory)
-    {
-        len += sprintf(buf+len, "Allocated %d bytes\n", mem_size);
-    }
+            len += sprintf(buf+len, "Allocated %d bytes\n", mem_size);
     else
-    {
-        len += sprintf(buf+len, "No memory in use\n");
-    }
+            len += sprintf(buf+len, "No memory in use\n");
     
     up(&sem);
 
@@ -243,46 +234,39 @@ static int startup(void)
 
     printk(KERN_INFO "hello: startup\n");
     
-    if (! request_region(lpt_port, SHORT_NR_PORTS, "MY_LPT")) 
-    {
-        printk(KERN_INFO "hello: can't get I/O mem address 0x%lx\n", lpt_port);
-        return -ENODEV;
+    if (! request_region(lpt_port, SHORT_NR_PORTS, "MY_LPT"))  {
+            printk(KERN_INFO "hello: can't get I/O mem address 0x%lx\n", lpt_port);
+            return -ENODEV;
     }
     printk(KERN_WARNING "hello: request_region: port 0x%lx hooked\n", lpt_port);
 
     // get a driver number
-    if (major) 
-    {
-        dev = MKDEV(major, minor);
-        result = register_chrdev_region(dev, 1, "hello");
-    } 
-    else 
-    {
-        result = alloc_chrdev_region(&dev, minor, 1, "hello");
-        major = MAJOR(dev);
+    if (major) {
+            dev = MKDEV(major, minor);
+            result = register_chrdev_region(dev, 1, "hello");
+    } else {
+            result = alloc_chrdev_region(&dev, minor, 1, "hello");
+            major = MAJOR(dev);
     }
     
-    if (result < 0) 
-    {
-        printk(KERN_WARNING "hello: can't get version %d:%d\n", major, minor);
-        return result;
+    if (result < 0) {
+            printk(KERN_WARNING "hello: can't get version %d:%d\n", major, minor);
+            return result;
     }
 
        
     // Initialize the device.	
     my_cdev = cdev_alloc();
-    if(!my_cdev)
-    {
-       printk(KERN_WARNING "hello:  cdev_alloc failed");
-       return -1;
+    if(!my_cdev) {
+            printk(KERN_WARNING "hello:  cdev_alloc failed");
+            return -1;
     }
 
     my_cdev->ops = &my_ops;
     
-    if(cdev_add(my_cdev, dev, 1) < 0)
-    {
-       printk(KERN_WARNING "hello:  cdev_add failed");
-       return -1;
+    if(cdev_add(my_cdev, dev, 1) < 0) {
+            printk(KERN_WARNING "hello:  cdev_add failed");
+            return -1;
     }
 
     
@@ -291,12 +275,6 @@ static int startup(void)
     printk(KERN_WARNING "hello: got version %d:%d\n", major, minor);
     printk(KERN_WARNING "hello: my_cdev allocated\n");
     printk(KERN_WARNING "hello: my_cdev added\n");
-    
-    
-
-    
-
-    
 
     return 0;
 }
