@@ -8,6 +8,7 @@
 #include <cppunit/XmlOutputter.h>
 #include <cppunit/extensions/HelperMacros.h>
 #include <cppunit/portability/Stream.h>
+#include <cppunit/TestAssert.h>
 
 #include "../src/Board.h"
 
@@ -29,8 +30,7 @@ public:
     {
         Board board;
                 
-        cerr << "board.cells.size() " << board.cells.size() << endl;
-        CPPUNIT_ASSERT(board.cells.size() == 25);
+        CPPUNIT_ASSERT_EQUAL(25, (int)board.cells.size());
     }
 };
 
