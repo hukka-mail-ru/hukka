@@ -5,6 +5,7 @@
 
 class Cell
 {
+public:
     Cell(unsigned circle, unsigned num):
         mCircle(circle),
         mNum(num)

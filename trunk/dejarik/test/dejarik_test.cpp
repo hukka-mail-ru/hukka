@@ -9,6 +9,7 @@
 #include <cppunit/extensions/HelperMacros.h>
 #include <cppunit/portability/Stream.h>
 
+#include "../src/Board.h"
 
 using namespace std;
 
@@ -26,9 +27,10 @@ public:
 
     void testOne() 
     {
-        
-        
-        CPPUNIT_ASSERT(4 == 4);
+        Board board;
+                
+        cerr << "board.cells.size() " << board.cells.size() << endl;
+        CPPUNIT_ASSERT(board.cells.size() == 25);
     }
 };
 
