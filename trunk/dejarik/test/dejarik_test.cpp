@@ -26,6 +26,8 @@ public:
 
     void testOne() 
     {
+        
+        
         CPPUNIT_ASSERT(4 == 4);
     }
 };
