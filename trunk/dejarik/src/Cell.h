@@ -2,21 +2,20 @@
 #define CELL_H_
 
 #include <boost/shared_ptr.hpp> 
+#include "Piece.h"
 
-class Cell
+
+struct Cell
 {
-public:
-    Cell(unsigned circle, unsigned num):
-        mCircle(circle),
-        mNum(num)
+    Cell(unsigned circle, unsigned xnum):
+        c(circle),
+        x(xnum)
     {}
-
-private:
     
-    unsigned mCircle; // coordinate: 0,1,2
-    unsigned mNum;    // coordinate: 0 in circle 0;   0..11 in circle 1;  0..11 in circle 2.  
+    unsigned c; // coordinate: 0,1,2
+    unsigned x; // coordinate: 0 in circle 0;   0..11 in circle 1;  0..11 in circle 2.  
     
-    //Piece* piece;
+    PiecePtr piece;
 };
 
 typedef boost::shared_ptr<Cell> CellPtr;
