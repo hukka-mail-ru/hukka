@@ -11,21 +11,24 @@ class Piece
 {
 public:
     
-    Piece() {}
+    Piece(const std::string& name, const CellPtr& pos,
+          unsigned attack, unsigned defence, unsigned move):
+          mName(name),
+          mPosition(pos),
+          mAttackRating(attack),
+          mDefenceRating(defence),
+          mMoveRating(move)
+          {}
     
-    void setPosition(const CellPtr& pos)
-    {
-        position = pos;
-    }
-    
-    CellPtr& getPosition()
-    {
-        return position;
-    }
     
 private:
     
-    CellPtr position;
+    std::string mName;
+    CellPtr mPosition;
+    
+    unsigned mAttackRating;
+    unsigned mDefenceRating;
+    unsigned mMoveRating;
     
 };
 

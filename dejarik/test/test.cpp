@@ -19,7 +19,7 @@ using namespace std;
 class DejaricTest : public CppUnit::TestFixture 
 {
    CPPUNIT_TEST_SUITE(DejaricTest);
-   CPPUNIT_TEST(testOne);
+   CPPUNIT_TEST(testBoard);
    CPPUNIT_TEST(testIsMoveValid);
    CPPUNIT_TEST_SUITE_END();
          
@@ -29,24 +29,26 @@ public:
     void tearDown() {}
         
 
-    void testOne() 
+    void testBoard() 
     {
         Board board;
                 
         CPPUNIT_ASSERT_EQUAL(25, (int)board.cells.size());
         
-        /*
-        try
-        {
-            board.getCell(10,10);
-        }
-        catch(string& err)
-        {
-            cerr << err << endl;
-        }*/
+        CPPUNIT_ASSERT_THROW(board.getCell(-1,-1), string); // both negative
+        CPPUNIT_ASSERT_THROW(board.getCell(-1,0), string);  // one negative
+        CPPUNIT_ASSERT_THROW(board.getCell(0,-1), string);  // one negative
         
-        CPPUNIT_ASSERT_NO_THROW(board.getCell(0,0));
-        CPPUNIT_ASSERT_THROW(board.getCell(10,10), string);
+        CPPUNIT_ASSERT_THROW(board.getCell(0,1), string); // out of bound
+        CPPUNIT_ASSERT_THROW(board.getCell(3,0), string);  // out of bound
+        CPPUNIT_ASSERT_THROW(board.getCell(2,12), string); // out of bound
+        
+        CPPUNIT_ASSERT_NO_THROW(board.getCell(0,0)); // normal
+        CPPUNIT_ASSERT_NO_THROW(board.getCell(1,0)); // normal
+        CPPUNIT_ASSERT_NO_THROW(board.getCell(2,0)); // normal
+        
+        CPPUNIT_ASSERT_NO_THROW(board.getCell(1,11)); // normal
+        CPPUNIT_ASSERT_NO_THROW(board.getCell(2,11)); // normal
     }
     
     
@@ -54,17 +56,35 @@ public:
     {
         Board board;
         
+        // ----------------------------------------
+        // start in the center
         CellPtr start = board.getCell(0,0);
-        CellPtr finish = board.getCell(0,0);
-        
-        PiecePtr piece (new Piece);
-        piece->setPosition(start);
 
-        CPPUNIT_ASSERT(board.isMoveValid(piece, finish) == true);
-        
-        finish = board.getCell(2,10);
-        CPPUNIT_ASSERT(board.isMoveValid(piece, finish) == true);
+        // King can go 1 cell
+        PiecePtr king (new Piece("King", start, 0, 0, 1));
+        CPPUNIT_ASSERT(board.isMoveValid(king, board.getCell(0,0)) == false); // no move
+        CPPUNIT_ASSERT(board.isMoveValid(king, board.getCell(1,5)) == true);
+        CPPUNIT_ASSERT(board.isMoveValid(king, board.getCell(2,11)) == false);
 
+        // ----------------------------------------
+        // from outer circle to center
+        start = board.getCell(2,0);
+
+        // Queen can go 2 calls
+        PiecePtr queen (new Piece("Queen", start, 0, 0, 2));
+
+        CPPUNIT_ASSERT(board.isMoveValid(queen, board.getCell(2,0)) == false); // no move
+        CPPUNIT_ASSERT(board.isMoveValid(queen, board.getCell(2,10)) == true);
+        CPPUNIT_ASSERT(board.isMoveValid(queen, board.getCell(1,11)) == true);
+        CPPUNIT_ASSERT(board.isMoveValid(queen, board.getCell(0,0)) == true);
+        CPPUNIT_ASSERT(board.isMoveValid(queen, board.getCell(1,1)) == true);
+        CPPUNIT_ASSERT(board.isMoveValid(queen, board.getCell(1,2)) == true);
+        
+        CPPUNIT_ASSERT(board.isMoveValid(queen, board.getCell(2,9)) == false); // out of possible moves
+        CPPUNIT_ASSERT(board.isMoveValid(queen, board.getCell(1,10)) == false);
+        CPPUNIT_ASSERT(board.isMoveValid(queen, board.getCell(1,5)) == false);
+        CPPUNIT_ASSERT(board.isMoveValid(queen, board.getCell(1,2)) == false);
+        CPPUNIT_ASSERT(board.isMoveValid(queen, board.getCell(2,3)) == false);
     }
     
 };
