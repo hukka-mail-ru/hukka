@@ -99,10 +99,11 @@ void Board::getPossibleMoves(const CellPtr& start, unsigned max, vector<CellPtr>
         if(cells[i]->mark)
             moves.push_back(cells[i]);
     }
-    
+
+    /*
     for(unsigned i=0; i<moves.size(); ++i)
         cout << "move[" << i << "]= " <<  moves[i]->c  << "." <<  moves[i]->x << endl;
-    cout << "===" << endl;
+    cout << "===" << endl;*/
     
     // mark possible moves for others
     for(unsigned move=0; move<max-1; move++)
@@ -110,7 +111,6 @@ void Board::getPossibleMoves(const CellPtr& start, unsigned max, vector<CellPtr>
         for(unsigned i=0; i<moves.size(); ++i)
         {
             markNeibours(moves[i]);
-            cout << ">>>markNeibours>>> " << i << endl;
         } 
         
         // memorize them
@@ -121,10 +121,10 @@ void Board::getPossibleMoves(const CellPtr& start, unsigned max, vector<CellPtr>
         }
     }
     
-        
+    /*    
     for(unsigned i=0; i<moves.size(); ++i)
         cout << "move[" << i << "]= " <<  moves[i]->c  << "." <<  moves[i]->x << endl;
-    cout << "=========" << endl;
+    cout << "=========" << endl;*/
         
     RETHROW("Board::getPossibleMoves");    
 }
