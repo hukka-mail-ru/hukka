@@ -24,7 +24,12 @@ public:
     {
         return mMoveRating;
     }
-    
+
+    CellPtr& getPosition()
+    {
+        return mPosition;
+    }
+
 private:
     
     std::string mName;
