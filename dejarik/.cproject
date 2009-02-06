@@ -473,6 +473,7 @@
 </target>
 </buildTargets>
 </storageModule>
+<storageModule moduleId="org.eclipse.cdt.core.language.mapping"/>
 </cconfiguration>
 <cconfiguration id="cdt.managedbuild.config.gnu.exe.debug.1985465721.906915769.123426695">
 <storageModule buildSystemId="org.eclipse.cdt.managedbuilder.core.configurationDataProvider" id="cdt.managedbuild.config.gnu.exe.debug.1985465721.906915769.123426695" moduleId="org.eclipse.cdt.core.settings" name="test_dejarik">
@@ -944,6 +945,7 @@
 </target>
 </buildTargets>
 </storageModule>
+<storageModule moduleId="org.eclipse.cdt.core.language.mapping"/>
 </cconfiguration>
 </storageModule>
 <storageModule moduleId="cdtBuildSystem" version="4.0.0">

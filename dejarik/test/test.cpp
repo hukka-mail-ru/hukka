@@ -31,6 +31,8 @@ public:
 
     void testBoard() 
     {
+        try
+        {
         Board board;
                 
         CPPUNIT_ASSERT_EQUAL(25, (int)board.cells.size());
@@ -49,11 +51,18 @@ public:
         
         CPPUNIT_ASSERT_NO_THROW(board.getCell(1,11)); // normal
         CPPUNIT_ASSERT_NO_THROW(board.getCell(2,11)); // normal
+        }
+        catch(string& err)
+        {
+            cerr << "testBoard -> " << err << endl;
+        }
     }
     
     
     void testIsMoveValid() 
     {
+        try
+        {
         Board board;
         
         // ----------------------------------------
@@ -88,8 +97,13 @@ public:
         CPPUNIT_ASSERT(board.isMoveValid(queen, board.getCell(1,5)) == false);
         CPPUNIT_ASSERT(board.isMoveValid(queen, board.getCell(1,2)) == false);
         CPPUNIT_ASSERT(board.isMoveValid(queen, board.getCell(2,3)) == false);
-        
+        }
         // --------------------------------------------
+        catch(string& err)
+        {
+            cerr << "testIsMoveValid -> " << err << endl;
+        }
+    
         
     }
     
