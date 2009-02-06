@@ -19,7 +19,7 @@ public:
     
     bool isMoveValid(const PiecePtr& piece, const CellPtr& dst);
     
-    void getPossibleMoves(const CellPtr& pos, std::vector<CellPtr>& moves);
+    void getPossibleMoves(const CellPtr& pos, unsigned max, std::vector<CellPtr>& moves);
     
     void getMoveSteps(const CellPtr& start, const CellPtr& finish, std::vector<CellPtr>& steps);
     

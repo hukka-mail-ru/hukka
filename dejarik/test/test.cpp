@@ -58,25 +58,28 @@ public:
         
         // ----------------------------------------
         // start in the center
-        CellPtr start = board.getCell(0,0);
+        CellPtr center = board.getCell(0,0);
 
         // King can go 1 cell
-        PiecePtr king (new Piece("King", start, 0, 0, 1));
+        PiecePtr king (new Piece("King", center, 0, 0, 1));
+        center->piece = king;
+        
         CPPUNIT_ASSERT(board.isMoveValid(king, board.getCell(0,0)) == false); // no move
         CPPUNIT_ASSERT(board.isMoveValid(king, board.getCell(1,5)) == true);
         CPPUNIT_ASSERT(board.isMoveValid(king, board.getCell(2,11)) == false);
 
         // ----------------------------------------
         // from outer circle to center
-        start = board.getCell(2,0);
+        CellPtr outer = board.getCell(2,0);
 
         // Queen can go 2 calls
-        PiecePtr queen (new Piece("Queen", start, 0, 0, 2));
+        PiecePtr queen (new Piece("Queen", outer, 0, 0, 2));
+        outer->piece = queen;
 
         CPPUNIT_ASSERT(board.isMoveValid(queen, board.getCell(2,0)) == false); // no move
         CPPUNIT_ASSERT(board.isMoveValid(queen, board.getCell(2,10)) == true);
         CPPUNIT_ASSERT(board.isMoveValid(queen, board.getCell(1,11)) == true);
-        CPPUNIT_ASSERT(board.isMoveValid(queen, board.getCell(0,0)) == true);
+        CPPUNIT_ASSERT(board.isMoveValid(queen, board.getCell(0,0)) == false); // we have King there!
         CPPUNIT_ASSERT(board.isMoveValid(queen, board.getCell(1,1)) == true);
         CPPUNIT_ASSERT(board.isMoveValid(queen, board.getCell(1,2)) == true);
         
@@ -85,6 +88,9 @@ public:
         CPPUNIT_ASSERT(board.isMoveValid(queen, board.getCell(1,5)) == false);
         CPPUNIT_ASSERT(board.isMoveValid(queen, board.getCell(1,2)) == false);
         CPPUNIT_ASSERT(board.isMoveValid(queen, board.getCell(2,3)) == false);
+        
+        // --------------------------------------------
+        
     }
     
 };
