@@ -10,9 +10,9 @@
 #include <cppunit/portability/Stream.h>
 #include <cppunit/TestAssert.h>
 
-#include "../src/Board.h"
-#include "../src/Cell.h"
-#include "../src/Piece.h"
+#include "Board.h"
+#include "Cell.h"
+#include "Piece.h"
 
 using namespace std;
 
