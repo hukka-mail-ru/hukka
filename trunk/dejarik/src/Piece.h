@@ -20,6 +20,10 @@ public:
           mMoveRating(move)
           {}
     
+    unsigned getMoveRating()
+    {
+        return mMoveRating;
+    }
     
 private:
     

@@ -33,12 +33,25 @@ CellPtr& Board::getCell(unsigned c, unsigned x)
     throw(err.str());
 }
 
-bool Board::isMoveValid(const PiecePtr& piece, const CellPtr& dst)
+bool Board::isMoveValid(const PiecePtr& piece, const CellPtr& finish)
 {
+    CellPtr start = piece->getPosition();
+    
+    vector<CellPtr>& moves;
+    getPossibleMoves(piece->getPosition(), moves);
+    
+    for(unsigned i=0; i<moves.size(); ++i)
+    {
+        if(moves[i]->c == finish->c && moves[i]->x == finish->x)
+        {
+            return true;
+        }
+    }
+    
     return false;
 }
 
-void Board::getPossibleMoves(const CellPtr& pos, std::vector<CellPtr>& moves)
+void Board::getPossibleMoves(const CellPtr& start, unsigned max, vector<CellPtr>& moves)
 {
     
 }
