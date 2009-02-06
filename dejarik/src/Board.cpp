@@ -1,4 +1,5 @@
 #include <sstream>
+#include <iostream>
 #include "Board.h"
 #include "Cell.h"
 
@@ -68,6 +69,7 @@ bool Board::isMoveValid(const PiecePtr& piece, const CellPtr& finish)
     vector<CellPtr> moves;    
     getPossibleMoves(piece->getPosition(), piece->getMoveRating(), moves);
     
+    
     for(unsigned i=0; i<moves.size(); ++i)
     {
         if(moves[i]->c == finish->c && moves[i]->x == finish->x)
@@ -87,18 +89,42 @@ void Board::getPossibleMoves(const CellPtr& start, unsigned max, vector<CellPtr>
     TRY_BEGINS;
     
     markAll(false);
-    start->mark = true;
     
-    for(unsigned i=0; i<max; i++)
+    //  mark possible moves from the start
+    markNeibours(start);
+    
+    // memorize them
+    for(unsigned i=0; i<cells.size(); i++)
     {
-        for(unsigned i=0; i<cells.size(); ++i)
-        {
-            if(!cells[i]->mark)
-                continue;
-            
-            markNeibours(cells[i]);
-        } 
+        if(cells[i]->mark)
+            moves.push_back(cells[i]);
     }
+    
+    for(unsigned i=0; i<moves.size(); ++i)
+        cout << "move[" << i << "]= " <<  moves[i]->c  << "." <<  moves[i]->x << endl;
+    cout << "===" << endl;
+    
+    // mark possible moves for others
+    for(unsigned move=0; move<max-1; move++)
+    {
+        for(unsigned i=0; i<moves.size(); ++i)
+        {
+            markNeibours(moves[i]);
+            cout << ">>>markNeibours>>> " << i << endl;
+        } 
+        
+        // memorize them
+        for(unsigned i=0; i<cells.size(); i++)
+        {
+            if(cells[i]->mark)
+                moves.push_back(cells[i]);
+        }
+    }
+    
+        
+    for(unsigned i=0; i<moves.size(); ++i)
+        cout << "move[" << i << "]= " <<  moves[i]->c  << "." <<  moves[i]->x << endl;
+    cout << "=========" << endl;
         
     RETHROW("Board::getPossibleMoves");    
 }
@@ -142,7 +168,7 @@ unsigned Board::getRightPos(unsigned pos)
     if(pos == CIRCLE - 1)
         return 0;
     else
-        return pos++;
+        return ++pos;
 }
 
 unsigned Board::getLeftPos(unsigned pos)
@@ -150,7 +176,7 @@ unsigned Board::getLeftPos(unsigned pos)
     if(pos == 0)
         return CIRCLE - 1;
     else
-        return pos--;
+        return --pos;
 }
 
 

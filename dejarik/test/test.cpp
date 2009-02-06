@@ -90,8 +90,8 @@ public:
         CPPUNIT_ASSERT(board.isMoveValid(queen, board.getCell(1,11)) == true);
         CPPUNIT_ASSERT(board.isMoveValid(queen, board.getCell(0,0)) == false); // we have King there!
         CPPUNIT_ASSERT(board.isMoveValid(queen, board.getCell(1,1)) == true);
-        CPPUNIT_ASSERT(board.isMoveValid(queen, board.getCell(1,2)) == true);
         
+        CPPUNIT_ASSERT(board.isMoveValid(queen, board.getCell(1,2)) == false);
         CPPUNIT_ASSERT(board.isMoveValid(queen, board.getCell(2,9)) == false); // out of possible moves
         CPPUNIT_ASSERT(board.isMoveValid(queen, board.getCell(1,10)) == false);
         CPPUNIT_ASSERT(board.isMoveValid(queen, board.getCell(1,5)) == false);
