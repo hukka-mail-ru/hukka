@@ -25,11 +25,11 @@ public:
     
 private:
     
-    void markAll(bool val);
+    void unmarkAll();
     
     void markNeibours(const CellPtr& cell);
     
-    void markIfVacant(unsigned c, unsigned x);
+    void markIfVacant(const CellPtr& prev, const CellPtr& cell);
     
     unsigned getRightPos(unsigned pos);
 

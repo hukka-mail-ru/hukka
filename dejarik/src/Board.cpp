@@ -37,11 +37,12 @@ Board::Board()
 }
 
 
-void Board::markAll(bool val)
+void Board::unmarkAll()
 {
     for(unsigned i=0; i<cells.size(); ++i)
     {
-        cells[i]->mark = val;
+        cells[i]->mark = false;
+        cells[i]->prev.reset();
     } 
 }
 
@@ -88,7 +89,7 @@ void Board::getPossibleMoves(const CellPtr& start, unsigned max, vector<CellPtr>
 {
     TRY_BEGINS;
     
-    markAll(false);
+    unmarkAll();
     
     //  mark possible moves from the start
     markNeibours(start);
@@ -138,21 +139,21 @@ void Board::markNeibours(const CellPtr& cell)
     {
         for(unsigned i=0; i<CIRCLE; ++i)
         {
-            markIfVacant(1, i);
+            markIfVacant(cell, getCell(1, i));
         }
     }
     else if (cell->c == 1)
     {
-        markIfVacant(0, 0);
-        markIfVacant(1, getRightPos(cell->x));
-        markIfVacant(1, getLeftPos(cell->x));
-        markIfVacant(2, cell->x);
+        markIfVacant(cell, getCell(0, 0));
+        markIfVacant(cell, getCell(1, getRightPos(cell->x)));
+        markIfVacant(cell, getCell(1, getLeftPos(cell->x)));
+        markIfVacant(cell, getCell(2, cell->x));
     }
     else if (cell->c == 2)
     {
-        markIfVacant(2, getRightPos(cell->x));
-        markIfVacant(2, getLeftPos(cell->x));
-        markIfVacant(1, cell->x);
+        markIfVacant(cell, getCell(2, getRightPos(cell->x)));
+        markIfVacant(cell, getCell(2, getLeftPos(cell->x)));
+        markIfVacant(cell, getCell(1, cell->x));
     }
     else
     {
@@ -162,6 +163,18 @@ void Board::markNeibours(const CellPtr& cell)
     RETHROW("Board::markNeibours");       
 }
 
+void Board::markIfVacant(const CellPtr& prev, const CellPtr& cell)
+{
+    TRY_BEGINS;
+    
+    if(!cell->piece && !cell->mark)
+    {
+        cell->mark = true;
+        cell->prev = prev;
+    }
+    
+    RETHROW("Board::markIfVacant");     
+}
 
 unsigned Board::getRightPos(unsigned pos)
 {
@@ -180,19 +193,7 @@ unsigned Board::getLeftPos(unsigned pos)
 }
 
 
-void Board::markIfVacant(unsigned c, unsigned x)
-{
-    TRY_BEGINS;
-    
-    CellPtr cell = getCell(c, x);
-    
-    if(cell->piece == NULL)
-    {
-        cell->mark = true;
-    }
-    
-    RETHROW("Board::markIfVacant");     
-}
+
 
 void Board::getMoveSteps(const CellPtr& start, const CellPtr& finish, std::vector<CellPtr>& steps)
 {

@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <projectDescription>
-	<name>Dejarik</name>
+	<name>dejarik</name>
 	<comment></comment>
 	<projects>
 	</projects>
@@ -59,7 +59,7 @@
 				</dictionary>
 				<dictionary>
 					<key>org.eclipse.cdt.make.core.fullBuildTarget</key>
-					<value>test_dejarik</value>
+					<value>dejarik</value>
 				</dictionary>
 				<dictionary>
 					<key>org.eclipse.cdt.make.core.autoBuildTarget</key>
