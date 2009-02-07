@@ -21,6 +21,7 @@ class DejaricTest : public CppUnit::TestFixture
    CPPUNIT_TEST_SUITE(DejaricTest);
    CPPUNIT_TEST(testBoard);
    CPPUNIT_TEST(testIsMoveValid);
+   CPPUNIT_TEST(testGetMoveSteps);
    CPPUNIT_TEST_SUITE_END();
          
    
@@ -73,9 +74,12 @@ public:
         PiecePtr king (new Piece("King", center, 0, 0, 1));
         center->piece = king;
         
-        CPPUNIT_ASSERT(board.isMoveValid(king, board.getCell(0,0)) == false); // no move
-        CPPUNIT_ASSERT(board.isMoveValid(king, board.getCell(1,5)) == true);
-        CPPUNIT_ASSERT(board.isMoveValid(king, board.getCell(2,11)) == false);
+        vector<CellPtr> moves;
+        board.getPossibleMoves(king, moves);
+        
+        CPPUNIT_ASSERT(board.isMoveValid(board.getCell(0,0)) == false); // no move
+        CPPUNIT_ASSERT(board.isMoveValid(board.getCell(1,5)) == true);
+        CPPUNIT_ASSERT(board.isMoveValid(board.getCell(2,11)) == false);
 
         // ----------------------------------------
         // from outer circle to center
@@ -84,19 +88,22 @@ public:
         // Queen can go 2 calls
         PiecePtr queen (new Piece("Queen", outer, 0, 0, 2));
         outer->piece = queen;
-
-        CPPUNIT_ASSERT(board.isMoveValid(queen, board.getCell(2,0)) == false); // no move
-        CPPUNIT_ASSERT(board.isMoveValid(queen, board.getCell(2,10)) == true);
-        CPPUNIT_ASSERT(board.isMoveValid(queen, board.getCell(1,11)) == true);
-        CPPUNIT_ASSERT(board.isMoveValid(queen, board.getCell(0,0)) == false); // we have King there!
-        CPPUNIT_ASSERT(board.isMoveValid(queen, board.getCell(1,1)) == true);
         
-        CPPUNIT_ASSERT(board.isMoveValid(queen, board.getCell(1,2)) == false);
-        CPPUNIT_ASSERT(board.isMoveValid(queen, board.getCell(2,9)) == false); // out of possible moves
-        CPPUNIT_ASSERT(board.isMoveValid(queen, board.getCell(1,10)) == false);
-        CPPUNIT_ASSERT(board.isMoveValid(queen, board.getCell(1,5)) == false);
-        CPPUNIT_ASSERT(board.isMoveValid(queen, board.getCell(1,2)) == false);
-        CPPUNIT_ASSERT(board.isMoveValid(queen, board.getCell(2,3)) == false);
+        moves.clear();
+        board.getPossibleMoves(queen, moves);
+
+        CPPUNIT_ASSERT(board.isMoveValid(board.getCell(2,0)) == false); // no move
+        CPPUNIT_ASSERT(board.isMoveValid(board.getCell(2,10)) == true);
+        CPPUNIT_ASSERT(board.isMoveValid(board.getCell(1,11)) == true);
+        CPPUNIT_ASSERT(board.isMoveValid(board.getCell(0,0)) == false); // we have King there!
+        CPPUNIT_ASSERT(board.isMoveValid(board.getCell(1,1)) == true);
+        
+        CPPUNIT_ASSERT(board.isMoveValid(board.getCell(1,2)) == false);
+        CPPUNIT_ASSERT(board.isMoveValid(board.getCell(2,9)) == false); // out of possible moves
+        CPPUNIT_ASSERT(board.isMoveValid(board.getCell(1,10)) == false);
+        CPPUNIT_ASSERT(board.isMoveValid(board.getCell(1,5)) == false);
+        CPPUNIT_ASSERT(board.isMoveValid(board.getCell(1,2)) == false);
+        CPPUNIT_ASSERT(board.isMoveValid(board.getCell(2,3)) == false);
         }
         // --------------------------------------------
         catch(string& err)
@@ -104,6 +111,67 @@ public:
             cerr << "testIsMoveValid -> " << err << endl;
         }
     
+        
+    }
+    
+    void testGetMoveSteps() 
+    {
+        
+        try
+        {
+        Board board;
+        
+        // ----------------------------------------
+        // from outer circle to center
+        CellPtr start = board.getCell(2,0);
+        CellPtr interim = board.getCell(1,0);
+        CellPtr finish = board.getCell(0,0);
+
+        // Queen can go 2 calls
+        PiecePtr queen (new Piece("Queen", start, 0, 0, 2));
+        start->piece = queen;
+        
+        vector<CellPtr> moves;
+        board.getPossibleMoves(queen, moves);
+        
+        vector<CellPtr> steps;
+        board.getMoveSteps(finish, steps);
+        
+        CPPUNIT_ASSERT_EQUAL((unsigned)2, steps.size());
+        
+        CPPUNIT_ASSERT_EQUAL(interim->c, steps[0]->c);
+        CPPUNIT_ASSERT_EQUAL(interim->x, steps[0]->x);
+        
+        CPPUNIT_ASSERT_EQUAL(finish->c, steps[1]->c);
+        CPPUNIT_ASSERT_EQUAL(finish->x, steps[1]->x);
+        
+        
+        finish = board.getCell(2,2);
+        steps.clear();
+        board.getMoveSteps(finish, steps);        
+        CPPUNIT_ASSERT_EQUAL((unsigned)2, steps.size());
+        
+        finish = board.getCell(2,11);
+        steps.clear();
+        board.getMoveSteps(finish, steps);        
+        CPPUNIT_ASSERT_EQUAL((unsigned)1, steps.size());
+        
+        finish = board.getCell(1,1);
+        steps.clear();
+        board.getMoveSteps(finish, steps);        
+        CPPUNIT_ASSERT_EQUAL((unsigned)2, steps.size());
+
+        finish = board.getCell(1,11);
+        steps.clear();
+        board.getMoveSteps(finish, steps);        
+        CPPUNIT_ASSERT_EQUAL((unsigned)2, steps.size());
+
+        }
+        // --------------------------------------------
+        catch(string& err)
+        {
+            cerr << "testIsMoveValid -> " << err << endl;
+        }
         
     }
     

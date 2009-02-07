@@ -15,6 +15,8 @@ struct Cell
         piece.reset();
     }
     
+    // operator = needed 
+    
     unsigned c; // coordinate: 0,1,2
     unsigned x; // coordinate: 0 in circle 0;   0..11 in circle 1;  0..11 in circle 2.  
     

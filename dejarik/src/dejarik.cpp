@@ -16,7 +16,8 @@ int main()
        PiecePtr king (new Piece("King", center, 0, 0, 1));
        center->piece = king;
        
-       bool res = board.isMoveValid(king, board.getCell(0,0));
+       vector<CellPtr> moves;
+       board.getPossibleMoves(king, moves);
        
    }
    catch(string& err)
