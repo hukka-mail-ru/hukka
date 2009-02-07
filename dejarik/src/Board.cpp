@@ -24,36 +24,45 @@ catch(string& err) \
 Board::Board()
 {
     CellPtr cell0 (new Cell(0,0));
-    cells.push_back(cell0);
+    mCells.push_back(cell0);
     
     for(unsigned i=0; i<CIRCLE; i++)
     {
         CellPtr cell1 (new Cell(1,i));
-        cells.push_back(cell1);
+        mCells.push_back(cell1);
         
         CellPtr cell2 (new Cell(2,i));
-        cells.push_back(cell2);
+        mCells.push_back(cell2);
     }       
 }
 
+void Board::clear()
+{
+    for(unsigned i=0; i<mCells.size(); ++i)
+    {
+        mCells[i]->piece.reset();
+        mCells[i]->mark = false;
+        mCells[i]->prev.reset();
+    } 
+}
 
 void Board::unmarkAll()
 {
-    for(unsigned i=0; i<cells.size(); ++i)
+    for(unsigned i=0; i<mCells.size(); ++i)
     {
-        cells[i]->mark = false;
-        cells[i]->prev.reset();
+        mCells[i]->mark = false;
+        mCells[i]->prev.reset();
     } 
 }
 
 
 CellPtr& Board::getCell(unsigned c, unsigned x)
 {
-    for(unsigned i=0; i<cells.size(); ++i)
+    for(unsigned i=0; i<mCells.size(); ++i)
     {
-        if(cells[i]->c == c && cells[i]->x == x)
+        if(mCells[i]->c == c && mCells[i]->x == x)
         {
-            return cells[i];
+            return mCells[i];
         }
     }
     
@@ -91,10 +100,10 @@ void Board::getPossibleMoves(const PiecePtr& piece, vector<CellPtr>& moves)
     markNeibours(piece->getPosition());
     
     // memorize them
-    for(unsigned i=0; i<cells.size(); i++)
+    for(unsigned i=0; i<mCells.size(); i++)
     {
-        if(cells[i]->mark)
-            moves.push_back(cells[i]);
+        if(mCells[i]->mark)
+            moves.push_back(mCells[i]);
     }
 
        /*
@@ -111,10 +120,10 @@ void Board::getPossibleMoves(const PiecePtr& piece, vector<CellPtr>& moves)
         } 
         
         // memorize them
-        for(unsigned i=0; i<cells.size(); i++)
+        for(unsigned i=0; i<mCells.size(); i++)
         {
-            if(cells[i]->mark)
-                moves.push_back(cells[i]);
+            if(mCells[i]->mark)
+                moves.push_back(mCells[i]);
         }
     }
     
