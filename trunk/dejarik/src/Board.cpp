@@ -63,17 +63,13 @@ CellPtr& Board::getCell(unsigned c, unsigned x)
 }
 
 
-bool Board::isMoveValid(const PiecePtr& piece, const CellPtr& finish)
+bool Board::isMoveValid(const CellPtr& finish)
 {
     TRY_BEGINS;
     
-    vector<CellPtr> moves;    
-    getPossibleMoves(piece->getPosition(), piece->getMoveRating(), moves);
-    
-    
-    for(unsigned i=0; i<moves.size(); ++i)
+    for(unsigned i=0; i<mPossibleMoves.size(); ++i)
     {
-        if(moves[i]->c == finish->c && moves[i]->x == finish->x)
+        if(mPossibleMoves[i]->c == finish->c && mPossibleMoves[i]->x == finish->x)
         {
             return true;
         }
@@ -85,14 +81,14 @@ bool Board::isMoveValid(const PiecePtr& piece, const CellPtr& finish)
 }
 
 
-void Board::getPossibleMoves(const CellPtr& start, unsigned max, vector<CellPtr>& moves)
+void Board::getPossibleMoves(const PiecePtr& piece, vector<CellPtr>& moves)
 {
     TRY_BEGINS;
     
     unmarkAll();
     
     //  mark possible moves from the start
-    markNeibours(start);
+    markNeibours(piece->getPosition());
     
     // memorize them
     for(unsigned i=0; i<cells.size(); i++)
@@ -101,13 +97,13 @@ void Board::getPossibleMoves(const CellPtr& start, unsigned max, vector<CellPtr>
             moves.push_back(cells[i]);
     }
 
-    /*
+       /*
     for(unsigned i=0; i<moves.size(); ++i)
         cout << "move[" << i << "]= " <<  moves[i]->c  << "." <<  moves[i]->x << endl;
     cout << "===" << endl;*/
     
     // mark possible moves for others
-    for(unsigned move=0; move<max-1; move++)
+    for(unsigned move=0; move < piece->getMoveRating()-1; move++)
     {
         for(unsigned i=0; i<moves.size(); ++i)
         {
@@ -122,6 +118,8 @@ void Board::getPossibleMoves(const CellPtr& start, unsigned max, vector<CellPtr>
         }
     }
     
+    mActivePiece = piece;
+    mPossibleMoves = moves;
     /*    
     for(unsigned i=0; i<moves.size(); ++i)
         cout << "move[" << i << "]= " <<  moves[i]->c  << "." <<  moves[i]->x << endl;
@@ -195,7 +193,14 @@ unsigned Board::getLeftPos(unsigned pos)
 
 
 
-void Board::getMoveSteps(const CellPtr& start, const CellPtr& finish, std::vector<CellPtr>& steps)
+void Board::getMoveSteps(const CellPtr& finish, std::vector<CellPtr>& steps)
 {
+    TRY_BEGINS;
     
+  //  vector<CellPtr> moves;    
+  //  getPossibleMoves(mActivePiece->getPosition(), mActivePiece->getMoveRating(), moves);
+    
+    
+    
+    RETHROW("Board::getMoveSteps");  
 }

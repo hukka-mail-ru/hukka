@@ -17,11 +17,11 @@ public:
     
     CellPtr& getCell(unsigned c, unsigned x);   
           
-    bool isMoveValid(const PiecePtr& piece, const CellPtr& dst);
+    bool isMoveValid(const CellPtr& finish);
     
-    void getPossibleMoves(const CellPtr& pos, unsigned max, std::vector<CellPtr>& moves);
+    void getPossibleMoves(const PiecePtr& piece, std::vector<CellPtr>& moves);
     
-    void getMoveSteps(const CellPtr& start, const CellPtr& finish, std::vector<CellPtr>& steps);
+    void getMoveSteps(const CellPtr& finish, std::vector<CellPtr>& steps);
     
 private:
     
@@ -35,7 +35,11 @@ private:
 
     unsigned getLeftPos(unsigned pos);
     
-    std::vector<CellPtr> cells;
+    std::vector<CellPtr> cells; // all the cells on board
+    
+    std::vector<CellPtr> mPossibleMoves;
+    
+    PiecePtr mActivePiece;
 };
 
 #endif /*BOARD_H_*/
