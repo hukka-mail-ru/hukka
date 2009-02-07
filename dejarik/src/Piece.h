@@ -29,6 +29,11 @@ public:
     {
         return mPosition;
     }
+    
+    void setPosition(const CellPtr& cell)
+    {
+        mPosition = cell;
+    }
 
 private:
     

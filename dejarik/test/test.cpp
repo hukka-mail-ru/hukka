@@ -135,6 +135,27 @@ public:
         CPPUNIT_ASSERT(findMove(moves, 2,11) == true);
         CPPUNIT_ASSERT(findMove(moves, 1,0) == true);
         
+        // -------------------------------------------------------------
+        board.clear(); 
+        cell = board.getCell(2,0);
+        
+        // King can go 1 cell
+        king = PiecePtr(new Piece("King", cell, 0, 0, 1));
+        cell->piece = king;
+        
+        PiecePtr queen1 (new Piece("King", board.getCell(2,1), 0, 0, 1));
+        PiecePtr queen2 (new Piece("King", board.getCell(2,11), 0, 0, 1));
+        PiecePtr queen3 (new Piece("King", board.getCell(1,0), 0, 0, 1));
+        
+        board.getCell(2,1)->piece = queen1;
+        board.getCell(2,11)->piece = queen2;
+        board.getCell(1,0)->piece = queen3;
+
+        moves.clear();
+        board.getPossibleMoves(king, moves);
+        CPPUNIT_ASSERT_EQUAL((unsigned)0, moves.size());
+        
+        
         }
         catch(string& err)
         {

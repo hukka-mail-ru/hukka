@@ -55,6 +55,17 @@ void Board::unmarkAll()
     } 
 }
 
+// piece <---> cell
+void Board::placePiece(const PiecePtr& piece, unsigned c, unsigned x)
+{
+    TRY_BEGINS;
+    
+    CellPtr cell = getCell(c, x);
+    piece->setPosition(cell);
+    cell->piece = piece;    
+    
+    RETHROW("Board::placePiece");
+}
 
 CellPtr& Board::getCell(unsigned c, unsigned x)
 {
