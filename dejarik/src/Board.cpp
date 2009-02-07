@@ -219,12 +219,18 @@ void Board::getMoveSteps(unsigned c, unsigned x, std::vector<CellPtr>& steps)
 {
     TRY_BEGINS;
     
-    CellPtr finish = getCell(c, x);
+    CellPtr cell = getCell(c, x);
     
-  //  vector<CellPtr> moves;    
-  //  getPossibleMoves(mActivePiece->getPosition(), mActivePiece->getMoveRating(), moves);
-    
-    
+    for(;;)
+    {
+        if(!cell->prev)
+            break;
+        
+        steps.insert(steps.begin(), cell); // push_front
+        
+        cell = cell->prev;
+    }
+
     
     RETHROW("Board::getMoveSteps");  
 }

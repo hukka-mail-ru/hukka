@@ -241,10 +241,6 @@ public:
         CPPUNIT_ASSERT_EQUAL((unsigned)2, steps.size());
         
         steps.clear();
-        board.getMoveSteps(2, 2, steps);        
-        CPPUNIT_ASSERT_EQUAL((unsigned)1, steps.size());
-        
-        steps.clear();
         board.getMoveSteps(1, 1, steps);        
         CPPUNIT_ASSERT_EQUAL((unsigned)2, steps.size());
 
