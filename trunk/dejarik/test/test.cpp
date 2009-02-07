@@ -20,6 +20,7 @@ class DejaricTest : public CppUnit::TestFixture
 {
    CPPUNIT_TEST_SUITE(DejaricTest);
    CPPUNIT_TEST(testBoard);
+   CPPUNIT_TEST(testPossibleMoves);
    CPPUNIT_TEST(testIsMoveValid);
    CPPUNIT_TEST(testGetMoveSteps);
    CPPUNIT_TEST_SUITE_END();
@@ -36,7 +37,7 @@ public:
         {
         Board board;
                 
-        CPPUNIT_ASSERT_EQUAL(25, (int)board.cells.size());
+        CPPUNIT_ASSERT_EQUAL(25, (int)board.mCells.size());
         
         CPPUNIT_ASSERT_THROW(board.getCell(-1,-1), string); // both negative
         CPPUNIT_ASSERT_THROW(board.getCell(-1,0), string);  // one negative
@@ -56,6 +57,88 @@ public:
         catch(string& err)
         {
             cerr << "testBoard -> " << err << endl;
+        }
+    }
+    
+    // helper for testPossibleMoves
+    bool findMove(vector<CellPtr> moves, unsigned c, unsigned x)
+    {      
+        for(unsigned i=0; i<moves.size(); ++i)
+        {
+            if(moves[i]->c == c && moves[i]->x == x)
+            {
+                return true;
+            }
+        }
+        
+        return false;
+    }
+    
+    void testPossibleMoves()
+    {
+        try
+        { 
+        Board board; 
+        CellPtr cell = board.getCell(0,0);
+        
+        // King can go 1 cell
+        PiecePtr king (new Piece("King", cell, 0, 0, 1));
+        cell->piece = king;
+        
+        vector<CellPtr> moves;
+        board.getPossibleMoves(king, moves);
+        CPPUNIT_ASSERT_EQUAL((unsigned)12, moves.size());
+                
+        CPPUNIT_ASSERT(findMove(moves, 1,0) == true);
+        CPPUNIT_ASSERT(findMove(moves, 1,1) == true);
+        CPPUNIT_ASSERT(findMove(moves, 1,2) == true);
+        CPPUNIT_ASSERT(findMove(moves, 1,3) == true);
+        CPPUNIT_ASSERT(findMove(moves, 1,4) == true);
+        CPPUNIT_ASSERT(findMove(moves, 1,5) == true);
+        CPPUNIT_ASSERT(findMove(moves, 1,6) == true);
+        CPPUNIT_ASSERT(findMove(moves, 1,7) == true);
+        CPPUNIT_ASSERT(findMove(moves, 1,8) == true);
+        CPPUNIT_ASSERT(findMove(moves, 1,9) == true);
+        CPPUNIT_ASSERT(findMove(moves, 1,10) == true);
+        CPPUNIT_ASSERT(findMove(moves, 1,11) == true);
+        
+        // -------------------------------------------------------------
+        board.clear(); 
+        cell = board.getCell(1,0);
+        
+        // King can go 1 cell
+        king = PiecePtr(new Piece("King", cell, 0, 0, 1));
+        cell->piece = king;
+        
+        moves.clear();
+        board.getPossibleMoves(king, moves);
+        CPPUNIT_ASSERT_EQUAL((unsigned)4, moves.size());
+                
+        CPPUNIT_ASSERT(findMove(moves, 0,0) == true);
+        CPPUNIT_ASSERT(findMove(moves, 1,1) == true);
+        CPPUNIT_ASSERT(findMove(moves, 1,11) == true);
+        CPPUNIT_ASSERT(findMove(moves, 2,0) == true);
+
+        // -------------------------------------------------------------
+        board.clear(); 
+        cell = board.getCell(2,0);
+        
+        // King can go 1 cell
+        king = PiecePtr(new Piece("King", cell, 0, 0, 1));
+        cell->piece = king;
+        
+        moves.clear();
+        board.getPossibleMoves(king, moves);
+        CPPUNIT_ASSERT_EQUAL((unsigned)3, moves.size());
+                
+        CPPUNIT_ASSERT(findMove(moves, 2,1) == true);
+        CPPUNIT_ASSERT(findMove(moves, 2,11) == true);
+        CPPUNIT_ASSERT(findMove(moves, 1,0) == true);
+        
+        }
+        catch(string& err)
+        {
+            cerr << "testPossibleMoves -> " << err << endl;
         }
     }
     

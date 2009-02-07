@@ -15,6 +15,8 @@ public:
     
     Board();
     
+    void clear();
+    
     CellPtr& getCell(unsigned c, unsigned x);   
           
     bool isMoveValid(const CellPtr& finish);
@@ -35,7 +37,7 @@ private:
 
     unsigned getLeftPos(unsigned pos);
     
-    std::vector<CellPtr> cells; // all the cells on board
+    std::vector<CellPtr> mCells; // all the cells on board
     
     std::vector<CellPtr> mPossibleMoves;
     
