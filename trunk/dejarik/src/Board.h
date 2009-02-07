@@ -18,6 +18,8 @@ public:
     void clear();
     
     CellPtr& getCell(unsigned c, unsigned x);   
+    
+    void placePiece(const PiecePtr& piece, unsigned c, unsigned x);
           
     bool isMoveValid(const CellPtr& finish);
     
