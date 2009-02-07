@@ -10,11 +10,8 @@ int main()
    try
    {
        Board board;
-       
-       CellPtr center = board.getCell(0,0);
     
-       PiecePtr king (new Piece("King", center, 0, 0, 1));
-       center->piece = king;
+       PiecePtr king (new Piece("King", 0, 0, 1));
        
        vector<CellPtr> moves;
        board.getPossibleMoves(king, moves);

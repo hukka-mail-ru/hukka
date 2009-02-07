@@ -79,11 +79,10 @@ public:
         try
         { 
         Board board; 
-        CellPtr cell = board.getCell(0,0);
         
         // King can go 1 cell
-        PiecePtr king (new Piece("King", cell, 0, 0, 1));
-        cell->piece = king;
+        PiecePtr king (new Piece("King", 0, 0, 1));
+        board.placePiece(king, 0, 0);
         
         vector<CellPtr> moves;
         board.getPossibleMoves(king, moves);
@@ -104,11 +103,8 @@ public:
         
         // -------------------------------------------------------------
         board.clear(); 
-        cell = board.getCell(1,0);
-        
-        // King can go 1 cell
-        king = PiecePtr(new Piece("King", cell, 0, 0, 1));
-        cell->piece = king;
+        king = PiecePtr(new Piece("King", 0, 0, 1));
+        board.placePiece(king, 1, 0);
         
         moves.clear();
         board.getPossibleMoves(king, moves);
@@ -121,11 +117,9 @@ public:
 
         // -------------------------------------------------------------
         board.clear(); 
-        cell = board.getCell(2,0);
-        
         // King can go 1 cell
-        king = PiecePtr(new Piece("King", cell, 0, 0, 1));
-        cell->piece = king;
+        king = PiecePtr(new Piece("King", 0, 0, 1));
+        board.placePiece(king, 2, 0);
         
         moves.clear();
         board.getPossibleMoves(king, moves);
@@ -137,19 +131,17 @@ public:
         
         // -------------------------------------------------------------
         board.clear(); 
-        cell = board.getCell(2,0);
-        
         // King can go 1 cell
-        king = PiecePtr(new Piece("King", cell, 0, 0, 1));
-        cell->piece = king;
+        king = PiecePtr(new Piece("King", 0, 0, 1));
+        board.placePiece(king, 2, 0);
         
-        PiecePtr queen1 (new Piece("King", board.getCell(2,1), 0, 0, 1));
-        PiecePtr queen2 (new Piece("King", board.getCell(2,11), 0, 0, 1));
-        PiecePtr queen3 (new Piece("King", board.getCell(1,0), 0, 0, 1));
+        PiecePtr queen1 (new Piece("Queen", 0, 0, 1));
+        PiecePtr queen2 (new Piece("Queen", 0, 0, 1));
+        PiecePtr queen3 (new Piece("Queen", 0, 0, 1));
         
-        board.getCell(2,1)->piece = queen1;
-        board.getCell(2,11)->piece = queen2;
-        board.getCell(1,0)->piece = queen3;
+        board.placePiece(queen1, 2, 1);
+        board.placePiece(queen2, 2, 11);
+        board.placePiece(queen3, 1, 0);
 
         moves.clear();
         board.getPossibleMoves(king, moves);
@@ -169,14 +161,10 @@ public:
         try
         {
         Board board;
-        
-        // ----------------------------------------
-        // start in the center
-        CellPtr center = board.getCell(0,0);
 
         // King can go 1 cell
-        PiecePtr king (new Piece("King", center, 0, 0, 1));
-        center->piece = king;
+        PiecePtr king (new Piece("King", 0, 0, 1));
+        board.placePiece(king, 0, 0);
         
         vector<CellPtr> moves;
         board.getPossibleMoves(king, moves);
@@ -186,12 +174,10 @@ public:
         CPPUNIT_ASSERT(board.isMoveValid(board.getCell(2,11)) == false);
 
         // ----------------------------------------
-        // from outer circle to center
-        CellPtr outer = board.getCell(2,0);
-
+        
         // Queen can go 2 calls
-        PiecePtr queen (new Piece("Queen", outer, 0, 0, 2));
-        outer->piece = queen;
+        PiecePtr queen (new Piece("Queen", 0, 0, 2));
+        board.placePiece(queen, 2, 0); // from outer circle to center
         
         moves.clear();
         board.getPossibleMoves(queen, moves);
@@ -232,8 +218,8 @@ public:
         CellPtr finish = board.getCell(0,0);
 
         // Queen can go 2 calls
-        PiecePtr queen (new Piece("Queen", start, 0, 0, 2));
-        start->piece = queen;
+        PiecePtr queen (new Piece("Queen", 0, 0, 2));
+        board.placePiece(queen, 2, 0);
         
         vector<CellPtr> moves;
         board.getPossibleMoves(queen, moves);

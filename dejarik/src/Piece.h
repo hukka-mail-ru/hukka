@@ -11,14 +11,15 @@ class Piece
 {
 public:
     
-    Piece(const std::string& name, const CellPtr& pos,
+    Piece(const std::string& name,
           unsigned attack, unsigned defence, unsigned move):
           mName(name),
-          mPosition(pos),
           mAttackRating(attack),
           mDefenceRating(defence),
           mMoveRating(move)
-          {}
+          {
+              mPosition.reset();
+          }
     
     unsigned getMoveRating()
     {
