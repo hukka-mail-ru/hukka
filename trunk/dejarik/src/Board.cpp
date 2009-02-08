@@ -110,7 +110,7 @@ void Board::getPossibleMoves(const PiecePtr& piece, vector<CellPtr>& moves)
     unmarkAll();
     
     //  mark possible moves from the start
-    markNeibours(piece->getPosition());
+    markNeibours(piece->getPosition(), POSSIBLE_MOVES);
     
     // memorize them
     for(unsigned i=0; i<mCells.size(); i++)
@@ -129,7 +129,7 @@ void Board::getPossibleMoves(const PiecePtr& piece, vector<CellPtr>& moves)
     {
         for(unsigned i=0; i<moves.size(); ++i)
         {
-            markNeibours(moves[i]);
+            markNeibours(moves[i], POSSIBLE_MOVES);
         } 
         
         // memorize them
@@ -151,7 +151,27 @@ void Board::getPossibleMoves(const PiecePtr& piece, vector<CellPtr>& moves)
 }
 
 
-void Board::markNeibours(const CellPtr& cell)
+void Board::getPossibleTargets(const PiecePtr& piece, std::vector<CellPtr>& targets)
+{
+    TRY_BEGINS;
+    
+    unmarkAll();
+    
+    //  mark possible moves from the start
+    markNeibours(piece->getPosition(), POSSIBLE_TARGETS);
+    
+    // memorize them
+    for(unsigned i=0; i<mCells.size(); i++)
+    {
+        if(mCells[i]->mark)
+            targets.push_back(mCells[i]);
+    }
+    
+    RETHROW("Board::getPossibleTargets");    
+}
+
+
+void Board::markNeibours(const CellPtr& cell, WhatToMark whatToMark)
 {
     TRY_BEGINS;
     
@@ -159,21 +179,21 @@ void Board::markNeibours(const CellPtr& cell)
     {
         for(unsigned i=0; i<CIRCLE; ++i)
         {
-            markIfVacant(cell, getCell(1, i));
+            mark(cell, getCell(1, i), whatToMark);
         }
     }
     else if (cell->c == 1)
     {
-        markIfVacant(cell, getCell(0, 0));
-        markIfVacant(cell, getCell(1, getRightPos(cell->x)));
-        markIfVacant(cell, getCell(1, getLeftPos(cell->x)));
-        markIfVacant(cell, getCell(2, cell->x));
+        mark(cell, getCell(0, 0), whatToMark);
+        mark(cell, getCell(1, getRightPos(cell->x)), whatToMark);
+        mark(cell, getCell(1, getLeftPos(cell->x)), whatToMark);
+        mark(cell, getCell(2, cell->x), whatToMark);
     }
     else if (cell->c == 2)
     {
-        markIfVacant(cell, getCell(2, getRightPos(cell->x)));
-        markIfVacant(cell, getCell(2, getLeftPos(cell->x)));
-        markIfVacant(cell, getCell(1, cell->x));
+        mark(cell, getCell(2, getRightPos(cell->x)), whatToMark);
+        mark(cell, getCell(2, getLeftPos(cell->x)), whatToMark);
+        mark(cell, getCell(1, cell->x), whatToMark);
     }
     else
     {
@@ -183,14 +203,24 @@ void Board::markNeibours(const CellPtr& cell)
     RETHROW("Board::markNeibours");       
 }
 
-void Board::markIfVacant(const CellPtr& prev, const CellPtr& cell)
+void Board::mark(const CellPtr& prev, const CellPtr& cell, WhatToMark whatToMark)
 {
     TRY_BEGINS;
     
-    if(!cell->piece && !cell->mark)
+    if(whatToMark == POSSIBLE_MOVES) // mark vacant cells
     {
-        cell->mark = true;
-        cell->prev = prev;
+        if(!cell->piece && !cell->mark)
+        {
+            cell->mark = true;
+            cell->prev = prev;
+        }
+    }
+    else if(whatToMark == POSSIBLE_TARGETS)
+    {
+        if(cell->piece && (cell->piece->getPlayer() != prev->piece->getPlayer())) // mark opponent's pieces
+        {
+            cell->mark = true;
+        }
     }
     
     RETHROW("Board::markIfVacant");     

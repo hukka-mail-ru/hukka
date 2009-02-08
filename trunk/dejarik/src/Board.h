@@ -21,8 +21,9 @@ public:
 
     // on user click1: (activate a piece)
     void getPossibleMoves(const PiecePtr& piece, std::vector<CellPtr>& moves);
+    void getPossibleTargets(const PiecePtr& piece, std::vector<CellPtr>& targets);
 
-    // on user click2: (move a piece)
+    // on user click2: (move the piece or attack a partner's piece)
     bool isMoveValid(unsigned c, unsigned x);
     void getMoveSteps(unsigned c, unsigned x, std::vector<CellPtr>& steps);
     
@@ -32,8 +33,14 @@ private:
     
     void unmarkAll();
     
-    void markNeibours(const CellPtr& cell);    
-    void markIfVacant(const CellPtr& prev, const CellPtr& cell);
+    enum WhatToMark
+    {
+        POSSIBLE_MOVES,
+        POSSIBLE_TARGETS
+    };
+    
+    void markNeibours(const CellPtr& cell, WhatToMark whatToMark);       
+    void mark(const CellPtr& prev, const CellPtr& cell, WhatToMark whatToMark);
     
     unsigned getRightPos(unsigned pos);
     unsigned getLeftPos(unsigned pos);

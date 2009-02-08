@@ -28,4 +28,5 @@ struct Cell
 
 typedef boost::shared_ptr<Cell> CellPtr;
 
+
 #endif /*CELL_H_*/
