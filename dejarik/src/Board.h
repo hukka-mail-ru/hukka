@@ -39,8 +39,8 @@ private:
         POSSIBLE_TARGETS
     };
     
-    void markNeibours(const CellPtr& cell, WhatToMark whatToMark);       
-    void mark(const CellPtr& prev, const CellPtr& cell, WhatToMark whatToMark);
+    void markNeibours(WhatToMark whatToMark, const CellPtr& cell);       
+    void mark(WhatToMark whatToMark, const CellPtr& prev, const CellPtr& cell);
     
     unsigned getRightPos(unsigned pos);
     unsigned getLeftPos(unsigned pos);

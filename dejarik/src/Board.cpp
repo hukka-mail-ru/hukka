@@ -110,7 +110,7 @@ void Board::getPossibleMoves(const PiecePtr& piece, vector<CellPtr>& moves)
     unmarkAll();
     
     //  mark possible moves from the start
-    markNeibours(piece->getPosition(), POSSIBLE_MOVES);
+    markNeibours(POSSIBLE_MOVES, piece->getPosition());
     
     // memorize them
     for(unsigned i=0; i<mCells.size(); i++)
@@ -129,7 +129,7 @@ void Board::getPossibleMoves(const PiecePtr& piece, vector<CellPtr>& moves)
     {
         for(unsigned i=0; i<moves.size(); ++i)
         {
-            markNeibours(moves[i], POSSIBLE_MOVES);
+            markNeibours(POSSIBLE_MOVES, moves[i]);
         } 
         
         // memorize them
@@ -158,7 +158,7 @@ void Board::getPossibleTargets(const PiecePtr& piece, std::vector<CellPtr>& targ
     unmarkAll();
     
     //  mark possible moves from the start
-    markNeibours(piece->getPosition(), POSSIBLE_TARGETS);
+    markNeibours(POSSIBLE_TARGETS, piece->getPosition());
     
     // memorize them
     for(unsigned i=0; i<mCells.size(); i++)
@@ -171,7 +171,7 @@ void Board::getPossibleTargets(const PiecePtr& piece, std::vector<CellPtr>& targ
 }
 
 
-void Board::markNeibours(const CellPtr& cell, WhatToMark whatToMark)
+void Board::markNeibours(WhatToMark whatToMark, const CellPtr& cell)
 {
     TRY_BEGINS;
     
@@ -179,21 +179,21 @@ void Board::markNeibours(const CellPtr& cell, WhatToMark whatToMark)
     {
         for(unsigned i=0; i<CIRCLE; ++i)
         {
-            mark(cell, getCell(1, i), whatToMark);
+            mark(whatToMark, cell, getCell(1, i));
         }
     }
     else if (cell->c == 1)
     {
-        mark(cell, getCell(0, 0), whatToMark);
-        mark(cell, getCell(1, getRightPos(cell->x)), whatToMark);
-        mark(cell, getCell(1, getLeftPos(cell->x)), whatToMark);
-        mark(cell, getCell(2, cell->x), whatToMark);
+        mark(whatToMark, cell, getCell(0, 0));
+        mark(whatToMark, cell, getCell(1, getRightPos(cell->x)));
+        mark(whatToMark, cell, getCell(1, getLeftPos(cell->x)));
+        mark(whatToMark, cell, getCell(2, cell->x));
     }
     else if (cell->c == 2)
     {
-        mark(cell, getCell(2, getRightPos(cell->x)), whatToMark);
-        mark(cell, getCell(2, getLeftPos(cell->x)), whatToMark);
-        mark(cell, getCell(1, cell->x), whatToMark);
+        mark(whatToMark, cell, getCell(2, getRightPos(cell->x)));
+        mark(whatToMark, cell, getCell(2, getLeftPos(cell->x)));
+        mark(whatToMark, cell, getCell(1, cell->x));
     }
     else
     {
@@ -203,7 +203,7 @@ void Board::markNeibours(const CellPtr& cell, WhatToMark whatToMark)
     RETHROW("Board::markNeibours");       
 }
 
-void Board::mark(const CellPtr& prev, const CellPtr& cell, WhatToMark whatToMark)
+void Board::mark(WhatToMark whatToMark, const CellPtr& prev, const CellPtr& cell)
 {
     TRY_BEGINS;
     
