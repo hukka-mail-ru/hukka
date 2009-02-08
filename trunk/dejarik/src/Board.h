@@ -19,7 +19,7 @@ public:
     // on Game over
     void clear();
 
-    // on user click1: (activate a piece)
+    // on user click1: (activate a piece => show possible moves and targets)
     void getPossibleMoves(const PiecePtr& piece, std::vector<CellPtr>& moves);
     void getPossibleTargets(const PiecePtr& piece, std::vector<CellPtr>& targets);
 
