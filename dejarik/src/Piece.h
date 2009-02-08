@@ -3,6 +3,7 @@
 
 #include <boost/shared_ptr.hpp> 
 #include "Cell.h"
+#include "Player.h"
 
 class Cell;
 typedef boost::shared_ptr<Cell> CellPtr;
@@ -21,6 +22,16 @@ public:
               mPosition.reset();
           }
     
+    unsigned getAttackRating()
+    {
+        return mAttackRating;
+    }
+    
+    unsigned getDefenceRating()
+    {
+        return mDefenceRating;
+    }
+    
     unsigned getMoveRating()
     {
         return mMoveRating;
@@ -36,10 +47,22 @@ public:
         mPosition = cell;
     }
 
+    PlayerPtr& getPlayer()
+    {
+        return mPlayer;
+    }
+    
+    void setPlayer(const PlayerPtr& player)
+    {
+        mPlayer = player;
+    }
+
+
 private:
     
     std::string mName;
-    CellPtr mPosition;
+    PlayerPtr mPlayer;
+    CellPtr mPosition;    
     
     unsigned mAttackRating;
     unsigned mDefenceRating;
