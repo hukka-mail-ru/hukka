@@ -18,6 +18,14 @@ catch(string& err) \
     throw str; \
 }
 
+#define CATCH(LOG) \
+} \
+catch(string& err) \
+{ \
+std::cerr << "EXCEPTION in " << #LOG << std::endl << \
+             "TRACE: "<< err << std::endl << std::endl;\
+}
+
 #define CLASSPTR(CLASS) \
 typedef boost::shared_ptr<CLASS> CLASS##Ptr;
 

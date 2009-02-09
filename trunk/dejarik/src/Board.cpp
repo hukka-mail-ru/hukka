@@ -181,7 +181,7 @@ void Board::markNeibours(WhatToMark whatToMark, const CellPtr& cell)
     }
     else
     {
-        throw string("Board::markNeibours. Invalid circle number");
+        throw string("[Board::markNeibours]: Invalid circle number");
     }
          
     RETHROW("Board::markNeibours");       
@@ -206,8 +206,12 @@ void Board::mark(WhatToMark whatToMark, const CellPtr& prev, const CellPtr& cell
             cell->mark = true;
         }
     }
+    else
+    {
+        throw string("[Board::mark]: Invalid 'whatToMark' parameter");
+    }
     
-    RETHROW("Board::markIfVacant");     
+    RETHROW("Board::mark");     
 }
 
 unsigned Board::getRightPos(unsigned pos)

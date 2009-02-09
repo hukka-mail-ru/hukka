@@ -34,8 +34,8 @@ public:
 
     void testBoard() 
     {
-        try
-        {
+        TRY_BEGINS 
+        
         Board board;
                 
         CPPUNIT_ASSERT_EQUAL(25, (int)board.mCells.size());
@@ -54,11 +54,9 @@ public:
         
         CPPUNIT_ASSERT_NO_THROW(board.getCell(1,11)); // normal
         CPPUNIT_ASSERT_NO_THROW(board.getCell(2,11)); // normal
-        }
-        catch(string& err)
-        {
-            cerr << "testBoard -> " << err << endl;
-        }
+        
+        CATCH("testBoard");
+
     }
     
     // helper for testPossibleMoves
@@ -77,8 +75,8 @@ public:
     
     void testPossibleMoves()
     {
-        try
-        { 
+        TRY_BEGINS 
+        
         Board board; 
         
         // King can go 1 cell
@@ -148,18 +146,13 @@ public:
         board.getPossibleMoves(king, moves);
         CPPUNIT_ASSERT_EQUAL((unsigned)0, moves.size());
         
-        
-        }
-        catch(string& err)
-        {
-            cerr << "testPossibleMoves -> " << err << endl;
-        }
+        CATCH("testPossibleMoves");
     }
     
     void testPossibleTargets()
     {
-        try
-        { 
+        TRY_BEGINS 
+        
         Board board; 
         
         // Two players
@@ -190,17 +183,14 @@ public:
         
         CPPUNIT_ASSERT(findCell(targets, 1,10) == true);
         CPPUNIT_ASSERT(findCell(targets, 1,11) == true);
-        }
-        catch(string& err)
-        {
-            cerr << "testPossibleMoves -> " << err << endl;
-        }
+        
+        CATCH("testPossibleTargets");
     }
     
     void testIsMoveValid() 
     {
-        try
-        {
+        TRY_BEGINS 
+        
         Board board;
 
         // King can go 1 cell
@@ -235,21 +225,14 @@ public:
         CPPUNIT_ASSERT(board.isMoveValid(1,5) == false);
         CPPUNIT_ASSERT(board.isMoveValid(1,2) == false);
         CPPUNIT_ASSERT(board.isMoveValid(2,3) == false);
-        }
-        // --------------------------------------------
-        catch(string& err)
-        {
-            cerr << "testIsMoveValid -> " << err << endl;
-        }
-    
         
+        CATCH("testIsMoveValid");
     }
     
     void testGetMoveSteps() 
     {
+        TRY_BEGINS 
         
-        try
-        {
         Board board;
         
         // ----------------------------------------
@@ -289,13 +272,7 @@ public:
         board.getMoveSteps(1, 11, steps);        
         CPPUNIT_ASSERT_EQUAL((unsigned)2, steps.size());
 
-        }
-        // --------------------------------------------
-        catch(string& err)
-        {
-            cerr << "testIsMoveValid -> " << err << endl;
-        }
-        
+        CATCH("testGetMoveSteps");
     }
     
 };
