@@ -4,6 +4,6 @@ add_executable (dejarik src/dejarik.cpp src/Board.cpp src/Piece.cpp)
  
 add_executable (test_dejarik test/test.cpp src/Board.cpp src/Piece.cpp) 
 target_link_libraries (test_dejarik cppunit dl) 
-include_directories (src) 
+include_directories (src include) 
 
 set(CMAKE_CXX_FLAGS "-g -Wall")
