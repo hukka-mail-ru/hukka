@@ -4,6 +4,12 @@
 #include <boost/shared_ptr.hpp> 
 #include "Piece.h"
 
+struct Cell;
+class Piece;
+
+typedef boost::shared_ptr<Cell> CellPtr;
+typedef boost::shared_ptr<Piece> PiecePtr;
+
 struct Cell
 {
     Cell(unsigned circle, unsigned xnum):
@@ -26,7 +32,6 @@ struct Cell
     PiecePtr piece;
 };
 
-typedef boost::shared_ptr<Cell> CellPtr;
 
 
 #endif /*CELL_H_*/

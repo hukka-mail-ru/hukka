@@ -22,41 +22,14 @@ public:
               mPosition.reset();
           }
     
-    unsigned getAttackRating()
-    {
-        return mAttackRating;
-    }
+    unsigned getAttackRating();
+    unsigned getDefenceRating();
+    unsigned getMoveRating();
+    CellPtr& getPosition();
+    PlayerPtr& getPlayer();
     
-    unsigned getDefenceRating()
-    {
-        return mDefenceRating;
-    }
-    
-    unsigned getMoveRating()
-    {
-        return mMoveRating;
-    }
-
-    CellPtr& getPosition()
-    {
-        return mPosition;
-    }
-    
-    void setPosition(const CellPtr& cell)
-    {
-        mPosition = cell;
-    }
-
-    PlayerPtr& getPlayer()
-    {
-        return mPlayer;
-    }
-    
-    void setPlayer(const PlayerPtr& player)
-    {
-        mPlayer = player;
-    }
-
+    void setPosition(const CellPtr& cell);
+    void setPlayer(const PlayerPtr& player);
 
 private:
     
