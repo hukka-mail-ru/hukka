@@ -5,22 +5,6 @@
 
 using namespace std;
 
-#define TRY_BEGINS \
-try \
-{   
-
-#define RETHROW(LOG) \
-} \
-catch(string& err) \
-{ \
-    string str = "["; \
-    str += LOG; \
-    str += "]->"; \
-    str += err; \
-    throw str; \
-}
-
-
 Board::Board()
 {
     CellPtr cell0 (new Cell(0,0));

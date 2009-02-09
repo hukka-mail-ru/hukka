@@ -1,12 +1,13 @@
 #ifndef PIECE_H_
 #define PIECE_H_
 
-#include <boost/shared_ptr.hpp> 
 #include "Cell.h"
 #include "Player.h"
+#include "Macros.h"
 
 class Cell;
-typedef boost::shared_ptr<Cell> CellPtr;
+//typedef boost::shared_ptr<Cell> CellPtr;
+CLASSPTR(Cell);
 
 class Piece
 {
@@ -43,6 +44,7 @@ private:
     
 };
 
-typedef boost::shared_ptr<Piece> PiecePtr;
+CLASSPTR(Piece);
+//typedef boost::shared_ptr<Piece> PiecePtr;
 
 #endif /*PIECE_H_*/

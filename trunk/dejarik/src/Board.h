@@ -3,6 +3,7 @@
 
 #include <vector>
 #include "Cell.h"
+#include "Macros.h"
 
 #define CIRCLE 12 // cells in a circle
 

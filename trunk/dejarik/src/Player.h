@@ -2,7 +2,7 @@
 #define PLAYER_H_
 
 #include <string>
-#include <boost/shared_ptr.hpp> 
+#include "Macros.h"
 
 class Player
 {
@@ -13,7 +13,7 @@ private:
     std::string mName;
 };
 
-typedef boost::shared_ptr<Player> PlayerPtr;
+CLASSPTR(Player);
 
 
 #endif /*PLAYER_H_*/
