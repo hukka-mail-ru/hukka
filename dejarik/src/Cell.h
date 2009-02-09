@@ -1,14 +1,14 @@
 #ifndef CELL_H_
 #define CELL_H_
 
-#include <boost/shared_ptr.hpp> 
+#include "Macros.h"
 #include "Piece.h"
 
 struct Cell;
 class Piece;
 
-typedef boost::shared_ptr<Cell> CellPtr;
-typedef boost::shared_ptr<Piece> PiecePtr;
+CLASSPTR(Cell);
+CLASSPTR(Piece);
 
 struct Cell
 {
