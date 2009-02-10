@@ -28,6 +28,27 @@ public:
     
     void testMakeTurn_attackTwice() 
     {
+        TRY_BEGINS;
+        
+        Board board;        
+        PiecePtr king1 (new Piece("White King", 0, 0, 1)); // king can go 1 cell
+        PiecePtr king2 (new Piece("Black King", 0, 0, 1)); // king can go 1 cell
+        
+        board.placePiece(king1, 1, 0);
+        board.placePiece(king2, 1, 10);
+        
+        PlayerPtr player1 (new Player);
+        PlayerPtr player2 (new Player);
+
+        player1->addPiece(king1);
+        player2->addPiece(king2);
+        
+        unsigned click = 1;       
+        CPPUNIT_ASSERT(player1->makeTurn(0, 0, click) == false); // click on empty cell
+        CPPUNIT_ASSERT(player1->makeTurn(1, 10, click) == false); // click on enimy
+        CPPUNIT_ASSERT(player1->makeTurn(1, 0, click) == true); // click on ally
+        
+        TRY_CATCH
     }
     
     void testMakeTurn_attackThenMove() 
@@ -75,7 +96,7 @@ public:
         click = 5;
         CPPUNIT_ASSERT_THROW(player1->makeTurn(0, 11, click), std::string);
         
-        CATCH("testMakeTurn_moveThenAttack");
+        TRY_CATCH
     }
     
     void testMakeTurn_moveThenAttack() 
@@ -84,7 +105,7 @@ public:
         
         Board board;        
         PiecePtr king1 (new Piece("White King", 0, 0, 1)); // king can go 1 cell
-        PiecePtr king2 (new Piece("White King", 0, 0, 1)); // king can go 1 cell
+        PiecePtr king2 (new Piece("Black King", 0, 0, 1)); // king can go 1 cell
         
         board.placePiece(king1, 1, 0);
         board.placePiece(king2, 1, 10);
@@ -117,7 +138,7 @@ public:
         
         CPPUNIT_ASSERT(board.getCell(1, 11)->piece == king1); // we are here
         
-        CATCH("testMakeTurn_moveThenAttack");
+        TRY_CATCH
     }
     
     

@@ -8,22 +8,22 @@
 try \
 {   
 
-#define RETHROW(LOG) \
+#define TRY_RETHROW \
 } \
 catch(std::string& err) \
 { \
     std::string str = "["; \
-    str += LOG; \
+    str += __FUNCTION__; \
     str += "]->"; \
     str += err; \
     throw str; \
 }
 
-#define CATCH(LOG) \
+#define TRY_CATCH \
 } \
 catch(std::string& err) \
 { \
-std::cerr << "EXCEPTION in " << #LOG << std::endl << \
+std::cerr << "EXCEPTION in " << __FUNCTION__ << std::endl << \
              "TRACE: "<< err << std::endl << std::endl;\
 }
 

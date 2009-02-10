@@ -48,7 +48,7 @@ void Board::placePiece(const PiecePtr& piece, unsigned c, unsigned x)
     piece->setPosition(cell);
     cell->piece = piece;    
     
-    RETHROW("Board::placePiece");
+    TRY_RETHROW;
 }
 
 CellPtr& Board::getCell(unsigned c, unsigned x)
@@ -81,7 +81,7 @@ bool Board::isMoveValid(unsigned c, unsigned x)
         }
     }
     
-    RETHROW("Board::isMoveValid");    
+    TRY_RETHROW;    
     
     return false;
 }
@@ -131,7 +131,7 @@ void Board::getPossibleMoves(const PiecePtr& piece, vector<CellPtr>& moves)
         cout << "move[" << i << "]= " <<  moves[i]->c  << "." <<  moves[i]->x << endl;
     cout << "=========" << endl;*/
         
-    RETHROW("Board::getPossibleMoves");    
+    TRY_RETHROW;    
 }
 
 
@@ -151,7 +151,7 @@ void Board::getPossibleTargets(const PiecePtr& piece, std::vector<CellPtr>& targ
             targets.push_back(mCells[i]);
     }
     
-    RETHROW("Board::getPossibleTargets");    
+    TRY_RETHROW;    
 }
 
 
@@ -181,10 +181,10 @@ void Board::markNeibours(WhatToMark whatToMark, const CellPtr& cell)
     }
     else
     {
-        throw string("[Board::markNeibours]: Invalid circle number");
+        throw string("Invalid circle number");
     }
          
-    RETHROW("Board::markNeibours");       
+    TRY_RETHROW;       
 }
 
 void Board::mark(WhatToMark whatToMark, const CellPtr& prev, const CellPtr& cell)
@@ -208,10 +208,10 @@ void Board::mark(WhatToMark whatToMark, const CellPtr& prev, const CellPtr& cell
     }
     else
     {
-        throw string("[Board::mark]: Invalid 'whatToMark' parameter");
+        throw string("Invalid 'whatToMark' parameter");
     }
     
-    RETHROW("Board::mark");     
+    TRY_RETHROW;     
 }
 
 unsigned Board::getRightPos(unsigned pos)
@@ -250,5 +250,5 @@ void Board::getMoveSteps(unsigned c, unsigned x, std::vector<CellPtr>& steps)
     }
 
     
-    RETHROW("Board::getMoveSteps");  
+    TRY_RETHROW;  
 }
