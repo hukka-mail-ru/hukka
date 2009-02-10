@@ -49,7 +49,7 @@ public:
         CPPUNIT_ASSERT_NO_THROW(board.getCell(1,11)); // normal
         CPPUNIT_ASSERT_NO_THROW(board.getCell(2,11)); // normal
         
-        CATCH("testBoard");
+        TRY_CATCH;
 
     }
     
@@ -140,7 +140,7 @@ public:
         board.getPossibleMoves(king, moves);
         CPPUNIT_ASSERT_EQUAL((unsigned)0, moves.size());
         
-        CATCH("testPossibleMoves");
+        TRY_CATCH;
     }
     
     void testPossibleTargets()
@@ -178,7 +178,7 @@ public:
         CPPUNIT_ASSERT(findCell(targets, 1,10) == true);
         CPPUNIT_ASSERT(findCell(targets, 1,11) == true);
         
-        CATCH("testPossibleTargets");
+        TRY_CATCH;
     }
     
     void testIsMoveValid() 
@@ -220,7 +220,7 @@ public:
         CPPUNIT_ASSERT(board.isMoveValid(1,2) == false);
         CPPUNIT_ASSERT(board.isMoveValid(2,3) == false);
         
-        CATCH("testIsMoveValid");
+        TRY_CATCH;
     }
     
     void testGetMoveSteps() 
@@ -266,7 +266,7 @@ public:
         board.getMoveSteps(1, 11, steps);        
         CPPUNIT_ASSERT_EQUAL((unsigned)2, steps.size());
 
-        CATCH("testGetMoveSteps");
+        TRY_CATCH;
     }
     
 };
