@@ -1,6 +1,7 @@
 #ifndef MACROS_H_
 #define MACROS_H_
 
+#include <iostream> 
 #include <boost/shared_ptr.hpp> 
 
 #define TRY_BEGINS \
@@ -9,9 +10,9 @@ try \
 
 #define RETHROW(LOG) \
 } \
-catch(string& err) \
+catch(std::string& err) \
 { \
-    string str = "["; \
+    std::string str = "["; \
     str += LOG; \
     str += "]->"; \
     str += err; \
@@ -20,7 +21,7 @@ catch(string& err) \
 
 #define CATCH(LOG) \
 } \
-catch(string& err) \
+catch(std::string& err) \
 { \
 std::cerr << "EXCEPTION in " << #LOG << std::endl << \
              "TRACE: "<< err << std::endl << std::endl;\
