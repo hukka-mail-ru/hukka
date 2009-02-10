@@ -28,7 +28,7 @@ public:
 
     void testBoard() 
     {
-        TRY_BEGINS 
+        TRY_BEGINS; 
         
         Board board;
                 
@@ -69,7 +69,7 @@ public:
     
     void testPossibleMoves()
     {
-        TRY_BEGINS 
+        TRY_BEGINS; 
         
         Board board; 
         
@@ -145,7 +145,7 @@ public:
     
     void testPossibleTargets()
     {
-        TRY_BEGINS 
+        TRY_BEGINS; 
         
         Board board; 
         
@@ -183,7 +183,7 @@ public:
     
     void testIsMoveValid() 
     {
-        TRY_BEGINS 
+        TRY_BEGINS ;
         
         Board board;
 
@@ -225,7 +225,7 @@ public:
     
     void testGetMoveSteps() 
     {
-        TRY_BEGINS 
+        TRY_BEGINS ;
         
         Board board;
         
