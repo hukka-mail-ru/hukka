@@ -28,6 +28,7 @@ std::cerr << "EXCEPTION in " << #LOG << std::endl << \
 }
 
 #define CLASSPTR(CLASS) \
+class CLASS; \
 typedef boost::shared_ptr<CLASS> CLASS##Ptr;
 
 #endif /*MACROS_H_*/
