@@ -11,6 +11,7 @@
 
 
 #include "TestBoard.h"
+#include "TestPlayer.h"
 
 using namespace std;
 
