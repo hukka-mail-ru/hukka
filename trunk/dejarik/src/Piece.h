@@ -5,8 +5,6 @@
 #include "Player.h"
 #include "Macros.h"
 
-class Cell;
-//typedef boost::shared_ptr<Cell> CellPtr;
 CLASSPTR(Cell);
 
 class Piece

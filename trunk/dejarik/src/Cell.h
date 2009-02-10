@@ -4,9 +4,6 @@
 #include "Macros.h"
 #include "Piece.h"
 
-struct Cell;
-class Piece;
-
 CLASSPTR(Cell);
 CLASSPTR(Piece);
 

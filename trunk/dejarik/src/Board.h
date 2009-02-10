@@ -10,6 +10,7 @@
 class Board // only one board in game
 {
     friend class TestBoard;
+    friend class TestPlayer;
     
 public:
     
