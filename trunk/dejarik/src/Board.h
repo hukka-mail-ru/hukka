@@ -9,7 +9,7 @@
 
 class Board // only one board in game
 {
-    friend class DejaricTest;
+    friend class TestBoard;
     
 public:
     
