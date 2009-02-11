@@ -14,7 +14,11 @@ class TestBoard : public CppUnit::TestFixture
 {
    CPPUNIT_TEST_SUITE(TestBoard);
    CPPUNIT_TEST(testBoard);
-   CPPUNIT_TEST(testPossibleMoves);
+   
+   CPPUNIT_TEST(testPossibleMoves_move1); // if piece.MoveRating == 1
+   CPPUNIT_TEST(testPossibleMoves_move2); // if piece.MoveRating == 2
+   CPPUNIT_TEST(testPossibleMoves_move3); // if piece.MoveRating == 3
+   
    CPPUNIT_TEST(testPossibleTargets);
    CPPUNIT_TEST(testIsMoveValid);
    CPPUNIT_TEST(testGetMoveSteps);
@@ -67,19 +71,20 @@ public:
         return false;
     }
     
-    void testPossibleMoves()
+    void testPossibleMoves_move1()
     {
         TRY_BEGINS; 
         
         Board board; 
         
+        // -------------------------------------------------------------
         // King can go 1 cell
         PiecePtr king (new Piece("King", 0, 0, 1));
         board.placePiece(king, 0, 0);
         
         std::vector<CellPtr> moves;
         board.getPossibleMoves(king, moves);
-        CPPUNIT_ASSERT_EQUAL((unsigned)12, moves.size());
+        CPPUNIT_ASSERT_EQUAL(12, (int)moves.size());
                 
         CPPUNIT_ASSERT(findCell(moves, 1,0) == true);
         CPPUNIT_ASSERT(findCell(moves, 1,1) == true);
@@ -110,8 +115,6 @@ public:
 
         // -------------------------------------------------------------
         board.clear(); 
-        // King can go 1 cell
-        king = PiecePtr(new Piece("King", 0, 0, 1));
         board.placePiece(king, 2, 0);
         
         moves.clear();
@@ -124,8 +127,6 @@ public:
         
         // -------------------------------------------------------------
         board.clear(); 
-        // King can go 1 cell
-        king = PiecePtr(new Piece("King", 0, 0, 1));
         board.placePiece(king, 2, 0);
         
         PiecePtr queen1 (new Piece("Queen", 0, 0, 1));
@@ -142,6 +143,204 @@ public:
         
         TRY_CATCH;
     }
+    
+    
+    void testPossibleMoves_move2()
+    {
+        TRY_BEGINS; 
+        
+        Board board; 
+                
+        PiecePtr slon (new Piece("Slon", 0, 0, 2)); // Slon can go 2 cells
+        board.placePiece(slon, 2, 0);
+        
+        // outer circle -------------------------------------------------------------
+        std::vector<CellPtr> moves;
+        board.getPossibleMoves(slon, moves);
+        CPPUNIT_ASSERT_EQUAL(6, (int)moves.size());
+        
+        CPPUNIT_ASSERT(findCell(moves, 2,0) == true);
+        CPPUNIT_ASSERT(findCell(moves, 2,10) == true);
+        CPPUNIT_ASSERT(findCell(moves, 2,2) == true);
+        CPPUNIT_ASSERT(findCell(moves, 1,11) == true);
+        CPPUNIT_ASSERT(findCell(moves, 1,1) == true);
+        CPPUNIT_ASSERT(findCell(moves, 0,0) == true);
+
+        // inner circle -------------------------------------------------------------
+        board.clear();
+        board.placePiece(slon, 1, 0);
+        
+        moves.clear();
+        board.getPossibleMoves(slon, moves);
+        CPPUNIT_ASSERT_EQUAL(15, (int)moves.size());
+        
+        CPPUNIT_ASSERT(findCell(moves, 1,0) == true);
+        CPPUNIT_ASSERT(findCell(moves, 1,1) == true);
+        CPPUNIT_ASSERT(findCell(moves, 1,2) == true);
+        CPPUNIT_ASSERT(findCell(moves, 1,3) == true);
+        CPPUNIT_ASSERT(findCell(moves, 1,4) == true);
+        CPPUNIT_ASSERT(findCell(moves, 1,5) == true);
+        CPPUNIT_ASSERT(findCell(moves, 1,6) == true);
+        CPPUNIT_ASSERT(findCell(moves, 1,7) == true);
+        CPPUNIT_ASSERT(findCell(moves, 1,8) == true);
+        CPPUNIT_ASSERT(findCell(moves, 1,9) == true);
+        CPPUNIT_ASSERT(findCell(moves, 1,10) == true);
+        CPPUNIT_ASSERT(findCell(moves, 1,11) == true);
+        
+        CPPUNIT_ASSERT(findCell(moves, 2,11) == true);
+        CPPUNIT_ASSERT(findCell(moves, 2,1) == true);
+        CPPUNIT_ASSERT(findCell(moves, 0,0) == true);
+        
+        // center  -------------------------------------------------------------
+        board.clear();
+        board.placePiece(slon, 0, 0);
+        
+        moves.clear();
+        board.getPossibleMoves(slon, moves);
+        CPPUNIT_ASSERT_EQUAL(25, (int)moves.size());
+        
+        CPPUNIT_ASSERT(findCell(moves, 1,0) == true);
+        CPPUNIT_ASSERT(findCell(moves, 1,1) == true);
+        CPPUNIT_ASSERT(findCell(moves, 1,2) == true);
+        CPPUNIT_ASSERT(findCell(moves, 1,3) == true);
+        CPPUNIT_ASSERT(findCell(moves, 1,4) == true);
+        CPPUNIT_ASSERT(findCell(moves, 1,5) == true);
+        CPPUNIT_ASSERT(findCell(moves, 1,6) == true);
+        CPPUNIT_ASSERT(findCell(moves, 1,7) == true);
+        CPPUNIT_ASSERT(findCell(moves, 1,8) == true);
+        CPPUNIT_ASSERT(findCell(moves, 1,9) == true);
+        CPPUNIT_ASSERT(findCell(moves, 1,10) == true);
+        CPPUNIT_ASSERT(findCell(moves, 1,11) == true);
+
+        CPPUNIT_ASSERT(findCell(moves, 2,0) == true);
+        CPPUNIT_ASSERT(findCell(moves, 2,1) == true);
+        CPPUNIT_ASSERT(findCell(moves, 2,2) == true);
+        CPPUNIT_ASSERT(findCell(moves, 2,3) == true);
+        CPPUNIT_ASSERT(findCell(moves, 2,4) == true);
+        CPPUNIT_ASSERT(findCell(moves, 2,5) == true);
+        CPPUNIT_ASSERT(findCell(moves, 2,6) == true);
+        CPPUNIT_ASSERT(findCell(moves, 2,7) == true);
+        CPPUNIT_ASSERT(findCell(moves, 2,8) == true);
+        CPPUNIT_ASSERT(findCell(moves, 2,9) == true);
+        CPPUNIT_ASSERT(findCell(moves, 2,10) == true);
+        CPPUNIT_ASSERT(findCell(moves, 2,11) == true);
+
+        CPPUNIT_ASSERT(findCell(moves, 0,0) == true);
+        
+        TRY_CATCH;
+    }
+    
+    void testPossibleMoves_move3()
+    {
+        TRY_BEGINS; 
+        
+        Board board; 
+               
+        PiecePtr queen (new Piece("Queen", 0, 0, 3)); // Queen can go 3 cells
+        board.placePiece(queen, 2, 0);
+        
+        // outer circle -------------------------------------------------------------
+        std::vector<CellPtr> moves;
+        board.getPossibleMoves(queen, moves);
+        CPPUNIT_ASSERT_EQUAL(17, (int)moves.size());
+        
+        CPPUNIT_ASSERT(findCell(moves, 2,11) == true);
+        CPPUNIT_ASSERT(findCell(moves, 2,9) == true);
+        CPPUNIT_ASSERT(findCell(moves, 2,1) == true);
+        CPPUNIT_ASSERT(findCell(moves, 2,3) == true);
+
+        CPPUNIT_ASSERT(findCell(moves, 1,0) == true);
+        CPPUNIT_ASSERT(findCell(moves, 1,1) == true);
+        CPPUNIT_ASSERT(findCell(moves, 1,2) == true);
+        CPPUNIT_ASSERT(findCell(moves, 1,3) == true);
+        CPPUNIT_ASSERT(findCell(moves, 1,4) == true);
+        CPPUNIT_ASSERT(findCell(moves, 1,5) == true);
+        CPPUNIT_ASSERT(findCell(moves, 1,6) == true);
+        CPPUNIT_ASSERT(findCell(moves, 1,7) == true);
+        CPPUNIT_ASSERT(findCell(moves, 1,8) == true);
+        CPPUNIT_ASSERT(findCell(moves, 1,9) == true);
+        CPPUNIT_ASSERT(findCell(moves, 1,10) == true);
+        CPPUNIT_ASSERT(findCell(moves, 1,11) == true);
+        
+        CPPUNIT_ASSERT(findCell(moves, 0,0) == true);
+        
+        // inner circle -------------------------------------------------------------
+        board.clear();
+        board.placePiece(queen, 1, 0);
+        
+        moves.clear();
+        board.getPossibleMoves(queen, moves);
+        CPPUNIT_ASSERT_EQUAL(25, (int)moves.size());
+        
+        CPPUNIT_ASSERT(findCell(moves, 1,0) == true);
+        CPPUNIT_ASSERT(findCell(moves, 1,1) == true);
+        CPPUNIT_ASSERT(findCell(moves, 1,2) == true);
+        CPPUNIT_ASSERT(findCell(moves, 1,3) == true);
+        CPPUNIT_ASSERT(findCell(moves, 1,4) == true);
+        CPPUNIT_ASSERT(findCell(moves, 1,5) == true);
+        CPPUNIT_ASSERT(findCell(moves, 1,6) == true);
+        CPPUNIT_ASSERT(findCell(moves, 1,7) == true);
+        CPPUNIT_ASSERT(findCell(moves, 1,8) == true);
+        CPPUNIT_ASSERT(findCell(moves, 1,9) == true);
+        CPPUNIT_ASSERT(findCell(moves, 1,10) == true);
+        CPPUNIT_ASSERT(findCell(moves, 1,11) == true);
+
+        CPPUNIT_ASSERT(findCell(moves, 2,0) == true);
+        CPPUNIT_ASSERT(findCell(moves, 2,1) == true);
+        CPPUNIT_ASSERT(findCell(moves, 2,2) == true);
+        CPPUNIT_ASSERT(findCell(moves, 2,3) == true);
+        CPPUNIT_ASSERT(findCell(moves, 2,4) == true);
+        CPPUNIT_ASSERT(findCell(moves, 2,5) == true);
+        CPPUNIT_ASSERT(findCell(moves, 2,6) == true);
+        CPPUNIT_ASSERT(findCell(moves, 2,7) == true);
+        CPPUNIT_ASSERT(findCell(moves, 2,8) == true);
+        CPPUNIT_ASSERT(findCell(moves, 2,9) == true);
+        CPPUNIT_ASSERT(findCell(moves, 2,10) == true);
+        CPPUNIT_ASSERT(findCell(moves, 2,11) == true);
+
+        CPPUNIT_ASSERT(findCell(moves, 0,0) == true);
+        
+        
+        // inner circle -------------------------------------------------------------
+        board.clear();
+        board.placePiece(queen, 0, 0);
+        
+        moves.clear();
+        board.getPossibleMoves(queen, moves);
+        CPPUNIT_ASSERT_EQUAL(25, (int)moves.size());
+        
+        CPPUNIT_ASSERT(findCell(moves, 1,0) == true);
+        CPPUNIT_ASSERT(findCell(moves, 1,1) == true);
+        CPPUNIT_ASSERT(findCell(moves, 1,2) == true);
+        CPPUNIT_ASSERT(findCell(moves, 1,3) == true);
+        CPPUNIT_ASSERT(findCell(moves, 1,4) == true);
+        CPPUNIT_ASSERT(findCell(moves, 1,5) == true);
+        CPPUNIT_ASSERT(findCell(moves, 1,6) == true);
+        CPPUNIT_ASSERT(findCell(moves, 1,7) == true);
+        CPPUNIT_ASSERT(findCell(moves, 1,8) == true);
+        CPPUNIT_ASSERT(findCell(moves, 1,9) == true);
+        CPPUNIT_ASSERT(findCell(moves, 1,10) == true);
+        CPPUNIT_ASSERT(findCell(moves, 1,11) == true);
+
+        CPPUNIT_ASSERT(findCell(moves, 2,0) == true);
+        CPPUNIT_ASSERT(findCell(moves, 2,1) == true);
+        CPPUNIT_ASSERT(findCell(moves, 2,2) == true);
+        CPPUNIT_ASSERT(findCell(moves, 2,3) == true);
+        CPPUNIT_ASSERT(findCell(moves, 2,4) == true);
+        CPPUNIT_ASSERT(findCell(moves, 2,5) == true);
+        CPPUNIT_ASSERT(findCell(moves, 2,6) == true);
+        CPPUNIT_ASSERT(findCell(moves, 2,7) == true);
+        CPPUNIT_ASSERT(findCell(moves, 2,8) == true);
+        CPPUNIT_ASSERT(findCell(moves, 2,9) == true);
+        CPPUNIT_ASSERT(findCell(moves, 2,10) == true);
+        CPPUNIT_ASSERT(findCell(moves, 2,11) == true);
+
+        CPPUNIT_ASSERT(findCell(moves, 0,0) == true);
+        
+        TRY_CATCH;
+     }
+         
+    
     
     void testPossibleTargets()
     {
