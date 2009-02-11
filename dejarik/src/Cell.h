@@ -12,7 +12,7 @@ struct Cell
     Cell(unsigned circle, unsigned xnum):
         c(circle),
         x(xnum),
-        mark(false) // not marked initially
+        mark(0) // not marked initially
     {
         prev.reset();
         piece.reset();
@@ -23,7 +23,7 @@ struct Cell
     unsigned c; // coordinate: 0,1,2
     unsigned x; // coordinate: 0 in circle 0;   0..11 in circle 1;  0..11 in circle 2.  
     
-    bool mark;
+    unsigned mark;
     CellPtr prev;
     
     PiecePtr piece;

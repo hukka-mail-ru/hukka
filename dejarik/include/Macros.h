@@ -31,4 +31,7 @@ std::cerr << "EXCEPTION in " << __FUNCTION__ << std::endl << \
 class CLASS; \
 typedef boost::shared_ptr<CLASS> CLASS##Ptr;
 
+#define SHOW_FUNCTION_NAME \
+std::cout << std::endl << __FUNCTION__ << std::endl; \
+
 #endif /*MACROS_H_*/
