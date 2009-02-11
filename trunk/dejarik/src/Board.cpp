@@ -192,7 +192,7 @@ void Board::markNeibours(WhatToMark whatToMark, unsigned step, const CellPtr& ce
         mark(whatToMark, step, cell, getCell(1, getLeftPos(cell->x)));
         mark(whatToMark, step, cell, getCell(2, cell->x));
         
-        cout << "markNeibours[" << step << "]= " <<  2 << "." <<  cell->x << endl;
+        //cout << "markNeibours[" << step << "]= " <<  2 << "." <<  cell->x << endl;
     }
     else if (cell->c == 2)
     {
@@ -214,7 +214,7 @@ void Board::mark(WhatToMark whatToMark, unsigned step, const CellPtr& prev, cons
     
     if(whatToMark == POSSIBLE_MOVES) // mark vacant cells
     {
-        if((!cell->piece || cell->piece == mActivePiece) && !cell->mark)
+        if(!cell->piece)
         {
             cell->mark = step;
             cell->prev = prev;

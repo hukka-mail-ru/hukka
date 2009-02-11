@@ -20,9 +20,9 @@ class TestBoard : public CppUnit::TestFixture
    CPPUNIT_TEST(testPossibleMoves_move3); // if piece.MoveRating == 3
    CPPUNIT_TEST(testPossibleMoves_trap); // no possible moves
    
-  // CPPUNIT_TEST(testPossibleTargets);
- //  CPPUNIT_TEST(testIsMoveValid);
- //  CPPUNIT_TEST(testGetMoveSteps);
+   CPPUNIT_TEST(testPossibleTargets);
+   CPPUNIT_TEST(testIsMoveValid);
+   CPPUNIT_TEST(testGetMoveSteps);
    CPPUNIT_TEST_SUITE_END();
          
    
@@ -191,9 +191,8 @@ public:
         // outer circle -------------------------------------------------------------
         std::vector<CellPtr> moves;
         board.getPossibleMoves(slon, moves);
-        CPPUNIT_ASSERT_EQUAL(6, (int)moves.size());
+        CPPUNIT_ASSERT_EQUAL(5, (int)moves.size());
         
-        CPPUNIT_ASSERT(findCell(moves, 2,0) == true);
         CPPUNIT_ASSERT(findCell(moves, 2,10) == true);
         CPPUNIT_ASSERT(findCell(moves, 2,2) == true);
         CPPUNIT_ASSERT(findCell(moves, 1,11) == true);
@@ -206,9 +205,8 @@ public:
         
         moves.clear();
         board.getPossibleMoves(slon, moves);
-        CPPUNIT_ASSERT_EQUAL(15, (int)moves.size());
+        CPPUNIT_ASSERT_EQUAL(14, (int)moves.size());
         
-        CPPUNIT_ASSERT(findCell(moves, 1,0) == true);
         CPPUNIT_ASSERT(findCell(moves, 1,1) == true);
         CPPUNIT_ASSERT(findCell(moves, 1,2) == true);
         CPPUNIT_ASSERT(findCell(moves, 1,3) == true);
@@ -231,7 +229,7 @@ public:
         
         moves.clear();
         board.getPossibleMoves(slon, moves);
-        CPPUNIT_ASSERT_EQUAL(25, (int)moves.size());
+        CPPUNIT_ASSERT_EQUAL(24, (int)moves.size());
         
         CPPUNIT_ASSERT(findCell(moves, 1,0) == true);
         CPPUNIT_ASSERT(findCell(moves, 1,1) == true);
@@ -258,8 +256,6 @@ public:
         CPPUNIT_ASSERT(findCell(moves, 2,9) == true);
         CPPUNIT_ASSERT(findCell(moves, 2,10) == true);
         CPPUNIT_ASSERT(findCell(moves, 2,11) == true);
-
-        CPPUNIT_ASSERT(findCell(moves, 0,0) == true);
         
         TRY_CATCH;
     }
@@ -305,9 +301,8 @@ public:
         
         moves.clear();
         board.getPossibleMoves(queen, moves);
-        CPPUNIT_ASSERT_EQUAL(25, (int)moves.size());
+        CPPUNIT_ASSERT_EQUAL(24, (int)moves.size());
         
-        CPPUNIT_ASSERT(findCell(moves, 1,0) == true);
         CPPUNIT_ASSERT(findCell(moves, 1,1) == true);
         CPPUNIT_ASSERT(findCell(moves, 1,2) == true);
         CPPUNIT_ASSERT(findCell(moves, 1,3) == true);
@@ -342,7 +337,7 @@ public:
         
         moves.clear();
         board.getPossibleMoves(queen, moves);
-        CPPUNIT_ASSERT_EQUAL(25, (int)moves.size());
+        CPPUNIT_ASSERT_EQUAL(24, (int)moves.size());
         
         CPPUNIT_ASSERT(findCell(moves, 1,0) == true);
         CPPUNIT_ASSERT(findCell(moves, 1,1) == true);
@@ -370,7 +365,6 @@ public:
         CPPUNIT_ASSERT(findCell(moves, 2,10) == true);
         CPPUNIT_ASSERT(findCell(moves, 2,11) == true);
 
-        CPPUNIT_ASSERT(findCell(moves, 0,0) == true);
         
         TRY_CATCH;
      }
