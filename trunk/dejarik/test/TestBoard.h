@@ -18,10 +18,11 @@ class TestBoard : public CppUnit::TestFixture
    CPPUNIT_TEST(testPossibleMoves_move1); // if piece.MoveRating == 1
    CPPUNIT_TEST(testPossibleMoves_move2); // if piece.MoveRating == 2
    CPPUNIT_TEST(testPossibleMoves_move3); // if piece.MoveRating == 3
+   CPPUNIT_TEST(testPossibleMoves_trap); // no possible moves
    
-   CPPUNIT_TEST(testPossibleTargets);
-   CPPUNIT_TEST(testIsMoveValid);
-   CPPUNIT_TEST(testGetMoveSteps);
+  // CPPUNIT_TEST(testPossibleTargets);
+ //  CPPUNIT_TEST(testIsMoveValid);
+ //  CPPUNIT_TEST(testGetMoveSteps);
    CPPUNIT_TEST_SUITE_END();
          
    
@@ -32,6 +33,7 @@ public:
 
     void testBoard() 
     {
+        SHOW_FUNCTION_NAME;
         TRY_BEGINS; 
         
         Board board;
@@ -71,8 +73,39 @@ public:
         return false;
     }
     
+    void testPossibleMoves_trap()
+    {
+        SHOW_FUNCTION_NAME;
+        TRY_BEGINS; 
+        
+        Board board; 
+        
+        // -------------------------------------------------------------
+        // King can go 1 cell
+        PiecePtr king (new Piece("King", 0, 0, 1));
+        board.placePiece(king, 1, 0);
+        
+        PiecePtr queen1 (new Piece("Quuen", 0, 0, 1));
+        PiecePtr queen2 (new Piece("Quuen", 0, 0, 1));
+        PiecePtr queen3 (new Piece("Quuen", 0, 0, 1));
+        PiecePtr queen4 (new Piece("Quuen", 0, 0, 1));
+        
+        board.placePiece(queen1, 2, 0);
+        board.placePiece(queen2, 1, 1);
+        board.placePiece(queen3, 1, 11);
+        board.placePiece(queen4, 0, 0);
+
+        std::vector<CellPtr> moves;
+        board.getPossibleMoves(king, moves);
+        CPPUNIT_ASSERT_EQUAL(0, (int)moves.size());
+        
+        
+        TRY_CATCH;
+    }
+    
     void testPossibleMoves_move1()
     {
+        SHOW_FUNCTION_NAME;
         TRY_BEGINS; 
         
         Board board; 
@@ -147,6 +180,7 @@ public:
     
     void testPossibleMoves_move2()
     {
+        SHOW_FUNCTION_NAME;
         TRY_BEGINS; 
         
         Board board; 
@@ -232,6 +266,7 @@ public:
     
     void testPossibleMoves_move3()
     {
+        SHOW_FUNCTION_NAME;
         TRY_BEGINS; 
         
         Board board; 
@@ -344,6 +379,7 @@ public:
     
     void testPossibleTargets()
     {
+        SHOW_FUNCTION_NAME;
         TRY_BEGINS; 
         
         Board board; 
@@ -382,6 +418,7 @@ public:
     
     void testIsMoveValid() 
     {
+        SHOW_FUNCTION_NAME;
         TRY_BEGINS ;
         
         Board board;
@@ -424,6 +461,7 @@ public:
     
     void testGetMoveSteps() 
     {
+        SHOW_FUNCTION_NAME;
         TRY_BEGINS ;
         
         Board board;
