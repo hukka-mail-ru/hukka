@@ -53,11 +53,11 @@ public:
     
 private:
     
-    void moveActivePiece();
+    void moveActivePiece(unsigned c, unsigned x) {}
     
-    void attackEnimyPiece();
+    void attackEnimy(const PiecePtr& enimyPiece) {}
     
-    void computeBattleResult();
+    void computeBattleResult() {}
     
     std::string mName;
     
