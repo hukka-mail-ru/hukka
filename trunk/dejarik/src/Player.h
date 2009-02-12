@@ -26,10 +26,8 @@ public:
         mBoard(board) 
         {}
     
-    void addPiece(const PiecePtr& piece)
-    {
-        mPieces.push_back(piece);
-    }
+    // Connect piece and player
+    void addPiece(const PiecePtr& piece);
     
     /* 
      Define the cell: empty ? ally ? enimy ?
@@ -53,9 +51,9 @@ public:
     
 private:
     
-    void moveActivePiece(unsigned c, unsigned x) {}
+    bool moveActivePiece(unsigned c, unsigned x);
     
-    void attackEnimy(const PiecePtr& enimyPiece) {}
+    bool attackEnimy(const PiecePtr& enimyPiece) { return true; }
     
     void computeBattleResult() {}
     

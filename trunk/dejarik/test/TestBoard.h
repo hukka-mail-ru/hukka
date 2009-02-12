@@ -385,7 +385,7 @@ public:
         // King can go 1 cell
         PiecePtr king (new Piece("King", 0, 0, 1));
         board->placePiece(king, 0, 0);
-        king->setPlayer(player1);
+        player1->addPiece(king);
         
         PiecePtr queen1 (new Piece("Queen", 0, 0, 1));
         PiecePtr queen2 (new Piece("Queen", 0, 0, 1));
@@ -394,11 +394,11 @@ public:
         board->placePiece(queen1, 1, 5);
         board->placePiece(queen2, 1, 10);
         board->placePiece(queen3, 1, 11);
-        board->placePiece(queen4, 2, 0); 
-        queen1->setPlayer(player1); // ally
-        queen2->setPlayer(player2); // ok
-        queen3->setPlayer(player2); // ok
-        queen4->setPlayer(player2); // out of range
+        board->placePiece(queen4, 2, 0);
+        player1->addPiece(queen1);
+        player2->addPiece(queen2);
+        player2->addPiece(queen3);
+        player2->addPiece(queen4);
         
         std::vector<CellPtr> targets;
         board->getPossibleTargets(king, targets);

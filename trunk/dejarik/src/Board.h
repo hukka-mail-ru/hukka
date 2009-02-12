@@ -21,6 +21,7 @@ public:
     // on Game start  
     Board();
     void placePiece(const PiecePtr& piece, unsigned c, unsigned x);
+    void placePiece(const PiecePtr& piece, const CellPtr& cell);
     
     // on Game over
     void clear();

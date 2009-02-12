@@ -22,20 +22,21 @@ public:
               mPosition.reset();
           }
     
-    unsigned getAttackRating();
-    unsigned getDefenceRating();
-    unsigned getMoveRating();
-    CellPtr& getPosition();
-    PlayerPtr& getPlayer();
+    unsigned getAttackRating() const;
+    unsigned getDefenceRating() const;
+    unsigned getMoveRating() const;
+    const CellPtr& getPosition() const;
+    const Player* getPlayer() const;
+    const std::string getName() const;
     
     void push();
     void setPosition(const CellPtr& cell);
-    void setPlayer(const PlayerPtr& player);
+    void setPlayer(Player* player);
 
 private:
     
     std::string mName;
-    PlayerPtr mPlayer;
+    Player* mPlayer;
     CellPtr mPosition;    
     
     unsigned mAttackRating;
