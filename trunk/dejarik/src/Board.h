@@ -4,8 +4,12 @@
 #include <vector>
 #include "Cell.h"
 #include "Macros.h"
+#include "Piece.h"
 
 #define CIRCLE 12 // cells in a circle
+
+CLASSPTR(Piece);
+CLASSPTR(Cell);
 
 class Board // only one board in game
 {
@@ -20,6 +24,9 @@ public:
     
     // on Game over
     void clear();
+    
+    // on user click
+    CellPtr& getCell(unsigned c, unsigned x);   
 
     // on user click1: (activate a piece => show possible moves and targets)
     void getPossibleMoves(const PiecePtr& piece, std::vector<CellPtr>& moves);
@@ -30,8 +37,6 @@ public:
     void getMoveSteps(unsigned c, unsigned x, std::vector<CellPtr>& steps);
     
 private:
-
-    CellPtr& getCell(unsigned c, unsigned x);   
     
     void unmarkAll();
     
@@ -53,5 +58,7 @@ private:
     
     PiecePtr mActivePiece;
 };
+
+CLASSPTR(Board);
 
 #endif /*BOARD_H_*/

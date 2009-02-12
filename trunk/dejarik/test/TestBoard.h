@@ -36,24 +36,24 @@ public:
         SHOW_FUNCTION_NAME;
         TRY_BEGINS; 
         
-        Board board;
+        BoardPtr board (new Board);
                 
-        CPPUNIT_ASSERT_EQUAL(25, (int)board.mCells.size());
+        CPPUNIT_ASSERT_EQUAL(25, (int)board->mCells.size());
         
-        CPPUNIT_ASSERT_THROW(board.getCell(-1,-1), std::string); // both negative
-        CPPUNIT_ASSERT_THROW(board.getCell(-1,0), std::string);  // one negative
-        CPPUNIT_ASSERT_THROW(board.getCell(0,-1), std::string);  // one negative
+        CPPUNIT_ASSERT_THROW(board->getCell(-1,-1), std::string); // both negative
+        CPPUNIT_ASSERT_THROW(board->getCell(-1,0), std::string);  // one negative
+        CPPUNIT_ASSERT_THROW(board->getCell(0,-1), std::string);  // one negative
         
-        CPPUNIT_ASSERT_THROW(board.getCell(0,1), std::string); // out of bound
-        CPPUNIT_ASSERT_THROW(board.getCell(3,0), std::string);  // out of bound
-        CPPUNIT_ASSERT_THROW(board.getCell(2,12), std::string); // out of bound
+        CPPUNIT_ASSERT_THROW(board->getCell(0,1), std::string); // out of bound
+        CPPUNIT_ASSERT_THROW(board->getCell(3,0), std::string);  // out of bound
+        CPPUNIT_ASSERT_THROW(board->getCell(2,12), std::string); // out of bound
         
-        CPPUNIT_ASSERT_NO_THROW(board.getCell(0,0)); // normal
-        CPPUNIT_ASSERT_NO_THROW(board.getCell(1,0)); // normal
-        CPPUNIT_ASSERT_NO_THROW(board.getCell(2,0)); // normal
+        CPPUNIT_ASSERT_NO_THROW(board->getCell(0,0)); // normal
+        CPPUNIT_ASSERT_NO_THROW(board->getCell(1,0)); // normal
+        CPPUNIT_ASSERT_NO_THROW(board->getCell(2,0)); // normal
         
-        CPPUNIT_ASSERT_NO_THROW(board.getCell(1,11)); // normal
-        CPPUNIT_ASSERT_NO_THROW(board.getCell(2,11)); // normal
+        CPPUNIT_ASSERT_NO_THROW(board->getCell(1,11)); // normal
+        CPPUNIT_ASSERT_NO_THROW(board->getCell(2,11)); // normal
         
         TRY_CATCH;
 
@@ -78,25 +78,25 @@ public:
         SHOW_FUNCTION_NAME;
         TRY_BEGINS; 
         
-        Board board; 
+        BoardPtr board (new Board); 
         
         // -------------------------------------------------------------
         // King can go 1 cell
         PiecePtr king (new Piece("King", 0, 0, 1));
-        board.placePiece(king, 1, 0);
+        board->placePiece(king, 1, 0);
         
         PiecePtr queen1 (new Piece("Quuen", 0, 0, 1));
         PiecePtr queen2 (new Piece("Quuen", 0, 0, 1));
         PiecePtr queen3 (new Piece("Quuen", 0, 0, 1));
         PiecePtr queen4 (new Piece("Quuen", 0, 0, 1));
         
-        board.placePiece(queen1, 2, 0);
-        board.placePiece(queen2, 1, 1);
-        board.placePiece(queen3, 1, 11);
-        board.placePiece(queen4, 0, 0);
+        board->placePiece(queen1, 2, 0);
+        board->placePiece(queen2, 1, 1);
+        board->placePiece(queen3, 1, 11);
+        board->placePiece(queen4, 0, 0);
 
         std::vector<CellPtr> moves;
-        board.getPossibleMoves(king, moves);
+        board->getPossibleMoves(king, moves);
         CPPUNIT_ASSERT_EQUAL(0, (int)moves.size());
         
         
@@ -108,15 +108,15 @@ public:
         SHOW_FUNCTION_NAME;
         TRY_BEGINS; 
         
-        Board board; 
+        BoardPtr board (new Board); 
         
         // -------------------------------------------------------------
         // King can go 1 cell
         PiecePtr king (new Piece("King", 0, 0, 1));
-        board.placePiece(king, 0, 0);
+        board->placePiece(king, 0, 0);
         
         std::vector<CellPtr> moves;
-        board.getPossibleMoves(king, moves);
+        board->getPossibleMoves(king, moves);
         CPPUNIT_ASSERT_EQUAL(12, (int)moves.size());
                 
         CPPUNIT_ASSERT(findCell(moves, 1,0) == true);
@@ -133,12 +133,12 @@ public:
         CPPUNIT_ASSERT(findCell(moves, 1,11) == true);
         
         // -------------------------------------------------------------
-        board.clear(); 
+        board->clear(); 
         king = PiecePtr(new Piece("King", 0, 0, 1));
-        board.placePiece(king, 1, 0);
+        board->placePiece(king, 1, 0);
         
         moves.clear();
-        board.getPossibleMoves(king, moves);
+        board->getPossibleMoves(king, moves);
         CPPUNIT_ASSERT_EQUAL((unsigned)4, moves.size());
                 
         CPPUNIT_ASSERT(findCell(moves, 0,0) == true);
@@ -147,11 +147,11 @@ public:
         CPPUNIT_ASSERT(findCell(moves, 2,0) == true);
 
         // -------------------------------------------------------------
-        board.clear(); 
-        board.placePiece(king, 2, 0);
+        board->clear(); 
+        board->placePiece(king, 2, 0);
         
         moves.clear();
-        board.getPossibleMoves(king, moves);
+        board->getPossibleMoves(king, moves);
         CPPUNIT_ASSERT_EQUAL((unsigned)3, moves.size());
                 
         CPPUNIT_ASSERT(findCell(moves, 2,1) == true);
@@ -159,19 +159,19 @@ public:
         CPPUNIT_ASSERT(findCell(moves, 1,0) == true);
         
         // -------------------------------------------------------------
-        board.clear(); 
-        board.placePiece(king, 2, 0);
+        board->clear(); 
+        board->placePiece(king, 2, 0);
         
         PiecePtr queen1 (new Piece("Queen", 0, 0, 1));
         PiecePtr queen2 (new Piece("Queen", 0, 0, 1));
         PiecePtr queen3 (new Piece("Queen", 0, 0, 1));
         
-        board.placePiece(queen1, 2, 1);
-        board.placePiece(queen2, 2, 11);
-        board.placePiece(queen3, 1, 0);
+        board->placePiece(queen1, 2, 1);
+        board->placePiece(queen2, 2, 11);
+        board->placePiece(queen3, 1, 0);
 
         moves.clear();
-        board.getPossibleMoves(king, moves);
+        board->getPossibleMoves(king, moves);
         CPPUNIT_ASSERT_EQUAL((unsigned)0, moves.size());
         
         TRY_CATCH;
@@ -183,14 +183,14 @@ public:
         SHOW_FUNCTION_NAME;
         TRY_BEGINS; 
         
-        Board board; 
+        BoardPtr board (new Board); 
                 
         PiecePtr slon (new Piece("Slon", 0, 0, 2)); // Slon can go 2 cells
-        board.placePiece(slon, 2, 0);
+        board->placePiece(slon, 2, 0);
         
         // outer circle -------------------------------------------------------------
         std::vector<CellPtr> moves;
-        board.getPossibleMoves(slon, moves);
+        board->getPossibleMoves(slon, moves);
         CPPUNIT_ASSERT_EQUAL(5, (int)moves.size());
         
         CPPUNIT_ASSERT(findCell(moves, 2,10) == true);
@@ -200,11 +200,11 @@ public:
         CPPUNIT_ASSERT(findCell(moves, 0,0) == true);
 
         // inner circle -------------------------------------------------------------
-        board.clear();
-        board.placePiece(slon, 1, 0);
+        board->clear();
+        board->placePiece(slon, 1, 0);
         
         moves.clear();
-        board.getPossibleMoves(slon, moves);
+        board->getPossibleMoves(slon, moves);
         CPPUNIT_ASSERT_EQUAL(14, (int)moves.size());
         
         CPPUNIT_ASSERT(findCell(moves, 1,1) == true);
@@ -224,11 +224,11 @@ public:
         CPPUNIT_ASSERT(findCell(moves, 0,0) == true);
         
         // center  -------------------------------------------------------------
-        board.clear();
-        board.placePiece(slon, 0, 0);
+        board->clear();
+        board->placePiece(slon, 0, 0);
         
         moves.clear();
-        board.getPossibleMoves(slon, moves);
+        board->getPossibleMoves(slon, moves);
         CPPUNIT_ASSERT_EQUAL(24, (int)moves.size());
         
         CPPUNIT_ASSERT(findCell(moves, 1,0) == true);
@@ -265,14 +265,14 @@ public:
         SHOW_FUNCTION_NAME;
         TRY_BEGINS; 
         
-        Board board; 
+        BoardPtr board (new Board); 
                
         PiecePtr queen (new Piece("Queen", 0, 0, 3)); // Queen can go 3 cells
-        board.placePiece(queen, 2, 0);
+        board->placePiece(queen, 2, 0);
         
         // outer circle -------------------------------------------------------------
         std::vector<CellPtr> moves;
-        board.getPossibleMoves(queen, moves);
+        board->getPossibleMoves(queen, moves);
         CPPUNIT_ASSERT_EQUAL(17, (int)moves.size());
         
         CPPUNIT_ASSERT(findCell(moves, 2,11) == true);
@@ -296,11 +296,11 @@ public:
         CPPUNIT_ASSERT(findCell(moves, 0,0) == true);
         
         // inner circle -------------------------------------------------------------
-        board.clear();
-        board.placePiece(queen, 1, 0);
+        board->clear();
+        board->placePiece(queen, 1, 0);
         
         moves.clear();
-        board.getPossibleMoves(queen, moves);
+        board->getPossibleMoves(queen, moves);
         CPPUNIT_ASSERT_EQUAL(24, (int)moves.size());
         
         CPPUNIT_ASSERT(findCell(moves, 1,1) == true);
@@ -332,11 +332,11 @@ public:
         
         
         // inner circle -------------------------------------------------------------
-        board.clear();
-        board.placePiece(queen, 0, 0);
+        board->clear();
+        board->placePiece(queen, 0, 0);
         
         moves.clear();
-        board.getPossibleMoves(queen, moves);
+        board->getPossibleMoves(queen, moves);
         CPPUNIT_ASSERT_EQUAL(24, (int)moves.size());
         
         CPPUNIT_ASSERT(findCell(moves, 1,0) == true);
@@ -376,32 +376,32 @@ public:
         SHOW_FUNCTION_NAME;
         TRY_BEGINS; 
         
-        Board board; 
+        BoardPtr board (new Board); 
         
         // Two players
-        PlayerPtr player1 (new Player());
-        PlayerPtr player2 (new Player());
+        PlayerPtr player1 (new Player("default", board));
+        PlayerPtr player2 (new Player("default", board));
         
         // King can go 1 cell
         PiecePtr king (new Piece("King", 0, 0, 1));
-        board.placePiece(king, 0, 0);
+        board->placePiece(king, 0, 0);
         king->setPlayer(player1);
         
         PiecePtr queen1 (new Piece("Queen", 0, 0, 1));
         PiecePtr queen2 (new Piece("Queen", 0, 0, 1));
         PiecePtr queen3 (new Piece("Queen", 0, 0, 1));
         PiecePtr queen4 (new Piece("Queen", 0, 0, 1));
-        board.placePiece(queen1, 1, 5);
-        board.placePiece(queen2, 1, 10);
-        board.placePiece(queen3, 1, 11);
-        board.placePiece(queen4, 2, 0); 
+        board->placePiece(queen1, 1, 5);
+        board->placePiece(queen2, 1, 10);
+        board->placePiece(queen3, 1, 11);
+        board->placePiece(queen4, 2, 0); 
         queen1->setPlayer(player1); // ally
         queen2->setPlayer(player2); // ok
         queen3->setPlayer(player2); // ok
         queen4->setPlayer(player2); // out of range
         
         std::vector<CellPtr> targets;
-        board.getPossibleTargets(king, targets);
+        board->getPossibleTargets(king, targets);
         CPPUNIT_ASSERT_EQUAL((unsigned)2, targets.size());
         
         CPPUNIT_ASSERT(findCell(targets, 1,10) == true);
@@ -415,40 +415,40 @@ public:
         SHOW_FUNCTION_NAME;
         TRY_BEGINS ;
         
-        Board board;
+        BoardPtr board (new Board);
 
         // King can go 1 cell
         PiecePtr king (new Piece("King", 0, 0, 1));
-        board.placePiece(king, 0, 0);
+        board->placePiece(king, 0, 0);
         
         std::vector<CellPtr> moves;
-        board.getPossibleMoves(king, moves);
+        board->getPossibleMoves(king, moves);
         
-        CPPUNIT_ASSERT(board.isMoveValid(0,0) == false); // no move
-        CPPUNIT_ASSERT(board.isMoveValid(1,5) == true);
-        CPPUNIT_ASSERT(board.isMoveValid(2,11) == false);
+        CPPUNIT_ASSERT(board->isMoveValid(0,0) == false); // no move
+        CPPUNIT_ASSERT(board->isMoveValid(1,5) == true);
+        CPPUNIT_ASSERT(board->isMoveValid(2,11) == false);
 
         // ----------------------------------------
         
         // Queen can go 2 calls
         PiecePtr queen (new Piece("Queen", 0, 0, 2));
-        board.placePiece(queen, 2, 0); // from outer circle to center
+        board->placePiece(queen, 2, 0); // from outer circle to center
         
         moves.clear();
-        board.getPossibleMoves(queen, moves);
+        board->getPossibleMoves(queen, moves);
 
-        CPPUNIT_ASSERT(board.isMoveValid(2,0) == false); // no move
-        CPPUNIT_ASSERT(board.isMoveValid(2,10) == true);
-        CPPUNIT_ASSERT(board.isMoveValid(1,11) == true);
-        CPPUNIT_ASSERT(board.isMoveValid(0,0) == false); // we have King there!
-        CPPUNIT_ASSERT(board.isMoveValid(1,1) == true);
+        CPPUNIT_ASSERT(board->isMoveValid(2,0) == false); // no move
+        CPPUNIT_ASSERT(board->isMoveValid(2,10) == true);
+        CPPUNIT_ASSERT(board->isMoveValid(1,11) == true);
+        CPPUNIT_ASSERT(board->isMoveValid(0,0) == false); // we have King there!
+        CPPUNIT_ASSERT(board->isMoveValid(1,1) == true);
         
-        CPPUNIT_ASSERT(board.isMoveValid(1,2) == false);
-        CPPUNIT_ASSERT(board.isMoveValid(2,9) == false); // out of possible moves
-        CPPUNIT_ASSERT(board.isMoveValid(1,10) == false);
-        CPPUNIT_ASSERT(board.isMoveValid(1,5) == false);
-        CPPUNIT_ASSERT(board.isMoveValid(1,2) == false);
-        CPPUNIT_ASSERT(board.isMoveValid(2,3) == false);
+        CPPUNIT_ASSERT(board->isMoveValid(1,2) == false);
+        CPPUNIT_ASSERT(board->isMoveValid(2,9) == false); // out of possible moves
+        CPPUNIT_ASSERT(board->isMoveValid(1,10) == false);
+        CPPUNIT_ASSERT(board->isMoveValid(1,5) == false);
+        CPPUNIT_ASSERT(board->isMoveValid(1,2) == false);
+        CPPUNIT_ASSERT(board->isMoveValid(2,3) == false);
         
         TRY_CATCH;
     }
@@ -458,23 +458,23 @@ public:
         SHOW_FUNCTION_NAME;
         TRY_BEGINS ;
         
-        Board board;
+        BoardPtr board (new Board);
         
         // ----------------------------------------
         // from outer circle to center
-        CellPtr start = board.getCell(2,0);
-        CellPtr interim = board.getCell(1,0);
-        CellPtr finish = board.getCell(0,0);
+        CellPtr start = board->getCell(2,0);
+        CellPtr interim = board->getCell(1,0);
+        CellPtr finish = board->getCell(0,0);
 
         // Queen can go 2 calls
         PiecePtr queen (new Piece("Queen", 0, 0, 2));
-        board.placePiece(queen, 2, 0);
+        board->placePiece(queen, 2, 0);
         
         std::vector<CellPtr> moves;
-        board.getPossibleMoves(queen, moves);
+        board->getPossibleMoves(queen, moves);
         
         std::vector<CellPtr> steps;
-        board.getMoveSteps(0, 0, steps);
+        board->getMoveSteps(0, 0, steps);
         
         CPPUNIT_ASSERT_EQUAL((unsigned)2, steps.size());
         
@@ -486,15 +486,15 @@ public:
         
         // --------------------------------------------------------------
         steps.clear();
-        board.getMoveSteps(2, 2, steps);        
+        board->getMoveSteps(2, 2, steps);        
         CPPUNIT_ASSERT_EQUAL((unsigned)2, steps.size());
         
         steps.clear();
-        board.getMoveSteps(1, 1, steps);        
+        board->getMoveSteps(1, 1, steps);        
         CPPUNIT_ASSERT_EQUAL((unsigned)2, steps.size());
 
         steps.clear();
-        board.getMoveSteps(1, 11, steps);        
+        board->getMoveSteps(1, 11, steps);        
         CPPUNIT_ASSERT_EQUAL((unsigned)2, steps.size());
 
         TRY_CATCH;
