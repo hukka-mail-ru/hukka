@@ -6,6 +6,7 @@
 #include "Macros.h"
 
 CLASSPTR(Cell);
+CLASSPTR(Player);
 
 class Piece
 {
@@ -27,6 +28,7 @@ public:
     CellPtr& getPosition();
     PlayerPtr& getPlayer();
     
+    void push();
     void setPosition(const CellPtr& cell);
     void setPlayer(const PlayerPtr& player);
 

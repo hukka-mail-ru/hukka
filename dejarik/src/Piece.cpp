@@ -20,10 +20,13 @@ CellPtr& Piece::getPosition()
     return mPosition;
 }
 
+
+
 void Piece::setPosition(const CellPtr& cell)
 {
     mPosition = cell;
 }
+
 
 PlayerPtr& Piece::getPlayer()
 {

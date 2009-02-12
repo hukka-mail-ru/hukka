@@ -1,7 +1,7 @@
 #include <sstream>
 #include <iostream>
 #include "Board.h"
-#include "Cell.h"
+
 
 using namespace std;
 
@@ -79,7 +79,7 @@ bool Board::isMoveValid(unsigned c, unsigned x)
         {
             return true;
         }
-    }
+    }   
     
     TRY_RETHROW;    
     
