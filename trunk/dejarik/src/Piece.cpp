@@ -32,12 +32,12 @@ void Piece::setPosition(const CellPtr& cell)
 }
 
 
-const Player* Piece::getPlayer() const
+const PlayerPtr& Piece::getPlayer() const
 {
     return mPlayer;
 }
 
-void Piece::setPlayer(Player* player)
+void Piece::setPlayer(const PlayerPtr& player)
 {
     mPlayer = player;
 }

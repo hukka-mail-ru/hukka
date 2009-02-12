@@ -60,6 +60,15 @@ void Board::placePiece(const PiecePtr& piece, const CellPtr& cell)
     TRY_RETHROW;
 }
 
+
+void Board::distribute(const PiecePtr& piece, const PlayerPtr& player)
+{
+    player->addPiece(piece);
+    piece->setPlayer(player);
+}
+
+
+
 CellPtr& Board::getCell(unsigned c, unsigned x)
 {
     for(unsigned i=0; i<mCells.size(); ++i)
