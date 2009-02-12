@@ -2,6 +2,12 @@
 
 using namespace std;
 
+void Player::addPiece(const PiecePtr& piece)
+{
+    mPieces.push_back(piece);
+    piece->setPlayer(this);
+}
+
 /* 
      Define the cell: empty ? ally ? enimy ?
       
@@ -35,13 +41,13 @@ bool Player::makeTurn(unsigned c, unsigned x, TurnStage turnStage)
     }
     
     // can't start from an enimy piece
-    if(piece && piece->getPlayer().get() != this && turnStage == TURN_START)
+    if(piece && piece->getPlayer() != this && turnStage == TURN_START)
     {
         return false;
     }
     
     // if clicked on ally, we must do TURN_START, even if we obtained TURN_FINISH
-    if(piece && piece->getPlayer().get() == this && turnStage == TURN_FINISH)
+    if(piece && piece->getPlayer() == this && turnStage == TURN_FINISH)
     {
         turnStage = TURN_START;
     }
@@ -58,11 +64,11 @@ bool Player::makeTurn(unsigned c, unsigned x, TurnStage turnStage)
     {
         if(!piece) // move to cell
         {
-            moveActivePiece(c, x);
+            return moveActivePiece(c, x);
         }
         else // attack enimy piece
         {
-            attackEnimy(piece);
+            return attackEnimy(piece);
         }
     }
     
@@ -70,4 +76,28 @@ bool Player::makeTurn(unsigned c, unsigned x, TurnStage turnStage)
     
     return true;
 
+}
+
+
+bool Player::moveActivePiece(unsigned c, unsigned x) 
+{
+    TRY_BEGINS;
+    
+    if(!mBoard->isMoveValid(c, x))
+    {
+        return false;
+    }
+    
+    vector<CellPtr> steps;
+    mBoard->getMoveSteps(c, x, steps);
+    
+    for(unsigned i = 0; i<steps.size(); i++)
+    {
+        mBoard->placePiece(mActivePiece, steps[i]);
+        cout << "moveActivePiece (" << mActivePiece->getName() << ")to " <<  steps[i]->c << "." << steps[i]->x << endl;
+    }
+    
+    TRY_RETHROW;
+    
+    return true;
 }

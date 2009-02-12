@@ -16,6 +16,7 @@ class TestPlayer: public CppUnit::TestFixture
     * or move and then attack, or attack and then move
     */
    CPPUNIT_TEST_SUITE(TestPlayer);
+   
    CPPUNIT_TEST(testMakeTurn_moveTwice);
    CPPUNIT_TEST(testMakeTurn_attackTwice);
    CPPUNIT_TEST(testMakeTurn_moveThenAttack);
@@ -27,6 +28,43 @@ class TestPlayer: public CppUnit::TestFixture
 public:         
     void setUp() {}
     void tearDown() {}
+    
+    void testMakeTurn_moveTwice() 
+    {
+        TRY_BEGINS;
+        SHOW_FUNCTION_NAME;
+        
+        BoardPtr board (new Board);        
+        PiecePtr king1 (new Piece("White King", 0, 0, 1)); // king can go 1 cell        
+        board->placePiece(king1, 1, 0);
+        
+        PlayerPtr player1 (new Player("default", board));
+        player1->addPiece(king1);
+        
+        CPPUNIT_ASSERT(board->getCell(1, 0)->piece == king1); // we are here
+        
+        CPPUNIT_ASSERT(player1->makeTurn(0, 0, TURN_START) == false); // click on empty cell
+        CPPUNIT_ASSERT(player1->makeTurn(1, 5, TURN_START) == false); // click on empty cell
+        CPPUNIT_ASSERT(player1->makeTurn(1, 0, TURN_START) == true);  // click on the piece
+        
+        CPPUNIT_ASSERT(player1->makeTurn(2, 5, TURN_FINISH) == false); // click out of range
+        CPPUNIT_ASSERT(player1->makeTurn(2, 10, TURN_FINISH) == false); // click out of range
+        CPPUNIT_ASSERT(player1->makeTurn(1, 11, TURN_FINISH) == true); // click in range. move there
+
+        CPPUNIT_ASSERT(board->getCell(1, 11)->piece == king1); // then we are here
+        
+        CPPUNIT_ASSERT(player1->makeTurn(0, 0, TURN_START) == false); // click on empty cell
+        CPPUNIT_ASSERT(player1->makeTurn(1, 10, TURN_START) == false); // click on empty cell
+        CPPUNIT_ASSERT(player1->makeTurn(1, 11, TURN_START) == true); // click on the piece
+        
+        CPPUNIT_ASSERT(player1->makeTurn(2, 7, TURN_FINISH) == false); // click out of range
+        CPPUNIT_ASSERT(player1->makeTurn(2, 7, TURN_FINISH) == false); // click out of range
+        CPPUNIT_ASSERT(player1->makeTurn(0, 0, TURN_FINISH) == true); // click in range. move there
+        
+        CPPUNIT_ASSERT(board->getCell(0, 0)->piece == king1); // finally we are here
+        
+        TRY_CATCH
+    }
     
     void testMakeTurn_attackTwice() 
     {
@@ -53,7 +91,7 @@ public:
         CPPUNIT_ASSERT(player1->makeTurn(1, 0, TURN_START) == true); // click on ally
         
         CPPUNIT_ASSERT(player1->makeTurn(2, 5, TURN_FINISH) == false); // click out of range
-        CPPUNIT_ASSERT(player1->makeTurn(0, 5, TURN_FINISH) == false); // click out of range
+        CPPUNIT_ASSERT(player1->makeTurn(1, 5, TURN_FINISH) == false); // click out of range
         CPPUNIT_ASSERT(player1->makeTurn(1, 1, TURN_FINISH) == true); // attack
 
         CPPUNIT_ASSERT(board->getCell(1, 0)->piece == king1); // we are still here
@@ -63,7 +101,7 @@ public:
         CPPUNIT_ASSERT(player1->makeTurn(1, 0, TURN_START) == true); // click on ally
         
         CPPUNIT_ASSERT(player1->makeTurn(2, 5, TURN_FINISH) == false); // click out of range
-        CPPUNIT_ASSERT(player1->makeTurn(0, 5, TURN_FINISH) == false); // click out of range
+        CPPUNIT_ASSERT(player1->makeTurn(1, 5, TURN_FINISH) == false); // click out of range
         CPPUNIT_ASSERT(player1->makeTurn(1, 1, TURN_FINISH) == true); // attack
         
         CPPUNIT_ASSERT(board->getCell(1, 0)->piece == king1); // we are still here
@@ -97,7 +135,7 @@ public:
         CPPUNIT_ASSERT(player1->makeTurn(1, 0, TURN_START) == true); // click on ally
         
         CPPUNIT_ASSERT(player1->makeTurn(2, 5, TURN_FINISH) == false); // click out of range
-        CPPUNIT_ASSERT(player1->makeTurn(0, 5, TURN_FINISH) == false); // click out of range
+        CPPUNIT_ASSERT(player1->makeTurn(1, 5, TURN_FINISH) == false); // click out of range
         CPPUNIT_ASSERT(player1->makeTurn(1, 1, TURN_FINISH) == true); // attack
 
         CPPUNIT_ASSERT(board->getCell(1, 0)->piece == king1); // we are still here
@@ -107,7 +145,7 @@ public:
         CPPUNIT_ASSERT(player1->makeTurn(1, 0, TURN_START) == true); // click on ally
         
         CPPUNIT_ASSERT(player1->makeTurn(2, 5, TURN_FINISH) == false); // click out of range
-        CPPUNIT_ASSERT(player1->makeTurn(0, 5, TURN_FINISH) == false); // click out of range
+        CPPUNIT_ASSERT(player1->makeTurn(1, 5, TURN_FINISH) == false); // click out of range
         CPPUNIT_ASSERT(player1->makeTurn(1, 11, TURN_FINISH) == true); // move
         
         CPPUNIT_ASSERT(board->getCell(1, 11)->piece == king1); // we're finally here
@@ -116,42 +154,6 @@ public:
         TRY_CATCH
     }
             
-    void testMakeTurn_moveTwice() 
-    {
-        TRY_BEGINS;
-        SHOW_FUNCTION_NAME;
-        
-        BoardPtr board (new Board);        
-        PiecePtr king1 (new Piece("White King", 0, 0, 1)); // king can go 1 cell        
-        board->placePiece(king1, 1, 0);
-        
-        PlayerPtr player1 (new Player("default", board));
-        player1->addPiece(king1);
-        
-        CPPUNIT_ASSERT(board->getCell(1, 0)->piece == king1); // we are here
-        
-        CPPUNIT_ASSERT(player1->makeTurn(0, 0, TURN_START) == false); // click on empty cell
-        CPPUNIT_ASSERT(player1->makeTurn(1, 5, TURN_START) == false); // click on empty cell
-        CPPUNIT_ASSERT(player1->makeTurn(1, 0, TURN_START) == true);  // click on the piece
-        
-        CPPUNIT_ASSERT(player1->makeTurn(2, 5, TURN_FINISH) == false); // click out of range
-        CPPUNIT_ASSERT(player1->makeTurn(0, 10, TURN_FINISH) == false); // click out of range
-        CPPUNIT_ASSERT(player1->makeTurn(1, 11, TURN_FINISH) == true); // click in range. move there
-
-        CPPUNIT_ASSERT(board->getCell(1, 11)->piece == king1); // then we are here
-        
-        CPPUNIT_ASSERT(player1->makeTurn(0, 0, TURN_START) == false); // click on empty cell
-        CPPUNIT_ASSERT(player1->makeTurn(1, 10, TURN_START) == false); // click on empty cell
-        CPPUNIT_ASSERT(player1->makeTurn(1, 11, TURN_START) == true); // click on the piece
-        
-        CPPUNIT_ASSERT(player1->makeTurn(2, 7, TURN_FINISH) == false); // click out of range
-        CPPUNIT_ASSERT(player1->makeTurn(0, 10, TURN_FINISH) == false); // click out of range
-        CPPUNIT_ASSERT(player1->makeTurn(0, 11, TURN_FINISH) == true); // click in range. move there
-        
-        CPPUNIT_ASSERT(board->getCell(0, 11)->piece == king1); // finally we are here
-        
-        TRY_CATCH
-    }
     
     void testMakeTurn_moveThenAttack() 
     {
@@ -178,7 +180,7 @@ public:
         CPPUNIT_ASSERT(player1->makeTurn(1, 0, TURN_START) == true); // click on ally
         
         CPPUNIT_ASSERT(player1->makeTurn(2, 5, TURN_FINISH) == false); // click out of range
-        CPPUNIT_ASSERT(player1->makeTurn(0, 10, TURN_FINISH) == false); // click out of range
+        CPPUNIT_ASSERT(player1->makeTurn(2, 7, TURN_FINISH) == false); // click out of range
         CPPUNIT_ASSERT(player1->makeTurn(1, 11, TURN_FINISH) == true); // click in range. move there
 
         CPPUNIT_ASSERT(board->getCell(1, 11)->piece == king1); // then we are here
@@ -188,7 +190,7 @@ public:
         CPPUNIT_ASSERT(player1->makeTurn(1, 11, TURN_START) == true); // click on ally
         
         CPPUNIT_ASSERT(player1->makeTurn(2, 7, TURN_FINISH) == false); // click out of range
-        CPPUNIT_ASSERT(player1->makeTurn(0, 10, TURN_FINISH) == false); // click out of range
+        CPPUNIT_ASSERT(player1->makeTurn(2, 4, TURN_FINISH) == false); // click out of range
         CPPUNIT_ASSERT(player1->makeTurn(1, 10, TURN_FINISH) == true); // click in range. attack
         
         CPPUNIT_ASSERT(board->getCell(1, 11)->piece == king1); // we didn't move
@@ -218,7 +220,7 @@ public:
         CPPUNIT_ASSERT(player1->makeTurn(1, 10, TURN_START) == false); // click on empty cell
         CPPUNIT_ASSERT(player1->makeTurn(1, 0, TURN_START) == true); // click on king
         
-        CPPUNIT_ASSERT(player1->makeTurn(0, 0, TURN_FINISH) == false); // click on empty cell
+        CPPUNIT_ASSERT(player1->makeTurn(1, 5, TURN_FINISH) == false); // click on empty cell
         CPPUNIT_ASSERT(player1->makeTurn(1, 10, TURN_FINISH) == false); // click on empty cell
         CPPUNIT_ASSERT(player1->makeTurn(2, 0, TURN_FINISH) == true); // click on slon
         

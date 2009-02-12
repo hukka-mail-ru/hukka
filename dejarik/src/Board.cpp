@@ -45,6 +45,15 @@ void Board::placePiece(const PiecePtr& piece, unsigned c, unsigned x)
     TRY_BEGINS;
     
     CellPtr cell = getCell(c, x);
+    placePiece(piece, cell);
+    
+    TRY_RETHROW;
+}
+
+void Board::placePiece(const PiecePtr& piece, const CellPtr& cell)
+{
+    TRY_BEGINS;
+    
     piece->setPosition(cell);
     cell->piece = piece;    
     
@@ -62,7 +71,7 @@ CellPtr& Board::getCell(unsigned c, unsigned x)
     }
     
     stringstream err;
-    err << "Board::getCell. No cell with position X=" << x << " C=" << c;
+    err << "Board::getCell. No cell with position C=" << c << ", X=" << x;
     throw(err.str());
 }
 

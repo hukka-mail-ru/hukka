@@ -1,25 +1,29 @@
 #include "Piece.h"
 
-unsigned Piece::getAttackRating()
+unsigned Piece::getAttackRating() const
 {
     return mAttackRating;
 }
 
-unsigned Piece::getDefenceRating()
+unsigned Piece::getDefenceRating() const
 {
     return mDefenceRating;
 }
 
-unsigned Piece::getMoveRating()
+unsigned Piece::getMoveRating() const
 {
     return mMoveRating;
 }
 
-CellPtr& Piece::getPosition()
+const CellPtr& Piece::getPosition() const
 {
     return mPosition;
 }
 
+const std::string Piece::getName() const
+{
+    return mName;
+}
 
 
 void Piece::setPosition(const CellPtr& cell)
@@ -28,12 +32,14 @@ void Piece::setPosition(const CellPtr& cell)
 }
 
 
-PlayerPtr& Piece::getPlayer()
+const Player* Piece::getPlayer() const
 {
     return mPlayer;
 }
 
-void Piece::setPlayer(const PlayerPtr& player)
+void Piece::setPlayer(Player* player)
 {
     mPlayer = player;
 }
+
+

@@ -23,6 +23,8 @@ catch(std::string& err) \
 } \
 catch(std::string& err) \
 { \
+std::cout << "EXCEPTION in " << __FUNCTION__ << std::endl << \
+             "TRACE: "<< err << std::endl << std::endl;\
 std::cerr << "EXCEPTION in " << __FUNCTION__ << std::endl << \
              "TRACE: "<< err << std::endl << std::endl;\
 }
