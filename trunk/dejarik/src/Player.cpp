@@ -25,7 +25,8 @@ bool Player::makeTurn(unsigned c, unsigned x, TurnStage turnStage)
     TRY_BEGINS;
     
     // Define the cell: empty ? ally ? enimy ?
-    PiecePtr piece = mBoard->getCell(c, x)->piece;
+    CellPtr cell = mBoard->getCell(c, x);
+    PiecePtr piece = cell->piece;
     
     // can't start from an empty cell
     if(!piece && turnStage == TURN_START)
@@ -39,7 +40,7 @@ bool Player::makeTurn(unsigned c, unsigned x, TurnStage turnStage)
         return false;
     }
     
-    // if clicked on ally, we must do TURN_START, even we are obtained TURN_FINISH
+    // if clicked on ally, we must do TURN_START, even if we obtained TURN_FINISH
     if(piece && piece->getPlayer().get() == this && turnStage == TURN_FINISH)
     {
         turnStage = TURN_START;
@@ -50,14 +51,23 @@ bool Player::makeTurn(unsigned c, unsigned x, TurnStage turnStage)
     {
         mActivePiece = piece;
         
+        vector<CellPtr> possibleMoves;
+        mBoard->getPossibleMoves(piece, possibleMoves);
     }
-    
-    
-    
-    
+    else if(turnStage == TURN_FINISH)
+    {
+        if(!piece) // move to cell
+        {
+            moveActivePiece(c, x);
+        }
+        else // attack enimy piece
+        {
+            attackEnimy(piece);
+        }
+    }
     
     TRY_RETHROW;
     
-    return false;
+    return true;
 
 }
