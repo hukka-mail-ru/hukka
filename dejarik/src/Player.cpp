@@ -5,7 +5,6 @@ using namespace std;
 void Player::addPiece(const PiecePtr& piece)
 {
     mPieces.push_back(piece);
-    piece->setPlayer(this);
 }
 
 /* 
@@ -41,13 +40,13 @@ bool Player::makeTurn(unsigned c, unsigned x, TurnStage turnStage)
     }
     
     // can't start from an enimy piece
-    if(piece && piece->getPlayer() != this && turnStage == TURN_START)
+    if(piece && piece->getPlayer().get() != this && turnStage == TURN_START)
     {
         return false;
     }
     
     // if clicked on ally, we must do TURN_START, even if we obtained TURN_FINISH
-    if(piece && piece->getPlayer() == this && turnStage == TURN_FINISH)
+    if(piece && piece->getPlayer().get() == this && turnStage == TURN_FINISH)
     {
         turnStage = TURN_START;
     }

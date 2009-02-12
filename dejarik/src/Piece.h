@@ -26,17 +26,17 @@ public:
     unsigned getDefenceRating() const;
     unsigned getMoveRating() const;
     const CellPtr& getPosition() const;
-    const Player* getPlayer() const;
+    const PlayerPtr& getPlayer() const;
     const std::string getName() const;
     
     void push();
     void setPosition(const CellPtr& cell);
-    void setPlayer(Player* player);
+    void setPlayer(const PlayerPtr& player);
 
 private:
     
     std::string mName;
-    Player* mPlayer;
+    PlayerPtr mPlayer;
     CellPtr mPosition;    
     
     unsigned mAttackRating;

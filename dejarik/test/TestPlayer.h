@@ -36,10 +36,11 @@ public:
         
         BoardPtr board (new Board);        
         PiecePtr king1 (new Piece("White King", 0, 0, 1)); // king can go 1 cell        
-        board->placePiece(king1, 1, 0);
-        
         PlayerPtr player1 (new Player("default", board));
-        player1->addPiece(king1);
+        
+        board->placePiece(king1, 1, 0);
+        board->distribute(king1, player1);
+
         
         CPPUNIT_ASSERT(board->getCell(1, 0)->piece == king1); // we are here
         
@@ -74,15 +75,14 @@ public:
         BoardPtr board (new Board);        
         PiecePtr king1 (new Piece("White King", 0, 0, 1)); // king can go 1 cell
         PiecePtr king2 (new Piece("Black King", 0, 0, 1)); // king can go 1 cell
+        PlayerPtr player1 (new Player("default", board));
+        PlayerPtr player2 (new Player("default", board));
         
         board->placePiece(king1, 1, 0);
         board->placePiece(king2, 1, 1);
         
-        PlayerPtr player1 (new Player("default", board));
-        PlayerPtr player2 (new Player("default", board));
-
-        player1->addPiece(king1);
-        player2->addPiece(king2);
+        board->distribute(king1, player1);
+        board->distribute(king2, player2);
 
         CPPUNIT_ASSERT(board->getCell(1, 0)->piece == king1); // we are here
         
@@ -117,16 +117,15 @@ public:
         
         BoardPtr board (new Board);        
         PiecePtr king1 (new Piece("White King", 0, 0, 1)); // king can go 1 cell
-        PiecePtr king2 (new Piece("Black King", 0, 0, 1)); // king can go 1 cell
+        PiecePtr king2 (new Piece("Black King", 0, 0, 1)); // king can go 1 cell        
+        PlayerPtr player1 (new Player("default", board));
+        PlayerPtr player2 (new Player("default", board));
         
         board->placePiece(king1, 1, 0);
         board->placePiece(king2, 1, 1);
         
-        PlayerPtr player1 (new Player("default", board));
-        PlayerPtr player2 (new Player("default", board));
-
-        player1->addPiece(king1);
-        player2->addPiece(king2);
+        board->distribute(king1, player1);
+        board->distribute(king2, player2);
 
         CPPUNIT_ASSERT(board->getCell(1, 0)->piece == king1); // we are here
         
@@ -162,16 +161,15 @@ public:
         
         BoardPtr board (new Board);        
         PiecePtr king1 (new Piece("White King", 0, 0, 1)); // king can go 1 cell
-        PiecePtr king2 (new Piece("Black King", 0, 0, 1)); // king can go 1 cell
+        PiecePtr king2 (new Piece("Black King", 0, 0, 1)); // king can go 1 cell        
+        PlayerPtr player1 (new Player("default", board));
+        PlayerPtr player2 (new Player("default", board));
         
         board->placePiece(king1, 1, 0);
         board->placePiece(king2, 1, 10);
-        
-        PlayerPtr player1 (new Player("default", board));
-        PlayerPtr player2 (new Player("default", board));
 
-        player1->addPiece(king1);
-        player2->addPiece(king2);
+        board->distribute(king1, player1);
+        board->distribute(king2, player2);
         
         CPPUNIT_ASSERT(board->getCell(1, 0)->piece == king1); // we are here
 
@@ -207,14 +205,13 @@ public:
         BoardPtr board (new Board);        
         PiecePtr king (new Piece("White King", 0, 0, 1)); // king can go 1 cell
         PiecePtr slon (new Piece("White Slon", 0, 0, 1)); // king can go 1 cell
+        PlayerPtr player1 (new Player("default", board));
         
         board->placePiece(king, 1, 0);
         board->placePiece(slon, 2, 0);
-        
-        PlayerPtr player1 (new Player("default", board));
 
-        player1->addPiece(king);
-        player1->addPiece(slon);
+        board->distribute(king, player1);
+        board->distribute(slon, player1);
         
         CPPUNIT_ASSERT(player1->makeTurn(0, 0, TURN_START) == false); // click on empty cell
         CPPUNIT_ASSERT(player1->makeTurn(1, 10, TURN_START) == false); // click on empty cell

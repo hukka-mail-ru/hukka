@@ -5,10 +5,12 @@
 #include "Cell.h"
 #include "Macros.h"
 #include "Piece.h"
+#include "Player.h"
 
 #define CIRCLE 12 // cells in a circle
 
 CLASSPTR(Piece);
+CLASSPTR(Player);
 CLASSPTR(Cell);
 
 class Board // only one board in game
@@ -22,6 +24,8 @@ public:
     Board();
     void placePiece(const PiecePtr& piece, unsigned c, unsigned x);
     void placePiece(const PiecePtr& piece, const CellPtr& cell);
+    
+    void distribute(const PiecePtr& piece, const PlayerPtr& player);
     
     // on Game over
     void clear();
