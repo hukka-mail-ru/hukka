@@ -11,8 +11,10 @@ CLASSPTR(Piece);
 CLASSPTR(Board);
 CLASSPTR(Player);
 
+// test block --------------------------------
 extern bool TestMakePush;
 extern bool TestMakeCounterPush;
+// -------------------------------------------
 
 // e.g. a move for 1.0 to 2.0
 // =>  TS_START at 1.0, TS_FINISH at 2.0

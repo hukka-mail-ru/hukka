@@ -43,6 +43,9 @@ public:
     
     void testMakePush()
     {
+        TRY_BEGINS;
+        SHOW_FUNCTION_NAME;
+        
         TestMakePush = true; // globally
         
         BoardPtr board (new Board);    
@@ -82,10 +85,15 @@ public:
 
         
         TestMakePush = false; // globally
+        
+        TRY_CATCH;
     }
     
     void testMakeCounterPush()
     {
+        TRY_BEGINS;
+        SHOW_FUNCTION_NAME;
+        
         TestMakeCounterPush = true; // globally
         
         BoardPtr board (new Board);    
@@ -123,7 +131,9 @@ public:
         CPPUNIT_ASSERT(board->getCell(1, 11)->piece == mine); // pushed
         CPPUNIT_ASSERT(board->getCell(1, 1)->piece == enemy); // enemy is still here
         
-        TestMakeCounterPush = false; // globally     
+        TestMakeCounterPush = false; // globally   
+        
+        TRY_CATCH;
     }
     
     void testGetBattleResult()
