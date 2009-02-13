@@ -29,12 +29,40 @@ class TestPlayer: public CppUnit::TestFixture
    CPPUNIT_TEST(testAttackEnimy_push);
    CPPUNIT_TEST(testAttackEnimy_counterPush);
    CPPUNIT_TEST(testAttackEnimy_aDraw); // counter-push
+   
+   CPPUNIT_TEST(testGetBattleResult);
    CPPUNIT_TEST_SUITE_END();
          
 public:         
     void setUp() {}
     void tearDown() {}
     
+    void testGetBattleResult()
+    {
+        TRY_BEGINS;
+        SHOW_FUNCTION_NAME;
+        
+        BoardPtr board (new Board);  
+        PlayerPtr player (new Player("default", board));
+        
+        BattleResult res = player->getBattleResult(0, 0);
+        CPPUNIT_ASSERT(res == RES_COUNTER_PUSH);
+
+        res = player->getBattleResult(0, 0);
+        CPPUNIT_ASSERT(res == RES_COUNTER_PUSH);
+
+        res = player->getBattleResult(2, 1);
+        CPPUNIT_ASSERT(res == RES_KILL || res == RES_PUSH || res == RES_COUNTER_PUSH);
+
+        res = player->getBattleResult(3, 2);
+        CPPUNIT_ASSERT(res == RES_KILL || res == RES_PUSH ||
+                res == RES_COUNTER_KILL || res == RES_COUNTER_PUSH);
+        
+        res = player->getBattleResult(1, 2);
+        CPPUNIT_ASSERT(res == RES_COUNTER_KILL || res == RES_COUNTER_PUSH || res == RES_PUSH);
+        
+        TRY_CATCH;
+    }
     
     void testAttackEnimy_kill()
     {
