@@ -41,6 +41,9 @@ public:
     bool isMoveValid(unsigned c, unsigned x);
     void getMoveSteps(unsigned c, unsigned x, std::vector<CellPtr>& steps);
     
+    // on a kill
+    void killPiece(PiecePtr& piece);
+    
 private:
     
     void unmarkAll();
