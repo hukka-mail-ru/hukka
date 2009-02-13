@@ -9,6 +9,7 @@
 
 #define CIRCLE 12 // cells in a circle
 
+CLASSPTR(Board);
 CLASSPTR(Piece);
 CLASSPTR(Player);
 CLASSPTR(Cell);
@@ -67,6 +68,5 @@ private:
     PiecePtr mActivePiece;
 };
 
-CLASSPTR(Board);
 
 #endif /*BOARD_H_*/
