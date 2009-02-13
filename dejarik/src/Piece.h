@@ -5,8 +5,11 @@
 #include "Player.h"
 #include "Macros.h"
 
-CLASSPTR(Cell);
-CLASSPTR(Player);
+
+CLASSPTR(Cell)
+CLASSPTR(Player)
+CLASSPTR(Piece)
+
 
 class Piece
 {
@@ -45,7 +48,5 @@ private:
     
 };
 
-CLASSPTR(Piece);
-//typedef boost::shared_ptr<Piece> PiecePtr;
 
 #endif /*PIECE_H_*/

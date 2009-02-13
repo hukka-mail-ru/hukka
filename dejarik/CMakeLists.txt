@@ -8,5 +8,5 @@ add_executable (dejarik src/dejarik.cpp ${SRC})
 add_executable (test_dejarik test/test.cpp ${SRC}) 
 target_link_libraries (test_dejarik cppunit dl) 
 
-include_directories (src include) 
+include_directories (src) 
 set(CMAKE_CXX_FLAGS "-g -Wall")

@@ -7,6 +7,11 @@
 #include "Piece.h"
 #include "Board.h"
 
+CLASSPTR(Piece);
+CLASSPTR(Board);
+CLASSPTR(Player);
+
+
 // e.g. a move for 1.0 to 2.0
 // =>  TS_START at 1.0, TS_FINISH at 2.0
 enum TurnStage 
@@ -14,9 +19,6 @@ enum TurnStage
     TURN_START, 
     TURN_FINISH
 };
-
-CLASSPTR(Piece);
-CLASSPTR(Board);
 
 enum BattleResult
 {
@@ -84,9 +86,6 @@ private:
     
     PiecePtr mActivePiece;
 };
-
-CLASSPTR(Player);
-
 
 
 

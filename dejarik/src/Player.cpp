@@ -138,7 +138,7 @@ BattleResult Player::getBattleResult(unsigned attackRating, unsigned defenceRati
     {
         return RES_COUNTER_PUSH;
     }
-    if(defence > attack)
+    else if(defence > attack)
     {
         if(defence >= attack + 7) // if Defense beats attack by 7 or less then Counter-Kill
         {
