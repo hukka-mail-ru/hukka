@@ -6,6 +6,8 @@
 
 using namespace std;
 
+bool TestMakePush = false;
+bool TestMakeCounterPush = false;
 
 void Player::addPiece(const PiecePtr& piece)
 {
@@ -60,16 +62,18 @@ bool Player::makeTurn(unsigned c, unsigned x, TurnStage turnStage, BattleResult&
         
         vector<CellPtr> possibleMoves;
         mBoard->getPossibleMoves(piece, possibleMoves);
+        
+        // GUI::showPossibleMoves() ... ?        
     }
     else if(turnStage == TURN_FINISH)
     {
         if(!piece) // move to cell
         {
-            return moveActivePiece(c, x);
+            return movePiece(mActivePiece, c, x);
         }
         else // attack enemy piece
         {
-            battleResult = attackEnimy(mActivePiece, piece); // here 'piece' definitely means 'enemy piece'
+            battleResult = attackEnimy(mActivePiece, piece); 
             return true;
         }
     }
@@ -77,7 +81,16 @@ bool Player::makeTurn(unsigned c, unsigned x, TurnStage turnStage, BattleResult&
     TRY_RETHROW;
     
     return true;
+}
 
+
+bool Player::makePush(unsigned c, unsigned x)
+{    
+    TRY_BEGINS;
+    
+    return movePiece(mBoard->getActivePiece(), c, x);
+    
+    TRY_RETHROW;
 }
 
 
@@ -98,6 +111,18 @@ BattleResult Player::attackEnimy(const PiecePtr& myPiece, const PiecePtr& enemyP
     {
         mBoard->killPiece(const_cast<PiecePtr&>(myPiece));
     }
+    else if(res == RES_PUSH)
+    {
+        vector<CellPtr> possiblePushes;
+        mBoard->getPossiblePushes(enemyPiece, possiblePushes);
+        // GUI::showPossibleMoves() ... ?   
+    }
+    else if(res == RES_COUNTER_PUSH)
+    {
+        vector<CellPtr> possiblePushes;
+        mBoard->getPossiblePushes(myPiece, possiblePushes);
+        // GUI::showPossibleMoves() ... ?   
+    }
     
     return res;
     
@@ -108,6 +133,15 @@ BattleResult Player::attackEnimy(const PiecePtr& myPiece, const PiecePtr& enemyP
 
 BattleResult Player::getBattleResult(unsigned attackRating, unsigned defenceRating)
 {
+    // test block -------------------------
+    if(TestMakePush)
+        return RES_PUSH;
+
+    if(TestMakeCounterPush)
+        return RES_COUNTER_PUSH;
+    // ------------------------------------
+    
+    
     srand((unsigned)time(0)); 
     
     unsigned attack = 0;
@@ -158,7 +192,7 @@ BattleResult Player::getBattleResult(unsigned attackRating, unsigned defenceRati
 }
 
 
-bool Player::moveActivePiece(unsigned c, unsigned x) 
+bool Player::movePiece(const PiecePtr& piece, unsigned c, unsigned x) 
 {
     TRY_BEGINS;
     
@@ -172,8 +206,8 @@ bool Player::moveActivePiece(unsigned c, unsigned x)
     
     for(unsigned i = 0; i<steps.size(); i++)
     {
-        mBoard->placePiece(mActivePiece, steps[i]);
-        cout << "moveActivePiece (" << mActivePiece->getName() << ")to " <<  steps[i]->c << "." << steps[i]->x << endl;
+        mBoard->placePiece(piece, steps[i]);
+        cout << "movePiece (" << piece->getName() << ")to " <<  steps[i]->c << "." << steps[i]->x << endl;
     }
     
     TRY_RETHROW;

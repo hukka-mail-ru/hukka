@@ -11,6 +11,8 @@ CLASSPTR(Piece);
 CLASSPTR(Board);
 CLASSPTR(Player);
 
+extern bool TestMakePush;
+extern bool TestMakeCounterPush;
 
 // e.g. a move for 1.0 to 2.0
 // =>  TS_START at 1.0, TS_FINISH at 2.0
@@ -63,9 +65,20 @@ public:
     */
     bool makeTurn(unsigned c, unsigned x, TurnStage turnStage, BattleResult& battleResult);
     
+    /*
+     * TURN_START: automatically when Game defined RES_PUSH or RES_COUNTER_PUSH
+     *    definePossiblePushes -> on the base of definePossibleMoves
+     *    show them on screen
+     * 
+     * TURN_FINISH: by player
+     *    isMoveValid
+     *    move enemy piece
+     */
+    bool makePush(unsigned c, unsigned x);
+    
 private:
     
-    bool moveActivePiece(unsigned c, unsigned x);    
+    bool movePiece(const PiecePtr& piece, unsigned c, unsigned x);    
     
     BattleResult attackEnimy(const PiecePtr& myPiece, const PiecePtr& enemyPiece);
     

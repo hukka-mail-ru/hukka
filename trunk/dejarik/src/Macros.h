@@ -10,9 +10,11 @@
   class name; \
   typedef boost::shared_ptr< name > name##Ptr; \
 
+
 #define TRY_BEGINS \
 try \
-{   
+{ \
+
 
 #define TRY_RETHROW \
 } \
@@ -22,6 +24,7 @@ catch(std::string& err) \
     os << "[" << __FUNCTION__ << "]->" << err; \
     throw os.str(); \
 }
+
 
 #define TRY_CATCH \
 } \

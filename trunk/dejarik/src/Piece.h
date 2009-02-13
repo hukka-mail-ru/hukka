@@ -35,6 +35,7 @@ public:
     void push();
     void setPosition(const CellPtr& cell);
     void setPlayer(const PlayerPtr& player);
+    void setMoveRating(unsigned move);
 
 private:
     
