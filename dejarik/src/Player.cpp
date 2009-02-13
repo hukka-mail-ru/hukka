@@ -6,8 +6,10 @@
 
 using namespace std;
 
+// test block --------------------------------
 bool TestMakePush = false;
 bool TestMakeCounterPush = false;
+// -------------------------------------------
 
 void Player::addPiece(const PiecePtr& piece)
 {
