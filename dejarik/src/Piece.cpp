@@ -42,4 +42,9 @@ void Piece::setPlayer(const PlayerPtr& player)
     mPlayer = player;
 }
 
+void Piece::setMoveRating(unsigned move)
+{
+    mMoveRating = move;
+}
+
 

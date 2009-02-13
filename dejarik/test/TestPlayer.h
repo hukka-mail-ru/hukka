@@ -31,11 +31,100 @@ class TestPlayer: public CppUnit::TestFixture
    CPPUNIT_TEST(testAttackEnimy_aDraw); // counter-push
    
    CPPUNIT_TEST(testGetBattleResult);
+   
+   CPPUNIT_TEST(testMakePush);
+   CPPUNIT_TEST(testMakeCounterPush);
+   
    CPPUNIT_TEST_SUITE_END();
          
 public:         
     void setUp() {}
     void tearDown() {}
+    
+    void testMakePush()
+    {
+        TestMakePush = true; // globally
+        
+        BoardPtr board (new Board);    
+        PiecePtr mine (new Piece("White King", 7, 0, 1)); // ] attack rating is enough for push 
+        PiecePtr enemy (new Piece("Black King", 0, 2, 1)); 
+        PlayerPtr player1 (new Player("default", board));
+        PlayerPtr player2 (new Player("default", board));
+        
+        board->placePiece(mine, 1, 0);
+        board->placePiece(enemy, 1, 1);
+        
+        board->distribute(mine, player1);
+        board->distribute(enemy, player2);
+        
+        CPPUNIT_ASSERT(board->getCell(1, 0)->piece == mine); // we are here
+        CPPUNIT_ASSERT(board->getCell(1, 1)->piece == enemy); // enemy is here
+                
+        BattleResult battleRes = RES_NO_BATTLE;
+        CPPUNIT_ASSERT(player1->makeTurn(0, 0, TURN_START, battleRes) == false); // click on empty cell
+        CPPUNIT_ASSERT(player1->makeTurn(1, 1, TURN_START, battleRes) == false); // click on enemy
+        CPPUNIT_ASSERT(player1->makeTurn(1, 0, TURN_START, battleRes) == true); // click on ally
+        
+        CPPUNIT_ASSERT(player1->makeTurn(2, 5, TURN_FINISH, battleRes) == false); // click out of range
+        CPPUNIT_ASSERT(player1->makeTurn(1, 5, TURN_FINISH, battleRes) == false); // click out of range
+        CPPUNIT_ASSERT(player1->makeTurn(1, 1, TURN_FINISH, battleRes) == true); // attack
+
+        CPPUNIT_ASSERT(battleRes == RES_PUSH);
+        CPPUNIT_ASSERT(board->getCell(1, 0)->piece == mine); // we are still here
+        CPPUNIT_ASSERT(board->getCell(1, 1)->piece == enemy); // enemy is still here
+        
+        CPPUNIT_ASSERT(player1->makePush(2, 5) == false); // click out of range
+        CPPUNIT_ASSERT(player1->makePush(1, 5) == false); // click out of range
+        CPPUNIT_ASSERT(player1->makePush(1, 2) == true); // push
+
+        CPPUNIT_ASSERT(board->getCell(1, 0)->piece == mine); // we are still here
+        CPPUNIT_ASSERT(board->getCell(1, 2)->piece == enemy); // enemy pushed
+
+        
+        TestMakePush = false; // globally
+    }
+    
+    void testMakeCounterPush()
+    {
+        TestMakeCounterPush = true; // globally
+        
+        BoardPtr board (new Board);    
+        PiecePtr mine (new Piece("White King", 2, 0, 1));  
+        PiecePtr enemy (new Piece("Black King", 0, 7, 1)); // ] defence rating is enough for push 
+        PlayerPtr player1 (new Player("default", board));
+        PlayerPtr player2 (new Player("default", board));
+        
+        board->placePiece(mine, 1, 0);
+        board->placePiece(enemy, 1, 1);
+        
+        board->distribute(mine, player1);
+        board->distribute(enemy, player2);
+        
+        CPPUNIT_ASSERT(board->getCell(1, 0)->piece == mine); // we are here
+        CPPUNIT_ASSERT(board->getCell(1, 1)->piece == enemy); // enemy is here
+                
+        BattleResult battleRes = RES_NO_BATTLE;
+        CPPUNIT_ASSERT(player1->makeTurn(0, 0, TURN_START, battleRes) == false); // click on empty cell
+        CPPUNIT_ASSERT(player1->makeTurn(1, 1, TURN_START, battleRes) == false); // click on enemy
+        CPPUNIT_ASSERT(player1->makeTurn(1, 0, TURN_START, battleRes) == true); // click on ally
+        
+        CPPUNIT_ASSERT(player1->makeTurn(2, 5, TURN_FINISH, battleRes) == false); // click out of range
+        CPPUNIT_ASSERT(player1->makeTurn(1, 5, TURN_FINISH, battleRes) == false); // click out of range
+        CPPUNIT_ASSERT(player1->makeTurn(1, 1, TURN_FINISH, battleRes) == true); // attack
+
+        CPPUNIT_ASSERT(battleRes == RES_COUNTER_PUSH);
+        CPPUNIT_ASSERT(board->getCell(1, 0)->piece == mine); // we are still here
+        CPPUNIT_ASSERT(board->getCell(1, 1)->piece == enemy); // enemy is still here
+        
+        CPPUNIT_ASSERT(player2->makePush(2, 5) == false); // click out of range
+        CPPUNIT_ASSERT(player2->makePush(1, 5) == false); // click out of range
+        CPPUNIT_ASSERT(player2->makePush(1, 11) == true); // push
+
+        CPPUNIT_ASSERT(board->getCell(1, 11)->piece == mine); // pushed
+        CPPUNIT_ASSERT(board->getCell(1, 1)->piece == enemy); // enemy is still here
+        
+        TestMakeCounterPush = false; // globally     
+    }
     
     void testGetBattleResult()
     {

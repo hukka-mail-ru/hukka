@@ -119,6 +119,25 @@ bool Board::isMoveValid(unsigned c, unsigned x)
     return false;
 }
 
+const PiecePtr& Board::getActivePiece()
+{
+    return mActivePiece;
+}
+
+void Board::getPossiblePushes(const PiecePtr& piece, vector<CellPtr>& pushes)
+{
+    TRY_BEGINS;
+    
+    unsigned temp = piece->getMoveRating(); // just memorize
+    piece->setMoveRating(1);
+    
+    getPossibleMoves(piece, pushes);
+    
+    piece->setMoveRating(temp); // restore
+    
+    TRY_RETHROW;
+}
+
 
 void Board::getPossibleMoves(const PiecePtr& piece, vector<CellPtr>& moves)
 {
