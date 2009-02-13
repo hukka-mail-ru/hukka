@@ -23,11 +23,194 @@ class TestPlayer: public CppUnit::TestFixture
    CPPUNIT_TEST(testMakeTurn_attackThenMove);   
    
    CPPUNIT_TEST(testMakeTurn_selectAnotherPiece);
+   
+   CPPUNIT_TEST(testAttackEnimy_kill);
+   CPPUNIT_TEST(testAttackEnimy_counterKill);
+   CPPUNIT_TEST(testAttackEnimy_push);
+   CPPUNIT_TEST(testAttackEnimy_counterPush);
+   CPPUNIT_TEST(testAttackEnimy_aDraw); // counter-push
    CPPUNIT_TEST_SUITE_END();
          
 public:         
     void setUp() {}
     void tearDown() {}
+    
+    
+    void testAttackEnimy_kill()
+    {
+        TRY_BEGINS;
+        SHOW_FUNCTION_NAME;
+        
+        BoardPtr board (new Board);    
+        PiecePtr mine (new Piece("White King", 7, 0, 1)); // attack rating is 7 
+        PiecePtr enemy (new Piece("Black King", 0, 0, 1)); // defence rating is 0 
+        PlayerPtr player1 (new Player("default", board));
+        PlayerPtr player2 (new Player("default", board));
+        
+        board->placePiece(mine, 1, 0);
+        board->placePiece(enemy, 1, 1);
+        
+        board->distribute(mine, player1);
+        board->distribute(enemy, player2);
+
+        CPPUNIT_ASSERT(player1->howManyPieces() == 1);         
+        CPPUNIT_ASSERT(player2->howManyPieces() == 1);
+        
+        player1->attackEnimy(mine, enemy);
+        
+        CPPUNIT_ASSERT(player1->howManyPieces() == 1);         
+        CPPUNIT_ASSERT(player2->howManyPieces() == 0);
+        
+        
+        TRY_CATCH;
+    }
+    
+    void testAttackEnimy_counterKill()
+    {
+        TRY_BEGINS;
+        SHOW_FUNCTION_NAME;
+        
+        BoardPtr board (new Board);    
+        PiecePtr mine (new Piece("White King", 0, 0, 1)); // attack rating is 0 
+        PiecePtr enemy (new Piece("Black King", 0, 7, 1)); // defence rating is 7 
+        PlayerPtr player1 (new Player("default", board));
+        PlayerPtr player2 (new Player("default", board));
+        
+        board->placePiece(mine, 1, 0);
+        board->placePiece(enemy, 1, 1);
+        
+        board->distribute(mine, player1);
+        board->distribute(enemy, player2);
+
+        CPPUNIT_ASSERT(player1->howManyPieces() == 1);         
+        CPPUNIT_ASSERT(player2->howManyPieces() == 1);
+        
+        player1->attackEnimy(mine, enemy);
+        
+        CPPUNIT_ASSERT(player1->howManyPieces() == 0);         
+        CPPUNIT_ASSERT(player2->howManyPieces() == 1);
+        
+        
+        TRY_CATCH;
+    }
+    
+    void testAttackEnimy_push()
+    {
+        TRY_BEGINS;
+        SHOW_FUNCTION_NAME;
+        
+        BoardPtr board (new Board);    
+        PiecePtr mine (new Piece("White King", 6, 0, 1)); // attack rating is 6 
+        PiecePtr enemy (new Piece("Black King", 0, 0, 1)); // defence rating is 0 
+        PlayerPtr player1 (new Player("default", board));
+        PlayerPtr player2 (new Player("default", board));
+        
+        board->placePiece(mine, 1, 0);
+        board->placePiece(enemy, 1, 1);
+        
+        board->distribute(mine, player1);
+        board->distribute(enemy, player2);
+        
+        CPPUNIT_ASSERT(player1->howManyPieces() == 1);         
+        CPPUNIT_ASSERT(player2->howManyPieces() == 1);
+
+        player1->attackEnimy(mine, enemy);
+        
+        CPPUNIT_ASSERT(player1->howManyPieces() == 1);         
+        CPPUNIT_ASSERT(player2->howManyPieces() == 1);
+        
+        // on position
+        mine->getPosition() == board->getCell(1, 0);
+        
+        // pushed somewhere there
+        CellPtr possiblePush1 = board->getCell(0, 0);
+        CellPtr possiblePush2 = board->getCell(1, 2);
+        CellPtr possiblePush3 = board->getCell(2, 1);
+        CPPUNIT_ASSERT(enemy->getPosition() == possiblePush1 ||
+                       enemy->getPosition() == possiblePush2 ||
+                       enemy->getPosition() == possiblePush3);
+        ;
+        TRY_CATCH; 
+    }
+    
+    void testAttackEnimy_counterPush()
+    {
+        TRY_BEGINS;
+        SHOW_FUNCTION_NAME;
+        
+        BoardPtr board (new Board);    
+        PiecePtr mine (new Piece("White King", 0, 0, 1)); // attack rating is 0 
+        PiecePtr enemy (new Piece("Black King", 0, 6, 1)); // defence rating is 6 
+        PlayerPtr player1 (new Player("default", board));
+        PlayerPtr player2 (new Player("default", board));
+        
+        board->placePiece(mine, 1, 0);
+        board->placePiece(enemy, 1, 1);
+        
+        board->distribute(mine, player1);
+        board->distribute(enemy, player2);
+
+        CPPUNIT_ASSERT(player1->howManyPieces() == 1);         
+        CPPUNIT_ASSERT(player2->howManyPieces() == 1);
+        
+        player1->attackEnimy(mine, enemy);
+        
+        CPPUNIT_ASSERT(player1->howManyPieces() == 1);         
+        CPPUNIT_ASSERT(player2->howManyPieces() == 1);
+        
+        // on position
+        enemy->getPosition() == board->getCell(1, 1);
+        
+        // pushed somewhere there
+        CellPtr possiblePush1 = board->getCell(0, 0);
+        CellPtr possiblePush2 = board->getCell(1, 11);
+        CellPtr possiblePush3 = board->getCell(2, 0);
+        CPPUNIT_ASSERT(mine->getPosition() == possiblePush1 ||
+                       mine->getPosition() == possiblePush2 ||
+                        mine->getPosition() == possiblePush3);
+        
+        TRY_CATCH; 
+    }
+    
+    
+    void testAttackEnimy_aDraw()
+    {
+        TRY_BEGINS;
+        SHOW_FUNCTION_NAME;
+        
+        BoardPtr board (new Board);    
+        PiecePtr mine (new Piece("White King", 0, 0, 1)); // attack rating is 0 
+        PiecePtr enemy (new Piece("Black King", 0, 0, 1)); // defence rating is 0
+        PlayerPtr player1 (new Player("default", board));
+        PlayerPtr player2 (new Player("default", board));
+        
+        board->placePiece(mine, 1, 0);
+        board->placePiece(enemy, 1, 1);
+        
+        board->distribute(mine, player1);
+        board->distribute(enemy, player2);
+
+        CPPUNIT_ASSERT(player1->howManyPieces() == 1);         
+        CPPUNIT_ASSERT(player2->howManyPieces() == 1);
+        
+        player1->attackEnimy(mine, enemy);
+        
+        CPPUNIT_ASSERT(player1->howManyPieces() == 1);         
+        CPPUNIT_ASSERT(player2->howManyPieces() == 1);
+        
+        // on position
+        enemy->getPosition() == board->getCell(1, 1);
+        
+        // pushed somewhere there
+        CellPtr possiblePush1 = board->getCell(0, 0);
+        CellPtr possiblePush2 = board->getCell(1, 11);
+        CellPtr possiblePush3 = board->getCell(2, 0);
+        CPPUNIT_ASSERT(mine->getPosition() == possiblePush1 ||
+                       mine->getPosition() == possiblePush2 ||
+                        mine->getPosition() == possiblePush3);
+        
+        TRY_CATCH; 
+    }
     
     void testMakeTurn_moveTwice() 
     {
@@ -87,7 +270,7 @@ public:
         CPPUNIT_ASSERT(board->getCell(1, 0)->piece == king1); // we are here
         
         CPPUNIT_ASSERT(player1->makeTurn(0, 0, TURN_START) == false); // click on empty cell
-        CPPUNIT_ASSERT(player1->makeTurn(1, 1, TURN_START) == false); // click on enimy
+        CPPUNIT_ASSERT(player1->makeTurn(1, 1, TURN_START) == false); // click on enemy
         CPPUNIT_ASSERT(player1->makeTurn(1, 0, TURN_START) == true); // click on ally
         
         CPPUNIT_ASSERT(player1->makeTurn(2, 5, TURN_FINISH) == false); // click out of range
@@ -97,7 +280,7 @@ public:
         CPPUNIT_ASSERT(board->getCell(1, 0)->piece == king1); // we are still here
         
         CPPUNIT_ASSERT(player1->makeTurn(0, 0, TURN_START) == false); // click on empty cell
-        CPPUNIT_ASSERT(player1->makeTurn(1, 1, TURN_START) == false); // click on enimy
+        CPPUNIT_ASSERT(player1->makeTurn(1, 1, TURN_START) == false); // click on enemy
         CPPUNIT_ASSERT(player1->makeTurn(1, 0, TURN_START) == true); // click on ally
         
         CPPUNIT_ASSERT(player1->makeTurn(2, 5, TURN_FINISH) == false); // click out of range
@@ -130,7 +313,7 @@ public:
         CPPUNIT_ASSERT(board->getCell(1, 0)->piece == king1); // we are here
         
         CPPUNIT_ASSERT(player1->makeTurn(0, 0, TURN_START) == false); // click on empty cell
-        CPPUNIT_ASSERT(player1->makeTurn(1, 1, TURN_START) == false); // click on enimy
+        CPPUNIT_ASSERT(player1->makeTurn(1, 1, TURN_START) == false); // click on enemy
         CPPUNIT_ASSERT(player1->makeTurn(1, 0, TURN_START) == true); // click on ally
         
         CPPUNIT_ASSERT(player1->makeTurn(2, 5, TURN_FINISH) == false); // click out of range
@@ -140,7 +323,7 @@ public:
         CPPUNIT_ASSERT(board->getCell(1, 0)->piece == king1); // we are still here
         
         CPPUNIT_ASSERT(player1->makeTurn(0, 0, TURN_START) == false); // click on empty cell
-        CPPUNIT_ASSERT(player1->makeTurn(1, 1, TURN_START) == false); // click on enimy
+        CPPUNIT_ASSERT(player1->makeTurn(1, 1, TURN_START) == false); // click on enemy
         CPPUNIT_ASSERT(player1->makeTurn(1, 0, TURN_START) == true); // click on ally
         
         CPPUNIT_ASSERT(player1->makeTurn(2, 5, TURN_FINISH) == false); // click out of range
@@ -174,7 +357,7 @@ public:
         CPPUNIT_ASSERT(board->getCell(1, 0)->piece == king1); // we are here
 
         CPPUNIT_ASSERT(player1->makeTurn(0, 0, TURN_START) == false); // click on empty cell
-        CPPUNIT_ASSERT(player1->makeTurn(1, 10, TURN_START) == false); // click on enimy
+        CPPUNIT_ASSERT(player1->makeTurn(1, 10, TURN_START) == false); // click on enemy
         CPPUNIT_ASSERT(player1->makeTurn(1, 0, TURN_START) == true); // click on ally
         
         CPPUNIT_ASSERT(player1->makeTurn(2, 5, TURN_FINISH) == false); // click out of range
@@ -184,7 +367,7 @@ public:
         CPPUNIT_ASSERT(board->getCell(1, 11)->piece == king1); // then we are here
         
         CPPUNIT_ASSERT(player1->makeTurn(0, 0, TURN_START) == false); // click on empty cell
-        CPPUNIT_ASSERT(player1->makeTurn(1, 10, TURN_START) == false); // click on enimy
+        CPPUNIT_ASSERT(player1->makeTurn(1, 10, TURN_START) == false); // click on enemy
         CPPUNIT_ASSERT(player1->makeTurn(1, 11, TURN_START) == true); // click on ally
         
         CPPUNIT_ASSERT(player1->makeTurn(2, 7, TURN_FINISH) == false); // click out of range
@@ -222,7 +405,7 @@ public:
         CPPUNIT_ASSERT(player1->makeTurn(2, 0, TURN_FINISH) == true); // click on slon
         
         CPPUNIT_ASSERT(player1->makeTurn(0, 0, TURN_FINISH) == false); // out of range
-        CPPUNIT_ASSERT(player1->makeTurn(2, 5, TURN_FINISH) == false); // click on enimy
+        CPPUNIT_ASSERT(player1->makeTurn(2, 5, TURN_FINISH) == false); // click on enemy
         CPPUNIT_ASSERT(player1->makeTurn(2, 1, TURN_FINISH) == true); // move
         
         CPPUNIT_ASSERT(board->getCell(1, 0)->piece == king); // we didn't move

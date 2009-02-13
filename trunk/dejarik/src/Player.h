@@ -20,17 +20,25 @@ CLASSPTR(Board);
 
 class Player
 {
+    friend class TestPlayer;
 public:
     Player(const std::string& name, const BoardPtr& board): 
         mName(name),
         mBoard(board) 
         {}
     
-    // Connect piece and player
-    void addPiece(const PiecePtr& piece);
+    void addPiece(const PiecePtr& piece)
+    {
+        mPieces.push_back(piece);
+    }
+    
+    unsigned howManyPieces()
+    {
+        return mPieces.size();
+    }
     
     /* 
-     Define the cell: empty ? ally ? enimy ?
+     Define the cell: empty ? ally ? enemy ?
       
     if clicked on ally, we must do TURN_START, even we are obtained TURN_FINISH
     
@@ -41,10 +49,10 @@ public:
     on TURN_FINISH:
       player moves mActivePiece 
         step-by-step, in cycle, mActivePiece.setPosition
-      or attacks an enimy piece:
-        enimy = get enimy piece 
+      or attacks an enemy piece:
+        enemy = get enemy piece 
         computeBattleRusult
-        res. can be: enimy.push or enimy.kill
+        res. can be: enemy.push or enemy.kill
         res. can be: mActivePiece.push or mActivePiece.kill
     */
     bool makeTurn(unsigned c, unsigned x, TurnStage turnStage);
@@ -53,7 +61,7 @@ private:
     
     bool moveActivePiece(unsigned c, unsigned x);
     
-    bool attackEnimy(const PiecePtr& enimyPiece) { return true; }
+    bool attackEnimy(const PiecePtr& myPiece, const PiecePtr& enemyPiece) { return true; }
     
     void computeBattleResult() {}
     
