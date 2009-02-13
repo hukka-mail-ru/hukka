@@ -18,6 +18,15 @@ enum TurnStage
 CLASSPTR(Piece);
 CLASSPTR(Board);
 
+enum BattleResult
+{
+    RES_NO_BATTLE,
+    RES_KILL,
+    RES_PUSH,
+    RES_COUNTER_KILL,
+    RES_COUNTER_PUSH
+};
+
 class Player
 {
     friend class TestPlayer;
@@ -27,17 +36,15 @@ public:
         mBoard(board) 
         {}
     
-    void addPiece(const PiecePtr& piece)
-    {
-        mPieces.push_back(piece);
-    }
+    void addPiece(const PiecePtr& piece);
     
-    unsigned howManyPieces()
-    {
-        return mPieces.size();
-    }
+    void removePiece(const PiecePtr& piece);
+    
+    unsigned howManyPieces();
     
     /* 
+     Returns true if the move is valid, else false
+
      Define the cell: empty ? ally ? enemy ?
       
     if clicked on ally, we must do TURN_START, even we are obtained TURN_FINISH
@@ -48,23 +55,27 @@ public:
     
     on TURN_FINISH:
       player moves mActivePiece 
-        step-by-step, in cycle, mActivePiece.setPosition
       or attacks an enemy piece:
-        enemy = get enemy piece 
-        computeBattleRusult
-        res. can be: enemy.push or enemy.kill
-        res. can be: mActivePiece.push or mActivePiece.kill
+      
+      battleResult: output parameter
     */
-    bool makeTurn(unsigned c, unsigned x, TurnStage turnStage);
+    bool makeTurn(unsigned c, unsigned x, TurnStage turnStage, BattleResult& battleResult);
     
 private:
     
-    bool moveActivePiece(unsigned c, unsigned x);
+    bool moveActivePiece(unsigned c, unsigned x);    
     
-    bool attackEnimy(const PiecePtr& myPiece, const PiecePtr& enemyPiece) { return true; }
+    BattleResult attackEnimy(const PiecePtr& myPiece, const PiecePtr& enemyPiece);
     
-    void computeBattleResult() {}
-    
+    /*
+        if Attack beats Defense by 7 or more then Kill
+        if Attack beats Defense by 6 or less then Push
+        if a draw then Counter-Push
+        if Defense beats Attack by 6 or less then Counter-Push
+        if Defense beats attack by 7 or less then Counter-Kill
+    */
+    BattleResult getBattleResult(unsigned attack, unsigned defence);
+       
     std::string mName;
     
     BoardPtr mBoard;

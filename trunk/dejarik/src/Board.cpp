@@ -60,11 +60,26 @@ void Board::placePiece(const PiecePtr& piece, const CellPtr& cell)
     TRY_RETHROW;
 }
 
-
 void Board::distribute(const PiecePtr& piece, const PlayerPtr& player)
 {
+    TRY_BEGINS;
+    
     player->addPiece(piece);
     piece->setPlayer(player);
+    
+    TRY_RETHROW;
+}
+
+void Board::killPiece(PiecePtr& piece)
+{
+    TRY_BEGINS;
+    
+    piece->getPlayer()->removePiece(piece);
+    CellPtr cell = piece->getPosition();
+    
+    piece.reset();
+    
+    TRY_RETHROW;
 }
 
 
