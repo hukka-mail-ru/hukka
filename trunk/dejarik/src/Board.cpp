@@ -66,7 +66,7 @@ void Board::placePiece(const PiecePtr& piece, const CellPtr& cell)
 {
     TRY_BEGINS;
     
-    piece->setPosition(cell);
+    piece->cell = cell;
     cell->piece = piece;    
     
     TRY_RETHROW;
@@ -77,7 +77,7 @@ void Board::distribute(const PiecePtr& piece, const PlayerPtr& player)
     TRY_BEGINS;
     
     player->addPiece(piece);
-    piece->setPlayer(player);
+    piece->player = player;
     
     TRY_RETHROW;
 }
@@ -86,9 +86,7 @@ void Board::killPiece(PiecePtr& piece)
 {
     TRY_BEGINS;
     
-    piece->getPlayer()->removePiece(piece);
-    CellPtr cell = piece->getPosition();
-    
+    piece->player->removePiece(piece);
     piece.reset();
     
     TRY_RETHROW;
@@ -140,12 +138,12 @@ void Board::getPossiblePushes(const PiecePtr& piece, vector<CellPtr>& pushes)
 {
     TRY_BEGINS;
     
-    unsigned temp = piece->getMoveRating(); // just memorize
-    piece->setMoveRating(1);
+    unsigned temp = piece->moveRating; // just memorize
+    piece->moveRating = 1;
     
     getPossibleMoves(piece, pushes);
     
-    piece->setMoveRating(temp); // restore
+    piece->moveRating = temp; // restore
     
     TRY_RETHROW;
 }
@@ -160,7 +158,7 @@ void Board::getPossibleMoves(const PiecePtr& piece, vector<CellPtr>& moves)
     unmarkAll();
     
     //  mark possible moves from the start
-    markNeibours(POSSIBLE_MOVES, 1, piece->getPosition());
+    markNeibours(POSSIBLE_MOVES, 1, piece->cell);
     
     // memorize them
     moves.clear();
@@ -177,7 +175,7 @@ void Board::getPossibleMoves(const PiecePtr& piece, vector<CellPtr>& moves)
     cout << "===" << endl;*/
     
     // mark possible moves for others
-    for(unsigned step=2; step <= piece->getMoveRating(); step++)
+    for(unsigned step=2; step <= piece->moveRating; step++)
     {
         for(unsigned i=0; i<moves.size(); ++i)
         {
@@ -225,7 +223,7 @@ void Board::getPossibleTargets(const PiecePtr& piece, std::vector<CellPtr>& targ
     const unsigned marked = 1;
     
     //  mark possible moves from the start
-    markNeibours(POSSIBLE_TARGETS, marked, piece->getPosition());
+    markNeibours(POSSIBLE_TARGETS, marked, piece->cell);
     
     // memorize them
     for(unsigned i=0; i<mCells.size(); i++)
@@ -286,7 +284,7 @@ void Board::mark(WhatToMark whatToMark, unsigned step, const CellPtr& prev, cons
     }
     else if(whatToMark == POSSIBLE_TARGETS)
     {
-        if(cell->piece && (cell->piece->getPlayer() != prev->piece->getPlayer())) // mark opponent's pieces
+        if(cell->piece && (cell->piece->player != prev->piece->player)) // mark opponent's pieces
         {
             cell->mark = step;
         }
