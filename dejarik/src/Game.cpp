@@ -1,4 +1,5 @@
 #include <vector>
+#include <sstream>
 
 #include "Game.h"
 
@@ -11,7 +12,7 @@ void Game::start()
     // TODO ask for player name
     
     mPlayer1 = PlayerPtr(new Player("Player1", mBoard));
-    mPlayer1 = PlayerPtr(new Player("Player2", mBoard));
+    mPlayer2 = PlayerPtr(new Player("Player2", mBoard));
 
     vector<PiecePtr> pieces;    
     pieces.push_back(PiecePtr(new Piece("Sarvip",     6, 6, 2)));
@@ -26,13 +27,17 @@ void Game::start()
     vector<CellPtr> cells;
     mBoard->getInitialCells(cells);  
     
+    // randomly divide the pieces between the players, 
+    // and place them on opposites sides of the board
+    srand((unsigned)time(0)); 
     const unsigned pieces_num = pieces.size();
     PlayerPtr player = mPlayer1;
+    
     for(unsigned i=0; i<pieces_num; i++)
     {
         unsigned rnd = (rand()%pieces.size()); // random 0.. pieces.size() - 1
         
-        mBoard->placePiece(pieces[rnd], cells[i]->c, cells[i]->x);
+        mBoard->placePiece(pieces[rnd], cells[i]);
         mBoard->distribute(pieces[rnd], player);
         
         player = (player == mPlayer1) ? mPlayer2 : mPlayer1; // next player
