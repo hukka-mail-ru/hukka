@@ -14,6 +14,7 @@ class TestBoard : public CppUnit::TestFixture
 {
    CPPUNIT_TEST_SUITE(TestBoard);
    CPPUNIT_TEST(testBoard);
+   CPPUNIT_TEST(testGetInitialCells);
    
    CPPUNIT_TEST(testPossibleMoves_move1); // if piece.MoveRating == 1
    CPPUNIT_TEST(testPossibleMoves_move2); // if piece.MoveRating == 2
@@ -56,7 +57,22 @@ public:
         CPPUNIT_ASSERT_NO_THROW(board->getCell(2,11)); // normal
         
         TRY_CATCH;
-
+    }
+    
+    
+    void testGetInitialCells() 
+    {
+        SHOW_FUNCTION_NAME;
+        TRY_BEGINS; 
+        
+        BoardPtr board (new Board);
+        
+        std::vector<CellPtr> cells;
+        board->getInitialCells(cells);
+        
+        CPPUNIT_ASSERT_EQUAL(8, (int)cells.size());
+        
+        TRY_CATCH;
     }
     
     // helper for testPossibleMoves

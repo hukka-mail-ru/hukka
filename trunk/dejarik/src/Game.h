@@ -10,6 +10,8 @@ CLASSPTR(Game);
 
 class Game
 {
+    friend class TestGame;
+    
 public:
     
     void start();

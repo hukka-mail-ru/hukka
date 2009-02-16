@@ -36,6 +36,8 @@ enum BattleResult
 class Player
 {
     friend class TestPlayer;
+    friend class TestGame;
+    
 public:
     Player(const std::string& name, const BoardPtr& board): 
         mName(name),

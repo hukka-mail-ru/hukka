@@ -20,6 +20,18 @@ Board::Board()
     }       
 }
 
+void Board::getInitialCells(vector<CellPtr>& cells)
+{
+    cells.push_back(getCell(2,0));
+    cells.push_back(getCell(2,1));
+    cells.push_back(getCell(2,2));
+    cells.push_back(getCell(2,3));
+    cells.push_back(getCell(2,6));
+    cells.push_back(getCell(2,7));
+    cells.push_back(getCell(2,8));
+    cells.push_back(getCell(2,9));
+}
+
 void Board::clear()
 {
     for(unsigned i=0; i<mCells.size(); ++i)
