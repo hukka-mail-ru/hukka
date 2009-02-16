@@ -7,7 +7,7 @@
 CLASSPTR(Cell);
 CLASSPTR(Piece);
 
-class Cell
+struct Cell
 {
 public:
     Cell(unsigned circle, unsigned xnum):

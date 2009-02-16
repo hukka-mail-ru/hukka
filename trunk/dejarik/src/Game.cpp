@@ -58,6 +58,17 @@ void Game::askNextPlayer()
     
 bool Game::checkVictory(PlayerPtr& vinner)
 {
+    if(mPlayer1->howManyPieces() == 0)
+    {
+        vinner = mPlayer2;
+        return true;
+    }
+    else if(mPlayer2->howManyPieces() == 0)
+    {
+        vinner = mPlayer1;
+        return true;
+    }
+    
     return false;
 }
 

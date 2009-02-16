@@ -81,19 +81,29 @@ public:
         SHOW_FUNCTION_NAME;
         
         Game game;
-        game.start();         
+        game.start();   
+        
+        PlayerPtr vinner;
+        bool res = game.checkVictory(vinner);
+        
+        CPPUNIT_ASSERT(res == false);
         
         // clear all
-        for(unsigned i = 0; i < game.mPlayer1->mPieces.size(); i++)
-        {
-            game.mPlayer1->removePiece(game.mPlayer1->mPieces[i]);
-        }
+        PiecePtr piece0 = game.mPlayer1->mPieces[0];
+        PiecePtr piece1 = game.mPlayer1->mPieces[1];
+        PiecePtr piece2 = game.mPlayer1->mPieces[2];
+        PiecePtr piece3 = game.mPlayer1->mPieces[3];
+        
+        game.mBoard->killPiece(piece0);
+        game.mBoard->killPiece(piece1);
+        game.mBoard->killPiece(piece2);
+        game.mBoard->killPiece(piece3);
         
         CPPUNIT_ASSERT_EQUAL(0, (int)game.mPlayer1->howManyPieces());
         CPPUNIT_ASSERT_EQUAL(4, (int)game.mPlayer2->howManyPieces());
 
-        PlayerPtr vinner;
-        bool res = game.checkVictory(vinner);
+
+        res = game.checkVictory(vinner);
         
         CPPUNIT_ASSERT(res == true);
         CPPUNIT_ASSERT(vinner == game.mPlayer2);
