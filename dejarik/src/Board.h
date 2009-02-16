@@ -23,6 +23,9 @@ public:
     
     // on Game start  
     Board();
+    
+    void getInitialCells(std::vector<CellPtr>& cells);
+    
     void placePiece(const PiecePtr& piece, unsigned c, unsigned x);
     void placePiece(const PiecePtr& piece, const CellPtr& cell);
     
