@@ -15,13 +15,23 @@ class Game
 public:
     
     void start();
+    
+    bool isOver();
 
-    void finish();
+    /*
+     * Defines if the mouse click is valid (true/false).
+     * and transforms the mouse coordinates into cell coordinates 
+     */
+    bool isCell(unsigned x, unsigned y, unsigned& cellC, unsigned& cellX);
+    
+    /*
+     * Reurns true if the click is allowed by the game rules 
+     */
+    bool onCellClick(unsigned c, unsigned x);
+
     
 private:
-    
-    void askNextPlayer();
-    
+        
     bool checkVictory(PlayerPtr& vinner);
     
     BoardPtr mBoard;

@@ -12,7 +12,9 @@ class TestGame: public CppUnit::TestFixture
 {
    CPPUNIT_TEST_SUITE(TestGame);
    CPPUNIT_TEST(testStart);
+   CPPUNIT_TEST(testOnCellClick);
    CPPUNIT_TEST(testCheckVictory);
+   CPPUNIT_TEST(testOver);
    CPPUNIT_TEST_SUITE_END();
          
 public:         
@@ -74,6 +76,40 @@ public:
         
         TRY_CATCH;
     }
+    
+    void testOnCellClick() 
+    {
+        TRY_BEGINS;
+        SHOW_FUNCTION_NAME; 
+    
+        Game game;
+        game.start();
+        
+        PiecePtr mine = game.mBoard->getCell(2,0)->piece;
+        PiecePtr enemy = game.mBoard->getCell(2,9)->piece;
+        
+        // player1 - me
+        CPPUNIT_ASSERT(game.onCellClick(2,9) == false); // click on enemy cell
+        CPPUNIT_ASSERT(game.onCellClick(0,0) == false); // click on empty cell
+        CPPUNIT_ASSERT(game.onCellClick(2,0) == true);  // select 'mine'
+        CPPUNIT_ASSERT(game.onCellClick(2,5) == false); // wrong move
+        CPPUNIT_ASSERT(game.onCellClick(1,0) == true);  // move 'mine'
+        CPPUNIT_ASSERT(game.onCellClick(1,11) == true); // move 'mine'
+        
+        // player2 -enemy
+        CPPUNIT_ASSERT(game.onCellClick(2,3) == false); // click on my cell
+        CPPUNIT_ASSERT(game.onCellClick(0,0) == false); // click on empty cell
+        CPPUNIT_ASSERT(game.onCellClick(2,0) == true);  // select 'enemy'
+        CPPUNIT_ASSERT(game.onCellClick(2,4) == false); // wrong move
+        CPPUNIT_ASSERT(game.onCellClick(2,10) == true);  // move 'enemy'
+        CPPUNIT_ASSERT(game.onCellClick(1,10) == true); // move 'enemy'
+        
+        // player1 - me
+        
+        
+        TRY_CATCH;
+    }
+    
         
     void testCheckVictory() 
     {
@@ -107,6 +143,33 @@ public:
         
         CPPUNIT_ASSERT(res == true);
         CPPUNIT_ASSERT(vinner == game.mPlayer2);
+        
+        TRY_CATCH;
+    }
+    
+    void testOver()
+    {
+        TRY_BEGINS;
+        SHOW_FUNCTION_NAME;
+        
+        Game game;
+        game.start();   
+        
+        CPPUNIT_ASSERT(game.isOver() == false);
+        
+        // clear all
+        PiecePtr piece0 = game.mPlayer1->mPieces[0];
+        PiecePtr piece1 = game.mPlayer1->mPieces[1];
+        PiecePtr piece2 = game.mPlayer1->mPieces[2];
+        PiecePtr piece3 = game.mPlayer1->mPieces[3];
+        
+        game.mBoard->killPiece(piece0);
+        game.mBoard->killPiece(piece1);
+        game.mBoard->killPiece(piece2);
+        game.mBoard->killPiece(piece3);
+
+        CPPUNIT_ASSERT(game.isOver() == true);
+
         
         TRY_CATCH;
     }
