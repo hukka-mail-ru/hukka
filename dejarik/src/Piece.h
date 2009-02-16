@@ -17,35 +17,21 @@ public:
     
     Piece(const std::string& name,
           unsigned attack, unsigned defence, unsigned move):
-          mName(name),
-          mAttackRating(attack),
-          mDefenceRating(defence),
-          mMoveRating(move)
+          name(name),
+          attackRating(attack),
+          defenceRating(defence),
+          moveRating(move)
           {
-              mPosition.reset();
-          }
+              cell.reset();
+          }    
     
-    unsigned getAttackRating() const;
-    unsigned getDefenceRating() const;
-    unsigned getMoveRating() const;
-    const CellPtr& getPosition() const;
-    const PlayerPtr& getPlayer() const;
-    const std::string getName() const;
+    std::string name;
+    PlayerPtr player;
+    CellPtr cell;    
     
-    void push();
-    void setPosition(const CellPtr& cell);
-    void setPlayer(const PlayerPtr& player);
-    void setMoveRating(unsigned move);
-
-private:
-    
-    std::string mName;
-    PlayerPtr mPlayer;
-    CellPtr mPosition;    
-    
-    unsigned mAttackRating;
-    unsigned mDefenceRating;
-    unsigned mMoveRating;
+    unsigned attackRating;
+    unsigned defenceRating;
+    unsigned moveRating;
     
 };
 

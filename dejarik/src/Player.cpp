@@ -46,13 +46,13 @@ bool Player::makeTurn(unsigned c, unsigned x, TurnStage turnStage, BattleResult&
     }
     
     // can't start from an enemy piece
-    if(piece && piece->getPlayer().get() != this && turnStage == TURN_START)
+    if(piece && piece->player.get() != this && turnStage == TURN_START)
     {
         return false;
     }
     
     // if clicked on ally, we must do TURN_START, even if we obtained TURN_FINISH
-    if(piece && piece->getPlayer().get() == this && turnStage == TURN_FINISH)
+    if(piece && piece->player.get() == this && turnStage == TURN_FINISH)
     {
         turnStage = TURN_START;
     }
@@ -101,9 +101,9 @@ BattleResult Player::attackEnimy(const PiecePtr& myPiece, const PiecePtr& enemyP
     TRY_BEGINS;
     
     // an assurance
-    assert(myPiece->getPlayer() != enemyPiece->getPlayer());
+    assert(myPiece->player != enemyPiece->player);
     
-    BattleResult res = getBattleResult(myPiece->getAttackRating(), enemyPiece->getDefenceRating());
+    BattleResult res = getBattleResult(myPiece->attackRating, enemyPiece->defenceRating);
     
     if(res == RES_KILL)
     {
@@ -209,7 +209,7 @@ bool Player::movePiece(const PiecePtr& piece, unsigned c, unsigned x)
     for(unsigned i = 0; i<steps.size(); i++)
     {
         mBoard->placePiece(piece, steps[i]);
-        cout << "movePiece (" << piece->getName() << ")to " <<  steps[i]->c << "." << steps[i]->x << endl;
+      //  cout << "movePiece (" << piece->getName() << ")to " <<  steps[i]->c << "." << steps[i]->x << endl;
     }
     
     TRY_RETHROW;
