@@ -7,6 +7,8 @@ using namespace std;
 
 void Game::start()
 {
+    TRY_BEGINS;
+    
     mBoard = BoardPtr(new Board());
     
     // TODO ask for player name
@@ -44,20 +46,76 @@ void Game::start()
         pieces.erase(remove(pieces.begin(), pieces.end(), pieces[rnd]), pieces.end()); 
     }
     
+    TRY_RETHROW;
 }
 
-void Game::finish()
+bool Game::isOver()
 {
+    TRY_BEGINS;
     
+    PlayerPtr vinner;
+    bool res = checkVictory(vinner);
+    
+    // TODO show vinner
+    
+    return res;
+    
+    TRY_RETHROW;
 }
+
     
-void Game::askNextPlayer()
+bool Game::onCellClick(unsigned c, unsigned x)
 {
+    TRY_BEGINS;
     
+    static PlayerPtr player = mPlayer1; // Player1 makes the first move
+    static TurnStage stage = TURN_START;    
+    static BattleResult battleResult = RES_NO_BATTLE;
+    
+    if(stage == TURN_START)
+    {
+        if(player->makeTurn(c, x, stage, battleResult))
+        {
+            stage = TURN_FINISH;
+            return true;
+        }
+    }
+    else if(stage == TURN_FINISH)
+    {
+        if(battleResult == RES_NO_BATTLE)
+        {
+            if(player->makeTurn(c, x, stage, battleResult))
+            {
+                if(battleResult == RES_NO_BATTLE ||
+                   battleResult == RES_KILL ||
+                   battleResult == RES_COUNTER_KILL)
+                {
+                    stage = TURN_START;
+                    player = (player == mPlayer1) ? mPlayer2 : mPlayer1; // next player
+                    return true;
+                }
+            }
+        }
+        else if(battleResult == RES_PUSH || battleResult == RES_COUNTER_PUSH)
+        {
+            if(player->makePush(c, x))
+            {
+                stage = TURN_START;
+                player = (player == mPlayer1) ? mPlayer2 : mPlayer1; // next player
+                return true;
+            }
+        }
+    }
+    
+    return false;
+    
+    TRY_RETHROW;
 }
     
 bool Game::checkVictory(PlayerPtr& vinner)
 {
+    TRY_BEGINS;
+    
     if(mPlayer1->howManyPieces() == 0)
     {
         vinner = mPlayer2;
@@ -68,6 +126,8 @@ bool Game::checkVictory(PlayerPtr& vinner)
         vinner = mPlayer1;
         return true;
     }
+    
+    TRY_RETHROW;
     
     return false;
 }

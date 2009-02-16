@@ -2,7 +2,7 @@ set(src/Player.cpp src/Board.cpp src/Game.cpp)
 
 
 # DEJARIK executable
-add_executable (dejarik src/dejarik.cpp src/Player.cpp src/Board.cpp src/Game.cpp)
+add_executable (dejarik src/main.cpp src/Player.cpp src/Board.cpp src/Game.cpp)
  
 # UNIT TESTs 
 #add_executable (test_dejarik test/test.cpp ${SRC}) 
