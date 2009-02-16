@@ -1,4 +1,4 @@
-set(SRC src/Board.cpp src/Piece.cpp src/Player.cpp) 
+set(SRC src/Piece.cpp src/Player.cpp src/Board.cpp src/Game.cpp) 
 
 
 # DEJARIK executable
