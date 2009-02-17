@@ -5,6 +5,10 @@
 
 using namespace std;
 
+// test block --------------------------------
+bool TestPiecesMoveOneCell = false;
+// --------------------------------
+
 void Game::start()
 {
     TRY_BEGINS;
@@ -28,11 +32,31 @@ void Game::start()
     
     vector<CellPtr> cells;
     mBoard->getInitialCells(cells);  
+    const unsigned pieces_num = pieces.size();
+    
+    // test block --------------------------------    
+    if(TestPiecesMoveOneCell)
+    {
+        for(unsigned i=0; i<pieces_num/2; i++)
+        {
+            pieces[i]->moveRating = 1;
+            mBoard->placePiece(pieces[i], cells[i]);
+            mBoard->distribute(pieces[i], mPlayer1);
+        }
+        for(unsigned i=pieces_num/2; i<pieces_num; i++)
+        {
+            pieces[i]->moveRating = 1;
+            mBoard->placePiece(pieces[i], cells[i]);
+            mBoard->distribute(pieces[i], mPlayer2);
+        }
+        
+        return;
+    }
+    // --------------------------------
     
     // randomly divide the pieces between the players, 
     // and place them on opposites sides of the board
-    srand((unsigned)time(0)); 
-    const unsigned pieces_num = pieces.size();
+    srand((unsigned)time(0));     
     PlayerPtr player = mPlayer1;
     
     for(unsigned i=0; i<pieces_num; i++)
@@ -45,6 +69,8 @@ void Game::start()
         player = (player == mPlayer1) ? mPlayer2 : mPlayer1; // next player
         pieces.erase(remove(pieces.begin(), pieces.end(), pieces[rnd]), pieces.end()); 
     }
+    
+    
     
     TRY_RETHROW;
 }
@@ -67,7 +93,8 @@ bool Game::isOver()
 bool Game::onCellClick(unsigned c, unsigned x)
 {
     TRY_BEGINS;
-    
+
+    static unsigned move = 0; // a player has 2 moves 
     static PlayerPtr player = mPlayer1; // Player1 makes the first move
     static TurnStage stage = TURN_START;    
     static BattleResult battleResult = RES_NO_BATTLE;
@@ -91,17 +118,31 @@ bool Game::onCellClick(unsigned c, unsigned x)
                    battleResult == RES_COUNTER_KILL)
                 {
                     stage = TURN_START;
-                    player = (player == mPlayer1) ? mPlayer2 : mPlayer1; // next player
-                    return true;
+                    move++;
                 }
+                
+                if(move == 2)
+                {
+                    player = (player == mPlayer1) ? mPlayer2 : mPlayer1; // next player
+                    move = 0;
+                }
+                
+                return true;
             }
         }
         else if(battleResult == RES_PUSH || battleResult == RES_COUNTER_PUSH)
         {
-            if(player->makePush(c, x))
+            if(player->makePush(c, x)) // without verification of piece's owner
             {
                 stage = TURN_START;
-                player = (player == mPlayer1) ? mPlayer2 : mPlayer1; // next player
+                move++;
+                
+                if(move == 2)
+                {
+                    player = (player == mPlayer1) ? mPlayer2 : mPlayer1; // next player
+                    move = 0;
+                }
+                
                 return true;
             }
         }

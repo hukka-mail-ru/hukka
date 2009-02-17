@@ -8,6 +8,10 @@
 CLASSPTR(Game);
 
 
+// tests--------------------------------
+extern bool TestPiecesMoveOneCell;
+// --------------------------------
+
 class Game
 {
     friend class TestGame;
