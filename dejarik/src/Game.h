@@ -8,9 +8,9 @@
 CLASSPTR(Game);
 
 
-// tests--------------------------------
+#ifdef UNIT_TESTS
 extern bool TestPiecesMoveOneCell;
-// --------------------------------
+#endif
 
 class Game
 {

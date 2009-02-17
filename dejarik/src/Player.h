@@ -11,10 +11,10 @@ CLASSPTR(Piece);
 CLASSPTR(Board);
 CLASSPTR(Player);
 
-// test block --------------------------------
+#ifdef UNIT_TESTS
 extern bool TestMakePush;
 extern bool TestMakeCounterPush;
-// -------------------------------------------
+#endif
 
 // e.g. a move for 1.0 to 2.0
 // =>  TURN_SELECTION at 1.0, TURN_ACTION at 2.0

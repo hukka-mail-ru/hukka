@@ -80,7 +80,7 @@ public:
     void testOnCellClick() 
     {
         TRY_BEGINS;
-        SHOW_FUNCTION_NAME; 
+        SHOW_FUNCTION_NAME;         
         
         TestPiecesMoveOneCell = true;
     
