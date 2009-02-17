@@ -81,6 +81,8 @@ public:
     {
         TRY_BEGINS;
         SHOW_FUNCTION_NAME; 
+        
+        TestPiecesMoveOneCell = true;
     
         Game game;
         game.start();
@@ -94,18 +96,21 @@ public:
         CPPUNIT_ASSERT(game.onCellClick(2,0) == true);  // select 'mine'
         CPPUNIT_ASSERT(game.onCellClick(2,5) == false); // wrong move
         CPPUNIT_ASSERT(game.onCellClick(1,0) == true);  // move 'mine'
+        CPPUNIT_ASSERT(game.onCellClick(1,0) == true);  // select 'mine'
         CPPUNIT_ASSERT(game.onCellClick(1,11) == true); // move 'mine'
         
         // player2 -enemy
         CPPUNIT_ASSERT(game.onCellClick(2,3) == false); // click on my cell
         CPPUNIT_ASSERT(game.onCellClick(0,0) == false); // click on empty cell
-        CPPUNIT_ASSERT(game.onCellClick(2,0) == true);  // select 'enemy'
+        CPPUNIT_ASSERT(game.onCellClick(2,9) == true);  // select 'enemy'
         CPPUNIT_ASSERT(game.onCellClick(2,4) == false); // wrong move
         CPPUNIT_ASSERT(game.onCellClick(2,10) == true);  // move 'enemy'
+        CPPUNIT_ASSERT(game.onCellClick(2,10) == true);  // select 'enemy'
         CPPUNIT_ASSERT(game.onCellClick(1,10) == true); // move 'enemy'
         
         // player1 - me
         
+        TestPiecesMoveOneCell = false;
         
         TRY_CATCH;
     }
