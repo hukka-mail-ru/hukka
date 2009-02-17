@@ -40,25 +40,25 @@ bool Player::makeTurn(unsigned c, unsigned x, TurnStage turnStage, BattleResult&
     PiecePtr piece = cell->piece;
     
     // can't start from an empty cell
-    if(!piece && turnStage == TURN_START)
+    if(!piece && turnStage == TURN_SELECTION)
     {
         return false;
     }
     
     // can't start from an enemy piece
-    if(piece && piece->player.get() != this && turnStage == TURN_START)
+    if(piece && piece->player.get() != this && turnStage == TURN_SELECTION)
     {
         return false;
     }
     
-    // if clicked on ally, we must do TURN_START, even if we obtained TURN_FINISH
-    if(piece && piece->player.get() == this && turnStage == TURN_FINISH)
+    // if clicked on ally, we must do TURN_SELECTION, even if we obtained TURN_ACTION
+    if(piece && piece->player.get() == this && turnStage == TURN_ACTION)
     {
-        turnStage = TURN_START;
+        turnStage = TURN_SELECTION;
     }
     
-    // on TURN_START:
-    if(turnStage == TURN_START)
+    // on TURN_SELECTION:
+    if(turnStage == TURN_SELECTION)
     {
         mActivePiece = piece;
         
@@ -67,7 +67,7 @@ bool Player::makeTurn(unsigned c, unsigned x, TurnStage turnStage, BattleResult&
         
         // GUI::showPossibleMoves() ... ?        
     }
-    else if(turnStage == TURN_FINISH)
+    else if(turnStage == TURN_ACTION)
     {
         if(!piece) // move to cell
         {

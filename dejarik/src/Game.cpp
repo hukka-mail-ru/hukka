@@ -52,7 +52,7 @@ void Game::start()
         
         return;
     }
-    // --------------------------------
+    // EO test block --------------------------------
     
     // randomly divide the pieces between the players, 
     // and place them on opposites sides of the board
@@ -96,18 +96,18 @@ bool Game::onCellClick(unsigned c, unsigned x)
 
     static unsigned move = 0; // a player has 2 moves 
     static PlayerPtr player = mPlayer1; // Player1 makes the first move
-    static TurnStage stage = TURN_START;    
+    static TurnStage stage = TURN_SELECTION; // each move has two phases: START (selection), FINISH (action)   
     static BattleResult battleResult = RES_NO_BATTLE;
     
-    if(stage == TURN_START)
+    if(stage == TURN_SELECTION)
     {
         if(player->makeTurn(c, x, stage, battleResult))
         {
-            stage = TURN_FINISH;
+            stage = TURN_ACTION;
             return true;
         }
     }
-    else if(stage == TURN_FINISH)
+    else if(stage == TURN_ACTION)
     {
         if(battleResult == RES_NO_BATTLE)
         {
@@ -117,7 +117,7 @@ bool Game::onCellClick(unsigned c, unsigned x)
                    battleResult == RES_KILL ||
                    battleResult == RES_COUNTER_KILL)
                 {
-                    stage = TURN_START;
+                    stage = TURN_SELECTION;
                     move++;
                 }
                 
@@ -134,7 +134,7 @@ bool Game::onCellClick(unsigned c, unsigned x)
         {
             if(player->makePush(c, x)) // without verification of piece's owner
             {
-                stage = TURN_START;
+                stage = TURN_SELECTION;
                 move++;
                 
                 if(move == 2)

@@ -17,11 +17,11 @@ extern bool TestMakeCounterPush;
 // -------------------------------------------
 
 // e.g. a move for 1.0 to 2.0
-// =>  TS_START at 1.0, TS_FINISH at 2.0
+// =>  TURN_SELECTION at 1.0, TURN_ACTION at 2.0
 enum TurnStage 
 {
-    TURN_START, 
-    TURN_FINISH
+    TURN_SELECTION, 
+    TURN_ACTION
 };
 
 enum BattleResult
@@ -55,13 +55,13 @@ public:
 
      Define the cell: empty ? ally ? enemy ?
       
-    if clicked on ally, we must do TURN_START, even we are obtained TURN_FINISH
+    if clicked on ally, we must do TURN_SELECTION, even we are obtained TURN_ACTION
     
-    on TURN_START:
+    on TURN_SELECTION:
        select mActivePiece
        player gets possible moves 
     
-    on TURN_FINISH:
+    on TURN_ACTION:
       player moves mActivePiece 
       or attacks an enemy piece:
       
@@ -70,11 +70,11 @@ public:
     bool makeTurn(unsigned c, unsigned x, TurnStage turnStage, BattleResult& battleResult);
     
     /*
-     * TURN_START: automatically when Game defined RES_PUSH or RES_COUNTER_PUSH
+     * TURN_SELECTION: automatically when Game defined RES_PUSH or RES_COUNTER_PUSH
      *    definePossiblePushes -> on the base of definePossibleMoves
      *    show them on screen
      * 
-     * TURN_FINISH: by player
+     * TURN_ACTION: by player
      *    isMoveValid
      *    move enemy piece
      */
