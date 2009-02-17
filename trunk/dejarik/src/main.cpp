@@ -4,7 +4,7 @@ using namespace std;
 #include "Game.h"
 #include "Macros.h"
 
-
+/*
 void onMouseClick(unsigned x, unsigned y) 
 {
     unsigned cellC = 0; // cell coordinate
@@ -13,21 +13,20 @@ void onMouseClick(unsigned x, unsigned y)
     {
         game.onCellClick(cellC, cellX);
     }
-}
+}*/
 
 
 int main()
 {
-
     TRY_BEGINS;
     
     Game game;
     
     game.start();
     
-    while(!game.over())
+    while(!game.isOver())
     {
-        sleep 1;
+        sleep(1);
     }
     
     TRY_CATCH;

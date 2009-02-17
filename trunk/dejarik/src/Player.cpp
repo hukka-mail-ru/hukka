@@ -6,10 +6,10 @@
 
 using namespace std;
 
-// test block --------------------------------
+#ifdef UNIT_TESTS
 bool TestMakePush = false;
 bool TestMakeCounterPush = false;
-// -------------------------------------------
+#endif
 
 void Player::addPiece(const PiecePtr& piece)
 {
@@ -135,13 +135,13 @@ BattleResult Player::attackEnimy(const PiecePtr& myPiece, const PiecePtr& enemyP
 
 BattleResult Player::getBattleResult(unsigned attackRating, unsigned defenceRating)
 {
-    // test block -------------------------
+#ifdef UNIT_TESTS
     if(TestMakePush)
         return RES_PUSH;
 
     if(TestMakeCounterPush)
         return RES_COUNTER_PUSH;
-    // ------------------------------------
+#endif
     
     
     srand((unsigned)time(0)); 

@@ -5,9 +5,9 @@
 
 using namespace std;
 
-// test block --------------------------------
+#ifdef UNIT_TESTS
 bool TestPiecesMoveOneCell = false;
-// --------------------------------
+#endif
 
 void Game::start()
 {
@@ -34,7 +34,8 @@ void Game::start()
     mBoard->getInitialCells(cells);  
     const unsigned pieces_num = pieces.size();
     
-    // test block --------------------------------    
+    
+#ifdef UNIT_TESTS
     if(TestPiecesMoveOneCell)
     {
         for(unsigned i=0; i<pieces_num/2; i++)
@@ -52,7 +53,7 @@ void Game::start()
         
         return;
     }
-    // EO test block --------------------------------
+#endif
     
     // randomly divide the pieces between the players, 
     // and place them on opposites sides of the board
