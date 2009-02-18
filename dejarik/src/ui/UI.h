@@ -19,7 +19,7 @@ public:
     
     bool startup();
     
-    void waitForEvents();
+    void handleEvents();
     
 private:
     
@@ -37,8 +37,13 @@ private:
     void drawBoard();
     void drawCell(Color color, float x1, float x2, float a1);
     
-    void mouseCoordinatesToGL(float winX, float winY, GLdouble& posX, GLdouble& posY, GLdouble& posZ);
+    void mouseToGL(float winX, float winY, GLdouble& x, GLdouble& y, GLdouble& z);
 
+    /*
+     * Defines if the mouse click is valid (true/false).
+     * and transforms the mouse coordinates into cell coordinates 
+     */
+    bool isCell(GLdouble x, GLdouble y, unsigned& cellC, unsigned& cellX);
     
     GamePtr mGame; 
     bool mQuit;

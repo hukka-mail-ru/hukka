@@ -26,6 +26,10 @@
 
 #define PI 3.14159265
 
+#define CELL_RADIUS_1 0.5 
+#define CELL_RADIUS_2 1.5
+#define CELL_RADIUS_3 2.5
+
 using namespace std;
 
 
@@ -84,7 +88,7 @@ bool UI::startup()
 }
 
 
-void UI::mouseCoordinatesToGL(float winX, float winY, GLdouble& posX, GLdouble& posY, GLdouble& posZ)
+void UI::mouseToGL(float winX, float winY, GLdouble& x, GLdouble& y, GLdouble& z)
 {
     GLint viewport[4];                  // Where The Viewport Values Will Be Stored
     glGetIntegerv(GL_VIEWPORT, viewport); // Retrieves The Viewport Values (X, Y, Width, Height)
@@ -100,71 +104,9 @@ void UI::mouseCoordinatesToGL(float winX, float winY, GLdouble& posX, GLdouble& 
     GLfloat winZ;
     glReadPixels(winX, winY, 1, 1, GL_DEPTH_COMPONENT, GL_FLOAT, &winZ);
     
-    gluUnProject( winX, winY, winZ, modelview, projection, viewport, 
-                  &posX, &posY, &posZ);
+    gluUnProject( winX, winY, winZ, modelview, projection, viewport, &x, &y, &z);
 }
 
-
-void UI::waitForEvents()
-{
-    /* wait for events */
-    SDL_Event event;
-
-    while ( !mQuit )
-    {
-        drawAll();
-
-        /* handle the events in the queue */
-        while ( SDL_PollEvent( &event ) )
-        {
-            if( event.type == SDL_KEYDOWN ) // handle key pressed 
-            {
-                if( event.key.keysym.sym  == SDLK_ESCAPE)
-                {
-                    mQuit = true;
-                    break;
-                }
-            }
-            if( event.type == SDL_MOUSEBUTTONDOWN ) 
-            {
-                if( event.button.button == SDL_BUTTON_LEFT ) 
-                { 
-                    //Get the mouse offsets 
-                    GLfloat winX = event.button.x; 
-                    GLfloat winY = event.button.y;
-
-                    GLdouble posX;
-                    GLdouble posY;
-                    GLdouble posZ;
-                    mouseCoordinatesToGL(winX, winY, posX, posY, posZ);
-                    
-                    cout << "posX: " << posX << endl; 
-                    cout << "posY: " << posY << endl; 
-                }
-                
-
-            }
-            /*if( event.type == SDL_MOUSEDOWN ) // mouse button pressed
-            {
-                unsigned cellC = 0; // cell coordinate
-                unsigned cellX = 0; // cell coordinate
-                if(mGame.isCell(x, y, cellC, cellX))
-                {
-                    mGame.onCellClick(cellC, cellX);
-                }   
-            }*/
-            else if(event.type == SDL_QUIT) // handle stop
-            {
-                mQuit = true;
-            }
-        }
-    
-        
-    }
-    
-    /* clean ourselves up and exit */
-    stop(true);
-}
 
 
 
@@ -229,6 +171,80 @@ bool UI::initGL()
     return true;
 }
 
+// is a point inside polynom
+bool pnpoly(int npol, float * xp, float * yp, float x, float y)
+{
+  bool c = false;
+  for (int i = 0, j = npol - 1; i < npol; j = i++) 
+  {
+    if ((((yp[i]<=y) && (y<yp[j])) || ((yp[j]<=y) && (y<yp[i]))) &&
+      (x > (xp[j] - xp[i]) * (y - yp[i]) / (yp[j] - yp[i]) + xp[i]))
+        c = !c;
+  }
+  return c;
+}
+
+
+bool UI::isCell(GLdouble x, GLdouble y, unsigned& cellC, unsigned& cellX)
+{
+    // CIRCLE 1
+    float a1 = 0;
+    for(unsigned i = 0; i < 12; i++)
+    {
+        float x1 = CELL_RADIUS_1;
+        float x2 = CELL_RADIUS_2;
+        float a1 = PI/6.0*i;
+        float a2 = a1 + PI/6.0;
+    
+        float xp[4] = {x1 * cos(a1), x2 * cos(a1), x2 * cos(a2), x1 * cos(a2)};
+        float yp[4] = {x1 * sin(a1), x2 * sin(a1), x2 * sin(a2), x1 * sin(a2)};
+        
+        if(pnpoly(4, xp, yp, x, y))
+        {
+            cellC = 1;
+            cellX = i;
+            return true;
+        }
+    }
+    
+    // CIRCLE 2
+    a1 = 0;
+    for(unsigned i = 0; i < 12; i++)
+    {
+        float x1 = CELL_RADIUS_2;
+        float x2 = CELL_RADIUS_3;
+        float a1 = PI/6.0*i;
+        float a2 = a1 + PI/6.0;
+    
+        float xp[4] = {x1 * cos(a1), x2 * cos(a1), x2 * cos(a2), x1 * cos(a2)};
+        float yp[4] = {x1 * sin(a1), x2 * sin(a1), x2 * sin(a2), x1 * sin(a2)};
+        
+        if(pnpoly(4, xp, yp, x, y))
+        {
+            cellC = 2;
+            cellX = i;
+            return true;
+        }
+    }
+    
+    // CENTRAL CIRCLE
+    float xp[12] = {0};
+    float yp[12] = {0};
+    for(unsigned i = 0; i < 12; i++)
+    {
+        xp[i] = CELL_RADIUS_1 * cos(PI/6.0*i);
+        yp[i] = CELL_RADIUS_1 * sin(PI/6.0*i);
+    }
+    if(pnpoly(12, xp, yp, x, y))
+    {
+        cellC = 0;
+        cellX = 0;
+        return true;
+    }
+    
+    return false;
+
+}
 
 
 void UI::drawCell(Color color, float x1, float x2, float a1) // a = init corner
@@ -256,13 +272,13 @@ void UI::drawCell(Color color, float x1, float x2, float a1) // a = init corner
 void UI::drawBoard()
 {
     // the cells
-    float x = 0.5;
+    float x = CELL_RADIUS_1;
     for(unsigned i = 1; i < 12; i+= 2)
     {
-        drawCell(CL_WHITE, x*1, x*3, PI/6.0*(i));
-        drawCell(CL_WHITE, x*3, x*5, PI/6.0*(i + 1));
-        drawCell(CL_BLACK, x*1, x*3, PI/6.0*(i + 1));
-        drawCell(CL_BLACK, x*3, x*5, PI/6.0*(i + 2));
+        drawCell(CL_WHITE, CELL_RADIUS_1, CELL_RADIUS_2, PI/6.0*(i));
+        drawCell(CL_WHITE, CELL_RADIUS_2, CELL_RADIUS_3, PI/6.0*(i + 1));
+        drawCell(CL_BLACK, CELL_RADIUS_1, CELL_RADIUS_2, PI/6.0*(i + 1));
+        drawCell(CL_BLACK, CELL_RADIUS_2, CELL_RADIUS_3, PI/6.0*(i + 2));
     }  
     
     // the central cell 
@@ -270,7 +286,7 @@ void UI::drawBoard()
     glBegin( GL_POLYGON ); 
         for(unsigned i = 0; i < 12; i++)
         {
-            glVertex3f( x * cos(PI/6.0*i),  x * sin(PI/6.0*i), 0.0f );
+            glVertex3f( CELL_RADIUS_1 * cos(PI/6.0*i),  CELL_RADIUS_1 * sin(PI/6.0*i), 0.0f );
         }
     glEnd( );  
     
@@ -278,7 +294,8 @@ void UI::drawBoard()
     glBegin( GL_POLYGON ); 
         for(unsigned i = 0; i < 12; i++)
         {
-            glVertex3f( (x-0.03) * cos(PI/6.0*i),  (x-0.03) * sin(PI/6.0*i), 0.0f );
+            glVertex3f( (CELL_RADIUS_1-0.03) * cos(PI/6.0*i),  
+                        (CELL_RADIUS_1-0.03) * sin(PI/6.0*i), 0.0f );
         }
     glEnd( );  
 }
@@ -305,6 +322,64 @@ bool UI::drawAll()
 
     return true;
 }
+
+
+
+void UI::handleEvents()
+{
+    /* wait for events */
+    SDL_Event event;
+
+    while ( !mQuit )
+    {
+        drawAll();
+
+        /* handle the events in the queue */
+        while ( SDL_PollEvent( &event ) )
+        {
+            // KEY EVENT
+            if( event.type == SDL_KEYDOWN ) // handle key pressed 
+            {
+                if( event.key.keysym.sym  == SDLK_ESCAPE)
+                {
+                    mQuit = true;
+                    break;
+                }
+            }
+            
+            // MOUSE EVENT
+            else if( event.type == SDL_MOUSEBUTTONDOWN ) 
+            {
+                if( event.button.button == SDL_BUTTON_LEFT ) 
+                { 
+                    GLdouble x = 0;
+                    GLdouble y = 0;
+                    GLdouble z = 0;
+                    mouseToGL(event.button.x, event.button.y, x, y, z);
+                    
+                    unsigned cellC = 0;
+                    unsigned cellX = 0;
+                    if(isCell(x, y, cellC, cellX))
+                    {
+                        cout << "cell " << cellC << "." << cellX << endl;
+                        mGame->onCellClick(cellC, cellX);
+                    }   
+                }
+            }
+
+            else if(event.type == SDL_QUIT) // handle stop
+            {
+                mQuit = true;
+            }
+        }
+    
+        
+    }
+    
+    /* clean ourselves up and exit */
+    stop(true);
+}
+
 
 
 
