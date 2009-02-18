@@ -9,7 +9,7 @@ using namespace std;
 bool TestPiecesMoveOneCell = false;
 #endif
 
-void Game::start()
+void Game::startup()
 {
     TRY_BEGINS;
     

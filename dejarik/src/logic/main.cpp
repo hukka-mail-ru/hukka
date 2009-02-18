@@ -2,7 +2,9 @@
 using namespace std;
 
 #include "Game.h"
+#include "UI.h"
 #include "Macros.h"
+
 
 /*
 void onMouseClick(unsigned x, unsigned y) 
@@ -20,14 +22,13 @@ int main()
 {
     TRY_BEGINS;
     
-    Game game;
+    GamePtr game = GamePtr(new Game());    
+    game->startup();
     
-    game.start();
+    UIPtr ui = UIPtr(new UI(game)); 
+    ui->startup();
     
-    while(!game.isOver())
-    {
-        sleep(1);
-    }
+    ui->waitForEvents();
     
     TRY_CATCH;
    
