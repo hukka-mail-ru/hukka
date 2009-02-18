@@ -28,7 +28,7 @@ int main()
     UIPtr ui = UIPtr(new UI(game)); 
     ui->startup();
     
-    ui->waitForEvents();
+    ui->handleEvents();
    
     exit(0);
     TRY_CATCH;
