@@ -12,15 +12,20 @@
  
 #include <iostream>
 #include <stdlib.h>
+#include <math.h>
 #include <GL/gl.h>
 #include <GL/glu.h>
+
 #include "SDL.h"
 #include "UI.h"
+
 
 /* screen width, height, and bit depth */
 #define SCREEN_WIDTH  240
 #define SCREEN_HEIGHT 320
 #define SCREEN_BPP     16
+
+#define PI 3.14159265
 
 using namespace std;
 
@@ -76,9 +81,6 @@ bool UI::startup()
     /* resize the initial window */
     resizeWindow( SCREEN_WIDTH, SCREEN_HEIGHT );
 
-    waitForEvents();
-
-    /* Should never get here */
     return true;
 }
 
@@ -88,11 +90,11 @@ void UI::waitForEvents()
 {
     /* wait for events */
     SDL_Event event;
-   
+
     while ( !mQuit )
     {
-        drawBoard();
-        
+        drawAll();
+
         /* handle the events in the queue */
         while ( SDL_PollEvent( &event ) )
         {
@@ -193,32 +195,74 @@ bool UI::initGL()
     return true;
 }
 
+
+
+void UI::drawCell(Color color, float x1, float x2, float a1) // a = init corner
+{
+    float a2 = a1 + PI/6.0;
+    
+    if(color == CL_BLACK)
+    {
+        glColor3f(0.0f,0.0f,0.0f);
+    }
+    else if(color == CL_WHITE)
+    {
+        glColor3f(1.0f,1.0f,1.0f);
+    }
+    
+    glBegin( GL_QUADS );      
+        glVertex3f( x1 * cos(a1),  x1 * sin(a1), 0.0f );
+        glVertex3f( x2 * cos(a1),  x2 * sin(a1), 0.0f );
+        glVertex3f( x2 * cos(a2),  x2 * sin(a2), 0.0f );
+        glVertex3f( x1 * cos(a2),  x1 * sin(a2), 0.0f );
+    glEnd( );  
+}
+
+
+void UI::drawBoard()
+{
+    // the cells
+    float x = 0.5;
+    for(unsigned i = 1; i < 12; i+= 2)
+    {
+        drawCell(CL_WHITE, x*1, x*3, PI/6.0*(i));
+        drawCell(CL_WHITE, x*3, x*5, PI/6.0*(i + 1));
+        drawCell(CL_BLACK, x*1, x*3, PI/6.0*(i + 1));
+        drawCell(CL_BLACK, x*3, x*5, PI/6.0*(i + 2));
+    }  
+    
+    // the central cell 
+    glColor3f(0.0f,0.0f,0.0f);
+    glBegin( GL_POLYGON ); 
+        for(unsigned i = 0; i < 12; i++)
+        {
+            glVertex3f( x * cos(PI/6.0*i),  x * sin(PI/6.0*i), 0.0f );
+        }
+    glEnd( );  
+    
+    glColor3f(1.0f,1.0f,1.0f);
+    glBegin( GL_POLYGON ); 
+        for(unsigned i = 0; i < 12; i++)
+        {
+            glVertex3f( (x-0.03) * cos(PI/6.0*i),  (x-0.03) * sin(PI/6.0*i), 0.0f );
+        }
+    glEnd( );  
+}
+
+
+
+
 /* Here goes our drawing code */
-bool UI::drawBoard()
+bool UI::drawAll()
 {
     /* Clear The Screen And The Depth Buffer */
     glClear( GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT );
-
-    /* Move Left 1.5 Units And Into The Screen 6.0 */
     glLoadIdentity();
-    glTranslatef( -1.5f, 0.0f, -6.0f );
+    glTranslatef( 0.0f, 0.0f, -10.0f );
 
-    glBegin( GL_TRIANGLES );            /* Drawing Using Triangles */
-      glVertex3f(  0.0f,  1.0f, 0.0f ); /* Top */
-      glVertex3f( -1.0f, -1.0f, 0.0f ); /* Bottom Left */
-      glVertex3f(  1.0f, -1.0f, 0.0f ); /* Bottom Right */
-    glEnd( );                           /* Finished Drawing The Triangle */
+    drawBoard();
 
-    /* Move Right 3 Units */
-    glTranslatef( 3.0f, 0.0f, 0.0f );
-
-    glBegin( GL_QUADS );                /* Draw A Quad */
-      glVertex3f( -1.0f,  1.0f, 0.0f ); /* Top Left */
-      glVertex3f(  1.0f,  1.0f, 0.0f ); /* Top Right */
-      glVertex3f(  1.0f, -1.0f, 0.0f ); /* Bottom Right */
-      glVertex3f( -1.0f, -1.0f, 0.0f ); /* Bottom Left */
-    glEnd( );                           /* Done Drawing The Quad */
-
+    
     /* Draw it to the screen */
     if(!mQuit)
     {

@@ -6,6 +6,7 @@
 
 CLASSPTR(UI);
 
+
 class UI
 {
 public:
@@ -22,7 +23,16 @@ private:
     bool stop(bool res);
     bool resizeWindow(unsigned width, unsigned height);
     bool initGL();
-    bool drawBoard();
+    
+    enum Color
+    {
+        CL_WHITE,
+        CL_BLACK
+    };
+    
+    bool drawAll();
+    void drawBoard();
+    void drawCell(Color color, float x1, float x2, float a1);
     
     
     GamePtr mGame; 
