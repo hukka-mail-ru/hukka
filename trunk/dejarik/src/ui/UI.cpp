@@ -97,14 +97,11 @@ void UI::mouseCoordinatesToGL(float winX, float winY, GLdouble& posX, GLdouble& 
 
     winY = (float)viewport[3] - winY;           // Subtract The Current Mouse Y Coordinate From The Screen Height
     
+    GLfloat winZ;
     glReadPixels(winX, winY, 1, 1, GL_DEPTH_COMPONENT, GL_FLOAT, &winZ);
     
     gluUnProject( winX, winY, winZ, modelview, projection, viewport, 
                   &posX, &posY, &posZ);
-
-    cout << "posX: " << posX << endl; 
-    cout << "posY: " << posY << endl; 
-    cout << "posZ: " << posZ << endl; 
 }
 
 
@@ -134,12 +131,15 @@ void UI::waitForEvents()
                 { 
                     //Get the mouse offsets 
                     GLfloat winX = event.button.x; 
-                    GLfloat winY = event.button.y; 
+                    GLfloat winY = event.button.y;
 
                     GLdouble posX;
                     GLdouble posY;
                     GLdouble posZ;
-                    mouseCoordinatesToGL(winX, winY)
+                    mouseCoordinatesToGL(winX, winY, posX, posY, posZ);
+                    
+                    cout << "posX: " << posX << endl; 
+                    cout << "posY: " << posY << endl; 
                 }
                 
 
