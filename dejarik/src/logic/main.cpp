@@ -29,7 +29,8 @@ int main()
     ui->startup();
     
     ui->waitForEvents();
-    
+   
+    exit(0);
     TRY_CATCH;
    
     return 0;
