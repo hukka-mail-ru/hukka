@@ -100,15 +100,48 @@ void UI::waitForEvents()
         {
             if( event.type == SDL_KEYDOWN ) // handle key pressed 
             {
-                switch ( event.key.keysym.sym )
+                if( event.key.keysym.sym  == SDLK_ESCAPE)
                 {
-                case SDLK_ESCAPE:
-                    /* ESC key was pressed */
                     mQuit = true;
                     break;
-                default:
-                    break;
                 }
+            }
+            if( event.type == SDL_MOUSEBUTTONDOWN ) 
+            {
+                GLfloat winX  = 0;
+                GLfloat winY = 0;
+                GLfloat winZ = 0;
+                if( event.button.button == SDL_BUTTON_LEFT ) 
+                { 
+                    //Get the mouse offsets 
+                    winX = event.button.x; 
+                    winY = event.button.y; 
+                    
+                    cout << "winX: " << winX << endl; 
+                    cout << "winY: " << winY << endl; 
+
+                }
+                
+                GLint viewport[4];                  // Where The Viewport Values Will Be Stored
+                glGetIntegerv(GL_VIEWPORT, viewport); // Retrieves The Viewport Values (X, Y, Width, Height)
+                
+                GLdouble modelview[16];                 // Where The 16 Doubles Of The Modelview Matrix Are To Be Stored
+                glGetDoublev(GL_MODELVIEW_MATRIX, modelview);       // Retrieve The Modelview Matrix
+
+                GLdouble projection[16];                // Where The 16 Doubles Of The Projection Matrix Are To Be Stored
+                glGetDoublev(GL_PROJECTION_MATRIX, projection);     // Retrieve The Projection Matrix
+
+                winY = (float)viewport[3] - winY;           // Subtract The Current Mouse Y Coordinate From The Screen Height
+                
+                glReadPixels(winX, winY, 1, 1, GL_DEPTH_COMPONENT, GL_FLOAT, &winZ);
+                
+                GLdouble posX, posY, posZ;              // Hold The Final Values
+                gluUnProject( winX, winY, winZ, modelview, projection, viewport, 
+                              &posX, &posY, &posZ);
+
+                cout << "posX: " << posX << endl; 
+                cout << "posY: " << posY << endl; 
+                cout << "posZ: " << posZ << endl; 
             }
             /*if( event.type == SDL_MOUSEDOWN ) // mouse button pressed
             {
