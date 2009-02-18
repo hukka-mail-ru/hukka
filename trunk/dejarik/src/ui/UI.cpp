@@ -83,14 +83,17 @@ bool UI::startup()
 }
 
 
+bool quit = false;
 
 void UI::waitForEvents()
 {
     /* wait for events */
     SDL_Event event;
-    bool stop = false;
-    while ( !stop )
+   
+    while ( !quit )
     {
+        drawBoard();
+        
         /* handle the events in the queue */
         while ( SDL_PollEvent( &event ) )
         {
@@ -100,7 +103,7 @@ void UI::waitForEvents()
                 {
                 case SDLK_ESCAPE:
                     /* ESC key was pressed */
-                    this->stop(true);
+                    quit = true;
                     break;
                 default:
                     break;
@@ -117,15 +120,15 @@ void UI::waitForEvents()
             }*/
             else if(event.type == SDL_QUIT) // handle stop
             {
-                stop = true;
+                quit = true;
             }
         }
     
-        drawBoard( );
+        
     }
     
     /* clean ourselves up and exit */
-    this->stop(true);
+    stop(true);
 }
 
 
@@ -218,7 +221,8 @@ bool UI::drawBoard()
     glEnd( );                           /* Done Drawing The Quad */
 
     /* Draw it to the screen */
-    SDL_GL_SwapBuffers( );
+    if(!quit)
+        SDL_GL_SwapBuffers();
 
     return true;
 }
