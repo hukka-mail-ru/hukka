@@ -1,6 +1,9 @@
 #ifndef UI_H_
 #define UI_H_
 
+#include <GL/gl.h>
+#include <GL/glu.h>
+
 #include "../include/Macros.h"
 #include "Game.h"
 
@@ -34,6 +37,8 @@ private:
     void drawBoard();
     void drawCell(Color color, float x1, float x2, float a1);
     
+    void mouseCoordinatesToGL(float winX, float winY, GLdouble& posX, GLdouble& posY, GLdouble& posZ);
+
     
     GamePtr mGame; 
     bool mQuit;
