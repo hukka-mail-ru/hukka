@@ -10,7 +10,7 @@ class UI
 {
 public:
     
-    UI(const GamePtr& game): mGame(game)
+    UI(const GamePtr& game): mGame(game), mQuit(false)
     {}
     
     bool startup();
@@ -26,6 +26,7 @@ private:
     
     
     GamePtr mGame; 
+    bool mQuit;
     
 };
 
