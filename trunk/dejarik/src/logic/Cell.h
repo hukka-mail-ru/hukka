@@ -1,7 +1,7 @@
 #ifndef CELL_H_
 #define CELL_H_
 
-#include "Macros.h"
+#include "../include/Macros.h"
 #include "Piece.h"
 
 CLASSPTR(Cell);

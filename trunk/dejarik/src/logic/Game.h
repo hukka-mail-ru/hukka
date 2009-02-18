@@ -1,7 +1,7 @@
 #ifndef GAME_H_
 #define GAME_H_
 
-#include "Macros.h"
+#include "../include/Macros.h"
 #include "Board.h"
 #include "Player.h"
 

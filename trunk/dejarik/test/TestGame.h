@@ -28,7 +28,7 @@ public:
         SHOW_FUNCTION_NAME;
         
         Game game;
-        game.start();
+        game.startup();
         
         CPPUNIT_ASSERT_EQUAL(4, (int)game.mPlayer1->howManyPieces());
         CPPUNIT_ASSERT_EQUAL(4, (int)game.mPlayer2->howManyPieces());
@@ -85,7 +85,7 @@ public:
         TestPiecesMoveOneCell = true;
     
         Game game;
-        game.start();
+        game.startup();
         
         PiecePtr mine = game.mBoard->getCell(2,0)->piece;
         PiecePtr enemy = game.mBoard->getCell(2,9)->piece;
@@ -122,7 +122,7 @@ public:
         SHOW_FUNCTION_NAME;
         
         Game game;
-        game.start();   
+        game.startup();   
         
         PlayerPtr vinner;
         bool res = game.checkVictory(vinner);
@@ -158,7 +158,7 @@ public:
         SHOW_FUNCTION_NAME;
         
         Game game;
-        game.start();   
+        game.startup();   
         
         CPPUNIT_ASSERT(game.isOver() == false);
         
