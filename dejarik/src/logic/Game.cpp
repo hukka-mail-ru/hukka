@@ -105,7 +105,11 @@ bool Game::onCellClick(const CellPtr& cell)
                    battleResult == RES_COUNTER_KILL)
                 {
                     stage = TURN_SELECTION;
+                    
                     move++;
+                    
+                //    if(cell->piece && cell->piece->player == mActivePlayer)
+                //        move--;
                 }
                 
                 if(move == 2)
@@ -123,7 +127,11 @@ bool Game::onCellClick(const CellPtr& cell)
             if(mActivePlayer->makePush(cell)) // without verification of piece's owner
             {
                 stage = TURN_SELECTION;
+                
                 move++;
+                
+              //  if(cell->piece && cell->piece->player == mActivePlayer)
+              //      move--;
                 
                 if(move == 2)
                 {
