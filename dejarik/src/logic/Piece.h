@@ -3,7 +3,7 @@
 
 #include "Cell.h"
 #include "Player.h"
-#include "Macros.h"
+#include "../common/Macros.h"
 
 
 CLASSPTR(Cell)

@@ -3,7 +3,7 @@
 
 #include <string>
 #include <vector>
-#include "Macros.h"
+#include "../common/Macros.h"
 #include "Piece.h"
 #include "Board.h"
 #include "Cell.h"

@@ -3,7 +3,7 @@
 
 #include <vector>
 #include "Cell.h"
-#include "Macros.h"
+#include "../common/Macros.h"
 #include "Piece.h"
 #include "Player.h"
 
@@ -63,8 +63,8 @@ private:
     
     enum WhatToMark
     {
-        POSSIBLE_MOVES,
-        POSSIBLE_TARGETS
+        MARK_POSSIBLE_MOVES,
+        MARK_POSSIBLE_TARGETS
     };
     
     void markNeibours(WhatToMark whatToMark, unsigned step, const CellPtr& cell);       
