@@ -173,15 +173,15 @@ bool UI::isCellClicked(GLdouble x, GLdouble y, unsigned& c, unsigned& r)
     vector<CellPtr> cells;
     mGame->getBoard()->getCells(cells);
     
-    for(unsigned i = 0; i < cells.size(); i++)
+    for(unsigned k = 0; k < cells.size(); k++)
     {
-        unsigned npol = cells[i]->x.size();
-        vector<float>& xp = cells[i]->x;
-        vector<float>& yp = cells[i]->y;
+        unsigned npol = cells[k]->x.size();
+        vector<float>& xp = cells[k]->x;
+        vector<float>& yp = cells[k]->y;
 
         // is (x,y) inside the polygon (xp, yp)
         bool res = false;
-        for (int i = 0, j = npol - 1; i < npol; j = i++) 
+        for (unsigned i = 0, j = npol - 1; i < npol; j = i++) 
         {
           if ((((yp[i]<=y) && (y<yp[j])) || ((yp[j]<=y) && (y<yp[i]))) &&
             (x > (xp[j] - xp[i]) * (y - yp[i]) / (yp[j] - yp[i]) + xp[i]))
@@ -190,8 +190,8 @@ bool UI::isCellClicked(GLdouble x, GLdouble y, unsigned& c, unsigned& r)
         
         if(res)
         {
-            c = cells[i]->c;
-            r = cells[i]->r;
+            c = cells[k]->c;
+            r = cells[k]->r;
             return true;
         }
     }
