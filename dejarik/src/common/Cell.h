@@ -25,6 +25,10 @@ public:
     CellPtr prev;
     
     PiecePtr piece;
+    
+private:
+    
+    void createSegment(float radius1, float radius2);
 };
 
 
