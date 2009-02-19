@@ -202,6 +202,26 @@ bool UI::isCellClicked(GLdouble x, GLdouble y, CellPtr& cell)
 }
 
 
+void UI::drawPiece(const CellPtr& cell)
+{
+    if(!cell->piece)
+        return;
+    
+    glColor3f(0.0f ,0.0f, 1.0f);
+    
+    glBegin( GL_POLYGON ); 
+         float x = cell->x_center;
+         float y = cell->y_center;
+         float w = 0.1;
+         glVertex3f(x+w, y, 0);
+         glVertex3f(x, y+w, 0);
+         glVertex3f(x-w, y, 0);
+         glVertex3f(x, y-w, 0);
+    glEnd();
+}
+
+
+
 void UI::drawCell(const CellPtr& cell) 
 {
     TRY_BEGINS;
@@ -232,7 +252,9 @@ void UI::drawCell(const CellPtr& cell)
         {
             glVertex3f( cell->x[i],  cell->y[i], 0.0f );
         }
-    glEnd( ); 
+    glEnd(); 
+    
+    drawPiece(cell);
     
     TRY_RETHROW;
 }
