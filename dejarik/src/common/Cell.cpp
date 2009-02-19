@@ -7,7 +7,7 @@
 #define CELL_RADIUS_2 1.5
 #define CELL_RADIUS_3 2.5
 
-#define INTERIM_ANGLES 3
+#define INTERIM_ANGLES 4
 
 using namespace std;
 
@@ -36,18 +36,19 @@ Cell::Cell(unsigned circle, unsigned radius):
         // angles
         const float a1 = PI/6.0 * r;
         const float a2 = a1 + PI/6.0;
-                
+        const float interim = (a2 - a1)/INTERIM_ANGLES;        
+        
         float a = a1;
-        for(unsigned i = 0; i<INTERIM_ANGLES; i++) // BBBBBB
+        for(unsigned i = 0; i<=INTERIM_ANGLES; i++) // BBBBBB
         {
-            a += (a2 - a1)/INTERIM_ANGLES*i;
             x.push_back(CELL_RADIUS_2 * cos(a));
             y.push_back(CELL_RADIUS_2 * sin(a));
+            a += interim;
         }
 
-        for(unsigned i = 0; i<INTERIM_ANGLES; i++) // DDDDDD
-        {
-            a -= (a2 - a1)/INTERIM_ANGLES*i;
+        for(unsigned i = 0; i<=INTERIM_ANGLES; i++) // DDDDDD
+        {            
+            a -= interim;
             x.push_back(CELL_RADIUS_1 * cos(a));
             y.push_back(CELL_RADIUS_1 * sin(a));
         }
@@ -57,18 +58,19 @@ Cell::Cell(unsigned circle, unsigned radius):
     {        
         const float a1 = PI/6.0 * r;
         const float a2 = a1 + PI/6.0;
+        const float interim = (a2 - a1)/INTERIM_ANGLES; 
                 
         float a = a1;
-        for(unsigned i = 0; i<INTERIM_ANGLES; i++) // BBBBBB
+        for(unsigned i = 0; i<=INTERIM_ANGLES; i++) // BBBBBB
         {
-            a += (a2 - a1)/INTERIM_ANGLES*i;
             x.push_back(CELL_RADIUS_3 * cos(a));
             y.push_back(CELL_RADIUS_3 * sin(a));
+            a += interim;
         }
 
-        for(unsigned i = 0; i<INTERIM_ANGLES; i++) // DDDDDD
+        for(unsigned i = 0; i<=INTERIM_ANGLES; i++) // DDDDDD
         {
-            a -= (a2 - a1)/INTERIM_ANGLES*i;
+            a -= interim;
             x.push_back(CELL_RADIUS_2 * cos(a));
             y.push_back(CELL_RADIUS_2 * sin(a));
         }
