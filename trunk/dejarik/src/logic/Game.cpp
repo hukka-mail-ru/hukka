@@ -91,7 +91,7 @@ bool Game::isOver()
 }
 
     
-bool Game::onCellClick(unsigned c, unsigned x)
+bool Game::onCellClick(unsigned c, unsigned r)
 {
     TRY_BEGINS;
 
@@ -102,7 +102,7 @@ bool Game::onCellClick(unsigned c, unsigned x)
     
     if(stage == TURN_SELECTION)
     {
-        if(player->makeTurn(c, x, stage, battleResult))
+        if(player->makeTurn(c, r, stage, battleResult))
         {
             stage = TURN_ACTION;
             return true;
@@ -112,7 +112,7 @@ bool Game::onCellClick(unsigned c, unsigned x)
     {
         if(battleResult == RES_NO_BATTLE)
         {
-            if(player->makeTurn(c, x, stage, battleResult))
+            if(player->makeTurn(c, r, stage, battleResult))
             {
                 if(battleResult == RES_NO_BATTLE ||
                    battleResult == RES_KILL ||
@@ -133,7 +133,7 @@ bool Game::onCellClick(unsigned c, unsigned x)
         }
         else if(battleResult == RES_PUSH || battleResult == RES_COUNTER_PUSH)
         {
-            if(player->makePush(c, x)) // without verification of piece's owner
+            if(player->makePush(c, r)) // without verification of piece's owner
             {
                 stage = TURN_SELECTION;
                 move++;

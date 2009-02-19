@@ -3,7 +3,7 @@
 
 #include <vector>
 #include "Cell.h"
-#include "../include/Macros.h"
+#include "Macros.h"
 #include "Piece.h"
 #include "Player.h"
 
@@ -26,7 +26,7 @@ public:
     
     void getInitialCells(std::vector<CellPtr>& cells);
     
-    void placePiece(const PiecePtr& piece, unsigned c, unsigned x);
+    void placePiece(const PiecePtr& piece, unsigned c, unsigned r);
     void placePiece(const PiecePtr& piece, const CellPtr& cell);
     
     void distribute(const PiecePtr& piece, const PlayerPtr& player);
@@ -35,15 +35,15 @@ public:
     void clear();
     
     // on user click
-    CellPtr& getCell(unsigned c, unsigned x);   
+    CellPtr& getCell(unsigned c, unsigned r);   
 
     // on user click1: (activate a piece => show possible moves and targets)
     void getPossibleMoves(const PiecePtr& piece, std::vector<CellPtr>& moves);
     void getPossibleTargets(const PiecePtr& piece, std::vector<CellPtr>& targets);
 
     // on user click2: (move the piece OR attack a partner's piece OR push a piece)
-    bool isMoveValid(unsigned c, unsigned x);
-    void getMoveSteps(unsigned c, unsigned x, std::vector<CellPtr>& steps);
+    bool isMoveValid(unsigned c, unsigned r);
+    void getMoveSteps(unsigned c, unsigned r, std::vector<CellPtr>& steps);
     
     // on a kill
     void killPiece(PiecePtr& piece);

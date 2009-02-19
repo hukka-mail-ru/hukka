@@ -76,11 +76,11 @@ public:
     }
     
     // helper for testPossibleMoves
-    bool findCell(std::vector<CellPtr> moves, unsigned c, unsigned x)
+    bool findCell(std::vector<CellPtr> moves, unsigned c, unsigned r)
     {      
         for(unsigned i=0; i<moves.size(); ++i)
         {
-            if(moves[i]->c == c && moves[i]->x == x)
+            if(moves[i]->c == c && moves[i]->r == r)
             {
                 return true;
             }
@@ -497,10 +497,10 @@ public:
         CPPUNIT_ASSERT_EQUAL((unsigned)2, steps.size());
         
         CPPUNIT_ASSERT_EQUAL(interim->c, steps[0]->c);
-        CPPUNIT_ASSERT_EQUAL(interim->x, steps[0]->x);
+        CPPUNIT_ASSERT_EQUAL(interim->r, steps[0]->r);
         
         CPPUNIT_ASSERT_EQUAL(finish->c, steps[1]->c);
-        CPPUNIT_ASSERT_EQUAL(finish->x, steps[1]->x);
+        CPPUNIT_ASSERT_EQUAL(finish->r, steps[1]->r);
         
         // --------------------------------------------------------------
         steps.clear();

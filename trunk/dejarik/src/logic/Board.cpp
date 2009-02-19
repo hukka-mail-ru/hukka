@@ -94,31 +94,31 @@ void Board::killPiece(PiecePtr& piece)
 
 
 
-CellPtr& Board::getCell(unsigned c, unsigned x)
+CellPtr& Board::getCell(unsigned c, unsigned r)
 {
     for(unsigned i=0; i<mCells.size(); ++i)
     {
-        if(mCells[i]->c == c && mCells[i]->x == x)
+        if(mCells[i]->c == c && mCells[i]->r == r)
         {
             return mCells[i];
         }
     }
     
     stringstream err;
-    err << "Board::getCell. No cell with position C=" << c << ", X=" << x;
+    err << "Board::getCell. No cell with position C=" << c << ", R=" << r;
     throw(err.str());
 }
 
 
-bool Board::isMoveValid(unsigned c, unsigned x)
+bool Board::isMoveValid(unsigned c, unsigned r)
 {
     TRY_BEGINS;
     
-    CellPtr finish = getCell(c, x);
+    CellPtr finish = getCell(c, r);
     
     for(unsigned i=0; i<mPossibleMoves.size(); ++i)
     {
-        if(mPossibleMoves[i]->c == finish->c && mPossibleMoves[i]->x == finish->x)
+        if(mPossibleMoves[i]->c == finish->c && mPossibleMoves[i]->r == finish->r)
         {
             return true;
         }
@@ -250,17 +250,17 @@ void Board::markNeibours(WhatToMark whatToMark, unsigned step, const CellPtr& ce
     else if (cell->c == 1)
     {
         mark(whatToMark, step, cell, getCell(0, 0));
-        mark(whatToMark, step, cell, getCell(1, getRightPos(cell->x)));
-        mark(whatToMark, step, cell, getCell(1, getLeftPos(cell->x)));
-        mark(whatToMark, step, cell, getCell(2, cell->x));
+        mark(whatToMark, step, cell, getCell(1, getRightPos(cell->r)));
+        mark(whatToMark, step, cell, getCell(1, getLeftPos(cell->r)));
+        mark(whatToMark, step, cell, getCell(2, cell->r));
         
         //cout << "markNeibours[" << step << "]= " <<  2 << "." <<  cell->x << endl;
     }
     else if (cell->c == 2)
     {
-        mark(whatToMark, step, cell, getCell(2, getRightPos(cell->x)));
-        mark(whatToMark, step, cell, getCell(2, getLeftPos(cell->x)));
-        mark(whatToMark, step, cell, getCell(1, cell->x));
+        mark(whatToMark, step, cell, getCell(2, getRightPos(cell->r)));
+        mark(whatToMark, step, cell, getCell(2, getLeftPos(cell->r)));
+        mark(whatToMark, step, cell, getCell(1, cell->r));
     }
     else
     {
