@@ -94,6 +94,8 @@ bool Game::isOver()
 bool Game::onCellClick(const CellPtr& cell)
 {
     TRY_BEGINS;
+    
+    mBoard->selectClickedCell(cell);
 
     static unsigned move = 0; // a player has 2 moves 
     static PlayerPtr player = mPlayer1; // Player1 makes the first move

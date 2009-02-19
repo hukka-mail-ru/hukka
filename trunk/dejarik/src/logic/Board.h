@@ -19,6 +19,7 @@ class Board // only one board in game
 {
     friend class TestBoard;
     friend class TestPlayer;
+    friend class TestGame;
     
 public:
     
@@ -36,8 +37,8 @@ public:
     void clear();
     
     // on user click
-    CellPtr& getCell(unsigned c, unsigned r);      
     void getCells(std::vector<CellPtr>& cells); // get all cells
+    void selectClickedCell(const CellPtr& cell);
 
     // on user click1: (activate a piece => show possible moves and targets)
     void getPossibleMoves(const PiecePtr& piece, std::vector<CellPtr>& moves);
@@ -56,6 +57,8 @@ public:
     
 private:
     
+    CellPtr& getCell(unsigned c, unsigned r);      
+
     void unmarkAll();
     
     enum WhatToMark

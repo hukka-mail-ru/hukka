@@ -22,6 +22,8 @@ Board::Board()
 
 void Board::getInitialCells(vector<CellPtr>& cells)
 {
+    TRY_BEGINS;
+    
     cells.push_back(getCell(2,0));
     cells.push_back(getCell(2,1));
     cells.push_back(getCell(2,2));
@@ -30,6 +32,8 @@ void Board::getInitialCells(vector<CellPtr>& cells)
     cells.push_back(getCell(2,7));
     cells.push_back(getCell(2,8));
     cells.push_back(getCell(2,9));
+    
+    TRY_RETHROW;
 }
 
 void Board::clear()
@@ -337,4 +341,14 @@ void Board::getMoveSteps(const CellPtr& start, std::vector<CellPtr>& steps)
 void Board::getCells(vector<CellPtr>& cells)
 {
     cells = mCells;    
+}
+
+void Board::selectClickedCell(const CellPtr& cell)
+{
+    for(unsigned i = 0; i < mCells.size(); i++)
+    {
+        mCells[i]->selected = SEL_NONE;
+    }
+    
+    cell->selected = SEL_CLICKED;
 }
