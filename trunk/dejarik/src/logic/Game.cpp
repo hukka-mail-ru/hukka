@@ -94,19 +94,27 @@ bool Game::isOver()
 bool Game::onCellClick(const CellPtr& cell)
 {
     TRY_BEGINS;
-    
-    mBoard->selectClickedCell(cell);
 
     static unsigned move = 0; // a player has 2 moves 
     static PlayerPtr player = mPlayer1; // Player1 makes the first move
     static TurnStage stage = TURN_SELECTION; // each move has two phases: START (selection), FINISH (action)   
     static BattleResult battleResult = RES_NO_BATTLE;
     
+    if(cell->piece)
+    {
+        cout << "Piece " << cell->piece->name << " Move: " << cell->piece->moveRating << endl;
+    }
+   // string st = (stage == TURN_SELECTION) ? "TURN_SELECTION" : "TURN_ACTION";
+    cout << "Stage " << stage << endl;
+    
+    
     if(stage == TURN_SELECTION)
     {
         if(player->makeTurn(cell, stage, battleResult))
         {
             stage = TURN_ACTION;
+            
+            mBoard->selectClickedCell(cell);
             return true;
         }
     }
@@ -130,6 +138,7 @@ bool Game::onCellClick(const CellPtr& cell)
                     move = 0;
                 }
                 
+                mBoard->selectClickedCell(cell);
                 return true;
             }
         }
@@ -146,6 +155,7 @@ bool Game::onCellClick(const CellPtr& cell)
                     move = 0;
                 }
                 
+                mBoard->selectClickedCell(cell);
                 return true;
             }
         }
