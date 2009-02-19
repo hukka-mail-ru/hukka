@@ -27,6 +27,7 @@ public:
      */
     bool onCellClick(unsigned c, unsigned r);
 
+    const BoardPtr& getBoard();
     
 private:
         

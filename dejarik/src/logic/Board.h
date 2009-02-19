@@ -7,7 +7,8 @@
 #include "Piece.h"
 #include "Player.h"
 
-#define CIRCLE 12 // cells in a circle
+#define CIRCLES 2 
+#define RADIUSES 12 // cells in a circle
 
 CLASSPTR(Board);
 CLASSPTR(Piece);
@@ -35,7 +36,8 @@ public:
     void clear();
     
     // on user click
-    CellPtr& getCell(unsigned c, unsigned r);   
+    CellPtr& getCell(unsigned c, unsigned r);      
+    void getCells(std::vector<CellPtr>& cells); // get all cells
 
     // on user click1: (activate a piece => show possible moves and targets)
     void getPossibleMoves(const PiecePtr& piece, std::vector<CellPtr>& moves);

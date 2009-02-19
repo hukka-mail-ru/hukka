@@ -174,3 +174,8 @@ bool Game::checkVictory(PlayerPtr& vinner)
     return false;
 }
 
+const BoardPtr& Game::getBoard()
+{
+    return mBoard;
+}
+

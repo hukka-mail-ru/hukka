@@ -10,7 +10,7 @@ Board::Board()
     CellPtr cell0 (new Cell(0,0));
     mCells.push_back(cell0);
     
-    for(unsigned i=0; i<CIRCLE; i++)
+    for(unsigned i=0; i<RADIUSES; i++)
     {
         CellPtr cell1 (new Cell(1,i));
         mCells.push_back(cell1);
@@ -242,7 +242,7 @@ void Board::markNeibours(WhatToMark whatToMark, unsigned step, const CellPtr& ce
     
     if(cell->c == 0)
     {
-        for(unsigned i=0; i<CIRCLE; ++i)
+        for(unsigned i=0; i<RADIUSES; ++i)
         {
             mark(whatToMark, step, cell, getCell(1, i));
         }
@@ -299,7 +299,7 @@ void Board::mark(WhatToMark whatToMark, unsigned step, const CellPtr& prev, cons
 
 unsigned Board::getRightPos(unsigned pos)
 {
-    if(pos == CIRCLE - 1)
+    if(pos == RADIUSES - 1)
         return 0;
     else
         return ++pos;
@@ -308,7 +308,7 @@ unsigned Board::getRightPos(unsigned pos)
 unsigned Board::getLeftPos(unsigned pos)
 {
     if(pos == 0)
-        return CIRCLE - 1;
+        return RADIUSES - 1;
     else
         return --pos;
 }
@@ -334,4 +334,9 @@ void Board::getMoveSteps(unsigned c, unsigned x, std::vector<CellPtr>& steps)
 
     
     TRY_RETHROW;  
+}
+
+void Board::getCells(vector<CellPtr>& cells)
+{
+    cells = mCells;    
 }

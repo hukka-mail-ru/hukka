@@ -12,8 +12,6 @@
  
 #include <iostream>
 #include <stdlib.h>
-#include <math.h>
-
 
 #include "SDL.h"
 #include "UI.h"
@@ -24,11 +22,6 @@
 #define SCREEN_HEIGHT 320
 #define SCREEN_BPP     16
 
-#define PI 3.14159265
-
-#define CELL_RADIUS_1 0.5 
-#define CELL_RADIUS_2 1.5
-#define CELL_RADIUS_3 2.5
 
 using namespace std;
 
@@ -171,133 +164,85 @@ bool UI::initGL()
     return true;
 }
 
-// is a point inside polynom
-bool pnpoly(int npol, float * xp, float * yp, float x, float y)
-{
-  bool c = false;
-  for (int i = 0, j = npol - 1; i < npol; j = i++) 
-  {
-    if ((((yp[i]<=y) && (y<yp[j])) || ((yp[j]<=y) && (y<yp[i]))) &&
-      (x > (xp[j] - xp[i]) * (y - yp[i]) / (yp[j] - yp[i]) + xp[i]))
-        c = !c;
-  }
-  return c;
-}
 
 
-bool UI::isCell(GLdouble x, GLdouble y, unsigned& cellC, unsigned& cellX)
+bool UI::isCellClicked(GLdouble x, GLdouble y, unsigned& c, unsigned& r)
 {
-    // CIRCLE 1
-    float a1 = 0;
-    for(unsigned i = 0; i < 12; i++)
-    {
-        float x1 = CELL_RADIUS_1;
-        float x2 = CELL_RADIUS_2;
-        float a1 = PI/6.0*i;
-        float a2 = a1 + PI/6.0;
+    TRY_BEGINS;
     
-        float xp[4] = {x1 * cos(a1), x2 * cos(a1), x2 * cos(a2), x1 * cos(a2)};
-        float yp[4] = {x1 * sin(a1), x2 * sin(a1), x2 * sin(a2), x1 * sin(a2)};
-        
-        if(pnpoly(4, xp, yp, x, y))
+    vector<CellPtr> cells;
+    mGame->getBoard()->getCells(cells);
+    
+    for(unsigned i = 0; i < cells.size(); i++)
+    {
+        unsigned npol = cells[i]->x.size();
+        vector<float>& xp = cells[i]->x;
+        vector<float>& yp = cells[i]->y;
+
+        // is (x,y) inside the polygon (xp, yp)
+        bool res = false;
+        for (int i = 0, j = npol - 1; i < npol; j = i++) 
         {
-            cellC = 1;
-            cellX = i;
+          if ((((yp[i]<=y) && (y<yp[j])) || ((yp[j]<=y) && (y<yp[i]))) &&
+            (x > (xp[j] - xp[i]) * (y - yp[i]) / (yp[j] - yp[i]) + xp[i]))
+              res = !res;
+        }
+        
+        if(res)
+        {
+            c = cells[i]->c;
+            r = cells[i]->r;
             return true;
         }
     }
     
-    // CIRCLE 2
-    a1 = 0;
-    for(unsigned i = 0; i < 12; i++)
-    {
-        float x1 = CELL_RADIUS_2;
-        float x2 = CELL_RADIUS_3;
-        float a1 = PI/6.0*i;
-        float a2 = a1 + PI/6.0;
-    
-        float xp[4] = {x1 * cos(a1), x2 * cos(a1), x2 * cos(a2), x1 * cos(a2)};
-        float yp[4] = {x1 * sin(a1), x2 * sin(a1), x2 * sin(a2), x1 * sin(a2)};
-        
-        if(pnpoly(4, xp, yp, x, y))
-        {
-            cellC = 2;
-            cellX = i;
-            return true;
-        }
-    }
-    
-    // CENTRAL CIRCLE
-    float xp[12] = {0};
-    float yp[12] = {0};
-    for(unsigned i = 0; i < 12; i++)
-    {
-        xp[i] = CELL_RADIUS_1 * cos(PI/6.0*i);
-        yp[i] = CELL_RADIUS_1 * sin(PI/6.0*i);
-    }
-    if(pnpoly(12, xp, yp, x, y))
-    {
-        cellC = 0;
-        cellX = 0;
-        return true;
-    }
+    TRY_RETHROW;    
     
     return false;
 
 }
 
 
-void UI::drawCell(Color color, float x1, float x2, float a1) // a = init corner
+void UI::drawCell(const CellPtr& cell) 
 {
-    float a2 = a1 + PI/6.0;
-    
-    if(color == CL_BLACK)
-    {
-        glColor3f(0.0f,0.0f,0.0f);
-    }
-    else if(color == CL_WHITE)
+    TRY_BEGINS;
+
+    // cells must be back/white like a chess
+    unsigned rest = (cell->c == 0 || cell->c == 1) ? 0 : 1;     
+    if(cell->r % 2 == rest) // odd/even
     {
         glColor3f(1.0f,1.0f,1.0f);
     }
+    else
+    {
+        glColor3f(0.0f,0.0f,0.0f);
+    }
     
-    glBegin( GL_QUADS );      
-        glVertex3f( x1 * cos(a1),  x1 * sin(a1), 0.0f );
-        glVertex3f( x2 * cos(a1),  x2 * sin(a1), 0.0f );
-        glVertex3f( x2 * cos(a2),  x2 * sin(a2), 0.0f );
-        glVertex3f( x1 * cos(a2),  x1 * sin(a2), 0.0f );
-    glEnd( );  
+    glBegin( GL_POLYGON );    
+        for(unsigned i = 0; i < cell->x.size(); i++)
+        {
+            glVertex3f( cell->x[i],  cell->y[i], 0.0f );
+        }
+    glEnd( ); 
+    
+    TRY_RETHROW;
 }
+
 
 
 void UI::drawBoard()
 {
-    // the cells
-    float x = CELL_RADIUS_1;
-    for(unsigned i = 1; i < 12; i+= 2)
+    TRY_BEGINS;
+    
+    vector<CellPtr> cells;
+    mGame->getBoard()->getCells(cells);
+    
+    for(unsigned i = 0; i < cells.size(); i++)
     {
-        drawCell(CL_WHITE, CELL_RADIUS_1, CELL_RADIUS_2, PI/6.0*(i));
-        drawCell(CL_WHITE, CELL_RADIUS_2, CELL_RADIUS_3, PI/6.0*(i + 1));
-        drawCell(CL_BLACK, CELL_RADIUS_1, CELL_RADIUS_2, PI/6.0*(i + 1));
-        drawCell(CL_BLACK, CELL_RADIUS_2, CELL_RADIUS_3, PI/6.0*(i + 2));
-    }  
+        drawCell(cells[i]);
+    }
     
-    // the central cell 
-    glColor3f(0.0f,0.0f,0.0f);
-    glBegin( GL_POLYGON ); 
-        for(unsigned i = 0; i < 12; i++)
-        {
-            glVertex3f( CELL_RADIUS_1 * cos(PI/6.0*i),  CELL_RADIUS_1 * sin(PI/6.0*i), 0.0f );
-        }
-    glEnd( );  
-    
-    glColor3f(1.0f,1.0f,1.0f);
-    glBegin( GL_POLYGON ); 
-        for(unsigned i = 0; i < 12; i++)
-        {
-            glVertex3f( (CELL_RADIUS_1-0.03) * cos(PI/6.0*i),  
-                        (CELL_RADIUS_1-0.03) * sin(PI/6.0*i), 0.0f );
-        }
-    glEnd( );  
+    TRY_RETHROW;
 }
 
 
@@ -306,6 +251,8 @@ void UI::drawBoard()
 /* Here goes our drawing code */
 bool UI::drawAll()
 {
+    TRY_BEGINS;
+    
     /* Clear The Screen And The Depth Buffer */
     glClear( GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT );
     glLoadIdentity();
@@ -320,6 +267,8 @@ bool UI::drawAll()
         SDL_GL_SwapBuffers();
     }
 
+    TRY_RETHROW;
+    
     return true;
 }
 
@@ -327,6 +276,8 @@ bool UI::drawAll()
 
 void UI::handleEvents()
 {
+    TRY_BEGINS;
+    
     /* wait for events */
     SDL_Event event;
 
@@ -359,7 +310,7 @@ void UI::handleEvents()
                     
                     unsigned cellC = 0;
                     unsigned cellX = 0;
-                    if(isCell(x, y, cellC, cellX))
+                    if(isCellClicked(x, y, cellC, cellX))
                     {
                         cout << "cell " << cellC << "." << cellX << endl;
                         mGame->onCellClick(cellC, cellX);
@@ -378,6 +329,8 @@ void UI::handleEvents()
     
     /* clean ourselves up and exit */
     stop(true);
+    
+    TRY_RETHROW;
 }
 
 
