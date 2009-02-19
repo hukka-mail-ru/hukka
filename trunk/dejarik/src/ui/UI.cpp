@@ -206,6 +206,7 @@ bool UI::isCellClicked(GLdouble x, GLdouble y, unsigned& c, unsigned& r)
 void UI::drawCell(const CellPtr& cell) 
 {
     TRY_BEGINS;
+       
 
     // cells must be back/white like a chess
     unsigned rest = (cell->c == 0 || cell->c == 1) ? 0 : 1;     
