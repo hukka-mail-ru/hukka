@@ -442,9 +442,11 @@ public:
         std::vector<CellPtr> moves;
         board->getPossibleMoves(king, moves);
         
-        CPPUNIT_ASSERT(board->isMoveValid(0,0) == false); // no move
-        CPPUNIT_ASSERT(board->isMoveValid(1,5) == true);
-        CPPUNIT_ASSERT(board->isMoveValid(2,11) == false);
+ 
+        
+        CPPUNIT_ASSERT(board->isMoveValid(board->getCell(0,0)) == false); // no move
+        CPPUNIT_ASSERT(board->isMoveValid(board->getCell(1,5)) == true);
+        CPPUNIT_ASSERT(board->isMoveValid(board->getCell(2,11)) == false);
 
         // ----------------------------------------
         
@@ -455,18 +457,18 @@ public:
         moves.clear();
         board->getPossibleMoves(queen, moves);
 
-        CPPUNIT_ASSERT(board->isMoveValid(2,0) == false); // no move
-        CPPUNIT_ASSERT(board->isMoveValid(2,10) == true);
-        CPPUNIT_ASSERT(board->isMoveValid(1,11) == true);
-        CPPUNIT_ASSERT(board->isMoveValid(0,0) == false); // we have King there!
-        CPPUNIT_ASSERT(board->isMoveValid(1,1) == true);
+        CPPUNIT_ASSERT(board->isMoveValid(board->getCell(2,0)) == false); // no move
+        CPPUNIT_ASSERT(board->isMoveValid(board->getCell(2,10)) == true);
+        CPPUNIT_ASSERT(board->isMoveValid(board->getCell(1,11)) == true);
+        CPPUNIT_ASSERT(board->isMoveValid(board->getCell(0,0)) == false); // we have King there!
+        CPPUNIT_ASSERT(board->isMoveValid(board->getCell(1,1)) == true);
         
-        CPPUNIT_ASSERT(board->isMoveValid(1,2) == false);
-        CPPUNIT_ASSERT(board->isMoveValid(2,9) == false); // out of possible moves
-        CPPUNIT_ASSERT(board->isMoveValid(1,10) == false);
-        CPPUNIT_ASSERT(board->isMoveValid(1,5) == false);
-        CPPUNIT_ASSERT(board->isMoveValid(1,2) == false);
-        CPPUNIT_ASSERT(board->isMoveValid(2,3) == false);
+        CPPUNIT_ASSERT(board->isMoveValid(board->getCell(1,2)) == false);
+        CPPUNIT_ASSERT(board->isMoveValid(board->getCell(2,9)) == false); // out of possible moves
+        CPPUNIT_ASSERT(board->isMoveValid(board->getCell(1,10)) == false);
+        CPPUNIT_ASSERT(board->isMoveValid(board->getCell(1,5)) == false);
+        CPPUNIT_ASSERT(board->isMoveValid(board->getCell(1,2)) == false);
+        CPPUNIT_ASSERT(board->isMoveValid(board->getCell(2,3)) == false);
         
         TRY_CATCH;
     }
@@ -492,7 +494,7 @@ public:
         board->getPossibleMoves(queen, moves);
         
         std::vector<CellPtr> steps;
-        board->getMoveSteps(0, 0, steps);
+        board->getMoveSteps(board->getCell(0, 0), steps);
         
         CPPUNIT_ASSERT_EQUAL((unsigned)2, steps.size());
         
@@ -504,15 +506,15 @@ public:
         
         // --------------------------------------------------------------
         steps.clear();
-        board->getMoveSteps(2, 2, steps);        
+        board->getMoveSteps(board->getCell(2, 2), steps);        
         CPPUNIT_ASSERT_EQUAL((unsigned)2, steps.size());
         
         steps.clear();
-        board->getMoveSteps(1, 1, steps);        
+        board->getMoveSteps(board->getCell(1, 1), steps);        
         CPPUNIT_ASSERT_EQUAL((unsigned)2, steps.size());
 
         steps.clear();
-        board->getMoveSteps(1, 11, steps);        
+        board->getMoveSteps(board->getCell(1, 11), steps);        
         CPPUNIT_ASSERT_EQUAL((unsigned)2, steps.size());
 
         TRY_CATCH;

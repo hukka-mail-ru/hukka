@@ -41,9 +41,9 @@ private:
 
     /*
      * Defines if the mouse click is valid (true/false).
-     * and transforms the mouse coordinates into cell coordinates 
+     * if true, returns the clicked cell
      */
-    bool isCellClicked(GLdouble x, GLdouble y, unsigned& c, unsigned& r);
+    bool isCellClicked(GLdouble x, GLdouble y,  CellPtr& cell);
     
     GamePtr mGame; 
     bool mQuit;

@@ -87,26 +87,28 @@ public:
         Game game;
         game.startup();
         
-        PiecePtr mine = game.mBoard->getCell(2,0)->piece;
-        PiecePtr enemy = game.mBoard->getCell(2,9)->piece;
+        BoardPtr board = game.getBoard();
+        
+        PiecePtr mine = board->getCell(2,0)->piece;
+        PiecePtr enemy = board->getCell(2,9)->piece;
         
         // player1 - me
-        CPPUNIT_ASSERT(game.onCellClick(2,9) == false); // click on enemy cell
-        CPPUNIT_ASSERT(game.onCellClick(0,0) == false); // click on empty cell
-        CPPUNIT_ASSERT(game.onCellClick(2,0) == true);  // select 'mine'
-        CPPUNIT_ASSERT(game.onCellClick(2,5) == false); // wrong move
-        CPPUNIT_ASSERT(game.onCellClick(1,0) == true);  // move 'mine'
-        CPPUNIT_ASSERT(game.onCellClick(1,0) == true);  // select 'mine'
-        CPPUNIT_ASSERT(game.onCellClick(1,11) == true); // move 'mine'
+        CPPUNIT_ASSERT(game.onCellClick(board->getCell(2,9)) == false); // click on enemy cell
+        CPPUNIT_ASSERT(game.onCellClick(board->getCell(0,0)) == false); // click on empty cell
+        CPPUNIT_ASSERT(game.onCellClick(board->getCell(2,0)) == true);  // select 'mine'
+        CPPUNIT_ASSERT(game.onCellClick(board->getCell(2,5)) == false); // wrong move
+        CPPUNIT_ASSERT(game.onCellClick(board->getCell(1,0)) == true);  // move 'mine'
+        CPPUNIT_ASSERT(game.onCellClick(board->getCell(1,0)) == true);  // select 'mine'
+        CPPUNIT_ASSERT(game.onCellClick(board->getCell(1,11)) == true); // move 'mine'
         
         // player2 -enemy
-        CPPUNIT_ASSERT(game.onCellClick(2,3) == false); // click on my cell
-        CPPUNIT_ASSERT(game.onCellClick(0,0) == false); // click on empty cell
-        CPPUNIT_ASSERT(game.onCellClick(2,9) == true);  // select 'enemy'
-        CPPUNIT_ASSERT(game.onCellClick(2,4) == false); // wrong move
-        CPPUNIT_ASSERT(game.onCellClick(2,10) == true);  // move 'enemy'
-        CPPUNIT_ASSERT(game.onCellClick(2,10) == true);  // select 'enemy'
-        CPPUNIT_ASSERT(game.onCellClick(1,10) == true); // move 'enemy'
+        CPPUNIT_ASSERT(game.onCellClick(board->getCell(2,3)) == false); // click on my cell
+        CPPUNIT_ASSERT(game.onCellClick(board->getCell(0,0)) == false); // click on empty cell
+        CPPUNIT_ASSERT(game.onCellClick(board->getCell(2,9)) == true);  // select 'enemy'
+        CPPUNIT_ASSERT(game.onCellClick(board->getCell(2,4)) == false); // wrong move
+        CPPUNIT_ASSERT(game.onCellClick(board->getCell(2,10)) == true);  // move 'enemy'
+        CPPUNIT_ASSERT(game.onCellClick(board->getCell(2,10)) == true);  // select 'enemy'
+        CPPUNIT_ASSERT(game.onCellClick(board->getCell(1,10)) == true); // move 'enemy'
         
         // player1 - me
         

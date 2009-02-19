@@ -166,7 +166,7 @@ bool UI::initGL()
 
 
 
-bool UI::isCellClicked(GLdouble x, GLdouble y, unsigned& c, unsigned& r)
+bool UI::isCellClicked(GLdouble x, GLdouble y, CellPtr& cell)
 {
     TRY_BEGINS;
     
@@ -190,8 +190,7 @@ bool UI::isCellClicked(GLdouble x, GLdouble y, unsigned& c, unsigned& r)
         
         if(res)
         {
-            c = cells[k]->c;
-            r = cells[k]->r;
+            cell = cells[k];
             return true;
         }
     }
@@ -309,12 +308,11 @@ void UI::handleEvents()
                     GLdouble z = 0;
                     mouseToGL(event.button.x, event.button.y, x, y, z);
                     
-                    unsigned cellC = 0;
-                    unsigned cellX = 0;
-                    if(isCellClicked(x, y, cellC, cellX))
+                    CellPtr cell;
+                    if(isCellClicked(x, y, cell))
                     {
-                        cout << "cell " << cellC << "." << cellX << endl;
-                        mGame->onCellClick(cellC, cellX);
+                        cout << "cell " << cell->c << "." << cell->r << endl;
+                        mGame->onCellClick(cell);
                     }   
                 }
             }

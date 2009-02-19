@@ -31,12 +31,11 @@ unsigned Player::howManyPieces()
 }
 
 
-bool Player::makeTurn(unsigned c, unsigned x, TurnStage turnStage, BattleResult& battleResult) 
+bool Player::makeTurn(const CellPtr& cell, TurnStage turnStage, BattleResult& battleResult) 
 {
     TRY_BEGINS;
     
     // Define the cell: empty ? ally ? enemy ?
-    CellPtr cell = mBoard->getCell(c, x);
     PiecePtr piece = cell->piece;
     
     // can't start from an empty cell
@@ -71,7 +70,7 @@ bool Player::makeTurn(unsigned c, unsigned x, TurnStage turnStage, BattleResult&
     {
         if(!piece) // move to cell
         {
-            return movePiece(mActivePiece, c, x);
+            return movePiece(mActivePiece, cell);
         }
         else // attack enemy piece
         {
@@ -86,11 +85,11 @@ bool Player::makeTurn(unsigned c, unsigned x, TurnStage turnStage, BattleResult&
 }
 
 
-bool Player::makePush(unsigned c, unsigned x)
+bool Player::makePush(const CellPtr& cell)
 {    
     TRY_BEGINS;
     
-    return movePiece(mBoard->getActivePiece(), c, x);
+    return movePiece(mBoard->getActivePiece(), cell);
     
     TRY_RETHROW;
 }
@@ -194,17 +193,17 @@ BattleResult Player::getBattleResult(unsigned attackRating, unsigned defenceRati
 }
 
 
-bool Player::movePiece(const PiecePtr& piece, unsigned c, unsigned x) 
+bool Player::movePiece(const PiecePtr& piece, const CellPtr& cell) 
 {
     TRY_BEGINS;
     
-    if(!mBoard->isMoveValid(c, x))
+    if(!mBoard->isMoveValid(cell))
     {
         return false;
     }
     
     vector<CellPtr> steps;
-    mBoard->getMoveSteps(c, x, steps);
+    mBoard->getMoveSteps(cell, steps);
     
     for(unsigned i = 0; i<steps.size(); i++)
     {

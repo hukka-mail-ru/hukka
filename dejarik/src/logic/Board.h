@@ -44,8 +44,8 @@ public:
     void getPossibleTargets(const PiecePtr& piece, std::vector<CellPtr>& targets);
 
     // on user click2: (move the piece OR attack a partner's piece OR push a piece)
-    bool isMoveValid(unsigned c, unsigned r);
-    void getMoveSteps(unsigned c, unsigned r, std::vector<CellPtr>& steps);
+    bool isMoveValid(const CellPtr& cell);
+    void getMoveSteps(const CellPtr& start, std::vector<CellPtr>& steps);
     
     // on a kill
     void killPiece(PiecePtr& piece);

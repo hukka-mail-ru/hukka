@@ -6,10 +6,12 @@
 #include "Macros.h"
 #include "Piece.h"
 #include "Board.h"
+#include "Cell.h"
 
 CLASSPTR(Piece);
 CLASSPTR(Board);
 CLASSPTR(Player);
+CLASSPTR(Cell);
 
 #ifdef UNIT_TESTS
 extern bool TestMakePush;
@@ -67,7 +69,7 @@ public:
       
       battleResult: output parameter
     */
-    bool makeTurn(unsigned c, unsigned x, TurnStage turnStage, BattleResult& battleResult);
+    bool makeTurn(const CellPtr& cell, TurnStage turnStage, BattleResult& battleResult);
     
     /*
      * TURN_SELECTION: automatically when Game defined RES_PUSH or RES_COUNTER_PUSH
@@ -78,11 +80,11 @@ public:
      *    isMoveValid
      *    move enemy piece
      */
-    bool makePush(unsigned c, unsigned x);
+    bool makePush(const CellPtr& cell);
     
 private:
     
-    bool movePiece(const PiecePtr& piece, unsigned c, unsigned x);    
+    bool movePiece(const PiecePtr& piece, const CellPtr& cell);    
     
     BattleResult attackEnimy(const PiecePtr& myPiece, const PiecePtr& enemyPiece);
     
