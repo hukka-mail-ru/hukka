@@ -331,11 +331,14 @@ void Board::getCells(vector<CellPtr>& cells)
 }
 
 void Board::selectClickedCell(const CellPtr& cell)
+{   
+    cell->selected = SEL_CLICKED;
+}
+
+void Board::deselectAll()
 {
     for(unsigned i = 0; i < mCells.size(); i++)
     {
         mCells[i]->selected = SEL_NONE;
     }
-    
-    cell->selected = SEL_CLICKED;
 }
