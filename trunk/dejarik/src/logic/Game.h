@@ -9,10 +9,6 @@
 CLASSPTR(Game);
 
 
-#ifdef UNIT_TESTS
-extern bool TestPiecesMoveOneCell;
-#endif
-
 class Game
 {
     friend class TestGame;
@@ -38,6 +34,7 @@ private:
     
     PlayerPtr mPlayer1;
     PlayerPtr mPlayer2;
+    PlayerPtr mActivePlayer;
     
 };
 

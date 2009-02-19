@@ -96,6 +96,16 @@ public:
         CPPUNIT_ASSERT(!game.mBoard->getCell(2,10)->piece);
         CPPUNIT_ASSERT(!game.mBoard->getCell(2,11)->piece);
         
+        CPPUNIT_ASSERT(game.mBoard->getCell(2,0)->piece->player == game.mPlayer1);
+        CPPUNIT_ASSERT(game.mBoard->getCell(2,1)->piece->player == game.mPlayer1);
+        CPPUNIT_ASSERT(game.mBoard->getCell(2,2)->piece->player == game.mPlayer1);
+        CPPUNIT_ASSERT(game.mBoard->getCell(2,3)->piece->player == game.mPlayer1);
+        
+        CPPUNIT_ASSERT(game.mBoard->getCell(2,6)->piece->player == game.mPlayer2);
+        CPPUNIT_ASSERT(game.mBoard->getCell(2,7)->piece->player == game.mPlayer2);
+        CPPUNIT_ASSERT(game.mBoard->getCell(2,8)->piece->player == game.mPlayer2);
+        CPPUNIT_ASSERT(game.mBoard->getCell(2,9)->piece->player == game.mPlayer2);  
+        
         TRY_CATCH;
     }
     
@@ -103,16 +113,21 @@ public:
     {
         TRY_BEGINS;
         SHOW_FUNCTION_NAME;         
-        
-        TestPiecesMoveOneCell = true;
     
         Game game;
         game.startup();
         
         BoardPtr board = game.getBoard();
         
-        PiecePtr mine = board->getCell(2,0)->piece;
-        PiecePtr enemy = board->getCell(2,9)->piece;
+    //    PiecePtr mine = board->getCell(2,0)->piece;
+    //    PiecePtr enemy = board->getCell(2,9)->piece;
+        
+        std::vector<CellPtr> cells;
+        board->getInitialCells(cells);
+        for(unsigned i = 0; i < cells.size(); i++)
+        {
+            cells[i]->piece->moveRating = 1;
+        }
         
         // player1 - me
         CPPUNIT_ASSERT(game.onCellClick(board->getCell(2,9)) == false); // click on enemy cell
@@ -131,10 +146,6 @@ public:
         CPPUNIT_ASSERT(game.onCellClick(board->getCell(2,10)) == true);  // move 'enemy'
         CPPUNIT_ASSERT(game.onCellClick(board->getCell(2,10)) == true);  // select 'enemy'
         CPPUNIT_ASSERT(game.onCellClick(board->getCell(1,10)) == true); // move 'enemy'
-        
-        // player1 - me
-        
-        TestPiecesMoveOneCell = false;
         
         TRY_CATCH;
     }

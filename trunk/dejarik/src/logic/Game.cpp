@@ -5,10 +5,6 @@
 
 using namespace std;
 
-#ifdef UNIT_TESTS
-bool TestPiecesMoveOneCell = false;
-#endif
-
 void Game::startup()
 {
     TRY_BEGINS;
@@ -33,45 +29,24 @@ void Game::startup()
     vector<CellPtr> cells;
     mBoard->getInitialCells(cells);  
     const unsigned pieces_num = pieces.size();
-    
-    
-#ifdef UNIT_TESTS
-    if(TestPiecesMoveOneCell)
-    {
-        for(unsigned i=0; i<pieces_num/2; i++)
-        {
-            pieces[i]->moveRating = 1;
-            mBoard->placePiece(pieces[i], cells[i]);
-            mBoard->distribute(pieces[i], mPlayer1);
-        }
-        for(unsigned i=pieces_num/2; i<pieces_num; i++)
-        {
-            pieces[i]->moveRating = 1;
-            mBoard->placePiece(pieces[i], cells[i]);
-            mBoard->distribute(pieces[i], mPlayer2);
-        }
-        
-        return;
-    }
-#endif
-    
+           
     // randomly divide the pieces between the players, 
     // and place them on opposites sides of the board
     srand((unsigned)time(0));     
-    PlayerPtr player = mPlayer1;
     
     for(unsigned i=0; i<pieces_num; i++)
     {
         unsigned rnd = (rand()%pieces.size()); // random 0.. pieces.size() - 1
         
-        mBoard->placePiece(pieces[rnd], cells[i]);
-        mBoard->distribute(pieces[rnd], player);
+        PlayerPtr player = (i < pieces_num/2) ? mPlayer1 : mPlayer2; 
         
-        player = (player == mPlayer1) ? mPlayer2 : mPlayer1; // next player
+        mBoard->placePiece(pieces[rnd], cells[i]);               
+        mBoard->distribute(pieces[rnd], player);        
+        
         pieces.erase(remove(pieces.begin(), pieces.end(), pieces[rnd]), pieces.end()); 
     }
     
-    
+    mActivePlayer = mPlayer1;
     
     TRY_RETHROW;
 }
@@ -96,7 +71,6 @@ bool Game::onCellClick(const CellPtr& cell)
     TRY_BEGINS;
 
     static unsigned move = 0; // a player has 2 moves 
-    static PlayerPtr player = mPlayer1; // Player1 makes the first move
     static TurnStage stage = TURN_SELECTION; // each move has two phases: START (selection), FINISH (action)   
     static BattleResult battleResult = RES_NO_BATTLE;
     
@@ -110,7 +84,7 @@ bool Game::onCellClick(const CellPtr& cell)
     
     if(stage == TURN_SELECTION)
     {
-        if(player->makeTurn(cell, stage, battleResult))
+        if(mActivePlayer->makeTurn(cell, stage, battleResult))
         {
             stage = TURN_ACTION;
             
@@ -122,7 +96,7 @@ bool Game::onCellClick(const CellPtr& cell)
     {
         if(battleResult == RES_NO_BATTLE)
         {
-            if(player->makeTurn(cell, stage, battleResult))
+            if(mActivePlayer->makeTurn(cell, stage, battleResult))
             {
                 if(battleResult == RES_NO_BATTLE ||
                    battleResult == RES_KILL ||
@@ -134,7 +108,7 @@ bool Game::onCellClick(const CellPtr& cell)
                 
                 if(move == 2)
                 {
-                    player = (player == mPlayer1) ? mPlayer2 : mPlayer1; // next player
+                    mActivePlayer = (mActivePlayer == mPlayer1) ? mPlayer2 : mPlayer1; // next player
                     move = 0;
                 }
                 
@@ -144,14 +118,14 @@ bool Game::onCellClick(const CellPtr& cell)
         }
         else if(battleResult == RES_PUSH || battleResult == RES_COUNTER_PUSH)
         {
-            if(player->makePush(cell)) // without verification of piece's owner
+            if(mActivePlayer->makePush(cell)) // without verification of piece's owner
             {
                 stage = TURN_SELECTION;
                 move++;
                 
                 if(move == 2)
                 {
-                    player = (player == mPlayer1) ? mPlayer2 : mPlayer1; // next player
+                    mActivePlayer = (mActivePlayer == mPlayer1) ? mPlayer2 : mPlayer1; // next player
                     move = 0;
                 }
                 

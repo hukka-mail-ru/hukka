@@ -1,3 +1,5 @@
+cmake_minimum_required(VERSION 2.6)
+
 include_directories (src/common src/logic src/ui) 
 set(CMAKE_CXX_FLAGS "-g -Wall")
 set(SRC src/common/Cell.cpp src/logic/Player.cpp src/logic/Board.cpp src/logic/Game.cpp) 
