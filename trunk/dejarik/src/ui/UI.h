@@ -38,6 +38,7 @@ private:
     bool drawAll();
     void drawBoard();
     void drawCell(const CellPtr& cell);
+    void drawPiece(const CellPtr& cell);
     
     void mouseToGL(float winX, float winY, GLdouble& x, GLdouble& y, GLdouble& z);
 

@@ -25,9 +25,13 @@ public:
     unsigned c; // coordinate: 0,1,2
     unsigned r; // coordinate: 0 in circle 0;   0..11 in circle 1;  0..11 in circle 2.  
     
-    // polygon coordinates
+    // polygon vertexes
     std::vector<float> x;
     std::vector<float> y;
+    
+    // polygon center
+    float x_center;
+    float y_center;
     
     unsigned mark;
     CellPtr prev;

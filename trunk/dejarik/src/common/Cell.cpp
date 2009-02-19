@@ -32,6 +32,9 @@ Cell::Cell(unsigned circle, unsigned radius):
             x.push_back(CELL_RADIUS_1 * cos(a));
             y.push_back(CELL_RADIUS_1 * sin(a));
         }
+        
+        x_center = 0;
+        y_center = 0;
     }
     // CIRCLE 1
     else if(c == 1)
@@ -67,4 +70,10 @@ void Cell::createSegment(float radius1, float radius2)
         x.push_back(radius1 * cos(a));
         y.push_back(radius1 * sin(a));
     }
+    
+    // define center
+    x_center = (radius2 + radius1)/2 * cos((a2 + a1)/2);
+    y_center = (radius2 + radius1)/2 * sin((a2 + a1)/2);
+    
+    
 }
