@@ -38,7 +38,31 @@ public:
         CPPUNIT_ASSERT(board->getCell(2,0)->selected == SEL_CLICKED);
         CPPUNIT_ASSERT(board->getCell(1,0)->selected == SEL_POSSIBLE_MOVE);
         CPPUNIT_ASSERT(board->getCell(2,11)->selected == SEL_POSSIBLE_MOVE);
+
+        CPPUNIT_ASSERT(game.onCellClick(board->getCell(2,3)));
+        CPPUNIT_ASSERT(board->getCell(2,3)->selected == SEL_CLICKED);
+        CPPUNIT_ASSERT(board->getCell(1,3)->selected == SEL_POSSIBLE_MOVE);
+        CPPUNIT_ASSERT(board->getCell(2,4)->selected == SEL_POSSIBLE_MOVE);
+
+        CPPUNIT_ASSERT(game.onCellClick(board->getCell(2,0)));
+        CPPUNIT_ASSERT(board->getCell(2,0)->selected == SEL_CLICKED);
+        CPPUNIT_ASSERT(board->getCell(1,0)->selected == SEL_POSSIBLE_MOVE);
+        CPPUNIT_ASSERT(board->getCell(2,11)->selected == SEL_POSSIBLE_MOVE);
+
+        CPPUNIT_ASSERT(game.onCellClick(board->getCell(2,3)));
+        CPPUNIT_ASSERT(board->getCell(2,3)->selected == SEL_CLICKED);
+        CPPUNIT_ASSERT(board->getCell(1,3)->selected == SEL_POSSIBLE_MOVE);
+        CPPUNIT_ASSERT(board->getCell(2,4)->selected == SEL_POSSIBLE_MOVE);
         
+        CPPUNIT_ASSERT(game.onCellClick(board->getCell(2,0)));
+        CPPUNIT_ASSERT(board->getCell(2,0)->selected == SEL_CLICKED);
+        CPPUNIT_ASSERT(board->getCell(1,0)->selected == SEL_POSSIBLE_MOVE);
+        CPPUNIT_ASSERT(board->getCell(2,11)->selected == SEL_POSSIBLE_MOVE);
+
+        CPPUNIT_ASSERT(game.onCellClick(board->getCell(2,3)));
+        CPPUNIT_ASSERT(board->getCell(2,3)->selected == SEL_CLICKED);
+        CPPUNIT_ASSERT(board->getCell(1,3)->selected == SEL_POSSIBLE_MOVE);
+        CPPUNIT_ASSERT(board->getCell(2,4)->selected == SEL_POSSIBLE_MOVE);
         
         TRY_CATCH;
     }
