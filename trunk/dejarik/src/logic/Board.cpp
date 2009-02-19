@@ -160,57 +160,41 @@ void Board::getPossibleMoves(const PiecePtr& piece, vector<CellPtr>& moves)
     unmarkAll();
     
     //  mark possible moves from the start
-    markNeibours(POSSIBLE_MOVES, 1, piece->cell);
+    markNeibours(MARK_POSSIBLE_MOVES, 1, piece->cell);
     
     // memorize them
     moves.clear();
     for(unsigned i=0; i<mCells.size(); i++)
     {
         if(mCells[i]->mark == 1)
+        {
             moves.push_back(mCells[i]);
+            mCells[i]->selected = SEL_POSSIBLE_MOVE;
+        }
     }
-
-       /*
-    cout << "=== mark1 ====" << endl;
-    for(unsigned i=0; i<moves.size(); ++i)
-        cout << "move[" << i << "]= " <<  moves[i]->c  << "." <<  moves[i]->x << endl;
-    cout << "===" << endl;*/
     
     // mark possible moves for others
     for(unsigned step=2; step <= piece->moveRating; step++)
     {
         for(unsigned i=0; i<moves.size(); ++i)
         {
-            markNeibours(POSSIBLE_MOVES, step, moves[i]);
-       
-            /*
-            cout << "=== mCells" << step << " ==== afrer markNeibours " <<  moves[i]->c  << "." <<  moves[i]->x << endl;
-            for(unsigned i=0; i<mCells.size(); ++i)
-                cout << "cell[" <<  mCells[i]->c  << "." <<  mCells[i]->x << "] " << mCells[i]->mark << endl;
-            cout << "=========" << endl;*/
+            markNeibours(MARK_POSSIBLE_MOVES, step, moves[i]);
         } 
-        
-
         
         // memorize them
         moves.clear();
         for(unsigned i=0; i<mCells.size(); i++)
         {
             if(mCells[i]->mark == step)
+            {
                 moves.push_back(mCells[i]);
+                mCells[i]->selected = SEL_POSSIBLE_MOVE;
+            }
         }
-        
-        /*
-        cout << "=== mark" << step << " ====" << endl;
-        for(unsigned i=0; i<moves.size(); ++i)
-            cout << "move[" << i << "]= " <<  moves[i]->c  << "." <<  moves[i]->x << endl;
-        cout << "=========" << endl;*/
     }
-    
+   
     
     mPossibleMoves = moves;
-        
-
        
     TRY_RETHROW;    
 }
@@ -225,13 +209,16 @@ void Board::getPossibleTargets(const PiecePtr& piece, std::vector<CellPtr>& targ
     const unsigned marked = 1;
     
     //  mark possible moves from the start
-    markNeibours(POSSIBLE_TARGETS, marked, piece->cell);
+    markNeibours(MARK_POSSIBLE_TARGETS, marked, piece->cell);
     
     // memorize them
     for(unsigned i=0; i<mCells.size(); i++)
     {
         if(mCells[i]->mark == marked)
+        {
             targets.push_back(mCells[i]);
+            mCells[i]->selected = SEL_POSSIBLE_TARGET;
+        }
     }
     
     TRY_RETHROW;    
@@ -276,7 +263,7 @@ void Board::mark(WhatToMark whatToMark, unsigned step, const CellPtr& prev, cons
 {
     TRY_BEGINS;
     
-    if(whatToMark == POSSIBLE_MOVES) // mark vacant cells
+    if(whatToMark == MARK_POSSIBLE_MOVES) // mark vacant cells
     {
         if(!cell->piece)
         {
@@ -284,7 +271,7 @@ void Board::mark(WhatToMark whatToMark, unsigned step, const CellPtr& prev, cons
             cell->prev = prev;
         }
     }
-    else if(whatToMark == POSSIBLE_TARGETS)
+    else if(whatToMark == MARK_POSSIBLE_TARGETS)
     {
         if(cell->piece && (cell->piece->player != prev->piece->player)) // mark opponent's pieces
         {

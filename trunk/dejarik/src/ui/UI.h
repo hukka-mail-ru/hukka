@@ -32,7 +32,9 @@ private:
     {
         CL_WHITE,
         CL_BLACK,
-        CL_GREEN
+        CL_GREEN,
+        CL_BLUE,
+        CL_RED
     };
     
     bool drawAll();

@@ -207,6 +207,8 @@ void UI::drawPiece(const CellPtr& cell)
     if(!cell->piece)
         return;
     
+    
+    
     glColor3f(0.0f ,0.0f, 1.0f);
     
     glBegin( GL_POLYGON ); 
@@ -228,11 +230,20 @@ void UI::drawCell(const CellPtr& cell)
     
     Color color = CL_WHITE;
     
+    
     if(cell->selected == SEL_CLICKED)
+    {
+        color = CL_BLUE;
+    }
+    else if(cell->selected == SEL_POSSIBLE_MOVE)
     {
         color = CL_GREEN;
     }
-    else
+    else if(cell->selected == SEL_POSSIBLE_TARGET)
+    {
+        color = CL_RED;
+    }
+    else if(cell->selected == SEL_NONE)
     {
         // cells must be back/white like a chess
         unsigned rest = (cell->c == 0 || cell->c == 1) ? 0 : 1; // depends on circle    
@@ -243,7 +254,9 @@ void UI::drawCell(const CellPtr& cell)
     {
         case CL_WHITE: glColor3f(1.0f,1.0f,1.0f); break;
         case CL_BLACK: glColor3f(0.0f,0.0f,0.0f); break;
-        case CL_GREEN: glColor3f(1.0f,0.0f,0.0f); break;
+        case CL_GREEN: glColor3f(0.0f,1.0f,0.0f); break;
+        case CL_BLUE: glColor3f(0.0f,0.0f,1.0f); break;
+        case CL_RED: glColor3f(1.0f,0.0f,0.0f); break;
         default: return;
     }
        

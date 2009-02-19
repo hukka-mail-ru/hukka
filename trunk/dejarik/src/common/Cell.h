@@ -12,6 +12,7 @@ enum Selection
     SEL_NONE,
     SEL_CLICKED,
     SEL_POSSIBLE_MOVE,
+    SEL_POSSIBLE_TARGET,
     SEL_POSSIBLE_PUSH
 };
 
