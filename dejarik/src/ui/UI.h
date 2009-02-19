@@ -3,6 +3,7 @@
 
 #include <GL/gl.h>
 #include <GL/glu.h>
+#include "SDL.h"
 
 #include "../common/Macros.h"
 #include "Game.h"
@@ -30,7 +31,8 @@ private:
     enum Color
     {
         CL_WHITE,
-        CL_BLACK
+        CL_BLACK,
+        CL_GREEN
     };
     
     bool drawAll();
@@ -44,6 +46,8 @@ private:
      * if true, returns the clicked cell
      */
     bool isCellClicked(GLdouble x, GLdouble y,  CellPtr& cell);
+    
+    void onMouseClick(const SDL_Event& event);
     
     GamePtr mGame; 
     bool mQuit;

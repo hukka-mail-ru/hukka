@@ -7,6 +7,14 @@
 CLASSPTR(Cell);
 CLASSPTR(Piece);
 
+enum Selection
+{
+    SEL_NONE,
+    SEL_CLICKED,
+    SEL_POSSIBLE_MOVE,
+    SEL_POSSIBLE_PUSH
+};
+
 struct Cell
 {
 public:
@@ -25,6 +33,8 @@ public:
     CellPtr prev;
     
     PiecePtr piece;
+    
+    Selection selected; // by mouse or 
     
 private:
     

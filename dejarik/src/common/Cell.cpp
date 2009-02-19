@@ -16,7 +16,8 @@ using namespace std;
 Cell::Cell(unsigned circle, unsigned radius):
     c(circle),
     r(radius),
-    mark(0) // not marked initially
+    mark(0), // not marked initially
+    selected(SEL_NONE) // not selected initially
 {
     prev.reset();
     piece.reset();

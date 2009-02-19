@@ -13,7 +13,7 @@
 #include <iostream>
 #include <stdlib.h>
 
-#include "SDL.h"
+
 #include "UI.h"
 
 
@@ -205,19 +205,28 @@ bool UI::isCellClicked(GLdouble x, GLdouble y, CellPtr& cell)
 void UI::drawCell(const CellPtr& cell) 
 {
     TRY_BEGINS;
-       
-
-    // cells must be back/white like a chess
-    unsigned rest = (cell->c == 0 || cell->c == 1) ? 0 : 1;     
-    if(cell->r % 2 == rest) // odd/even
+    
+    Color color = CL_WHITE;
+    
+    if(cell->selected == SEL_CLICKED)
     {
-        glColor3f(1.0f,1.0f,1.0f);
+        color = CL_GREEN;
     }
     else
     {
-        glColor3f(0.0f,0.0f,0.0f);
+        // cells must be back/white like a chess
+        unsigned rest = (cell->c == 0 || cell->c == 1) ? 0 : 1; // depends on circle    
+        color = (cell->r % 2 == rest) ? CL_WHITE : CL_BLACK; // odd/even
     }
     
+    switch(color)
+    {
+        case CL_WHITE: glColor3f(1.0f,1.0f,1.0f); break;
+        case CL_BLACK: glColor3f(0.0f,0.0f,0.0f); break;
+        case CL_GREEN: glColor3f(1.0f,0.0f,0.0f); break;
+        default: return;
+    }
+       
     glBegin( GL_POLYGON );    
         for(unsigned i = 0; i < cell->x.size(); i++)
         {
@@ -273,14 +282,30 @@ bool UI::drawAll()
 }
 
 
+void UI::onMouseClick(const SDL_Event& event)
+{
+    if( event.button.button == SDL_BUTTON_LEFT ) 
+    { 
+        GLdouble x = 0;
+        GLdouble y = 0;
+        GLdouble z = 0;
+        mouseToGL(event.button.x, event.button.y, x, y, z);
+        
+        CellPtr cell;
+        if(isCellClicked(x, y, cell))
+        {
+            cout << "cell " << cell->c << "." << cell->r << endl;                        
+            mGame->onCellClick(cell);
+        }   
+    }   
+}
+
 
 void UI::handleEvents()
 {
     TRY_BEGINS;
     
-    /* wait for events */
     SDL_Event event;
-
     while ( !mQuit )
     {
         drawAll();
@@ -288,33 +313,10 @@ void UI::handleEvents()
         /* handle the events in the queue */
         while ( SDL_PollEvent( &event ) )
         {
-            // KEY EVENT
-            if( event.type == SDL_KEYDOWN ) // handle key pressed 
-            {
-                if( event.key.keysym.sym  == SDLK_ESCAPE)
-                {
-                    mQuit = true;
-                    break;
-                }
-            }
-            
             // MOUSE EVENT
-            else if( event.type == SDL_MOUSEBUTTONDOWN ) 
+            if( event.type == SDL_MOUSEBUTTONDOWN ) 
             {
-                if( event.button.button == SDL_BUTTON_LEFT ) 
-                { 
-                    GLdouble x = 0;
-                    GLdouble y = 0;
-                    GLdouble z = 0;
-                    mouseToGL(event.button.x, event.button.y, x, y, z);
-                    
-                    CellPtr cell;
-                    if(isCellClicked(x, y, cell))
-                    {
-                        cout << "cell " << cell->c << "." << cell->r << endl;
-                        mGame->onCellClick(cell);
-                    }   
-                }
+                onMouseClick(event);
             }
 
             else if(event.type == SDL_QUIT) // handle stop
@@ -322,8 +324,6 @@ void UI::handleEvents()
                 mQuit = true;
             }
         }
-    
-        
     }
     
     /* clean ourselves up and exit */
