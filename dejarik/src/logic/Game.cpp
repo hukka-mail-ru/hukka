@@ -69,6 +69,8 @@ bool Game::isOver()
 bool Game::onCellClick(const CellPtr& cell)
 {
     TRY_BEGINS;
+    
+    mBoard->deselectAll();
 
     static unsigned move = 0; // a player has 2 moves 
     static TurnStage stage = TURN_SELECTION; // each move has two phases: START (selection), FINISH (action)   

@@ -38,6 +38,7 @@ public:
     
     // on user click
     void getCells(std::vector<CellPtr>& cells); // get all cells
+    void deselectAll();
     void selectClickedCell(const CellPtr& cell);
 
     // on user click1: (activate a piece => show possible moves and targets)
