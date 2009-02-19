@@ -4,7 +4,7 @@
 #include <GL/gl.h>
 #include <GL/glu.h>
 
-#include "../include/Macros.h"
+#include "../common/Macros.h"
 #include "Game.h"
 
 CLASSPTR(UI);

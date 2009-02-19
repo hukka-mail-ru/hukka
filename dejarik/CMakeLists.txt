@@ -1,4 +1,4 @@
-include_directories (src/include src/logic src/ui) 
+include_directories (src/common src/logic src/ui) 
 set(CMAKE_CXX_FLAGS "-g -Wall")
 set(SRC src/logic/Player.cpp src/logic/Board.cpp src/logic/Game.cpp) 
 
