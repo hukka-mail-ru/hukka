@@ -110,15 +110,13 @@ CellPtr& Board::getCell(unsigned c, unsigned r)
 }
 
 
-bool Board::isMoveValid(unsigned c, unsigned r)
+bool Board::isMoveValid(const CellPtr& cell)
 {
     TRY_BEGINS;
     
-    CellPtr finish = getCell(c, r);
-    
     for(unsigned i=0; i<mPossibleMoves.size(); ++i)
     {
-        if(mPossibleMoves[i]->c == finish->c && mPossibleMoves[i]->r == finish->r)
+        if(mPossibleMoves[i]->c == cell->c && mPossibleMoves[i]->r == cell->r)
         {
             return true;
         }
@@ -316,11 +314,11 @@ unsigned Board::getLeftPos(unsigned pos)
 
 
 
-void Board::getMoveSteps(unsigned c, unsigned x, std::vector<CellPtr>& steps)
+void Board::getMoveSteps(const CellPtr& start, std::vector<CellPtr>& steps)
 {
     TRY_BEGINS;
     
-    CellPtr cell = getCell(c, x);
+    CellPtr cell = start;
     
     for(;;)
     {

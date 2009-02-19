@@ -64,21 +64,21 @@ public:
         CPPUNIT_ASSERT(board->getCell(1, 1)->piece == enemy); // enemy is here
                 
         BattleResult battleRes = RES_NO_BATTLE;
-        CPPUNIT_ASSERT(player1->makeTurn(0, 0, TURN_SELECTION, battleRes) == false); // click on empty cell
-        CPPUNIT_ASSERT(player1->makeTurn(1, 1, TURN_SELECTION, battleRes) == false); // click on enemy
-        CPPUNIT_ASSERT(player1->makeTurn(1, 0, TURN_SELECTION, battleRes) == true); // click on ally
+        CPPUNIT_ASSERT(player1->makeTurn(board->getCell(0, 0), TURN_SELECTION, battleRes) == false); // click on empty cell
+        CPPUNIT_ASSERT(player1->makeTurn(board->getCell(1, 1), TURN_SELECTION, battleRes) == false); // click on enemy
+        CPPUNIT_ASSERT(player1->makeTurn(board->getCell(1, 0), TURN_SELECTION, battleRes) == true); // click on ally
         
-        CPPUNIT_ASSERT(player1->makeTurn(2, 5, TURN_ACTION, battleRes) == false); // click out of range
-        CPPUNIT_ASSERT(player1->makeTurn(1, 5, TURN_ACTION, battleRes) == false); // click out of range
-        CPPUNIT_ASSERT(player1->makeTurn(1, 1, TURN_ACTION, battleRes) == true); // attack
+        CPPUNIT_ASSERT(player1->makeTurn(board->getCell(2, 5), TURN_ACTION, battleRes) == false); // click out of range
+        CPPUNIT_ASSERT(player1->makeTurn(board->getCell(1, 5), TURN_ACTION, battleRes) == false); // click out of range
+        CPPUNIT_ASSERT(player1->makeTurn(board->getCell(1, 1), TURN_ACTION, battleRes) == true); // attack
 
         CPPUNIT_ASSERT(battleRes == RES_PUSH);
         CPPUNIT_ASSERT(board->getCell(1, 0)->piece == mine); // we are still here
         CPPUNIT_ASSERT(board->getCell(1, 1)->piece == enemy); // enemy is still here
         
-        CPPUNIT_ASSERT(player1->makePush(2, 5) == false); // click out of range
-        CPPUNIT_ASSERT(player1->makePush(1, 5) == false); // click out of range
-        CPPUNIT_ASSERT(player1->makePush(1, 2) == true); // push
+        CPPUNIT_ASSERT(player1->makePush(board->getCell(2, 5)) == false); // click out of range
+        CPPUNIT_ASSERT(player1->makePush(board->getCell(1, 5)) == false); // click out of range
+        CPPUNIT_ASSERT(player1->makePush(board->getCell(1, 2)) == true); // push
 
         CPPUNIT_ASSERT(board->getCell(1, 0)->piece == mine); // we are still here
         CPPUNIT_ASSERT(board->getCell(1, 2)->piece == enemy); // enemy pushed
@@ -112,21 +112,21 @@ public:
         CPPUNIT_ASSERT(board->getCell(1, 1)->piece == enemy); // enemy is here
                 
         BattleResult battleRes = RES_NO_BATTLE;
-        CPPUNIT_ASSERT(player1->makeTurn(0, 0, TURN_SELECTION, battleRes) == false); // click on empty cell
-        CPPUNIT_ASSERT(player1->makeTurn(1, 1, TURN_SELECTION, battleRes) == false); // click on enemy
-        CPPUNIT_ASSERT(player1->makeTurn(1, 0, TURN_SELECTION, battleRes) == true); // click on ally
+        CPPUNIT_ASSERT(player1->makeTurn(board->getCell(0, 0), TURN_SELECTION, battleRes) == false); // click on empty cell
+        CPPUNIT_ASSERT(player1->makeTurn(board->getCell(1, 1), TURN_SELECTION, battleRes) == false); // click on enemy
+        CPPUNIT_ASSERT(player1->makeTurn(board->getCell(1, 0), TURN_SELECTION, battleRes) == true); // click on ally
         
-        CPPUNIT_ASSERT(player1->makeTurn(2, 5, TURN_ACTION, battleRes) == false); // click out of range
-        CPPUNIT_ASSERT(player1->makeTurn(1, 5, TURN_ACTION, battleRes) == false); // click out of range
-        CPPUNIT_ASSERT(player1->makeTurn(1, 1, TURN_ACTION, battleRes) == true); // attack
+        CPPUNIT_ASSERT(player1->makeTurn(board->getCell(2, 5), TURN_ACTION, battleRes) == false); // click out of range
+        CPPUNIT_ASSERT(player1->makeTurn(board->getCell(1, 5), TURN_ACTION, battleRes) == false); // click out of range
+        CPPUNIT_ASSERT(player1->makeTurn(board->getCell(1, 1), TURN_ACTION, battleRes) == true); // attack
 
         CPPUNIT_ASSERT(battleRes == RES_COUNTER_PUSH);
         CPPUNIT_ASSERT(board->getCell(1, 0)->piece == mine); // we are still here
         CPPUNIT_ASSERT(board->getCell(1, 1)->piece == enemy); // enemy is still here
         
-        CPPUNIT_ASSERT(player2->makePush(2, 5) == false); // click out of range
-        CPPUNIT_ASSERT(player2->makePush(1, 5) == false); // click out of range
-        CPPUNIT_ASSERT(player2->makePush(1, 11) == true); // push
+        CPPUNIT_ASSERT(player2->makePush(board->getCell(2, 5)) == false); // click out of range
+        CPPUNIT_ASSERT(player2->makePush(board->getCell(1, 5)) == false); // click out of range
+        CPPUNIT_ASSERT(player2->makePush(board->getCell(1, 11)) == true); // push
 
         CPPUNIT_ASSERT(board->getCell(1, 11)->piece == mine); // pushed
         CPPUNIT_ASSERT(board->getCell(1, 1)->piece == enemy); // enemy is still here
@@ -322,25 +322,25 @@ public:
         CPPUNIT_ASSERT(board->getCell(1, 0)->piece == king1); // we are here
         
         BattleResult battleRes = RES_NO_BATTLE;
-        CPPUNIT_ASSERT(player1->makeTurn(0, 0, TURN_SELECTION, battleRes) == false); // click on empty cell
-        CPPUNIT_ASSERT(player1->makeTurn(1, 5, TURN_SELECTION, battleRes) == false); // click on empty cell
-        CPPUNIT_ASSERT(player1->makeTurn(1, 0, TURN_SELECTION, battleRes) == true);  // click on the piece
+        CPPUNIT_ASSERT(player1->makeTurn(board->getCell(0, 0), TURN_SELECTION, battleRes) == false); // click on empty cell
+        CPPUNIT_ASSERT(player1->makeTurn(board->getCell(1, 5), TURN_SELECTION, battleRes) == false); // click on empty cell
+        CPPUNIT_ASSERT(player1->makeTurn(board->getCell(1, 0), TURN_SELECTION, battleRes) == true);  // click on the piece
         
-        CPPUNIT_ASSERT(player1->makeTurn(2, 5, TURN_ACTION, battleRes) == false); // click out of range
-        CPPUNIT_ASSERT(player1->makeTurn(2, 10, TURN_ACTION, battleRes) == false); // click out of range
-        CPPUNIT_ASSERT(player1->makeTurn(1, 11, TURN_ACTION, battleRes) == true); // click in range. move there
+        CPPUNIT_ASSERT(player1->makeTurn(board->getCell(2, 5), TURN_ACTION, battleRes) == false); // click out of range
+        CPPUNIT_ASSERT(player1->makeTurn(board->getCell(2, 10), TURN_ACTION, battleRes) == false); // click out of range
+        CPPUNIT_ASSERT(player1->makeTurn(board->getCell(1, 11), TURN_ACTION, battleRes) == true); // click in range. move there
 
         CPPUNIT_ASSERT(battleRes == RES_NO_BATTLE);
         CPPUNIT_ASSERT(board->getCell(1, 11)->piece == king1); // then we are here
         
         battleRes = RES_NO_BATTLE;
-        CPPUNIT_ASSERT(player1->makeTurn(0, 0, TURN_SELECTION, battleRes) == false); // click on empty cell
-        CPPUNIT_ASSERT(player1->makeTurn(1, 10, TURN_SELECTION, battleRes) == false); // click on empty cell
-        CPPUNIT_ASSERT(player1->makeTurn(1, 11, TURN_SELECTION, battleRes) == true); // click on the piece
+        CPPUNIT_ASSERT(player1->makeTurn(board->getCell(0, 0), TURN_SELECTION, battleRes) == false); // click on empty cell
+        CPPUNIT_ASSERT(player1->makeTurn(board->getCell(1, 10), TURN_SELECTION, battleRes) == false); // click on empty cell
+        CPPUNIT_ASSERT(player1->makeTurn(board->getCell(1, 11), TURN_SELECTION, battleRes) == true); // click on the piece
         
-        CPPUNIT_ASSERT(player1->makeTurn(2, 7, TURN_ACTION, battleRes) == false); // click out of range
-        CPPUNIT_ASSERT(player1->makeTurn(2, 7, TURN_ACTION, battleRes) == false); // click out of range
-        CPPUNIT_ASSERT(player1->makeTurn(0, 0, TURN_ACTION, battleRes) == true); // click in range. move there
+        CPPUNIT_ASSERT(player1->makeTurn(board->getCell(2, 7), TURN_ACTION, battleRes) == false); // click out of range
+        CPPUNIT_ASSERT(player1->makeTurn(board->getCell(2, 7), TURN_ACTION, battleRes) == false); // click out of range
+        CPPUNIT_ASSERT(player1->makeTurn(board->getCell(0, 0), TURN_ACTION, battleRes) == true); // click in range. move there
         
         CPPUNIT_ASSERT(battleRes == RES_NO_BATTLE);
         CPPUNIT_ASSERT(board->getCell(0, 0)->piece == king1); // finally we are here
@@ -368,25 +368,25 @@ public:
         CPPUNIT_ASSERT(board->getCell(1, 0)->piece == king1); // we are here
         
         BattleResult battleRes = RES_NO_BATTLE;
-        CPPUNIT_ASSERT(player1->makeTurn(0, 0, TURN_SELECTION, battleRes) == false); // click on empty cell
-        CPPUNIT_ASSERT(player1->makeTurn(1, 1, TURN_SELECTION, battleRes) == false); // click on enemy
-        CPPUNIT_ASSERT(player1->makeTurn(1, 0, TURN_SELECTION, battleRes) == true); // click on ally
+        CPPUNIT_ASSERT(player1->makeTurn(board->getCell(0, 0), TURN_SELECTION, battleRes) == false); // click on empty cell
+        CPPUNIT_ASSERT(player1->makeTurn(board->getCell(1, 1), TURN_SELECTION, battleRes) == false); // click on enemy
+        CPPUNIT_ASSERT(player1->makeTurn(board->getCell(1, 0), TURN_SELECTION, battleRes) == true); // click on ally
         
-        CPPUNIT_ASSERT(player1->makeTurn(2, 5, TURN_ACTION, battleRes) == false); // click out of range
-        CPPUNIT_ASSERT(player1->makeTurn(1, 5, TURN_ACTION, battleRes) == false); // click out of range
-        CPPUNIT_ASSERT(player1->makeTurn(1, 1, TURN_ACTION, battleRes) == true); // attack
+        CPPUNIT_ASSERT(player1->makeTurn(board->getCell(2, 5), TURN_ACTION, battleRes) == false); // click out of range
+        CPPUNIT_ASSERT(player1->makeTurn(board->getCell(1, 5), TURN_ACTION, battleRes) == false); // click out of range
+        CPPUNIT_ASSERT(player1->makeTurn(board->getCell(1, 1), TURN_ACTION, battleRes) == true); // attack
 
         CPPUNIT_ASSERT(battleRes != RES_NO_BATTLE);
         CPPUNIT_ASSERT(board->getCell(1, 0)->piece == king1); // we are still here
         
         battleRes = RES_NO_BATTLE;
-        CPPUNIT_ASSERT(player1->makeTurn(0, 0, TURN_SELECTION, battleRes) == false); // click on empty cell
-        CPPUNIT_ASSERT(player1->makeTurn(1, 1, TURN_SELECTION, battleRes) == false); // click on enemy
-        CPPUNIT_ASSERT(player1->makeTurn(1, 0, TURN_SELECTION, battleRes) == true); // click on ally
+        CPPUNIT_ASSERT(player1->makeTurn(board->getCell(0, 0), TURN_SELECTION, battleRes) == false); // click on empty cell
+        CPPUNIT_ASSERT(player1->makeTurn(board->getCell(1, 1), TURN_SELECTION, battleRes) == false); // click on enemy
+        CPPUNIT_ASSERT(player1->makeTurn(board->getCell(1, 0), TURN_SELECTION, battleRes) == true); // click on ally
         
-        CPPUNIT_ASSERT(player1->makeTurn(2, 5, TURN_ACTION, battleRes) == false); // click out of range
-        CPPUNIT_ASSERT(player1->makeTurn(1, 5, TURN_ACTION, battleRes) == false); // click out of range
-        CPPUNIT_ASSERT(player1->makeTurn(1, 1, TURN_ACTION, battleRes) == true); // attack
+        CPPUNIT_ASSERT(player1->makeTurn(board->getCell(2, 5), TURN_ACTION, battleRes) == false); // click out of range
+        CPPUNIT_ASSERT(player1->makeTurn(board->getCell(1, 5), TURN_ACTION, battleRes) == false); // click out of range
+        CPPUNIT_ASSERT(player1->makeTurn(board->getCell(1, 1), TURN_ACTION, battleRes) == true); // attack
         
         CPPUNIT_ASSERT(battleRes != RES_NO_BATTLE);
         CPPUNIT_ASSERT(board->getCell(1, 0)->piece == king1); // we are still here
@@ -415,25 +415,25 @@ public:
         CPPUNIT_ASSERT(board->getCell(1, 0)->piece == king1); // we are here
         
         BattleResult battleRes = RES_NO_BATTLE;
-        CPPUNIT_ASSERT(player1->makeTurn(0, 0, TURN_SELECTION, battleRes) == false); // click on empty cell
-        CPPUNIT_ASSERT(player1->makeTurn(1, 1, TURN_SELECTION, battleRes) == false); // click on enemy
-        CPPUNIT_ASSERT(player1->makeTurn(1, 0, TURN_SELECTION, battleRes) == true); // click on ally
+        CPPUNIT_ASSERT(player1->makeTurn(board->getCell(0, 0), TURN_SELECTION, battleRes) == false); // click on empty cell
+        CPPUNIT_ASSERT(player1->makeTurn(board->getCell(1, 1), TURN_SELECTION, battleRes) == false); // click on enemy
+        CPPUNIT_ASSERT(player1->makeTurn(board->getCell(1, 0), TURN_SELECTION, battleRes) == true); // click on ally
         
-        CPPUNIT_ASSERT(player1->makeTurn(2, 5, TURN_ACTION, battleRes) == false); // click out of range
-        CPPUNIT_ASSERT(player1->makeTurn(1, 5, TURN_ACTION, battleRes) == false); // click out of range
-        CPPUNIT_ASSERT(player1->makeTurn(1, 1, TURN_ACTION, battleRes) == true); // attack
+        CPPUNIT_ASSERT(player1->makeTurn(board->getCell(2, 5), TURN_ACTION, battleRes) == false); // click out of range
+        CPPUNIT_ASSERT(player1->makeTurn(board->getCell(1, 5), TURN_ACTION, battleRes) == false); // click out of range
+        CPPUNIT_ASSERT(player1->makeTurn(board->getCell(1, 1), TURN_ACTION, battleRes) == true); // attack
 
         CPPUNIT_ASSERT(battleRes != RES_NO_BATTLE);
         CPPUNIT_ASSERT(board->getCell(1, 0)->piece == king1); // we are still here
         
         battleRes = RES_NO_BATTLE;
-        CPPUNIT_ASSERT(player1->makeTurn(0, 0, TURN_SELECTION, battleRes) == false); // click on empty cell
-        CPPUNIT_ASSERT(player1->makeTurn(1, 1, TURN_SELECTION, battleRes) == false); // click on enemy
-        CPPUNIT_ASSERT(player1->makeTurn(1, 0, TURN_SELECTION, battleRes) == true); // click on ally
+        CPPUNIT_ASSERT(player1->makeTurn(board->getCell(0, 0), TURN_SELECTION, battleRes) == false); // click on empty cell
+        CPPUNIT_ASSERT(player1->makeTurn(board->getCell(1, 1), TURN_SELECTION, battleRes) == false); // click on enemy
+        CPPUNIT_ASSERT(player1->makeTurn(board->getCell(1, 0), TURN_SELECTION, battleRes) == true); // click on ally
         
-        CPPUNIT_ASSERT(player1->makeTurn(2, 5, TURN_ACTION, battleRes) == false); // click out of range
-        CPPUNIT_ASSERT(player1->makeTurn(1, 5, TURN_ACTION, battleRes) == false); // click out of range
-        CPPUNIT_ASSERT(player1->makeTurn(1, 11, TURN_ACTION, battleRes) == true); // move
+        CPPUNIT_ASSERT(player1->makeTurn(board->getCell(2, 5), TURN_ACTION, battleRes) == false); // click out of range
+        CPPUNIT_ASSERT(player1->makeTurn(board->getCell(1, 5), TURN_ACTION, battleRes) == false); // click out of range
+        CPPUNIT_ASSERT(player1->makeTurn(board->getCell(1, 11), TURN_ACTION, battleRes) == true); // move
         
         CPPUNIT_ASSERT(battleRes == RES_NO_BATTLE);
         CPPUNIT_ASSERT(board->getCell(1, 11)->piece == king1); // we're finally here
@@ -463,25 +463,25 @@ public:
         CPPUNIT_ASSERT(board->getCell(1, 0)->piece == king1); // we are here
 
         BattleResult battleRes = RES_NO_BATTLE;
-        CPPUNIT_ASSERT(player1->makeTurn(0, 0, TURN_SELECTION, battleRes) == false); // click on empty cell
-        CPPUNIT_ASSERT(player1->makeTurn(1, 10, TURN_SELECTION, battleRes) == false); // click on enemy
-        CPPUNIT_ASSERT(player1->makeTurn(1, 0, TURN_SELECTION, battleRes) == true); // click on ally
+        CPPUNIT_ASSERT(player1->makeTurn(board->getCell(0, 0), TURN_SELECTION, battleRes) == false); // click on empty cell
+        CPPUNIT_ASSERT(player1->makeTurn(board->getCell(1, 10), TURN_SELECTION, battleRes) == false); // click on enemy
+        CPPUNIT_ASSERT(player1->makeTurn(board->getCell(1, 0), TURN_SELECTION, battleRes) == true); // click on ally
         
-        CPPUNIT_ASSERT(player1->makeTurn(2, 5, TURN_ACTION, battleRes) == false); // click out of range
-        CPPUNIT_ASSERT(player1->makeTurn(2, 7, TURN_ACTION, battleRes) == false); // click out of range
-        CPPUNIT_ASSERT(player1->makeTurn(1, 11, TURN_ACTION, battleRes) == true); // click in range. move there
+        CPPUNIT_ASSERT(player1->makeTurn(board->getCell(2, 5), TURN_ACTION, battleRes) == false); // click out of range
+        CPPUNIT_ASSERT(player1->makeTurn(board->getCell(2, 7), TURN_ACTION, battleRes) == false); // click out of range
+        CPPUNIT_ASSERT(player1->makeTurn(board->getCell(1, 11), TURN_ACTION, battleRes) == true); // click in range. move there
 
         CPPUNIT_ASSERT(battleRes == RES_NO_BATTLE);
         CPPUNIT_ASSERT(board->getCell(1, 11)->piece == king1); // then we are here
         
         battleRes = RES_NO_BATTLE;
-        CPPUNIT_ASSERT(player1->makeTurn(0, 0, TURN_SELECTION, battleRes) == false); // click on empty cell
-        CPPUNIT_ASSERT(player1->makeTurn(1, 10, TURN_SELECTION, battleRes) == false); // click on enemy
-        CPPUNIT_ASSERT(player1->makeTurn(1, 11, TURN_SELECTION, battleRes) == true); // click on ally
+        CPPUNIT_ASSERT(player1->makeTurn(board->getCell(0, 0), TURN_SELECTION, battleRes) == false); // click on empty cell
+        CPPUNIT_ASSERT(player1->makeTurn(board->getCell(1, 10), TURN_SELECTION, battleRes) == false); // click on enemy
+        CPPUNIT_ASSERT(player1->makeTurn(board->getCell(1, 11), TURN_SELECTION, battleRes) == true); // click on ally
         
-        CPPUNIT_ASSERT(player1->makeTurn(2, 7, TURN_ACTION, battleRes) == false); // click out of range
-        CPPUNIT_ASSERT(player1->makeTurn(2, 4, TURN_ACTION, battleRes) == false); // click out of range
-        CPPUNIT_ASSERT(player1->makeTurn(1, 10, TURN_ACTION, battleRes) == true); // click in range. attack
+        CPPUNIT_ASSERT(player1->makeTurn(board->getCell(2, 7), TURN_ACTION, battleRes) == false); // click out of range
+        CPPUNIT_ASSERT(player1->makeTurn(board->getCell(2, 4), TURN_ACTION, battleRes) == false); // click out of range
+        CPPUNIT_ASSERT(player1->makeTurn(board->getCell(1, 10), TURN_ACTION, battleRes) == true); // click in range. attack
         
         CPPUNIT_ASSERT(battleRes != RES_NO_BATTLE);
         CPPUNIT_ASSERT(board->getCell(1, 11)->piece == king1); // we didn't move
@@ -507,20 +507,20 @@ public:
         board->distribute(slon, player1);
         
         BattleResult battleRes = RES_NO_BATTLE;
-        CPPUNIT_ASSERT(player1->makeTurn(0, 0, TURN_SELECTION, battleRes) == false); // click on empty cell
-        CPPUNIT_ASSERT(player1->makeTurn(1, 10, TURN_SELECTION, battleRes) == false); // click on empty cell
-        CPPUNIT_ASSERT(player1->makeTurn(1, 0, TURN_SELECTION, battleRes) == true); // click on king
+        CPPUNIT_ASSERT(player1->makeTurn(board->getCell(0, 0), TURN_SELECTION, battleRes) == false); // click on empty cell
+        CPPUNIT_ASSERT(player1->makeTurn(board->getCell(1, 10), TURN_SELECTION, battleRes) == false); // click on empty cell
+        CPPUNIT_ASSERT(player1->makeTurn(board->getCell(1, 0), TURN_SELECTION, battleRes) == true); // click on king
         
-        CPPUNIT_ASSERT(player1->makeTurn(1, 5, TURN_ACTION, battleRes) == false); // click on empty cell
-        CPPUNIT_ASSERT(player1->makeTurn(1, 10, TURN_ACTION, battleRes) == false); // click on empty cell
-        CPPUNIT_ASSERT(player1->makeTurn(2, 0, TURN_ACTION, battleRes) == true); // click on slon
+        CPPUNIT_ASSERT(player1->makeTurn(board->getCell(1, 5), TURN_ACTION, battleRes) == false); // click on empty cell
+        CPPUNIT_ASSERT(player1->makeTurn(board->getCell(1, 10), TURN_ACTION, battleRes) == false); // click on empty cell
+        CPPUNIT_ASSERT(player1->makeTurn(board->getCell(2, 0), TURN_ACTION, battleRes) == true); // click on slon
         
         CPPUNIT_ASSERT(battleRes == RES_NO_BATTLE);
         
         battleRes = RES_NO_BATTLE;
-        CPPUNIT_ASSERT(player1->makeTurn(0, 0, TURN_ACTION, battleRes) == false); // out of range
-        CPPUNIT_ASSERT(player1->makeTurn(2, 5, TURN_ACTION, battleRes) == false); // click on enemy
-        CPPUNIT_ASSERT(player1->makeTurn(2, 1, TURN_ACTION, battleRes) == true); // move
+        CPPUNIT_ASSERT(player1->makeTurn(board->getCell(0, 0), TURN_ACTION, battleRes) == false); // out of range
+        CPPUNIT_ASSERT(player1->makeTurn(board->getCell(2, 5), TURN_ACTION, battleRes) == false); // click on enemy
+        CPPUNIT_ASSERT(player1->makeTurn(board->getCell(2, 1), TURN_ACTION, battleRes) == true); // move
         
         CPPUNIT_ASSERT(battleRes == RES_NO_BATTLE);
         CPPUNIT_ASSERT(board->getCell(1, 0)->piece == king); // we didn't move
