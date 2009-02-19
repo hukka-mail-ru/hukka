@@ -7,9 +7,11 @@
 #define CELL_RADIUS_2 1.5
 #define CELL_RADIUS_3 2.5
 
-#define INTERIM_ANGLES 4
+#define INTERIM_ANGLES 4 // smoothness of the circles
 
 using namespace std;
+
+
 
 Cell::Cell(unsigned circle, unsigned radius):
     c(circle),
@@ -33,47 +35,35 @@ Cell::Cell(unsigned circle, unsigned radius):
     // CIRCLE 1
     else if(c == 1)
     {
-        // angles
-        const float a1 = PI/6.0 * r;
-        const float a2 = a1 + PI/6.0;
-        const float interim = (a2 - a1)/INTERIM_ANGLES;        
-        
-        float a = a1;
-        for(unsigned i = 0; i<=INTERIM_ANGLES; i++) // BBBBBB
-        {
-            x.push_back(CELL_RADIUS_2 * cos(a));
-            y.push_back(CELL_RADIUS_2 * sin(a));
-            a += interim;
-        }
-
-        for(unsigned i = 0; i<=INTERIM_ANGLES; i++) // DDDDDD
-        {            
-            a -= interim;
-            x.push_back(CELL_RADIUS_1 * cos(a));
-            y.push_back(CELL_RADIUS_1 * sin(a));
-        }
+        createSegment(CELL_RADIUS_1, CELL_RADIUS_2);
     }
     // CIRCLE 2
     else if(c == 2)
     {        
-        const float a1 = PI/6.0 * r;
-        const float a2 = a1 + PI/6.0;
-        const float interim = (a2 - a1)/INTERIM_ANGLES; 
-                
-        float a = a1;
-        for(unsigned i = 0; i<=INTERIM_ANGLES; i++) // BBBBBB
-        {
-            x.push_back(CELL_RADIUS_3 * cos(a));
-            y.push_back(CELL_RADIUS_3 * sin(a));
-            a += interim;
-        }
+        createSegment(CELL_RADIUS_2, CELL_RADIUS_3);
+    }
+}
 
-        for(unsigned i = 0; i<=INTERIM_ANGLES; i++) // DDDDDD
-        {
-            a -= interim;
-            x.push_back(CELL_RADIUS_2 * cos(a));
-            y.push_back(CELL_RADIUS_2 * sin(a));
-        }
+
+void Cell::createSegment(float radius1, float radius2)
+{
+    // angles
+    const float a1 = PI/6.0 * r;
+    const float a2 = a1 + PI/6.0;
+    const float interim = (a2 - a1)/INTERIM_ANGLES;        
+    
+    float a = a1;
+    for(unsigned i = 0; i<=INTERIM_ANGLES; i++) // BBBBBB
+    {
+        x.push_back(radius2 * cos(a));
+        y.push_back(radius2 * sin(a));
+        a += interim;
     }
 
+    for(unsigned i = 0; i<=INTERIM_ANGLES; i++) // DDDDDD
+    {            
+        a -= interim;
+        x.push_back(radius1 * cos(a));
+        y.push_back(radius1 * sin(a));
+    }
 }
