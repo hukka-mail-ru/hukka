@@ -61,17 +61,40 @@ void Board::placePiece(const PiecePtr& piece, unsigned c, unsigned x)
     TRY_BEGINS;
     
     CellPtr cell = getCell(c, x);
+    
+    if(piece->cell)
+    cout << "cell: " << piece->cell->c << "." << piece->cell->r << endl;
+    
     placePiece(piece, cell);
+    
+    
     
     TRY_RETHROW;
 }
 
-void Board::placePiece(const PiecePtr& piece, const CellPtr& cell)
+void Board::placePiece(const PiecePtr& piece, const CellPtr& newcell)
 {
     TRY_BEGINS;
     
-    piece->cell = cell;
-    cell->piece = piece;    
+    CellPtr oldcell = piece->cell;
+    
+    if(oldcell)
+    {
+        cout << "oldcell: " << oldcell->c << "." << oldcell->r << endl;
+        assert(oldcell->piece);
+        
+        newcell->piece.swap(oldcell->piece);
+        
+        assert(!oldcell->piece);
+        assert(newcell->piece);
+        
+    }
+    else
+    {
+        newcell->piece = piece;
+    }
+
+    piece->cell = newcell;
     
     TRY_RETHROW;
 }
