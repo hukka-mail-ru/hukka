@@ -16,9 +16,10 @@ class TestBoard : public CppUnit::TestFixture
    CPPUNIT_TEST(testBoard);
    CPPUNIT_TEST(testGetInitialCells);
    
-   CPPUNIT_TEST(testPossibleMoves_move1); // if piece.MoveRating == 1
-   CPPUNIT_TEST(testPossibleMoves_move2); // if piece.MoveRating == 2
-   CPPUNIT_TEST(testPossibleMoves_move3); // if piece.MoveRating == 3
+   CPPUNIT_TEST(testPossibleMoves1); // if piece.MoveRating == 1
+   CPPUNIT_TEST(testPossibleMoves2); // if piece.MoveRating == 2
+   CPPUNIT_TEST(testPossibleMoves3); // if piece.MoveRating == 3
+   CPPUNIT_TEST(testPossibleMoves4); // another configuration
    CPPUNIT_TEST(testPossibleMoves_trap); // no possible moves
    
    CPPUNIT_TEST(testPossibleTargets);
@@ -119,7 +120,7 @@ public:
         TRY_CATCH;
     }
     
-    void testPossibleMoves_move1()
+    void testPossibleMoves1()
     {
         SHOW_FUNCTION_NAME;
         TRY_BEGINS; 
@@ -196,7 +197,7 @@ public:
     }
     
     
-    void testPossibleMoves_move2()
+    void testPossibleMoves2()
     {
         SHOW_FUNCTION_NAME;
         TRY_BEGINS; 
@@ -282,7 +283,7 @@ public:
         TRY_CATCH;
     }
     
-    void testPossibleMoves_move3()
+    void testPossibleMoves3()
     {
         SHOW_FUNCTION_NAME;
         TRY_BEGINS; 
@@ -393,7 +394,37 @@ public:
         TRY_CATCH;
      }
          
-    
+    void testPossibleMoves4()
+    {
+        SHOW_FUNCTION_NAME;
+        TRY_BEGINS; 
+        
+        BoardPtr board (new Board); 
+               
+        PiecePtr queen (new Piece("Queen", 0, 0, 3)); // Queen can go 3 cells
+        board->placePiece(queen, 2, 0);
+        
+        
+        PiecePtr king1 (new Piece("King", 0, 0, 1)); 
+        PiecePtr king2 (new Piece("King", 0, 0, 1)); 
+        PiecePtr king3 (new Piece("King", 0, 0, 1)); 
+
+        board->placePiece(king1, 0, 0);
+        board->placePiece(king2, 2, 11);
+        board->placePiece(king3, 2, 2);
+        
+
+        std::vector<CellPtr> moves;
+        board->getPossibleMoves(queen, moves);
+        CPPUNIT_ASSERT_EQUAL(4, (int)moves.size());
+        
+        CPPUNIT_ASSERT(findCell(moves, 2,1) == true);
+        CPPUNIT_ASSERT(findCell(moves, 1,0) == true);
+        CPPUNIT_ASSERT(findCell(moves, 1,10) == true);
+        CPPUNIT_ASSERT(findCell(moves, 1,2) == true);
+        
+        TRY_CATCH;
+    }
     
     void testPossibleTargets()
     {
