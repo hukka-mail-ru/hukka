@@ -17,6 +17,7 @@ class TestGame: public CppUnit::TestFixture
    CPPUNIT_TEST(testOver);
    CPPUNIT_TEST(testSelection);
    CPPUNIT_TEST(testMove);
+   CPPUNIT_TEST(testMove2);
    CPPUNIT_TEST_SUITE_END();
          
 public:         
@@ -50,6 +51,30 @@ public:
         
         CPPUNIT_ASSERT(!board->getCell(2, 0)->piece);
         CPPUNIT_ASSERT(board->getCell(1, 0)->piece);
+        
+        TRY_CATCH;
+    }
+    
+    
+    void testMove2()
+    {
+        TRY_BEGINS;
+        SHOW_FUNCTION_NAME;
+        
+        Game game;
+        game.startup();
+        
+        BoardPtr board = game.getBoard();
+        board->getCell(2, 0)->piece->moveRating = 2;   
+        
+        game.onCellClick(board->getCell(2,0)); // ally        
+        game.onCellClick(board->getCell(2,6)); // enemy
+        
+        game.onCellClick(board->getCell(2,0)); // ally 
+        game.onCellClick(board->getCell(0,0)); // move
+        
+        CPPUNIT_ASSERT(!board->getCell(2, 0)->piece);
+        CPPUNIT_ASSERT(board->getCell(0, 0)->piece);
         
         TRY_CATCH;
     }
