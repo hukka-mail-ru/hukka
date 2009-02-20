@@ -2,10 +2,11 @@
 #define BOARD_H_
 
 #include <vector>
+#include "Player.h"
 #include "Cell.h"
 #include "../common/Macros.h"
 #include "Piece.h"
-#include "Player.h"
+
 
 #define CIRCLES 2 
 #define RADIUSES 12 // cells in a circle
@@ -14,6 +15,7 @@ CLASSPTR(Board);
 CLASSPTR(Piece);
 CLASSPTR(Player);
 CLASSPTR(Cell);
+
 
 class Board // only one board in game
 {
@@ -39,21 +41,20 @@ public:
     // on user click
     void getCells(std::vector<CellPtr>& cells); // get all cells
     void deselectAll();
+    void selectAll(const PlayerPtr& player);
     void selectClickedCell(const CellPtr& cell);
 
     // on user click1: (activate a piece => show possible moves and targets)
-    void getPossibleMoves(const PiecePtr& piece, std::vector<CellPtr>& moves);
-    void getPossibleTargets(const PiecePtr& piece, std::vector<CellPtr>& targets);
+    void definePossibleClicks(const PlayerPtr& player, bool push);
 
     // on user click2: (move the piece OR attack a partner's piece OR push a piece)
-    bool isMoveValid(const CellPtr& cell);
+    bool isClickValid(const CellPtr& cell);
     void getMoveSteps(const CellPtr& start, std::vector<CellPtr>& steps);
     
     // on a kill
     void killPiece(PiecePtr& piece);
     
     // on a push
-    void getPossiblePushes(const PiecePtr& piece, std::vector<CellPtr>& pushes);
     const PiecePtr& getActivePiece();
     
 private:
@@ -70,13 +71,17 @@ private:
     
     void markNeibours(WhatToMark whatToMark, unsigned step, const CellPtr& cell);       
     void mark(WhatToMark whatToMark, unsigned step, const CellPtr& prev, const CellPtr& cell);
-    
+
+    void definePossibleMoves(const PiecePtr& piece, std::vector<CellPtr>& moves);
+    void definePossibleTargets(const PiecePtr& piece, std::vector<CellPtr>& targets);
+    void definePossiblePushes(const PiecePtr& piece, std::vector<CellPtr>& pushes);
+
     unsigned getRightPos(unsigned pos);
     unsigned getLeftPos(unsigned pos);
     
     std::vector<CellPtr> mCells; // all the cells on board
     
-    std::vector<CellPtr> mPossibleMoves;
+    std::vector<CellPtr> mPossibleClicks;
     
     PiecePtr mActivePiece;
 };

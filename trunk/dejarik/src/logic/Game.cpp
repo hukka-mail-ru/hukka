@@ -46,10 +46,34 @@ void Game::startup()
         pieces.erase(remove(pieces.begin(), pieces.end(), pieces[rnd]), pieces.end()); 
     }
     
-    mActivePlayer = mPlayer1;
+    passTurn();
+    mBoard->definePossibleClicks(mActivePlayer, false);
     
     TRY_RETHROW;
 }
+
+
+void Game::passTurn()
+{
+    TRY_BEGINS;
+    
+    if(!mActivePlayer)
+    {
+        mActivePlayer = mPlayer1;
+    }
+    else
+    {    
+        mActivePlayer = (mActivePlayer == mPlayer1) ? mPlayer2 : mPlayer1; // next player
+    }
+    
+    if(mActivePlayer->getLeftMoves() == 0)
+    {
+        mActivePlayer->setLeftMoves(2);
+    }
+    
+    TRY_RETHROW;
+}
+
 
 bool Game::isOver()
 {
@@ -66,10 +90,74 @@ bool Game::isOver()
 }
 
     
-bool Game::onCellClick(const CellPtr& cell)
+void Game::onCellClick(const CellPtr& cell)
 {
     TRY_BEGINS;
     
+    mBoard->deselectAll();
+    
+    if(!mBoard->isClickValid(cell))
+    {
+        return;
+    }
+    
+    if(!cell->piece) // empty cell
+    {
+        mActivePlayer->movePiece(cell);
+        mActivePlayer->decrementLeftMoves();
+        mBoard->definePossibleClicks(mActivePlayer, false);
+    }
+    else // clicked on a piece
+    {
+        if(cell->piece->player == mActivePlayer) // mine
+        {
+            mActivePlayer->setActivePiece(cell->piece);
+            mBoard->definePossibleClicks(mActivePlayer, false);
+        }
+        else // enemy's
+        {
+            BattleResult res = mActivePlayer->attackEnimy(cell->piece);
+            
+            if(res == RES_KILL)
+            {
+                mBoard->killPiece(const_cast<PiecePtr&>(cell->piece));
+                mActivePlayer->decrementLeftMoves();
+                mBoard->definePossibleClicks(mActivePlayer, false);
+            }
+            else if(res == RES_COUNTER_KILL)
+            {
+                mBoard->killPiece(const_cast<PiecePtr&>(mActivePlayer->getActivePiece()));
+                mActivePlayer->decrementLeftMoves();
+                mBoard->definePossibleClicks(mActivePlayer, false);
+            }
+            else if(res == RES_PUSH)
+            {
+                mBoard->definePossibleClicks(mActivePlayer, true ); 
+                mActivePlayer->incrementLeftMoves();
+            }
+            else if(res == RES_COUNTER_PUSH)
+            {
+                mActivePlayer->decrementLeftMoves();
+                
+                PlayerPtr enemy = (mActivePlayer == mPlayer1) ? mPlayer2 : mPlayer1; // next player
+                mBoard->definePossibleClicks(enemy, true );
+                enemy->setLeftMoves(1);
+                passTurn();
+                return;
+            }
+            
+        }
+        
+        
+    }
+    
+    if(mActivePlayer->getLeftMoves() == 0)
+    {
+        passTurn();
+    }
+    
+    
+   /* 
     mBoard->deselectAll();
 
     static unsigned move = 0; // a player has 2 moves 
@@ -119,6 +207,8 @@ bool Game::onCellClick(const CellPtr& cell)
                 if(move == 2)
                 {
                     mActivePlayer = (mActivePlayer == mPlayer1) ? mPlayer2 : mPlayer1; // next player
+                    mBoard->deselectAll();
+                    mBoard->selectAll(mActivePlayer);
                     move = 0;
                 }
                 
@@ -136,6 +226,7 @@ bool Game::onCellClick(const CellPtr& cell)
                 if(move == 2)
                 {
                     mActivePlayer = (mActivePlayer == mPlayer1) ? mPlayer2 : mPlayer1; // next player
+                    mBoard->selectAll(mActivePlayer);
                     move = 0;
                 }
                 
@@ -146,7 +237,7 @@ bool Game::onCellClick(const CellPtr& cell)
     }
     
     return false;
-    
+*/    
     TRY_RETHROW;
 }
     
