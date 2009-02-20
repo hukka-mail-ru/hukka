@@ -78,11 +78,19 @@ bool Game::onCellClick(const CellPtr& cell)
     
     if(cell->piece)
     {
-        cout << "Piece " << cell->piece->name << " Move: " << cell->piece->moveRating << endl;
+        cout << "Player " << (long)mActivePlayer.get() << 
+                "; Piece " << cell->piece->name << 
+                "; Move: " << cell->piece->moveRating << 
+                "; Stage:" << stage << endl;
     }
-   // string st = (stage == TURN_SELECTION) ? "TURN_SELECTION" : "TURN_ACTION";
-    cout << "Stage " << stage << endl;
+  
     
+    // if clicked on an ally piece, then TURN_SELECTION
+    if(battleResult != RES_PUSH && battleResult != RES_COUNTER_PUSH &&
+       cell->piece && cell->piece->player == mActivePlayer)
+    {
+        stage = TURN_SELECTION;
+    }
     
     if(stage == TURN_SELECTION)
     {
@@ -105,11 +113,7 @@ bool Game::onCellClick(const CellPtr& cell)
                    battleResult == RES_COUNTER_KILL)
                 {
                     stage = TURN_SELECTION;
-                    
                     move++;
-                    
-                //    if(cell->piece && cell->piece->player == mActivePlayer)
-                //        move--;
                 }
                 
                 if(move == 2)
@@ -118,7 +122,7 @@ bool Game::onCellClick(const CellPtr& cell)
                     move = 0;
                 }
                 
-                mBoard->selectClickedCell(cell);
+              //  mBoard->selectClickedCell(cell);
                 return true;
             }
         }
@@ -127,11 +131,7 @@ bool Game::onCellClick(const CellPtr& cell)
             if(mActivePlayer->makePush(cell)) // without verification of piece's owner
             {
                 stage = TURN_SELECTION;
-                
                 move++;
-                
-              //  if(cell->piece && cell->piece->player == mActivePlayer)
-              //      move--;
                 
                 if(move == 2)
                 {
@@ -139,7 +139,7 @@ bool Game::onCellClick(const CellPtr& cell)
                     move = 0;
                 }
                 
-                mBoard->selectClickedCell(cell);
+             //   mBoard->selectClickedCell(cell);
                 return true;
             }
         }

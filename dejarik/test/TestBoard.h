@@ -164,6 +164,7 @@ public:
 
         // -------------------------------------------------------------
         board->clear(); 
+        king = PiecePtr(new Piece("King", 0, 0, 1));
         board->placePiece(king, 2, 0);
         
         moves.clear();
@@ -176,6 +177,7 @@ public:
         
         // -------------------------------------------------------------
         board->clear(); 
+        king = PiecePtr(new Piece("King", 0, 0, 1));
         board->placePiece(king, 2, 0);
         
         PiecePtr queen1 (new Piece("Queen", 0, 0, 1));
@@ -216,8 +218,11 @@ public:
         CPPUNIT_ASSERT(findCell(moves, 0,0) == true);
 
         // inner circle -------------------------------------------------------------
-        board->clear();
+  //      board->clear();
         board->placePiece(slon, 1, 0);
+        
+        CPPUNIT_ASSERT(!board->getCell(2,0)->piece);
+        CPPUNIT_ASSERT(board->getCell(1,0)->piece == slon);
         
         moves.clear();
         board->getPossibleMoves(slon, moves);
@@ -241,6 +246,7 @@ public:
         
         // center  -------------------------------------------------------------
         board->clear();
+        slon = PiecePtr(new Piece("Slon", 0, 0, 2)); // Slon can go 2 cells
         board->placePiece(slon, 0, 0);
         
         moves.clear();
@@ -313,6 +319,7 @@ public:
         
         // inner circle -------------------------------------------------------------
         board->clear();
+        queen = PiecePtr(new Piece("Queen", 0, 0, 3)); 
         board->placePiece(queen, 1, 0);
         
         moves.clear();
@@ -349,6 +356,7 @@ public:
         
         // inner circle -------------------------------------------------------------
         board->clear();
+        queen = PiecePtr(new Piece("Queen", 0, 0, 3));
         board->placePiece(queen, 0, 0);
         
         moves.clear();
