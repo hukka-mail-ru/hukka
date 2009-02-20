@@ -22,12 +22,14 @@ public:
     /*
      * Reurns true if the click is allowed by the game rules 
      */
-    bool onCellClick(const CellPtr& cell);
+    void onCellClick(const CellPtr& cell);
 
     const BoardPtr& getBoard();
     
 private:
         
+    void passTurn(); // pass turn to the next player
+    
     bool checkVictory(PlayerPtr& vinner);
     
     BoardPtr mBoard;

@@ -16,6 +16,7 @@ enum Selection
     SEL_POSSIBLE_PUSH
 };
 
+
 struct Cell
 {
 public:

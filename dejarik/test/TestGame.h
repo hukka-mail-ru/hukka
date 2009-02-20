@@ -67,11 +67,16 @@ public:
         BoardPtr board = game.getBoard();
         board->getCell(2, 0)->piece->moveRating = 2;   
         
-        game.onCellClick(board->getCell(2,0)); // ally        
-        game.onCellClick(board->getCell(2,6)); // enemy
+        game.onCellClick(board->getCell(2,0)); // ally
         
-        game.onCellClick(board->getCell(2,0)); // ally 
-        game.onCellClick(board->getCell(0,0)); // move
+        CellPtr cell26 = board->getCell(2,6);
+        game.onCellClick(cell26); // enemy
+
+        CellPtr cell20 = board->getCell(2,0);
+        game.onCellClick(cell20); // ally
+        
+        CellPtr cell00 = board->getCell(0,0);
+        game.onCellClick(cell00); // move
         
         CPPUNIT_ASSERT(!board->getCell(2, 0)->piece);
         CPPUNIT_ASSERT(board->getCell(0, 0)->piece);

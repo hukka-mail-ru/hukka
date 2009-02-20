@@ -8,6 +8,7 @@
 #include "Board.h"
 #include "Cell.h"
 
+
 CLASSPTR(Piece);
 CLASSPTR(Board);
 CLASSPTR(Player);
@@ -52,6 +53,16 @@ public:
     
     unsigned howManyPieces();
     
+    const PiecePtr& getActivePiece()
+    {
+        return mActivePiece;
+    }
+    
+    void setActivePiece(const PiecePtr& piece)
+    {
+        mActivePiece = piece;
+    }
+    
     /* 
      Returns true if the move is valid, else false
 
@@ -69,7 +80,7 @@ public:
       
       battleResult: output parameter
     */
-    bool makeTurn(const CellPtr& cell, TurnStage turnStage, BattleResult& battleResult);
+   // bool makeTurn(const CellPtr& cell, TurnStage turnStage, BattleResult& battleResult);
     
     /*
      * TURN_SELECTION: automatically when Game defined RES_PUSH or RES_COUNTER_PUSH
@@ -80,13 +91,35 @@ public:
      *    isMoveValid
      *    move enemy piece
      */
-    bool makePush(const CellPtr& cell);
+   // bool makePush(const CellPtr& cell);
+    
+    void setLeftMoves(unsigned moves)
+    {
+        mLeftMoves = moves;
+    }
+    
+    void incrementLeftMoves()
+    {
+        mLeftMoves++;
+    }
+    
+    void decrementLeftMoves()
+    {
+        mLeftMoves--;
+    }
+
+    unsigned getLeftMoves()
+    {
+        return mLeftMoves;
+    }
+
+    void movePiece(const CellPtr& cell);    
+    
+    BattleResult attackEnimy(const PiecePtr& enemyPiece);
     
 private:
     
-    bool movePiece(const PiecePtr& piece, const CellPtr& cell);    
-    
-    BattleResult attackEnimy(const PiecePtr& myPiece, const PiecePtr& enemyPiece);
+
     
     /*
         if Attack beats Defense by 7 or more then Kill
@@ -104,6 +137,8 @@ private:
     std::vector<PiecePtr> mPieces;
     
     PiecePtr mActivePiece;
+    
+    unsigned mLeftMoves;
 };
 
 

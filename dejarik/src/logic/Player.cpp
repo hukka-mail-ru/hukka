@@ -30,7 +30,7 @@ unsigned Player::howManyPieces()
     return mPieces.size();
 }
 
-
+/*
 bool Player::makeTurn(const CellPtr& cell, TurnStage turnStage, BattleResult& battleResult) 
 {
     TRY_BEGINS;
@@ -61,8 +61,11 @@ bool Player::makeTurn(const CellPtr& cell, TurnStage turnStage, BattleResult& ba
     {
         mActivePiece = piece;
         
-        vector<CellPtr> possibleMoves;
-        mBoard->getPossibleMoves(piece, possibleMoves);
+        vector<CellPtr> moves;
+        mBoard->getPossibleMoves(piece, moves);
+        
+        vector<CellPtr> targets;
+        mBoard->getPossibleTargets(piece, targets);
         
         // GUI::showPossibleMoves() ... ?        
     }
@@ -74,6 +77,11 @@ bool Player::makeTurn(const CellPtr& cell, TurnStage turnStage, BattleResult& ba
         }
         else // attack enemy piece
         {
+            if(!mBoard->isTargetValid(cell))
+            {
+                return false;
+            }
+            
             battleResult = attackEnimy(mActivePiece, piece); 
             return true;
         }
@@ -82,9 +90,9 @@ bool Player::makeTurn(const CellPtr& cell, TurnStage turnStage, BattleResult& ba
     TRY_RETHROW;
     
     return true;
-}
+}*/
 
-
+/*
 bool Player::makePush(const CellPtr& cell)
 {    
     TRY_BEGINS;
@@ -92,38 +100,19 @@ bool Player::makePush(const CellPtr& cell)
     return movePiece(mBoard->getActivePiece(), cell);
     
     TRY_RETHROW;
-}
+}*/
 
 
-BattleResult Player::attackEnimy(const PiecePtr& myPiece, const PiecePtr& enemyPiece)
+BattleResult Player::attackEnimy(const PiecePtr& enemyPiece)
 {
     TRY_BEGINS;
     
     // an assurance
-    assert(myPiece->player != enemyPiece->player);
+    assert(mActivePiece->player != enemyPiece->player);
     
-    BattleResult res = getBattleResult(myPiece->attackRating, enemyPiece->defenceRating);
+    enemyPiece->player->setActivePiece(enemyPiece);
     
-    if(res == RES_KILL)
-    {
-        mBoard->killPiece(const_cast<PiecePtr&>(enemyPiece));
-    }
-    else if(res == RES_COUNTER_KILL)
-    {
-        mBoard->killPiece(const_cast<PiecePtr&>(myPiece));
-    }
-    else if(res == RES_PUSH)
-    {
-        vector<CellPtr> possiblePushes;
-        mBoard->getPossiblePushes(enemyPiece, possiblePushes);
-        // GUI::showPossibleMoves() ... ?   
-    }
-    else if(res == RES_COUNTER_PUSH)
-    {
-        vector<CellPtr> possiblePushes;
-        mBoard->getPossiblePushes(myPiece, possiblePushes);
-        // GUI::showPossibleMoves() ... ?   
-    }
+    BattleResult res = getBattleResult(mActivePiece->attackRating, enemyPiece->defenceRating);
     
     return res;
     
@@ -193,25 +182,18 @@ BattleResult Player::getBattleResult(unsigned attackRating, unsigned defenceRati
 }
 
 
-bool Player::movePiece(const PiecePtr& piece, const CellPtr& cell) 
+void Player::movePiece(const CellPtr& cell) 
 {
     TRY_BEGINS;
-    
-    if(!mBoard->isMoveValid(cell))
-    {
-        return false;
-    }
-    
+       
     vector<CellPtr> steps;
     mBoard->getMoveSteps(cell, steps);
     
     for(unsigned i = 0; i<steps.size(); i++)
     {
-        mBoard->placePiece(piece, steps[i]);
+        mBoard->placePiece(mActivePiece, steps[i]);
       //  cout << "movePiece (" << piece->getName() << ")to " <<  steps[i]->c << "." << steps[i]->x << endl;
     }
     
     TRY_RETHROW;
-    
-    return true;
 }

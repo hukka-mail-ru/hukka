@@ -130,36 +130,84 @@ CellPtr& Board::getCell(unsigned c, unsigned r)
 }
 
 
-bool Board::isMoveValid(const CellPtr& cell)
+bool Board::isClickValid(const CellPtr& cell)
 {
     TRY_BEGINS;
     
-    for(unsigned i=0; i<mPossibleMoves.size(); ++i)
+    for(unsigned i=0; i<mPossibleClicks.size(); ++i)
     {
-        if(mPossibleMoves[i]->c == cell->c && mPossibleMoves[i]->r == cell->r)
+        if(mPossibleClicks[i] == cell)
         {
             return true;
         }
     }   
     
-    TRY_RETHROW;    
-    
+    TRY_RETHROW;        
     return false;
 }
+
 
 const PiecePtr& Board::getActivePiece()
 {
     return mActivePiece;
 }
 
-void Board::getPossiblePushes(const PiecePtr& piece, vector<CellPtr>& pushes)
+
+void Board::definePossibleClicks(const PlayerPtr& player, bool push)
+{
+    TRY_BEGINS;
+    
+    mPossibleClicks.clear();
+    
+    PiecePtr activePiece = player->getActivePiece();
+    
+    if(push) // (battleRes == RES_PUSH || battleRes == RES_COUNTER_PUSH)
+    {
+        if(activePiece)
+        {
+            vector<CellPtr> pushes;
+            definePossibleMoves(activePiece, pushes);
+            mPossibleClicks = pushes;
+        }
+        
+        return;
+    }
+    
+    // all player's pieces   
+    for(unsigned i=0; i<mCells.size(); ++i)
+    {
+        if(mCells[i]->piece && mCells[i]->piece->player == player)
+            mPossibleClicks.push_back(mCells[i]);
+    }
+    
+    if(activePiece)
+    {
+        // + moves
+        vector<CellPtr> moves;
+        definePossibleMoves(activePiece, moves);
+        mPossibleClicks.insert(mPossibleClicks.end(), moves.begin(), moves.end());
+
+        // + targets
+        vector<CellPtr> targets;
+        definePossibleMoves(activePiece, targets);
+        mPossibleClicks.insert(mPossibleClicks.end(), targets.begin(), targets.end());
+    }
+    
+    TRY_RETHROW;
+}
+
+
+
+
+
+void Board::definePossiblePushes(const PiecePtr& piece, vector<CellPtr>& pushes)
 {
     TRY_BEGINS;
     
     unsigned temp = piece->moveRating; // just memorize
     piece->moveRating = 1;
     
-    getPossibleMoves(piece, pushes);
+    definePossibleMoves(piece, pushes);
     
     piece->moveRating = temp; // restore
     
@@ -167,7 +215,7 @@ void Board::getPossiblePushes(const PiecePtr& piece, vector<CellPtr>& pushes)
 }
 
 
-void Board::getPossibleMoves(const PiecePtr& piece, vector<CellPtr>& moves)
+void Board::definePossibleMoves(const PiecePtr& piece, vector<CellPtr>& moves)
 {
     TRY_BEGINS;
     
@@ -208,15 +256,12 @@ void Board::getPossibleMoves(const PiecePtr& piece, vector<CellPtr>& moves)
             }
         }
     }
-   
-    
-    mPossibleMoves = moves;
-       
+          
     TRY_RETHROW;    
 }
 
 
-void Board::getPossibleTargets(const PiecePtr& piece, std::vector<CellPtr>& targets)
+void Board::definePossibleTargets(const PiecePtr& piece, std::vector<CellPtr>& targets)
 {
     TRY_BEGINS;
     
@@ -357,4 +402,13 @@ void Board::deselectAll()
     {
         mCells[i]->selected = SEL_NONE;
     }
+}
+
+void Board::selectAll(const PlayerPtr& player)
+{
+    for(unsigned i = 0; i < mCells.size(); i++)
+    {
+        if(mCells[i]->piece && mCells[i]->piece->player == player)
+            mCells[i]->selected = SEL_POSSIBLE_MOVE;
+    }    
 }
