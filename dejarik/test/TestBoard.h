@@ -23,7 +23,7 @@ class TestBoard : public CppUnit::TestFixture
    CPPUNIT_TEST(testPossibleMoves_trap); // no possible moves
    
    CPPUNIT_TEST(testPossibleTargets);
-   CPPUNIT_TEST(testIsMoveValid);
+   CPPUNIT_TEST(testIsClickValid);
    CPPUNIT_TEST(testGetMoveSteps);
    CPPUNIT_TEST_SUITE_END();
          
@@ -467,7 +467,7 @@ public:
         TRY_CATCH;
     }
     
-    void testIsMoveValid() 
+    void testIsClickValid() 
     {
         SHOW_FUNCTION_NAME;
         TRY_BEGINS ;
@@ -483,9 +483,9 @@ public:
         
  
         
-        CPPUNIT_ASSERT(board->isMoveValid(board->getCell(0,0)) == false); // no move
-        CPPUNIT_ASSERT(board->isMoveValid(board->getCell(1,5)) == true);
-        CPPUNIT_ASSERT(board->isMoveValid(board->getCell(2,11)) == false);
+        CPPUNIT_ASSERT(board->isClickValid(board->getCell(0,0)) == false); // no move
+        CPPUNIT_ASSERT(board->isClickValid(board->getCell(1,5)) == true);
+        CPPUNIT_ASSERT(board->isClickValid(board->getCell(2,11)) == false);
 
         // ----------------------------------------
         
@@ -496,18 +496,18 @@ public:
         moves.clear();
         board->getPossibleMoves(queen, moves);
 
-        CPPUNIT_ASSERT(board->isMoveValid(board->getCell(2,0)) == false); // no move
-        CPPUNIT_ASSERT(board->isMoveValid(board->getCell(2,10)) == true);
-        CPPUNIT_ASSERT(board->isMoveValid(board->getCell(1,11)) == true);
-        CPPUNIT_ASSERT(board->isMoveValid(board->getCell(0,0)) == false); // we have King there!
-        CPPUNIT_ASSERT(board->isMoveValid(board->getCell(1,1)) == true);
+        CPPUNIT_ASSERT(board->isClickValid(board->getCell(2,0)) == false); // no move
+        CPPUNIT_ASSERT(board->isClickValid(board->getCell(2,10)) == true);
+        CPPUNIT_ASSERT(board->isClickValid(board->getCell(1,11)) == true);
+        CPPUNIT_ASSERT(board->isClickValid(board->getCell(0,0)) == false); // we have King there!
+        CPPUNIT_ASSERT(board->isClickValid(board->getCell(1,1)) == true);
         
-        CPPUNIT_ASSERT(board->isMoveValid(board->getCell(1,2)) == false);
-        CPPUNIT_ASSERT(board->isMoveValid(board->getCell(2,9)) == false); // out of possible moves
-        CPPUNIT_ASSERT(board->isMoveValid(board->getCell(1,10)) == false);
-        CPPUNIT_ASSERT(board->isMoveValid(board->getCell(1,5)) == false);
-        CPPUNIT_ASSERT(board->isMoveValid(board->getCell(1,2)) == false);
-        CPPUNIT_ASSERT(board->isMoveValid(board->getCell(2,3)) == false);
+        CPPUNIT_ASSERT(board->isClickValid(board->getCell(1,2)) == false);
+        CPPUNIT_ASSERT(board->isClickValid(board->getCell(2,9)) == false); // out of possible moves
+        CPPUNIT_ASSERT(board->isClickValid(board->getCell(1,10)) == false);
+        CPPUNIT_ASSERT(board->isClickValid(board->getCell(1,5)) == false);
+        CPPUNIT_ASSERT(board->isClickValid(board->getCell(1,2)) == false);
+        CPPUNIT_ASSERT(board->isClickValid(board->getCell(2,3)) == false);
         
         TRY_CATCH;
     }

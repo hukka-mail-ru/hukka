@@ -105,7 +105,6 @@ void Game::onCellClick(const CellPtr& cell)
     {
         mActivePlayer->movePiece(cell);
         mActivePlayer->decrementLeftMoves();
-        mBoard->definePossibleClicks(mActivePlayer, false);
     }
     else // clicked on a piece
     {
@@ -113,6 +112,7 @@ void Game::onCellClick(const CellPtr& cell)
         {
             mActivePlayer->setActivePiece(cell->piece);
             mBoard->definePossibleClicks(mActivePlayer, false);
+            mBoard->selectClickedCell(cell);
         }
         else // enemy's
         {
@@ -145,99 +145,14 @@ void Game::onCellClick(const CellPtr& cell)
                 passTurn();
                 return;
             }
-            
         }
-        
-        
     }
     
     if(mActivePlayer->getLeftMoves() == 0)
     {
         passTurn();
     }
-    
-    
-   /* 
-    mBoard->deselectAll();
 
-    static unsigned move = 0; // a player has 2 moves 
-    static TurnStage stage = TURN_SELECTION; // each move has two phases: START (selection), FINISH (action)   
-    static BattleResult battleResult = RES_NO_BATTLE;
-    
-    if(cell->piece)
-    {
-        cout << "Player " << (long)mActivePlayer.get() << 
-                "; Piece " << cell->piece->name << 
-                "; Move: " << cell->piece->moveRating << 
-                "; Stage:" << stage << endl;
-    }
-  
-    
-    // if clicked on an ally piece, then TURN_SELECTION
-    if(battleResult != RES_PUSH && battleResult != RES_COUNTER_PUSH &&
-       cell->piece && cell->piece->player == mActivePlayer)
-    {
-        stage = TURN_SELECTION;
-    }
-    
-    if(stage == TURN_SELECTION)
-    {
-        if(mActivePlayer->makeTurn(cell, stage, battleResult))
-        {
-            stage = TURN_ACTION;
-            
-            mBoard->selectClickedCell(cell);
-            return true;
-        }
-    }
-    else if(stage == TURN_ACTION)
-    {
-        if(battleResult == RES_NO_BATTLE)
-        {
-            if(mActivePlayer->makeTurn(cell, stage, battleResult))
-            {
-                if(battleResult == RES_NO_BATTLE ||
-                   battleResult == RES_KILL ||
-                   battleResult == RES_COUNTER_KILL)
-                {
-                    stage = TURN_SELECTION;
-                    move++;
-                }
-                
-                if(move == 2)
-                {
-                    mActivePlayer = (mActivePlayer == mPlayer1) ? mPlayer2 : mPlayer1; // next player
-                    mBoard->deselectAll();
-                    mBoard->selectAll(mActivePlayer);
-                    move = 0;
-                }
-                
-              //  mBoard->selectClickedCell(cell);
-                return true;
-            }
-        }
-        else if(battleResult == RES_PUSH || battleResult == RES_COUNTER_PUSH)
-        {
-            if(mActivePlayer->makePush(cell)) // without verification of piece's owner
-            {
-                stage = TURN_SELECTION;
-                move++;
-                
-                if(move == 2)
-                {
-                    mActivePlayer = (mActivePlayer == mPlayer1) ? mPlayer2 : mPlayer1; // next player
-                    mBoard->selectAll(mActivePlayer);
-                    move = 0;
-                }
-                
-             //   mBoard->selectClickedCell(cell);
-                return true;
-            }
-        }
-    }
-    
-    return false;
-*/    
     TRY_RETHROW;
 }
     
