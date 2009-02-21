@@ -325,7 +325,9 @@ void UI::onMouseClick(const SDL_Event& event)
         CellPtr cell;
         if(isCellClicked(x, y, cell))
         {
-            cout << "cell " << cell->c << "." << cell->r << endl;                        
+            cout << "cell " << cell->c << "." << cell->r << endl;
+            if(cell->piece)
+                cout << "piece " << cell->piece->name << " move " <<cell->piece->moveRating << endl;                        
             mGame->onCellClick(cell);
         }   
     }   

@@ -215,7 +215,7 @@ void Board::getPossiblePushes(const PiecePtr& piece, vector<CellPtr>& pushes)
 }
 
 
-void Board::getPossibleMoves(const PiecePtr& piece, vector<CellPtr>& moves)
+void Board::getPossibleMoves(const PiecePtr& piece, vector<CellPtr>& possibleMoves)
 {
     TRY_BEGINS;
     
@@ -223,6 +223,7 @@ void Board::getPossibleMoves(const PiecePtr& piece, vector<CellPtr>& moves)
     
     unmarkAll();
     
+    vector<CellPtr> moves;
     //  mark possible moves from the start
     markNeibours(MARK_POSSIBLE_MOVES, 1, piece->cell);
     
@@ -233,7 +234,7 @@ void Board::getPossibleMoves(const PiecePtr& piece, vector<CellPtr>& moves)
         if(mCells[i]->mark == 1)
         {
             moves.push_back(mCells[i]);
-            mCells[i]->selected = SEL_POSSIBLE_MOVE;
+         //   mCells[i]->selected = SEL_POSSIBLE_MOVE;
         }
     }
     
@@ -252,10 +253,21 @@ void Board::getPossibleMoves(const PiecePtr& piece, vector<CellPtr>& moves)
             if(mCells[i]->mark == step)
             {
                 moves.push_back(mCells[i]);
-                mCells[i]->selected = SEL_POSSIBLE_MOVE;
+              //  mCells[i]->selected = SEL_POSSIBLE_MOVE;
             }
         }
     }
+    
+    
+    for(unsigned i=0; i<moves.size(); i++)
+    {
+        if(moves[i]->mark == piece->moveRating)
+        {
+            possibleMoves.push_back(moves[i]);
+            moves[i]->selected = SEL_POSSIBLE_MOVE;
+        }
+    }
+    
           
     TRY_RETHROW;    
 }

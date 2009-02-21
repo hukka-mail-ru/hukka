@@ -20,6 +20,8 @@ class TestGame: public CppUnit::TestFixture
    CPPUNIT_TEST(testMove2);
    CPPUNIT_TEST(testMove3);
    CPPUNIT_TEST(testMove4);
+   CPPUNIT_TEST(testMove5);
+   CPPUNIT_TEST(testMove6);
    CPPUNIT_TEST_SUITE_END();
          
 public:         
@@ -50,6 +52,76 @@ public:
         TRY_CATCH;
     }
     
+    void testMove6()
+    {
+        TRY_BEGINS;
+        SHOW_FUNCTION_NAME;
+        
+        Game game;
+        game.startup();
+        
+        BoardPtr board = game.getBoard();
+        board->getCell(2, 2)->piece->moveRating = 2;
+        board->getCell(2, 0)->piece->moveRating = 1;
+        
+        // 1
+        game.onCellClick(board->getCell(2,2));
+        game.onCellClick(board->getCell(0,0));
+        
+        // 2
+        game.onCellClick(board->getCell(2,0));
+        game.onCellClick(board->getCell(1,0));
+        
+        CPPUNIT_ASSERT(board->getCell(0, 0)->piece);
+        CPPUNIT_ASSERT(board->getCell(1, 0)->piece);
+        
+        // enemy
+        board->getCell(2, 9)->piece->moveRating = 3;
+        
+        game.onCellClick(board->getCell(2,9));
+        game.onCellClick(board->getCell(1,11));
+        
+        CPPUNIT_ASSERT(board->getCell(1, 11)->piece);
+        
+        
+        CPPUNIT_ASSERT(board->getCell(0,0)->selected == SEL_NONE);
+        CPPUNIT_ASSERT(board->getCell(1,0)->selected == SEL_NONE);
+        CPPUNIT_ASSERT(board->getCell(1,1)->selected == SEL_NONE);
+        CPPUNIT_ASSERT(board->getCell(1,2)->selected == SEL_NONE);
+        CPPUNIT_ASSERT(board->getCell(1,3)->selected == SEL_NONE);
+        CPPUNIT_ASSERT(board->getCell(1,4)->selected == SEL_NONE);
+        CPPUNIT_ASSERT(board->getCell(1,5)->selected == SEL_NONE);
+        CPPUNIT_ASSERT(board->getCell(1,6)->selected == SEL_NONE);
+        CPPUNIT_ASSERT(board->getCell(1,7)->selected == SEL_NONE);
+        CPPUNIT_ASSERT(board->getCell(1,8)->selected == SEL_NONE);
+        CPPUNIT_ASSERT(board->getCell(1,9)->selected == SEL_NONE);
+        CPPUNIT_ASSERT(board->getCell(1,10)->selected == SEL_NONE);
+        CPPUNIT_ASSERT(board->getCell(1,11)->selected == SEL_NONE);
+        
+        TRY_CATCH;
+    }
+    
+    void testMove5()
+    {
+        TRY_BEGINS;
+        SHOW_FUNCTION_NAME;
+        
+        Game game;
+        game.startup();
+        
+        BoardPtr board = game.getBoard();
+        board->getCell(2, 2)->piece->moveRating = 2;
+        
+        game.onCellClick(board->getCell(2,2));
+        game.onCellClick(board->getCell(1,2));
+        
+        CPPUNIT_ASSERT(board->getCell(2, 2)->piece);
+        CPPUNIT_ASSERT(!board->getCell(1, 2)->piece);
+
+        
+        TRY_CATCH;
+    }
+    
     void testMove4()
     {
         TRY_BEGINS;
@@ -59,7 +131,7 @@ public:
         game.startup();
         
         BoardPtr board = game.getBoard();
-        board->getCell(2, 1)->piece->moveRating = 3;
+        board->getCell(2, 1)->piece->moveRating = 2;
         board->getCell(2, 2)->piece->moveRating = 1;
         
         // move 1
@@ -68,15 +140,15 @@ public:
 
         CPPUNIT_ASSERT(board->getCell(2, 0)->piece);
         CPPUNIT_ASSERT(board->getCell(2, 1)->piece);
-        CPPUNIT_ASSERT(board->getCell(1, 1)->piece);
+        CPPUNIT_ASSERT(board->getCell(1, 2)->piece);
         CPPUNIT_ASSERT(board->getCell(2, 3)->piece);
 
         game.onCellClick(board->getCell(2,1));
         game.onCellClick(board->getCell(2,0));
         
         CPPUNIT_ASSERT(board->getCell(2, 0)->piece);
-        CPPUNIT_ASSERT(board->getCell(2, 2)->piece);
-        CPPUNIT_ASSERT(board->getCell(1, 1)->piece);
+        CPPUNIT_ASSERT(board->getCell(2, 1)->piece);
+        CPPUNIT_ASSERT(board->getCell(1, 2)->piece);
         CPPUNIT_ASSERT(board->getCell(2, 3)->piece);
         
         TRY_CATCH;
@@ -204,6 +276,7 @@ public:
         
         BoardPtr board = game.getBoard();
         board->getCell(2, 0)->piece->moveRating = 1;
+        board->getCell(2, 3)->piece->moveRating = 1;
         
         game.onCellClick(board->getCell(2,0));
         CPPUNIT_ASSERT(board->getCell(2,0)->selected == SEL_CLICKED);
