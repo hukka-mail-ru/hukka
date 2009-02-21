@@ -320,17 +320,40 @@ void Board::markNeibours(WhatToMark whatToMark, unsigned step, const CellPtr& ce
     TRY_RETHROW;       
 }
 
+bool isInPrevious(const CellPtr& start)
+{
+    CellPtr cell = start; // copy
+    
+    unsigned i = 0;
+    for(;;)
+    {        
+        if(!cell->prev)
+            return false;
+        
+        cell = cell->prev;
+        
+        if(cell == start)
+            return true;
+        
+        i++;
+        assert(i<4); // 3 is the maximum moves quantity
+    }  
+}
+
 void Board::mark(WhatToMark whatToMark, unsigned step, const CellPtr& prev, const CellPtr& cell)
 {
     TRY_BEGINS;
     
-    if(whatToMark == MARK_POSSIBLE_MOVES) // mark vacant cells
+    if(whatToMark == MARK_POSSIBLE_MOVES) 
     {
-        if(!cell->piece)
-        {
+        // mark vacant cells, but:
+        // can't move finishing on the start position
+        // can't move through a cell twice
+        if(!cell->piece && !isInPrevious(cell))
+        {            
             cell->mark = step;
             
-            if(!cell->prev)
+            if(!cell->prev) // the previous cell must be set ONCE
                 cell->prev = prev;
         }
     }
