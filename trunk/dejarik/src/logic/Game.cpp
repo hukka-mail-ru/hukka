@@ -47,7 +47,7 @@ void Game::startup()
     }
     
     passTurn();
-    mBoard->definePossibleClicks(mActivePlayer, false);
+    
     
     TRY_RETHROW;
 }
@@ -69,7 +69,10 @@ void Game::passTurn()
     if(mActivePlayer->getLeftMoves() == 0)
     {
         mActivePlayer->setLeftMoves(2);
+        mBoard->definePossibleClicks(mActivePlayer, false);
     }
+    
+    
     
     TRY_RETHROW;
 }

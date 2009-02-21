@@ -44,7 +44,8 @@ class Player
 public:
     Player(const std::string& name, const BoardPtr& board): 
         mName(name),
-        mBoard(board) 
+        mBoard(board),
+        mLeftMoves(0)
         {}
     
     void addPiece(const PiecePtr& piece);
