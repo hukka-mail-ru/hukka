@@ -64,24 +64,30 @@ public:
         board->getCell(2, 2)->piece->moveRating = 2;
         board->getCell(2, 0)->piece->moveRating = 1;
         
-        // 1
+        // 1 move
         game.onCellClick(board->getCell(2,2));
         game.onCellClick(board->getCell(0,0));
         
-        // 2
+        // 2 move
         game.onCellClick(board->getCell(2,0));
         game.onCellClick(board->getCell(1,0));
         
         CPPUNIT_ASSERT(board->getCell(0, 0)->piece);
         CPPUNIT_ASSERT(board->getCell(1, 0)->piece);
         
-        // enemy
+        // enemy 1 move
         board->getCell(2, 9)->piece->moveRating = 3;
+        board->getCell(2, 8)->piece->moveRating = 1;
         
         game.onCellClick(board->getCell(2,9));
         game.onCellClick(board->getCell(1,11));
         
+        // enemy 2 move
+        game.onCellClick(board->getCell(2,8));
+        game.onCellClick(board->getCell(1,8));
+        
         CPPUNIT_ASSERT(board->getCell(1, 11)->piece);
+        CPPUNIT_ASSERT(board->getCell(1, 8)->piece);
         
         
         CPPUNIT_ASSERT(board->getCell(0,0)->selected == SEL_NONE);

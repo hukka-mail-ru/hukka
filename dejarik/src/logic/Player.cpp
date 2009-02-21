@@ -36,11 +36,11 @@ BattleResult Player::attackEnimy(const PiecePtr& enemyPiece)
     TRY_BEGINS;
     
     // an assurance
-    assert(mActivePiece->player != enemyPiece->player);
+    assert(mActivePiece.lock()->player != enemyPiece->player);
     
     enemyPiece->player->setActivePiece(enemyPiece);
     
-    BattleResult res = getBattleResult(mActivePiece->attackRating, enemyPiece->defenceRating);
+    BattleResult res = getBattleResult(mActivePiece.lock()->attackRating, enemyPiece->defenceRating);
     
     return res;
     
@@ -119,7 +119,7 @@ void Player::movePiece(const CellPtr& cell)
     
     for(unsigned i = 0; i<steps.size(); i++)
     {
-        mBoard->placePiece(mActivePiece, steps[i]);
+        mBoard->placePiece(mActivePiece.lock(), steps[i]);
       //  cout << "movePiece (" << piece->getName() << ")to " <<  steps[i]->c << "." << steps[i]->x << endl;
     }
     
