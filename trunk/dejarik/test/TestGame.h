@@ -15,15 +15,72 @@ class TestGame: public CppUnit::TestFixture
    CPPUNIT_TEST(testCheckVictory);
    CPPUNIT_TEST(testOver);
    CPPUNIT_TEST(testSelection);
+   CPPUNIT_TEST(testSelection2);
    CPPUNIT_TEST(testMove);
    CPPUNIT_TEST(testMove2);
    CPPUNIT_TEST(testMove3);
+   CPPUNIT_TEST(testMove4);
    CPPUNIT_TEST_SUITE_END();
          
 public:         
     void setUp() {}
     void tearDown() {}
     
+    void testSelection2()
+    {
+        TRY_BEGINS;
+        SHOW_FUNCTION_NAME;
+        
+        Game game;
+        game.startup();
+        
+        BoardPtr board = game.getBoard();
+        board->getCell(2, 2)->piece->moveRating = 2;
+        
+        game.onCellClick(board->getCell(2,2));
+        
+        CPPUNIT_ASSERT(board->getCell(2,2)->selected == SEL_CLICKED);
+        CPPUNIT_ASSERT(board->getCell(1,2)->selected == SEL_NONE);
+        CPPUNIT_ASSERT(board->getCell(0,0)->selected == SEL_POSSIBLE_MOVE);
+        CPPUNIT_ASSERT(board->getCell(1,3)->selected == SEL_POSSIBLE_MOVE);
+        CPPUNIT_ASSERT(board->getCell(1,1)->selected == SEL_POSSIBLE_MOVE);
+        CPPUNIT_ASSERT(board->getCell(1,4)->selected == SEL_NONE);
+        CPPUNIT_ASSERT(board->getCell(1,0)->selected == SEL_NONE);
+        
+        TRY_CATCH;
+    }
+    
+    void testMove4()
+    {
+        TRY_BEGINS;
+        SHOW_FUNCTION_NAME;
+        
+        Game game;
+        game.startup();
+        
+        BoardPtr board = game.getBoard();
+        board->getCell(2, 1)->piece->moveRating = 3;
+        board->getCell(2, 2)->piece->moveRating = 1;
+        
+        // move 1
+        game.onCellClick(board->getCell(2,2));
+        game.onCellClick(board->getCell(1,2));
+
+        CPPUNIT_ASSERT(board->getCell(2, 0)->piece);
+        CPPUNIT_ASSERT(board->getCell(2, 1)->piece);
+        CPPUNIT_ASSERT(board->getCell(1, 1)->piece);
+        CPPUNIT_ASSERT(board->getCell(2, 3)->piece);
+
+        game.onCellClick(board->getCell(2,1));
+        game.onCellClick(board->getCell(2,0));
+        
+        CPPUNIT_ASSERT(board->getCell(2, 0)->piece);
+        CPPUNIT_ASSERT(board->getCell(2, 2)->piece);
+        CPPUNIT_ASSERT(board->getCell(1, 1)->piece);
+        CPPUNIT_ASSERT(board->getCell(2, 3)->piece);
+        
+        TRY_CATCH;
+    }
     
     void testMove3()
     {
