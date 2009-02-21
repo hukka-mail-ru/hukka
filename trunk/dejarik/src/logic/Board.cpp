@@ -46,14 +46,6 @@ void Board::clear()
     } 
 }
 
-void Board::unmarkAll()
-{
-    for(unsigned i=0; i<mCells.size(); ++i)
-    {
-        mCells[i]->mark = 0;
-        mCells[i]->prev.reset();
-    } 
-}
 
 // piece <---> cell
 void Board::placePiece(const PiecePtr& piece, unsigned c, unsigned x)
@@ -189,7 +181,7 @@ void Board::definePossibleClicks(const PlayerPtr& player, bool push)
 
         // + targets
         vector<CellPtr> targets;
-        getPossibleMoves(activePiece, targets);
+        getPossibleTargets(activePiece, targets);
         mPossibleClicks.insert(mPossibleClicks.end(), targets.begin(), targets.end());
     }
     
@@ -221,7 +213,13 @@ void Board::getPossibleMoves(const PiecePtr& piece, vector<CellPtr>& possibleMov
     
     mActivePiece = piece;
     
-    unmarkAll();
+    //unmarkAll();
+    for(unsigned i=0; i<mCells.size(); ++i)
+    {
+        mCells[i]->mark = 0;
+        mCells[i]->prev.reset();
+    } 
+    
     
     vector<CellPtr> moves;
     //  mark possible moves from the start
@@ -277,7 +275,11 @@ void Board::getPossibleTargets(const PiecePtr& piece, std::vector<CellPtr>& targ
 {
     TRY_BEGINS;
     
-    unmarkAll();
+    //unmarkAll();
+    for(unsigned i=0; i<mCells.size(); ++i)
+    {
+        mCells[i]->mark = 0;
+    } 
     
     const unsigned marked = 1;
     

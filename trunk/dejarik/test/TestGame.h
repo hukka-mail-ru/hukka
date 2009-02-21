@@ -16,6 +16,7 @@ class TestGame: public CppUnit::TestFixture
    CPPUNIT_TEST(testOver);
    CPPUNIT_TEST(testSelection);
    CPPUNIT_TEST(testSelection2);
+   CPPUNIT_TEST(testSelection3);
    CPPUNIT_TEST(testMove);
    CPPUNIT_TEST(testMove2);
    CPPUNIT_TEST(testMove3);
@@ -27,6 +28,37 @@ class TestGame: public CppUnit::TestFixture
 public:         
     void setUp() {}
     void tearDown() {}
+
+    void testSelection3()
+    {
+        TRY_BEGINS;
+        SHOW_FUNCTION_NAME;
+        
+        Game game;
+        game.startup();
+        
+        BoardPtr board = game.getBoard();
+        board->getCell(2, 2)->piece->moveRating = 1;
+        
+        game.onCellClick(board->getCell(2,2));
+        game.onCellClick(board->getCell(1,2));
+        CPPUNIT_ASSERT(board->getCell(1, 2)->piece);
+        
+        game.onCellClick(board->getCell(1,2));
+        game.onCellClick(board->getCell(0,0));
+        CPPUNIT_ASSERT(board->getCell(0, 0)->piece);
+        
+        board->getCell(2, 7)->piece->moveRating = 1;
+        
+        game.onCellClick(board->getCell(2,7));
+        game.onCellClick(board->getCell(1,7));
+        game.onCellClick(board->getCell(1,7));               
+        CPPUNIT_ASSERT(board->getCell(1, 7)->piece);
+        
+        CPPUNIT_ASSERT(board->getCell(0,0)->selected == SEL_POSSIBLE_TARGET);
+        
+        TRY_CATCH;
+    }
     
     void testSelection2()
     {
