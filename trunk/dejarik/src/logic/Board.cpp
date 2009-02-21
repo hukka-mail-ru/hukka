@@ -102,7 +102,7 @@ void Board::distribute(const PiecePtr& piece, const PlayerPtr& player)
     TRY_RETHROW;
 }
 
-void Board::killPiece(PiecePtr& piece)
+void Board::killPiece(PiecePtr piece)
 {
     TRY_BEGINS;
     

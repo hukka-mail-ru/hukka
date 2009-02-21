@@ -55,7 +55,7 @@ public:
     
     unsigned howManyPieces();
     
-    const PiecePtr& getActivePiece()
+    PiecePtr getActivePiece()
     {
         return mActivePiece.lock();
     }
