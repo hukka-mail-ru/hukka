@@ -66,6 +66,8 @@ void Game::passTurn()
         mActivePlayer = (mActivePlayer == mPlayer1) ? mPlayer2 : mPlayer1; // next player
     }
     
+    mActivePlayer->resetActivePiece();
+    
     if(mActivePlayer->getLeftMoves() == 0)
     {
         mActivePlayer->setLeftMoves(2);

@@ -3,6 +3,7 @@
 
 #include <string>
 #include <vector>
+#include <boost/weak_ptr.hpp> 
 #include "../common/Macros.h"
 #include "Piece.h"
 #include "Board.h"
@@ -56,12 +57,17 @@ public:
     
     const PiecePtr& getActivePiece()
     {
-        return mActivePiece;
+        return mActivePiece.lock();
     }
     
     void setActivePiece(const PiecePtr& piece)
     {
         mActivePiece = piece;
+    }
+    
+    void resetActivePiece()
+    {
+        mActivePiece.reset();
     }
 
     
@@ -108,7 +114,7 @@ private:
     
     std::vector<PiecePtr> mPieces;
     
-    PiecePtr mActivePiece;
+    boost::weak_ptr<Piece> mActivePiece;
     
     unsigned mLeftMoves;
 };
