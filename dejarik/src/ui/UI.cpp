@@ -207,9 +207,10 @@ void UI::drawPiece(const CellPtr& cell)
     if(!cell->piece)
         return;
     
-    
-    
-    glColor3f(0.0f ,0.0f, 1.0f);
+    if(cell->piece->player == mGame->mPlayer1)
+        glColor3f(0.5f ,0.5f, 1.0f); // blue
+    else
+        glColor3f(1.0f ,0.0f, 1.0f); // pink
     
     glBegin( GL_POLYGON ); 
          float x = cell->x_center;
@@ -286,6 +287,34 @@ void UI::drawBoard()
 }
 
 
+void UI::drawActivePlayer()
+{
+    TRY_BEGINS;
+    
+    if(!mGame->mActivePlayer)
+        return;
+
+    float y = 0;
+    if(mGame->mActivePlayer == mGame->mPlayer1)
+    {
+        glColor3f(0.5f ,0.5f, 1.0f); // blue
+        y = 3;
+    }
+    else
+    {
+        glColor3f(1.0f ,0.0f, 1.0f); // pink
+        y = -3;
+    }
+    
+    glBegin( GL_POLYGON ); 
+         glVertex3f(0, y, 0);
+         glVertex3f(1, y, 0);
+         glVertex3f(1, y+0.2, 0);
+         glVertex3f(0, y+0.2, 0);
+    glEnd();
+    
+    TRY_RETHROW;
+}
 
 
 /* Here goes our drawing code */
@@ -299,7 +328,7 @@ bool UI::drawAll()
     glTranslatef( 0.0f, 0.0f, -10.0f );
 
     drawBoard();
-
+    drawActivePlayer();
     
     /* Draw it to the screen */
     if(!mQuit)

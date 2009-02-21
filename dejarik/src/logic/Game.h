@@ -12,6 +12,7 @@ CLASSPTR(Game);
 class Game
 {
     friend class TestGame;
+    friend class UI; // ????????
     
 public:
     
