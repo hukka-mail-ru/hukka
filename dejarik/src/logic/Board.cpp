@@ -372,6 +372,7 @@ void Board::getMoveSteps(const CellPtr& start, std::vector<CellPtr>& steps)
     
     CellPtr cell = start;
     
+    unsigned i = 0;
     for(;;)
     {
         if(!cell->prev)
@@ -380,6 +381,9 @@ void Board::getMoveSteps(const CellPtr& start, std::vector<CellPtr>& steps)
         steps.insert(steps.begin(), cell); // push_front
         
         cell = cell->prev;
+        
+        i++;
+        assert(i<4); // 3 is the maximum moves quantity
     }
 
     

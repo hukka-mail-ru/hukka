@@ -17,12 +17,38 @@ class TestGame: public CppUnit::TestFixture
    CPPUNIT_TEST(testSelection);
    CPPUNIT_TEST(testMove);
    CPPUNIT_TEST(testMove2);
+   CPPUNIT_TEST(testMove3);
    CPPUNIT_TEST_SUITE_END();
          
 public:         
     void setUp() {}
     void tearDown() {}
+    
+    
+    void testMove3()
+    {
+        TRY_BEGINS;
+        SHOW_FUNCTION_NAME;
         
+        Game game;
+        game.startup();
+        
+        BoardPtr board = game.getBoard();
+        board->getCell(2, 2)->piece->moveRating = 3;
+        
+        game.onCellClick(board->getCell(2,2));
+        game.onCellClick(board->getCell(0,0));
+
+        CPPUNIT_ASSERT(board->getCell(0,0)->selected == SEL_NONE);
+        CPPUNIT_ASSERT(board->getCell(1,2)->selected == SEL_NONE);
+        CPPUNIT_ASSERT(board->getCell(2,2)->selected == SEL_NONE);
+        
+        CPPUNIT_ASSERT(!board->getCell(2, 2)->piece);
+        CPPUNIT_ASSERT(board->getCell(0, 0)->piece);
+        
+        TRY_CATCH;
+    }
+    
     
     void testMove()
     {
