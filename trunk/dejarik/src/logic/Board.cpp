@@ -166,7 +166,7 @@ void Board::definePossibleClicks(const PlayerPtr& player, bool push)
         if(activePiece)
         {
             vector<CellPtr> pushes;
-            definePossibleMoves(activePiece, pushes);
+            getPossibleMoves(activePiece, pushes);
             mPossibleClicks = pushes;
         }
         
@@ -184,12 +184,12 @@ void Board::definePossibleClicks(const PlayerPtr& player, bool push)
     {
         // + moves
         vector<CellPtr> moves;
-        definePossibleMoves(activePiece, moves);
+        getPossibleMoves(activePiece, moves);
         mPossibleClicks.insert(mPossibleClicks.end(), moves.begin(), moves.end());
 
         // + targets
         vector<CellPtr> targets;
-        definePossibleMoves(activePiece, targets);
+        getPossibleMoves(activePiece, targets);
         mPossibleClicks.insert(mPossibleClicks.end(), targets.begin(), targets.end());
     }
     
@@ -200,14 +200,14 @@ void Board::definePossibleClicks(const PlayerPtr& player, bool push)
 
 
 
-void Board::definePossiblePushes(const PiecePtr& piece, vector<CellPtr>& pushes)
+void Board::getPossiblePushes(const PiecePtr& piece, vector<CellPtr>& pushes)
 {
     TRY_BEGINS;
     
     unsigned temp = piece->moveRating; // just memorize
     piece->moveRating = 1;
     
-    definePossibleMoves(piece, pushes);
+    getPossibleMoves(piece, pushes);
     
     piece->moveRating = temp; // restore
     
@@ -215,7 +215,7 @@ void Board::definePossiblePushes(const PiecePtr& piece, vector<CellPtr>& pushes)
 }
 
 
-void Board::definePossibleMoves(const PiecePtr& piece, vector<CellPtr>& moves)
+void Board::getPossibleMoves(const PiecePtr& piece, vector<CellPtr>& moves)
 {
     TRY_BEGINS;
     
@@ -261,7 +261,7 @@ void Board::definePossibleMoves(const PiecePtr& piece, vector<CellPtr>& moves)
 }
 
 
-void Board::definePossibleTargets(const PiecePtr& piece, std::vector<CellPtr>& targets)
+void Board::getPossibleTargets(const PiecePtr& piece, std::vector<CellPtr>& targets)
 {
     TRY_BEGINS;
     

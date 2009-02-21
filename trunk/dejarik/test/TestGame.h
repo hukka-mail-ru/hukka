@@ -12,7 +12,6 @@ class TestGame: public CppUnit::TestFixture
 {
    CPPUNIT_TEST_SUITE(TestGame);
    CPPUNIT_TEST(testStart);
-   CPPUNIT_TEST(testOnCellClick);
    CPPUNIT_TEST(testCheckVictory);
    CPPUNIT_TEST(testOver);
    CPPUNIT_TEST(testSelection);
@@ -36,14 +35,15 @@ public:
         BoardPtr board = game.getBoard();
         board->getCell(2, 0)->piece->moveRating = 1;   
         
-        CPPUNIT_ASSERT(game.onCellClick(board->getCell(2,0)));
+        // Move 1
+        game.onCellClick(board->getCell(2,0));
         CPPUNIT_ASSERT(board->getCell(2,0)->selected == SEL_CLICKED);
         CPPUNIT_ASSERT(board->getCell(1,0)->selected == SEL_POSSIBLE_MOVE);
         CPPUNIT_ASSERT(board->getCell(2,11)->selected == SEL_POSSIBLE_MOVE);
         
         CPPUNIT_ASSERT(board->getCell(2, 0)->piece);
         
-        CPPUNIT_ASSERT(game.onCellClick(board->getCell(1,0)));
+        game.onCellClick(board->getCell(1,0));
         CPPUNIT_ASSERT(board->getCell(1,0)->selected == SEL_NONE);
         CPPUNIT_ASSERT(board->getCell(2,0)->selected == SEL_NONE);
         CPPUNIT_ASSERT(board->getCell(1,11)->selected == SEL_NONE);
@@ -51,6 +51,33 @@ public:
         
         CPPUNIT_ASSERT(!board->getCell(2, 0)->piece);
         CPPUNIT_ASSERT(board->getCell(1, 0)->piece);
+        
+        // Move 2
+        game.onCellClick(board->getCell(1,0));
+        CPPUNIT_ASSERT(board->getCell(1,0)->selected == SEL_CLICKED);
+        CPPUNIT_ASSERT(board->getCell(2,0)->selected == SEL_POSSIBLE_MOVE);
+        CPPUNIT_ASSERT(board->getCell(0,0)->selected == SEL_POSSIBLE_MOVE);
+        CPPUNIT_ASSERT(board->getCell(1,1)->selected == SEL_POSSIBLE_MOVE);
+        CPPUNIT_ASSERT(board->getCell(1,11)->selected == SEL_POSSIBLE_MOVE);
+        
+        CPPUNIT_ASSERT(!board->getCell(2, 0)->piece);
+        CPPUNIT_ASSERT(board->getCell(1, 0)->piece);
+                
+        game.onCellClick(board->getCell(2,0));
+        CPPUNIT_ASSERT(board->getCell(1,0)->selected == SEL_NONE);
+        CPPUNIT_ASSERT(board->getCell(2,0)->selected == SEL_NONE);
+        CPPUNIT_ASSERT(board->getCell(0,0)->selected == SEL_NONE);
+        CPPUNIT_ASSERT(board->getCell(1,1)->selected == SEL_NONE);
+        CPPUNIT_ASSERT(board->getCell(1,11)->selected == SEL_NONE);;
+        
+        CPPUNIT_ASSERT(board->getCell(2, 0)->piece);
+        CPPUNIT_ASSERT(!board->getCell(1, 0)->piece);
+                
+        // Now another player must go
+        game.onCellClick(board->getCell(2,0));
+        CPPUNIT_ASSERT(board->getCell(2,0)->selected == SEL_NONE);
+        CPPUNIT_ASSERT(board->getCell(1,0)->selected == SEL_NONE);
+        CPPUNIT_ASSERT(board->getCell(2,11)->selected == SEL_NONE);     
         
         TRY_CATCH;
     }
@@ -95,32 +122,32 @@ public:
         BoardPtr board = game.getBoard();
         board->getCell(2, 0)->piece->moveRating = 1;
         
-        CPPUNIT_ASSERT(game.onCellClick(board->getCell(2,0)));
+        game.onCellClick(board->getCell(2,0));
         CPPUNIT_ASSERT(board->getCell(2,0)->selected == SEL_CLICKED);
         CPPUNIT_ASSERT(board->getCell(1,0)->selected == SEL_POSSIBLE_MOVE);
         CPPUNIT_ASSERT(board->getCell(2,11)->selected == SEL_POSSIBLE_MOVE);
 
-        CPPUNIT_ASSERT(game.onCellClick(board->getCell(2,3)));
+        game.onCellClick(board->getCell(2,3));
         CPPUNIT_ASSERT(board->getCell(2,3)->selected == SEL_CLICKED);
         CPPUNIT_ASSERT(board->getCell(1,3)->selected == SEL_POSSIBLE_MOVE);
         CPPUNIT_ASSERT(board->getCell(2,4)->selected == SEL_POSSIBLE_MOVE);
 
-        CPPUNIT_ASSERT(game.onCellClick(board->getCell(2,0)));
+        game.onCellClick(board->getCell(2,0));
         CPPUNIT_ASSERT(board->getCell(2,0)->selected == SEL_CLICKED);
         CPPUNIT_ASSERT(board->getCell(1,0)->selected == SEL_POSSIBLE_MOVE);
         CPPUNIT_ASSERT(board->getCell(2,11)->selected == SEL_POSSIBLE_MOVE);
 
-        CPPUNIT_ASSERT(game.onCellClick(board->getCell(2,3)));
+        game.onCellClick(board->getCell(2,3));
         CPPUNIT_ASSERT(board->getCell(2,3)->selected == SEL_CLICKED);
         CPPUNIT_ASSERT(board->getCell(1,3)->selected == SEL_POSSIBLE_MOVE);
         CPPUNIT_ASSERT(board->getCell(2,4)->selected == SEL_POSSIBLE_MOVE);
         
-        CPPUNIT_ASSERT(game.onCellClick(board->getCell(2,0)));
+        game.onCellClick(board->getCell(2,0));
         CPPUNIT_ASSERT(board->getCell(2,0)->selected == SEL_CLICKED);
         CPPUNIT_ASSERT(board->getCell(1,0)->selected == SEL_POSSIBLE_MOVE);
         CPPUNIT_ASSERT(board->getCell(2,11)->selected == SEL_POSSIBLE_MOVE);
 
-        CPPUNIT_ASSERT(game.onCellClick(board->getCell(2,3)));
+        game.onCellClick(board->getCell(2,3));
         CPPUNIT_ASSERT(board->getCell(2,3)->selected == SEL_CLICKED);
         CPPUNIT_ASSERT(board->getCell(1,3)->selected == SEL_POSSIBLE_MOVE);
         CPPUNIT_ASSERT(board->getCell(2,4)->selected == SEL_POSSIBLE_MOVE);
@@ -194,46 +221,7 @@ public:
         TRY_CATCH;
     }
     
-    void testOnCellClick() 
-    {
-        TRY_BEGINS;
-        SHOW_FUNCTION_NAME;         
-    
-        Game game;
-        game.startup();
-        
-        BoardPtr board = game.getBoard();
-        
-    //    PiecePtr mine = board->getCell(2,0)->piece;
-    //    PiecePtr enemy = board->getCell(2,9)->piece;
-        
-        std::vector<CellPtr> cells;
-        board->getInitialCells(cells);
-        for(unsigned i = 0; i < cells.size(); i++)
-        {
-            cells[i]->piece->moveRating = 1;
-        }
-        
-        // player1 - me
-        CPPUNIT_ASSERT(game.onCellClick(board->getCell(2,9)) == false); // click on enemy cell
-        CPPUNIT_ASSERT(game.onCellClick(board->getCell(0,0)) == false); // click on empty cell
-        CPPUNIT_ASSERT(game.onCellClick(board->getCell(2,0)) == true);  // select 'mine'
-        CPPUNIT_ASSERT(game.onCellClick(board->getCell(2,5)) == false); // wrong move
-        CPPUNIT_ASSERT(game.onCellClick(board->getCell(1,0)) == true);  // move 'mine'
-        CPPUNIT_ASSERT(game.onCellClick(board->getCell(1,0)) == true);  // select 'mine'
-        CPPUNIT_ASSERT(game.onCellClick(board->getCell(1,11)) == true); // move 'mine'
-        
-        // player2 -enemy
-        CPPUNIT_ASSERT(game.onCellClick(board->getCell(2,3)) == false); // click on my cell
-        CPPUNIT_ASSERT(game.onCellClick(board->getCell(0,0)) == false); // click on empty cell
-        CPPUNIT_ASSERT(game.onCellClick(board->getCell(2,9)) == true);  // select 'enemy'
-        CPPUNIT_ASSERT(game.onCellClick(board->getCell(2,4)) == false); // wrong move
-        CPPUNIT_ASSERT(game.onCellClick(board->getCell(2,10)) == true);  // move 'enemy'
-        CPPUNIT_ASSERT(game.onCellClick(board->getCell(2,10)) == true);  // select 'enemy'
-        CPPUNIT_ASSERT(game.onCellClick(board->getCell(1,10)) == true); // move 'enemy'
-        
-        TRY_CATCH;
-    }
+
     
         
     void testCheckVictory() 

@@ -72,9 +72,9 @@ private:
     void markNeibours(WhatToMark whatToMark, unsigned step, const CellPtr& cell);       
     void mark(WhatToMark whatToMark, unsigned step, const CellPtr& prev, const CellPtr& cell);
 
-    void definePossibleMoves(const PiecePtr& piece, std::vector<CellPtr>& moves);
-    void definePossibleTargets(const PiecePtr& piece, std::vector<CellPtr>& targets);
-    void definePossiblePushes(const PiecePtr& piece, std::vector<CellPtr>& pushes);
+    void getPossibleMoves(const PiecePtr& piece, std::vector<CellPtr>& moves);
+    void getPossibleTargets(const PiecePtr& piece, std::vector<CellPtr>& targets);
+    void getPossiblePushes(const PiecePtr& piece, std::vector<CellPtr>& pushes);
 
     unsigned getRightPos(unsigned pos);
     unsigned getLeftPos(unsigned pos);

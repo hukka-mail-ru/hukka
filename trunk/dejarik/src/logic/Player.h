@@ -62,36 +62,7 @@ public:
     {
         mActivePiece = piece;
     }
-    
-    /* 
-     Returns true if the move is valid, else false
 
-     Define the cell: empty ? ally ? enemy ?
-      
-    if clicked on ally, we must do TURN_SELECTION, even we are obtained TURN_ACTION
-    
-    on TURN_SELECTION:
-       select mActivePiece
-       player gets possible moves 
-    
-    on TURN_ACTION:
-      player moves mActivePiece 
-      or attacks an enemy piece:
-      
-      battleResult: output parameter
-    */
-   // bool makeTurn(const CellPtr& cell, TurnStage turnStage, BattleResult& battleResult);
-    
-    /*
-     * TURN_SELECTION: automatically when Game defined RES_PUSH or RES_COUNTER_PUSH
-     *    definePossiblePushes -> on the base of definePossibleMoves
-     *    show them on screen
-     * 
-     * TURN_ACTION: by player
-     *    isMoveValid
-     *    move enemy piece
-     */
-   // bool makePush(const CellPtr& cell);
     
     void setLeftMoves(unsigned moves)
     {

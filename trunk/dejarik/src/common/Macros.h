@@ -38,6 +38,6 @@ std::cerr << "EXCEPTION in " << __FUNCTION__ << std::endl << \
 
 
 #define SHOW_FUNCTION_NAME \
-std::cout << std::endl << __FUNCTION__ << std::endl; \
+std::cout << std::endl  << __FUNCTION__ << std::endl; \
 
 #endif /*MACROS_H_*/

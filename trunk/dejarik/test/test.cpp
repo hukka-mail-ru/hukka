@@ -10,8 +10,8 @@
 #include <cppunit/portability/Stream.h>
 
 
-#include "TestBoard.h"
-#include "TestPlayer.h"
+//#include "TestBoard.h"
+//#include "TestPlayer.h"
 #include "TestGame.h"
 
 using namespace std;
