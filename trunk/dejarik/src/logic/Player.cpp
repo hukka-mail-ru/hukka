@@ -125,3 +125,40 @@ void Player::movePiece(const CellPtr& cell)
     
     TRY_RETHROW;
 }
+
+
+PiecePtr Player::getActivePiece()
+{
+    return mActivePiece.lock();
+}
+
+void Player::setActivePiece(const PiecePtr& piece)
+{
+    mActivePiece = piece;
+}
+
+void Player::resetActivePiece()
+{
+    mActivePiece.reset();
+}
+
+
+void Player::setLeftMoves(unsigned moves)
+{
+    mLeftMoves = moves;
+}
+
+void Player::incrementLeftMoves()
+{
+    mLeftMoves++;
+}
+
+void Player::decrementLeftMoves()
+{
+    mLeftMoves--;
+}
+
+unsigned Player::getLeftMoves()
+{
+    return mLeftMoves;
+}

@@ -3,6 +3,8 @@
 
 #include "Game.h"
 
+#define NUM_MOVES 2
+
 using namespace std;
 
 void Game::startup()
@@ -70,7 +72,7 @@ void Game::passTurn()
     
     if(mActivePlayer->getLeftMoves() == 0)
     {
-        mActivePlayer->setLeftMoves(2);
+        mActivePlayer->setLeftMoves(NUM_MOVES);
         mBoard->definePossibleClicks(mActivePlayer, false);
     }
     

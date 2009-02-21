@@ -49,56 +49,28 @@ public:
         mLeftMoves(0)
         {}
     
-    void addPiece(const PiecePtr& piece);
-    
-    void removePiece(const PiecePtr& piece);
-    
+    void addPiece(const PiecePtr& piece);   
+    void removePiece(const PiecePtr& piece);    
     unsigned howManyPieces();
     
-    PiecePtr getActivePiece()
-    {
-        return mActivePiece.lock();
-    }
     
-    void setActivePiece(const PiecePtr& piece)
-    {
-        mActivePiece = piece;
-    }
-    
-    void resetActivePiece()
-    {
-        mActivePiece.reset();
-    }
+    PiecePtr getActivePiece();    
+    void setActivePiece(const PiecePtr& piece);    
+    void resetActivePiece();
+
+ 
+    void setLeftMoves(unsigned moves);    
+    void incrementLeftMoves();   
+    void decrementLeftMoves();
+    unsigned getLeftMoves();
 
     
-    void setLeftMoves(unsigned moves)
-    {
-        mLeftMoves = moves;
-    }
-    
-    void incrementLeftMoves()
-    {
-        mLeftMoves++;
-    }
-    
-    void decrementLeftMoves()
-    {
-        mLeftMoves--;
-    }
-
-    unsigned getLeftMoves()
-    {
-        return mLeftMoves;
-    }
-
     void movePiece(const CellPtr& cell);    
     
     BattleResult attackEnimy(const PiecePtr& enemyPiece);
     
 private:
-    
 
-    
     /*
         if Attack beats Defense by 7 or more then Kill
         if Attack beats Defense by 6 or less then Push
