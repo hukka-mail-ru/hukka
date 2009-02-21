@@ -52,7 +52,7 @@ public:
     void getMoveSteps(const CellPtr& start, std::vector<CellPtr>& steps);
     
     // on a kill
-    void killPiece(PiecePtr& piece);
+    void killPiece(PiecePtr piece);
     
     // on a push
     const PiecePtr& getActivePiece();

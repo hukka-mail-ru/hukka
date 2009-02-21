@@ -66,7 +66,7 @@ void Game::passTurn()
         mActivePlayer = (mActivePlayer == mPlayer1) ? mPlayer2 : mPlayer1; // next player
     }
     
-    mActivePlayer->resetActivePiece();
+    mActivePlayer->resetActivePiece(); // no active piece at the beginning
     
     if(mActivePlayer->getLeftMoves() == 0)
     {
@@ -131,7 +131,7 @@ void Game::onCellClick(const CellPtr& cell)
             }
             else if(res == RES_COUNTER_KILL)
             {
-                mBoard->killPiece(const_cast<PiecePtr&>(mActivePlayer->getActivePiece()));
+                mBoard->killPiece(mActivePlayer->getActivePiece());
                 mActivePlayer->decrementLeftMoves();
                 mBoard->definePossibleClicks(mActivePlayer, false);
             }
