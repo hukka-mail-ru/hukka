@@ -329,7 +329,9 @@ void Board::mark(WhatToMark whatToMark, unsigned step, const CellPtr& prev, cons
         if(!cell->piece)
         {
             cell->mark = step;
-            cell->prev = prev;
+            
+            if(!cell->prev)
+                cell->prev = prev;
         }
     }
     else if(whatToMark == MARK_POSSIBLE_TARGETS)
@@ -375,6 +377,14 @@ void Board::getMoveSteps(const CellPtr& start, std::vector<CellPtr>& steps)
     unsigned i = 0;
     for(;;)
     {
+        /*
+        if(cell->prev)
+        cout << "Cell: " << cell->c << "." << cell->r << 
+         "   prev: " << cell->prev->c << "." << cell->prev->r << endl;
+        else
+        cout << "Cell: " << cell->c << "." << cell->r <<  " NO PREV " << endl;
+        */
+        
         if(!cell->prev)
             break;
         
