@@ -60,8 +60,6 @@ public:
 private:
     
     CellPtr& getCell(unsigned c, unsigned r);      
-
-    void unmarkAll();
     
     enum WhatToMark
     {
