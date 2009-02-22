@@ -150,26 +150,25 @@ const PiecePtr& Board::getActivePiece()
     return mActivePiece;
 }
 
+void Board::definePossiblePushClicks(const PiecePtr& piece)
+{
+    TRY_BEGINS;
+    
+    mPossibleClicks.clear();
+    
+    getPossiblePushes(piece, mPossibleClicks);
+        
+    TRY_RETHROW;
+}
 
-void Board::definePossibleClicks(const PlayerPtr& player, bool push)
+
+void Board::definePossibleClicks(const PlayerPtr& player)
 {
     TRY_BEGINS;
     
     mPossibleClicks.clear();
     
     PiecePtr activePiece = player->getActivePiece();
-    
-    if(push) // (battleRes == RES_PUSH || battleRes == RES_COUNTER_PUSH)
-    {
-        if(activePiece)
-        {
-            vector<CellPtr> pushes;
-            getPossiblePushes(activePiece, pushes);
-            mPossibleClicks = pushes;
-        }
-        
-        return;
-    }
     
     // all player's pieces   
     for(unsigned i=0; i<mCells.size(); ++i)
