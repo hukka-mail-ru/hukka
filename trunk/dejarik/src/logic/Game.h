@@ -23,7 +23,7 @@ public:
     /*
      * Reurns true if the click is allowed by the game rules 
      */
-    void onCellClick(const CellPtr& cell);
+    BattleResult onCellClick(const CellPtr& cell);
 
     const BoardPtr& getBoard();
     

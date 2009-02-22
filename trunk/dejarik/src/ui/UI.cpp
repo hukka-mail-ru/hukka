@@ -356,8 +356,19 @@ void UI::onMouseClick(const SDL_Event& event)
         {
             cout << "cell " << cell->c << "." << cell->r << endl;
             if(cell->piece)
-                cout << "piece " << cell->piece->name << " move " <<cell->piece->moveRating << endl;                        
-            mGame->onCellClick(cell);
+                cout << "piece " << cell->piece->name << " move " <<cell->piece->moveRating << endl; 
+            
+            BattleResult res = mGame->onCellClick(cell);
+            
+            switch(res)
+            {
+                case RES_NO_BATTLE: cout << "RES_NO_BATTLE" << endl; break;
+                case RES_KILL:  cout << "RES_KILL" << endl;break;
+                case RES_PUSH:cout << "RES_PUSH" << endl;break;
+                case RES_COUNTER_KILL:cout << "RES_COUNTER_KILL" << endl;break;
+                case RES_COUNTER_PUSH:cout << "RES_COUNTER_PUSH" << endl;break;
+                default: break;
+            }
         }   
     }   
 }

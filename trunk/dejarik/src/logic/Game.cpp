@@ -97,15 +97,16 @@ bool Game::isOver()
 }
 
     
-void Game::onCellClick(const CellPtr& cell)
+BattleResult Game::onCellClick(const CellPtr& cell)
 {
     TRY_BEGINS;
     
+    BattleResult res = RES_NO_BATTLE;
     mBoard->deselectAll();
     
     if(!mBoard->isClickValid(cell))
     {
-        return;
+        return res;
     }
     
     if(!cell->piece) // empty cell
@@ -124,7 +125,7 @@ void Game::onCellClick(const CellPtr& cell)
         else // enemy's
         {
             PiecePtr enemyPiece = cell->piece;
-            BattleResult res = mActivePlayer->attackEnimy(enemyPiece);
+            res = mActivePlayer->attackEnimy(enemyPiece);
             
             if(res == RES_KILL)
             {
@@ -153,7 +154,7 @@ void Game::onCellClick(const CellPtr& cell)
                 mBoard->definePossiblePushClicks(mActivePlayer->getActivePiece());
                 enemy->setLeftMoves(1);
                 passTurn();
-                return;
+                return res;
             }
         }
     }
@@ -163,7 +164,10 @@ void Game::onCellClick(const CellPtr& cell)
         passTurn();
     }
 
+    return res;
+    
     TRY_RETHROW;
+    
 }
     
 bool Game::checkVictory(PlayerPtr& vinner)
