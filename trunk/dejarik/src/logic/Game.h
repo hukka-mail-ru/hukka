@@ -16,7 +16,7 @@ class Game
     
 public:
     
-    void startup();
+    void startup(); 
     
     bool isOver();
     
