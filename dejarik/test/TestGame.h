@@ -55,6 +55,9 @@ public:
         CPPUNIT_ASSERT(board->getCell(1, 8)->piece);
         CPPUNIT_ASSERT(!board->getCell(2, 8)->piece);
         
+        for(unsigned i=0; i< board->mCells.size(); i++)
+            board->mCells[i]->selected == SEL_NONE;
+        
         TRY_CATCH;
     }
     
