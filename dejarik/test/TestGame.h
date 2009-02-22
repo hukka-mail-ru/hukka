@@ -25,11 +25,41 @@ class TestGame: public CppUnit::TestFixture
    CPPUNIT_TEST(testMove6);
    CPPUNIT_TEST(testKill);
    CPPUNIT_TEST(testCounterKill);
+   CPPUNIT_TEST(testPush);
    CPPUNIT_TEST_SUITE_END();
          
 public:         
     void setUp() {}
     void tearDown() {}
+    
+    void testPush()
+    {
+        TRY_BEGINS;
+        SHOW_FUNCTION_NAME;
+        
+        Game game;
+        game.startup();
+        
+        BoardPtr board = game.getBoard();
+        board->getCell(2, 2)->piece->moveRating = 3;
+        board->getCell(2, 2)->piece->attackRating = 1;
+        
+        board->getCell(2, 8)->piece->defenceRating = 0;
+        
+        game.onCellClick(board->getCell(2,2));
+        game.onCellClick(board->getCell(1,8));
+        CPPUNIT_ASSERT(board->getCell(1, 8)->piece);
+        
+        game.onCellClick(board->getCell(1,8));
+        game.onCellClick(board->getCell(2,8));
+        
+        CPPUNIT_ASSERT(board->getCell(1, 8)->piece);
+        CPPUNIT_ASSERT(board->getCell(2, 8)->piece);
+        
+        checkAllDeselected(board);
+        
+        TRY_CATCH;
+    }
     
     void testKill()
     {
@@ -55,8 +85,7 @@ public:
         CPPUNIT_ASSERT(board->getCell(1, 8)->piece);
         CPPUNIT_ASSERT(!board->getCell(2, 8)->piece);
         
-        for(unsigned i=0; i< board->mCells.size(); i++)
-            board->mCells[i]->selected == SEL_NONE;
+        checkAllDeselected(board);
         
         TRY_CATCH;
     }
@@ -84,6 +113,8 @@ public:
         
         CPPUNIT_ASSERT(!board->getCell(1, 8)->piece);
         CPPUNIT_ASSERT(board->getCell(2, 8)->piece);
+        
+        checkAllDeselected(board);
         
         TRY_CATCH;
     }
@@ -180,20 +211,7 @@ public:
         CPPUNIT_ASSERT(board->getCell(1, 11)->piece);
         CPPUNIT_ASSERT(board->getCell(1, 8)->piece);
         
-        
-        CPPUNIT_ASSERT(board->getCell(0,0)->selected == SEL_NONE);
-        CPPUNIT_ASSERT(board->getCell(1,0)->selected == SEL_NONE);
-        CPPUNIT_ASSERT(board->getCell(1,1)->selected == SEL_NONE);
-        CPPUNIT_ASSERT(board->getCell(1,2)->selected == SEL_NONE);
-        CPPUNIT_ASSERT(board->getCell(1,3)->selected == SEL_NONE);
-        CPPUNIT_ASSERT(board->getCell(1,4)->selected == SEL_NONE);
-        CPPUNIT_ASSERT(board->getCell(1,5)->selected == SEL_NONE);
-        CPPUNIT_ASSERT(board->getCell(1,6)->selected == SEL_NONE);
-        CPPUNIT_ASSERT(board->getCell(1,7)->selected == SEL_NONE);
-        CPPUNIT_ASSERT(board->getCell(1,8)->selected == SEL_NONE);
-        CPPUNIT_ASSERT(board->getCell(1,9)->selected == SEL_NONE);
-        CPPUNIT_ASSERT(board->getCell(1,10)->selected == SEL_NONE);
-        CPPUNIT_ASSERT(board->getCell(1,11)->selected == SEL_NONE);
+        checkAllDeselected(board);
         
         TRY_CATCH;
     }
@@ -540,6 +558,36 @@ public:
         TRY_CATCH;
     }
 
+    void checkAllDeselected(const BoardPtr& board)
+    {
+        CPPUNIT_ASSERT(board->getCell(0,0)->selected == SEL_NONE);
+        
+        CPPUNIT_ASSERT(board->getCell(1,0)->selected == SEL_NONE);
+        CPPUNIT_ASSERT(board->getCell(1,1)->selected == SEL_NONE);
+        CPPUNIT_ASSERT(board->getCell(1,2)->selected == SEL_NONE);
+        CPPUNIT_ASSERT(board->getCell(1,3)->selected == SEL_NONE);
+        CPPUNIT_ASSERT(board->getCell(1,4)->selected == SEL_NONE);
+        CPPUNIT_ASSERT(board->getCell(1,5)->selected == SEL_NONE);
+        CPPUNIT_ASSERT(board->getCell(1,6)->selected == SEL_NONE);
+        CPPUNIT_ASSERT(board->getCell(1,7)->selected == SEL_NONE);
+        CPPUNIT_ASSERT(board->getCell(1,8)->selected == SEL_NONE);
+        CPPUNIT_ASSERT(board->getCell(1,9)->selected == SEL_NONE);
+        CPPUNIT_ASSERT(board->getCell(1,10)->selected == SEL_NONE);
+        CPPUNIT_ASSERT(board->getCell(1,11)->selected == SEL_NONE);
+        
+        CPPUNIT_ASSERT(board->getCell(2,0)->selected == SEL_NONE);
+        CPPUNIT_ASSERT(board->getCell(2,1)->selected == SEL_NONE);
+        CPPUNIT_ASSERT(board->getCell(2,2)->selected == SEL_NONE);
+        CPPUNIT_ASSERT(board->getCell(2,3)->selected == SEL_NONE);
+        CPPUNIT_ASSERT(board->getCell(2,4)->selected == SEL_NONE);
+        CPPUNIT_ASSERT(board->getCell(2,5)->selected == SEL_NONE);
+        CPPUNIT_ASSERT(board->getCell(2,6)->selected == SEL_NONE);
+        CPPUNIT_ASSERT(board->getCell(2,7)->selected == SEL_NONE);
+        CPPUNIT_ASSERT(board->getCell(2,8)->selected == SEL_NONE);
+        CPPUNIT_ASSERT(board->getCell(2,9)->selected == SEL_NONE);
+        CPPUNIT_ASSERT(board->getCell(2,10)->selected == SEL_NONE);
+        CPPUNIT_ASSERT(board->getCell(2,11)->selected == SEL_NONE);
+    }
 
 };
 

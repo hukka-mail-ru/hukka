@@ -164,7 +164,7 @@ void Board::definePossibleClicks(const PlayerPtr& player, bool push)
         if(activePiece)
         {
             vector<CellPtr> pushes;
-            getPossibleMoves(activePiece, pushes);
+            getPossiblePushes(activePiece, pushes);
             mPossibleClicks = pushes;
         }
         
