@@ -98,8 +98,14 @@ void Board::killPiece(PiecePtr piece)
 {
     TRY_BEGINS;
     
+    CellPtr cell = piece->cell;
+    
     piece->player->removePiece(piece);
     piece.reset();
+    cell->piece.reset();
+    
+    assert(!piece);
+    assert(!cell->piece);
     
     TRY_RETHROW;
 }
