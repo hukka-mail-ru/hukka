@@ -135,6 +135,7 @@ void Game::onCellClick(const CellPtr& cell)
             {
                 mBoard->killPiece(mActivePlayer->getActivePiece());
                 mActivePlayer->decrementLeftMoves();
+                mActivePlayer->resetActivePiece();
                 mBoard->definePossibleClicks(mActivePlayer, false);
             }
             else if(res == RES_PUSH)
