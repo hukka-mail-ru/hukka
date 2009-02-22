@@ -73,7 +73,7 @@ void Game::passTurn()
     if(mActivePlayer->getLeftMoves() == 0)
     {
         mActivePlayer->setLeftMoves(NUM_MOVES);
-        mBoard->definePossibleClicks(mActivePlayer, false);
+        mBoard->definePossibleClicks(mActivePlayer);
     }
     
     
@@ -118,30 +118,31 @@ void Game::onCellClick(const CellPtr& cell)
         if(cell->piece->player == mActivePlayer) // mine
         {
             mActivePlayer->setActivePiece(cell->piece);
-            mBoard->definePossibleClicks(mActivePlayer, false);
+            mBoard->definePossibleClicks(mActivePlayer);
             mBoard->selectClickedCell(cell);
         }
         else // enemy's
         {
-            BattleResult res = mActivePlayer->attackEnimy(cell->piece);
+            PiecePtr enemyPiece = cell->piece;
+            BattleResult res = mActivePlayer->attackEnimy(enemyPiece);
             
             if(res == RES_KILL)
             {
-                mBoard->killPiece(const_cast<PiecePtr&>(cell->piece));
+                mBoard->killPiece(const_cast<PiecePtr&>(enemyPiece));
                 mActivePlayer->decrementLeftMoves();
                 mActivePlayer->resetActivePiece();
-                mBoard->definePossibleClicks(mActivePlayer, false);
+                mBoard->definePossibleClicks(mActivePlayer);
             }
             else if(res == RES_COUNTER_KILL)
             {
                 mBoard->killPiece(mActivePlayer->getActivePiece());
                 mActivePlayer->decrementLeftMoves();
                 mActivePlayer->resetActivePiece();
-                mBoard->definePossibleClicks(mActivePlayer, false);
+                mBoard->definePossibleClicks(mActivePlayer);
             }
             else if(res == RES_PUSH)
             {
-                mBoard->definePossibleClicks(mActivePlayer, true ); 
+                mBoard->definePossiblePushClicks(enemyPiece); 
                 mActivePlayer->incrementLeftMoves();
             }
             else if(res == RES_COUNTER_PUSH)
@@ -149,7 +150,7 @@ void Game::onCellClick(const CellPtr& cell)
                 mActivePlayer->decrementLeftMoves();
                 
                 PlayerPtr enemy = (mActivePlayer == mPlayer1) ? mPlayer2 : mPlayer1; // next player
-                mBoard->definePossibleClicks(enemy, true );
+                mBoard->definePossiblePushClicks(mActivePlayer->getActivePiece());
                 enemy->setLeftMoves(1);
                 passTurn();
                 return;

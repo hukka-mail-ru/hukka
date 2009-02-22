@@ -45,8 +45,8 @@ public:
     void selectClickedCell(const CellPtr& cell);
 
     // on user click1: (activate a piece => show possible moves and targets)
-    void definePossibleClicks(const PlayerPtr& player, bool push);
-
+    void definePossibleClicks(const PlayerPtr& player);
+    
     // on user click2: (move the piece OR attack a partner's piece OR push a piece)
     bool isClickValid(const CellPtr& cell);
     void getMoveSteps(const CellPtr& start, std::vector<CellPtr>& steps);
@@ -56,6 +56,7 @@ public:
     
     // on a push
     const PiecePtr& getActivePiece();
+    void definePossiblePushClicks(const PiecePtr& piece);
     
 private:
     
