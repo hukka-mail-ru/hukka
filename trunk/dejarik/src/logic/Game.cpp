@@ -195,3 +195,19 @@ const BoardPtr& Game::getBoard()
     return mBoard;
 }
 
+const PlayerPtr& Game::getPlayer1()
+{
+    return mPlayer1;
+}
+
+const PlayerPtr& Game::getPlayer2()
+{
+    return mPlayer2;
+}
+
+const PlayerPtr& Game::getActivePlayer()
+{
+    return mActivePlayer;
+}
+
+
