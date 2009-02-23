@@ -12,7 +12,6 @@ CLASSPTR(Game);
 class Game
 {
     friend class TestGame;
-    friend class UI; // ????????
     
 public:
     
@@ -26,6 +25,11 @@ public:
     BattleResult onCellClick(const CellPtr& cell);
 
     const BoardPtr& getBoard();
+    
+    // needed by UI:
+    const PlayerPtr& getPlayer1();
+    const PlayerPtr& getPlayer2();
+    const PlayerPtr& getActivePlayer();
     
 private:
         
