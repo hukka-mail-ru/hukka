@@ -167,6 +167,9 @@ public:
         
         // enemy push
         game.onCellClick(board->getCell(0,0));
+        CPPUNIT_ASSERT(board->getCell(0, 0)->piece);
+        CPPUNIT_ASSERT(board->getCell(2, 9)->piece);
+        checkAllDeselected(board);
         
         // enemy turn 2
         game.onCellClick(board->getCell(2,9));        

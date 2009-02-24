@@ -55,7 +55,7 @@ void Game::startup()
 }
 
 
-void Game::passTurn(BattleResult prevBattleResult)
+void Game::passTurn(BattleResult battleResult)
 {
     TRY_BEGINS;
     
@@ -70,7 +70,7 @@ void Game::passTurn(BattleResult prevBattleResult)
     
     // no active piece at the beginning
     // but if RES_COUNTER_PUSH the player (enemy) must have an active piece (ours)
-    if(prevBattleResult != RES_COUNTER_PUSH)
+    if(battleResult != RES_COUNTER_PUSH)
     {
         mActivePlayer->resetActivePiece();
     }
@@ -106,7 +106,8 @@ BattleResult Game::onCellClick(const CellPtr& cell)
 {
     TRY_BEGINS;
     
-    BattleResult res = RES_NO_BATTLE;
+    BattleResult res = RES_NO_BATTLE; 
+    static BattleResult prevBattleResult = RES_NO_BATTLE;
     mBoard->deselectAll();
     
     if(!mBoard->isClickValid(cell))
@@ -118,6 +119,13 @@ BattleResult Game::onCellClick(const CellPtr& cell)
     {
         mActivePlayer->movePiece(cell);
         mActivePlayer->decrementLeftMoves();
+        
+        // after a push we need to redefine where our pieces are.
+        if(prevBattleResult == RES_PUSH)
+        {
+            mActivePlayer->resetActivePiece();
+            mBoard->definePossibleClicks(mActivePlayer);
+        }
     }
     else // clicked on a piece
     {
@@ -175,6 +183,7 @@ BattleResult Game::onCellClick(const CellPtr& cell)
         passTurn();
     }
 
+    prevBattleResult = res;
     return res;
     
     TRY_RETHROW;

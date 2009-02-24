@@ -34,7 +34,7 @@ public:
 private:
         
     // pass turn to the next player
-    void passTurn(BattleResult prevBattleResult = RES_NO_BATTLE); 
+    void passTurn(BattleResult battleResult = RES_NO_BATTLE); 
     
     bool checkVictory(PlayerPtr& vinner);
     
