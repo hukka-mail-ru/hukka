@@ -26,7 +26,7 @@ Cell::Cell(unsigned circle, unsigned radius):
     // CENTRAL CIRCLE
     if(c == 0)
     {
-        for(unsigned i = 0; i < INTERIM_ANGLES*4; i++)
+        for(unsigned i = 0; i < INTERIM_ANGLES*3; i++)
         {
             float a = PI/6.0*i;
             x.push_back(CELL_RADIUS_1 * cos(a));
