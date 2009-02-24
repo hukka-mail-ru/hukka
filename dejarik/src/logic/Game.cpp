@@ -115,27 +115,32 @@ BattleResult Game::onCellClick(const CellPtr& cell)
         return res;
     }
     
-    if(!cell->piece) // empty cell
+    // clicked on empty cell
+    if(!cell->piece) 
     {
+        // common move
         mActivePlayer->movePiece(cell);
         mActivePlayer->decrementLeftMoves();
         
-        // after a push we need to redefine where our pieces are.
+        // push: we need to redefine where our pieces are.
         if(prevBattleResult == RES_PUSH)
         {
             mActivePlayer->resetActivePiece();
             mBoard->definePossibleClicks(mActivePlayer);
         }
     }
-    else // clicked on a piece
+    else 
     {
-        if(cell->piece->player == mActivePlayer) // mine
+        // clicked on our piece
+        if(cell->piece->player == mActivePlayer) 
         {
             mActivePlayer->setActivePiece(cell->piece);
             mBoard->definePossibleClicks(mActivePlayer);
             mBoard->selectClickedCell(cell);
         }
-        else // enemy's
+        
+        // clicked on enemy's piece
+        else 
         {
             PiecePtr myPiece = mActivePlayer->getActivePiece(); // "me" means Player1
             PiecePtr enemyPiece = cell->piece;                  // "enemy" means Player2
@@ -159,7 +164,7 @@ BattleResult Game::onCellClick(const CellPtr& cell)
             else if(res == RES_PUSH)
             {
                 mBoard->definePossiblePushClicks(enemyPiece);                 
-                mActivePlayer->setActivePiece(enemyPiece);
+                mActivePlayer->setActivePiece(enemyPiece); // We now owns enemy's piece!
             }
             else if(res == RES_COUNTER_PUSH)
             {
@@ -173,6 +178,8 @@ BattleResult Game::onCellClick(const CellPtr& cell)
                 enemy->setActivePiece(myPiece);
                 
                 passTurn(RES_COUNTER_PUSH);
+                
+                prevBattleResult = res;
                 return res;
             }
         }
