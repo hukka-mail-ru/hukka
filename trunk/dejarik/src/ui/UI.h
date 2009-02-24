@@ -27,6 +27,7 @@ private:
     bool stop(bool res);
     bool resizeWindow(unsigned width, unsigned height);
     bool initGL();
+    bool LoadGLTextures();
     
     enum Color
     {
@@ -42,6 +43,7 @@ private:
     void drawCell(const CellPtr& cell);
     void drawPiece(const CellPtr& cell);
     void drawActivePlayer();
+    void drawSquare();
     
     void mouseToGL(float winX, float winY, GLdouble& x, GLdouble& y, GLdouble& z);
 
