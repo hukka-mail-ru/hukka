@@ -230,6 +230,12 @@ void UI::drawCell(const CellPtr& cell)
     TRY_BEGINS;
     
     Color color = CL_WHITE;
+    Color backgr = CL_WHITE;
+    
+    // cells must be back/white like a chess
+    unsigned rest = (cell->c == 0 || cell->c == 1) ? 0 : 1; // depends on circle    
+    backgr = (cell->r % 2 == rest) ? CL_WHITE : CL_BLACK; // odd/even
+    
     
     switch(cell->selected)
     {
@@ -237,23 +243,16 @@ void UI::drawCell(const CellPtr& cell)
         case SEL_POSSIBLE_MOVE:   color = CL_GREEN; break;
         case SEL_POSSIBLE_TARGET: color = CL_RED;   break;
         case SEL_POSSIBLE_PUSH:   color = CL_RED;   break;
-        
-        case SEL_NONE:
-          {
-              // cells must be back/white like a chess
-              unsigned rest = (cell->c == 0 || cell->c == 1) ? 0 : 1; // depends on circle    
-              color = (cell->r % 2 == rest) ? CL_WHITE : CL_BLACK; // odd/even
-              break;
-          }
+        case SEL_NONE:            color = backgr;   break;
     }
     
     switch(color)
     {
         case CL_WHITE: glColor3f(1.0f,1.0f,1.0f); break;
         case CL_BLACK: glColor3f(0.0f,0.0f,0.0f); break;
-        case CL_GREEN: glColor3f(0.0f,1.0f,0.0f); break;
-        case CL_BLUE: glColor3f(0.0f,0.0f,1.0f); break;
-        case CL_RED: glColor3f(1.0f,0.0f,0.0f); break;
+        case CL_GREEN: if(backgr == CL_WHITE) glColor3f(0.0f,0.8f,0.0f); else glColor3f(0.0f,0.4f,0.0f); break;
+        case CL_BLUE: glColor3f(0,0,1); break;
+        case CL_RED:  glColor3f(1,0,0); break;
         default: return;
     }
        
@@ -264,8 +263,7 @@ void UI::drawCell(const CellPtr& cell)
         }
     glEnd(); 
     
-    drawPiece(cell);
-    
+       
     TRY_RETHROW;
 }
 
@@ -281,6 +279,7 @@ void UI::drawBoard()
     for(unsigned i = 0; i < cells.size(); i++)
     {
         drawCell(cells[i]);
+        drawPiece(cells[i]);
     }
     
     TRY_RETHROW;
