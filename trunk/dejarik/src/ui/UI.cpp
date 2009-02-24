@@ -374,6 +374,7 @@ void UI::onMouseClick(const SDL_Event& event)
             if(mGame->checkVictory(vinner))
             {
                 mQuit = true;
+                cout << "GAME OVER. Vinner: " << vinner->getName() << endl;
             }
         }   
     }   
@@ -401,6 +402,11 @@ void UI::handleEvents()
             else if(event.type == SDL_QUIT) // handle stop
             {
                 mQuit = true;
+            }
+            
+            if(mQuit)
+            {
+                break;
             }
         }
     }

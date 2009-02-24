@@ -68,6 +68,8 @@ public:
     
     BattleResult attackEnimy(const PiecePtr& enemyPiece);
     
+    std::string getName() { return mName; }
+    
 private:
 
     /*
