@@ -60,7 +60,6 @@ public:
 
  
     void setLeftMoves(unsigned moves);    
-    void incrementLeftMoves();   
     void decrementLeftMoves();
     unsigned getLeftMoves();
 

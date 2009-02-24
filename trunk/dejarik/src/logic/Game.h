@@ -33,7 +33,8 @@ public:
     
 private:
         
-    void passTurn(); // pass turn to the next player
+    // pass turn to the next player
+    void passTurn(BattleResult prevBattleResult = RES_NO_BATTLE); 
     
     bool checkVictory(PlayerPtr& vinner);
     

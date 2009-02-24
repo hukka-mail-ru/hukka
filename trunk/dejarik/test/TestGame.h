@@ -27,6 +27,7 @@ class TestGame: public CppUnit::TestFixture
    CPPUNIT_TEST(testCounterKill);
    CPPUNIT_TEST(testPush);
    CPPUNIT_TEST(testPush2);
+   CPPUNIT_TEST(testPush3);
    CPPUNIT_TEST(testCounterPush);
    CPPUNIT_TEST_SUITE_END();
          
@@ -72,7 +73,7 @@ public:
         CPPUNIT_ASSERT(board->getCell(1,10)->selected == SEL_POSSIBLE_MOVE);
         CPPUNIT_ASSERT(board->getCell(2,9)->selected == SEL_POSSIBLE_MOVE);
         
-        // I get a posssibility to push
+        // I get a posssibility to counter-push
         game.onCellClick(board->getCell(1,8));
         
         CPPUNIT_ASSERT(board->getCell(0, 0)->piece);
@@ -93,12 +94,15 @@ public:
         board->getCell(2, 2)->piece->moveRating = 3;
         board->getCell(2, 2)->piece->attackRating = 1;
         
+        board->getCell(2, 9)->piece->moveRating = 1;
         board->getCell(2, 9)->piece->defenceRating = 0;
         
+        // my turn
         game.onCellClick(board->getCell(2,2));
         game.onCellClick(board->getCell(1,9));
         CPPUNIT_ASSERT(board->getCell(1, 9)->piece);
         
+        // my turn 2
         game.onCellClick(board->getCell(1,9));
         game.onCellClick(board->getCell(2,9));
         
@@ -111,9 +115,66 @@ public:
         CPPUNIT_ASSERT(board->getCell(1,8)->selected == SEL_NONE);
         CPPUNIT_ASSERT(board->getCell(0,0)->selected == SEL_NONE);
         
+        // I get a posssibility to push
+        game.onCellClick(board->getCell(2,10));
+        
+        CPPUNIT_ASSERT(board->getCell(1, 9)->piece);
+        CPPUNIT_ASSERT(board->getCell(2, 10)->piece);
+        
+        // enemy turn
+        game.onCellClick(board->getCell(2,10));        
+        CPPUNIT_ASSERT(board->getCell(2,10)->selected == SEL_CLICKED);
+        CPPUNIT_ASSERT(board->getCell(2,9)->selected == SEL_POSSIBLE_MOVE);
+        CPPUNIT_ASSERT(board->getCell(1,10)->selected == SEL_POSSIBLE_MOVE);
+        CPPUNIT_ASSERT(board->getCell(2,11)->selected == SEL_POSSIBLE_MOVE);
+        
+        game.onCellClick(board->getCell(2,11));
+        checkAllDeselected(board);
+        
         TRY_CATCH;
     }
     
+    
+    void testPush3()
+    {
+        TRY_BEGINS;
+        SHOW_FUNCTION_NAME;
+        
+        Game game;
+        game.startup();
+        
+        BoardPtr board = game.getBoard();
+        board->getCell(2, 2)->piece->moveRating = 2; // me
+        board->getCell(2, 2)->piece->defenceRating = 0;
+        
+        board->getCell(2, 9)->piece->moveRating = 1; // enemy
+        board->getCell(2, 9)->piece->attackRating = 1;
+        
+        // my turn
+        game.onCellClick(board->getCell(2,2));
+        game.onCellClick(board->getCell(0,0));        
+        // my turn 2
+        game.onCellClick(board->getCell(0,0));
+        game.onCellClick(board->getCell(1,9));
+        
+        CPPUNIT_ASSERT(board->getCell(1, 9)->piece);
+        CPPUNIT_ASSERT(board->getCell(2, 9)->piece);
+
+        // enemy turn. gets a push
+        game.onCellClick(board->getCell(2,9));
+        BattleResult res = game.onCellClick(board->getCell(1,9));
+        CPPUNIT_ASSERT(res == RES_PUSH);
+        
+        // enemy push
+        game.onCellClick(board->getCell(0,0));
+        
+        // enemy turn 2
+        game.onCellClick(board->getCell(2,9));        
+        CPPUNIT_ASSERT(board->getCell(2,9)->selected == SEL_CLICKED);
+        CPPUNIT_ASSERT(board->getCell(1,9)->selected == SEL_POSSIBLE_MOVE);
+
+        TRY_CATCH;
+    }
     
     void testPush()
     {

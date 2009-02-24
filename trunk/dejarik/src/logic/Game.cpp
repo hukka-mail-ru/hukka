@@ -55,7 +55,7 @@ void Game::startup()
 }
 
 
-void Game::passTurn()
+void Game::passTurn(BattleResult prevBattleResult)
 {
     TRY_BEGINS;
     
@@ -68,7 +68,12 @@ void Game::passTurn()
         mActivePlayer = (mActivePlayer == mPlayer1) ? mPlayer2 : mPlayer1; // next player
     }
     
-    mActivePlayer->resetActivePiece(); // no active piece at the beginning
+    // no active piece at the beginning
+    // but if RES_COUNTER_PUSH the player (enemy) must have an active piece (ours)
+    if(prevBattleResult != RES_COUNTER_PUSH)
+    {
+        mActivePlayer->resetActivePiece();
+    }
     
     if(mActivePlayer->getLeftMoves() == 0)
     {
@@ -124,7 +129,9 @@ BattleResult Game::onCellClick(const CellPtr& cell)
         }
         else // enemy's
         {
-            PiecePtr enemyPiece = cell->piece;
+            PiecePtr myPiece = mActivePlayer->getActivePiece(); // "me" means Player1
+            PiecePtr enemyPiece = cell->piece;                  // "enemy" means Player2
+            
             res = mActivePlayer->attackEnimy(enemyPiece);
             
             if(res == RES_KILL)
@@ -136,24 +143,28 @@ BattleResult Game::onCellClick(const CellPtr& cell)
             }
             else if(res == RES_COUNTER_KILL)
             {
-                mBoard->killPiece(mActivePlayer->getActivePiece());
+                mBoard->killPiece(myPiece);
                 mActivePlayer->decrementLeftMoves();
                 mActivePlayer->resetActivePiece();
                 mBoard->definePossibleClicks(mActivePlayer);
             }
             else if(res == RES_PUSH)
             {
-                mBoard->definePossiblePushClicks(enemyPiece); 
-                mActivePlayer->incrementLeftMoves();
+                mBoard->definePossiblePushClicks(enemyPiece);                 
+                mActivePlayer->setActivePiece(enemyPiece);
             }
             else if(res == RES_COUNTER_PUSH)
             {
                 mActivePlayer->decrementLeftMoves();
                 
                 PlayerPtr enemy = (mActivePlayer == mPlayer1) ? mPlayer2 : mPlayer1; // next player
-                mBoard->definePossiblePushClicks(mActivePlayer->getActivePiece());
+                mBoard->definePossiblePushClicks(myPiece);
                 enemy->setLeftMoves(1);
-                passTurn();
+                
+                // enemy now owns our piece!
+                enemy->setActivePiece(myPiece);
+                
+                passTurn(RES_COUNTER_PUSH);
                 return res;
             }
         }
