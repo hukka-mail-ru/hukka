@@ -87,19 +87,6 @@ void Game::passTurn(BattleResult battleResult)
 }
 
 
-bool Game::isOver()
-{
-    TRY_BEGINS;
-    
-    PlayerPtr vinner;
-    bool res = checkVictory(vinner);
-    
-    // TODO show vinner
-    
-    return res;
-    
-    TRY_RETHROW;
-}
 
     
 BattleResult Game::onCellClick(const CellPtr& cell)

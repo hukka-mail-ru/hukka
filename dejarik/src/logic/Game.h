@@ -17,7 +17,7 @@ public:
     
     void startup(); 
     
-    bool isOver();
+    bool checkVictory(PlayerPtr& vinner);
     
     /*
      * Reurns true if the click is allowed by the game rules 
@@ -36,7 +36,6 @@ private:
     // pass turn to the next player
     void passTurn(BattleResult battleResult = RES_NO_BATTLE); 
     
-    bool checkVictory(PlayerPtr& vinner);
     
     BoardPtr mBoard;
     
