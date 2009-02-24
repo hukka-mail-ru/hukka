@@ -148,11 +148,6 @@ void Player::setLeftMoves(unsigned moves)
     mLeftMoves = moves;
 }
 
-void Player::incrementLeftMoves()
-{
-    mLeftMoves++;
-}
-
 void Player::decrementLeftMoves()
 {
     mLeftMoves--;
