@@ -29,12 +29,84 @@ class TestGame: public CppUnit::TestFixture
    CPPUNIT_TEST(testPush2);
    CPPUNIT_TEST(testPush3);
    CPPUNIT_TEST(testCounterPush);
+   CPPUNIT_TEST(testVictory);
    CPPUNIT_TEST_SUITE_END();
          
 public:         
     void setUp() {}
     void tearDown() {}
     
+    
+    void testVictory() 
+    {
+        TRY_BEGINS;
+        SHOW_FUNCTION_NAME;
+        
+        Game game;
+        game.startup();
+        
+        BoardPtr board = game.getBoard();
+        board->getCell(2, 0)->piece->moveRating = 3;
+        board->getCell(2, 0)->piece->attackRating = 100;
+
+        board->getCell(2, 6)->piece->moveRating = 1;
+        board->getCell(2, 6)->piece->defenceRating = 0;
+        board->getCell(2, 7)->piece->defenceRating = 0;
+        board->getCell(2, 8)->piece->defenceRating = 0;
+        board->getCell(2, 9)->piece->defenceRating = 0;
+        
+        // kill 1
+        game.onCellClick(board->getCell(2,0));
+        game.onCellClick(board->getCell(1,9));
+        game.onCellClick(board->getCell(1,9));
+        game.onCellClick(board->getCell(2,9));
+        
+        // enemy
+        game.onCellClick(board->getCell(2,6));
+        game.onCellClick(board->getCell(1,6));
+        game.onCellClick(board->getCell(1,6));
+        game.onCellClick(board->getCell(2,6));
+
+        // kill 2
+        game.onCellClick(board->getCell(1,9));
+        game.onCellClick(board->getCell(1,8));
+        game.onCellClick(board->getCell(1,8));
+        game.onCellClick(board->getCell(2,8));
+        
+        // enemy
+        game.onCellClick(board->getCell(2,6));
+        game.onCellClick(board->getCell(1,6));
+        game.onCellClick(board->getCell(1,6));
+        game.onCellClick(board->getCell(2,6));
+        
+        // kill 3
+        game.onCellClick(board->getCell(1,8));
+        game.onCellClick(board->getCell(1,7));
+        game.onCellClick(board->getCell(1,7));
+        game.onCellClick(board->getCell(2,7));
+        
+        // enemy
+        game.onCellClick(board->getCell(2,6));
+        game.onCellClick(board->getCell(1,6));
+        game.onCellClick(board->getCell(1,6));
+        game.onCellClick(board->getCell(2,6));
+        
+        PlayerPtr vinner;
+        CPPUNIT_ASSERT(!game.checkVictory(vinner));
+        
+        // kill 4
+        game.onCellClick(board->getCell(1,7));
+        game.onCellClick(board->getCell(1,6));
+        game.onCellClick(board->getCell(1,6));
+        game.onCellClick(board->getCell(2,6));
+        
+        
+        CPPUNIT_ASSERT(game.checkVictory(vinner));
+        CPPUNIT_ASSERT(vinner.get() == game.getPlayer1());
+
+
+        TRY_CATCH;
+    }
     
     void testCounterPush() // enemy attacks and obtains a counter-push
     {
@@ -687,7 +759,8 @@ public:
         Game game;
         game.startup();   
         
-        CPPUNIT_ASSERT(game.isOver() == false);
+        PlayerPtr player;
+        CPPUNIT_ASSERT(game.checkVictory(player) == false);
         
         // clear all
         PiecePtr piece0 = game.mPlayer1->mPieces[0];
@@ -700,7 +773,7 @@ public:
         game.mBoard->killPiece(piece2);
         game.mBoard->killPiece(piece3);
 
-        CPPUNIT_ASSERT(game.isOver() == true);
+        CPPUNIT_ASSERT(game.checkVictory(player) == true);
 
         
         TRY_CATCH;

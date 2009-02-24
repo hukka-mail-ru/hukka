@@ -369,6 +369,12 @@ void UI::onMouseClick(const SDL_Event& event)
                 case RES_COUNTER_PUSH:cout << "RES_COUNTER_PUSH" << endl;break;
                 default: break;
             }
+            
+            PlayerPtr vinner;
+            if(mGame->checkVictory(vinner))
+            {
+                mQuit = true;
+            }
         }   
     }   
 }

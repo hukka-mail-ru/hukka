@@ -6,17 +6,6 @@ using namespace std;
 #include "Macros.h"
 
 
-/*
-void onMouseClick(unsigned x, unsigned y) 
-{
-    unsigned cellC = 0; // cell coordinate
-    unsigned cellX = 0; // cell coordinate
-    if(game.isCell(x, y, cellC, cellX))
-    {
-        game.onCellClick(cellC, cellX);
-    }
-}*/
-
 
 int main()
 {
