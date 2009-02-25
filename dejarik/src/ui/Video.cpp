@@ -207,6 +207,7 @@ void Video::drawSprite(GLuint texture, float x, float y, float w, float h)
 {
     glBindTexture( GL_TEXTURE_2D, texture);
     
+    
     glBegin(GL_POLYGON);
       glTexCoord2f( 0, 1 ); glVertex3f(  x + 0,  y + 0, 0 );
       glTexCoord2f( 1, 1 ); glVertex3f(  x + w,  y + 0, 0 );
@@ -225,8 +226,9 @@ void Video::drawMaskedSprite(const MaskedTexture& mtex, float x, float y, float 
     drawSprite(mtex.mask, x, y, w, h);
 
     glBlendFunc( GL_ONE, GL_ONE );
-    
+    glColor3f(0.5f ,0.5f, 1.0f); // blue
     drawSprite(mtex.texture, x, y, w, h);
+   glColor3f(1 ,1, 1); // blue
     
     glEnable( GL_DEPTH_TEST ); /* Enable Depth Testing */
     glDisable( GL_BLEND );     /* Disable Blending     */
