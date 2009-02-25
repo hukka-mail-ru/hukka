@@ -69,18 +69,16 @@ void UI::drawBg() // temp
 {
     TRY_BEGINS;
     
-    Video::drawSprite(Video::texture_bg, 
-            0, 0, 2, 2);
+    Video::drawSprite(Video::texture_bg, 0, 0, 2, 2);
 
     TRY_RETHROW;
 }
 
-void UI::drawSquare()
+void UI::drawSquare()// temp
 {
     TRY_BEGINS;
     
-    Video::drawMaskedSprite(Video::texture_sprite, Video::texture_mask,
-            0.5,  0.5,  1, 1);
+    Video::drawMaskedSprite(Video::mtex1,  0.5,  0.5,  1, 1);
 
     TRY_RETHROW;
 }

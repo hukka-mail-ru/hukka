@@ -10,9 +10,8 @@ using namespace std;
 #define SCREEN_BPP     16
 
 
-GLuint Video::texture_sprite; /* Storage For One Texture ( NEW ) */
-GLuint Video::texture_mask; /* Storage For One Texture ( NEW ) */
 GLuint Video::texture_bg; /* Storage For One Texture ( NEW ) */
+MaskedTexture Video::mtex1;
 
 bool Video::startup()
 {
@@ -191,10 +190,10 @@ bool Video::loadTexture(GLuint& texture, const char* path)
 
 bool Video::loadAllTextures()
 {
-    if(!Video::loadTexture(texture_sprite, "img/sprite1.bmp"))
+    if(!Video::loadTexture(mtex1.texture, "img/sprite1.bmp"))
         return false;
     
-    if(!Video::loadTexture(texture_mask, "img/mask1.bmp"))
+    if(!Video::loadTexture(mtex1.mask, "img/mask1.bmp"))
         return false;
     
     if(!Video::loadTexture(texture_bg, "img/bg.bmp"))
@@ -217,17 +216,17 @@ void Video::drawSprite(GLuint texture, float x, float y, float w, float h)
 }
 
 
-void Video::drawMaskedSprite(GLuint texture, GLuint mask, float x, float y, float w, float h)
+void Video::drawMaskedSprite(const MaskedTexture& mtex, float x, float y, float w, float h)
 {
     glEnable( GL_BLEND );   
     glDisable( GL_DEPTH_TEST );
     glBlendFunc( GL_DST_COLOR, GL_ZERO );
     
-    drawSprite(mask, x, y, w, h);
+    drawSprite(mtex.mask, x, y, w, h);
 
     glBlendFunc( GL_ONE, GL_ONE );
     
-    drawSprite(texture, x, y, w, h);
+    drawSprite(mtex.texture, x, y, w, h);
     
     glEnable( GL_DEPTH_TEST ); /* Enable Depth Testing */
     glDisable( GL_BLEND );     /* Disable Blending     */
