@@ -194,7 +194,7 @@ bool Video::loadAllTextures()
     if(!Video::loadTexture(texture_sprite, "img/sprite1.bmp"))
         return false;
     
-    if(!Video::loadTexture(texture_sprite, "img/mask1.bmp"))
+    if(!Video::loadTexture(texture_mask, "img/mask1.bmp"))
         return false;
     
     if(!Video::loadTexture(texture_bg, "img/bg.bmp"))

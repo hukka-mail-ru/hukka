@@ -25,10 +25,6 @@ public:
     
 private:
     
-    bool stop(bool res);
-    
-   
-    
     enum Color
     {
         CL_WHITE,
@@ -47,8 +43,6 @@ private:
     void drawSquare(); // temp
     void drawBg(); // temp
     
-    
-
     /*
      * Defines if the mouse click is valid (true/false).
      * if true, returns the clicked cell

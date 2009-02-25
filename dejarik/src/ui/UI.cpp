@@ -23,66 +23,10 @@ using namespace std;
 
 bool UI::startup()
 {
+    TRY_BEGINS;
     return Video::startup();
+    TRY_RETHROW;
 }
-
-bool UI::stop(bool res)
-{
-    return Video::stop(res);
-}
-
-
-
-
-
-void UI::drawBg() // temp
-{
-    glBindTexture( GL_TEXTURE_2D, Video::texture_bg );
-    
-    glBegin(GL_POLYGON);
-      glTexCoord2f( 0.0f, 0.0f ); glVertex3f(  0,  0, 0 );
-      glTexCoord2f( 1.0f, 0.0f ); glVertex3f(  2,  0, 0 );
-      glTexCoord2f( 1.0f, 1.0f ); glVertex3f(  2,  2, 0 );
-      glTexCoord2f( 0.0f, 1.0f ); glVertex3f(  0,  2, 0 );
-    glEnd( ); 
-}
-
-void UI::drawSquare()
-{
-    /* Select Our Texture */
-    
-
-    glEnable( GL_BLEND );   
-    glDisable( GL_DEPTH_TEST );
-    glBlendFunc( GL_DST_COLOR, GL_ZERO );
-    
-/*
-    glBindTexture( GL_TEXTURE_2D,  Video::texture_mask );
-    glBegin(GL_POLYGON);
-      glTexCoord2f( 0.0f, 0.0f ); glVertex3f(  0,  0, 0 );
-      glTexCoord2f( 1.0f, 0.0f ); glVertex3f(  1,  0, 0 );
-      glTexCoord2f( 1.0f, 1.0f ); glVertex3f(  1,  1, 0 );
-      glTexCoord2f( 0.0f, 1.0f ); glVertex3f(  0,  1, 0 );
-    glEnd( ); 
-  */  
-    glBlendFunc( GL_ONE, GL_ONE );
-    
-    glBindTexture( GL_TEXTURE_2D,  Video::texture_sprite );
-    glBegin(GL_POLYGON);
-      glTexCoord2f( 0.0f, 0.0f ); glVertex3f(  0,  0, 0 );
-      glTexCoord2f( 1.0f, 0.0f ); glVertex3f(  1,  0, 0 );
-      glTexCoord2f( 1.0f, 1.0f ); glVertex3f(  1,  1, 0 );
-      glTexCoord2f( 0.0f, 1.0f ); glVertex3f(  0,  1, 0 );
-    glEnd( );
-    
-   
-    
-    glEnable( GL_DEPTH_TEST ); /* Enable Depth Testing */
-    glDisable( GL_BLEND );     /* Disable Blending     */
-
-}
-
-
 
 bool UI::isCellClicked(float x, float y, CellPtr& cell)
 {
@@ -120,8 +64,63 @@ bool UI::isCellClicked(float x, float y, CellPtr& cell)
 }
 
 
+
+void UI::drawBg() // temp
+{
+    TRY_BEGINS;
+    
+    glBindTexture( GL_TEXTURE_2D, Video::texture_bg );
+    
+    glBegin(GL_POLYGON);
+      glTexCoord2f( 0.0f, 0.0f ); glVertex3f(  0,  0, 0 );
+      glTexCoord2f( 1.0f, 0.0f ); glVertex3f(  2,  0, 0 );
+      glTexCoord2f( 1.0f, 1.0f ); glVertex3f(  2,  2, 0 );
+      glTexCoord2f( 0.0f, 1.0f ); glVertex3f(  0,  2, 0 );
+    glEnd( ); 
+    
+    TRY_RETHROW;
+}
+
+void UI::drawSquare()
+{
+    TRY_BEGINS;
+
+
+    glEnable( GL_BLEND );   
+    glDisable( GL_DEPTH_TEST );
+    glBlendFunc( GL_DST_COLOR, GL_ZERO );
+    
+
+    glBindTexture( GL_TEXTURE_2D,  Video::texture_mask );
+    glBegin(GL_POLYGON);
+      glTexCoord2f( 0, 0 ); glVertex3f(  0,  0, 0 );
+      glTexCoord2f( 1, 0 ); glVertex3f(  1,  0, 0 );
+      glTexCoord2f( 1, 1 ); glVertex3f(  1,  1, 0 );
+      glTexCoord2f( 0, 1 ); glVertex3f(  0,  1, 0 );
+    glEnd( ); 
+    
+    glBlendFunc( GL_ONE, GL_ONE );
+    
+    glBindTexture( GL_TEXTURE_2D,  Video::texture_sprite );
+    glBegin(GL_POLYGON);
+      glTexCoord2f( 0, 0 ); glVertex3f(  0,  0, 0 );
+      glTexCoord2f( 1, 0 ); glVertex3f(  1,  0, 0 );
+      glTexCoord2f( 1, 1 ); glVertex3f(  1,  1, 0 );
+      glTexCoord2f( 0, 1 ); glVertex3f(  0,  1, 0 );
+    glEnd( );
+    
+   
+    
+    glEnable( GL_DEPTH_TEST ); /* Enable Depth Testing */
+    glDisable( GL_BLEND );     /* Disable Blending     */
+
+    TRY_RETHROW;
+}
+
 void UI::drawPiece(const CellPtr& cell)
 {
+    TRY_BEGINS;
+    
     if(!cell->piece)
         return;
     
@@ -139,6 +138,8 @@ void UI::drawPiece(const CellPtr& cell)
          glVertex3f(x-w, y, 0);
          glVertex3f(x, y-w, 0);
     glEnd();
+    
+    TRY_RETHROW;
 }
 
 
@@ -265,6 +266,8 @@ bool UI::drawAll()
 
 void UI::onMouseClick(const SDL_Event& event)
 {
+    TRY_BEGINS;
+    
     if( event.button.button == SDL_BUTTON_LEFT ) 
     { 
         GLdouble x = 0;
@@ -299,6 +302,8 @@ void UI::onMouseClick(const SDL_Event& event)
             }
         }   
     }   
+    
+    TRY_RETHROW;
 }
 
 
@@ -333,7 +338,7 @@ void UI::handleEvents()
     }
     
     /* clean ourselves up and exit */
-    stop(true);
+    Video::stop(true);
     
     TRY_RETHROW;
 }
