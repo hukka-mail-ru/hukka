@@ -69,55 +69,22 @@ void UI::drawBg() // temp
 {
     TRY_BEGINS;
     
-    glBindTexture( GL_TEXTURE_2D, Video::texture_bg );
-    
-    glBegin(GL_POLYGON);
-      glTexCoord2f( 0.0f, 0.0f ); glVertex3f(  0,  0, 0 );
-      glTexCoord2f( 1.0f, 0.0f ); glVertex3f(  2,  0, 0 );
-      glTexCoord2f( 1.0f, 1.0f ); glVertex3f(  2,  2, 0 );
-      glTexCoord2f( 0.0f, 1.0f ); glVertex3f(  0,  2, 0 );
-    glEnd( ); 
-    
+    Video::drawSprite(Video::texture_bg, 
+            0, 0, 2, 2);
+
     TRY_RETHROW;
 }
 
 void UI::drawSquare()
 {
     TRY_BEGINS;
-
-
-    glEnable( GL_BLEND );   
-    glDisable( GL_DEPTH_TEST );
-    glBlendFunc( GL_DST_COLOR, GL_ZERO );
     
-
-    glBindTexture( GL_TEXTURE_2D,  Video::texture_mask );
-    glBegin(GL_POLYGON);
-    float xx = 0.5;
-      glTexCoord2f( 0, 0 ); glVertex3f(  0 + xx,  0 + xx, 0 );
-      glTexCoord2f( 1, 0 ); glVertex3f(  1 + xx,  0 + xx, 0 );
-      glTexCoord2f( 1, 1 ); glVertex3f(  1 + xx,  1 + xx, 0 );
-      glTexCoord2f( 0, 1 ); glVertex3f(  0 + xx,  1 + xx, 0 );
-    glEnd( ); 
-    
-    glBlendFunc( GL_ONE, GL_ONE );
-    
-    glBindTexture( GL_TEXTURE_2D,  Video::texture_sprite );
-    glBegin(GL_POLYGON);
- 
-      glTexCoord2f( 0, 0 ); glVertex3f(  0 + xx,  0 + xx, 0 );
-      glTexCoord2f( 1, 0 ); glVertex3f(  1 + xx,  0 + xx, 0 );
-      glTexCoord2f( 1, 1 ); glVertex3f(  1 + xx,  1 + xx, 0 );
-      glTexCoord2f( 0, 1 ); glVertex3f(  0 + xx,  1 + xx, 0 );
-    glEnd( );
-    
-   
-    
-    glEnable( GL_DEPTH_TEST ); /* Enable Depth Testing */
-    glDisable( GL_BLEND );     /* Disable Blending     */
+    Video::drawMaskedSprite(Video::texture_sprite, Video::texture_mask,
+            0.5,  0.5,  1, 1);
 
     TRY_RETHROW;
 }
+
 
 void UI::drawPiece(const CellPtr& cell)
 {
