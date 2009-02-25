@@ -93,20 +93,22 @@ void UI::drawSquare()
 
     glBindTexture( GL_TEXTURE_2D,  Video::texture_mask );
     glBegin(GL_POLYGON);
-      glTexCoord2f( 0, 0 ); glVertex3f(  0,  0, 0 );
-      glTexCoord2f( 1, 0 ); glVertex3f(  1,  0, 0 );
-      glTexCoord2f( 1, 1 ); glVertex3f(  1,  1, 0 );
-      glTexCoord2f( 0, 1 ); glVertex3f(  0,  1, 0 );
+    float xx = 0.5;
+      glTexCoord2f( 0, 0 ); glVertex3f(  0 + xx,  0 + xx, 0 );
+      glTexCoord2f( 1, 0 ); glVertex3f(  1 + xx,  0 + xx, 0 );
+      glTexCoord2f( 1, 1 ); glVertex3f(  1 + xx,  1 + xx, 0 );
+      glTexCoord2f( 0, 1 ); glVertex3f(  0 + xx,  1 + xx, 0 );
     glEnd( ); 
     
     glBlendFunc( GL_ONE, GL_ONE );
     
     glBindTexture( GL_TEXTURE_2D,  Video::texture_sprite );
     glBegin(GL_POLYGON);
-      glTexCoord2f( 0, 0 ); glVertex3f(  0,  0, 0 );
-      glTexCoord2f( 1, 0 ); glVertex3f(  1,  0, 0 );
-      glTexCoord2f( 1, 1 ); glVertex3f(  1,  1, 0 );
-      glTexCoord2f( 0, 1 ); glVertex3f(  0,  1, 0 );
+ 
+      glTexCoord2f( 0, 0 ); glVertex3f(  0 + xx,  0 + xx, 0 );
+      glTexCoord2f( 1, 0 ); glVertex3f(  1 + xx,  0 + xx, 0 );
+      glTexCoord2f( 1, 1 ); glVertex3f(  1 + xx,  1 + xx, 0 );
+      glTexCoord2f( 0, 1 ); glVertex3f(  0 + xx,  1 + xx, 0 );
     glEnd( );
     
    
