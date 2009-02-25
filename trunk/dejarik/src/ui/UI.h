@@ -1,12 +1,13 @@
 #ifndef UI_H_
 #define UI_H_
 
-#include <GL/gl.h>
-#include <GL/glu.h>
-#include "SDL.h"
 
 #include "../common/Macros.h"
 #include "Game.h"
+
+#include <GL/gl.h>
+#include <GL/glu.h>
+#include <SDL.h>
 
 CLASSPTR(UI);
 
@@ -25,9 +26,8 @@ public:
 private:
     
     bool stop(bool res);
-    bool resizeWindow(unsigned width, unsigned height);
-    bool initGL();
-    bool LoadGLTextures();
+    
+   
     
     enum Color
     {
@@ -43,21 +43,24 @@ private:
     void drawCell(const CellPtr& cell);
     void drawPiece(const CellPtr& cell);
     void drawActivePlayer();
-    void drawSquare();
     
-    void mouseToGL(float winX, float winY, GLdouble& x, GLdouble& y, GLdouble& z);
+    void drawSquare(); // temp
+    void drawBg(); // temp
+    
+    
 
     /*
      * Defines if the mouse click is valid (true/false).
      * if true, returns the clicked cell
      */
-    bool isCellClicked(GLdouble x, GLdouble y,  CellPtr& cell);
+    bool isCellClicked(float x, float y,  CellPtr& cell);
     
     void onMouseClick(const SDL_Event& event);
     
     GamePtr mGame; 
     bool mQuit;
     
+
 };
 
 
