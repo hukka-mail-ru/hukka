@@ -202,3 +202,34 @@ bool Video::loadAllTextures()
     
     return true;
 }
+
+
+void Video::drawSprite(GLuint texture, float x, float y, float w, float h)
+{
+    glBindTexture( GL_TEXTURE_2D, texture);
+    
+    glBegin(GL_POLYGON);
+      glTexCoord2f( 0, 1 ); glVertex3f(  x + 0,  y + 0, 0 );
+      glTexCoord2f( 1, 1 ); glVertex3f(  x + w,  y + 0, 0 );
+      glTexCoord2f( 1, 0 ); glVertex3f(  x + w,  y + h, 0 );
+      glTexCoord2f( 0, 0 ); glVertex3f(  x + 0,  y + h, 0 );
+    glEnd( ); 
+}
+
+
+void Video::drawMaskedSprite(GLuint texture, GLuint mask, float x, float y, float w, float h)
+{
+    glEnable( GL_BLEND );   
+    glDisable( GL_DEPTH_TEST );
+    glBlendFunc( GL_DST_COLOR, GL_ZERO );
+    
+    drawSprite(mask, x, y, w, h);
+
+    glBlendFunc( GL_ONE, GL_ONE );
+    
+    drawSprite(texture, x, y, w, h);
+    
+    glEnable( GL_DEPTH_TEST ); /* Enable Depth Testing */
+    glDisable( GL_BLEND );     /* Disable Blending     */
+
+}
