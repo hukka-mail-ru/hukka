@@ -67,8 +67,11 @@ bool UI::isCellClicked(float x, float y, CellPtr& cell)
 void UI::drawSquare()// temp
 {
     TRY_BEGINS;    
-    for(int i =0 ;i<270; i+=30)
-        Video::drawMaskedSprite(Video::mtex1, RGB(1,0,0), 50, 50, i);
+    for(int i =0 ;i<360; i+=30)
+        Video::drawMaskedSprite(Video::segment1, RGB(1,1,1), 144, 120, i);
+    
+    for(int i =0 ;i<360; i+=30)
+        Video::drawMaskedSprite(Video::segment2, RGB(1,1,1), 186, 102, i);
 
     TRY_RETHROW;
 }
