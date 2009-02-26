@@ -5,10 +5,18 @@
 #include <GL/glu.h>
 #include <SDL.h>
 
+
+struct Texture
+{
+    GLuint id;
+    float w;
+    float h;
+};
+
 struct MaskedTexture
 {
-    GLuint texture;
-    GLuint mask;
+    Texture texture;
+    Texture mask;
 };
 
 class Video
@@ -19,20 +27,23 @@ public:
     static bool stop(bool res);
    
     
+    
     static void mouseToGL(float winX, float winY, GLdouble& x, GLdouble& y, GLdouble& z);
     static bool loadAllTextures();
     
-    static void drawSprite(GLuint texture, float x, float y, float w, float h);    
-    static void drawMaskedSprite(const MaskedTexture& mtex, float x, float y, float w, float h);
+    static void drawBackground();
+    static void drawSprite(const Texture& texture, float x, float y);    
+    static void drawMaskedSprite(const MaskedTexture& mtex, float x, float y);
     
 
-    static GLuint texture_bg; /* Storage For One Texture ( NEW ) */    
+    static Texture texture_bg; /* Storage For One Texture ( NEW ) */    
     static MaskedTexture mtex1;
     
 private:
     static bool initGL();
-    static bool loadTexture(GLuint& texture, const char* path);
+    static bool loadTexture(Texture& texture, const char* path);
     static bool resizeWindow(unsigned width, unsigned height);
+   
     
 
     
