@@ -72,6 +72,8 @@ void UI::drawSquare()// temp
     
     for(int i =0 ;i<360; i+=30)
         Video::drawMaskedSprite(Video::segment2, RGB(1,1,1), 186, 102, i);
+    
+    Video::drawMaskedSprite(Video::segment0, RGB(1,1,1), 92, 132, 0);
 
     TRY_RETHROW;
 }
