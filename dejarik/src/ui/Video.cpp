@@ -72,36 +72,6 @@ bool Video::stop(bool res)
 }
 
 
-
-bool Video::resizeWindow(unsigned width, unsigned height)
-{
-    /* Protect against a divide by zero */
-    if ( height == 0 )
-        height = 1;
-
-    /* Height / width ration */
-    GLfloat ratio = ( GLfloat )width / ( GLfloat )height;
-
-    /* Setup our viewport. */
-    glViewport( 0, 0, ( GLsizei )width, ( GLsizei )height );
-
-    /* change to the projection matrix and set our viewing volume. */
-    glMatrixMode( GL_PROJECTION );
-    glLoadIdentity( );
-
-    /* Set our perspective */
-    gluPerspective( 45.0f, ratio, 0.1f, 100.0f );
-
-    /* Make sure we're chaning the model view and not the projection */
-    glMatrixMode( GL_MODELVIEW );
-
-    /* Reset The View */
-    glLoadIdentity( );
-
-    return true;    
-}
-
-
 bool Video::initGL()
 {
     /* Load in the texture */
@@ -131,6 +101,36 @@ bool Video::initGL()
 
     return true;    
 }
+
+
+bool Video::resizeWindow(unsigned width, unsigned height)
+{
+    /* Protect against a divide by zero */
+    if ( height == 0 )
+        height = 1;
+
+    /* Height / width ration */
+    GLfloat ratio = ( GLfloat )width / ( GLfloat )height;
+
+    /* Setup our viewport. */
+    glViewport( 0, 0, ( GLsizei )width, ( GLsizei )height );
+
+    /* change to the projection matrix and set our viewing volume. */
+    glMatrixMode( GL_PROJECTION );
+    glLoadIdentity( );
+
+    /* Set our perspective */
+    gluPerspective( 45.0f, ratio, 0.1f, 100.0f );
+
+    /* Make sure we're chaning the model view and not the projection */
+    glMatrixMode( GL_MODELVIEW );
+
+    /* Reset The View */
+    glLoadIdentity( );
+
+    return true;    
+}
+
 
 void Video::winToGL(float winX, float winY, GLdouble& x, GLdouble& y, GLdouble& z)
 {
@@ -224,7 +224,7 @@ void Video::drawBackground()
 }
 
 
-void Video::drawSprite(const Texture& texture, float winX, float winY)
+void Video::drawSprite(const Texture& texture, const RGB& color, float winX, float winY, float angle)
 {
     GLdouble x1 = 0;
     GLdouble y1 = 0;
@@ -236,7 +236,15 @@ void Video::drawSprite(const Texture& texture, float winX, float winY)
     GLdouble z2 = 0;
     Video::winToGL(winX + texture.w, winY + texture.h, x2, y2, z2);
         
+ //   glLoadIdentity();
+    
+    glPushMatrix();
+    
     glBindTexture( GL_TEXTURE_2D, texture.id);
+    glColor3f(color.r, color.g, color.b); // blue
+    glRotatef(angle ,0, 0, 1); // rotate
+    
+  //  glTranslatef(0.0f, 0.0f, -10.0f);
     
     glBegin(GL_POLYGON);
       glTexCoord2f( 0, 0 ); glVertex3f(  x1,  y1, 0.0 );
@@ -244,23 +252,31 @@ void Video::drawSprite(const Texture& texture, float winX, float winY)
       glTexCoord2f( 1, 1 ); glVertex3f(  x2,  y2, 0.0 );
       glTexCoord2f( 0, 1 ); glVertex3f(  x1,  y2, 0.0 );
     glEnd( ); 
+    
+
+    glColor3f(1, 1, 1); // reset
+    
+    glPopMatrix();
+    
 }
 
 
-void Video::drawMaskedSprite(const MaskedTexture& mtex, float x, float y)
+void Video::drawMaskedSprite(const MaskedTexture& mtex, const RGB& color, float x, float y, float angle)
 {
+  //  glLoadIdentity();
+    
     glEnable( GL_BLEND );   
     glDisable( GL_DEPTH_TEST );
     glBlendFunc( GL_DST_COLOR, GL_ZERO );
     
-    drawSprite(mtex.mask, x, y);
+    drawSprite(mtex.mask, RGB(1,1,1), x, y, angle);
 
     glBlendFunc( GL_ONE, GL_ONE );
-glColor3f(0.5f ,0.5f, 1.0f); // blue
-    drawSprite(mtex.texture, x, y);
-glColor3f(1 ,1, 1); // blue
+
+    
+    drawSprite(mtex.texture, color, x, y, angle);
     
     glEnable( GL_DEPTH_TEST ); /* Enable Depth Testing */
     glDisable( GL_BLEND );     /* Disable Blending     */
-
+//    glLoadIdentity();
 }

@@ -8,7 +8,7 @@
 
 struct Texture
 {
-    GLuint id;
+    unsigned id;
     float w;
     float h;
 };
@@ -18,6 +18,15 @@ struct MaskedTexture
     Texture texture;
     Texture mask;
 };
+
+struct RGB
+{
+    RGB(unsigned r, unsigned g, unsigned b): r(r), g(g), b(b) {}
+    unsigned r;
+    unsigned g;
+    unsigned b;
+};
+
 
 class Video
 {
@@ -32,8 +41,8 @@ public:
     static bool loadAllTextures();
     
     static void drawBackground();
-    static void drawSprite(const Texture& texture, float x, float y);    
-    static void drawMaskedSprite(const MaskedTexture& mtex, float x, float y);
+    static void drawSprite(const Texture& texture, const RGB& color, float x, float y, float angle);    
+    static void drawMaskedSprite(const MaskedTexture& mtex, const RGB& color, float x, float y, float angle);
     
 
     static Texture texture_bg; /* Storage For One Texture ( NEW ) */    
