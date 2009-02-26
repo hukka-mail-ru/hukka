@@ -11,7 +11,8 @@ using namespace std;
 
 
 Texture Video::texture_bg; /* Storage For One Texture ( NEW ) */
-MaskedTexture Video::mtex1;
+
+MaskedTexture Video::segment0;
 MaskedTexture Video::segment1;
 MaskedTexture Video::segment2;
 
@@ -197,10 +198,10 @@ bool Video::loadTexture(Texture& texture, const char* path)
 
 bool Video::loadAllTextures()
 {
-    if(!Video::loadTexture(mtex1.texture, "img/sprite1.bmp"))
+    if(!Video::loadTexture(segment0.texture, "img/segment0.bmp"))
         return false;
     
-    if(!Video::loadTexture(mtex1.mask, "img/mask1.bmp"))
+    if(!Video::loadTexture(segment0.mask, "img/segment0_mask.bmp"))
         return false;
     
     if(!Video::loadTexture(segment1.texture, "img/segment.bmp"))
