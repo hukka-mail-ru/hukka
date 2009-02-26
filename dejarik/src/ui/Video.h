@@ -47,6 +47,8 @@ public:
 
     static Texture texture_bg; /* Storage For One Texture ( NEW ) */    
     static MaskedTexture mtex1;
+    static MaskedTexture segment1;
+    static MaskedTexture segment2;
     
 private:
     static bool initGL();

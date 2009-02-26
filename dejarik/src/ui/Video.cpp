@@ -12,6 +12,8 @@ using namespace std;
 
 Texture Video::texture_bg; /* Storage For One Texture ( NEW ) */
 MaskedTexture Video::mtex1;
+MaskedTexture Video::segment1;
+MaskedTexture Video::segment2;
 
 bool Video::startup()
 {
@@ -201,6 +203,18 @@ bool Video::loadAllTextures()
     if(!Video::loadTexture(mtex1.mask, "img/mask1.bmp"))
         return false;
     
+    if(!Video::loadTexture(segment1.texture, "img/segment.bmp"))
+        return false;
+    
+    if(!Video::loadTexture(segment1.mask, "img/segment_mask.bmp"))
+        return false;
+    
+    if(!Video::loadTexture(segment2.texture, "img/segment2.bmp"))
+        return false;
+    
+    if(!Video::loadTexture(segment2.mask, "img/segment2_mask.bmp"))
+        return false;
+    
     if(!Video::loadTexture(texture_bg, "img/bg.bmp"))
         return false;
     
@@ -214,12 +228,14 @@ void Video::drawBackground()
     float w = 80; 
     float h = 80;
     glBindTexture( GL_TEXTURE_2D, texture_bg.id);
+
     glBegin(GL_POLYGON);
       glTexCoord2f( 0, 1 ); glVertex3f(  x + 0,  y + 0, 0.0 );
       glTexCoord2f( 1, 1 ); glVertex3f(  x + w,  y + 0, 0.0 );
       glTexCoord2f( 1, 0 ); glVertex3f(  x + w,  y + h, 0.0 );
       glTexCoord2f( 0, 0 ); glVertex3f(  x + 0,  y + h, 0.0 );
     glEnd( ); 
+ 
   //  Video::drawSprite(Video::texture_bg, -5, -5, 10, 10); // just a big white sprite 
 }
 
@@ -236,26 +252,21 @@ void Video::drawSprite(const Texture& texture, const RGB& color, float winX, flo
     GLdouble z2 = 0;
     Video::winToGL(winX + texture.w, winY + texture.h, x2, y2, z2);
         
- //   glLoadIdentity();
-    
     glPushMatrix();
     
-    glBindTexture( GL_TEXTURE_2D, texture.id);
-    glColor3f(color.r, color.g, color.b); // blue
-    glRotatef(angle ,0, 0, 1); // rotate
-    
-  //  glTranslatef(0.0f, 0.0f, -10.0f);
-    
-    glBegin(GL_POLYGON);
-      glTexCoord2f( 0, 0 ); glVertex3f(  x1,  y1, 0.0 );
-      glTexCoord2f( 1, 0 ); glVertex3f(  x2,  y1, 0.0 );
-      glTexCoord2f( 1, 1 ); glVertex3f(  x2,  y2, 0.0 );
-      glTexCoord2f( 0, 1 ); glVertex3f(  x1,  y2, 0.0 );
-    glEnd( ); 
-    
-
-    glColor3f(1, 1, 1); // reset
-    
+        glBindTexture( GL_TEXTURE_2D, texture.id);
+        glColor3f(color.r, color.g, color.b); // blue
+        glRotatef(angle ,0, 0, 1); // rotate
+        
+        
+        glBegin(GL_POLYGON);
+          glTexCoord2f( 0, 0 ); glVertex3f(  x1,  y1, 0.0 );
+          glTexCoord2f( 1, 0 ); glVertex3f(  x2,  y1, 0.0 );
+          glTexCoord2f( 1, 1 ); glVertex3f(  x2,  y2, 0.0 );
+          glTexCoord2f( 0, 1 ); glVertex3f(  x1,  y2, 0.0 );
+        glEnd( ); 
+        
+        glColor3f(1, 1, 1); // reset
     glPopMatrix();
     
 }
@@ -263,7 +274,6 @@ void Video::drawSprite(const Texture& texture, const RGB& color, float winX, flo
 
 void Video::drawMaskedSprite(const MaskedTexture& mtex, const RGB& color, float x, float y, float angle)
 {
-  //  glLoadIdentity();
     
     glEnable( GL_BLEND );   
     glDisable( GL_DEPTH_TEST );
@@ -278,5 +288,5 @@ void Video::drawMaskedSprite(const MaskedTexture& mtex, const RGB& color, float 
     
     glEnable( GL_DEPTH_TEST ); /* Enable Depth Testing */
     glDisable( GL_BLEND );     /* Disable Blending     */
-//    glLoadIdentity();
+
 }
