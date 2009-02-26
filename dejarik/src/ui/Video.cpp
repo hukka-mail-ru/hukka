@@ -10,7 +10,7 @@ using namespace std;
 #define SCREEN_BPP     16
 
 
-GLuint Video::texture_bg; /* Storage For One Texture ( NEW ) */
+Texture Video::texture_bg; /* Storage For One Texture ( NEW ) */
 MaskedTexture Video::mtex1;
 
 bool Video::startup()
@@ -61,7 +61,7 @@ bool Video::startup()
 
     /* resize the initial window */
     resizeWindow( SCREEN_WIDTH, SCREEN_HEIGHT );
-
+    
     return true;
 }
 
@@ -70,6 +70,8 @@ bool Video::stop(bool res)
     SDL_Quit();
     return res;
 }
+
+
 
 bool Video::resizeWindow(unsigned width, unsigned height)
 {
@@ -151,7 +153,7 @@ void Video::mouseToGL(float winX, float winY, GLdouble& x, GLdouble& y, GLdouble
 
 
 
-bool Video::loadTexture(GLuint& texture, const char* path)
+bool Video::loadTexture(Texture& texture, const char* path)
 {
     /* Status indicator */
     bool res = false;
@@ -167,14 +169,17 @@ bool Video::loadTexture(GLuint& texture, const char* path)
         res = true;
 
         /* Create The Texture */
-        glGenTextures(1, &texture);
+        glGenTextures(1, &texture.id);
 
         /* Typical Texture Generation Using Data From The Bitmap */
-        glBindTexture(GL_TEXTURE_2D, texture);
+        glBindTexture(GL_TEXTURE_2D, texture.id);
 
         /* Generate The Texture */
         glTexImage2D(GL_TEXTURE_2D, 0, 3, image->w, image->h, 0, GL_BGR,
                 GL_UNSIGNED_BYTE, image->pixels );
+        
+        texture.w = image->w;
+        texture.h = image->h;
 
         /* Linear Filtering */
         glTexParameteri( GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR );
@@ -202,31 +207,59 @@ bool Video::loadAllTextures()
     return true;
 }
 
-
-void Video::drawSprite(GLuint texture, float x, float y, float w, float h)
+void Video::drawBackground()
 {
-    glBindTexture( GL_TEXTURE_2D, texture);
-    
+    float x = -40;
+    float y = -40; 
+    float w = 80; 
+    float h = 80;
+    glBindTexture( GL_TEXTURE_2D, texture_bg.id);
     glBegin(GL_POLYGON);
       glTexCoord2f( 0, 1 ); glVertex3f(  x + 0,  y + 0, 0.0 );
       glTexCoord2f( 1, 1 ); glVertex3f(  x + w,  y + 0, 0.0 );
       glTexCoord2f( 1, 0 ); glVertex3f(  x + w,  y + h, 0.0 );
       glTexCoord2f( 0, 0 ); glVertex3f(  x + 0,  y + h, 0.0 );
     glEnd( ); 
+  //  Video::drawSprite(Video::texture_bg, -5, -5, 10, 10); // just a big white sprite 
 }
 
 
-void Video::drawMaskedSprite(const MaskedTexture& mtex, float x, float y, float w, float h)
+void Video::drawSprite(const Texture& texture, float winX, float winY)
+{
+    
+    GLdouble x2 = 0;
+    GLdouble y2 = 0;
+    GLdouble z2 = 0;
+    Video::mouseToGL(winX + texture.w, winY + texture.h, x2, y2, z2);
+    
+    GLdouble x1 = 0;
+    GLdouble y1 = 0;
+    GLdouble z1 = 0;
+    Video::mouseToGL(winX, winY, x1, y1, z1);
+
+    
+    glBindTexture( GL_TEXTURE_2D, texture.id);
+    
+    glBegin(GL_POLYGON);
+      glTexCoord2f( 0, 0 ); glVertex3f(  x1,  y1, 0.0 );
+      glTexCoord2f( 1, 0 ); glVertex3f(  x2,  y1, 0.0 );
+      glTexCoord2f( 1, 1 ); glVertex3f(  x2,  y2, 0.0 );
+      glTexCoord2f( 0, 1 ); glVertex3f(  x1,  y2, 0.0 );
+    glEnd( ); 
+}
+
+
+void Video::drawMaskedSprite(const MaskedTexture& mtex, float x, float y)
 {
     glEnable( GL_BLEND );   
     glDisable( GL_DEPTH_TEST );
     glBlendFunc( GL_DST_COLOR, GL_ZERO );
     
-    drawSprite(mtex.mask, x, y, w, h);
+    drawSprite(mtex.mask, x, y);
 
     glBlendFunc( GL_ONE, GL_ONE );
 glColor3f(0.5f ,0.5f, 1.0f); // blue
-    drawSprite(mtex.texture, x, y, w, h);
+    drawSprite(mtex.texture, x, y);
 glColor3f(1 ,1, 1); // blue
     
     glEnable( GL_DEPTH_TEST ); /* Enable Depth Testing */

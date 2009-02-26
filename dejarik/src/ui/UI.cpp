@@ -64,26 +64,11 @@ bool UI::isCellClicked(float x, float y, CellPtr& cell)
 }
 
 
-
-void UI::drawBg() // temp
-{
-    TRY_BEGINS;
-
-    Video::drawSprite(Video::texture_bg, -5, -5, 10, 10); // just a big white sprite
-
-    TRY_RETHROW;
-}
-
 void UI::drawSquare()// temp
 {
-    TRY_BEGINS;
+    TRY_BEGINS;    
     
-    GLdouble x = 0;
-    GLdouble y = 0;
-    GLdouble z = 0;
-    Video::mouseToGL(100, 200, x, y, z);
-    
-    Video::drawMaskedSprite(Video::mtex1,  x,  y,  1, 1);
+    Video::drawMaskedSprite(Video::mtex1,  50, 50);
 
     TRY_RETHROW;
 }
@@ -220,7 +205,8 @@ bool UI::drawAll()
 
   //  drawBoard();
   //  drawActivePlayer();
-    drawBg();
+    
+    Video::drawBackground();
     drawSquare();
     
     

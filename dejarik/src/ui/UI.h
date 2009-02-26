@@ -41,7 +41,6 @@ private:
     void drawActivePlayer();
     
     void drawSquare(); // temp
-    void drawBg(); // temp
     
     /*
      * Defines if the mouse click is valid (true/false).
