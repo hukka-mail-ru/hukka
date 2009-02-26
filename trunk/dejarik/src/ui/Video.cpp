@@ -132,7 +132,7 @@ bool Video::initGL()
     return true;    
 }
 
-void Video::mouseToGL(float winX, float winY, GLdouble& x, GLdouble& y, GLdouble& z)
+void Video::winToGL(float winX, float winY, GLdouble& x, GLdouble& y, GLdouble& z)
 {
     GLint viewport[4];                  // Where The Viewport Values Will Be Stored
     glGetIntegerv(GL_VIEWPORT, viewport); // Retrieves The Viewport Values (X, Y, Width, Height)
@@ -226,18 +226,16 @@ void Video::drawBackground()
 
 void Video::drawSprite(const Texture& texture, float winX, float winY)
 {
-    
-    GLdouble x2 = 0;
-    GLdouble y2 = 0;
-    GLdouble z2 = 0;
-    Video::mouseToGL(winX + texture.w, winY + texture.h, x2, y2, z2);
-    
     GLdouble x1 = 0;
     GLdouble y1 = 0;
     GLdouble z1 = 0;
-    Video::mouseToGL(winX, winY, x1, y1, z1);
+    Video::winToGL(winX, winY, x1, y1, z1);
 
-    
+    GLdouble x2 = 0;
+    GLdouble y2 = 0;
+    GLdouble z2 = 0;
+    Video::winToGL(winX + texture.w, winY + texture.h, x2, y2, z2);
+        
     glBindTexture( GL_TEXTURE_2D, texture.id);
     
     glBegin(GL_POLYGON);

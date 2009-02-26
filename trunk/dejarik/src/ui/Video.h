@@ -28,7 +28,7 @@ public:
    
     
     
-    static void mouseToGL(float winX, float winY, GLdouble& x, GLdouble& y, GLdouble& z);
+    static void winToGL(float winX, float winY, GLdouble& x, GLdouble& y, GLdouble& z);
     static bool loadAllTextures();
     
     static void drawBackground();

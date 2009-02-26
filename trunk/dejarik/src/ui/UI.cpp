@@ -231,7 +231,7 @@ void UI::onMouseClick(const SDL_Event& event)
         GLdouble x = 0;
         GLdouble y = 0;
         GLdouble z = 0;
-        Video::mouseToGL(event.button.x, event.button.y, x, y, z);
+        Video::winToGL(event.button.x, event.button.y, x, y, z);
         
         cout << "mouse " << event.button.x << " " << event.button.y << endl;
         cout << "mouse " << x << " "<< y << " " << z << endl;
