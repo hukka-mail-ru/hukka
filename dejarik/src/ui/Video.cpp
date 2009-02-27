@@ -259,20 +259,44 @@ void Video::drawBackground()
 }
 
 
-void Video::drawPolygon(const Texture& texture, const RGB& color, float winX, float winY, float angle)
+void Video::drawPolygon(const vector<float>& xWin, const vector<float>& yWin, const RGB& color)
 {
     TRY_BEGINS;
+    
+    vector<float> x; 
+    vector<float> y;
+    
+    
+    for(unsigned i=0; i< xWin.size(); i++)
+    {
+        GLdouble x1 = 0;
+        GLdouble y1 = 0;
+        GLdouble z1 = 0;
+        Video::winToGL(xWin[i], yWin[i], x1, y1, z1);
+        
+        x.push_back( x1 );
+        y.push_back( y1 );
+    }
+    
+    
+    
     glEnable( GL_BLEND );   
     glDisable( GL_DEPTH_TEST );
     glBlendFunc(GL_SRC_ALPHA, GL_ONE);
-    glColor4f(color.r, color.g, color.b, 0.5f);
+    glColor4f(color.r, color.g, color.b, 0.75f);
         
         
         glBegin(GL_POLYGON);
+
+            for(unsigned i=0; i< x.size(); i++)
+            {                
+                glVertex3f( x[i], y[i], 0 );
+            }
+            /*
            glVertex3f(  0,  0, 0.0 );
            glVertex3f(  1,  0, 0.0 );
            glVertex3f(  1,  1, 0.0 );
-           glVertex3f(  0,  1, 0.0 );
+           glVertex3f(  0,  1, 0.0 );*/
         glEnd( ); 
         
     glColor3f(1, 1, 1); // reset
