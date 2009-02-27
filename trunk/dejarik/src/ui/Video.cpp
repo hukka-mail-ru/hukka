@@ -11,6 +11,7 @@ using namespace std;
 
 
 Texture Video::texture_bg; /* Storage For One Texture ( NEW ) */
+Texture Video::board; /* Storage For One Texture ( NEW ) */
 
 MaskedTexture Video::segment0;
 MaskedTexture Video::segment1;
@@ -215,6 +216,9 @@ bool Video::loadAllTextures()
     
     if(!Video::loadTexture(segment2.mask, "img/segment2_mask.bmp"))
         return false;
+    
+    if(!Video::loadTexture(board, "img/board.bmp"))
+            return false;
     
     if(!Video::loadTexture(texture_bg, "img/bg.bmp"))
         return false;
