@@ -120,7 +120,8 @@ void UI::drawCell(const CellPtr& cell)
     
     if(cell->c == 0)
     {
-        Video::drawMaskedSprite(Video::segment0, color, 92, 132, 0);
+        //Video::drawMaskedSprite(Video::segment0, color, 92, 132, 0);
+        Video::drawPolygon(Video::piece, color, 92, 132, 0);
     }
     else if(cell->c == 1)
     {

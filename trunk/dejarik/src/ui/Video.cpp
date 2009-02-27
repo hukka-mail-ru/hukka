@@ -89,7 +89,7 @@ void Video::initGL()
     loadAllTextures();
 
     /* Enable Texture Mapping ( NEW ) */
-    glEnable( GL_TEXTURE_2D );
+   // glEnable( GL_TEXTURE_2D );
     
     /* Enable smooth shading */
     glShadeModel( GL_SMOOTH );
@@ -259,9 +259,34 @@ void Video::drawBackground()
 }
 
 
+void Video::drawPolygon(const Texture& texture, const RGB& color, float winX, float winY, float angle)
+{
+    TRY_BEGINS;
+    glEnable( GL_BLEND );   
+    glDisable( GL_DEPTH_TEST );
+    glBlendFunc(GL_SRC_ALPHA, GL_ONE);
+    glColor4f(color.r, color.g, color.b, 0.5f);
+        
+        
+        glBegin(GL_POLYGON);
+           glVertex3f(  0,  0, 0.0 );
+           glVertex3f(  1,  0, 0.0 );
+           glVertex3f(  1,  1, 0.0 );
+           glVertex3f(  0,  1, 0.0 );
+        glEnd( ); 
+        
+    glColor3f(1, 1, 1); // reset
+    glEnable( GL_DEPTH_TEST ); /* Enable Depth Testing */
+    glDisable( GL_BLEND );     /* Disable Blending     */
+    
+    
+    TRY_RETHROW;
+}
+
 void Video::drawSprite(const Texture& texture, const RGB& color, float winX, float winY, float angle)
 {
     TRY_BEGINS;
+   
     
     GLdouble x1 = 0;
     GLdouble y1 = 0;
@@ -272,7 +297,8 @@ void Video::drawSprite(const Texture& texture, const RGB& color, float winX, flo
     GLdouble y2 = 0;
     GLdouble z2 = 0;
     Video::winToGL(winX + texture.w, winY + texture.h, x2, y2, z2);
-        
+    
+    glEnable( GL_TEXTURE_2D );
     glPushMatrix();
     
         glBindTexture( GL_TEXTURE_2D, texture.id);
@@ -289,6 +315,7 @@ void Video::drawSprite(const Texture& texture, const RGB& color, float winX, flo
         
         glColor3f(1, 1, 1); // reset
     glPopMatrix();
+    glDisable( GL_TEXTURE_2D );
     
     TRY_RETHROW;
 }

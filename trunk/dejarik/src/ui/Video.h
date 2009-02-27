@@ -42,6 +42,7 @@ public:
     static void drawSprite(const Texture& texture, const RGB& color, float x, float y, float angle);    
     static void drawMaskedSprite(const MaskedTexture& mtex, const RGB& color, float x, float y, float angle);
     
+    static void drawPolygon(const Texture& texture, const RGB& color, float winX, float winY, float angle);
 
     static Texture texture_bg; 
     static Texture board;
