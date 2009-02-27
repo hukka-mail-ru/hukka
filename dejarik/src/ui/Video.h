@@ -45,7 +45,8 @@ public:
     static void drawMaskedSprite(const MaskedTexture& mtex, const RGB& color, float x, float y, float angle);
     
 
-    static Texture texture_bg; /* Storage For One Texture ( NEW ) */    
+    static Texture texture_bg; 
+    static Texture board;    
 
     static MaskedTexture segment0;
     static MaskedTexture segment1;

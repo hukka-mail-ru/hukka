@@ -3,9 +3,16 @@
 
 #define PI 3.14159265
 
-#define CELL_RADIUS_1 0.5 
-#define CELL_RADIUS_2 1.5
-#define CELL_RADIUS_3 2.5
+// in pixels
+#define SCREEN_WIDTH  240
+#define SCREEN_HEIGHT 320
+
+#define SCREEN_CENTER_X SCREEN_WIDTH/2
+#define SCREEN_CENTER_Y SCREEN_HEIGHT/2
+
+#define CELL_RADIUS_1 27 
+#define CELL_RADIUS_2 76
+#define CELL_RADIUS_3 115
 
 #define INTERIM_ANGLES 4 // smoothness of the circles
 
@@ -29,12 +36,12 @@ Cell::Cell(unsigned circle, unsigned radius):
         for(unsigned i = 0; i < INTERIM_ANGLES*3; i++)
         {
             float a = PI/6.0*i;
-            x.push_back(CELL_RADIUS_1 * cos(a));
-            y.push_back(CELL_RADIUS_1 * sin(a));
+            x.push_back(SCREEN_CENTER_X + CELL_RADIUS_1 * cos(a));
+            y.push_back(SCREEN_CENTER_Y + CELL_RADIUS_1 * sin(a));
         }
         
-        x_center = 0;
-        y_center = 0;
+        x_center = SCREEN_CENTER_X;
+        y_center = SCREEN_CENTER_Y;
     }
     // CIRCLE 1
     else if(c == 1)
@@ -59,21 +66,21 @@ void Cell::createSegment(float radius1, float radius2)
     float a = a1;
     for(unsigned i = 0; i<=INTERIM_ANGLES; i++) // BBBBBB
     {
-        x.push_back(radius2 * cos(a));
-        y.push_back(radius2 * sin(a));
+        x.push_back(SCREEN_CENTER_X + radius2 * cos(a));
+        y.push_back(SCREEN_CENTER_Y + radius2 * sin(a));
         a += interim;
     }
 
     for(unsigned i = 0; i<=INTERIM_ANGLES; i++) // DDDDDD
     {            
         a -= interim;
-        x.push_back(radius1 * cos(a));
-        y.push_back(radius1 * sin(a));
+        x.push_back(SCREEN_CENTER_X + radius1 * cos(a));
+        y.push_back(SCREEN_CENTER_Y + radius1 * sin(a));
     }
     
     // define center
-    x_center = (radius2 + radius1)/2 * cos((a2 + a1)/2);
-    y_center = (radius2 + radius1)/2 * sin((a2 + a1)/2);
+    x_center = SCREEN_CENTER_X + (radius2 + radius1)/2 * cos((a2 + a1)/2);
+    y_center = SCREEN_CENTER_Y + (radius2 + radius1)/2 * sin((a2 + a1)/2);
     
     
 }

@@ -75,7 +75,7 @@ void UI::drawSquare()// temp
         Video::drawMaskedSprite(Video::segment1, RGB(1,1,1), 144, 120, i);
     
     for(int i =0 ;i<360; i+=30)
-        Video::drawMaskedSprite(Video::segment2, RGB(1,0,1), 186, 102, i);
+        Video::drawMaskedSprite(Video::segment2, RGB(1,1,1), 186, 102, i);
     
     
 
@@ -158,6 +158,9 @@ void UI::drawBoard()
 {
     TRY_BEGINS;
     
+    Video::drawSprite(Video::board, RGB(1,1,1), 1, 1, 0);
+    
+    /*
     vector<CellPtr> cells;
     mGame->getBoard()->getCells(cells);
     
@@ -166,7 +169,7 @@ void UI::drawBoard()
         drawCell(cells[i]);
         drawPiece(cells[i]);
     }
-    
+    */
      
     TRY_RETHROW;
 }
@@ -211,12 +214,13 @@ bool UI::drawAll()
     glClear( GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT );
     glLoadIdentity();
     glTranslatef( 0.0f, 0.0f, -10.0f );
-
-  //  drawBoard();
-  //  drawActivePlayer();
     
     Video::drawBackground();
-    drawSquare();
+    drawBoard();
+  //  drawActivePlayer();
+    
+    
+  //  drawSquare();
     
     
     /* Draw it to the screen */
@@ -237,16 +241,16 @@ void UI::onMouseClick(const SDL_Event& event)
     
     if( event.button.button == SDL_BUTTON_LEFT ) 
     { 
-        GLdouble x = 0;
+    /*    GLdouble x = 0;
         GLdouble y = 0;
         GLdouble z = 0;
         Video::winToGL(event.button.x, event.button.y, x, y, z);
-        
-        cout << "mouse " << event.button.x << " " << event.button.y << endl;
-        cout << "mouse " << x << " "<< y << " " << z << endl;
+      */  
+     //   cout << "mouse " << event.button.x << " " << event.button.y << endl;
+    //    cout << "mouse " << x << " "<< y << " " << z << endl;
         
         CellPtr cell;
-        if(isCellClicked(x, y, cell))
+        if(isCellClicked(event.button.x, event.button.y, cell))
         {
             cout << "cell " << cell->c << "." << cell->r << endl;
             if(cell->piece)
