@@ -21,10 +21,10 @@ using namespace std;
 
 // TODO replace cerr with THROW
 
-bool UI::startup()
+void UI::startup()
 {
     TRY_BEGINS;
-    return Video::startup();
+    Video::startup();
     TRY_RETHROW;
 }
 
@@ -90,6 +90,10 @@ void UI::drawPiece(const CellPtr& cell)
     if(!cell->piece)
         return;
     
+    
+    Video::drawSprite(Video::piece, RGB(1,1,1), cell->x_center, cell->y_center, 0);
+    /*
+    
     if(cell->piece->player.get() == mGame->getPlayer1())
         glColor3f(0.5f ,0.5f, 1.0f); // blue
     else
@@ -104,7 +108,7 @@ void UI::drawPiece(const CellPtr& cell)
          glVertex3f(x-w, y, 0);
          glVertex3f(x, y-w, 0);
     glEnd();
-    
+    */
     TRY_RETHROW;
 }
 
@@ -114,39 +118,30 @@ void UI::drawCell(const CellPtr& cell)
 {
     TRY_BEGINS;
     
-    Color color = CL_WHITE;
-    Color backgr = CL_WHITE;
-    
-    // cells must be back/white like a chess
-    unsigned rest = (cell->c == 0 || cell->c == 1) ? 0 : 1; // depends on circle    
-    backgr = (cell->r % 2 == rest) ? CL_WHITE : CL_BLACK; // odd/even
-    
-    
+    RGB color = RGB(1,1,1);
+
     switch(cell->selected)
     {
-        case SEL_CLICKED:         color = CL_BLUE;  break;
-        case SEL_POSSIBLE_MOVE:   color = CL_GREEN; break;
-        case SEL_POSSIBLE_TARGET: color = CL_RED;   break;
-        case SEL_POSSIBLE_PUSH:   color = CL_RED;   break;
-        case SEL_NONE:            color = backgr;   break;
+        case SEL_CLICKED:         color = RGB(0,0,1);  break;
+        case SEL_POSSIBLE_MOVE:   color = RGB(0,1,0); break;
+        case SEL_POSSIBLE_TARGET: color = RGB(1,0,0);   break;
+        case SEL_POSSIBLE_PUSH:   color = RGB(1,0,0);   break;
+        case SEL_NONE:            color = RGB(1,1,1);   break;
     }
+
     
-    switch(color)
+    if(cell->c == 0)
     {
-        case CL_WHITE: glColor3f(1.0f,1.0f,1.0f); break;
-        case CL_BLACK: glColor3f(0.0f,0.0f,0.0f); break;
-        case CL_GREEN: if(backgr == CL_WHITE) glColor3f(0.0f,0.8f,0.0f); else glColor3f(0.0f,0.4f,0.0f); break;
-        case CL_BLUE: glColor3f(0,0,1); break;
-        case CL_RED:  glColor3f(1,0,0); break;
-        default: return;
+        Video::drawMaskedSprite(Video::segment0, color, 92, 132, 0);
     }
-       
-    glBegin( GL_POLYGON );    
-        for(unsigned i = 0; i < cell->x.size(); i++)
-        {
-            glVertex3f( cell->x[i],  cell->y[i], 0.0f );
-        }
-    glEnd(); 
+    else if(cell->c == 1)
+    {
+        Video::drawMaskedSprite(Video::segment1, color, 144, 120, cell->r * 30);
+    }
+    else if(cell->c == 2)
+    {
+        Video::drawMaskedSprite(Video::segment2, color, 186, 102, cell->r * 30);
+    }
     
        
     TRY_RETHROW;
@@ -160,7 +155,7 @@ void UI::drawBoard()
     
     Video::drawSprite(Video::board, RGB(1,1,1), 1, 1, 0);
     
-    /*
+    
     vector<CellPtr> cells;
     mGame->getBoard()->getCells(cells);
     
@@ -169,7 +164,7 @@ void UI::drawBoard()
         drawCell(cells[i]);
         drawPiece(cells[i]);
     }
-    */
+    
      
     TRY_RETHROW;
 }
@@ -240,15 +235,7 @@ void UI::onMouseClick(const SDL_Event& event)
     TRY_BEGINS;
     
     if( event.button.button == SDL_BUTTON_LEFT ) 
-    { 
-    /*    GLdouble x = 0;
-        GLdouble y = 0;
-        GLdouble z = 0;
-        Video::winToGL(event.button.x, event.button.y, x, y, z);
-      */  
-     //   cout << "mouse " << event.button.x << " " << event.button.y << endl;
-    //    cout << "mouse " << x << " "<< y << " " << z << endl;
-        
+    {        
         CellPtr cell;
         if(isCellClicked(event.button.x, event.button.y, cell))
         {
@@ -313,7 +300,7 @@ void UI::handleEvents()
     }
     
     /* clean ourselves up and exit */
-    Video::stop(true);
+    Video::stop();
     
     TRY_RETHROW;
 }

@@ -19,7 +19,7 @@ public:
     UI(const GamePtr& game): mGame(game), mQuit(false)
     {}
     
-    bool startup();
+    void startup();
     
     void handleEvents();
     
