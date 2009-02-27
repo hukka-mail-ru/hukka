@@ -114,7 +114,7 @@ void UI::drawCell(const CellPtr& cell)
         case SEL_POSSIBLE_MOVE:   color = RGB(0,1,0); break;
         case SEL_POSSIBLE_TARGET: color = RGB(1,0,0);   break;
         case SEL_POSSIBLE_PUSH:   color = RGB(1,0,0);   break;
-        case SEL_NONE:            color = RGB(1,1,1);   break;
+        case SEL_NONE:            return;
     }
 
     
@@ -124,11 +124,11 @@ void UI::drawCell(const CellPtr& cell)
     }
     else if(cell->c == 1)
     {
-        Video::drawMaskedSprite(Video::segment1, color, 144, 120, 330 - cell->r * 30);
+        Video::drawMaskedSprite(Video::segment1, color, 143, 120, 330 - cell->r * 30);
     }
     else if(cell->c == 2)
     {
-        Video::drawMaskedSprite(Video::segment2, color, 186, 102, 330 - cell->r * 30);
+        Video::drawMaskedSprite(Video::segment2, color, 185, 102, 330 - cell->r * 30);
     }
     
        
