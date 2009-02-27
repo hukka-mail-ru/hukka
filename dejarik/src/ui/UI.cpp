@@ -53,6 +53,12 @@ bool UI::isCellClicked(float x, float y, CellPtr& cell)
         if(res)
         {
             cell = cells[k];
+            
+            for (unsigned i = 0; i < cells[k]->x.size(); i++) 
+            {
+                cout << "cell - " << k << " : " <<  cells[k]->x[i] << " : " << cells[k]->y[i] << endl;
+            }
+            
             return true;
         }
     }
@@ -63,24 +69,6 @@ bool UI::isCellClicked(float x, float y, CellPtr& cell)
 
 }
 
-
-void UI::drawSquare()// temp
-{
-    
-    TRY_BEGINS;    
-    
-    Video::drawMaskedSprite(Video::segment0, RGB(1,1,1), 92, 132, 0);
-    
-    for(int i =0 ;i<360; i+=30)
-        Video::drawMaskedSprite(Video::segment1, RGB(1,1,1), 144, 120, i);
-    
-    for(int i =0 ;i<360; i+=30)
-        Video::drawMaskedSprite(Video::segment2, RGB(1,1,1), 186, 102, i);
-    
-    
-
-    TRY_RETHROW;
-}
 
 
 void UI::drawPiece(const CellPtr& cell)
@@ -136,11 +124,11 @@ void UI::drawCell(const CellPtr& cell)
     }
     else if(cell->c == 1)
     {
-        Video::drawMaskedSprite(Video::segment1, color, 144, 120, cell->r * 30);
+        Video::drawMaskedSprite(Video::segment1, color, 144, 120, 330 - cell->r * 30);
     }
     else if(cell->c == 2)
     {
-        Video::drawMaskedSprite(Video::segment2, color, 186, 102, cell->r * 30);
+        Video::drawMaskedSprite(Video::segment2, color, 186, 102, 330 - cell->r * 30);
     }
     
        
@@ -163,6 +151,7 @@ void UI::drawBoard()
     {
         drawCell(cells[i]);
         drawPiece(cells[i]);
+
     }
     
      
@@ -239,9 +228,10 @@ void UI::onMouseClick(const SDL_Event& event)
         CellPtr cell;
         if(isCellClicked(event.button.x, event.button.y, cell))
         {
-            cout << "cell " << cell->c << "." << cell->r << endl;
-            if(cell->piece)
-                cout << "piece " << cell->piece->name << " move " <<cell->piece->moveRating << endl; 
+            cout << "mouse " << event.button.x << "." << event.button.y << endl;
+            //cout << "cell " << cell->c << "." << cell->r << endl;
+            //if(cell->piece)
+            //    cout << "piece " << cell->piece->name << " move " <<cell->piece->moveRating << endl; 
             
             BattleResult res = mGame->onCellClick(cell);
             
