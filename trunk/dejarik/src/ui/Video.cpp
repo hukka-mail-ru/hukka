@@ -12,26 +12,29 @@ using namespace std;
 
 Texture Video::texture_bg; /* Storage For One Texture ( NEW ) */
 Texture Video::board; /* Storage For One Texture ( NEW ) */
+Texture Video::piece; /* Storage For One Texture ( NEW ) */
 
 MaskedTexture Video::segment0;
 MaskedTexture Video::segment1;
 MaskedTexture Video::segment2;
 
-bool Video::startup()
+void Video::startup()
 {
+    TRY_BEGINS;
+    
     /* initialize SDL */
     if ( SDL_Init( SDL_INIT_VIDEO ) < 0 )
     {
-        cerr << "Video initialization failed: " <<  SDL_GetError( ) << endl;
-        return Video::stop(false);
+        SDL_Quit();
+        throw ("Video initialization failed");
     }
 
     /* Fetch the video info */
     const SDL_VideoInfo* videoInfo = SDL_GetVideoInfo( );
     if ( !videoInfo )
     {
-        cerr << "Video query failed: " <<  SDL_GetError( ) << endl;
-        return stop(false);
+        SDL_Quit();
+        throw ("Video query failed");
     }
 
     /* the flags to pass to SDL_SetVideoMode */
@@ -56,31 +59,34 @@ bool Video::startup()
     /* Verify there is a surface */
     if (!SDL_SetVideoMode( SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_BPP, videoFlags ) )
     {
-        cerr <<  "Video mode set failed: " << SDL_GetError( ) << endl;
-        return stop(false);
+        SDL_Quit();
+        throw ("Video mode set failed");
     }
 
     /* initialize OpenGL */
-    initGL( );
+    initGL();
 
     /* resize the initial window */
     resizeWindow( SCREEN_WIDTH, SCREEN_HEIGHT );
+
     
-    return true;
+    TRY_RETHROW;
 }
 
-bool Video::stop(bool res)
+void Video::stop()
 {
+    TRY_BEGINS;
     SDL_Quit();
-    return res;
+    TRY_RETHROW;
 }
 
 
-bool Video::initGL()
+void Video::initGL()
 {
+    TRY_BEGINS;
+        
     /* Load in the texture */
-    if (!loadAllTextures())
-        return false;
+    loadAllTextures();
 
     /* Enable Texture Mapping ( NEW ) */
     glEnable( GL_TEXTURE_2D );
@@ -102,13 +108,14 @@ bool Video::initGL()
 
     /* Really Nice Perspective Calculations */
     glHint( GL_PERSPECTIVE_CORRECTION_HINT, GL_NICEST );
-
-    return true;    
+ 
+    TRY_RETHROW;
 }
 
 
-bool Video::resizeWindow(unsigned width, unsigned height)
+void Video::resizeWindow(unsigned width, unsigned height)
 {
+    TRY_BEGINS;
     /* Protect against a divide by zero */
     if ( height == 0 )
         height = 1;
@@ -131,13 +138,15 @@ bool Video::resizeWindow(unsigned width, unsigned height)
 
     /* Reset The View */
     glLoadIdentity( );
-
-    return true;    
+   
+    TRY_RETHROW;
 }
 
 
 void Video::winToGL(float winX, float winY, GLdouble& x, GLdouble& y, GLdouble& z)
 {
+    TRY_BEGINS;
+    
     GLint viewport[4];                  // Where The Viewport Values Will Be Stored
     glGetIntegerv(GL_VIEWPORT, viewport); // Retrieves The Viewport Values (X, Y, Width, Height)
     
@@ -153,12 +162,16 @@ void Video::winToGL(float winX, float winY, GLdouble& x, GLdouble& y, GLdouble& 
     glReadPixels(winX, winY, 1, 1, GL_DEPTH_COMPONENT, GL_FLOAT, &winZ);
     
     gluUnProject( winX, winY, winZ, modelview, projection, viewport, &x, &y, &z);
+    
+    TRY_RETHROW;
 }
 
 
 
-bool Video::loadTexture(Texture& texture, const char* path)
+void Video::loadTexture(Texture& texture, const char* path)
 {
+    TRY_BEGINS;
+    
     /* Status indicator */
     bool res = false;
 
@@ -194,40 +207,40 @@ bool Video::loadTexture(Texture& texture, const char* path)
     if (image)
         SDL_FreeSurface(image);
 
-    return res;    
+    if(!res)
+    {
+        ostringstream os;
+        os << "loadTexture failed: " << path << endl;
+        throw os.str();
+    }
+    
+    TRY_RETHROW;
 }
 
-bool Video::loadAllTextures()
+void Video::loadAllTextures()
 {
-    if(!Video::loadTexture(segment0.texture, "img/segment0.bmp"))
-        return false;
+    TRY_BEGINS;
     
-    if(!Video::loadTexture(segment0.mask, "img/segment0_mask.bmp"))
-        return false;
+    Video::loadTexture(segment0.texture, "img/segment0.bmp");    
+    Video::loadTexture(segment0.mask, "img/segment0_mask.bmp");
     
-    if(!Video::loadTexture(segment1.texture, "img/segment.bmp"))
-        return false;
+    Video::loadTexture(segment1.texture, "img/segment.bmp");    
+    Video::loadTexture(segment1.mask, "img/segment_mask.bmp");
     
-    if(!Video::loadTexture(segment1.mask, "img/segment_mask.bmp"))
-        return false;
+    Video::loadTexture(segment2.texture, "img/segment2.bmp");    
+    Video::loadTexture(segment2.mask, "img/segment2_mask.bmp");
     
-    if(!Video::loadTexture(segment2.texture, "img/segment2.bmp"))
-        return false;
+    Video::loadTexture(board, "img/board.bmp");
+    Video::loadTexture(piece, "img/piece.bmp");
+    Video::loadTexture(texture_bg, "img/bg.bmp");
     
-    if(!Video::loadTexture(segment2.mask, "img/segment2_mask.bmp"))
-        return false;
-    
-    if(!Video::loadTexture(board, "img/board.bmp"))
-            return false;
-    
-    if(!Video::loadTexture(texture_bg, "img/bg.bmp"))
-        return false;
-    
-    return true;
+    TRY_RETHROW;
 }
 
 void Video::drawBackground()
 {
+    TRY_BEGINS;
+    
     float x = -40;
     float y = -40; 
     float w = 80; 
@@ -241,12 +254,15 @@ void Video::drawBackground()
       glTexCoord2f( 0, 0 ); glVertex3f(  x + 0,  y + h, 0.0 );
     glEnd( ); 
  
+    TRY_RETHROW;
   //  Video::drawSprite(Video::texture_bg, -5, -5, 10, 10); // just a big white sprite 
 }
 
 
 void Video::drawSprite(const Texture& texture, const RGB& color, float winX, float winY, float angle)
 {
+    TRY_BEGINS;
+    
     GLdouble x1 = 0;
     GLdouble y1 = 0;
     GLdouble z1 = 0;
@@ -274,11 +290,13 @@ void Video::drawSprite(const Texture& texture, const RGB& color, float winX, flo
         glColor3f(1, 1, 1); // reset
     glPopMatrix();
     
+    TRY_RETHROW;
 }
 
 
 void Video::drawMaskedSprite(const MaskedTexture& mtex, const RGB& color, float x, float y, float angle)
 {
+    TRY_BEGINS;
     
     glEnable( GL_BLEND );   
     glDisable( GL_DEPTH_TEST );
@@ -294,4 +312,5 @@ void Video::drawMaskedSprite(const MaskedTexture& mtex, const RGB& color, float 
     glEnable( GL_DEPTH_TEST ); /* Enable Depth Testing */
     glDisable( GL_BLEND );     /* Disable Blending     */
 
+    TRY_RETHROW;
 }

@@ -4,6 +4,7 @@
 #include <GL/gl.h>
 #include <GL/glu.h>
 #include <SDL.h>
+#include "../common/Macros.h"
 
 
 struct Texture
@@ -32,13 +33,10 @@ class Video
 {
     
 public:
-    static bool startup();
-    static bool stop(bool res);
-   
+    static void startup();
+    static void stop();
     
-    
-    static void winToGL(float winX, float winY, GLdouble& x, GLdouble& y, GLdouble& z);
-    static bool loadAllTextures();
+    static void loadAllTextures();
     
     static void drawBackground();
     static void drawSprite(const Texture& texture, const RGB& color, float x, float y, float angle);    
@@ -46,17 +44,19 @@ public:
     
 
     static Texture texture_bg; 
-    static Texture board;    
+    static Texture board;
+    static Texture piece;   
 
     static MaskedTexture segment0;
     static MaskedTexture segment1;
     static MaskedTexture segment2;
     
 private:
-    static bool initGL();
-    static bool loadTexture(Texture& texture, const char* path);
-    static bool resizeWindow(unsigned width, unsigned height);
+    static void initGL();
+    static void loadTexture(Texture& texture, const char* path);
+    static void resizeWindow(unsigned width, unsigned height);
    
+    static void winToGL(float winX, float winY, GLdouble& x, GLdouble& y, GLdouble& z);
     
 
     
