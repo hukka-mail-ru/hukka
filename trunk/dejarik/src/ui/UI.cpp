@@ -112,12 +112,15 @@ void UI::drawCell(const CellPtr& cell)
     {
         case SEL_CLICKED:         color = RGB(0,0,1);  break;
         case SEL_POSSIBLE_MOVE:   color = RGB(0,1,0); break;
-        case SEL_POSSIBLE_TARGET: color = RGB(1,0,0);   break;
+        case SEL_POSSIBLE_TARGET: color = RGB(1,0.5,0.5);   break;
         case SEL_POSSIBLE_PUSH:   color = RGB(1,0,0);   break;
         case SEL_NONE:            return;
     }
 
     
+    Video::drawPolygon(cell->x, cell->y, color);
+    Video::drawShape(cell->x, cell->y, color);
+    /*
     if(cell->c == 0)
     {
         //Video::drawMaskedSprite(Video::segment0, color, 92, 132, 0);
@@ -130,7 +133,7 @@ void UI::drawCell(const CellPtr& cell)
     else if(cell->c == 2)
     {
         Video::drawMaskedSprite(Video::segment2, color, 185, 102, 330 - cell->r * 30);
-    }
+    }*/
     
        
     TRY_RETHROW;
