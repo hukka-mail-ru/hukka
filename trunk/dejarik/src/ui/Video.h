@@ -1,6 +1,7 @@
 #ifndef VIDEO_H_
 #define VIDEO_H_
 
+#include <vector>
 #include <GL/gl.h>
 #include <GL/glu.h>
 #include <SDL.h>
@@ -42,7 +43,7 @@ public:
     static void drawSprite(const Texture& texture, const RGB& color, float x, float y, float angle);    
     static void drawMaskedSprite(const MaskedTexture& mtex, const RGB& color, float x, float y, float angle);
     
-    static void drawPolygon(const Texture& texture, const RGB& color, float winX, float winY, float angle);
+    static void drawPolygon(const std::vector<float>& x, const std::vector<float>& y, const RGB& color);
 
     static Texture texture_bg; 
     static Texture board;
