@@ -8,6 +8,18 @@
 #include "Macros.h"
 #include "Game.h"
 
+/* TODO
+TEST
+
+Piece 2,1 movement 2
+1) move to 0.0
+2) move to 1,8
+
+piece 2,8 movement 1
+1) move to 1,8 -> KILL
+2) select 1,8 - NO SELECTION! but must be.
+*/
+
 class TestGame: public CppUnit::TestFixture 
 {
    CPPUNIT_TEST_SUITE(TestGame);
