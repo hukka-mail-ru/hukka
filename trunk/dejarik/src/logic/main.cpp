@@ -18,7 +18,7 @@ using namespace std;
 int fd = 0;
 
 bool lockFile()
-{
+{   
     fd = open(LOCKED_FILE, O_CREAT);
     if(fd == -1) 
         return false;
@@ -26,7 +26,7 @@ bool lockFile()
     // Place an exclusive lock
     if(flock(fd, LOCK_EX) == -1) 
         return false;
-    
+
     return true;
 }
 
