@@ -4,15 +4,12 @@
 #define PI 3.14159265
 
 // in pixels
-#define SCREEN_WIDTH  240
-#define SCREEN_HEIGHT 320
+#define CIRCLE_CENTER_X 121
+#define CIRCLE_CENTER_Y 158
 
-#define SCREEN_CENTER_X SCREEN_WIDTH/2 + 1
-#define SCREEN_CENTER_Y SCREEN_HEIGHT/2 - 2
-
-#define CELL_RADIUS_1 27 
-#define CELL_RADIUS_2 76
-#define CELL_RADIUS_3 114
+#define RADIUS_1 27 
+#define RADIUS_2 76
+#define RADIUS_3 114
 
 #define INTERIM_ANGLES 4 // smoothness of the circles
 
@@ -36,22 +33,22 @@ Cell::Cell(unsigned circle, unsigned radius):
         for(unsigned i = 0; i < INTERIM_ANGLES*3; i++)
         {
             float a = PI/6.0*i;
-            x.push_back(SCREEN_CENTER_X + CELL_RADIUS_1 * cos(a));
-            y.push_back(SCREEN_CENTER_Y + CELL_RADIUS_1 * sin(a));
+            x.push_back(CIRCLE_CENTER_X + RADIUS_1 * cos(a));
+            y.push_back(CIRCLE_CENTER_Y + RADIUS_1 * sin(a));
         }
         
-        x_center = SCREEN_CENTER_X;
-        y_center = SCREEN_CENTER_Y;
+        x_center = CIRCLE_CENTER_X;
+        y_center = CIRCLE_CENTER_Y;
     }
     // CIRCLE 1
     else if(c == 1)
     {
-        createSegment(CELL_RADIUS_1, CELL_RADIUS_2);
+        createSegment(RADIUS_1, RADIUS_2);
     }
     // CIRCLE 2
     else if(c == 2)
     {        
-        createSegment(CELL_RADIUS_2, CELL_RADIUS_3);
+        createSegment(RADIUS_2, RADIUS_3);
     }
 }
 
@@ -66,21 +63,21 @@ void Cell::createSegment(float radius1, float radius2)
     float a = a1;
     for(unsigned i = 0; i<=INTERIM_ANGLES; i++) // BBBBBB
     {
-        x.push_back(SCREEN_CENTER_X + radius2 * cos(a));
-        y.push_back(SCREEN_CENTER_Y + radius2 * sin(a));
+        x.push_back(CIRCLE_CENTER_X + radius2 * cos(a));
+        y.push_back(CIRCLE_CENTER_Y + radius2 * sin(a));
         a += interim;
     }
 
     for(unsigned i = 0; i<=INTERIM_ANGLES; i++) // DDDDDD
     {            
         a -= interim;
-        x.push_back(SCREEN_CENTER_X + radius1 * cos(a));
-        y.push_back(SCREEN_CENTER_Y + radius1 * sin(a));
+        x.push_back(CIRCLE_CENTER_X + radius1 * cos(a));
+        y.push_back(CIRCLE_CENTER_Y + radius1 * sin(a));
     }
     
     // define center
-    x_center = SCREEN_CENTER_X + (radius2 + radius1)/2 * cos((a2 + a1)/2);
-    y_center = SCREEN_CENTER_Y + (radius2 + radius1)/2 * sin((a2 + a1)/2);
+    x_center = CIRCLE_CENTER_X + (radius2 + radius1)/2 * cos((a2 + a1)/2);
+    y_center = CIRCLE_CENTER_Y + (radius2 + radius1)/2 * sin((a2 + a1)/2);
     
     
 }
