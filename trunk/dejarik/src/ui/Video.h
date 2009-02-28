@@ -23,10 +23,10 @@ struct MaskedTexture
 
 struct RGB
 {
-    RGB(unsigned r, unsigned g, unsigned b): r(r), g(g), b(b) {}
-    unsigned r;
-    unsigned g;
-    unsigned b;
+    RGB(float r, float g, float b): r(r), g(g), b(b) {}
+    float r;
+    float g;
+    float b;
 };
 
 

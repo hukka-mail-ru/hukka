@@ -98,7 +98,7 @@ void UI::drawCell(const CellPtr& cell, bool clicked)
     switch(cell->selected)
     {
         case SEL_CLICKED:         color = RGB(0,0,1);  if(!clicked) return; break;
-        case SEL_POSSIBLE_MOVE:   color = RGB(1,0,0);  if(clicked) return; break;
+        case SEL_POSSIBLE_MOVE:   color = RGB(0.2, 1, 0.2);  if(clicked) return; break;
         case SEL_POSSIBLE_TARGET: color = RGB(1,0,0);  if(clicked) return; break;
         case SEL_POSSIBLE_PUSH:   color = RGB(1,0,1);  if(clicked) return; break;
         case SEL_NONE:            return;
@@ -107,8 +107,8 @@ void UI::drawCell(const CellPtr& cell, bool clicked)
     
     Video::drawPolygon(cell->x, cell->y, color, 0.5);
     
-    if(cell->c == 0) 
-     Video::drawShape(cell->x, cell->y, RGB(0.5,0.5,0.5), 2);
+  //  if(cell->c == 0) 
+ //    Video::drawShape(cell->x, cell->y, color, 1);
     
        
     TRY_RETHROW;
