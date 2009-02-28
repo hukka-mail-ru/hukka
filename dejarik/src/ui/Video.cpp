@@ -259,7 +259,7 @@ void Video::drawBackground()
 }
 
 
-void Video::drawShape(const vector<float>& xWin, const vector<float>& yWin, const RGB& color)
+void Video::drawShape(const vector<float>& xWin, const vector<float>& yWin, const RGB& color, float width)
 {
     TRY_BEGINS;
     
@@ -279,7 +279,7 @@ void Video::drawShape(const vector<float>& xWin, const vector<float>& yWin, cons
     
     
     glColor3f(color.r, color.g, color.b);
-    glLineWidth(2.0);
+    glLineWidth(width);
     
         glBegin(GL_LINE_LOOP);
 
@@ -295,7 +295,7 @@ void Video::drawShape(const vector<float>& xWin, const vector<float>& yWin, cons
     TRY_RETHROW;
 }
 
-void Video::drawPolygon(const vector<float>& xWin, const vector<float>& yWin, const RGB& color)
+void Video::drawPolygon(const vector<float>& xWin, const vector<float>& yWin, const RGB& color, float opacity)
 {
     TRY_BEGINS;
     
@@ -318,7 +318,7 @@ void Video::drawPolygon(const vector<float>& xWin, const vector<float>& yWin, co
     glEnable( GL_BLEND );   
     glDisable( GL_DEPTH_TEST );
     glBlendFunc(GL_SRC_ALPHA, GL_ONE);
-    glColor4f(color.r, color.g, color.b, 0.2f);
+    glColor4f(color.r, color.g, color.b, opacity);
         
         glBegin(GL_POLYGON);
 
