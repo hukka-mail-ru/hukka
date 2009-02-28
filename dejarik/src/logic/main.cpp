@@ -23,8 +23,7 @@ bool lockFile()
     if(fd == -1) 
         return false;
     
-    // Place an exclusive lock
-    if(flock(fd, LOCK_EX) == -1) 
+    if(flock(fd, LOCK_EX | LOCK_NB) == -1) 
         return false;
 
     return true;
