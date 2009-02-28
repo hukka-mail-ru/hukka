@@ -317,7 +317,9 @@ void Video::drawPolygon(const vector<float>& xWin, const vector<float>& yWin, co
     
     glEnable( GL_BLEND );   
     glDisable( GL_DEPTH_TEST );
-    glBlendFunc(GL_SRC_ALPHA, GL_ONE);
+   // glBlendFunc(GL_SRC_ALPHA, GL_ONE);
+    glBlendFunc(GL_SRC_ALPHA,GL_ONE_MINUS_SRC_ALPHA); 
+    
     glColor4f(color.r, color.g, color.b, opacity);
         
         glBegin(GL_POLYGON);
