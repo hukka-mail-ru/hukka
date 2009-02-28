@@ -108,7 +108,7 @@ void UI::drawCell(const CellPtr& cell, bool clicked)
     Video::drawPolygon(cell->x, cell->y, color, 0.5);
     
     if(cell->c == 0) 
-     Video::drawShape(cell->x, cell->y, color, 1);
+     Video::drawShape(cell->x, cell->y, RGB(0.5,0.5,0.5), 2);
     
        
     TRY_RETHROW;
