@@ -94,6 +94,7 @@ void UI::drawCell(const CellPtr& cell, bool clicked)
     TRY_BEGINS;
     
     RGB color = RGB(1,1,1);
+    
 
     switch(cell->selected)
     {
@@ -108,7 +109,7 @@ void UI::drawCell(const CellPtr& cell, bool clicked)
     Video::drawPolygon(cell->x, cell->y, color, 0.5);
     
     if(cell->c == 0) 
-     Video::drawShape(cell->x, cell->y, color, 1);
+     Video::drawShape(cell->x, cell->y, RGB(0,0,0), 1);
     
        
     TRY_RETHROW;
@@ -126,12 +127,14 @@ void UI::drawBoard()
     vector<CellPtr> cells;
     mGame->getBoard()->getCells(cells);
     
+    // draw all but clicked cell
     for(unsigned i = 0; i < cells.size(); i++)
     {
         drawCell(cells[i], false);
         drawPiece(cells[i]);
     }
     
+    // draw clicked cell
     for(unsigned i = 0; i < cells.size(); i++)
     {
         drawCell(cells[i], true);
