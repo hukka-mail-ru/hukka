@@ -43,8 +43,11 @@ public:
     static void drawSprite(const Texture& texture, const RGB& color, float x, float y, float angle);    
     static void drawMaskedSprite(const MaskedTexture& mtex, const RGB& color, float x, float y, float angle);
     
-    static void drawPolygon(const std::vector<float>& x, const std::vector<float>& y, const RGB& color);
-    static void drawShape(const std::vector<float>& xWin, const std::vector<float>& yWin, const RGB& color);
+    static void drawPolygon(const std::vector<float>& x, const std::vector<float>& y, 
+            const RGB& color, float opacity);
+    
+    static void drawShape(const std::vector<float>& xWin, const std::vector<float>& yWin, 
+            const RGB& color, float width);
     
     static Texture texture_bg; 
     static Texture board;

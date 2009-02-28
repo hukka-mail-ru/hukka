@@ -77,32 +77,19 @@ void UI::drawPiece(const CellPtr& cell)
     
     if(!cell->piece)
         return;
-    
-    
-    Video::drawSprite(Video::piece, RGB(1,1,1), cell->x_center, cell->y_center, 0);
-    /*
-    
+
     if(cell->piece->player.get() == mGame->getPlayer1())
-        glColor3f(0.5f ,0.5f, 1.0f); // blue
+        Video::drawSprite(Video::piece, RGB(1,1,1), cell->x_center, cell->y_center, 0);
     else
-        glColor3f(1.0f ,0.0f, 1.0f); // pink
+        Video::drawSprite(Video::piece, RGB(1,0,0), cell->x_center, cell->y_center, 0);
+
     
-    glBegin( GL_POLYGON ); 
-         float x = cell->x_center;
-         float y = cell->y_center;
-         float w = 0.1;
-         glVertex3f(x+w, y, 0);
-         glVertex3f(x, y+w, 0);
-         glVertex3f(x-w, y, 0);
-         glVertex3f(x, y-w, 0);
-    glEnd();
-    */
     TRY_RETHROW;
 }
 
 
 
-void UI::drawCell(const CellPtr& cell) 
+void UI::drawCell(const CellPtr& cell, bool clicked) 
 {
     TRY_BEGINS;
     
@@ -110,30 +97,18 @@ void UI::drawCell(const CellPtr& cell)
 
     switch(cell->selected)
     {
-        case SEL_CLICKED:         color = RGB(0,0,1);  break;
-        case SEL_POSSIBLE_MOVE:   color = RGB(0,1,0); break;
-        case SEL_POSSIBLE_TARGET: color = RGB(1,0.5,0.5);   break;
-        case SEL_POSSIBLE_PUSH:   color = RGB(1,0,0);   break;
+        case SEL_CLICKED:         color = RGB(0,0,1);  if(!clicked) return; break;
+        case SEL_POSSIBLE_MOVE:   color = RGB(1,0,0);  if(clicked) return; break;
+        case SEL_POSSIBLE_TARGET: color = RGB(1,0,0);  if(clicked) return; break;
+        case SEL_POSSIBLE_PUSH:   color = RGB(1,0,1);  if(clicked) return; break;
         case SEL_NONE:            return;
     }
 
     
-    Video::drawPolygon(cell->x, cell->y, color);
-    Video::drawShape(cell->x, cell->y, color);
-    /*
-    if(cell->c == 0)
-    {
-        //Video::drawMaskedSprite(Video::segment0, color, 92, 132, 0);
-        Video::drawPolygon(cell->x, cell->y, color);
-    }
-    else if(cell->c == 1)
-    {
-        Video::drawMaskedSprite(Video::segment1, color, 143, 120, 330 - cell->r * 30);
-    }
-    else if(cell->c == 2)
-    {
-        Video::drawMaskedSprite(Video::segment2, color, 185, 102, 330 - cell->r * 30);
-    }*/
+    Video::drawPolygon(cell->x, cell->y, color, 0.5);
+    
+    if(cell->c == 0) 
+     Video::drawShape(cell->x, cell->y, color, 1);
     
        
     TRY_RETHROW;
@@ -153,9 +128,13 @@ void UI::drawBoard()
     
     for(unsigned i = 0; i < cells.size(); i++)
     {
-        drawCell(cells[i]);
+        drawCell(cells[i], false);
         drawPiece(cells[i]);
-
+    }
+    
+    for(unsigned i = 0; i < cells.size(); i++)
+    {
+        drawCell(cells[i], true);
     }
     
      

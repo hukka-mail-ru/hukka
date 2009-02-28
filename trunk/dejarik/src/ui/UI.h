@@ -36,7 +36,7 @@ private:
     
     bool drawAll();
     void drawBoard();
-    void drawCell(const CellPtr& cell);
+    void drawCell(const CellPtr& cell, bool clicked);
     void drawPiece(const CellPtr& cell);
     void drawActivePlayer();
     
