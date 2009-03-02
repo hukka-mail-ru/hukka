@@ -16,7 +16,7 @@ class UI
 {
 public:
     
-    UI(const GamePtr& game): mGame(game), mQuit(false)
+    UI(const GamePtr& game): mGame(game), mQuit(false), mMoving(false)
     {}
     
     void startup();
@@ -52,6 +52,7 @@ private:
     
     GamePtr mGame; 
     bool mQuit;
+    bool mMoving; // piece moving in progress
     
 
 };

@@ -114,7 +114,7 @@ void Player::movePiece(const CellPtr& cell)
 {
     TRY_BEGINS;
        
-    vector<CellPtr> steps;
+    vector<CellPtr> steps;       
     mBoard->getMoveSteps(cell, steps);
     
     for(unsigned i = 0; i<steps.size(); i++)
