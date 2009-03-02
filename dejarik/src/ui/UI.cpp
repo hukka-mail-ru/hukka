@@ -236,7 +236,8 @@ void UI::onMouseClick(const SDL_Event& event)
             //    cout << "piece " << cell->piece->name << " move " <<cell->piece->moveRating << endl; 
             
             BattleResult res = mGame->onCellClick(cell);
-            
+           
+            // log -------------------------
             switch(res)
             {
                 case RES_NO_BATTLE: cout << "RES_NO_BATTLE" << endl; break;
@@ -246,6 +247,7 @@ void UI::onMouseClick(const SDL_Event& event)
                 case RES_COUNTER_PUSH:cout << "RES_COUNTER_PUSH" << endl;break;
                 default: break;
             }
+            //----------------------------
             
             PlayerPtr vinner;
             if(mGame->checkVictory(vinner))
