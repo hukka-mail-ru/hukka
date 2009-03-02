@@ -96,7 +96,7 @@ void UI::drawPiece(const CellPtr& cell)
 
     Video::drawSprite(cell->piece->name, color, 
                       cell->x_center - x_offset, 
-                      cell->y_center - y_offset, (3 - cell->r) * 30 - 15);
+                      cell->y_center - y_offset, (3.0 - (float)cell->r) * 30.0 - 15.0);
 
     
     TRY_RETHROW;
