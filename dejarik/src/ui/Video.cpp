@@ -9,14 +9,7 @@ using namespace std;
 #define SCREEN_HEIGHT 320
 #define SCREEN_BPP     16
 
-
-Texture Video::texture_bg; /* Storage For One Texture ( NEW ) */
-Texture Video::board; /* Storage For One Texture ( NEW ) */
-Texture Video::piece; /* Storage For One Texture ( NEW ) */
-
-MaskedTexture Video::segment0;
-MaskedTexture Video::segment1;
-MaskedTexture Video::segment2;
+std::map<std::string, ImagePtr> Video::images;
 
 void Video::startup()
 {
@@ -85,11 +78,8 @@ void Video::initGL()
 {
     TRY_BEGINS;
         
-    /* Load in the texture */
-    loadAllTextures();
-
-    /* Enable Texture Mapping ( NEW ) */
-   // glEnable( GL_TEXTURE_2D );
+    /* Load all the textures */
+    createImages();
     
     /* Enable smooth shading */
     glShadeModel( GL_SMOOTH );
@@ -168,7 +158,7 @@ void Video::winToGL(float winX, float winY, GLdouble& x, GLdouble& y, GLdouble& 
 
 
 
-void Video::loadTexture(Texture& texture, const char* path)
+void Video::loadTexture(Texture& texture, const std::string& path)
 {
     TRY_BEGINS;
     
@@ -179,7 +169,7 @@ void Video::loadTexture(Texture& texture, const char* path)
     SDL_Surface* image; 
 
     /* Load The Bitmap, Check For Errors, If Bitmap's Not Found Quit */
-    if ((image = SDL_LoadBMP(path)))
+    if ((image = SDL_LoadBMP(path.c_str())))
         {
 
         /* Set the status to true */
@@ -217,23 +207,41 @@ void Video::loadTexture(Texture& texture, const char* path)
     TRY_RETHROW;
 }
 
-void Video::loadAllTextures()
+
+
+
+void Video::createImage(const std::string& name, ImageType type)
+{
+    ImagePtr image (new Image); 
+    image->type = type;
+    
+    ostringstream fullname;
+    fullname << "img/" << name << ".bmp";
+    
+    loadTexture(image->texture, fullname.str());  
+    
+    if(type == IT_MASKED)
+    {
+        ostringstream fullmask;
+        fullmask << "img/" << name << "_mask.bmp";
+        loadTexture(image->mask, fullmask.str());
+    }
+    
+    images[name] = image;  
+}
+
+void Video::createImages()
 {
     TRY_BEGINS;
     
-    Video::loadTexture(segment0.texture, "img/segment0.bmp");    
-    Video::loadTexture(segment0.mask, "img/segment0_mask.bmp");
+    createImage("segment0", IT_MASKED);
+    createImage("segment", IT_MASKED);
+    createImage("segment2", IT_MASKED);
     
-    Video::loadTexture(segment1.texture, "img/segment.bmp");    
-    Video::loadTexture(segment1.mask, "img/segment_mask.bmp");
-    
-    Video::loadTexture(segment2.texture, "img/segment2.bmp");    
-    Video::loadTexture(segment2.mask, "img/segment2_mask.bmp");
-    
-    Video::loadTexture(board, "img/board.bmp");
-    Video::loadTexture(piece, "img/piece.bmp");
-    Video::loadTexture(texture_bg, "img/bg.bmp");
-    
+    createImage("board", IT_SINGLE);
+    createImage("piece", IT_SINGLE);
+    createImage("bg", IT_SINGLE);
+
     TRY_RETHROW;
 }
 
@@ -245,7 +253,7 @@ void Video::drawBackground()
     float y = -40; 
     float w = 80; 
     float h = 80;
-    glBindTexture( GL_TEXTURE_2D, texture_bg.id);
+    glBindTexture( GL_TEXTURE_2D, images["bg"]->texture.id);
 
     glBegin(GL_POLYGON);
       glTexCoord2f( 0, 1 ); glVertex3f(  x + 0,  y + 0, 0.0 );
@@ -255,7 +263,6 @@ void Video::drawBackground()
     glEnd( ); 
  
     TRY_RETHROW;
-  //  Video::drawSprite(Video::texture_bg, -5, -5, 10, 10); // just a big white sprite 
 }
 
 
@@ -338,7 +345,43 @@ void Video::drawPolygon(const vector<float>& xWin, const vector<float>& yWin, co
     TRY_RETHROW;
 }
 
-void Video::drawSprite(const Texture& texture, const RGB& color, float winX, float winY, float angle)
+void Video::drawSprite(const std::string& imageName, const RGB& color, float winX, float winY, float angle)
+{
+    TRY_BEGINS;
+    
+    if(!images[imageName])
+    {
+        ostringstream os;
+        os << "Can't find name " << imageName;
+        throw os.str(); 
+    }
+    
+    if(images[imageName]->type == IT_SINGLE)
+    {
+        drawImage(images[imageName]->texture, color, winX, winY, angle);
+    }
+    else if(images[imageName]->type == IT_MASKED)
+    {
+        glEnable( GL_BLEND );   
+        glDisable( GL_DEPTH_TEST );
+        glBlendFunc( GL_DST_COLOR, GL_ZERO );
+        
+        drawImage(images[imageName]->mask, RGB(1,1,1), winX, winY, angle);
+
+        glBlendFunc( GL_ONE, GL_ONE );
+
+        
+        drawImage(images[imageName]->texture, color, winX, winY, angle);
+        
+        glEnable( GL_DEPTH_TEST ); /* Enable Depth Testing */
+        glDisable( GL_BLEND );     /* Disable Blending     */
+    }
+    
+    TRY_RETHROW;
+}
+
+
+void Video::drawImage(const Texture& texture, const RGB& color, float winX, float winY, float angle)
 {
     TRY_BEGINS;
    
@@ -376,23 +419,3 @@ void Video::drawSprite(const Texture& texture, const RGB& color, float winX, flo
 }
 
 
-void Video::drawMaskedSprite(const MaskedTexture& mtex, const RGB& color, float x, float y, float angle)
-{
-    TRY_BEGINS;
-    
-    glEnable( GL_BLEND );   
-    glDisable( GL_DEPTH_TEST );
-    glBlendFunc( GL_DST_COLOR, GL_ZERO );
-    
-    drawSprite(mtex.mask, RGB(1,1,1), x, y, angle);
-
-    glBlendFunc( GL_ONE, GL_ONE );
-
-    
-    drawSprite(mtex.texture, color, x, y, angle);
-    
-    glEnable( GL_DEPTH_TEST ); /* Enable Depth Testing */
-    glDisable( GL_BLEND );     /* Disable Blending     */
-
-    TRY_RETHROW;
-}
