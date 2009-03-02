@@ -88,53 +88,46 @@ void UI::drawPiece(const CellPtr& cell)
     if(!cell->piece)
         return;
     
-    const unsigned movesTotal = 10;
-    static unsigned movesLeft = movesTotal;
+    float x_offset = 15; // a half of texture size
+    float y_offset = 15; // a half of texture size
+
+    RGB color = (cell->piece->player.get() == mGame->getPlayer1()) ? RGB(1,1,1) : RGB(1,0,0);
+
+    
+    const unsigned total = 10;
+    static unsigned moves = 0;
     if(cell->piece->cellBeforeMoving != cell) // moving needed
     {
-        if(movesLeft > 0)
-        {
-            float x_offset = 15; // a half of texture size
-            float y_offset = 15; // a half of texture size
+        if(moves < total)
+        {       
+            float x_start = cell->piece->cellBeforeMoving->x_center - x_offset;
+            float y_start = cell->piece->cellBeforeMoving->y_center - y_offset;
             
-        
-            RGB color = (cell->piece->player.get() == mGame->getPlayer1()) ? RGB(1,1,1) : RGB(1,0,0);
-        
-            float x_finish = cell->piece->cellBeforeMoving->x_center - x_offset;
-            float y_finish = cell->piece->cellBeforeMoving->y_center - y_offset;
-            
-            float x_start = cell->x_center - x_offset;
-            float y_start = cell->y_center - y_offset;
+            float x_finish = cell->x_center - x_offset;
+            float y_finish = cell->y_center - y_offset;
             
             
             Video::drawSprite(cell->piece->name, color, 
-                              x_start + (x_finish - x_start)/movesTotal*movesLeft, 
-                              y_start + (y_finish - y_start)/movesTotal*movesLeft, 
+                              x_start + (x_finish - x_start)/total*moves, 
+                              y_start + (y_finish - y_start)/total*moves, 
                               (3.0 - (float)cell->r) * 30.0 - 15.0); // a piece must look at the center  
         
-            movesLeft--;
-            sleep(1); // TODO move it to platform-dependent code.
+            moves++;
+            SDL_Delay(10); 
         }
         else
         {
             cell->piece->cellBeforeMoving = cell;
             mMoving = false;
-            movesLeft = movesTotal;
+            moves = 0;
         }
     }    
     else // just draw a piece
     {
-        float x_offset = 15; // a half of texture size
-        float y_offset = 15; // a half of texture size
-        
-    
-        RGB color = (cell->piece->player.get() == mGame->getPlayer1()) ? RGB(1,1,1) : RGB(1,0,0);
-    
         Video::drawSprite(cell->piece->name, color, 
                           cell->x_center - x_offset, 
                           cell->y_center - y_offset, 
                           (3.0 - (float)cell->r) * 30.0 - 15.0); // a piece must look at the center  
-        
     }
     TRY_RETHROW;
 }
@@ -313,11 +306,10 @@ void UI::handleEvents()
     SDL_Event event;
     while ( !mQuit )
     {
-        drawAll();
         /* handle the events in the queue */
         while ( SDL_PollEvent( &event ) )
         {
-            
+            drawAll();
             
             // MOUSE EVENT
             if( !mMoving && event.type == SDL_MOUSEBUTTONDOWN ) 
