@@ -77,11 +77,13 @@ void UI::drawPiece(const CellPtr& cell)
     
     if(!cell->piece)
         return;
+    
+    
 
     if(cell->piece->player.get() == mGame->getPlayer1())
-        Video::drawSprite("piece", RGB(1,1,1), cell->x_center, cell->y_center, 0);
+        Video::drawSprite(cell->piece->name, RGB(1,1,1), cell->x_center - 15, cell->y_center - 15, 0);
     else
-        Video::drawSprite("piece", RGB(1,0,0), cell->x_center, cell->y_center, 0);
+        Video::drawSprite(cell->piece->name, RGB(1,0,0), cell->x_center - 15, cell->y_center - 15, 0);
 
     
     TRY_RETHROW;
