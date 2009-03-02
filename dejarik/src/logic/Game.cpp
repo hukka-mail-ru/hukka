@@ -45,7 +45,9 @@ void Game::startup()
         PlayerPtr player = (i < pieces_num/2) ? mPlayer1 : mPlayer2; 
         
         mBoard->placePiece(pieces[rnd], cells[i]);               
-        mBoard->distribute(pieces[rnd], player);        
+        mBoard->distribute(pieces[rnd], player);  
+        
+        pieces[rnd]->cellBeforeMoving = cells[i]; // zeroize cellBeforeMoving
         
         pieces.erase(remove(pieces.begin(), pieces.end(), pieces[rnd]), pieces.end()); 
     }
@@ -127,6 +129,8 @@ BattleResult Game::onCellClick(const CellPtr& cell)
             mActivePlayer->setActivePiece(cell->piece);
             mBoard->definePossibleClicks(mActivePlayer);
             mBoard->selectClickedCell(cell);
+            
+            cell->piece->cellBeforeMoving = cell;
         }
         
         // clicked on enemy's piece

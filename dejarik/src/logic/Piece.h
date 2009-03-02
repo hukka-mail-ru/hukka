@@ -27,7 +27,8 @@ public:
     
     std::string name;
     PlayerPtr player;
-    CellPtr cell;    
+    CellPtr cell;   
+    CellPtr cellBeforeMoving;     
     
     unsigned attackRating;
     unsigned defenceRating;
