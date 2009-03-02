@@ -113,12 +113,13 @@ void UI::drawPiece(const CellPtr& cell)
                               (3.0 - (float)cell->r) * 30.0 - 15.0); // a piece must look at the center  
         
             movesLeft--;
-            sleep(1);
+            sleep(1); // TODO move it to platform-dependent code.
         }
         else
         {
             cell->piece->cellBeforeMoving = cell;
             mMoving = false;
+            movesLeft = movesTotal;
         }
     }    
     else // just draw a piece
