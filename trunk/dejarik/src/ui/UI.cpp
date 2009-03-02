@@ -90,14 +90,11 @@ void UI::drawPiece(const CellPtr& cell)
     float y_offset = 15; // a half of texture size
     
 
-    if(cell->piece->player.get() == mGame->getPlayer1())
-        Video::drawSprite(cell->piece->name, RGB(1,1,1), 
-                          cell->x_center - x_offset, 
-                          cell->y_center - y_offset, 0);
-    else
-        Video::drawSprite(cell->piece->name, RGB(1,0,0), 
-                          cell->x_center - x_offset, 
-                          cell->y_center - y_offset, 0);
+    RGB color = (cell->piece->player.get() == mGame->getPlayer1()) ? RGB(1,1,1) : RGB(1,0,0);
+
+    Video::drawSprite(cell->piece->name, color, 
+                      cell->x_center - x_offset, 
+                      cell->y_center - y_offset, 0);
 
     
     TRY_RETHROW;

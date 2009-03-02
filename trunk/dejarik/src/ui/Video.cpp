@@ -307,7 +307,9 @@ void Video::drawShape(const vector<float>& xWin, const vector<float>& yWin, cons
     TRY_RETHROW;
 }
 
-void Video::drawPolygon(const vector<float>& xWin, const vector<float>& yWin, const RGB& color, float opacity)
+void Video::drawPolygon(
+        const vector<float>& xWin, const vector<float>& yWin, 
+        const RGB& color, float opacity)
 {
     TRY_BEGINS;
     
@@ -350,7 +352,9 @@ void Video::drawPolygon(const vector<float>& xWin, const vector<float>& yWin, co
     TRY_RETHROW;
 }
 
-void Video::drawSprite(const std::string& imageName, const RGB& color, float winX, float winY, float angle)
+void Video::drawSprite(
+        const std::string& imageName, const RGB& color, 
+        float winX, float winY, float angle)
 {
     TRY_BEGINS;
     
@@ -403,6 +407,8 @@ void Video::drawImage(const Texture& texture, const RGB& color, float winX, floa
     
     glEnable( GL_TEXTURE_2D );
     glPushMatrix();
+    
+       // glLoadIdentity();
     
         glBindTexture( GL_TEXTURE_2D, texture.id);
         glColor3f(color.r, color.g, color.b); // blue
