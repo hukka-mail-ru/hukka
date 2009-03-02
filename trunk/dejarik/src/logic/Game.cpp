@@ -95,8 +95,8 @@ BattleResult Game::onCellClick(const CellPtr& cell)
 {
     TRY_BEGINS;
     
-    BattleResult res = RES_NO_BATTLE; 
-    static BattleResult prevBattleResult = RES_NO_BATTLE;
+    BattleResult res = RES_CLICK; 
+    static BattleResult prevBattleResult = RES_CLICK;
     mBoard->deselectAll();
     
     if(!mBoard->isClickValid(cell))
@@ -110,6 +110,7 @@ BattleResult Game::onCellClick(const CellPtr& cell)
         // common move
         mActivePlayer->movePiece(cell);
         mActivePlayer->decrementLeftMoves();
+        res = RES_MOVE;
         
         // push: we need to redefine where our pieces are.
         if(prevBattleResult == RES_PUSH)
