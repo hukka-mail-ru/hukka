@@ -409,8 +409,6 @@ void Video::drawImage(const Texture& texture, const RGB& color, float winX, floa
     glPushMatrix();
     glEnable( GL_TEXTURE_2D );
     
-      //  glLoadIdentity();
-    
         glBindTexture( GL_TEXTURE_2D, texture.id);
         glColor3f(color.r, color.g, color.b); // blue
         
