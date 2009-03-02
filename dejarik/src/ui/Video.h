@@ -45,7 +45,7 @@ class Video
 {
     
 public:
-    static void startup();
+    static void startup(const std::vector<std::string>& pieceNames);
     static void stop();
     
     
@@ -62,7 +62,7 @@ public:
 private:
     
     static void initGL();
-    static void createImages();
+    static void createImages(const std::vector<std::string>& names);
     static void createImage(const std::string& name, ImageType type);
 
     static void loadTexture(Texture& texture, const std::string& path);

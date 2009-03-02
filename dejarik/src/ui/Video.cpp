@@ -11,7 +11,7 @@ using namespace std;
 
 std::map<std::string, ImagePtr> Video::images;
 
-void Video::startup()
+void Video::startup(const std::vector<std::string>& pieceNames)
 {
     TRY_BEGINS;
     
@@ -56,6 +56,9 @@ void Video::startup()
         throw ("Video mode set failed");
     }
 
+    /* Load all the textures */
+    createImages(pieceNames);
+    
     /* initialize OpenGL */
     initGL();
 
@@ -77,10 +80,7 @@ void Video::stop()
 void Video::initGL()
 {
     TRY_BEGINS;
-        
-    /* Load all the textures */
-    createImages();
-    
+
     /* Enable smooth shading */
     glShadeModel( GL_SMOOTH );
 
@@ -230,23 +230,19 @@ void Video::createImage(const std::string& name, ImageType type)
     images[name] = image;  
 }
 
-void Video::createImages()
+void Video::createImages(const std::vector<std::string>& names)
 {
     TRY_BEGINS;
     
+    for(unsigned i =0; i<names.size(); ++i)
+    {
+        createImage(names[i], IT_MASKED);
+    }
+
     createImage("segment0", IT_MASKED);
     createImage("segment", IT_MASKED);
     createImage("segment2", IT_MASKED);
-    
-    createImage("Ghhhk", IT_MASKED);
-    createImage("Houjix", IT_MASKED);
-    createImage("Klorslug", IT_MASKED);
-    createImage("Molator", IT_MASKED);
-    createImage("Monnok", IT_MASKED);
-    createImage("Ngok", IT_MASKED);
-    createImage("Sarvip", IT_MASKED);
-    createImage("Strider", IT_MASKED);
-    
+        
     createImage("board", IT_SINGLE);
     createImage("piece", IT_SINGLE);
     createImage("bg", IT_SINGLE);
