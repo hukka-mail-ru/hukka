@@ -405,14 +405,18 @@ void Video::drawImage(const Texture& texture, const RGB& color, float winX, floa
     GLdouble z2 = 0;
     Video::winToGL(winX + texture.w, winY + texture.h, x2, y2, z2);
     
-    glEnable( GL_TEXTURE_2D );
-    glPushMatrix();
     
-       // glLoadIdentity();
+    glPushMatrix();
+    glEnable( GL_TEXTURE_2D );
+    
+      //  glLoadIdentity();
     
         glBindTexture( GL_TEXTURE_2D, texture.id);
         glColor3f(color.r, color.g, color.b); // blue
-        glRotatef(angle ,0, 0, 1); // rotate
+        
+        glTranslatef((x1+x2)/2, (y1+y2)/2, 0); // rotate [move to the coordinate center]
+        glRotatef(angle ,0, 0, 1); // rotation
+        glTranslatef(-(x1+x2)/2, -(y1+y2)/2, 0); // move back to the old position
         
         
         glBegin(GL_POLYGON);
@@ -423,8 +427,9 @@ void Video::drawImage(const Texture& texture, const RGB& color, float winX, floa
         glEnd( ); 
         
         glColor3f(1, 1, 1); // reset
-    glPopMatrix();
     glDisable( GL_TEXTURE_2D );
+    glPopMatrix();
+    
     
     TRY_RETHROW;
 }

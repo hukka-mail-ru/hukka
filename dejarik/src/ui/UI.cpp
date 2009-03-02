@@ -67,6 +67,8 @@ bool UI::isCellClicked(float x, float y, CellPtr& cell)
                 cout << "cell - " << k << " : " <<  cells[k]->x[i] << " : " << cells[k]->y[i] << endl;
             }
             
+            cout << "cell " << cell->c <<  "." << cell->r << endl; 
+            
             return true;
         }
     }
@@ -94,7 +96,7 @@ void UI::drawPiece(const CellPtr& cell)
 
     Video::drawSprite(cell->piece->name, color, 
                       cell->x_center - x_offset, 
-                      cell->y_center - y_offset, 0);
+                      cell->y_center - y_offset, (3 - cell->r) * 30 - 15);
 
     
     TRY_RETHROW;
