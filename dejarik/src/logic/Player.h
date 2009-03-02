@@ -30,7 +30,8 @@ enum TurnStage
 
 enum BattleResult
 {
-    RES_NO_BATTLE,
+    RES_CLICK,
+    RES_MOVE,
     RES_KILL,
     RES_PUSH,
     RES_COUNTER_KILL,
