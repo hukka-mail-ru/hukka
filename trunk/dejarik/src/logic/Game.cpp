@@ -24,8 +24,8 @@ void Game::startup()
     pieces.push_back(PiecePtr(new Piece("Ghhhk",      4, 3, 2)));
     pieces.push_back(PiecePtr(new Piece("Houjix",     4, 4, 1)));
     pieces.push_back(PiecePtr(new Piece("Strider",    2, 7, 3)));
-    pieces.push_back(PiecePtr(new Piece("Ng'ok",      3, 8, 1)));
-    pieces.push_back(PiecePtr(new Piece("K'lor'slug", 7, 3, 2)));
+    pieces.push_back(PiecePtr(new Piece("Ngok",       3, 8, 1)));
+    pieces.push_back(PiecePtr(new Piece("Klorslug",   7, 3, 2)));
     pieces.push_back(PiecePtr(new Piece("Molator",    8, 2, 2)));
     
     vector<CellPtr> cells;
