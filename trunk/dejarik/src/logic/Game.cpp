@@ -28,6 +28,8 @@ void Game::startup()
     pieces.push_back(PiecePtr(new Piece("Klorslug",   7, 3, 2)));
     pieces.push_back(PiecePtr(new Piece("Molator",    8, 2, 2)));
     
+    mPieces = pieces; // memorize
+    
     vector<CellPtr> cells;
     mBoard->getInitialCells(cells);  
     const unsigned pieces_num = pieces.size();

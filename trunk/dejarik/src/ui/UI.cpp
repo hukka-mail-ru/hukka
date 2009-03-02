@@ -24,7 +24,15 @@ using namespace std;
 void UI::startup()
 {
     TRY_BEGINS;
-    Video::startup();
+    
+    vector<PiecePtr> pieces = mGame->getPieces();
+    vector<string> names;
+    for(unsigned i=0; i<pieces.size(); i++)
+    {
+         names.push_back(pieces[i]->name);
+    }
+        
+    Video::startup(names);
     TRY_RETHROW;
 }
 
@@ -78,12 +86,18 @@ void UI::drawPiece(const CellPtr& cell)
     if(!cell->piece)
         return;
     
+    float x_offset = 15; // a half of texture size
+    float y_offset = 15; // a half of texture size
     
 
     if(cell->piece->player.get() == mGame->getPlayer1())
-        Video::drawSprite(cell->piece->name, RGB(1,1,1), cell->x_center - 15, cell->y_center - 15, 0);
+        Video::drawSprite(cell->piece->name, RGB(1,1,1), 
+                          cell->x_center - x_offset, 
+                          cell->y_center - y_offset, 0);
     else
-        Video::drawSprite(cell->piece->name, RGB(1,0,0), cell->x_center - 15, cell->y_center - 15, 0);
+        Video::drawSprite(cell->piece->name, RGB(1,0,0), 
+                          cell->x_center - x_offset, 
+                          cell->y_center - y_offset, 0);
 
     
     TRY_RETHROW;
