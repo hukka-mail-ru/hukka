@@ -79,9 +79,9 @@ void UI::drawPiece(const CellPtr& cell)
         return;
 
     if(cell->piece->player.get() == mGame->getPlayer1())
-        Video::drawSprite(Video::piece, RGB(1,1,1), cell->x_center, cell->y_center, 0);
+        Video::drawSprite("piece", RGB(1,1,1), cell->x_center, cell->y_center, 0);
     else
-        Video::drawSprite(Video::piece, RGB(1,0,0), cell->x_center, cell->y_center, 0);
+        Video::drawSprite("piece", RGB(1,0,0), cell->x_center, cell->y_center, 0);
 
     
     TRY_RETHROW;
@@ -121,7 +121,7 @@ void UI::drawBoard()
 {
     TRY_BEGINS;
     
-    Video::drawSprite(Video::board, RGB(1,1,1), 1, 1, 0);
+    Video::drawSprite("board", RGB(1,1,1), 1, 1, 0);
     
     
     vector<CellPtr> cells;
