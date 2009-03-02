@@ -290,8 +290,7 @@ void UI::onMouseClick(const SDL_Event& event)
                 mQuit = true;
                 cout << "GAME OVER. Vinner: " << vinner->getName() << endl;
             }
-            
-            // TODO move if needed
+
         }   
     }   
     
@@ -306,10 +305,13 @@ void UI::handleEvents()
     SDL_Event event;
     while ( !mQuit )
     {
+        drawAll();
+        SDL_Delay(1);
+        
         /* handle the events in the queue */
         while ( SDL_PollEvent( &event ) )
         {
-            drawAll();
+            
             
             // MOUSE EVENT
             if( !mMoving && event.type == SDL_MOUSEBUTTONDOWN ) 
