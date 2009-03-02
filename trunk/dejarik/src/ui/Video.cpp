@@ -238,6 +238,15 @@ void Video::createImages()
     createImage("segment", IT_MASKED);
     createImage("segment2", IT_MASKED);
     
+    createImage("pieces/Ghhhk", IT_MASKED);
+    createImage("pieces/Houjix", IT_MASKED);
+    createImage("pieces/Klorslug", IT_MASKED);
+    createImage("pieces/Molator", IT_MASKED);
+    createImage("pieces/Monnok", IT_MASKED);
+    createImage("pieces/Ngok", IT_MASKED);
+    createImage("pieces/Sarvip", IT_MASKED);
+    createImage("pieces/Strider", IT_MASKED);
+    
     createImage("board", IT_SINGLE);
     createImage("piece", IT_SINGLE);
     createImage("bg", IT_SINGLE);
