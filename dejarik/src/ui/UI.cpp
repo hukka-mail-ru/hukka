@@ -253,6 +253,8 @@ void UI::onMouseClick(const SDL_Event& event)
                 mQuit = true;
                 cout << "GAME OVER. Vinner: " << vinner->getName() << endl;
             }
+            
+            // TODO move if needed
         }   
     }   
     
