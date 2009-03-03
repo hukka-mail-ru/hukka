@@ -87,27 +87,24 @@ void UI::drawPiece(const CellPtr& cell)
     
     if(!cell->piece)
         return;
-    
-    float x_offset = 15; // a half of texture size
-    float y_offset = 15; // a half of texture size
 
     RGB color = (cell->piece->player.get() == mGame->getPlayer1()) ? RGB(1,1,1) : RGB(1,0,0);
 
     
-    const unsigned total = 10;
+    const unsigned total = 10; 
     static unsigned moves = 0;
     if(cell->piece->cellBeforeMoving != cell) // moving needed
     {
         if(moves < total)
         {       
-            float x_start = cell->piece->cellBeforeMoving->x_center - x_offset;
-            float y_start = cell->piece->cellBeforeMoving->y_center - y_offset;
+            float x_start = cell->piece->cellBeforeMoving->x_center; 
+            float y_start = cell->piece->cellBeforeMoving->y_center; 
             
-            float x_finish = cell->x_center - x_offset;
-            float y_finish = cell->y_center - y_offset;
+            float x_finish = cell->x_center; 
+            float y_finish = cell->y_center; 
             
             
-            Video::drawSprite(cell->piece->name, color, 
+            Video::drawSprite(cell->piece->name, color, XY_CENTER,
                               x_start + (x_finish - x_start)/total*moves, 
                               y_start + (y_finish - y_start)/total*moves, 
                               (3.0 - (float)cell->r) * 30.0 - 15.0); // a piece must look at the center  
@@ -124,9 +121,9 @@ void UI::drawPiece(const CellPtr& cell)
     }    
     else // just draw a piece
     {
-        Video::drawSprite(cell->piece->name, color, 
-                          cell->x_center - x_offset, 
-                          cell->y_center - y_offset, 
+        Video::drawSprite(cell->piece->name, color, XY_CENTER,
+                          cell->x_center,
+                          cell->y_center,
                           (3.0 - (float)cell->r) * 30.0 - 15.0); // a piece must look at the center  
     }
     TRY_RETHROW;
@@ -166,7 +163,7 @@ void UI::drawBoard()
 {
     TRY_BEGINS;
     
-    Video::drawSprite("board", RGB(1,1,1), 1, 1, 0);
+    Video::drawSprite("board", RGB(1,1,1), XY_LEFTBOTTOM, 1, 1, 0);
     
     
     vector<CellPtr> cells;
@@ -233,9 +230,7 @@ bool UI::drawAll()
     Video::drawBackground();
     drawBoard();
   //  drawActivePlayer();
-    
-    
-  //  drawSquare();
+
     
     
     /* Draw it to the screen */
@@ -306,7 +301,7 @@ void UI::handleEvents()
     while ( !mQuit )
     {
         drawAll();
-        SDL_Delay(1);
+        SDL_Delay(1); // to prevent too frequent drawings
         
         /* handle the events in the queue */
         while ( SDL_PollEvent( &event ) )
