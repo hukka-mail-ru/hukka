@@ -131,45 +131,34 @@ void UI::drawPiece(const CellPtr& cell)
 
         
         // define angle
-        const float dy = y - CIRCLE_CENTER_Y;
-        if(dy > 0) // lower sector
+        float rotation = 0.0;
+        if(mMoveSteps[step]->c > mMoveSteps[step+1]->c) // look to the center
         {
-            if(mMoveSteps[step]->c > mMoveSteps[step+1]->c) // look to the center
-            {
-                cell->piece->angle = getNormalAngle(x, y);
-            }
-            else if(mMoveSteps[step]->c < mMoveSteps[step+1]->c) // look to the outer space
-            {
-                cell->piece->angle = getNormalAngle(x, y) + 180.0;
-            }
-            else if(mMoveSteps[step]->r < mMoveSteps[step+1]->r) // look left
-            {
-                cell->piece->angle = getNormalAngle(x, y) + 90.0;
-            }
-            else if(mMoveSteps[step]->r > mMoveSteps[step+1]->r) // look right
-            {
-                cell->piece->angle = getNormalAngle(x, y) - 90.0;
-            }
+            rotation = 0;
         }
-        else if(dy < 0) // upper sector
+        else if(mMoveSteps[step]->c < mMoveSteps[step+1]->c) // look to the outer space
         {
-            if(mMoveSteps[step]->c > mMoveSteps[step+1]->c) // look to the center
-            {
-                cell->piece->angle = getNormalAngle(x, y) + 180.0;
-            }
-            else if(mMoveSteps[step]->c < mMoveSteps[step+1]->c) // look to the outer space
-            {
-                cell->piece->angle = getNormalAngle(x, y);
-            }
-            else if(mMoveSteps[step]->r < mMoveSteps[step+1]->r) // look left
-            {
-                cell->piece->angle = getNormalAngle(x, y) - 90.0;
-            }
-            else if(mMoveSteps[step]->r > mMoveSteps[step+1]->r) // look right
-            {
-                cell->piece->angle = getNormalAngle(x, y) + 90.0;
-            }
+            rotation = 180.0;
         }
+        else if(mMoveSteps[step]->r == RADIUSES-1 && mMoveSteps[step+1]->r == 0) // look left
+        {
+            rotation = 90.0;
+        }
+        else if(mMoveSteps[step]->r == 0 && mMoveSteps[step+1]->r == RADIUSES-1) // look right
+        {
+            rotation = - 90.0;
+        }
+        else if(mMoveSteps[step]->r < mMoveSteps[step+1]->r)
+        {
+            rotation = 90.0;
+        }
+        else if(mMoveSteps[step]->r > mMoveSteps[step+1]->r)
+        {
+            rotation = - 90.0;
+        }
+            
+        cell->piece->angle = getNormalAngle(x, y) + rotation;
+        
         
         Video::drawSprite(cell->piece->name, color, XY_CENTER, x, y, cell->piece->angle); 
 
