@@ -20,7 +20,8 @@ public:
           name(name),
           attackRating(attack),
           defenceRating(defence),
-          moveRating(move)
+          moveRating(move),
+          angle(666.0)
           {
               cell.reset();
           }    
@@ -33,6 +34,8 @@ public:
     unsigned attackRating;
     unsigned defenceRating;
     unsigned moveRating;
+    
+    float angle; // used by UI
     
 };
 

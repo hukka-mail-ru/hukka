@@ -90,32 +90,41 @@ void UI::drawPiece(const CellPtr& cell)
 
     RGB color = (cell->piece->player.get() == mGame->getPlayer1()) ? RGB(1,1,1) : RGB(1,0,0);
 
+    const float sector = 360.0 / RADIUSES;
     
     const unsigned total = 20; 
     static unsigned moves = 0; // pixel by pixel
     static unsigned step = 0; // cell by cell
+
     
     if(cell->piece->cellBeforeMoving != cell) // moving needed
     {
         assert(mMoveSteps.size() > 1);                     
         
-        float x_start = mMoveSteps[step]->x_center; 
-        float y_start = mMoveSteps[step]->y_center; 
+        const float x_start = mMoveSteps[step]->x_center; 
+        const float y_start = mMoveSteps[step]->y_center; 
         
-        float x_finish = mMoveSteps[step+1]->x_center; 
-        float y_finish = mMoveSteps[step+1]->y_center; 
+        const float x_finish = mMoveSteps[step+1]->x_center; 
+        const float y_finish = mMoveSteps[step+1]->y_center; 
         
         
-        float angle = 360 / RADIUSES;
+        if(mMoveSteps[step]->c > mMoveSteps[step+1]->c) // look to the center
+        {
+            cell->piece->angle = (3.0 - (float)cell->piece->cellBeforeMoving->r) * sector - sector/2;
+        }
+        else if(mMoveSteps[step]->c < mMoveSteps[step+1]->c) // look to the outer space
+        {
+            cell->piece->angle = (3.0 - (float)cell->r) * sector - sector/2 + 180.0;
+        }
+        
         
         Video::drawSprite(cell->piece->name, color, XY_CENTER,
                           x_start + (x_finish - x_start) / total * moves, 
                           y_start + (y_finish - y_start) / total * moves, 
-                          (3.0 - (float)cell->r) * angle - angle/2); // a piece must look at the center  
+                          cell->piece->angle); 
 
         moves++;
-        SDL_Delay(5); 
-
+        
         if(moves >= total) // proceed to the next cell
         {
             step++;
@@ -131,10 +140,15 @@ void UI::drawPiece(const CellPtr& cell)
     }    
     else // just draw a piece
     {
+        if(cell->piece->angle == 666.0) // 666 means undefined
+        {
+            cell->piece->angle = (3.0 - (float)cell->r) * sector - sector/2;
+        }
+        
         Video::drawSprite(cell->piece->name, color, XY_CENTER,
                           cell->x_center,
                           cell->y_center,
-                          (3.0 - (float)cell->r) * 30.0 - 15.0); // a piece must look at the center*/  
+                          cell->piece->angle); // a piece must look at the center*/  
     }
     TRY_RETHROW;
 }
@@ -315,6 +329,11 @@ void UI::handleEvents()
     {
         drawAll();
         SDL_Delay(1); // to prevent too frequent drawings
+        
+        if(mMoving)
+        {
+            SDL_Delay(5);
+        }
         
         /* handle the events in the queue */
         while ( SDL_PollEvent( &event ) )
