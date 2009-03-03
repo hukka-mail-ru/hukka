@@ -21,7 +21,7 @@ public:
           attackRating(attack),
           defenceRating(defence),
           moveRating(move),
-          angle(666.0)
+          angle(FLOAT_UNDEFINED)
           {
               cell.reset();
           }    

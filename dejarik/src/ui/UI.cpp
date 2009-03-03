@@ -179,7 +179,7 @@ void UI::drawPiece(const CellPtr& cell)
     }    
     else // just draw a piece
     {
-        if(cell->piece->angle == 666.0) // 666 means undefined
+        if(cell->piece->angle == FLOAT_UNDEFINED) 
         {
             cell->piece->angle = getNormalAngle(cell->x_center, cell->y_center);
         }
