@@ -149,9 +149,9 @@ void UI::drawPiece(const CellPtr& cell)
     {
         assert(mMoveSteps.size() > 1);                     
         
+        // moving straight
         if(moves < straight)
         {
-            // define start/finish
             const float x_start = mMoveSteps[step]->x_center; 
             const float y_start = mMoveSteps[step]->y_center; 
             
@@ -164,13 +164,17 @@ void UI::drawPiece(const CellPtr& cell)
             // define angle           
             cell->piece->angle = getNormalAngle(x, y) + getRotation(step);
         }
-        else if(moves >= straight && step >= mMoveSteps.size() - 2)
+        
+        // last cell OR cell without change of direction
+        else if(moves >= straight && 
+                (step >= mMoveSteps.size() - 2 || getRotation(step) == getRotation(step+1)) )
         {
-            moves = total; // finish moving 
+            moves = total; 
         }
+        
+        // rotation on a turn
         else if(moves >= straight && step < mMoveSteps.size() - 2)
         {
-            
             x = mMoveSteps[step+1]->x_center;
             y = mMoveSteps[step+1]->y_center; 
             
@@ -183,6 +187,7 @@ void UI::drawPiece(const CellPtr& cell)
             cell->piece->angle = getNormalAngle(x, y) + a;
         }
         
+        // draw
         Video::drawSprite(cell->piece->name, color, XY_CENTER, x, y, cell->piece->angle); 
 
         moves++;
