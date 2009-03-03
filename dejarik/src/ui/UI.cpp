@@ -104,10 +104,12 @@ void UI::drawPiece(const CellPtr& cell)
             float y_finish = cell->y_center; 
             
             
+            float angle = 360 / RADIUSES;
+            
             Video::drawSprite(cell->piece->name, color, XY_CENTER,
                               x_start + (x_finish - x_start)/total*moves, 
                               y_start + (y_finish - y_start)/total*moves, 
-                              (3.0 - (float)cell->r) * 30.0 - 15.0); // a piece must look at the center  
+                              (3.0 - (float)cell->r) * angle - angle/2); // a piece must look at the center  
         
             moves++;
             SDL_Delay(10); 
