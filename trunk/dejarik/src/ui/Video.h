@@ -40,6 +40,12 @@ struct RGB
     float b;
 };
 
+enum SpriteXY
+{
+    XY_CENTER,
+    XY_LEFTBOTTOM
+};
+
 
 class Video
 {
@@ -57,7 +63,8 @@ public:
     static void drawShape(const std::vector<float>& xWin, const std::vector<float>& yWin, 
             const RGB& color, float width);
 
-    static void drawSprite(const std::string& imageName, const RGB& color, float x, float y, float angle);    
+    static void drawSprite(const std::string& imageName, const RGB& color, 
+            SpriteXY spriteXY, float x, float y, float angle);    
         
 private:
     

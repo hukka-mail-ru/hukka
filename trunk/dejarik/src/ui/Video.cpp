@@ -354,7 +354,7 @@ void Video::drawPolygon(
 
 void Video::drawSprite(
         const std::string& imageName, const RGB& color, 
-        float winX, float winY, float angle)
+        SpriteXY spriteXY, float winX, float winY, float angle)
 {
     TRY_BEGINS;
     
@@ -364,6 +364,13 @@ void Video::drawSprite(
         os << "Can't find name " << imageName;
         throw os.str(); 
     }
+    
+    if(spriteXY == XY_CENTER)
+    {
+        winX -= images[imageName]->texture.w / 2;
+        winY -= images[imageName]->texture.h / 2;
+    }
+    
     
     if(images[imageName]->type == IT_SINGLE)
     {
