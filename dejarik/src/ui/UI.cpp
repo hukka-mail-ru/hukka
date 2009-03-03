@@ -80,6 +80,23 @@ bool UI::isCellClicked(float x, float y, CellPtr& cell)
 
 }
 
+float getNormalAngle(float x, float y)
+{
+    const float dy = y - CIRCLE_CENTER_Y;
+    const float dx = x - CIRCLE_CENTER_X;
+    
+    float ang = atan (- dy / dx ) * 180.0 / PI;
+    if(ang > 0)
+        ang += 180;
+    
+    if(dy < 0)
+        ang += 180;
+    
+    ang +=90;
+    
+    return ang;
+}
+
 
 
 void UI::drawPiece(const CellPtr& cell)
@@ -113,44 +130,46 @@ void UI::drawPiece(const CellPtr& cell)
         const float y = y_start + (y_finish - y_start) / total * moves;
 
         
-        float alfa = atan ((y - CIRCLE_CENTER_Y) / (x - CIRCLE_CENTER_X)) * (180.0/PI);
-
-        
         // define angle
-        if(mMoveSteps[step]->c > mMoveSteps[step+1]->c) // look to the center
+        const float dy = y - CIRCLE_CENTER_Y;
+        if(dy > 0) // lower sector
         {
-            cell->piece->angle = (3.0 - (float)mMoveSteps[step]->r) * sector - sector/2;
+            if(mMoveSteps[step]->c > mMoveSteps[step+1]->c) // look to the center
+            {
+                cell->piece->angle = getNormalAngle(x, y);
+            }
+            else if(mMoveSteps[step]->c < mMoveSteps[step+1]->c) // look to the outer space
+            {
+                cell->piece->angle = getNormalAngle(x, y) + 180.0;
+            }
+            else if(mMoveSteps[step]->r < mMoveSteps[step+1]->r) // look left
+            {
+                cell->piece->angle = getNormalAngle(x, y) + 90.0;
+            }
+            else if(mMoveSteps[step]->r > mMoveSteps[step+1]->r) // look right
+            {
+                cell->piece->angle = getNormalAngle(x, y) - 90.0;
+            }
         }
-        else if(mMoveSteps[step]->c < mMoveSteps[step+1]->c) // look to the outer space
+        else if(dy < 0) // upper sector
         {
-            cell->piece->angle = (3.0 - (float)mMoveSteps[step]->r) * sector - sector/2 + 180.0;
+            if(mMoveSteps[step]->c > mMoveSteps[step+1]->c) // look to the center
+            {
+                cell->piece->angle = getNormalAngle(x, y) + 180.0;
+            }
+            else if(mMoveSteps[step]->c < mMoveSteps[step+1]->c) // look to the outer space
+            {
+                cell->piece->angle = getNormalAngle(x, y);
+            }
+            else if(mMoveSteps[step]->r < mMoveSteps[step+1]->r) // look left
+            {
+                cell->piece->angle = getNormalAngle(x, y) - 90.0;
+            }
+            else if(mMoveSteps[step]->r > mMoveSteps[step+1]->r) // look right
+            {
+                cell->piece->angle = getNormalAngle(x, y) + 90.0;
+            }
         }
-        else if(mMoveSteps[step]->r < mMoveSteps[step+1]->r) // look left
-        {
-            
-            
-            if(y - CIRCLE_CENTER_Y < 0)
-            {
-                cell->piece->angle = -alfa+180;
-            }
-            else
-            {
-                cell->piece->angle = -alfa;
-            }
-        }
-        else if(mMoveSteps[step]->r > mMoveSteps[step+1]->r) // look right
-        {
-            if(y - CIRCLE_CENTER_Y < 0)
-            {
-                cell->piece->angle = -alfa;
-            }
-            else
-            {
-                cell->piece->angle = -alfa+180;
-            }
-
-        }
-        
         
         Video::drawSprite(cell->piece->name, color, XY_CENTER, x, y, cell->piece->angle); 
 
@@ -173,7 +192,7 @@ void UI::drawPiece(const CellPtr& cell)
     {
         if(cell->piece->angle == 666.0) // 666 means undefined
         {
-            cell->piece->angle = (3.0 - (float)cell->r) * sector - sector/2;
+            cell->piece->angle = getNormalAngle(cell->x_center, cell->y_center);
         }
         
         Video::drawSprite(cell->piece->name, color, XY_CENTER,
