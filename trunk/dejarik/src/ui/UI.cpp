@@ -91,38 +91,39 @@ void UI::drawPiece(const CellPtr& cell)
     RGB color = (cell->piece->player.get() == mGame->getPlayer1()) ? RGB(1,1,1) : RGB(1,0,0);
 
     
-    const unsigned total = 10; 
-    static unsigned moves = 0;
+    const unsigned total = 20; 
+    static unsigned moves = 0; // pixel by pixel
+    static unsigned step = 0; // cell by cell
+    
     if(cell->piece->cellBeforeMoving != cell) // moving needed
     {
         assert(mMoveSteps.size() > 1);                     
         
-        if(moves < total)
-        {       
-            float x_start = mMoveSteps[0]->x_center; 
-            float y_start = mMoveSteps[0]->y_center; 
-            
-            float x_finish = mMoveSteps[1]->x_center; 
-            float y_finish = mMoveSteps[1]->y_center; 
-            
-            
-            float angle = 360 / RADIUSES;
-            
-            Video::drawSprite(cell->piece->name, color, XY_CENTER,
-                              x_start + (x_finish - x_start)/total*moves, 
-                              y_start + (y_finish - y_start)/total*moves, 
-                              (3.0 - (float)cell->r) * angle - angle/2); // a piece must look at the center  
+        float x_start = mMoveSteps[step]->x_center; 
+        float y_start = mMoveSteps[step]->y_center; 
         
-            moves++;
-            SDL_Delay(10); 
-        }
-        else
+        float x_finish = mMoveSteps[step+1]->x_center; 
+        float y_finish = mMoveSteps[step+1]->y_center; 
+        
+        
+        float angle = 360 / RADIUSES;
+        
+        Video::drawSprite(cell->piece->name, color, XY_CENTER,
+                          x_start + (x_finish - x_start) / total * moves, 
+                          y_start + (y_finish - y_start) / total * moves, 
+                          (3.0 - (float)cell->r) * angle - angle/2); // a piece must look at the center  
+
+        moves++;
+        SDL_Delay(5); 
+
+        if(moves >= total) // proceed to the next cell
         {
-            mMoveSteps.erase(mMoveSteps.begin()); // proceed to the next step
+            step++;
             moves = 0;
             
-            if(mMoveSteps.size() == 1) // eo moving
+            if(step == mMoveSteps.size() - 1) // finish cell reached
             {
+                step = 0;
                 mMoving = false;
                 cell->piece->cellBeforeMoving = cell;
             }
@@ -133,7 +134,7 @@ void UI::drawPiece(const CellPtr& cell)
         Video::drawSprite(cell->piece->name, color, XY_CENTER,
                           cell->x_center,
                           cell->y_center,
-                          (3.0 - (float)cell->r) * 30.0 - 15.0); // a piece must look at the center  
+                          (3.0 - (float)cell->r) * 30.0 - 15.0); // a piece must look at the center*/  
     }
     TRY_RETHROW;
 }
@@ -244,7 +245,7 @@ bool UI::drawAll()
     
     /* Draw it to the screen */
     if(!mQuit)
-    {
+    {       
         SDL_GL_SwapBuffers();
     }
 
