@@ -42,6 +42,9 @@ private:
     
     void drawSquare(); // temp
     
+    float getNormalAngle(float x, float y);
+    float getRotation(unsigned step);
+            
     /*
      * Defines if the mouse click is valid (true/false).
      * if true, returns the clicked cell
