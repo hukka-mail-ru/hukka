@@ -5,6 +5,7 @@
 #include <sstream> 
 #include <boost/shared_ptr.hpp> 
 
+#define FLOAT_UNDEFINED 666.0
 
 #define CLASSPTR(name) \
   class name; \
