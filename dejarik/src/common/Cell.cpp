@@ -1,15 +1,7 @@
 #include <math.h>
 #include "Cell.h"
 
-#define PI 3.14159265
 
-// in pixels
-#define CIRCLE_CENTER_X 121
-#define CIRCLE_CENTER_Y 158
-
-#define RADIUS_1 27 
-#define RADIUS_2 76
-#define RADIUS_3 114
 
 #define INTERIM_ANGLES 4 // smoothness of the circles
 

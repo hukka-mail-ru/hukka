@@ -12,6 +12,7 @@
  
 
 #include <stdlib.h>
+#include <math.h>
 #include "UI.h"
 #include "Video.h"
 
@@ -101,27 +102,57 @@ void UI::drawPiece(const CellPtr& cell)
     {
         assert(mMoveSteps.size() > 1);                     
         
+        // define start/finish
         const float x_start = mMoveSteps[step]->x_center; 
         const float y_start = mMoveSteps[step]->y_center; 
         
         const float x_finish = mMoveSteps[step+1]->x_center; 
         const float y_finish = mMoveSteps[step+1]->y_center; 
         
+        const float x = x_start + (x_finish - x_start) / total * moves;
+        const float y = y_start + (y_finish - y_start) / total * moves;
+
         
+        float alfa = atan ((y - CIRCLE_CENTER_Y) / (x - CIRCLE_CENTER_X)) * (180.0/PI);
+
+        
+        // define angle
         if(mMoveSteps[step]->c > mMoveSteps[step+1]->c) // look to the center
         {
-            cell->piece->angle = (3.0 - (float)cell->piece->cellBeforeMoving->r) * sector - sector/2;
+            cell->piece->angle = (3.0 - (float)mMoveSteps[step]->r) * sector - sector/2;
         }
         else if(mMoveSteps[step]->c < mMoveSteps[step+1]->c) // look to the outer space
         {
-            cell->piece->angle = (3.0 - (float)cell->r) * sector - sector/2 + 180.0;
+            cell->piece->angle = (3.0 - (float)mMoveSteps[step]->r) * sector - sector/2 + 180.0;
+        }
+        else if(mMoveSteps[step]->r < mMoveSteps[step+1]->r) // look left
+        {
+            
+            
+            if(y - CIRCLE_CENTER_Y < 0)
+            {
+                cell->piece->angle = -alfa+180;
+            }
+            else
+            {
+                cell->piece->angle = -alfa;
+            }
+        }
+        else if(mMoveSteps[step]->r > mMoveSteps[step+1]->r) // look right
+        {
+            if(y - CIRCLE_CENTER_Y < 0)
+            {
+                cell->piece->angle = -alfa;
+            }
+            else
+            {
+                cell->piece->angle = -alfa+180;
+            }
+
         }
         
         
-        Video::drawSprite(cell->piece->name, color, XY_CENTER,
-                          x_start + (x_finish - x_start) / total * moves, 
-                          y_start + (y_finish - y_start) / total * moves, 
-                          cell->piece->angle); 
+        Video::drawSprite(cell->piece->name, color, XY_CENTER, x, y, cell->piece->angle); 
 
         moves++;
         
