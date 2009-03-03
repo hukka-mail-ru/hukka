@@ -80,7 +80,8 @@ bool UI::isCellClicked(float x, float y, CellPtr& cell)
 
 }
 
-float getNormalAngle(float x, float y)
+// helper for drawPiece
+float UI::getNormalAngle(float x, float y)
 {
     const float dy = y - CIRCLE_CENTER_Y;
     const float dx = x - CIRCLE_CENTER_X;
@@ -97,6 +98,33 @@ float getNormalAngle(float x, float y)
     return ang;
 }
 
+// helper for drawPiece
+float UI::getRotation(unsigned step)
+{
+    float rotation = 0.0;
+    if(mMoveSteps[step]->c > mMoveSteps[step+1]->c) // look to the center
+    {
+        rotation = 0;
+    }
+    else if(mMoveSteps[step]->c < mMoveSteps[step+1]->c) // look to the outer space
+    {
+        rotation = 180.0;
+    }
+    else if(mMoveSteps[step]->r == RADIUSES-1 && mMoveSteps[step+1]->r == 0) // look left (boundary)
+    {
+        rotation = 90.0;
+    }
+    else if(mMoveSteps[step]->r < mMoveSteps[step+1]->r)// look left
+    {
+        rotation = 90.0;
+    }
+    else if(mMoveSteps[step]->r > mMoveSteps[step+1]->r)// look right
+    {
+        rotation = - 90.0;
+    }
+    
+    return rotation;
+}
 
 
 void UI::drawPiece(const CellPtr& cell)
@@ -108,64 +136,59 @@ void UI::drawPiece(const CellPtr& cell)
 
     RGB color = (cell->piece->player.get() == mGame->getPlayer1()) ? RGB(1,1,1) : RGB(1,0,0);
 
-    const float sector = 360.0 / RADIUSES;
-    
-    const unsigned total = 20; 
+    const unsigned straight = 20;
+    const unsigned rot = 5;
+    const unsigned total = straight + rot;
+   
     static unsigned moves = 0; // pixel by pixel
     static unsigned step = 0; // cell by cell
+    static float x = 0;
+    static float y = 0;
 
-    
     if(cell->piece->cellBeforeMoving != cell) // moving needed
     {
         assert(mMoveSteps.size() > 1);                     
         
-        // define start/finish
-        const float x_start = mMoveSteps[step]->x_center; 
-        const float y_start = mMoveSteps[step]->y_center; 
-        
-        const float x_finish = mMoveSteps[step+1]->x_center; 
-        const float y_finish = mMoveSteps[step+1]->y_center; 
-        
-        const float x = x_start + (x_finish - x_start) / total * moves;
-        const float y = y_start + (y_finish - y_start) / total * moves;
-
-        
-        // define angle
-        float rotation = 0.0;
-        if(mMoveSteps[step]->c > mMoveSteps[step+1]->c) // look to the center
+        if(moves < straight)
         {
-            rotation = 0;
-        }
-        else if(mMoveSteps[step]->c < mMoveSteps[step+1]->c) // look to the outer space
-        {
-            rotation = 180.0;
-        }
-        else if(mMoveSteps[step]->r == RADIUSES-1 && mMoveSteps[step+1]->r == 0) // look left
-        {
-            rotation = 90.0;
-        }
-        else if(mMoveSteps[step]->r == 0 && mMoveSteps[step+1]->r == RADIUSES-1) // look right
-        {
-            rotation = - 90.0;
-        }
-        else if(mMoveSteps[step]->r < mMoveSteps[step+1]->r)
-        {
-            rotation = 90.0;
-        }
-        else if(mMoveSteps[step]->r > mMoveSteps[step+1]->r)
-        {
-            rotation = - 90.0;
-        }
+            // define start/finish
+            const float x_start = mMoveSteps[step]->x_center; 
+            const float y_start = mMoveSteps[step]->y_center; 
             
-        cell->piece->angle = getNormalAngle(x, y) + rotation;
-        
+            const float x_finish = mMoveSteps[step+1]->x_center; 
+            const float y_finish = mMoveSteps[step+1]->y_center; 
+            
+            x = x_start + (x_finish - x_start) / straight * moves;
+            y = y_start + (y_finish - y_start) / straight * moves;
+            
+            // define angle           
+            cell->piece->angle = getNormalAngle(x, y) + getRotation(step);
+        }
+        else if(moves >= straight && step >= mMoveSteps.size() - 2)
+        {
+            moves = total; // finish moving 
+        }
+        else if(moves >= straight && step < mMoveSteps.size() - 2)
+        {
+            
+            x = mMoveSteps[step+1]->x_center;
+            y = mMoveSteps[step+1]->y_center; 
+            
+            // define angle  
+            const float a_start = getRotation(step);
+            const float a_finish = getRotation(step+1);
+            
+            const float a = a_start + (a_finish - a_start) / rot * (rot - (total - moves));
+            
+            cell->piece->angle = getNormalAngle(x, y) + a;
+        }
         
         Video::drawSprite(cell->piece->name, color, XY_CENTER, x, y, cell->piece->angle); 
 
         moves++;
         
         if(moves >= total) // proceed to the next cell
-        {
+        {            
             step++;
             moves = 0;
             
@@ -371,7 +394,7 @@ void UI::handleEvents()
         
         if(mMoving)
         {
-            SDL_Delay(5);
+            SDL_Delay(55);
         }
         
         /* handle the events in the queue */
