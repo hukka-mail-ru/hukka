@@ -95,13 +95,15 @@ void UI::drawPiece(const CellPtr& cell)
     static unsigned moves = 0;
     if(cell->piece->cellBeforeMoving != cell) // moving needed
     {
+        assert(mMoveSteps.size() > 1);                     
+        
         if(moves < total)
         {       
-            float x_start = cell->piece->cellBeforeMoving->x_center; 
-            float y_start = cell->piece->cellBeforeMoving->y_center; 
+            float x_start = mMoveSteps[0]->x_center; 
+            float y_start = mMoveSteps[0]->y_center; 
             
-            float x_finish = cell->x_center; 
-            float y_finish = cell->y_center; 
+            float x_finish = mMoveSteps[1]->x_center; 
+            float y_finish = mMoveSteps[1]->y_center; 
             
             
             float angle = 360 / RADIUSES;
@@ -116,9 +118,14 @@ void UI::drawPiece(const CellPtr& cell)
         }
         else
         {
-            cell->piece->cellBeforeMoving = cell;
-            mMoving = false;
+            mMoveSteps.erase(mMoveSteps.begin()); // proceed to the next step
             moves = 0;
+            
+            if(mMoveSteps.size() == 1) // eo moving
+            {
+                mMoving = false;
+                cell->piece->cellBeforeMoving = cell;
+            }
         }
     }    
     else // just draw a piece
@@ -266,6 +273,9 @@ void UI::onMouseClick(const SDL_Event& event)
             if(res == RES_MOVE)
             {
                 mMoving = true;
+                mGame->getBoard()->getMoveSteps(cell, mMoveSteps);
+                mMoveSteps.insert(mMoveSteps.begin(), cell->piece->cellBeforeMoving);
+                
             }
             
             // log -------------------------
