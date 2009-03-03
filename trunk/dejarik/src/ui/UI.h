@@ -53,6 +53,7 @@ private:
     GamePtr mGame; 
     bool mQuit;
     bool mMoving; // piece moving in progress
+    std::vector<CellPtr> mMoveSteps; 
     
 
 };
