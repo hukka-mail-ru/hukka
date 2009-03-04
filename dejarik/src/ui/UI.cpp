@@ -136,21 +136,40 @@ void UI::drawPiece(const CellPtr& cell)
 
     RGB color = (cell->piece->player.get() == mGame->getPlayer1()) ? RGB(1,1,1) : RGB(1,0,0);
 
-    const unsigned straight = 20;
     const unsigned rot = 5;
-    const unsigned total = straight + rot;
+    const unsigned straight = 20;
+    const unsigned total = rot + straight;
    
     static unsigned moves = 0; // pixel by pixel
     static unsigned step = 0; // cell by cell
-    static float x = 0;
-    static float y = 0;
 
     if(cell->piece->cellBeforeMoving != cell) // moving needed
     {
-        assert(mMoveSteps.size() > 1);                     
+        assert(mMoveSteps.size() > 1);    
+        
+        float x = mMoveSteps[step]->x_center;
+        float y = mMoveSteps[step]->y_center; 
+        
+        // cell without change of direction
+        if(moves < rot && cell->piece->angle == getNormalAngle(x, y) + getRotation(step) )
+        {
+            moves = rot;
+        }
+        
+        // rotation on a turn
+        if(moves < rot)
+        {            
+            // define angle  
+            const float a_start = cell->piece->angle;
+            const float a_finish = getNormalAngle(x, y) + getRotation(step);
+            
+            const float a = a_start + (a_finish - a_start) / rot * moves;
+            
+            cell->piece->angle = a;
+        }
         
         // moving straight
-        if(moves < straight)
+        if(moves >= rot && moves < total)
         {
             const float x_start = mMoveSteps[step]->x_center; 
             const float y_start = mMoveSteps[step]->y_center; 
@@ -158,34 +177,13 @@ void UI::drawPiece(const CellPtr& cell)
             const float x_finish = mMoveSteps[step+1]->x_center; 
             const float y_finish = mMoveSteps[step+1]->y_center; 
             
-            x = x_start + (x_finish - x_start) / straight * moves;
-            y = y_start + (y_finish - y_start) / straight * moves;
+            x = x_start + (x_finish - x_start) / straight * (moves - rot);
+            y = y_start + (y_finish - y_start) / straight * (moves - rot);
             
             // define angle           
             cell->piece->angle = getNormalAngle(x, y) + getRotation(step);
         }
         
-        // last cell OR cell without change of direction
-        else if(moves >= straight && 
-                (step >= mMoveSteps.size() - 2 || getRotation(step) == getRotation(step+1)) )
-        {
-            moves = total; 
-        }
-        
-        // rotation on a turn
-        else if(moves >= straight && step < mMoveSteps.size() - 2)
-        {
-            x = mMoveSteps[step+1]->x_center;
-            y = mMoveSteps[step+1]->y_center; 
-            
-            // define angle  
-            const float a_start = getRotation(step);
-            const float a_finish = getRotation(step+1);
-            
-            const float a = a_start + (a_finish - a_start) / rot * (rot - (total - moves));
-            
-            cell->piece->angle = getNormalAngle(x, y) + a;
-        }
         
         // draw
         Video::drawSprite(cell->piece->name, color, XY_CENTER, x, y, cell->piece->angle); 
