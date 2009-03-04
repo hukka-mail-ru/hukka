@@ -140,7 +140,7 @@ void UI::drawPiece(const CellPtr& cell)
 
     RGB color = (cell->piece->player.get() == mGame->getPlayer1()) ? RGB(1,1,1) : RGB(1,0,0);
 
-    const unsigned rot = 5;
+    const unsigned rot = 20;
     const unsigned straight = 20;
     const unsigned total = rot + straight;
    
@@ -163,7 +163,13 @@ void UI::drawPiece(const CellPtr& cell)
         if(moves < rot)
         {            
             const float a_start = cell->piece->angle;
-            const float a_finish = getNormalAngle(cell->piece->x, cell->piece->y) + getRotation(step);
+            
+            float a_finish = getNormalAngle(cell->piece->x, cell->piece->y) + getRotation(step);
+            
+            if(mMoveSteps[step]->c == 0)
+            {
+                a_finish = getNormalAngle(mMoveSteps[step+1]->x_center, mMoveSteps[step+1]->y_center) + getRotation(step);
+            }
             
             const float a = a_start + (a_finish - a_start) / rot * moves;
             
@@ -409,7 +415,7 @@ void UI::handleEvents()
         
         if(mMoving)
         {
-            SDL_Delay(55);
+            SDL_Delay(5);
         }
         
         /* handle the events in the queue */
