@@ -21,7 +21,9 @@ public:
           attackRating(attack),
           defenceRating(defence),
           moveRating(move),
-          angle(FLOAT_UNDEFINED)
+          angle(FLOAT_UNDEFINED),
+          x(FLOAT_UNDEFINED),
+          y(FLOAT_UNDEFINED)
           {
               cell.reset();
           }    
@@ -36,6 +38,8 @@ public:
     unsigned moveRating;
     
     float angle; // used by UI
+    float x; // used by UI
+    float y; // used by UI
     
 };
 

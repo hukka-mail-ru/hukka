@@ -151,11 +151,10 @@ void UI::drawPiece(const CellPtr& cell)
     {
         assert(mMoveSteps.size() > 1);    
         
-        float x = mMoveSteps[step]->x_center;
-        float y = mMoveSteps[step]->y_center; 
         
         //  without change of direction
-        if(moves < rot && cell->piece->angle == getNormalAngle(x, y) + getRotation(step) )
+        if(moves < rot && (int)cell->piece->angle == 
+            (int)(getNormalAngle(cell->piece->x, cell->piece->y) + getRotation(step)) )
         {
             moves = rot;
         }
@@ -164,7 +163,7 @@ void UI::drawPiece(const CellPtr& cell)
         if(moves < rot)
         {            
             const float a_start = cell->piece->angle;
-            const float a_finish = getNormalAngle(x, y) + getRotation(step);
+            const float a_finish = getNormalAngle(cell->piece->x, cell->piece->y) + getRotation(step);
             
             const float a = a_start + (a_finish - a_start) / rot * moves;
             
@@ -180,16 +179,18 @@ void UI::drawPiece(const CellPtr& cell)
             const float x_finish = mMoveSteps[step+1]->x_center; 
             const float y_finish = mMoveSteps[step+1]->y_center; 
             
-            x = x_start + (x_finish - x_start) / straight * (moves - rot);
-            y = y_start + (y_finish - y_start) / straight * (moves - rot);
+            float x = x_start + (x_finish - x_start) / straight * (moves - rot);
+            float y = y_start + (y_finish - y_start) / straight * (moves - rot);
             
             // smooth rotation     
             cell->piece->angle = getNormalAngle(x, y) + getRotation(step);
+            cell->piece->x = x;
+            cell->piece->y = y;
         }
         
         
         // draw
-        Video::drawSprite(cell->piece->name, color, XY_CENTER, x, y, cell->piece->angle); 
+        Video::drawSprite(cell->piece->name, color, XY_CENTER, cell->piece->x,  cell->piece->y, cell->piece->angle); 
 
         moves++;
         
@@ -212,10 +213,18 @@ void UI::drawPiece(const CellPtr& cell)
         {
             cell->piece->angle = getNormalAngle(cell->x_center, cell->y_center);
         }
+        if(cell->piece->x == FLOAT_UNDEFINED) 
+        {
+            cell->piece->x = cell->x_center;
+        }
+        if(cell->piece->y == FLOAT_UNDEFINED) 
+        {
+            cell->piece->y = cell->y_center;
+        }
         
         Video::drawSprite(cell->piece->name, color, XY_CENTER,
-                          cell->x_center,
-                          cell->y_center,
+                          cell->piece->x,
+                          cell->piece->y,
                           cell->piece->angle); // a piece must look at the center*/  
     }
     TRY_RETHROW;
