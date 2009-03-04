@@ -42,7 +42,7 @@ private:
     
     void drawSquare(); // temp
     
-    float getNormalAngle(float x, float y);
+    float getNormalAngle(float x, float y); // must be changed smoothly (when moving along orbit)
     float getRotation(unsigned step);
             
     /*
