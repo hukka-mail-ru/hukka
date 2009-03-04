@@ -86,6 +86,8 @@ float UI::getNormalAngle(float x, float y)
     const float dy = y - CIRCLE_CENTER_Y;
     const float dx = x - CIRCLE_CENTER_X;
     
+    
+    
     float ang = atan (- dy / dx ) * 180.0 / PI;
     if(ang > 0)
         ang += 180;
@@ -130,6 +132,17 @@ float UI::getRotation(unsigned step)
     return rotation;
 }
 
+float shorterAngle(float ang)
+{
+
+    if(ang > 180)
+        return 180 - ang;
+    
+    if(ang < -180)
+        return 360 + ang;
+
+    return ang;
+}
 
 void UI::drawPiece(const CellPtr& cell)
 {
@@ -162,14 +175,19 @@ void UI::drawPiece(const CellPtr& cell)
         // rotation at the beginning
         if(moves < rot)
         {            
-            const float a_start = cell->piece->angle;
-            
+            float a_start = cell->piece->angle;            
             float a_finish = getNormalAngle(cell->piece->x, cell->piece->y) + getRotation(step);
             
-            if(mMoveSteps[step]->c == 0)
+            if(mMoveSteps[step]->c == 0) // special case - when we start from the center
             {
-                a_finish = getNormalAngle(mMoveSteps[step+1]->x_center, mMoveSteps[step+1]->y_center) + getRotation(step);
-            }
+                a_finish = getNormalAngle(mMoveSteps[step+1]->x_center, mMoveSteps[step+1]->y_center); 
+                           + getRotation(step);
+                   
+                a_finish = shorterAngle(a_finish);
+                
+                cout << "a_start: " << a_start << endl;
+                cout << "a_finish: " << a_finish << endl;
+            }          
             
             const float a = a_start + (a_finish - a_start) / rot * moves;
             
