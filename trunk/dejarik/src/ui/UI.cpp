@@ -110,9 +110,13 @@ float UI::getRotation(unsigned step)
     {
         rotation = 180.0;
     }
-    else if(mMoveSteps[step]->r == RADIUSES-1 && mMoveSteps[step+1]->r == 0) // look left (boundary)
+    else if(mMoveSteps[step]->r == RADIUSES-1 && mMoveSteps[step+1]->r == 0) // boundary
     {
         rotation = 90.0;
+    }
+    else if(mMoveSteps[step]->r == 0 && mMoveSteps[step+1]->r == RADIUSES-1) // boundary
+    {
+        rotation = -90.0;
     }
     else if(mMoveSteps[step]->r < mMoveSteps[step+1]->r)// look left
     {
@@ -150,16 +154,15 @@ void UI::drawPiece(const CellPtr& cell)
         float x = mMoveSteps[step]->x_center;
         float y = mMoveSteps[step]->y_center; 
         
-        // cell without change of direction
+        //  without change of direction
         if(moves < rot && cell->piece->angle == getNormalAngle(x, y) + getRotation(step) )
         {
             moves = rot;
         }
         
-        // rotation on a turn
+        // rotation at the beginning
         if(moves < rot)
         {            
-            // define angle  
             const float a_start = cell->piece->angle;
             const float a_finish = getNormalAngle(x, y) + getRotation(step);
             
@@ -168,7 +171,7 @@ void UI::drawPiece(const CellPtr& cell)
             cell->piece->angle = a;
         }
         
-        // moving straight
+        // then move straight
         if(moves >= rot && moves < total)
         {
             const float x_start = mMoveSteps[step]->x_center; 
@@ -180,7 +183,7 @@ void UI::drawPiece(const CellPtr& cell)
             x = x_start + (x_finish - x_start) / straight * (moves - rot);
             y = y_start + (y_finish - y_start) / straight * (moves - rot);
             
-            // define angle           
+            // smooth rotation     
             cell->piece->angle = getNormalAngle(x, y) + getRotation(step);
         }
         
