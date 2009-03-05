@@ -12,7 +12,7 @@ set_target_properties(dejarik PROPERTIES COMPILE_FLAGS "-I/usr/include/SDL -D_GN
 set_target_properties(dejarik PROPERTIES LINK_FLAGS "-L/usr/lib")
  
 # UNIT TESTs 
-add_executable (test_dejarik test/test.cpp ${SRC}) 
+add_executable (test_dejarik test/test.cpp src/ui/Animation.cpp ${SRC}) 
 target_link_libraries (test_dejarik cppunit dl) 
 set_target_properties(test_dejarik PROPERTIES COMPILE_FLAGS "-D UNIT_TESTS")
 

@@ -13,6 +13,7 @@
 //#include "TestBoard.h"
 //#include "TestPlayer.h"
 #include "TestGame.h"
+#include "TestAnimation.h"
 
 using namespace std;
 

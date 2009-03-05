@@ -132,8 +132,6 @@ float Animation::getNormalAngle(float x, float y)
     const float dy = y - CIRCLE_CENTER_Y;
     const float dx = x - CIRCLE_CENTER_X;
     
-    
-    
     float ang = atan (- dy / dx ) * 180.0 / PI;
     if(ang > 0)
         ang += 180;
@@ -141,7 +139,12 @@ float Animation::getNormalAngle(float x, float y)
     if(dy < 0)
         ang += 180;
     
+    if(dx < 0 && ang == 0)
+        ang += 180;
+    
     ang +=90;
+    
+    ang = shorterAngle(ang);
     
     return ang;
 }
@@ -180,12 +183,8 @@ float Animation::getRotation(unsigned step)
 
 float Animation::shorterAngle(float ang)
 {
-
-    if(ang > 180)
-        return 180 - ang;
-    
-    if(ang < -180)
-        return 360 + ang;
+    while(ang > 360)
+        return ang -= 360;
 
     return ang;
 }
