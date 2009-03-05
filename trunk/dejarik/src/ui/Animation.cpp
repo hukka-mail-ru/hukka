@@ -40,6 +40,37 @@ void Animation::initPiece(const PiecePtr& piece)
 }
 
 
+float Animation::getTargetAngle(unsigned step)
+{
+    if(mMoveSteps[step]->c == 0)
+    {
+        float res = getNormalAngle(mMoveSteps[step+1]->x_center, mMoveSteps[step+1]->y_center) + getRotation(step);
+        return shorterAngle(res);
+    }
+    else
+    {
+        float res = getNormalAngle(mMoveSteps[step]->x_center, mMoveSteps[step]->y_center) + getRotation(step);
+        return shorterAngle(res);
+    }
+
+    
+}
+
+float Animation::getSmallestAngle(float start, float end)
+{
+    start = shorterAngle(start);
+    end = shorterAngle(end);
+    
+    if(end == 0)
+        end = 360;
+    
+    float shifted = end - start;
+    if(shifted > 180)
+        return -(360 - shifted);
+    else
+        return shifted;
+}
+
 void Animation::updatePiece(const PiecePtr& piece)
 {
     TRY_BEGINS;
@@ -53,7 +84,7 @@ void Animation::updatePiece(const PiecePtr& piece)
     const float oldy = piece->y;
     const float oldang = piece->angle;
     
-    const unsigned rot = 20;
+    const unsigned rot = 10;
     const unsigned straight = 20;
     const unsigned total = rot + straight;
    
@@ -63,6 +94,45 @@ void Animation::updatePiece(const PiecePtr& piece)
     assert(mMoveSteps.size() > 1);    
     mMoving = true;
     
+    
+    // 1. Rotation
+    if(moves <= rot)
+    {
+       float targetAngle = getTargetAngle(step);
+    
+       
+       if((int)piece->angle != (int)targetAngle) // need to rotate the piece 
+       {
+           // rotate smoothly
+           if(moves <= rot)
+           {   
+               piece->angle = piece->angle + getSmallestAngle(piece->angle, targetAngle) / rot * moves;           
+               moves++;
+           }
+       }
+       else // piece has the proper position
+       {
+           moves = rot + 1;
+       }
+    }
+    
+   
+   // 2. Straight
+   if(moves > rot && moves <= total)
+   {
+       const float x_start = mMoveSteps[step]->x_center; 
+       const float y_start = mMoveSteps[step]->y_center; 
+       
+       const float x_finish = mMoveSteps[step+1]->x_center; 
+       const float y_finish = mMoveSteps[step+1]->y_center; 
+       
+       piece->x = x_start + (x_finish - x_start) / straight * (moves - rot);
+       piece->y = y_start + (y_finish - y_start) / straight * (moves - rot);
+       
+       piece->angle = getNormalAngle(piece->x, piece->y) + getRotation(step);
+       moves++;
+   }
+/*
     //  without change of direction
     if(moves <= rot && (int)piece->angle == 
         (int)(getNormalAngle(piece->x, piece->y) + getRotation(step)) )
@@ -89,9 +159,11 @@ void Animation::updatePiece(const PiecePtr& piece)
             }
         }          
         
-        const float a = a_start + (a_finish - a_start) / rot * moves;
-        
-        piece->angle = a;
+        if(moves <= rot )
+        {
+            const float a = a_start + (a_finish - a_start) / rot * moves;
+            piece->angle = a;
+        }
     }
     
     // then move straight
@@ -122,8 +194,10 @@ void Animation::updatePiece(const PiecePtr& piece)
     }
             
     moves++;
-    
+    */
+
     assert(oldx != piece->x || oldy != piece->y || oldang != piece->angle);
+  //  assert(fabs(oldang - piece->angle) < 15);
     assert(piece->x < CIRCLE_CENTER_X + RADIUS_3);
     assert(piece->x > CIRCLE_CENTER_X - RADIUS_3); 
     assert(piece->y < CIRCLE_CENTER_Y + RADIUS_3);
@@ -206,8 +280,16 @@ float Animation::getRotation(unsigned step)
 
 float Animation::shorterAngle(float ang)
 {
-    while(ang > 360)
-        return ang -= 360;
+    if(ang > 0)
+    {
+        while(ang >= 360)
+            ang -= 360;
+    }
+    else
+    {
+        while(ang < 0)
+            ang += 360;
+    }
 
     return ang;
 }
