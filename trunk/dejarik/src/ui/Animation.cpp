@@ -19,7 +19,7 @@ bool Animation::updateAll(const std::vector<CellPtr>& moveSteps)
     
     return mMoving;
     
-    TRY_RETHROW
+    TRY_RETHROW;
 }
 
 
@@ -75,7 +75,7 @@ void Animation::updatePiece(const PiecePtr& piece)
         
         if(mMoveSteps[step]->c == 0) // special case - when we start from the center
         {
-            a_finish = getNormalAngle(mMoveSteps[step+1]->x_center, mMoveSteps[step+1]->y_center); 
+            a_finish = getNormalAngle(mMoveSteps[step+1]->x_center, mMoveSteps[step+1]->y_center) 
                        + getRotation(step);
                
             a_finish = shorterAngle(a_finish);
@@ -152,6 +152,8 @@ float Animation::getNormalAngle(float x, float y)
 // helper for drawPiece
 float Animation::getRotation(unsigned step)
 {
+    TRY_BEGINS;
+    
     float rotation = 0.0;
     if(mMoveSteps[step]->c > mMoveSteps[step+1]->c) // look to the center
     {
@@ -179,6 +181,8 @@ float Animation::getRotation(unsigned step)
     }
     
     return rotation;
+    
+    TRY_RETHROW
 }
 
 float Animation::shorterAngle(float ang)
