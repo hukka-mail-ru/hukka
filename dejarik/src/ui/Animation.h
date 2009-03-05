@@ -1,14 +1,19 @@
 #ifndef ANIMATION_H_
 #define ANIMATION_H_
 
-#include "PieceImage.h"
+#include "Piece.h"
 #include "Cell.h"
+#include "Game.h"
+
 
 class Animation
 {
 public:
     
-    void updateAll();
+    Animation(const GamePtr& game): mGame(game), mMoving(false) {}
+    
+    // retrun true if moving in process 
+    bool updateAll(const std::vector<CellPtr>& moveSteps);
     
 private:
   
@@ -16,9 +21,12 @@ private:
     float getRotation(unsigned step);
     float shorterAngle(float ang);
     
-    void initPiece(const PieceImagePtr& piece);
-    void updatePiece(const CellPtr& cell);
-
+    void initPiece(const PiecePtr& piece);
+    void updatePiece(const PiecePtr& piece);
+    
+    GamePtr mGame;
+    std::vector<CellPtr> mMoveSteps; 
+    bool mMoving; // piece moving in progress
 };
 
 

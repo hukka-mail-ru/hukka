@@ -1,17 +1,25 @@
 #include "Animation.h"
+#include <math.h>
 
-/*
-void Animation::initPiece(const PieceImagePtr& piece)
+using namespace std;
+
+bool Animation::updateAll(const std::vector<CellPtr>& moveSteps)
 {
-    piece->angle = getNormalAngle(cellImage->x_center, cellImage->y_center);
-    piece->x = cellImage->x_center;
-    piece->y = cellImage->y_center;
+    mMoveSteps = moveSteps;
+    
+    // draw Pieces
+    vector<PiecePtr> pieces = mGame->getPieces();
+    for(unsigned i = 0; i < pieces.size(); i++)
+    {
+        updatePiece(pieces[i]);
+    }
+    
+    return mMoving;
 }
 
-void Animation::updatePiece(const PieceImagePtr& pieceImage)
+void Animation::updatePiece(const PiecePtr& piece)
 {
     TRY_BEGINS;
-    
     
     const unsigned rot = 20;
     const unsigned straight = 20;
@@ -20,14 +28,14 @@ void Animation::updatePiece(const PieceImagePtr& pieceImage)
     static unsigned moves = 0; // pixel by pixel
     static unsigned step = 0; // cell by cell
 
-    if(pieceImagepiece->cellBeforeMoving != cell) // moving needed
+    if(piece->cellBeforeMoving != piece->cell) // moving needed
     {
         assert(mMoveSteps.size() > 1);    
-        
+        mMoving = true;
         
         //  without change of direction
-        if(moves < rot && (int)cell->piece->angle == 
-            (int)(getNormalAngle(cell->piece->x, cell->piece->y) + getRotation(step)) )
+        if(moves < rot && (int)piece->angle == 
+            (int)(getNormalAngle(piece->x, piece->y) + getRotation(step)) )
         {
             moves = rot;
         }
@@ -35,8 +43,8 @@ void Animation::updatePiece(const PieceImagePtr& pieceImage)
         // rotation at the beginning
         if(moves < rot)
         {            
-            float a_start = cell->piece->angle;            
-            float a_finish = getNormalAngle(cell->piece->x, cell->piece->y) + getRotation(step);
+            float a_start = piece->angle;            
+            float a_finish = getNormalAngle(piece->x, piece->y) + getRotation(step);
             
             if(mMoveSteps[step]->c == 0) // special case - when we start from the center
             {
@@ -51,7 +59,7 @@ void Animation::updatePiece(const PieceImagePtr& pieceImage)
             
             const float a = a_start + (a_finish - a_start) / rot * moves;
             
-            cell->piece->angle = a;
+            piece->angle = a;
         }
         
         // then move straight
@@ -67,16 +75,13 @@ void Animation::updatePiece(const PieceImagePtr& pieceImage)
             float y = y_start + (y_finish - y_start) / straight * (moves - rot);
             
             // smooth rotation     
-            cell->piece->angle = getNormalAngle(x, y) + getRotation(step);
-            cell->piece->x = x;
-            cell->piece->y = y;
+            piece->angle = getNormalAngle(x, y) + getRotation(step);
+            piece->x = x;
+            piece->y = y;
         }
-        
-        
-        // draw
-        Video::drawSprite(piece->name, color, XY_CENTER, piece->x,  piece->y, piece->angle); 
-
+                
         moves++;
+        
         
         if(moves >= total) // proceed to the next cell
         {            
@@ -87,15 +92,46 @@ void Animation::updatePiece(const PieceImagePtr& pieceImage)
             {
                 step = 0;
                 mMoving = false;
-                cell->piece->cellBeforeMoving = cell;
+                piece->cellBeforeMoving = piece->cell;
             }
         }
     }    
     else // just draw a piece
     {
-          
+        if(piece->angle == FLOAT_UNDEFINED) 
+        {
+            piece->angle = getNormalAngle(piece->cell->x_center, piece->cell->y_center);
+        }
+        if(piece->x == FLOAT_UNDEFINED) 
+        {
+            piece->x = piece->cell->x_center;
+        }
+        if(piece->y == FLOAT_UNDEFINED) 
+        {
+            piece->y = piece->cell->y_center;
+        }
     }
     TRY_RETHROW;
+}
+
+// helper for drawPiece
+float Animation::getNormalAngle(float x, float y)
+{
+    const float dy = y - CIRCLE_CENTER_Y;
+    const float dx = x - CIRCLE_CENTER_X;
+    
+    
+    
+    float ang = atan (- dy / dx ) * 180.0 / PI;
+    if(ang > 0)
+        ang += 180;
+    
+    if(dy < 0)
+        ang += 180;
+    
+    ang +=90;
+    
+    return ang;
 }
 
 // helper for drawPiece
@@ -130,27 +166,6 @@ float Animation::getRotation(unsigned step)
     return rotation;
 }
 
-// helper for drawPiece
-float Animation::getNormalAngle(float x, float y)
-{
-    const float dy = y - CIRCLE_CENTER_Y;
-    const float dx = x - CIRCLE_CENTER_X;
-    
-    
-    
-    float ang = atan (- dy / dx ) * 180.0 / PI;
-    if(ang > 0)
-        ang += 180;
-    
-    if(dy < 0)
-        ang += 180;
-    
-    ang +=90;
-    
-    return ang;
-}
-
-
 float Animation::shorterAngle(float ang)
 {
 
@@ -161,9 +176,4 @@ float Animation::shorterAngle(float ang)
         return 360 + ang;
 
     return ang;
-}*/
-
-void Animation::updateAll()
-{
-    
 }

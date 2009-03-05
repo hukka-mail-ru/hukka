@@ -4,14 +4,11 @@
 
 #include "../common/Macros.h"
 #include "Game.h"
-#include "CellImage.h"
-#include "PieceImage.h"
 #include "Animation.h"
 
 #include <GL/gl.h>
 #include <GL/glu.h>
 #include <SDL.h>
-#include <map>
 
 CLASSPTR(UI);
 
@@ -20,14 +17,13 @@ class UI
 {
 public:
     
-    UI(const GamePtr& game): mGame(game), mQuit(false), mMoving(false)
+    UI(const GamePtr& game): mGame(game), mQuit(false), animation(game)
     {}
     
     void startup();
     
     void handleEvents();
     
-
 private:
     
     enum Color
@@ -41,10 +37,10 @@ private:
     
     bool drawAll();
     void drawBoard();
-    void drawCell(const CellImagePtr& cell, bool clicked);
-    void drawPiece(const PieceImagePtr& piece);
+    void drawCell(const CellPtr& cell, bool clicked);
+    void drawPiece(const PiecePtr& piece);
     void drawActivePlayer();
-    
+            
     /*
      * Defines if the mouse click is valid (true/false).
      * if true, returns the clicked cell
@@ -54,14 +50,10 @@ private:
     void onMouseClick(const SDL_Event& event);
     
     GamePtr mGame; 
-    bool mQuit;
-    bool mMoving; // piece moving in progress
+    bool mQuit;    
     std::vector<CellPtr> mMoveSteps; 
     
-    std::map<CellPtr, CellImagePtr> mCellImages;
-    std::map<PiecePtr, PieceImagePtr> mPieceImages;
-    
-    Animation animation; // 1 UI has 1 Animation
+    Animation animation;
 
 };
 
