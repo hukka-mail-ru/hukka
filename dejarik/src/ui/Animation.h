@@ -8,6 +8,8 @@
 
 class Animation
 {
+    friend class TestAnimation;
+    Animation() {}; // for test
 public:
     
     Animation(const GamePtr& game): mGame(game), mMoving(false) {}
