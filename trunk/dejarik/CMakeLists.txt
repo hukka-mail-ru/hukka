@@ -2,11 +2,11 @@ cmake_minimum_required(VERSION 2.4)
 
 include_directories (src/common src/logic src/ui) 
 set(CMAKE_CXX_FLAGS "-g -Wall")
-set(SRC src/logic/Player.cpp src/logic/Board.cpp src/logic/Game.cpp) 
+set(SRC src/logic/Player.cpp src/logic/Board.cpp src/logic/Game.cpp src/common/Cell.cpp) 
 
 
 # DEJARIK executable
-add_executable (dejarik src/logic/main.cpp ${SRC}  src/ui/UI.cpp src/ui/Video.cpp src/ui/CellImage.cpp src/ui/Animation.cpp)
+add_executable (dejarik src/logic/main.cpp ${SRC}  src/ui/UI.cpp src/ui/Video.cpp src/ui/Animation.cpp)
 target_link_libraries (dejarik GL GLU SDL pthread) 
 set_target_properties(dejarik PROPERTIES COMPILE_FLAGS "-I/usr/include/SDL -D_GNU_SOURCE=1 -D_REENTRANT")
 set_target_properties(dejarik PROPERTIES LINK_FLAGS "-L/usr/lib")

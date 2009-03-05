@@ -11,8 +11,6 @@
  */
  
 
-#include <stdlib.h>
-#include <math.h>
 #include "UI.h"
 #include "Video.h"
 
@@ -26,22 +24,7 @@ void UI::startup()
 {
     TRY_BEGINS;
     
-    vector<CellPtr> cells;
-    mGame->getBoard()->getCells(cells);
-    for(unsigned i=0; i<cells.size(); i++)
-    {
-         CellImagePtr image (new CellImage(cells[i]));
-         mCellImages[cells[i]] = image;
-    }
-    
-    
     vector<PiecePtr> pieces = mGame->getPieces();
-    for(unsigned i=0; i<pieces.size(); i++)
-    {
-         PieceImagePtr image (new PieceImage(pieces[i]));
-         mPieceImages[pieces[i]] = image;
-    }
-    
     vector<string> names;
     for(unsigned i=0; i<pieces.size(); i++)
     {
@@ -61,9 +44,9 @@ bool UI::isCellClicked(float x, float y, CellPtr& cell)
     
     for(unsigned k = 0; k < cells.size(); k++)
     {
-        unsigned npol = mCellImages[cells[k]]->x.size();
-        vector<float>& xp = mCellImages[cells[k]]->x;
-        vector<float>& yp = mCellImages[cells[k]]->y;
+        unsigned npol = cells[k]->x.size();
+        vector<float>& xp = cells[k]->x;
+        vector<float>& yp = cells[k]->y;
 
         // is (x,y) inside the polygon (xp, yp)
         bool res = false;
@@ -78,11 +61,9 @@ bool UI::isCellClicked(float x, float y, CellPtr& cell)
         {
             cell = cells[k];
             
-            for (unsigned i = 0; i < npol; i++) 
+            for (unsigned i = 0; i < cells[k]->x.size(); i++) 
             {
-                cout << "cell - " << k << " : " <<  
-                mCellImages[cells[k]]->x[i] << " : " << 
-                mCellImages[cells[k]]->y[i] << endl;
+                cout << "cell - " << k << " : " <<  cells[k]->x[i] << " : " << cells[k]->y[i] << endl;
             }
             
             cout << "cell " << cell->c <<  "." << cell->r << endl; 
@@ -98,27 +79,28 @@ bool UI::isCellClicked(float x, float y, CellPtr& cell)
 }
 
 
-void UI::drawPiece(const PieceImagePtr& pieceImage)
+void UI::drawPiece(const PiecePtr& piece)
 {
     TRY_BEGINS;
-    RGB color = (pieceImage->piece->cell->piece->player.get() == mGame->getPlayer1()) ? RGB(1,1,1) : RGB(1,0,0);
     
-    Video::drawSprite(pieceImage->piece->name, color, XY_CENTER,
-                      pieceImage->x,
-                      pieceImage->y,
-                      pieceImage->angle); // a piece must look at the center*/  
+    RGB color = (piece->player.get() == mGame->getPlayer1()) ? RGB(1,1,1) : RGB(1,0,0);
 
+    Video::drawSprite(piece->name, color, XY_CENTER,
+                      piece->x,
+                      piece->y,
+                      piece->angle); 
+    
     TRY_RETHROW;
 }
 
 
 
-void UI::drawCell(const CellImagePtr& cellImage, bool clicked) 
+void UI::drawCell(const CellPtr& cell, bool clicked) 
 {
     TRY_BEGINS;
     
     RGB color = RGB(1,1,1);
-    CellPtr cell = cellImage->cell;
+    
 
     switch(cell->selected)
     {
@@ -130,10 +112,10 @@ void UI::drawCell(const CellImagePtr& cellImage, bool clicked)
     }
 
     
-    Video::drawPolygon(cellImage->x, cellImage->y, color, 0.5);
+    Video::drawPolygon(cell->x, cell->y, color, 0.5);
     
     if(cell->c == 0) 
-        Video::drawShape(cellImage->x, cellImage->y, RGB(0,0,0), 1);
+     Video::drawShape(cell->x, cell->y, RGB(0,0,0), 1);
     
        
     TRY_RETHROW;
@@ -147,26 +129,29 @@ void UI::drawBoard()
     
     Video::drawSprite("board", RGB(1,1,1), XY_LEFTBOTTOM, 1, 1, 0);
     
-    // draw all but clicked cell
+    
     vector<CellPtr> cells;
     mGame->getBoard()->getCells(cells);
+    
+    // draw all but clicked cell
     for(unsigned i = 0; i < cells.size(); i++)
     {
-        drawCell(mCellImages[cells[i]], false);
+        drawCell(cells[i], false);
     }
-       
+    
     // draw clicked cell
     for(unsigned i = 0; i < cells.size(); i++)
     {
-        drawCell(mCellImages[cells[i]], true);
+        drawCell(cells[i], true);
     }
     
-    // draw pieces
+    // draw Pieces
     vector<PiecePtr> pieces = mGame->getPieces();
-    for(unsigned i=0; i<pieces.size(); i++)
+    for(unsigned i = 0; i < pieces.size(); i++)
     {
-        drawPiece(mPieceImages[pieces[i]]);
+        drawPiece(pieces[i]);
     }
+    
      
     TRY_RETHROW;
 }
@@ -248,7 +233,6 @@ void UI::onMouseClick(const SDL_Event& event)
            
             if(res == RES_MOVE)
             {
-                mMoving = true;
                 mGame->getBoard()->getMoveSteps(cell, mMoveSteps);
                 mMoveSteps.insert(mMoveSteps.begin(), cell->piece->cellBeforeMoving);
                 
@@ -288,16 +272,16 @@ void UI::handleEvents()
     SDL_Event event;
     while ( !mQuit )
     {
-        animation.updateAll();
-        drawAll();
-        SDL_Delay(1); // to prevent too frequent drawings
+        bool moving = animation.updateAll(mMoveSteps);
         
-        
-        
-        if(mMoving)
+        if(moving)
         {
             SDL_Delay(5);
         }
+        
+        drawAll();
+        SDL_Delay(1); // to prevent too frequent drawings
+        
         
         /* handle the events in the queue */
         while ( SDL_PollEvent( &event ) )
@@ -305,7 +289,7 @@ void UI::handleEvents()
             
             
             // MOUSE EVENT
-            if( !mMoving && event.type == SDL_MOUSEBUTTONDOWN ) 
+            if( !moving && event.type == SDL_MOUSEBUTTONDOWN ) 
             {
                 onMouseClick(event);
             }
