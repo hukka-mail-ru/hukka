@@ -49,6 +49,9 @@ void Animation::updatePiece(const PiecePtr& piece)
         return;
     }
 
+    const float oldx = piece->x;
+    const float oldy = piece->y;
+    const float oldang = piece->angle;
     
     const unsigned rot = 20;
     const unsigned straight = 20;
@@ -120,6 +123,9 @@ void Animation::updatePiece(const PiecePtr& piece)
             
     moves++;
     
+    assert(oldx != piece->x);
+    assert(oldy != piece->y);
+    assert(oldang != piece->angle);
     
     if(moves >= total) // proceed to the next cell
     {            
