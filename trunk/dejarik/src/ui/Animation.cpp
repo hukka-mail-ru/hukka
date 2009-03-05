@@ -64,14 +64,14 @@ void Animation::updatePiece(const PiecePtr& piece)
     mMoving = true;
     
     //  without change of direction
-    if(moves < rot && (int)piece->angle == 
+    if(moves <= rot && (int)piece->angle == 
         (int)(getNormalAngle(piece->x, piece->y) + getRotation(step)) )
     {
         moves = rot+1;
     }
     
     // rotation at the beginning
-    if(moves < rot)
+    if(moves <= rot)
     {            
         float a_start = piece->angle;            
         float a_finish = getNormalAngle(piece->x, piece->y) + getRotation(step);
@@ -95,7 +95,7 @@ void Animation::updatePiece(const PiecePtr& piece)
     }
     
     // then move straight
-    if(moves >= rot && moves < total)
+    if(moves > rot && moves <= total)
     {
         const float x_start = mMoveSteps[step]->x_center; 
         const float y_start = mMoveSteps[step]->y_center; 
@@ -124,12 +124,15 @@ void Animation::updatePiece(const PiecePtr& piece)
     moves++;
     
     assert(oldx != piece->x || oldy != piece->y || oldang != piece->angle);
-
+    assert(piece->x < CIRCLE_CENTER_X + RADIUS_3);
+    assert(piece->x > CIRCLE_CENTER_X - RADIUS_3); 
+    assert(piece->y < CIRCLE_CENTER_Y + RADIUS_3);
+    assert(piece->y > CIRCLE_CENTER_Y - RADIUS_3); 
     
-    if(moves >= total) // proceed to the next cell
+    if(moves > total) // proceed to the next cell
     {            
         step++;
-        moves = 0;
+        moves = 1;
         
         if(step == mMoveSteps.size() - 1) // finish cell reached
         {
