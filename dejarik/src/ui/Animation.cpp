@@ -57,7 +57,7 @@ void Animation::updatePiece(const PiecePtr& piece)
     const unsigned straight = 20;
     const unsigned total = rot + straight;
    
-    static unsigned moves = 0; // pixel by pixel
+    static unsigned moves = 1; // pixel by pixel
     static unsigned step = 0; // cell by cell
     
     assert(mMoveSteps.size() > 1);    
@@ -67,7 +67,7 @@ void Animation::updatePiece(const PiecePtr& piece)
     if(moves < rot && (int)piece->angle == 
         (int)(getNormalAngle(piece->x, piece->y) + getRotation(step)) )
     {
-        moves = rot;
+        moves = rot+1;
     }
     
     // rotation at the beginning
@@ -85,7 +85,7 @@ void Animation::updatePiece(const PiecePtr& piece)
             
             if((int)piece->angle == (int)a_finish) // no need to rotate
             {
-                moves = rot;
+                moves = rot+1;
             }
         }          
         
@@ -123,9 +123,8 @@ void Animation::updatePiece(const PiecePtr& piece)
             
     moves++;
     
-    assert(oldx != piece->x);
-    assert(oldy != piece->y);
-    assert(oldang != piece->angle);
+    assert(oldx != piece->x || oldy != piece->y || oldang != piece->angle);
+
     
     if(moves >= total) // proceed to the next cell
     {            
