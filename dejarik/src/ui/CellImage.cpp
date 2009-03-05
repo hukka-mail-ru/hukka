@@ -1,5 +1,5 @@
 #include <math.h>
-#include "Cell.h"
+#include "CellImage.h"
 
 
 
@@ -9,18 +9,12 @@ using namespace std;
 
 
 
-Cell::Cell(unsigned circle, unsigned radius):
-    c(circle),
-    r(radius),
-    mark(0), // not marked initially
-    selected(SEL_NONE) // not selected initially
+CellImage::CellImage(const CellPtr& _cell)
 {
-    prev.reset();
-    piece.reset();
-
+    cell = _cell;
     
     // CENTRAL CIRCLE
-    if(c == 0)
+    if(cell->c == 0)
     {
         for(unsigned i = 0; i < INTERIM_ANGLES*3; i++)
         {
@@ -33,22 +27,22 @@ Cell::Cell(unsigned circle, unsigned radius):
         y_center = CIRCLE_CENTER_Y;
     }
     // CIRCLE 1
-    else if(c == 1)
+    else if(cell->c == 1)
     {
         createSegment(RADIUS_1, RADIUS_2);
     }
     // CIRCLE 2
-    else if(c == 2)
+    else if(cell->c == 2)
     {        
         createSegment(RADIUS_2, RADIUS_3);
     }
 }
 
 
-void Cell::createSegment(float radius1, float radius2)
+void CellImage::createSegment(float radius1, float radius2)
 {
     // angles
-    const float a1 = PI/6.0 * r;
+    const float a1 = PI/6.0 * cell->r;
     const float a2 = a1 + PI/6.0;
     const float interim = (a2 - a1)/INTERIM_ANGLES;        
     

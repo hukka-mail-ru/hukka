@@ -26,7 +26,22 @@ void UI::startup()
 {
     TRY_BEGINS;
     
+    vector<CellPtr> cells;
+    mGame->getBoard()->getCells(cells);
+    for(unsigned i=0; i<cells.size(); i++)
+    {
+         CellImagePtr image (new CellImage(cells[i]));
+         mCellImages[cells[i]] = image;
+    }
+    
+    
     vector<PiecePtr> pieces = mGame->getPieces();
+    for(unsigned i=0; i<pieces.size(); i++)
+    {
+         PieceImagePtr image (new PieceImage(pieces[i]));
+         mPieceImages[pieces[i]] = image;
+    }
+    
     vector<string> names;
     for(unsigned i=0; i<pieces.size(); i++)
     {
@@ -46,9 +61,9 @@ bool UI::isCellClicked(float x, float y, CellPtr& cell)
     
     for(unsigned k = 0; k < cells.size(); k++)
     {
-        unsigned npol = cells[k]->x.size();
-        vector<float>& xp = cells[k]->x;
-        vector<float>& yp = cells[k]->y;
+        unsigned npol = mCellImages[cells[k]]->x.size();
+        vector<float>& xp = mCellImages[cells[k]]->x;
+        vector<float>& yp = mCellImages[cells[k]]->y;
 
         // is (x,y) inside the polygon (xp, yp)
         bool res = false;
@@ -63,9 +78,11 @@ bool UI::isCellClicked(float x, float y, CellPtr& cell)
         {
             cell = cells[k];
             
-            for (unsigned i = 0; i < cells[k]->x.size(); i++) 
+            for (unsigned i = 0; i < npol; i++) 
             {
-                cout << "cell - " << k << " : " <<  cells[k]->x[i] << " : " << cells[k]->y[i] << endl;
+                cout << "cell - " << k << " : " <<  
+                mCellImages[cells[k]]->x[i] << " : " << 
+                mCellImages[cells[k]]->y[i] << endl;
             }
             
             cout << "cell " << cell->c <<  "." << cell->r << endl; 
@@ -80,188 +97,28 @@ bool UI::isCellClicked(float x, float y, CellPtr& cell)
 
 }
 
-// helper for drawPiece
-float UI::getNormalAngle(float x, float y)
-{
-    const float dy = y - CIRCLE_CENTER_Y;
-    const float dx = x - CIRCLE_CENTER_X;
-    
-    
-    
-    float ang = atan (- dy / dx ) * 180.0 / PI;
-    if(ang > 0)
-        ang += 180;
-    
-    if(dy < 0)
-        ang += 180;
-    
-    ang +=90;
-    
-    return ang;
-}
 
-// helper for drawPiece
-float UI::getRotation(unsigned step)
-{
-    float rotation = 0.0;
-    if(mMoveSteps[step]->c > mMoveSteps[step+1]->c) // look to the center
-    {
-        rotation = 0;
-    }
-    else if(mMoveSteps[step]->c < mMoveSteps[step+1]->c) // look to the outer space
-    {
-        rotation = 180.0;
-    }
-    else if(mMoveSteps[step]->r == RADIUSES-1 && mMoveSteps[step+1]->r == 0) // boundary
-    {
-        rotation = 90.0;
-    }
-    else if(mMoveSteps[step]->r == 0 && mMoveSteps[step+1]->r == RADIUSES-1) // boundary
-    {
-        rotation = -90.0;
-    }
-    else if(mMoveSteps[step]->r < mMoveSteps[step+1]->r)// look left
-    {
-        rotation = 90.0;
-    }
-    else if(mMoveSteps[step]->r > mMoveSteps[step+1]->r)// look right
-    {
-        rotation = - 90.0;
-    }
-    
-    return rotation;
-}
-
-float shorterAngle(float ang)
-{
-
-    if(ang > 180)
-        return 180 - ang;
-    
-    if(ang < -180)
-        return 360 + ang;
-
-    return ang;
-}
-
-void UI::drawPiece(const CellPtr& cell)
+void UI::drawPiece(const PieceImagePtr& pieceImage)
 {
     TRY_BEGINS;
+    RGB color = (pieceImage->piece->cell->piece->player.get() == mGame->getPlayer1()) ? RGB(1,1,1) : RGB(1,0,0);
     
-    if(!cell->piece)
-        return;
+    Video::drawSprite(pieceImage->piece->name, color, XY_CENTER,
+                      pieceImage->x,
+                      pieceImage->y,
+                      pieceImage->angle); // a piece must look at the center*/  
 
-    RGB color = (cell->piece->player.get() == mGame->getPlayer1()) ? RGB(1,1,1) : RGB(1,0,0);
-
-    const unsigned rot = 20;
-    const unsigned straight = 20;
-    const unsigned total = rot + straight;
-   
-    static unsigned moves = 0; // pixel by pixel
-    static unsigned step = 0; // cell by cell
-
-    if(cell->piece->cellBeforeMoving != cell) // moving needed
-    {
-        assert(mMoveSteps.size() > 1);    
-        
-        
-        //  without change of direction
-        if(moves < rot && (int)cell->piece->angle == 
-            (int)(getNormalAngle(cell->piece->x, cell->piece->y) + getRotation(step)) )
-        {
-            moves = rot;
-        }
-        
-        // rotation at the beginning
-        if(moves < rot)
-        {            
-            float a_start = cell->piece->angle;            
-            float a_finish = getNormalAngle(cell->piece->x, cell->piece->y) + getRotation(step);
-            
-            if(mMoveSteps[step]->c == 0) // special case - when we start from the center
-            {
-                a_finish = getNormalAngle(mMoveSteps[step+1]->x_center, mMoveSteps[step+1]->y_center); 
-                           + getRotation(step);
-                   
-                a_finish = shorterAngle(a_finish);
-                
-                cout << "a_start: " << a_start << endl;
-                cout << "a_finish: " << a_finish << endl;
-            }          
-            
-            const float a = a_start + (a_finish - a_start) / rot * moves;
-            
-            cell->piece->angle = a;
-        }
-        
-        // then move straight
-        if(moves >= rot && moves < total)
-        {
-            const float x_start = mMoveSteps[step]->x_center; 
-            const float y_start = mMoveSteps[step]->y_center; 
-            
-            const float x_finish = mMoveSteps[step+1]->x_center; 
-            const float y_finish = mMoveSteps[step+1]->y_center; 
-            
-            float x = x_start + (x_finish - x_start) / straight * (moves - rot);
-            float y = y_start + (y_finish - y_start) / straight * (moves - rot);
-            
-            // smooth rotation     
-            cell->piece->angle = getNormalAngle(x, y) + getRotation(step);
-            cell->piece->x = x;
-            cell->piece->y = y;
-        }
-        
-        
-        // draw
-        Video::drawSprite(cell->piece->name, color, XY_CENTER, cell->piece->x,  cell->piece->y, cell->piece->angle); 
-
-        moves++;
-        
-        if(moves >= total) // proceed to the next cell
-        {            
-            step++;
-            moves = 0;
-            
-            if(step == mMoveSteps.size() - 1) // finish cell reached
-            {
-                step = 0;
-                mMoving = false;
-                cell->piece->cellBeforeMoving = cell;
-            }
-        }
-    }    
-    else // just draw a piece
-    {
-        if(cell->piece->angle == FLOAT_UNDEFINED) 
-        {
-            cell->piece->angle = getNormalAngle(cell->x_center, cell->y_center);
-        }
-        if(cell->piece->x == FLOAT_UNDEFINED) 
-        {
-            cell->piece->x = cell->x_center;
-        }
-        if(cell->piece->y == FLOAT_UNDEFINED) 
-        {
-            cell->piece->y = cell->y_center;
-        }
-        
-        Video::drawSprite(cell->piece->name, color, XY_CENTER,
-                          cell->piece->x,
-                          cell->piece->y,
-                          cell->piece->angle); // a piece must look at the center*/  
-    }
     TRY_RETHROW;
 }
 
 
 
-void UI::drawCell(const CellPtr& cell, bool clicked) 
+void UI::drawCell(const CellImagePtr& cellImage, bool clicked) 
 {
     TRY_BEGINS;
     
     RGB color = RGB(1,1,1);
-    
+    CellPtr cell = cellImage->cell;
 
     switch(cell->selected)
     {
@@ -273,10 +130,10 @@ void UI::drawCell(const CellPtr& cell, bool clicked)
     }
 
     
-    Video::drawPolygon(cell->x, cell->y, color, 0.5);
+    Video::drawPolygon(cellImage->x, cellImage->y, color, 0.5);
     
     if(cell->c == 0) 
-     Video::drawShape(cell->x, cell->y, RGB(0,0,0), 1);
+        Video::drawShape(cellImage->x, cellImage->y, RGB(0,0,0), 1);
     
        
     TRY_RETHROW;
@@ -290,23 +147,26 @@ void UI::drawBoard()
     
     Video::drawSprite("board", RGB(1,1,1), XY_LEFTBOTTOM, 1, 1, 0);
     
-    
+    // draw all but clicked cell
     vector<CellPtr> cells;
     mGame->getBoard()->getCells(cells);
-    
-    // draw all but clicked cell
     for(unsigned i = 0; i < cells.size(); i++)
     {
-        drawCell(cells[i], false);
-        drawPiece(cells[i]);
+        drawCell(mCellImages[cells[i]], false);
     }
-    
+       
     // draw clicked cell
     for(unsigned i = 0; i < cells.size(); i++)
     {
-        drawCell(cells[i], true);
+        drawCell(mCellImages[cells[i]], true);
     }
     
+    // draw pieces
+    vector<PiecePtr> pieces = mGame->getPieces();
+    for(unsigned i=0; i<pieces.size(); i++)
+    {
+        drawPiece(mPieceImages[pieces[i]]);
+    }
      
     TRY_RETHROW;
 }
@@ -428,8 +288,11 @@ void UI::handleEvents()
     SDL_Event event;
     while ( !mQuit )
     {
+        animation.updateAll();
         drawAll();
         SDL_Delay(1); // to prevent too frequent drawings
+        
+        
         
         if(mMoving)
         {
