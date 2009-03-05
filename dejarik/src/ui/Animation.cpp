@@ -5,21 +5,50 @@ using namespace std;
 
 bool Animation::updateAll(const std::vector<CellPtr>& moveSteps)
 {
+    TRY_BEGINS;
+    
     mMoveSteps = moveSteps;
     
     // draw Pieces
     vector<PiecePtr> pieces = mGame->getPieces();
     for(unsigned i = 0; i < pieces.size(); i++)
     {
+        initPiece(pieces[i]);
         updatePiece(pieces[i]);
     }
     
     return mMoving;
+    
+    TRY_RETHROW
 }
+
+
+void Animation::initPiece(const PiecePtr& piece)
+{
+    if(piece->angle == FLOAT_UNDEFINED) 
+    {
+        piece->angle = getNormalAngle(piece->cell->x_center, piece->cell->y_center);
+    }
+    if(piece->x == FLOAT_UNDEFINED) 
+    {
+        piece->x = piece->cell->x_center;
+    }
+    if(piece->y == FLOAT_UNDEFINED) 
+    {
+        piece->y = piece->cell->y_center;
+    }
+}
+
 
 void Animation::updatePiece(const PiecePtr& piece)
 {
     TRY_BEGINS;
+
+    if(piece->cellBeforeMoving == piece->cell) // moving not needed
+    {
+        return;
+    }
+
     
     const unsigned rot = 20;
     const unsigned straight = 20;
@@ -27,90 +56,73 @@ void Animation::updatePiece(const PiecePtr& piece)
    
     static unsigned moves = 0; // pixel by pixel
     static unsigned step = 0; // cell by cell
-
-    if(piece->cellBeforeMoving != piece->cell) // moving needed
+    
+    assert(mMoveSteps.size() > 1);    
+    mMoving = true;
+    
+    //  without change of direction
+    if(moves < rot && (int)piece->angle == 
+        (int)(getNormalAngle(piece->x, piece->y) + getRotation(step)) )
     {
-        assert(mMoveSteps.size() > 1);    
-        mMoving = true;
+        moves = rot;
+    }
+    
+    // rotation at the beginning
+    if(moves < rot)
+    {            
+        float a_start = piece->angle;            
+        float a_finish = getNormalAngle(piece->x, piece->y) + getRotation(step);
         
-        //  without change of direction
-        if(moves < rot && (int)piece->angle == 
-            (int)(getNormalAngle(piece->x, piece->y) + getRotation(step)) )
+        if(mMoveSteps[step]->c == 0) // special case - when we start from the center
         {
-            moves = rot;
-        }
+            a_finish = getNormalAngle(mMoveSteps[step+1]->x_center, mMoveSteps[step+1]->y_center); 
+                       + getRotation(step);
+               
+            a_finish = shorterAngle(a_finish);
+            
+            cout << "a_start: " << a_start << endl;
+            cout << "a_finish: " << a_finish << endl;
+        }          
         
-        // rotation at the beginning
-        if(moves < rot)
-        {            
-            float a_start = piece->angle;            
-            float a_finish = getNormalAngle(piece->x, piece->y) + getRotation(step);
-            
-            if(mMoveSteps[step]->c == 0) // special case - when we start from the center
-            {
-                a_finish = getNormalAngle(mMoveSteps[step+1]->x_center, mMoveSteps[step+1]->y_center); 
-                           + getRotation(step);
-                   
-                a_finish = shorterAngle(a_finish);
-                
-                cout << "a_start: " << a_start << endl;
-                cout << "a_finish: " << a_finish << endl;
-            }          
-            
-            const float a = a_start + (a_finish - a_start) / rot * moves;
-            
-            piece->angle = a;
-        }
+        const float a = a_start + (a_finish - a_start) / rot * moves;
         
-        // then move straight
-        if(moves >= rot && moves < total)
-        {
-            const float x_start = mMoveSteps[step]->x_center; 
-            const float y_start = mMoveSteps[step]->y_center; 
-            
-            const float x_finish = mMoveSteps[step+1]->x_center; 
-            const float y_finish = mMoveSteps[step+1]->y_center; 
-            
-            float x = x_start + (x_finish - x_start) / straight * (moves - rot);
-            float y = y_start + (y_finish - y_start) / straight * (moves - rot);
-            
-            // smooth rotation     
-            piece->angle = getNormalAngle(x, y) + getRotation(step);
-            piece->x = x;
-            piece->y = y;
-        }
-                
-        moves++;
-        
-        
-        if(moves >= total) // proceed to the next cell
-        {            
-            step++;
-            moves = 0;
-            
-            if(step == mMoveSteps.size() - 1) // finish cell reached
-            {
-                step = 0;
-                mMoving = false;
-                piece->cellBeforeMoving = piece->cell;
-            }
-        }
-    }    
-    else // just draw a piece
+        piece->angle = a;
+    }
+    
+    // then move straight
+    if(moves >= rot && moves < total)
     {
-        if(piece->angle == FLOAT_UNDEFINED) 
+        const float x_start = mMoveSteps[step]->x_center; 
+        const float y_start = mMoveSteps[step]->y_center; 
+        
+        const float x_finish = mMoveSteps[step+1]->x_center; 
+        const float y_finish = mMoveSteps[step+1]->y_center; 
+        
+        float x = x_start + (x_finish - x_start) / straight * (moves - rot);
+        float y = y_start + (y_finish - y_start) / straight * (moves - rot);
+        
+        // smooth rotation     
+        piece->angle = getNormalAngle(x, y) + getRotation(step);
+        piece->x = x;
+        piece->y = y;
+    }
+            
+    moves++;
+    
+    
+    if(moves >= total) // proceed to the next cell
+    {            
+        step++;
+        moves = 0;
+        
+        if(step == mMoveSteps.size() - 1) // finish cell reached
         {
-            piece->angle = getNormalAngle(piece->cell->x_center, piece->cell->y_center);
-        }
-        if(piece->x == FLOAT_UNDEFINED) 
-        {
-            piece->x = piece->cell->x_center;
-        }
-        if(piece->y == FLOAT_UNDEFINED) 
-        {
-            piece->y = piece->cell->y_center;
+            step = 0;
+            mMoving = false;
+            piece->cellBeforeMoving = piece->cell;
         }
     }
+
     TRY_RETHROW;
 }
 
