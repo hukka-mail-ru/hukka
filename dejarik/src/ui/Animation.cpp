@@ -103,8 +103,17 @@ void Animation::updatePiece(const PiecePtr& piece)
         float x = x_start + (x_finish - x_start) / straight * (moves - rot);
         float y = y_start + (y_finish - y_start) / straight * (moves - rot);
         
-        // smooth rotation     
-        piece->angle = getNormalAngle(x, y) + getRotation(step);
+        // smooth rotation
+        if(mMoveSteps[step]->c == 0) //special case - when we move through the center
+        {
+            piece->angle = shorterAngle(getNormalAngle(mMoveSteps[step+1]->x_center, mMoveSteps[step+1]->y_center) 
+                                   + getRotation(step));
+        }
+        else
+        {
+            piece->angle = getNormalAngle(x, y) + getRotation(step);
+        }
+        
         piece->x = x;
         piece->y = y;
     }
