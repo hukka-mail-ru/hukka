@@ -64,11 +64,16 @@ float Animation::getSmallestAngle(float start, float end)
     if(end == 0)
         end = 360;
     
+    float res = 0;
     float shifted = end - start;
     if(shifted > 180)
-        return -(360 - shifted);
+        res = -(360 - shifted);
     else
-        return shifted;
+        res = shifted;
+    
+    assert(fabs(res) <= 180);
+    
+    return res;
 }
 
 void Animation::updatePiece(const PiecePtr& piece)
@@ -101,7 +106,7 @@ void Animation::updatePiece(const PiecePtr& piece)
        float targetAngle = getTargetAngle(step);
     
        
-       if((int)piece->angle != (int)targetAngle) // need to rotate the piece 
+       if((int)shorterAngle(piece->angle) != (int)targetAngle) // need to rotate the piece 
        {
            // rotate smoothly
            if(moves <= rot)
