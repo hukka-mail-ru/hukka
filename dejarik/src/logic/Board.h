@@ -22,6 +22,7 @@ class Board // only one board in game
     friend class TestBoard;
     friend class TestPlayer;
     friend class TestGame;
+    friend class TestAnimation;
     
 public:
     

@@ -40,7 +40,8 @@ private:
     void drawCell(const CellPtr& cell, bool clicked);
     void drawPiece(const PiecePtr& piece);
     void drawActivePlayer();
-            
+    float getFinishAngle(unsigned step, const CellPtr& cell);
+    
     /*
      * Defines if the mouse click is valid (true/false).
      * if true, returns the clicked cell

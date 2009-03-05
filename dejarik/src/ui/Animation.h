@@ -20,8 +20,10 @@ public:
 private:
   
     float getNormalAngle(float x, float y); // must be changed smoothly (when moving along orbit)
+    float getTargetAngle(unsigned step);
     float getRotation(unsigned step);
     float shorterAngle(float ang);
+    float getSmallestAngle(float start, float end); 
     
     void initPiece(const PiecePtr& piece);
     void updatePiece(const PiecePtr& piece);
