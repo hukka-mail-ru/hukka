@@ -80,8 +80,10 @@ void Animation::updatePiece(const PiecePtr& piece)
                
             a_finish = shorterAngle(a_finish);
             
-            cout << "a_start: " << a_start << endl;
-            cout << "a_finish: " << a_finish << endl;
+            if((int)piece->angle == (int)a_finish) // no need to rotate
+            {
+                moves = rot;
+            }
         }          
         
         const float a = a_start + (a_finish - a_start) / rot * moves;
