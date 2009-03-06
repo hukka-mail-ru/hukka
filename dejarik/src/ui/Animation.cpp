@@ -130,7 +130,9 @@ void Animation::updatePiece(const PiecePtr& piece)
        piece->x = x_start + (x_finish - x_start) / straight * (moves - rot);
        piece->y = y_start + (y_finish - y_start) / straight * (moves - rot);
        
-       piece->angle = getNormalAngle(piece->x, piece->y) + getRotation(step);
+       if(mMoveSteps[step+1]->c != 0) // don't need to change the angle in the center
+           piece->angle = getNormalAngle(piece->x, piece->y) + getRotation(step);
+       
        moves++;
    }
 
