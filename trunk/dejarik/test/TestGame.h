@@ -36,18 +36,38 @@ class TestGame: public CppUnit::TestFixture
    CPPUNIT_TEST(testMove5);
    CPPUNIT_TEST(testMove6);
    CPPUNIT_TEST(testKill);
+   CPPUNIT_TEST(testKill2);
    CPPUNIT_TEST(testCounterKill);
    CPPUNIT_TEST(testPush);
    CPPUNIT_TEST(testPush2);
    CPPUNIT_TEST(testPush3);
    CPPUNIT_TEST(testCounterPush);
    CPPUNIT_TEST(testVictory);
+   
    CPPUNIT_TEST_SUITE_END();
          
 public:         
     void setUp() {}
     void tearDown() {}
     
+    
+    void testKill2()
+    {
+        TRY_BEGINS;
+        SHOW_FUNCTION_NAME;
+        
+        Game game;
+        game.startup();
+        
+        BoardPtr board = game.getBoard();
+        
+        CPPUNIT_ASSERT_EQUAL((unsigned)8, game.getPieces().size());
+        
+        board->killPiece(board->getCell(2, 0)->piece);
+        CPPUNIT_ASSERT_EQUAL((unsigned)7, game.getPieces().size());
+        
+        TRY_CATCH;
+    }
     
     void testVictory() 
     {
