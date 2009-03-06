@@ -61,6 +61,8 @@ float Animation::getSmallestAngle(float start, float end)
     start = shorterAngle(start);
     end = shorterAngle(end);
     
+    cout << " start : " << start << endl;
+    cout << " end : " << end << endl;
     if(end == 0)
         end = 360;
     
@@ -71,6 +73,7 @@ float Animation::getSmallestAngle(float start, float end)
     else
         res = shifted;
     
+    cout << " getSmallestAngle : " << res << endl;
     assert(fabs(res) <= 180);
     
     return res;
@@ -99,18 +102,21 @@ void Animation::updatePiece(const PiecePtr& piece)
     assert(mMoveSteps.size() > 1);    
     mMoving = true;
     
-    
+    cout << "1" << endl;
     // 1. Rotation
     if(moves <= rot)
     {
        float targetAngle = getTargetAngle(step);
     
-       
+       cout << "1.1" << endl;
        if((int)shorterAngle(piece->angle) != (int)targetAngle) // need to rotate the piece 
        {
            // rotate smoothly
            if(moves <= rot)
            {   
+               cout << "piece->angle: " << piece->angle << endl;
+               cout << "targetAngle: " << targetAngle << endl;
+               cout << "getSmallestAngle(piece->angle, targetAngle): " << getSmallestAngle(piece->angle, targetAngle) << endl;
                piece->angle = piece->angle + getSmallestAngle(piece->angle, targetAngle) / rot * moves;           
                moves++;
            }
@@ -121,7 +127,7 @@ void Animation::updatePiece(const PiecePtr& piece)
        }
     }
     
-   
+    cout << "2" << endl;
    // 2. Straight
    if(moves > rot && moves <= total)
    {
@@ -137,69 +143,7 @@ void Animation::updatePiece(const PiecePtr& piece)
        piece->angle = getNormalAngle(piece->x, piece->y) + getRotation(step);
        moves++;
    }
-/*
-    //  without change of direction
-    if(moves <= rot && (int)piece->angle == 
-        (int)(getNormalAngle(piece->x, piece->y) + getRotation(step)) )
-    {
-        moves = rot+1;
-    }
-    
-    // rotation at the beginning
-    if(moves <= rot)
-    {            
-        float a_start = piece->angle;            
-        float a_finish = getNormalAngle(piece->x, piece->y) + getRotation(step);
-        
-        if(mMoveSteps[step]->c == 0) // special case - when we start from the center
-        {
-            a_finish = getNormalAngle(mMoveSteps[step+1]->x_center, mMoveSteps[step+1]->y_center) 
-                       + getRotation(step);
-               
-            a_finish = shorterAngle(a_finish);
-            
-            if((int)piece->angle == (int)a_finish) // no need to rotate
-            {
-                moves = rot+1;
-            }
-        }          
-        
-        if(moves <= rot )
-        {
-            const float a = a_start + (a_finish - a_start) / rot * moves;
-            piece->angle = a;
-        }
-    }
-    
-    // then move straight
-    if(moves > rot && moves <= total)
-    {
-        const float x_start = mMoveSteps[step]->x_center; 
-        const float y_start = mMoveSteps[step]->y_center; 
-        
-        const float x_finish = mMoveSteps[step+1]->x_center; 
-        const float y_finish = mMoveSteps[step+1]->y_center; 
-        
-        float x = x_start + (x_finish - x_start) / straight * (moves - rot);
-        float y = y_start + (y_finish - y_start) / straight * (moves - rot);
-        
-        // smooth rotation
-        if(mMoveSteps[step]->c == 0) //special case - when we move through the center
-        {
-            piece->angle = shorterAngle(getNormalAngle(mMoveSteps[step+1]->x_center, mMoveSteps[step+1]->y_center) 
-                                   + getRotation(step));
-        }
-        else
-        {
-            piece->angle = getNormalAngle(x, y) + getRotation(step);
-        }
-        
-        piece->x = x;
-        piece->y = y;
-    }
-            
-    moves++;
-    */
+
 
     assert(oldx != piece->x || oldy != piece->y || oldang != piece->angle);
   //  assert(fabs(oldang - piece->angle) < 15);
@@ -229,6 +173,9 @@ float Animation::getNormalAngle(float x, float y)
 {
     const float dy = y - CIRCLE_CENTER_Y;
     const float dx = x - CIRCLE_CENTER_X;
+    
+    if(dx == 0 && dy ==0)
+        return 0.0;
     
     float ang = atan (- dy / dx ) * 180.0 / PI;
     if(ang > 0)
