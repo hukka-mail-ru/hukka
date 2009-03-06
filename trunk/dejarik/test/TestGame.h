@@ -60,11 +60,10 @@ public:
         game.startup();
         
         BoardPtr board = game.getBoard();
-        
-        CPPUNIT_ASSERT_EQUAL((unsigned)8, game.getPieces().size());
+        CPPUNIT_ASSERT_EQUAL((unsigned)8, board->getPieces().size());
         
         board->killPiece(board->getCell(2, 0)->piece);
-        CPPUNIT_ASSERT_EQUAL((unsigned)7, game.getPieces().size());
+        CPPUNIT_ASSERT_EQUAL((unsigned)7, board->getPieces().size());
         
         TRY_CATCH;
     }

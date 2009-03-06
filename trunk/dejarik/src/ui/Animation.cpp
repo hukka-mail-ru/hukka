@@ -10,7 +10,7 @@ bool Animation::updateAll(const std::vector<CellPtr>& moveSteps)
     mMoveSteps = moveSteps;
     
     // draw Pieces
-    vector<PiecePtr> pieces = mGame->getPieces();
+    vector<PiecePtr> pieces = mGame->getBoard()->getPieces();
     for(unsigned i = 0; i < pieces.size(); i++)
     {
         initPiece(pieces[i]);

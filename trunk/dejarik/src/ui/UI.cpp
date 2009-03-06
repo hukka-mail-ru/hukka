@@ -24,7 +24,7 @@ void UI::startup()
 {
     TRY_BEGINS;
     
-    vector<PiecePtr> pieces = mGame->getPieces();
+    vector<PiecePtr> pieces = mGame->getBoard()->getPieces();
     vector<string> names;
     for(unsigned i=0; i<pieces.size(); i++)
     {
@@ -146,7 +146,7 @@ void UI::drawBoard()
     }
     
     // draw Pieces
-    vector<PiecePtr> pieces = mGame->getPieces();
+    vector<PiecePtr> pieces = mGame->getBoard()->getPieces();
     for(unsigned i = 0; i < pieces.size(); i++)
     {
         drawPiece(pieces[i]);

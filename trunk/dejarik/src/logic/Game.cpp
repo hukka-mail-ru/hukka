@@ -18,17 +18,8 @@ void Game::startup()
     mPlayer1 = PlayerPtr(new Player("Player1", mBoard));
     mPlayer2 = PlayerPtr(new Player("Player2", mBoard));
 
-    vector<PiecePtr> pieces;    
-    pieces.push_back(PiecePtr(new Piece("Sarvip",     6, 6, 2)));
-    pieces.push_back(PiecePtr(new Piece("Monnok",     6, 5, 3)));
-    pieces.push_back(PiecePtr(new Piece("Ghhhk",      4, 3, 2)));
-    pieces.push_back(PiecePtr(new Piece("Houjix",     4, 4, 1)));
-    pieces.push_back(PiecePtr(new Piece("Strider",    2, 7, 3)));
-    pieces.push_back(PiecePtr(new Piece("Ngok",       3, 8, 1)));
-    pieces.push_back(PiecePtr(new Piece("Klorslug",   7, 3, 2)));
-    pieces.push_back(PiecePtr(new Piece("Molator",    8, 2, 2)));
-    
-    mPieces = pieces; // memorize
+    mBoard->createPieces();
+    vector<PiecePtr> pieces = mBoard->getPieces();
     
     vector<CellPtr> cells;
     mBoard->getInitialCells(cells);  
