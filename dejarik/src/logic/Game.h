@@ -26,8 +26,6 @@ public:
 
     const BoardPtr& getBoard();
     
-    std::vector<PiecePtr>& getPieces() { return mPieces; }
-    
     // needed by UI:
     const Player* getPlayer1();
     const Player* getPlayer2();
@@ -45,7 +43,7 @@ private:
     PlayerPtr mPlayer2;
     PlayerPtr mActivePlayer;
     
-    std::vector<PiecePtr> mPieces;
+
     
 };
 

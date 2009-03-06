@@ -30,10 +30,10 @@ public:
     Board();
     
     void getInitialCells(std::vector<CellPtr>& cells);
-    
+    void createPieces();
+    std::vector<PiecePtr>& getPieces() { return mPieces; }
     void placePiece(const PiecePtr& piece, unsigned c, unsigned r);
-    void placePiece(const PiecePtr& piece, const CellPtr& cell);
-    
+    void placePiece(const PiecePtr& piece, const CellPtr& cell);    
     void distribute(const PiecePtr& piece, const PlayerPtr& player);
     
     // on Game over
@@ -84,6 +84,7 @@ private:
     std::vector<CellPtr> mPossibleClicks;
     
     PiecePtr mActivePiece;
+    std::vector<PiecePtr> mPieces;
 };
 
 
