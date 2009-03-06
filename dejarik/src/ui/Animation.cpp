@@ -102,24 +102,15 @@ void Animation::updatePiece(const PiecePtr& piece)
     assert(mMoveSteps.size() > 1);    
     mMoving = true;
     
-    cout << "1" << endl;
     // 1. Rotation
     if(moves <= rot)
     {
        float targetAngle = getTargetAngle(step);
     
-       cout << "1.1" << endl;
        if((int)shorterAngle(piece->angle) != (int)targetAngle) // need to rotate the piece 
        {
-           // rotate smoothly
-           if(moves <= rot)
-           {   
-               cout << "piece->angle: " << piece->angle << endl;
-               cout << "targetAngle: " << targetAngle << endl;
-               cout << "getSmallestAngle(piece->angle, targetAngle): " << getSmallestAngle(piece->angle, targetAngle) << endl;
-               piece->angle = piece->angle + getSmallestAngle(piece->angle, targetAngle) / rot * moves;           
-               moves++;
-           }
+           piece->angle = piece->angle + getSmallestAngle(piece->angle, targetAngle) / rot * moves;           
+           moves++;
        }
        else // piece has the proper position
        {
@@ -127,7 +118,6 @@ void Animation::updatePiece(const PiecePtr& piece)
        }
     }
     
-    cout << "2" << endl;
    // 2. Straight
    if(moves > rot && moves <= total)
    {
@@ -146,7 +136,7 @@ void Animation::updatePiece(const PiecePtr& piece)
 
 
     assert(oldx != piece->x || oldy != piece->y || oldang != piece->angle);
-  //  assert(fabs(oldang - piece->angle) < 15);
+  //  assert(fabs(oldang - piece->angle) < 15); // TODO sometimes we crash here
     assert(piece->x < CIRCLE_CENTER_X + RADIUS_3);
     assert(piece->x > CIRCLE_CENTER_X - RADIUS_3); 
     assert(piece->y < CIRCLE_CENTER_Y + RADIUS_3);
