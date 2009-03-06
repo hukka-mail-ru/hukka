@@ -76,6 +76,9 @@ public:
         Animation anim;
         
         CPPUNIT_ASSERT_EQUAL((float)0, 
+                anim.getNormalAngle(CIRCLE_CENTER_X , CIRCLE_CENTER_Y ));
+        
+        CPPUNIT_ASSERT_EQUAL((float)0, 
                 anim.getNormalAngle(CIRCLE_CENTER_X , CIRCLE_CENTER_Y + 10));
 
         CPPUNIT_ASSERT_EQUAL((float)180, 
