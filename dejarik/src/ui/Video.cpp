@@ -236,9 +236,10 @@ void Video::createImages(const std::vector<std::string>& names)
     
     for(unsigned i =0; i<names.size(); ++i)
     {
-        string name = names[i] +"0";
-        createImage(name, IT_MASKED);
+        createImage(names[i] +"0", IT_MASKED);        
+        createImage("menu_" + names[i], IT_SINGLE);
     }
+    
     
     for(unsigned i =1; i<8; ++i)
     {
@@ -247,8 +248,9 @@ void Video::createImages(const std::vector<std::string>& names)
         createImage(name.str(), IT_MASKED);
     }
     
-    createImage("menu_Klorslug", IT_SINGLE);
-
+   
+    createImage("menu_default", IT_SINGLE);
+    
     createImage("segment0", IT_MASKED);
     createImage("segment", IT_MASKED);
     createImage("segment2", IT_MASKED);
