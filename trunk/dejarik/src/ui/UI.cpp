@@ -270,18 +270,16 @@ void UI::onMouseClick(const SDL_Event& event)
                 
             }
             
-            // log -------------------------
             switch(res)
             {
                 case RES_CLICK: cout << "RES_CLICK" << endl; break;
                 case RES_MOVE: cout << "RES_MOVE" << endl; break;
-                case RES_KILL:  cout << "RES_KILL" << endl;break;
-                case RES_PUSH:cout << "RES_PUSH" << endl;break;
-                case RES_COUNTER_KILL:cout << "RES_COUNTER_KILL" << endl;break;
-                case RES_COUNTER_PUSH:cout << "RES_COUNTER_PUSH" << endl;break;
+                case RES_KILL: menuItemName = "kill"; cout << "RES_KILL" << endl;break;
+                case RES_PUSH: menuItemName = "push"; cout << "RES_PUSH" << endl;break;
+                case RES_COUNTER_KILL: menuItemName = "counter_kill"; cout << "RES_COUNTER_KILL" << endl;break;
+                case RES_COUNTER_PUSH: menuItemName = "counter_push"; cout << "RES_COUNTER_PUSH" << endl;break;
                 default: break;
             }
-            //----------------------------
             
             PlayerPtr vinner;
             if(mGame->checkVictory(vinner))

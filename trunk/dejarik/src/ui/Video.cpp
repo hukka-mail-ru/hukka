@@ -250,6 +250,10 @@ void Video::createImages(const std::vector<std::string>& names)
     
    
     createImage("menu_default", IT_SINGLE);
+    createImage("menu_kill", IT_SINGLE);
+    createImage("menu_push", IT_SINGLE);
+    createImage("menu_counter_kill", IT_SINGLE);
+    createImage("menu_counter_push", IT_SINGLE);
     
     createImage("segment0", IT_MASKED);
     createImage("segment", IT_MASKED);
