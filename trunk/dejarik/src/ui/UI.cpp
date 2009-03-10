@@ -100,11 +100,16 @@ void UI::drawPiece(const PiecePtr& piece)
 
 void UI::drawMenu()
 {
+    TRY_BEGINS;
+   
+    
     // menu 
-    Video::drawSprite("menu_Klorslug", RGB(1,1,1), XY_LEFTBOTTOM,
+    Video::drawSprite("menu_" + menuItemName, RGB(1,1,1), XY_LEFTBOTTOM,
                       3,
                       252,
                       0); 
+    
+    TRY_RETHROW;
 }
 
 
@@ -118,7 +123,7 @@ void UI::drawCell(const CellPtr& cell, bool clicked)
 
     switch(cell->selected)
     {
-        case SEL_CLICKED:         color = RGB(0,0,1);  if(!clicked) return; break;
+        case SEL_CLICKED:         color = RGB(0,0,1);  if(!clicked) return;  break;
         case SEL_POSSIBLE_MOVE:   color = RGB(0.2, 1, 0.2);  if(clicked) return; break;
         case SEL_POSSIBLE_TARGET: color = RGB(1,0,0);  if(clicked) return; break;
         case SEL_POSSIBLE_PUSH:   color = RGB(1,0,1);  if(clicked) return; break;
@@ -150,7 +155,7 @@ void UI::drawBoard()
     vector<CellPtr> cells;
     mGame->getBoard()->getCells(cells);
     
-    // draw all but clicked cell
+    // draw all but clicked cell    
     for(unsigned i = 0; i < cells.size(); i++)
     {
         drawCell(cells[i], false);
@@ -174,7 +179,7 @@ void UI::drawBoard()
     TRY_RETHROW;
 }
 
-
+/*
 void UI::drawActivePlayer()
 {
     TRY_BEGINS;
@@ -202,7 +207,7 @@ void UI::drawActivePlayer()
     glEnd();
     
     TRY_RETHROW;
-}
+}*/
 
 
 /* Here goes our drawing code */
@@ -252,6 +257,10 @@ void UI::onMouseClick(const SDL_Event& event)
             //if(cell->piece)
             //    cout << "piece " << cell->piece->name << " move " <<cell->piece->moveRating << endl; 
             
+            // show Menu item
+            menuItemName = (cell->piece) ? cell->piece->name : "default";
+            
+            // process the click
             BattleResult res = mGame->onCellClick(cell);
            
             if(res == RES_MOVE)
@@ -280,7 +289,7 @@ void UI::onMouseClick(const SDL_Event& event)
                 mQuit = true;
                 cout << "GAME OVER. Vinner: " << vinner->getName() << endl;
             }
-
+            
         }   
     }   
     

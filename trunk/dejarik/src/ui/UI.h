@@ -17,7 +17,7 @@ class UI
 {
 public:
     
-    UI(const GamePtr& game): mGame(game), mQuit(false), animation(game)
+    UI(const GamePtr& game): mGame(game), mQuit(false), animation(game), menuItemName("default")
     {}
     
     void startup();
@@ -56,6 +56,7 @@ private:
     std::vector<CellPtr> mMoveSteps; 
     
     Animation animation;
+    std::string menuItemName;
 
 };
 
