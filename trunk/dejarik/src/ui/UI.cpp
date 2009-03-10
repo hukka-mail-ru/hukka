@@ -86,7 +86,13 @@ void UI::drawPiece(const PiecePtr& piece)
 {
     TRY_BEGINS;
     
-    RGB color = (piece->player.get() == mGame->getPlayer1()) ? RGB(1,1,1) : RGB(1,0,0);
+    RGB color = (piece->player.get() == mGame->getActivePlayer()) ? RGB(1,0,1) : RGB(1,1,1);
+
+    if(mMoving)
+    {
+        color = RGB(1,1,1);
+    }
+    
 
     ostringstream name;
     name << piece->name << piece->sprite;
@@ -302,9 +308,9 @@ void UI::handleEvents()
     SDL_Event event;
     while ( !mQuit )
     {
-        bool moving = animation.updateAll(mMoveSteps);
+        mMoving = animation.updateAll(mMoveSteps);
         
-        if(moving)
+        if(mMoving)
         {
             SDL_Delay(5);
         }
@@ -319,7 +325,7 @@ void UI::handleEvents()
             
             
             // MOUSE EVENT
-            if( !moving && event.type == SDL_MOUSEBUTTONDOWN ) 
+            if( !mMoving && event.type == SDL_MOUSEBUTTONDOWN ) 
             {
                 onMouseClick(event);
             }

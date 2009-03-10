@@ -17,7 +17,8 @@ class UI
 {
 public:
     
-    UI(const GamePtr& game): mGame(game), mQuit(false), animation(game), menuItemName("default")
+    UI(const GamePtr& game):
+        mGame(game), mQuit(false), animation(game), menuItemName("default"), mMoving(false)
     {}
     
     void startup();
@@ -57,6 +58,7 @@ private:
     
     Animation animation;
     std::string menuItemName;
+    bool mMoving;
 
 };
 
