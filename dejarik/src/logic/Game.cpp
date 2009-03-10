@@ -94,12 +94,18 @@ BattleResult Game::onCellClick(const CellPtr& cell)
     
     if(!mBoard->isClickValid(cell))
     {
+        mActivePlayer->resetActivePiece();
         return res;
     }
     
     // clicked on empty cell
     if(!cell->piece) 
     {
+        if(!mActivePlayer->getActivePiece())
+        {
+            return res;
+        }
+        
         // common move
         mActivePlayer->movePiece(cell);
         mActivePlayer->decrementLeftMoves();
