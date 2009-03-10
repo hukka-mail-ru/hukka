@@ -43,6 +43,7 @@ class TestGame: public CppUnit::TestFixture
    CPPUNIT_TEST(testPush2);
    CPPUNIT_TEST(testPush3);
    CPPUNIT_TEST(testCounterPush);
+   CPPUNIT_TEST(testCounterPush2);
    CPPUNIT_TEST(testVictory);
    
    CPPUNIT_TEST_SUITE_END();
@@ -51,6 +52,42 @@ public:
     void setUp() {}
     void tearDown() {}
     
+    void testCounterPush2() // enemy attacks and obtains a counter-push
+    {
+        TRY_BEGINS;
+        SHOW_FUNCTION_NAME;
+        
+        Game game;
+        game.startup();
+        
+        BoardPtr board = game.getBoard();
+        const Player* player1 = game.getActivePlayer();
+        board->getCell(2, 2)->piece->moveRating = 3; // me
+        board->getCell(2, 2)->piece->attackRating = 0;
+        
+        board->getCell(2, 9)->piece->defenceRating = 1;// enemy     
+        
+        game.onCellClick(board->getCell(2,2));
+        game.onCellClick(board->getCell(1,9));
+        
+        CPPUNIT_ASSERT(board->getCell(1, 9)->piece);
+        
+        game.onCellClick(board->getCell(1,9));       
+        BattleResult res = game.onCellClick(board->getCell(2,9));
+        
+        CPPUNIT_ASSERT(res == RES_COUNTER_PUSH);
+        
+        game.onCellClick(board->getCell(0,0)); // counter-pushed 
+        CPPUNIT_ASSERT(board->getCell(0, 0)->piece);
+        CPPUNIT_ASSERT(!board->getCell(1, 9)->piece);
+        
+        CPPUNIT_ASSERT(player1 != game.getActivePlayer());
+        game.onCellClick(board->getCell(2,9));
+        game.onCellClick(board->getCell(1,9));
+        CPPUNIT_ASSERT(board->getCell(1, 9)->piece);
+    
+        TRY_CATCH;
+    }
     
     void testMove7()
     {
@@ -209,6 +246,8 @@ public:
         
         TRY_CATCH;
     }
+    
+  
     
     void testPush2()
     {
