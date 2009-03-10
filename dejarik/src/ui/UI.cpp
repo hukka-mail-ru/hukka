@@ -85,7 +85,9 @@ void UI::drawPiece(const PiecePtr& piece)
     
     RGB color = (piece->player.get() == mGame->getPlayer1()) ? RGB(1,1,1) : RGB(1,0,0);
 
-    Video::drawSprite(piece->name, color, XY_CENTER,
+    ostringstream name;
+    name << piece->name << piece->sprite;
+    Video::drawSprite(name.str(), color, XY_CENTER,
                       piece->x,
                       piece->y,
                       piece->angle); 

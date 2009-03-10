@@ -23,7 +23,9 @@ public:
           moveRating(move),
           angle(FLOAT_UNDEFINED),
           x(FLOAT_UNDEFINED),
-          y(FLOAT_UNDEFINED)
+          y(FLOAT_UNDEFINED),
+          sprite(0),
+          sprites(8)
           {
               cell.reset();
           }    
@@ -40,6 +42,8 @@ public:
     float angle; // used by UI
     float x; // used by UI
     float y; // used by UI
+    unsigned sprite;
+    unsigned sprites;
     
 };
 

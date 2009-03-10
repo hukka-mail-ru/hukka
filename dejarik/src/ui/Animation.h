@@ -24,6 +24,7 @@ private:
     float getRotation(unsigned step);
     float shorterAngle(float ang);
     float getSmallestAngle(float start, float end); 
+    void  updatePieceImage(const PiecePtr& piece);
     
     void initPiece(const PiecePtr& piece);
     void updatePiece(const PiecePtr& piece);
