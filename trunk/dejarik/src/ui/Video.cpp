@@ -236,7 +236,15 @@ void Video::createImages(const std::vector<std::string>& names)
     
     for(unsigned i =0; i<names.size(); ++i)
     {
-        createImage(names[i], IT_MASKED);
+        string name = names[i] +"0";
+        createImage(name, IT_MASKED);
+    }
+    
+    for(unsigned i =1; i<8; ++i)
+    {
+        ostringstream name;
+        name << "Molator" << i;
+        createImage(name.str(), IT_MASKED);
     }
 
     createImage("segment0", IT_MASKED);

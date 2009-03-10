@@ -88,6 +88,21 @@ float Animation::getSmallestAngle(float start, float end)
     return res;
 }
 
+void Animation::updatePieceImage(const PiecePtr& piece)
+{
+    TRY_BEGINS;
+    
+    if(piece->name != "Molator") // TODO temorary
+        return;
+    
+    piece->sprite++;
+    
+    if(piece->sprite == piece->sprites)
+        piece->sprite = 0; 
+    
+    TRY_RETHROW;
+}
+
 void Animation::updatePiece(const PiecePtr& piece)
 {
     TRY_BEGINS;
@@ -145,6 +160,7 @@ void Animation::updatePiece(const PiecePtr& piece)
        moves++;
    }
 
+   updatePieceImage(piece);
 
     assert(oldx != piece->x || oldy != piece->y || oldang != piece->angle);
   //  assert(fabs(oldang - piece->angle) < 15); // TODO sometimes we crash here
