@@ -35,6 +35,7 @@ class TestGame: public CppUnit::TestFixture
    CPPUNIT_TEST(testMove4);
    CPPUNIT_TEST(testMove5);
    CPPUNIT_TEST(testMove6);
+   CPPUNIT_TEST(testMove7);
    CPPUNIT_TEST(testKill);
    CPPUNIT_TEST(testKill2);
    CPPUNIT_TEST(testCounterKill);
@@ -49,6 +50,30 @@ class TestGame: public CppUnit::TestFixture
 public:         
     void setUp() {}
     void tearDown() {}
+    
+    
+    void testMove7()
+    {
+        TRY_BEGINS;
+        SHOW_FUNCTION_NAME;
+        
+        Game game;
+        game.startup();
+        
+        BoardPtr board = game.getBoard();
+        board->getCell(2, 0)->piece->moveRating = 1; // me
+        
+        // my turn
+        game.onCellClick(board->getCell(2,0));
+        game.onCellClick(board->getCell(0,0));        
+        game.onCellClick(board->getCell(1,0));
+        
+        CPPUNIT_ASSERT(!board->getCell(1, 0)->piece);
+        CPPUNIT_ASSERT(board->getCell(2, 0)->piece);
+        
+        
+        TRY_CATCH;
+    }
     
     
     void testKill2()
