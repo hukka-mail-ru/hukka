@@ -40,6 +40,7 @@ private:
     void drawCell(const CellPtr& cell, bool clicked);
     void drawPiece(const PiecePtr& piece);
     void drawActivePlayer();
+    void drawMenu();
     float getFinishAngle(unsigned step, const CellPtr& cell);
     
     /*

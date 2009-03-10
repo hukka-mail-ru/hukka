@@ -14,6 +14,7 @@
 #include "UI.h"
 #include "Video.h"
 
+#define VERT_OFFSET -32.0 // how many pixels is from the board center to the screen center 
 
 using namespace std;
 
@@ -38,6 +39,8 @@ void UI::startup()
 bool UI::isCellClicked(float x, float y, CellPtr& cell)
 {
     TRY_BEGINS;
+    
+    y = y - VERT_OFFSET;
     
     vector<CellPtr> cells;
     mGame->getBoard()->getCells(cells);
@@ -89,10 +92,19 @@ void UI::drawPiece(const PiecePtr& piece)
     name << piece->name << piece->sprite;
     Video::drawSprite(name.str(), color, XY_CENTER,
                       piece->x,
-                      piece->y,
+                      piece->y + VERT_OFFSET,
                       piece->angle); 
-    
+        
     TRY_RETHROW;
+}
+
+void UI::drawMenu()
+{
+    // menu 
+    Video::drawSprite("menu_Klorslug", RGB(1,1,1), XY_LEFTBOTTOM,
+                      3,
+                      252,
+                      0); 
 }
 
 
@@ -113,11 +125,14 @@ void UI::drawCell(const CellPtr& cell, bool clicked)
         case SEL_NONE:            return;
     }
 
+    vector<float> celly;
+    for(unsigned i = 0; i<cell->y.size(); i++)
+        celly.push_back(cell->y[i] + VERT_OFFSET);
     
-    Video::drawPolygon(cell->x, cell->y, color, 0.5);
+    Video::drawPolygon(cell->x, celly, color, 0.5);
     
     if(cell->c == 0) 
-     Video::drawShape(cell->x, cell->y, RGB(0,0,0), 1);
+       Video::drawShape(cell->x, celly, RGB(0,0,0), 1);
     
        
     TRY_RETHROW;
@@ -153,6 +168,7 @@ void UI::drawBoard()
     {
         drawPiece(pieces[i]);
     }
+    
     
      
     TRY_RETHROW;
@@ -200,9 +216,14 @@ bool UI::drawAll()
     glTranslatef( 0.0f, 0.0f, -10.0f );
     
     Video::drawBackground();
+    
+    
+    
     drawBoard();
   //  drawActivePlayer();
-
+   // glTranslatef( 100.0f, -5.0f, 0.0f );
+    
+    drawMenu();
     
     
     /* Draw it to the screen */

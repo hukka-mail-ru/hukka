@@ -246,6 +246,8 @@ void Video::createImages(const std::vector<std::string>& names)
         name << "Molator" << i;
         createImage(name.str(), IT_MASKED);
     }
+    
+    createImage("menu_Klorslug", IT_SINGLE);
 
     createImage("segment0", IT_MASKED);
     createImage("segment", IT_MASKED);
