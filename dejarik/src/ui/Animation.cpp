@@ -74,6 +74,15 @@ float Animation::getSmallestAngle(float start, float end)
         res = shifted;
     
     cout << " getSmallestAngle : " << res << endl;
+    
+    assert(fabs(res) <= 360);
+    
+    // shorter angle
+    if(fabs(res) > 180)
+        res = (fabs(res) - 180) * (-res / fabs(res));
+    
+    cout << " res : " << res << endl;
+    
     assert(fabs(res) <= 180);
     
     return res;
