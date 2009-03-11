@@ -52,7 +52,7 @@ public:
     void setUp() {}
     void tearDown() {}
     
-    void testCounterPush2() // enemy attacks and obtains a counter-push
+    void testCounterPush2() 
     {
         TRY_BEGINS;
         SHOW_FUNCTION_NAME;
@@ -65,7 +65,8 @@ public:
         board->getCell(2, 2)->piece->moveRating = 3; // me
         board->getCell(2, 2)->piece->attackRating = 0;
         
-        board->getCell(2, 9)->piece->defenceRating = 1;// enemy     
+        board->getCell(2, 9)->piece->defenceRating = 1;// enemy  
+        board->getCell(2, 9)->piece->moveRating = 1; // enemy
         
         game.onCellClick(board->getCell(2,2));
         game.onCellClick(board->getCell(1,9));
@@ -81,7 +82,11 @@ public:
         CPPUNIT_ASSERT(board->getCell(0, 0)->piece);
         CPPUNIT_ASSERT(!board->getCell(1, 9)->piece);
         
+        // now enemy's turn
         CPPUNIT_ASSERT(player1 != game.getActivePlayer());
+        CPPUNIT_ASSERT(board->getCell(2, 9)->piece);
+        CPPUNIT_ASSERT(!board->getCell(1, 9)->piece);
+        
         game.onCellClick(board->getCell(2,9));
         game.onCellClick(board->getCell(1,9));
         CPPUNIT_ASSERT(board->getCell(1, 9)->piece);

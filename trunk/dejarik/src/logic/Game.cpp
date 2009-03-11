@@ -178,7 +178,20 @@ BattleResult Game::onCellClick(const CellPtr& cell)
     
     if(mActivePlayer->getLeftMoves() == 0)
     {
-        passTurn();
+        PlayerPtr enemy = (mActivePlayer == mPlayer1) ? mPlayer2 : mPlayer1; // next player
+        
+        // special case: keep on turning if the 'COUNTER PUSH' was the result 
+        // of the last enemy turn
+        if(enemy->getLeftMoves() == 0 && prevBattleResult == RES_COUNTER_PUSH)
+        {
+            mActivePlayer->setLeftMoves(NUM_MOVES);
+            mActivePlayer->resetActivePiece();
+            mBoard->definePossibleClicks(mActivePlayer);
+        }
+        else // normal case
+        {
+            passTurn();
+        }
     }
 
     prevBattleResult = res;
