@@ -6,50 +6,52 @@ using namespace std;
 #include "UI.h"
 #include "Macros.h"
 
-// PLATFORM-DEPENDENT
-// ----------------------------------------------------------------------
-#include <sys/types.h>
-#include <sys/stat.h>
-#include <fcntl.h>
-#include <unistd.h>
-#include <sys/file.h>
-
-#define LOCKED_FILE "locked_file"
-int fd = 0;
-
-bool lockFile()
-{   
-    fd = open(LOCKED_FILE, O_CREAT);
-    if(fd == -1) 
-        return false;
+#ifdef LINUX_BUILD
+    #include <sys/types.h>
+    #include <sys/stat.h>
+    #include <fcntl.h>
+    #include <unistd.h>
+    #include <sys/file.h>
     
-    if(flock(fd, LOCK_EX | LOCK_NB) == -1) 
-        return false;
-
-    return true;
-}
-
-
-bool unlockFile()
-{
-    // try to unlock; erase file if unlocking failed
-    if(flock(fd, LOCK_UN) == -1) 
-        return false;
-
-    if(unlink(LOCKED_FILE) == -1)
-        return false;
+    #define LOCKED_FILE "locked_file"
+    int fd = 0;
     
-    return true;
-}
-// ----------------------------------------------------------------------
+    bool lockFile()
+    {   
+        fd = open(LOCKED_FILE, O_CREAT);
+        if(fd == -1) 
+            return false;
+        
+        if(flock(fd, LOCK_EX | LOCK_NB) == -1) 
+            return false;
+    
+        return true;
+    }
+    
+    
+    bool unlockFile()
+    {
+        // try to unlock; erase file if unlocking failed
+        if(flock(fd, LOCK_UN) == -1) 
+            return false;
+    
+        if(unlink(LOCKED_FILE) == -1)
+            return false;
+        
+        return true;
+    }
+    // ----------------------------------------------------------------------
+#endif
 
-
+    
 int main()
 {
     TRY_BEGINS;
 
+#ifdef LINUX_BUILD
     if(!lockFile())
         return -1;
+#endif
     
     GamePtr game = GamePtr(new Game());    
     game->startup();
@@ -61,5 +63,9 @@ int main()
    
     TRY_CATCH;
 
+#ifdef LINUX_BUILD
     return unlockFile();
+#endif
+    
+    return 0;
 }
