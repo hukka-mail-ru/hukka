@@ -1,4 +1,4 @@
-#ifndef PIECE_H_
+ #ifndef PIECE_H_
 #define PIECE_H_
 
 #include "Cell.h"
