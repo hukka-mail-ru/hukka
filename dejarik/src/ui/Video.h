@@ -1,6 +1,10 @@
 #ifndef VIDEO_H_
 #define VIDEO_H_
 
+#ifdef WIN_BUILD
+#include <windows.h>
+#endif
+
 #include <vector>
 #include <string>
 #include <map>
