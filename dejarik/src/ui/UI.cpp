@@ -86,11 +86,11 @@ void UI::drawPiece(const PiecePtr& piece)
 {
     TRY_BEGINS;
     
-    RGB color = (piece->player.get() == mGame->getActivePlayer()) ? RGB(1,0,1) : RGB(1,1,1);
+    RGB_Color color = (piece->player.get() == mGame->getActivePlayer()) ? RGB_Color(1,0,1) : RGB_Color(1,1,1);
 
     if(mMoving)
     {
-        color = RGB(1,1,1);
+        color = RGB_Color(1,1,1);
     }
     
 
@@ -110,7 +110,7 @@ void UI::drawMenu()
    
     
     // menu 
-    Video::drawSprite("menu_" + menuItemName, RGB(1,1,1), XY_LEFTBOTTOM,
+    Video::drawSprite("menu_" + menuItemName, RGB_Color(1,1,1), XY_LEFTBOTTOM,
                       3,
                       252,
                       0); 
@@ -124,15 +124,15 @@ void UI::drawCell(const CellPtr& cell, bool clicked)
 {
     TRY_BEGINS;
     
-    RGB color = RGB(1,1,1);
+    RGB_Color color = RGB_Color(1,1,1);
     
 
     switch(cell->selected)
     {
-        case SEL_CLICKED:         color = RGB(0,0,1);  if(!clicked) return;  break;
-        case SEL_POSSIBLE_MOVE:   color = RGB(0.2, 1, 0.2);  if(clicked) return; break;
-        case SEL_POSSIBLE_TARGET: color = RGB(1,0,0);  if(clicked) return; break;
-        case SEL_POSSIBLE_PUSH:   color = RGB(1,0,1);  if(clicked) return; break;
+        case SEL_CLICKED:         color = RGB_Color(0,0,1);  if(!clicked) return;  break;
+        case SEL_POSSIBLE_MOVE:   color = RGB_Color(0.2, 1, 0.2);  if(clicked) return; break;
+        case SEL_POSSIBLE_TARGET: color = RGB_Color(1,0,0);  if(clicked) return; break;
+        case SEL_POSSIBLE_PUSH:   color = RGB_Color(1,0,1);  if(clicked) return; break;
         case SEL_NONE:            return;
     }
 
@@ -143,7 +143,7 @@ void UI::drawCell(const CellPtr& cell, bool clicked)
     Video::drawPolygon(cell->x, celly, color, 0.5);
     
     if(cell->c == 0) 
-       Video::drawShape(cell->x, celly, RGB(0,0,0), 1);
+       Video::drawShape(cell->x, celly, RGB_Color(0,0,0), 1);
     
        
     TRY_RETHROW;
@@ -155,7 +155,7 @@ void UI::drawBoard()
 {
     TRY_BEGINS;
     
-    Video::drawSprite("board", RGB(1,1,1), XY_LEFTBOTTOM, 1, 1, 0);
+    Video::drawSprite("board", RGB_Color(1,1,1), XY_LEFTBOTTOM, 1, 1, 0);
     
     
     vector<CellPtr> cells;
