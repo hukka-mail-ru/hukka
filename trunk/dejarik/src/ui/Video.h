@@ -81,7 +81,7 @@ private:
     static void loadTexture(Texture& texture, const std::string& path);
     static void resizeWindow(unsigned width, unsigned height);
    
-    static void winToGL(float winX, float winY, GLdouble& x, GLdouble& y, GLdouble& z);
+    static void winToGL(float winX, float winY, double& x, double& y, double& z);
     
     static void drawImage(const Texture& texture, const RGB_Color& color, float x, float y, float angle);    
 
