@@ -12,7 +12,7 @@
  
 
 #include "UI.h"
-#include "Video.h"
+
 
 #define VERT_OFFSET -32.0 // how many pixels is from the board center to the screen center 
 
