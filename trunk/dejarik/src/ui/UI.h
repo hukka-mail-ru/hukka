@@ -5,15 +5,7 @@
 #include "../common/Macros.h"
 #include "Game.h"
 #include "Animation.h"
-
-
-#ifdef WIN_BUILD
-#include <windows.h>
-#endif
-
-#include <GL/gl.h>
-#include <GL/glu.h>
-#include <SDL.h>
+#include "Video.h"
 
 CLASSPTR(UI);
 
