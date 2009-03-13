@@ -287,7 +287,7 @@ void Video::drawBackground()
 }
 
 
-void Video::drawShape(const vector<float>& xWin, const vector<float>& yWin, const RGB& color, float width)
+void Video::drawShape(const vector<float>& xWin, const vector<float>& yWin, const RGB_Color& color, float width)
 {
     TRY_BEGINS;
     
@@ -325,7 +325,7 @@ void Video::drawShape(const vector<float>& xWin, const vector<float>& yWin, cons
 
 void Video::drawPolygon(
         const vector<float>& xWin, const vector<float>& yWin, 
-        const RGB& color, float opacity)
+        const RGB_Color& color, float opacity)
 {
     TRY_BEGINS;
     
@@ -369,7 +369,7 @@ void Video::drawPolygon(
 }
 
 void Video::drawSprite(
-        const std::string& imageName, const RGB& color, 
+        const std::string& imageName, const RGB_Color& color, 
         SpriteXY spriteXY, float winX, float winY, float angle)
 {
     TRY_BEGINS;
@@ -398,7 +398,7 @@ void Video::drawSprite(
         glDisable( GL_DEPTH_TEST );
         glBlendFunc( GL_DST_COLOR, GL_ZERO );
         
-        drawImage(images[imageName]->mask, RGB(1,1,1), winX, winY, angle);
+        drawImage(images[imageName]->mask, RGB_Color(1,1,1), winX, winY, angle);
 
         glBlendFunc( GL_ONE, GL_ONE );
 
@@ -413,7 +413,7 @@ void Video::drawSprite(
 }
 
 
-void Video::drawImage(const Texture& texture, const RGB& color, float winX, float winY, float angle)
+void Video::drawImage(const Texture& texture, const RGB_Color& color, float winX, float winY, float angle)
 {
     TRY_BEGINS;
    
@@ -432,7 +432,7 @@ void Video::drawImage(const Texture& texture, const RGB& color, float winX, floa
     glPushMatrix();
     glEnable( GL_TEXTURE_2D );
     
-        glBindTexture( GL_TEXTURE_2D, texture.id);
+        glBindTexture(GL_TEXTURE_2D, texture.id);
         glColor3f(color.r, color.g, color.b); // blue
         
         glTranslatef((x1+x2)/2, (y1+y2)/2, 0); // rotate [move to the coordinate center]

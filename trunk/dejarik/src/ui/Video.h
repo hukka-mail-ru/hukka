@@ -37,9 +37,10 @@ struct Image
 
 CLASSPTR(Image);
 
-struct RGB
+
+struct RGB_Color
 {
-    RGB(float r, float g, float b): r(r), g(g), b(b) {}
+    RGB_Color(float r, float g, float b): r(r), g(g), b(b) {}
     float r;
     float g;
     float b;
@@ -63,12 +64,12 @@ public:
     static void drawBackground();
     
     static void drawPolygon(const std::vector<float>& x, const std::vector<float>& y, 
-            const RGB& color, float opacity);
+            const RGB_Color& color, float opacity);
     
     static void drawShape(const std::vector<float>& xWin, const std::vector<float>& yWin, 
-            const RGB& color, float width);
+            const RGB_Color& color, float width);
 
-    static void drawSprite(const std::string& imageName, const RGB& color, 
+    static void drawSprite(const std::string& imageName, const RGB_Color& color, 
             SpriteXY spriteXY, float x, float y, float angle);    
         
 private:
@@ -82,7 +83,7 @@ private:
    
     static void winToGL(float winX, float winY, GLdouble& x, GLdouble& y, GLdouble& z);
     
-    static void drawImage(const Texture& texture, const RGB& color, float x, float y, float angle);    
+    static void drawImage(const Texture& texture, const RGB_Color& color, float x, float y, float angle);    
 
     static std::map<std::string, ImagePtr> images;
 
