@@ -88,7 +88,7 @@ void Video::initGL()
     glClearColor( 0.5f, 0.5f, 0.5f, 0.0f );
 
     /* Depth buffer setup */
-    glClearDepth( 1.0f );
+  //  glClearDepth( 1.0f ); // Can't work in ES. It seems we can just comment it
 
     /* Enables Depth Testing */
     glEnable( GL_DEPTH_TEST );
