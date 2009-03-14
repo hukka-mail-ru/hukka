@@ -47,7 +47,7 @@
  * Output:  out - the resulting 4x1 vector.
  */
 static void
-transform_point(GLdouble out[4], const GLdouble m[16], const GLdouble in[4])
+transform_point(double out[4], const double m[16], const double in[4])
 {
 #define M(row,col)  m[col*4+row]
    out[0] =
@@ -70,11 +70,11 @@ transform_point(GLdouble out[4], const GLdouble m[16], const GLdouble in[4])
  * Output:  product - product of a and b
  */
 static void
-matmul(GLdouble * product, const GLdouble * a, const GLdouble * b)
+matmul(double * product, const double * a, const double * b)
 {
    /* This matmul was contributed by Thomas Malik */
-   GLdouble temp[16];
-   GLint i;
+   double temp[16];
+   int i;
 
 #define A(row,col)  a[(col<<2)+row]
 #define B(row,col)  b[(col<<2)+row]
@@ -103,7 +103,7 @@ matmul(GLdouble * product, const GLdouble * a, const GLdouble * b)
 #undef A
 #undef B
 #undef T
-   memcpy(product, temp, 16 * sizeof(GLdouble));
+   memcpy(product, temp, 16 * sizeof(double));
 }
 
 
@@ -114,15 +114,15 @@ matmul(GLdouble * product, const GLdouble * a, const GLdouble * b)
  * Return GL_TRUE for success, GL_FALSE for failure (singular matrix)
  */
 static GLboolean
-invert_matrix(const GLdouble * m, GLdouble * out)
+invert_matrix(const double * m, double * out)
 {
 /* NB. OpenGL Matrices are COLUMN major. */
-#define SWAP_ROWS(a, b) { GLdouble *_tmp = a; (a)=(b); (b)=_tmp; }
+#define SWAP_ROWS(a, b) { double *_tmp = a; (a)=(b); (b)=_tmp; }
 #define MAT(m,r,c) (m)[(c)*4+(r)]
 
-   GLdouble wtmp[4][8];
-   GLdouble m0, m1, m2, m3, s;
-   GLdouble *r0, *r1, *r2, *r3;
+   double wtmp[4][8];
+   double m0, m1, m2, m3, s;
+   double *r0, *r1, *r2, *r3;
 
    r0 = wtmp[0], r1 = wtmp[1], r2 = wtmp[2], r3 = wtmp[3];
 
@@ -290,14 +290,14 @@ invert_matrix(const GLdouble * m, GLdouble * out)
 
 
 /* projection du point (objx,objy,obz) sur l'ecran (winx,winy,winz) */
-GLint GLAPIENTRY
-gluProject(GLdouble objx, GLdouble objy, GLdouble objz,
-       const GLdouble model[16], const GLdouble proj[16],
-       const GLint viewport[4],
-       GLdouble * winx, GLdouble * winy, GLdouble * winz)
+int GLAPIENTRY
+gluProject(double objx, double objy, double objz,
+       const double model[16], const double proj[16],
+       const int viewport[4],
+       double * winx, double * winy, double * winz)
 {
    /* matrice de transformation */
-   GLdouble in[4], out[4];
+   double in[4], out[4];
 
    /* initilise la matrice et le vecteur a transformer */
    in[0] = objx;
@@ -326,15 +326,15 @@ gluProject(GLdouble objx, GLdouble objy, GLdouble objz,
 
 
 /* transformation du point ecran (winx,winy,winz) en point objet */
-GLint GLAPIENTRY
-gluUnProject(GLdouble winx, GLdouble winy, GLdouble winz,
-         const GLdouble model[16], const GLdouble proj[16],
-         const GLint viewport[4],
-         GLdouble * objx, GLdouble * objy, GLdouble * objz)
+int GLAPIENTRY
+gluUnProject(double winx, double winy, double winz,
+         const double model[16], const double proj[16],
+         const int viewport[4],
+         double * objx, double * objy, double * objz)
 {
    /* matrice de transformation */
-   GLdouble m[16], A[16];
-   GLdouble in[4], out[4];
+   double m[16], A[16];
+   double in[4], out[4];
 
    /* transformation coordonnees normalisees entre -1 et 1 */
    in[0] = (winx - viewport[0]) * 2 / viewport[2] - 1.0;
@@ -362,19 +362,19 @@ gluUnProject(GLdouble winx, GLdouble winy, GLdouble winz,
  * This is like gluUnProject but also takes near and far DepthRange values.
  */
 #ifdef GLU_VERSION_1_3
-GLint GLAPIENTRY
-gluUnProject4(GLdouble winx, GLdouble winy, GLdouble winz, GLdouble clipw,
-          const GLdouble modelMatrix[16],
-          const GLdouble projMatrix[16],
-          const GLint viewport[4],
+int GLAPIENTRY
+gluUnProject4(double winx, double winy, double winz, double clipw,
+          const double modelMatrix[16],
+          const double projMatrix[16],
+          const int viewport[4],
           GLclampd nearZ, GLclampd farZ,
-          GLdouble * objx, GLdouble * objy, GLdouble * objz,
-          GLdouble * objw)
+          double * objx, double * objy, double * objz,
+          double * objw)
 {
    /* matrice de transformation */
-   GLdouble m[16], A[16];
-   GLdouble in[4], out[4];
-   GLdouble z = nearZ + winz * (farZ - nearZ);
+   double m[16], A[16];
+   double in[4], out[4];
+   double z = nearZ + winz * (farZ - nearZ);
 
    /* transformation coordonnees normalisees entre -1 et 1 */
    in[0] = (winx - viewport[0]) * 2 / viewport[2] - 1.0;
@@ -399,10 +399,9 @@ gluUnProject4(GLdouble winx, GLdouble winy, GLdouble winz, GLdouble clipw,
 #endif
 
 
-void GLAPIENTRY
-gluPerspective(GLdouble fovy, GLdouble aspect, GLdouble zNear, GLdouble zFar)
+void gluPerspective(double fovy, double aspect, double zNear, double zFar)
 {
-   GLdouble xmin, xmax, ymin, ymax;
+   double xmin, xmax, ymin, ymax;
 
    ymax = zNear * tan(fovy * M_PI / 360.0);
    ymin = -ymax;

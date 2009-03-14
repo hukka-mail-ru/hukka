@@ -4,13 +4,14 @@
 
 #ifdef LINUX_BUILD
     #include <GL/gl.h>
+  //  #include <GLES/gl.h>
 #endif
 
 #ifdef WIN_BUILD
     #include <GLES/gl.h>
 #endif
 
-GLAPI void GLAPIENTRY gluPerspective (GLdouble fovy, GLdouble aspect, GLdouble zNear, GLdouble zFar);
-GLAPI GLint GLAPIENTRY gluUnProject (GLdouble winX, GLdouble winY, GLdouble winZ, const GLdouble *model, const GLdouble *proj, const GLint *view, GLdouble* objX, GLdouble* objY, GLdouble* objZ);
+void gluPerspective (double fovy, double aspect, double zNear, double zFar);
+int gluUnProject (double winX, double winY, double winZ, const double *model, const double *proj, const int *view, double* objX, double* objY, double* objZ);
 
 #endif /*Glbasic_H_*/
