@@ -2,13 +2,16 @@
 #define Glbasic_H_
 
 
-#ifdef LINUX_BUILD
+#ifdef OPENGL_BUILD
     #include <GL/gl.h>
-  //  #include <GLES/gl.h>
 #endif
 
-#ifdef WIN_BUILD
+#ifdef OPENGL_ES_BUILD
     #include <GLES/gl.h>
+    #include <GLES/glext.h>
+
+    #undef GL_OES_single_precision
+    #define GL_GLEXT_PROTOTYPES
 #endif
 
 void gluPerspective (double fovy, double aspect, double zNear, double zFar);
