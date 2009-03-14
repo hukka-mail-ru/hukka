@@ -149,9 +149,8 @@ void Video::winToGL(float winX, float winY, float& x, float& y, float& z)
     
     winY = (float)viewport[3] - winY;           // Subtract The Current Mouse Y Coordinate From The Screen Height
     
-    
-    GLfloat winZ = 0;
-    glReadPixels(winX, winY, 1, 1, GL_DEPTH_COMPONENT, GL_FLOAT, &winZ);
+    GLfloat winZ = 0.990991; // A magic number :( because opengl ES doesn't have GL_DEPTH_COMPONENT   
+    // glReadPixels(winX, winY, 1, 1, GL_DEPTH_COMPONENT, GL_FLOAT, &winZ);    
     
     gluUnProject( winX, winY, winZ, modelview, projection, viewport, &x, &y, &z);
     
