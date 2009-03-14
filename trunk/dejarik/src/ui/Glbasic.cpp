@@ -47,7 +47,7 @@
  * Output:  out - the resulting 4x1 vector.
  */
 static void
-transform_point(double out[4], const double m[16], const double in[4])
+transform_point(float out[4], const float m[16], const float in[4])
 {
 #define M(row,col)  m[col*4+row]
    out[0] =
@@ -70,10 +70,10 @@ transform_point(double out[4], const double m[16], const double in[4])
  * Output:  product - product of a and b
  */
 static void
-matmul(double * product, const double * a, const double * b)
+matmul(float * product, const float * a, const float * b)
 {
    /* This matmul was contributed by Thomas Malik */
-   double temp[16];
+   float temp[16];
    int i;
 
 #define A(row,col)  a[(col<<2)+row]
@@ -103,7 +103,7 @@ matmul(double * product, const double * a, const double * b)
 #undef A
 #undef B
 #undef T
-   memcpy(product, temp, 16 * sizeof(double));
+   memcpy(product, temp, 16 * sizeof(float));
 }
 
 
@@ -114,15 +114,15 @@ matmul(double * product, const double * a, const double * b)
  * Return GL_TRUE for success, GL_FALSE for failure (singular matrix)
  */
 static GLboolean
-invert_matrix(const double * m, double * out)
+invert_matrix(const float * m, float * out)
 {
 /* NB. OpenGL Matrices are COLUMN major. */
-#define SWAP_ROWS(a, b) { double *_tmp = a; (a)=(b); (b)=_tmp; }
+#define SWAP_ROWS(a, b) { float *_tmp = a; (a)=(b); (b)=_tmp; }
 #define MAT(m,r,c) (m)[(c)*4+(r)]
 
-   double wtmp[4][8];
-   double m0, m1, m2, m3, s;
-   double *r0, *r1, *r2, *r3;
+   float wtmp[4][8];
+   float m0, m1, m2, m3, s;
+   float *r0, *r1, *r2, *r3;
 
    r0 = wtmp[0], r1 = wtmp[1], r2 = wtmp[2], r3 = wtmp[3];
 
@@ -290,13 +290,13 @@ invert_matrix(const double * m, double * out)
 
 
 /* projection du point (objx,objy,obz) sur l'ecran (winx,winy,winz) */
-int gluProject(double objx, double objy, double objz,
-       const double model[16], const double proj[16],
+int gluProject(float objx, float objy, float objz,
+       const float model[16], const float proj[16],
        const int viewport[4],
-       double * winx, double * winy, double * winz)
+       float * winx, float * winy, float * winz)
 {
    /* matrice de transformation */
-   double in[4], out[4];
+   float in[4], out[4];
 
    /* initilise la matrice et le vecteur a transformer */
    in[0] = objx;
@@ -325,14 +325,14 @@ int gluProject(double objx, double objy, double objz,
 
 
 /* transformation du point ecran (winx,winy,winz) en point objet */
-int gluUnProject(double winx, double winy, double winz,
-         const double model[16], const double proj[16],
+int gluUnProject(float winx, float winy, float winz,
+         const float model[16], const float proj[16],
          const int viewport[4],
-         double * objx, double * objy, double * objz)
+         float * objx, float * objy, float * objz)
 {
    /* matrice de transformation */
-   double m[16], A[16];
-   double in[4], out[4];
+   float m[16], A[16];
+   float in[4], out[4];
 
    /* transformation coordonnees normalisees entre -1 et 1 */
    in[0] = (winx - viewport[0]) * 2 / viewport[2] - 1.0;
@@ -361,18 +361,18 @@ int gluUnProject(double winx, double winy, double winz,
  */
 #ifdef GLU_VERSION_1_3
 int GLAPIENTRY
-gluUnProject4(double winx, double winy, double winz, double clipw,
-          const double modelMatrix[16],
-          const double projMatrix[16],
+gluUnProject4(float winx, float winy, float winz, float clipw,
+          const float modelMatrix[16],
+          const float projMatrix[16],
           const int viewport[4],
           GLclampd nearZ, GLclampd farZ,
-          double * objx, double * objy, double * objz,
-          double * objw)
+          float * objx, float * objy, float * objz,
+          float * objw)
 {
    /* matrice de transformation */
-   double m[16], A[16];
-   double in[4], out[4];
-   double z = nearZ + winz * (farZ - nearZ);
+   float m[16], A[16];
+   float in[4], out[4];
+   float z = nearZ + winz * (farZ - nearZ);
 
    /* transformation coordonnees normalisees entre -1 et 1 */
    in[0] = (winx - viewport[0]) * 2 / viewport[2] - 1.0;
@@ -397,9 +397,9 @@ gluUnProject4(double winx, double winy, double winz, double clipw,
 #endif
 
 
-void gluPerspective(double fovy, double aspect, double zNear, double zFar)
+void gluPerspective(float fovy, float aspect, float zNear, float zFar)
 {
-   double xmin, xmax, ymin, ymax;
+   float xmin, xmax, ymin, ymax;
 
    ymax = zNear * tan(fovy * M_PI / 360.0);
    ymin = -ymax;

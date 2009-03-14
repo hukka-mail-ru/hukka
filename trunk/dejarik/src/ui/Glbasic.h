@@ -14,7 +14,7 @@
 
 #endif
 
-void gluPerspective (double fovy, double aspect, double zNear, double zFar);
-int gluUnProject (double winX, double winY, double winZ, const double *model, const double *proj, const int *view, double* objX, double* objY, double* objZ);
+void gluPerspective (float fovy, float aspect, float zNear, float zFar);
+int gluUnProject (float winX, float winY, float winZ, const float *model, const float *proj, const int *view, float* objX, float* objY, float* objZ);
 
 #endif /*Glbasic_H_*/

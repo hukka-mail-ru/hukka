@@ -133,20 +133,22 @@ void Video::resizeWindow(unsigned width, unsigned height)
 }
 
 
-void Video::winToGL(float winX, float winY, double& x, double& y, double& z)
+void Video::winToGL(float winX, float winY, float& x, float& y, float& z)
 {
     TRY_BEGINS;
     
     int viewport[4];                  // Where The Viewport Values Will Be Stored
     glGetIntegerv(GL_VIEWPORT, viewport); // Retrieves The Viewport Values (X, Y, Width, Height)
     
-    double modelview[16];                 // Where The 16 Doubles Of The Modelview Matrix Are To Be Stored
-    glGetDoublev(GL_MODELVIEW_MATRIX, modelview);       // Retrieve The Modelview Matrix
+    float modelview[16];                 // Where The 16 Doubles Of The Modelview Matrix Are To Be Stored
+    glGetFloatv(GL_MODELVIEW_MATRIX, modelview);       // Retrieve The Modelview Matrix
 
-    double projection[16];                // Where The 16 Doubles Of The Projection Matrix Are To Be Stored
-    glGetDoublev(GL_PROJECTION_MATRIX, projection);     // Retrieve The Projection Matrix
+    float projection[16];                // Where The 16 Doubles Of The Projection Matrix Are To Be Stored
+    glGetFloatv(GL_PROJECTION_MATRIX, projection);     // Retrieve The Projection Matrix
 
+    
     winY = (float)viewport[3] - winY;           // Subtract The Current Mouse Y Coordinate From The Screen Height
+    
     
     GLfloat winZ = 0;
     glReadPixels(winX, winY, 1, 1, GL_DEPTH_COMPONENT, GL_FLOAT, &winZ);
@@ -296,9 +298,9 @@ void Video::drawShape(const vector<float>& xWin, const vector<float>& yWin, cons
     
     for(unsigned i=0; i< xWin.size(); i++)
     {
-        double x1 = 0;
-        double y1 = 0;
-        double z1 = 0;
+        float x1 = 0;
+        float y1 = 0;
+        float z1 = 0;
         Video::winToGL(xWin[i], yWin[i], x1, y1, z1);
         
         x.push_back( x1 );
@@ -334,9 +336,9 @@ void Video::drawPolygon(
     
     for(unsigned i=0; i< xWin.size(); i++)
     {
-        double x1 = 0;
-        double y1 = 0;
-        double z1 = 0;
+        float x1 = 0;
+        float y1 = 0;
+        float z1 = 0;
         Video::winToGL(xWin[i], yWin[i], x1, y1, z1);
         
         x.push_back( x1 );
@@ -418,14 +420,14 @@ void Video::drawImage(const Texture& texture, const RGB_Color& color, float winX
     TRY_BEGINS;
    
     
-    double x1 = 0;
-    double y1 = 0;
-    double z1 = 0;
+    float x1 = 0;
+    float y1 = 0;
+    float z1 = 0;
     Video::winToGL(winX, winY, x1, y1, z1);
 
-    double x2 = 0;
-    double y2 = 0;
-    double z2 = 0;
+    float x2 = 0;
+    float y2 = 0;
+    float z2 = 0;
     Video::winToGL(winX + texture.w, winY + texture.h, x2, y2, z2);
     
     
