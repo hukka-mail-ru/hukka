@@ -3,9 +3,12 @@
 
 /* $Revision: 1.1 $ on $Date: 2008/09/30 13:39:42 $ */
 
+
+
 #ifdef __cplusplus
 extern "C" {
 #endif
+
 
 /*
 ** License Applicability. Except to the extent portions of this file are
@@ -229,6 +232,7 @@ typedef void* GLeglImageOES;
 #define GL_3DC_XY_AMD                                           0x87FA
 #endif
 
+
 /* GL_AMD_compressed_ATC_texture */
 #ifndef GL_AMD_compressed_ATC_texture
 #define GL_ATC_RGB_AMD                                          0x8C92
@@ -311,10 +315,16 @@ typedef void (GL_APIENTRYP PFNGLDRAWTEXFVOESPROC) (const GLfloat *coords);
 #define GL_OES_extended_matrix_palette 1
 #endif
 
+
+
+
 /* GL_OES_fixed_point */
 #ifndef GL_OES_fixed_point
 #define GL_OES_fixed_point 1
 #ifdef GL_GLEXT_PROTOTYPES
+
+void kkk();
+
 GL_API void GL_APIENTRY glAlphaFuncxOES (GLenum func, GLclampx ref);
 GL_API void GL_APIENTRY glClearColorxOES (GLclampx red, GLclampx green, GLclampx blue, GLclampx alpha);
 GL_API void GL_APIENTRY glClearDepthxOES (GLclampx depth);
