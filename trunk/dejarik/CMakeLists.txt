@@ -8,7 +8,7 @@ set(SRC_UI src/ui/Glbasic.cpp src/ui/UI.cpp src/ui/Video.cpp src/ui/Animation.cp
 # DEJARIK executable
 add_executable (dejarik src/logic/main.cpp ${SRC} ${SRC_UI})
 target_link_libraries (dejarik GL SDL pthread) 
-set_target_properties(dejarik PROPERTIES COMPILE_FLAGS "-D LINUX_BUILD -I/usr/include/SDL -D_GNU_SOURCE=1 -D_REENTRANT")
+set_target_properties(dejarik PROPERTIES COMPILE_FLAGS "-D LINUX_BUILD -D OPENGL_ES_BUILD -I/usr/include/SDL -D_GNU_SOURCE=1 -D_REENTRANT")
 set_target_properties(dejarik PROPERTIES LINK_FLAGS "-L/usr/lib")
 
 # UNIT TESTs 

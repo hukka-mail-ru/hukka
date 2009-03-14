@@ -290,8 +290,7 @@ invert_matrix(const double * m, double * out)
 
 
 /* projection du point (objx,objy,obz) sur l'ecran (winx,winy,winz) */
-int GLAPIENTRY
-gluProject(double objx, double objy, double objz,
+int gluProject(double objx, double objy, double objz,
        const double model[16], const double proj[16],
        const int viewport[4],
        double * winx, double * winy, double * winz)
@@ -326,8 +325,7 @@ gluProject(double objx, double objy, double objz,
 
 
 /* transformation du point ecran (winx,winy,winz) en point objet */
-int GLAPIENTRY
-gluUnProject(double winx, double winy, double winz,
+int gluUnProject(double winx, double winy, double winz,
          const double model[16], const double proj[16],
          const int viewport[4],
          double * objx, double * objy, double * objz)
@@ -409,7 +407,14 @@ void gluPerspective(double fovy, double aspect, double zNear, double zFar)
    xmin = ymin * aspect;
    xmax = ymax * aspect;
 
+
+#ifdef OPENGL_BUILD
    glFrustum(xmin, xmax, ymin, ymax, zNear, zFar);
+#endif
+   
+#ifdef OPENGL_ES_BUILD
+   glFrustumfOES(xmin, xmax, ymin, ymax, zNear, zFar);
+#endif
 }
 
 
