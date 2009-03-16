@@ -43,8 +43,7 @@ using namespace std;
     // ----------------------------------------------------------------------
 #endif
 
-    
-int main()
+int main(int argc, char *argv[])
 {
     TRY_BEGINS;
 
