@@ -183,7 +183,7 @@ void Video::loadTexture(Texture& texture, const std::string& path)
         glBindTexture(GL_TEXTURE_2D, texture.id);
 
         /* Generate The Texture */
-        glTexImage2D(GL_TEXTURE_2D, 0, 3, image->w, image->h, 0, GL_BGR,
+        glTexImage2D(GL_TEXTURE_2D, 0, GL_RGB, image->w, image->h, 0, GL_RGB, // blue chanel must be changed by red 
                 GL_UNSIGNED_BYTE, image->pixels );
         
         texture.w = image->w;
@@ -275,15 +275,23 @@ void Video::drawBackground()
     float y = -40; 
     float w = 80; 
     float h = 80;
+  
     glBindTexture( GL_TEXTURE_2D, images["bg"]->texture.id);
 
-    glBegin(GL_POLYGON);
-      glTexCoord2f( 0, 1 ); glVertex3f(  x + 0,  y + 0, 0.0 );
-      glTexCoord2f( 1, 1 ); glVertex3f(  x + w,  y + 0, 0.0 );
-      glTexCoord2f( 1, 0 ); glVertex3f(  x + w,  y + h, 0.0 );
-      glTexCoord2f( 0, 0 ); glVertex3f(  x + 0,  y + h, 0.0 );
-    glEnd( ); 
- 
+    const GLbyte vertices []=
+    {
+        x + 0,  y + 0, 0,
+        x + w,  y + 0, 0,
+        x + w,  y + h, 0,
+        x + 0,  y + h, 0
+    };
+     
+    
+    glVertexPointer(3, GL_FLOAT, 0, vertices);
+    glTexCoordPointer(2, GL_FLOAT, 0, vertices);
+    glEnableClientState(GL_VERTEX_ARRAY);
+    glEnableClientState(GL_TEXTURE_COORD_ARRAY);
+
     TRY_RETHROW;
 }
 
@@ -292,74 +300,70 @@ void Video::drawShape(const vector<float>& xWin, const vector<float>& yWin, cons
 {
     TRY_BEGINS;
     
-    vector<float> x; 
-    vector<float> y;
+    vector<float> vertices; 
     
     for(unsigned i=0; i< xWin.size(); i++)
     {
-        float x1 = 0;
-        float y1 = 0;
-        float z1 = 0;
-        Video::winToGL(xWin[i], yWin[i], x1, y1, z1);
+        float x = 0;
+        float y = 0;
+        float z = 0;
+        Video::winToGL(xWin[i], yWin[i], x, y, z);
         
-        x.push_back( x1 );
-        y.push_back( y1 );
+        vertices.push_back( x );
+        vertices.push_back( y );
+        vertices.push_back( 0 );
     }
-    
     
     glColor3f(color.r, color.g, color.b);
     glLineWidth(width);
     
-        glBegin(GL_LINE_LOOP);
+    
+    glVertexPointer(3, GL_FLOAT, 0, &vertices[0]);
+    glEnableClientState(GL_VERTEX_ARRAY);
 
-            for(unsigned i=0; i< x.size(); i++)
-            {                
-                glVertex3f( x[i], y[i], 0 );
-            }
-        glEnd( ); 
-        
+        glDrawArrays(GL_LINE_LOOP, 0, xWin.size());
+
+    glDisableClientState(GL_VERTEX_ARRAY);
+ 
     glColor3f(1, 1, 1); // reset
     
     
     TRY_RETHROW;
 }
 
+
 void Video::drawPolygon(
         const vector<float>& xWin, const vector<float>& yWin, 
         const RGB_Color& color, float opacity)
 {
     TRY_BEGINS;
-    
-    vector<float> x; 
-    vector<float> y;
+    vector<float> vertices; 
     
     for(unsigned i=0; i< xWin.size(); i++)
     {
-        float x1 = 0;
-        float y1 = 0;
-        float z1 = 0;
-        Video::winToGL(xWin[i], yWin[i], x1, y1, z1);
+        float x = 0;
+        float y = 0;
+        float z = 0;
+        Video::winToGL(xWin[i], yWin[i], x, y, z);
         
-        x.push_back( x1 );
-        y.push_back( y1 );
+        vertices.push_back( x );
+        vertices.push_back( y );
+        vertices.push_back( 0 );
     }
-    
     
     
     glEnable( GL_BLEND );   
     glDisable( GL_DEPTH_TEST );
-   // glBlendFunc(GL_SRC_ALPHA, GL_ONE);
     glBlendFunc(GL_SRC_ALPHA,GL_ONE_MINUS_SRC_ALPHA); 
     
     glColor4f(color.r, color.g, color.b, opacity);
         
-        glBegin(GL_POLYGON);
+    glVertexPointer(3, GL_FLOAT, 0, &vertices[0]);
+    glEnableClientState(GL_VERTEX_ARRAY);
 
-            for(unsigned i=0; i< x.size(); i++)
-            {                
-                glVertex3f( x[i], y[i], 0 );
-            }
-        glEnd( ); 
+        glDrawArrays(GL_TRIANGLE_FAN, 0, xWin.size());
+
+    glDisableClientState(GL_VERTEX_ARRAY);
         
     glColor3f(1, 1, 1); // reset
     glEnable( GL_DEPTH_TEST ); /* Enable Depth Testing */
@@ -440,13 +444,31 @@ void Video::drawImage(const Texture& texture, const RGB_Color& color, float winX
         glRotatef(angle ,0, 0, 1); // rotation
         glTranslatef(-(x1+x2)/2, -(y1+y2)/2, 0); // move back to the old position
         
+        const float vertices []=
+        {
+            x1,  y1, 0,
+            x2,  y1, 0,
+            x2,  y2, 0,
+            x1,  y2, 0,
+        };
+         
+        const float texCoords[] = 
+        {
+                0, 0,
+                1, 0,
+                1, 1,
+                0, 1,
+        };
         
-        glBegin(GL_POLYGON);
-          glTexCoord2f( 0, 0 ); glVertex3f(  x1,  y1, 0.0 );
-          glTexCoord2f( 1, 0 ); glVertex3f(  x2,  y1, 0.0 );
-          glTexCoord2f( 1, 1 ); glVertex3f(  x2,  y2, 0.0 );
-          glTexCoord2f( 0, 1 ); glVertex3f(  x1,  y2, 0.0 );
-        glEnd( ); 
+        glVertexPointer(3, GL_FLOAT, 0, vertices);
+        glTexCoordPointer(2, GL_FLOAT, 0, texCoords);
+        glEnableClientState(GL_VERTEX_ARRAY);
+        glEnableClientState(GL_TEXTURE_COORD_ARRAY);
+
+        glDrawArrays(GL_TRIANGLE_FAN, 0, 4);
+
+        glDisableClientState(GL_VERTEX_ARRAY);
+        glDisableClientState(GL_TEXTURE_COORD_ARRAY);
         
         glColor3f(1, 1, 1); // reset
     glDisable( GL_TEXTURE_2D );

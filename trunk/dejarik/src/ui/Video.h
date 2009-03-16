@@ -65,7 +65,7 @@ public:
     
     static void drawPolygon(const std::vector<float>& x, const std::vector<float>& y, 
             const RGB_Color& color, float opacity);
-    
+     
     static void drawShape(const std::vector<float>& xWin, const std::vector<float>& yWin, 
             const RGB_Color& color, float width);
 
