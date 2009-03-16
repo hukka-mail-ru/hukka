@@ -3,6 +3,10 @@
 
 #include "Game.h"
 
+#ifdef WIN_BUILD
+#include <time.h>
+#endif
+
 #define NUM_MOVES 2
 
 using namespace std;
