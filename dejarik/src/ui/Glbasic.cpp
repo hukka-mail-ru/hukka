@@ -417,7 +417,7 @@ void gluPerspective(float fovy, float aspect, float zNear, float zFar)
 #endif
    
 #ifdef OPENGL_ES_BUILD
-   glFrustumfOES(xmin, xmax, ymin, ymax, zNear, zFar);
+   glFrustumf(xmin, xmax, ymin, ymax, zNear, zFar);
 #endif
 }
 
