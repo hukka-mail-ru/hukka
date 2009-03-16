@@ -314,7 +314,7 @@ void Video::drawShape(const vector<float>& xWin, const vector<float>& yWin, cons
         vertices.push_back( 0 );
     }
     
-    glColor3f(color.r, color.g, color.b);
+    glColor4f(color.r, color.g, color.b, 0);
     glLineWidth(width);
     
     
@@ -325,7 +325,7 @@ void Video::drawShape(const vector<float>& xWin, const vector<float>& yWin, cons
 
     glDisableClientState(GL_VERTEX_ARRAY);
  
-    glColor3f(1, 1, 1); // reset
+    glColor4f(1, 1, 1, 0); // reset
     
     
     TRY_RETHROW;
@@ -365,7 +365,7 @@ void Video::drawPolygon(
 
     glDisableClientState(GL_VERTEX_ARRAY);
         
-    glColor3f(1, 1, 1); // reset
+    glColor4f(1, 1, 1, 0); // reset
     glEnable( GL_DEPTH_TEST ); /* Enable Depth Testing */
     glDisable( GL_BLEND );     /* Disable Blending     */
     
@@ -438,7 +438,7 @@ void Video::drawImage(const Texture& texture, const RGB_Color& color, float winX
     glEnable( GL_TEXTURE_2D );
     
         glBindTexture(GL_TEXTURE_2D, texture.id);
-        glColor3f(color.r, color.g, color.b); // blue
+        glColor4f(color.r, color.g, color.b, 0); // blue
         
         glTranslatef((x1+x2)/2, (y1+y2)/2, 0); // rotate [move to the coordinate center]
         glRotatef(angle ,0, 0, 1); // rotation
@@ -470,7 +470,7 @@ void Video::drawImage(const Texture& texture, const RGB_Color& color, float winX
         glDisableClientState(GL_VERTEX_ARRAY);
         glDisableClientState(GL_TEXTURE_COORD_ARRAY);
         
-        glColor3f(1, 1, 1); // reset
+        glColor4f(1, 1, 1, 0); // reset
     glDisable( GL_TEXTURE_2D );
     glPopMatrix();
     
