@@ -19,22 +19,22 @@ try \
 
 #define TRY_RETHROW \
 } \
-catch(std::string& err) \
+catch(std::runtime_error& err) \
 { \
     std::ostringstream os; \
-    os << "[" << __FUNCTION__ << "]->" << err; \
-    throw os.str(); \
+    os << "[" << __FUNCTION__ << "]->" << err.what(); \
+    throw runtime_error(os.str()); \
 }
 
 
 #define TRY_CATCH \
 } \
-catch(std::string& err) \
+catch(std::runtime_error& err) \
 { \
 std::cout << "EXCEPTION in " << __FUNCTION__ << std::endl << \
-             "TRACE: "<< err << std::endl << std::endl;\
+             "TRACE: "<< err.what() << std::endl << std::endl;\
 std::cerr << "EXCEPTION in " << __FUNCTION__ << std::endl << \
-             "TRACE: "<< err << std::endl << std::endl;\
+             "TRACE: "<< err.what() << std::endl << std::endl;\
 }
 
 

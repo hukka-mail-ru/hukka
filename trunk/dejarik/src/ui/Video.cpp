@@ -213,6 +213,8 @@ void Video::loadTexture(Texture& texture, const std::string& path)
 
 void Video::createImage(const std::string& name, ImageType type)
 {
+	TRY_BEGINS;
+
     ImagePtr image (new Image); 
     image->type = type;
     
@@ -229,6 +231,8 @@ void Video::createImage(const std::string& name, ImageType type)
     }
     
     images[name] = image;  
+
+	TRY_RETHROW;
 }
 
 void Video::createImages(const std::vector<std::string>& names)
