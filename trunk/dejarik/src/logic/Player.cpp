@@ -104,7 +104,7 @@ BattleResult Player::getBattleResult(unsigned attackRating, unsigned defenceRati
     
     stringstream err;
     err << __FUNCTION__ << " Battle result is undefined: attack=" << attack << ", defence=" << defence;
-    throw(err.str());
+    throw runtime_error(err.str());
     
     return RES_MOVE;
 }

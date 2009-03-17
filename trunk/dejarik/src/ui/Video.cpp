@@ -19,7 +19,7 @@ void Video::startup(const std::vector<std::string>& pieceNames)
     if ( SDL_Init( SDL_INIT_VIDEO ) < 0 )
     {
         SDL_Quit();
-        throw ("Video initialization failed");
+        throw runtime_error("Video initialization failed");
     }
 
     /* Fetch the video info */
@@ -27,7 +27,7 @@ void Video::startup(const std::vector<std::string>& pieceNames)
     if ( !videoInfo )
     {
         SDL_Quit();
-        throw ("Video query failed");
+        throw runtime_error("Video query failed");
     }
 
     /* the flags to pass to SDL_SetVideoMode */
@@ -53,7 +53,7 @@ void Video::startup(const std::vector<std::string>& pieceNames)
     if (!SDL_SetVideoMode( SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_BPP, videoFlags ) )
     {
         SDL_Quit();
-        throw ("Video mode set failed");
+        throw runtime_error("Video mode set failed");
     }
 
     /* Load all the textures */
@@ -202,7 +202,7 @@ void Video::loadTexture(Texture& texture, const std::string& path)
     {
         ostringstream os;
         os << "loadTexture failed: " << path << endl;
-        throw os.str();
+        throw runtime_error(os.str());
     }
     
     TRY_RETHROW;
@@ -387,7 +387,7 @@ void Video::drawSprite(
     {
         ostringstream os;
         os << "Can't find name " << imageName;
-        throw os.str(); 
+        throw runtime_error(os.str()); 
     }
     
     if(spriteXY == XY_CENTER)
