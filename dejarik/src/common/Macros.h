@@ -3,6 +3,7 @@
 
 #include <iostream> 
 #include <sstream> 
+#include <stdexcept>
 #include <boost/shared_ptr.hpp> 
 
 #define FLOAT_UNDEFINED 666.0
