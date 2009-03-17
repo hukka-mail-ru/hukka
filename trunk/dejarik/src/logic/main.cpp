@@ -6,6 +6,10 @@ using namespace std;
 #include "UI.h"
 #include "Macros.h"
 
+#ifdef WIN_BUILD
+//#include "stdafx.h"
+#endif
+
 #ifdef LINUX_BUILD
     #include <sys/types.h>
     #include <sys/stat.h>
