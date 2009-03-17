@@ -137,7 +137,7 @@ CellPtr& Board::getCell(unsigned c, unsigned r)
     
     stringstream err;
     err << "Board::getCell. No cell with position C=" << c << ", R=" << r;
-    throw(err.str());
+    throw runtime_error(err.str());
 }
 
 
@@ -346,7 +346,7 @@ void Board::markNeibours(WhatToMark whatToMark, unsigned step, const CellPtr& ce
     }
     else
     {
-        throw string("Invalid circle number");
+        throw runtime_error("Invalid circle number");
     }
          
     TRY_RETHROW;       
@@ -398,7 +398,7 @@ void Board::mark(WhatToMark whatToMark, unsigned step, const CellPtr& prev, cons
     }
     else
     {
-        throw string("Invalid 'whatToMark' parameter");
+        throw runtime_error("Invalid 'whatToMark' parameter");
     }
     
     TRY_RETHROW;     
