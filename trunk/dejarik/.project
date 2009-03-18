@@ -38,12 +38,8 @@
 					<value>org.eclipse.cdt.make.core.activeConfigSettings</value>
 				</dictionary>
 				<dictionary>
-					<key>org.eclipse.cdt.make.core.buildLocation</key>
-					<value>${workspace_loc:/Dejarik}</value>
-				</dictionary>
-				<dictionary>
 					<key>org.eclipse.cdt.make.core.useDefaultBuildCmd</key>
-					<value>false</value>
+					<value>true</value>
 				</dictionary>
 				<dictionary>
 					<key>org.eclipse.cdt.make.core.enableAutoBuild</key>
