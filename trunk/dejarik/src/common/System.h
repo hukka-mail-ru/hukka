@@ -2,6 +2,7 @@
 #define SYSTEM_H_
 
 bool isAppAlreadyRunning();
+long getTime(); // get absolute time in microseconds 
 
 
 #ifdef WIN_BUILD
