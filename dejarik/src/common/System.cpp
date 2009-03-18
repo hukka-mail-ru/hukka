@@ -5,11 +5,13 @@ using namespace std;
 #ifdef LINUX_BUILD
 
 #include <sys/types.h>
+#include <sys/time.h>
 #include <signal.h>
 #include <unistd.h>
 #include <stdlib.h>
 #include <string>
 #include <fstream>
+#include <stdexcept>
 
 void writePID(const char* pidfile)
 {
@@ -39,6 +41,17 @@ bool isAppAlreadyRunning()
     return false;
 }
 
+
+// get time in microseconds 
+long getTime()
+{
+    timeval tv;
+    if(gettimeofday(&tv, NULL) == -1)
+        throw runtime_error("gettimeofday failed");
+    
+    return tv.tv_sec*1000000 + tv.tv_usec;
+}
+
 #endif
 
 
@@ -51,6 +64,11 @@ bool isAppAlreadyRunning()
     return false;
 }
 
+long getTime()
+{
+    // TODO not implemented yet
+    return 0;
+}
 
 time_t time( time_t *inTT )
 {

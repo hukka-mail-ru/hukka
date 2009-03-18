@@ -12,14 +12,13 @@
  
 
 #include "UI.h"
+#include "System.h"
 
-
+// TODO Hmm.. VERT_OFFSET should be in Cell.h ?
 #define VERT_OFFSET -32.0 // how many pixels is from the board center to the screen center 
 
 using namespace std;
 
-
-// TODO replace cerr with THROW
 
 void UI::startup()
 {
@@ -308,16 +307,12 @@ void UI::handleEvents()
     SDL_Event event;
     while ( !mQuit )
     {
+        long time1 = getTime(); // start the timer 
+
         mMoving = animation.updateAll(mMoveSteps);
         
-        if(mMoving)
-        {
-            SDL_Delay(5);
-        }
-        
         drawAll();
-        SDL_Delay(1); // to prevent too frequent drawings
-        
+              
         
         /* handle the events in the queue */
         while ( SDL_PollEvent( &event ) )
@@ -339,6 +334,17 @@ void UI::handleEvents()
             {
                 break;
             }
+        }
+        
+        // a delay before the next iteration
+        if(mMoving)
+        {
+            float timeForDrawing = (getTime() - time1)/1000.0;
+            SDL_Delay(20 - timeForDrawing);
+        }
+        else
+        {
+            SDL_Delay(1); // to prevent too frequent drawings
         }
     }
     
