@@ -442,9 +442,9 @@ void Video::drawImage(const Texture& texture, const RGB_Color& color, float winX
         glBindTexture(GL_TEXTURE_2D, texture.id);
         glColor4f(color.r, color.g, color.b, 0); // blue
         
-        glTranslatef((x1+x2)/2, (y1+y2)/2, 0); // rotate [move to the coordinate center]
-        glRotatef(angle ,0, 0, 1); // rotation
-        glTranslatef(-(x1+x2)/2, -(y1+y2)/2, 0); // move back to the old position
+        glTranslatex((x1+x2)/2, (y1+y2)/2, 0); // rotate [move to the coordinate center]
+        glRotatex(angle ,0, 0, 1); // rotation
+        glTranslatex(-(x1+x2)/2, -(y1+y2)/2, 0); // move back to the old position
         
         const float vertices []=
         {

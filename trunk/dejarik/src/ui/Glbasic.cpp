@@ -359,47 +359,6 @@ int gluUnProject(float winx, float winy, float winz,
 }
 
 
-/*
- * New in GLU 1.3
- * This is like gluUnProject but also takes near and far DepthRange values.
- */
-#ifdef GLU_VERSION_1_3
-int GLAPIENTRY
-gluUnProject4(float winx, float winy, float winz, float clipw,
-          const float modelMatrix[16],
-          const float projMatrix[16],
-          const int viewport[4],
-          GLclampd nearZ, GLclampd farZ,
-          float * objx, float * objy, float * objz,
-          float * objw)
-{
-   /* matrice de transformation */
-   float m[16], A[16];
-   float in[4], out[4];
-   float z = nearZ + winz * (farZ - nearZ);
-
-   /* transformation coordonnees normalisees entre -1 et 1 */
-   in[0] = (winx - viewport[0]) * 2 / viewport[2] - 1.0;
-   in[1] = (winy - viewport[1]) * 2 / viewport[3] - 1.0;
-   in[2] = 2.0 * z - 1.0;
-   in[3] = clipw;
-
-   /* calcul transformation inverse */
-   matmul(A, projMatrix, modelMatrix);
-   invert_matrix(A, m);
-
-   /* d'ou les coordonnees objets */
-   transform_point(out, m, in);
-   if (out[3] == 0.0)
-      return GL_FALSE;
-   *objx = out[0] / out[3];
-   *objy = out[1] / out[3];
-   *objz = out[2] / out[3];
-   *objw = out[3];
-   return GL_TRUE;
-}
-#endif
-
 
 void gluPerspective(float fovy, float aspect, float zNear, float zFar)
 {
@@ -411,14 +370,25 @@ void gluPerspective(float fovy, float aspect, float zNear, float zFar)
    xmin = ymin * aspect;
    xmax = ymax * aspect;
 
-
-#ifdef OPENGL_BUILD
-   glFrustum(xmin, xmax, ymin, ymax, zNear, zFar);
-#endif
-   
-#ifdef OPENGL_ES_BUILD
-   glFrustumf(xmin, xmax, ymin, ymax, zNear, zFar);
-#endif
+   glFrustumx(xmin, xmax, ymin, ymax, zNear, zFar);
 }
 
 
+#ifdef OPENGL_BUILD
+
+void glTranslatex(float x, float y, float z)
+{
+    glTranslatef(x, y, z);
+}
+
+void glRotatex(float angle, float x, float y, float z)
+{
+    glRotatef(angle, x, y, z);
+}
+
+void glFrustumx(float left, float right, float bottom, float top, float near, float far)
+{
+    glFrustum(left, right, bottom, top, near, far);
+}
+
+#endif

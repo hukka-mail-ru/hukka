@@ -224,7 +224,7 @@ bool UI::drawAll()
     /* Clear The Screen And The Depth Buffer */
     glClear( GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT );
     glLoadIdentity();
-    glTranslatef( 0.0f, 0.0f, -10.0f );
+    glTranslatex( 0.0f, 0.0f, -10.0f );
     
     mVideo.drawBackground();
     
@@ -232,7 +232,7 @@ bool UI::drawAll()
     
     drawBoard();
   //  drawActivePlayer();
-   // glTranslatef( 100.0f, -5.0f, 0.0f );
+   // glTranslatex( 100.0f, -5.0f, 0.0f );
     
     drawMenu();
     
