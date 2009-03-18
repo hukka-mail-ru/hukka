@@ -9,7 +9,6 @@ using namespace std;
 #define SCREEN_HEIGHT 320
 #define SCREEN_BPP     16
 
-std::map<std::string, ImagePtr> Video::images;
 
 void Video::startup(const std::vector<std::string>& pieceNames)
 {
@@ -114,7 +113,11 @@ void Video::resizeWindow(unsigned width, unsigned height)
     GLfloat ratio = ( GLfloat )width / ( GLfloat )height;
 
     /* Setup our viewport. */
-    glViewport( 0, 0, ( GLsizei )width, ( GLsizei )height );
+    viewport[0] = 0;
+    viewport[1] = 0;
+    viewport[2] = width;
+    viewport[3] = height;
+    glViewport(viewport[0], viewport[1], (GLsizei)viewport[2], (GLsizei)viewport[3] );
 
     /* change to the projection matrix and set our viewing volume. */
     glMatrixMode( GL_PROJECTION );
@@ -136,15 +139,10 @@ void Video::resizeWindow(unsigned width, unsigned height)
 void Video::winToGL(float winX, float winY, float& x, float& y, float& z)
 {
     TRY_BEGINS;
-    
-    int viewport[4];                  // Where The Viewport Values Will Be Stored
-    glGetIntegerv(GL_VIEWPORT, viewport); // Retrieves The Viewport Values (X, Y, Width, Height)
-    
-    float modelview[16];                 // Where The 16 Doubles Of The Modelview Matrix Are To Be Stored
-    glGetFloatv(GL_MODELVIEW_MATRIX, modelview);       // Retrieve The Modelview Matrix
 
-    float projection[16];                // Where The 16 Doubles Of The Projection Matrix Are To Be Stored
-    glGetFloatv(GL_PROJECTION_MATRIX, projection);     // Retrieve The Projection Matrix
+    // TODO Rrrrhh! The magic numbers should be somehow calculated, based on GL_PROJECTION and GL_MODELVIEW
+    float modelview[16] = {1,0,0,0,0,1,0,0,0,0,1,0,0,0,-10,1} ;              
+    float projection[16] = {3.218951,0,0,0,0,2.414213,0,0,0,0,-1.002002,-1,0,0,-0.2002002,0};
 
     
     winY = (float)viewport[3] - winY;           // Subtract The Current Mouse Y Coordinate From The Screen Height

@@ -32,7 +32,7 @@ void UI::startup()
          names.push_back(pieces[i]->name);
     }
         
-    Video::startup(names);
+    mVideo.startup(names);
     TRY_RETHROW;
 }
 
@@ -96,7 +96,7 @@ void UI::drawPiece(const PiecePtr& piece)
 
     ostringstream name;
     name << piece->name << piece->sprite;
-    Video::drawSprite(name.str(), color, XY_CENTER,
+    mVideo.drawSprite(name.str(), color, XY_CENTER,
                       piece->x,
                       piece->y + VERT_OFFSET,
                       piece->angle); 
@@ -110,7 +110,7 @@ void UI::drawMenu()
    
     
     // menu 
-    Video::drawSprite("menu_" + menuItemName, RGB_Color(1,1,1), XY_LEFTBOTTOM,
+    mVideo.drawSprite("menu_" + menuItemName, RGB_Color(1,1,1), XY_LEFTBOTTOM,
                       3,
                       252,
                       0); 
@@ -140,10 +140,10 @@ void UI::drawCell(const CellPtr& cell, bool clicked)
     for(unsigned i = 0; i<cell->y.size(); i++)
         celly.push_back(cell->y[i] + VERT_OFFSET);
     
-    Video::drawPolygon(cell->x, celly, color, 0.5);
+    mVideo.drawPolygon(cell->x, celly, color, 0.5);
     
     if(cell->c == 0) 
-       Video::drawShape(cell->x, celly, RGB_Color(0,0,0), 1);
+       mVideo.drawShape(cell->x, celly, RGB_Color(0,0,0), 1);
     
        
     TRY_RETHROW;
@@ -155,7 +155,7 @@ void UI::drawBoard()
 {
     TRY_BEGINS;
     
-    Video::drawSprite("board", RGB_Color(1,1,1), XY_LEFTBOTTOM, 1, 1, 0);
+    mVideo.drawSprite("board", RGB_Color(1,1,1), XY_LEFTBOTTOM, 1, 1, 0);
     
     
     vector<CellPtr> cells;
@@ -226,7 +226,7 @@ bool UI::drawAll()
     glLoadIdentity();
     glTranslatef( 0.0f, 0.0f, -10.0f );
     
-    Video::drawBackground();
+    mVideo.drawBackground();
     
     
     
@@ -343,7 +343,7 @@ void UI::handleEvents()
     }
     
     /* clean ourselves up and exit */
-    Video::stop();
+    mVideo.stop();
     
     TRY_RETHROW;
 }

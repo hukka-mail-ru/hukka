@@ -57,6 +57,7 @@ private:
     std::string menuItemName;
     bool mMoving;
 
+    Video mVideo;
 };
 
 
