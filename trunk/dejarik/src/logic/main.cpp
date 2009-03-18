@@ -12,16 +12,8 @@ int main(int argc, char *argv[])
 {
     TRY_BEGINS;
 
-    // Only one copy of the app can be running  
-#ifdef LINUX_BUILD
-    pid_t pid = readPID("pidfile.txt");
-    
-    if(pid != 0 && isRunning(pid)) 
+    if(isAppAlreadyRunning())
         return -1;
-    
-    writePID("pidfile.txt");
-#endif
-    
     
     GamePtr game = GamePtr(new Game());    
     game->startup();
