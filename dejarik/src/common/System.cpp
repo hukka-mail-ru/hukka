@@ -11,7 +11,6 @@ using namespace std;
 #include <string>
 #include <fstream>
 
-
 void writePID(const char* pidfile)
 {
     ofstream out(pidfile);
@@ -28,9 +27,16 @@ pid_t readPID(const char* pidfile)
     return atoi(str.c_str());
 }
 
-bool isRunning(pid_t pid)
+bool isAppAlreadyRunning()
 {
-    return (kill(pid,0)==0) ? true : false;  // return 0 if the process exists, else -1
+    pid_t pid = readPID("pidfile.txt");
+    
+    if(pid != 0 && kill(pid,0) == 0) // kill returns 0 if the process exists, else -1
+        return true;
+    
+    writePID("pidfile.txt");
+    
+    return false;
 }
 
 #endif
@@ -38,6 +44,14 @@ bool isRunning(pid_t pid)
 
 
 #ifdef WIN_BUILD
+
+bool isAppAlreadyRunning()
+{
+    // TODO not implemented yet
+    return false;
+}
+
+
 time_t time( time_t *inTT )
 {
     SYSTEMTIME sysTimeStruct;
