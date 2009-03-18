@@ -10,4 +10,8 @@
     bool isRunning(pid_t pid);
 #endif
 
+#ifdef WIN_BUILD
+    time_t time( time_t *inTT )
+#endif
+    
 #endif /*SYSTEM_H_*/
