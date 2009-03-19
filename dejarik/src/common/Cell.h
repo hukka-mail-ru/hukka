@@ -29,7 +29,7 @@ enum Selection
 };
 
 
-struct Cell
+class Cell
 {
 public:
     Cell(unsigned circle, unsigned radius);
