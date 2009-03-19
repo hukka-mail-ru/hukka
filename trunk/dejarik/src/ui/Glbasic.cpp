@@ -401,13 +401,13 @@ void glTexParameterx(GLenum target, GLenum pname, float param)
 	glTexParameterx(target, pname, param);
 }
 
-void glLineWidthxx(float width)
+void glLineWidthx(float width)
 {
-	glLineWidthx(float);
+	glLineWidth(float);
 }
 
-void glClearColorxx(GLclampf red, GLclampf green, GLclampf blue, GLclampf alpha)
+void glClearColorx(GLclampf red, GLclampf green, GLclampf blue, GLclampf alpha)
 {
-	glClearColorx(red, green, blue, alpha);
+	glClearColor(red, green, blue, alpha);
 }
 #endif

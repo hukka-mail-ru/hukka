@@ -25,8 +25,8 @@ void glRotatex(float angle, float x, float y, float z);
 void glFrustumx(float left, float right, float bottom, float top, float near, float far);
 void glColor4x(float red, float green, float blue, float alpha);
 void glTexParameterx(GLenum target, GLenum pname, float param);
-void glLineWidthxx(float width);
-void glClearColorxx(GLclampf red, GLclampf green, GLclampf blue, GLclampf alpha);
+void glLineWidthx(float width);
+void glClearColorx(GLclampf red, GLclampf green, GLclampf blue, GLclampf alpha);
 #endif
 
 #endif /*Glbasic_H_*/

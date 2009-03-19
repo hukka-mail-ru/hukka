@@ -11,7 +11,7 @@ CLASSPTR(Player)
 CLASSPTR(Piece)
 
 
-struct Piece
+class Piece
 {
 public:
     
