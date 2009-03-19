@@ -9,7 +9,7 @@
 #ifdef OPENGL_ES_BUILD
     #define GL_GLEXT_PROTOTYPES
 
-    #include <GLES/glext.h>
+    #include <GLES/gl.h>
 
 #endif
 
@@ -23,6 +23,10 @@ int gluUnProject (float winX, float winY, float winZ, const float *model, const 
 void glTranslatex(float x, float y, float z);
 void glRotatex(float angle, float x, float y, float z);
 void glFrustumx(float left, float right, float bottom, float top, float near, float far);
+void glColor4x(float red, float green, float blue, float alpha);
+void glTexParameterx(GLenum target, GLenum pname, float param);
+void glLineWidthxx(float width);
+void glClearColorxx(GLclampf red, GLclampf green, GLclampf blue, GLclampf alpha);
 #endif
 
 #endif /*Glbasic_H_*/

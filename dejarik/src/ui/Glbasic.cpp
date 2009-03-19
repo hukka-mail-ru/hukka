@@ -391,4 +391,23 @@ void glFrustumx(float left, float right, float bottom, float top, float near, fl
     glFrustum(left, right, bottom, top, near, far);
 }
 
+void glColor4x(float red, float green, float blue, float alpha)
+{
+	glColor4x(red, green, blue, alpha);
+}
+
+void glTexParameterx(GLenum target, GLenum pname, float param)
+{
+	glTexParameterx(target, pname, param);
+}
+
+void glLineWidthxx(float width)
+{
+	glLineWidthx(float);
+}
+
+void glClearColorxx(GLclampf red, GLclampf green, GLclampf blue, GLclampf alpha)
+{
+	glClearColorx(red, green, blue, alpha);
+}
 #endif

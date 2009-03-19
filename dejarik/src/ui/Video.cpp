@@ -84,7 +84,7 @@ void Video::initGL()
     glShadeModel( GL_SMOOTH );
 
     /* Set the background grey */
-    glClearColor( 0.5f, 0.5f, 0.5f, 0.0f );
+    glClearColorx( 0.5f, 0.5f, 0.5f, 0.0f );
 
     /* Depth buffer setup */
   //  glClearDepth( 1.0f ); // Can't work in ES. It seems we can just comment it
@@ -188,8 +188,8 @@ void Video::loadTexture(Texture& texture, const std::string& path)
         texture.h = image->h;
 
         /* Linear Filtering */
-        glTexParameterf( GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR );
-        glTexParameterf( GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR );
+        glTexParameterx( GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR );
+        glTexParameterx( GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR );
         }
 
     /* Free up any memory we may have used */
@@ -316,8 +316,8 @@ void Video::drawShape(const vector<float>& xWin, const vector<float>& yWin, cons
         vertices.push_back( 0 );
     }
     
-    glColor4f(color.r, color.g, color.b, 0);
-    glLineWidth(width);
+    glColor4x(color.r, color.g, color.b, 0);
+    glLineWidthx(width);
     
     
     glVertexPointer(3, GL_FLOAT, 0, &vertices[0]);
@@ -327,7 +327,7 @@ void Video::drawShape(const vector<float>& xWin, const vector<float>& yWin, cons
 
     glDisableClientState(GL_VERTEX_ARRAY);
  
-    glColor4f(1, 1, 1, 0); // reset
+    glColor4x(1, 1, 1, 0); // reset
     
     
     TRY_RETHROW;
@@ -358,7 +358,7 @@ void Video::drawPolygon(
     glDisable( GL_DEPTH_TEST );
     glBlendFunc(GL_SRC_ALPHA,GL_ONE_MINUS_SRC_ALPHA); 
     
-    glColor4f(color.r, color.g, color.b, opacity);
+    glColor4x(color.r, color.g, color.b, opacity);
         
     glVertexPointer(3, GL_FLOAT, 0, &vertices[0]);
     glEnableClientState(GL_VERTEX_ARRAY);
@@ -367,7 +367,7 @@ void Video::drawPolygon(
 
     glDisableClientState(GL_VERTEX_ARRAY);
         
-    glColor4f(1, 1, 1, 0); // reset
+    glColor4x(1, 1, 1, 0); // reset
     glEnable( GL_DEPTH_TEST ); /* Enable Depth Testing */
     glDisable( GL_BLEND );     /* Disable Blending     */
     
@@ -440,7 +440,7 @@ void Video::drawImage(const Texture& texture, const RGB_Color& color, float winX
     glEnable( GL_TEXTURE_2D );
     
         glBindTexture(GL_TEXTURE_2D, texture.id);
-        glColor4f(color.r, color.g, color.b, 0); // blue
+        glColor4x(color.r, color.g, color.b, 0); // blue
         
         glTranslatex((x1+x2)/2, (y1+y2)/2, 0); // rotate [move to the coordinate center]
         glRotatex(angle ,0, 0, 1); // rotation
@@ -472,7 +472,7 @@ void Video::drawImage(const Texture& texture, const RGB_Color& color, float winX
         glDisableClientState(GL_VERTEX_ARRAY);
         glDisableClientState(GL_TEXTURE_COORD_ARRAY);
         
-        glColor4f(1, 1, 1, 0); // reset
+        glColor4x(1, 1, 1, 0); // reset
     glDisable( GL_TEXTURE_2D );
     glPopMatrix();
     
