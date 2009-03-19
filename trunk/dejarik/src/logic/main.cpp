@@ -7,8 +7,13 @@ using namespace std;
 #include "Macros.h"
 #include "System.h"
 
-
+#ifdef LINUX_BUILD
 int main(int argc, char *argv[])
+#endif 
+
+#ifdef WIN_BUILD
+int _tmain(int argc, _TCHAR* argv[])
+#endif
 {
     TRY_BEGINS;
 
