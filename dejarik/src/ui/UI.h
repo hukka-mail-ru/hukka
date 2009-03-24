@@ -47,7 +47,7 @@ private:
      */
     bool isCellClicked(float x, float y,  CellPtr& cell);
     
-    void onMouseClick(const SDL_Event& event);
+    void onMouseClick(int button_x, int button_y);
     
     GamePtr mGame; 
     bool mQuit;    

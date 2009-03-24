@@ -248,53 +248,51 @@ bool UI::drawAll()
 }
 
 
-void UI::onMouseClick(const SDL_Event& event)
+void UI::onMouseClick(int button_x, int button_y)
 {
     TRY_BEGINS;
-    
-    if( event.button.button == SDL_BUTTON_LEFT ) 
-    {        
-        CellPtr cell;
-        if(isCellClicked(event.button.x, event.button.y, cell))
+     
+    CellPtr cell;
+    if(isCellClicked(button_x, button_y, cell))
+    {
+       // cout << "mouse " << event.button.x << "." << event.button.y << endl;
+        //cout << "cell " << cell->c << "." << cell->r << endl;
+        //if(cell->piece)
+        //    cout << "piece " << cell->piece->name << " move " <<cell->piece->moveRating << endl; 
+        
+        // show Menu item
+        menuItemName = (cell->piece) ? cell->piece->name : "default";
+        
+        // process the click
+        BattleResult res = mGame->onCellClick(cell);
+       
+        if(res == RES_MOVE)
         {
-            cout << "mouse " << event.button.x << "." << event.button.y << endl;
-            //cout << "cell " << cell->c << "." << cell->r << endl;
-            //if(cell->piece)
-            //    cout << "piece " << cell->piece->name << " move " <<cell->piece->moveRating << endl; 
+            mGame->getBoard()->getMoveSteps(cell, mMoveSteps);
+            mMoveSteps.insert(mMoveSteps.begin(), cell->piece->cellBeforeMoving);
             
-            // show Menu item
-            menuItemName = (cell->piece) ? cell->piece->name : "default";
-            
-            // process the click
-            BattleResult res = mGame->onCellClick(cell);
-           
-            if(res == RES_MOVE)
-            {
-                mGame->getBoard()->getMoveSteps(cell, mMoveSteps);
-                mMoveSteps.insert(mMoveSteps.begin(), cell->piece->cellBeforeMoving);
-                
-            }
-            
-            switch(res)
-            {
-                case RES_CLICK: cout << "RES_CLICK" << endl; break;
-                case RES_MOVE: cout << "RES_MOVE" << endl; break;
-                case RES_KILL: menuItemName = "kill"; cout << "RES_KILL" << endl;break;
-                case RES_PUSH: menuItemName = "push"; cout << "RES_PUSH" << endl;break;
-                case RES_COUNTER_KILL: menuItemName = "counter_kill"; cout << "RES_COUNTER_KILL" << endl;break;
-                case RES_COUNTER_PUSH: menuItemName = "counter_push"; cout << "RES_COUNTER_PUSH" << endl;break;
-                default: break;
-            }
-            
-            PlayerPtr vinner;
-            if(mGame->checkVictory(vinner))
-            {
-                mQuit = true;
-                cout << "GAME OVER. Vinner: " << vinner->getName() << endl;
-            }
-            
-        }   
+        }
+        
+        switch(res)
+        {
+            case RES_CLICK: cout << "RES_CLICK" << endl; break;
+            case RES_MOVE: cout << "RES_MOVE" << endl; break;
+            case RES_KILL: menuItemName = "kill"; cout << "RES_KILL" << endl;break;
+            case RES_PUSH: menuItemName = "push"; cout << "RES_PUSH" << endl;break;
+            case RES_COUNTER_KILL: menuItemName = "counter_kill"; cout << "RES_COUNTER_KILL" << endl;break;
+            case RES_COUNTER_PUSH: menuItemName = "counter_push"; cout << "RES_COUNTER_PUSH" << endl;break;
+            default: break;
+        }
+        
+        PlayerPtr vinner;
+        if(mGame->checkVictory(vinner))
+        {
+            mQuit = true;
+            cout << "GAME OVER. Vinner: " << vinner->getName() << endl;
+        }
+        
     }   
+ 
     
     TRY_RETHROW;
 }
@@ -304,7 +302,7 @@ void UI::handleEvents()
 {
     TRY_BEGINS;
     
-    SDL_Event event;
+    
     while ( !mQuit )
     {
         long time1 = getTime(); // start the timer 
@@ -315,16 +313,14 @@ void UI::handleEvents()
               
         
         /* handle the events in the queue */
+        SDL_Event event;
         while ( SDL_PollEvent( &event ) )
         {
-            
-            
-            // MOUSE EVENT
-            if( !mMoving && event.type == SDL_MOUSEBUTTONDOWN ) 
+            if( !mMoving && event.type == SDL_MOUSEBUTTONDOWN &&
+                 event.button.button == SDL_BUTTON_LEFT ) 
             {
-                onMouseClick(event);
+                onMouseClick(event.button.x, event.button.y);
             }
-
             else if(event.type == SDL_QUIT) // handle stop
             {
                 mQuit = true;
