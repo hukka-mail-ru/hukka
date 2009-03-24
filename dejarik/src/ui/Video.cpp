@@ -16,12 +16,12 @@ void Video::startup(const std::vector<std::string>& pieceNames)
     
     /* initialize SDL */
     initSDL();
-
-    /* Load all the textures */
-    createImages(pieceNames);
     
     /* initialize OpenGL */
     initGL();
+
+    /* Load all the textures */
+    createImages(pieceNames);
 
     /* resize the initial window */
     resizeWindow( SCREEN_WIDTH, SCREEN_HEIGHT );
@@ -191,7 +191,7 @@ void Video::loadTexture(Texture& texture, const std::string& path)
         glBindTexture(GL_TEXTURE_2D, texture.id);
 
         /* Generate The Texture */
-        glTexImage2D(GL_TEXTURE_2D, 0, GL_RGB, image->w, image->h, 0, GL_RGB, // blue chanel must be changed by red 
+        glTexImage2D(GL_TEXTURE_2D, 0, GL_RGB, image->w, image->h, 0, GL_BGR, // blue chanel must be changed by red 
                 GL_UNSIGNED_BYTE, image->pixels );
         
         texture.w = image->w;

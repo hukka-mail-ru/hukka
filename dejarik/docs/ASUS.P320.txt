@@ -1,0 +1,7 @@
+Processor: TI OMAP 850 [kernel ARM926EJ-S, freq.200MHz]
+
+ARM [Advanced RISC Machines] - the most popular architecture of smartphones and mobile devices
+
+http://www.mobimag.ru/Articles/2476/Serdce_mobilnogo_apparata_vsyo_chto_nado_znat_o_processorah_ARM_i_MIPS.htm
+
+OS Windows Mobile [kernel Windows CE]
