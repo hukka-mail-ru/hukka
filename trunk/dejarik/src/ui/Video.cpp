@@ -15,6 +15,33 @@ void Video::startup(const std::vector<std::string>& pieceNames)
     TRY_BEGINS;
     
     /* initialize SDL */
+    initSDL();
+
+    /* Load all the textures */
+    createImages(pieceNames);
+    
+    /* initialize OpenGL */
+    initGL();
+
+    /* resize the initial window */
+    resizeWindow( SCREEN_WIDTH, SCREEN_HEIGHT );
+
+    
+    TRY_RETHROW;
+}
+
+void Video::stop()
+{
+    TRY_BEGINS;
+    SDL_Quit();
+    TRY_RETHROW;
+}
+
+void Video::initSDL()
+{
+    TRY_BEGINS;
+
+    /* initialize SDL */
     if ( SDL_Init( SDL_INIT_VIDEO ) < 0 )
     {
         SDL_Quit();
@@ -55,26 +82,9 @@ void Video::startup(const std::vector<std::string>& pieceNames)
         throw runtime_error("Video mode set failed");
     }
 
-    /* Load all the textures */
-    createImages(pieceNames);
-    
-    /* initialize OpenGL */
-    initGL();
 
-    /* resize the initial window */
-    resizeWindow( SCREEN_WIDTH, SCREEN_HEIGHT );
-
-    
     TRY_RETHROW;
 }
-
-void Video::stop()
-{
-    TRY_BEGINS;
-    SDL_Quit();
-    TRY_RETHROW;
-}
-
 
 void Video::initGL()
 {
