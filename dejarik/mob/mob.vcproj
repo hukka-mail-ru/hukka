@@ -41,7 +41,7 @@
 				Name="VCCLCompilerTool"
 				ExecutionBucket="7"
 				Optimization="0"
-				AdditionalIncludeDirectories="C:\Distrib\devel\Vincent\include"
+				AdditionalIncludeDirectories="..\..\Vincent\include"
 				PreprocessorDefinitions="_DEBUG;_WIN32_WCE=$(CEVER);UNDER_CE;$(PLATFORMDEFINES);WINCE;DEBUG;_WINDOWS;$(ARCHFAM);$(_ARCHFAM_);_UNICODE;UNICODE;POCKETPC2003_UI_MODEL;OPENGL_ES_BUILD"
 				MinimalRebuild="true"
 				RuntimeLibrary="1"
@@ -67,7 +67,7 @@
 				AdditionalDependencies="libGLES_CM.lib"
 				OutputFile="$(OutDir)/mob.exe"
 				LinkIncremental="2"
-				AdditionalLibraryDirectories="C:\Distrib\devel\Vincent\bin\arm\Debug"
+				AdditionalLibraryDirectories="..\..\Vincent\bin\arm\Debug"
 				DelayLoadDLLs="$(NOINHERIT)"
 				GenerateDebugInformation="true"
 				ProgramDatabaseFile="$(OutDir)/mob.pdb"
@@ -227,14 +227,6 @@
 			>
 			<File
 				RelativePath=".\mob.ico"
-				>
-			</File>
-			<File
-				RelativePath=".\mobppc.rc"
-				>
-			</File>
-			<File
-				RelativePath=".\mobppc.rc2"
 				>
 			</File>
 		</Filter>
