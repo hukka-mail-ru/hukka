@@ -166,6 +166,114 @@ void Video::winToGL(float winX, float winY, float& x, float& y, float& z)
 }
 
 
+void Video::freeSurface(Surface* surface)
+{
+    free(surface->pixels);
+    delete surface;
+}
+
+
+Surface* Video::loadBMP(const char* filename)
+{
+    TRY_BEGINS;
+    
+#ifndef BM
+#define BM 0x4D42
+#endif
+
+    unsigned char* pixels;
+    int i, j, base;
+    int result;
+    int width;
+    int height;
+    int bpp;
+
+    BITMAPFILEHEADER bmpHeader = {0};
+    BITMAPINFOHEADER bmpInfo = {0};
+    RGBTRIPLE rgb = {0};
+
+    if(!filename) 
+        throw runtime_error("Filename not set");
+
+    // Open the file
+    FILE * file;
+    if( !(file = fopen(filename, "rb")))
+        throw runtime_error("Can't open file");
+
+    // Read the bmp header and check for a valid file
+    result = fread(&bmpHeader, sizeof(bmpHeader), 1, file);
+    if(!result) 
+    {
+        fclose(file);
+        throw runtime_error("Can't read BMP header");
+    }
+    if(bmpHeader.bfType != BM) 
+    {
+        fclose(file);
+        throw runtime_error("Not a BMP file");
+    }
+
+    // Read the infoheader
+    result = fread(&bmpInfo, sizeof(bmpInfo), 1, file);
+    if(!result) 
+    {
+        fclose(file);
+        throw runtime_error("Can't read BMP info");
+    }
+
+    // Get the informations
+    width = bmpInfo.biWidth;
+    height = bmpInfo.biHeight;
+    bpp = bmpInfo.biBitCount;
+
+    if(bmpInfo.biCompression || bpp != 24) 
+    {
+        fclose( file );
+        throw runtime_error("Can't read compressed BMP");
+    }
+
+    unsigned pixelsNum = width * height * 3;
+    pixels = (unsigned char*)malloc(pixelsNum);
+    if(!pixels) 
+    {
+        fclose(file);
+        throw runtime_error("Can't allocate memory for surface");
+    }
+    memset(pixels, 0, pixelsNum);
+    base = 0;
+
+    // Read the pixels
+    for (j=height-1; j >= 0 ; j--) 
+    {
+        for (i=0; i < width; i++) 
+        {
+            result = fread(&rgb, sizeof(rgb), 1, file);
+            if(!result) 
+            {
+                free(pixels);
+                fclose(file);
+                throw runtime_error("Can't read BMP pixels");
+            }
+            pixels[(j*width + i)*3  + 2] = rgb.rgbtRed;
+            pixels[(j*width + i)*3  + 1] = rgb.rgbtGreen;
+            pixels[(j*width + i)*3  + 0] = rgb.rgbtBlue;
+          //  base += 3;
+        }
+    }
+
+    fclose(file);
+
+    Surface* surface = new Surface();
+    surface->pixels = pixels;
+    surface->w = width;
+    surface->h = height;
+    
+    return surface;
+
+    TRY_RETHROW;
+}
+
+
 
 void Video::loadTexture(Texture& texture, const std::string& path)
 {
@@ -175,11 +283,11 @@ void Video::loadTexture(Texture& texture, const std::string& path)
     bool res = false;
 
     /* Create storage space for the texture */
-    SDL_Surface* image; 
+    Surface* image = loadBMP(path.c_str()); 
 
     /* Load The Bitmap, Check For Errors, If Bitmap's Not Found Quit */
-    if ((image = SDL_LoadBMP(path.c_str())))
-        {
+    if (image)
+    {
 
         /* Set the status to true */
         res = true;
@@ -191,8 +299,8 @@ void Video::loadTexture(Texture& texture, const std::string& path)
         glBindTexture(GL_TEXTURE_2D, texture.id);
 
         /* Generate The Texture */
-        glTexImage2D(GL_TEXTURE_2D, 0, GL_RGB, image->w, image->h, 0, GL_BGR, // blue chanel must be changed by red 
-                GL_UNSIGNED_BYTE, image->pixels );
+        glTexImage2D(GL_TEXTURE_2D, 0, GL_RGB, image->w, image->h, 0, GL_RGB, // blue chanel must be changed by red 
+                     GL_UNSIGNED_BYTE, image->pixels );
         
         texture.w = image->w;
         texture.h = image->h;
@@ -200,11 +308,11 @@ void Video::loadTexture(Texture& texture, const std::string& path)
         /* Linear Filtering */
         glTexParameterx( GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR );
         glTexParameterx( GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR );
-        }
+    }
 
     /* Free up any memory we may have used */
     if (image)
-        SDL_FreeSurface(image);
+        freeSurface(image);
 
     if(!res)
     {

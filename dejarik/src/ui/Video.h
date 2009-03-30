@@ -17,6 +17,45 @@
 
 #include "../common/Macros.h"
 
+/////////////////////////////////////////////////////////////////////////
+#ifdef LINUX_BUILD
+    #include <X11/Xmd.h> // for INT16, INT32
+    #pragma pack(1)
+    struct BITMAPFILEHEADER 
+    {
+    
+        INT16 bfType;
+        INT32 bfSize;
+        INT16 bfReserved1;
+        INT16 bfReserved2;
+        INT32 bfOffBits;
+    };
+    
+    #pragma pack(1)
+    struct BITMAPINFOHEADER 
+    { 
+      INT32 biSize; 
+      INT32 biWidth; 
+      INT32 biHeight; 
+      INT16 biPlanes; 
+      INT16 biBitCount; 
+      INT32 biCompression; 
+      INT32 biSizeImage; 
+      INT32 biXPelsPerMeter; 
+      INT32 biYPelsPerMeter; 
+      INT32 biClrUsed; 
+      INT32 biClrImportant; 
+    }; 
+    
+    #pragma pack(1)
+    struct RGBTRIPLE 
+    {
+      INT8 rgbtRed;
+      INT8 rgbtGreen;
+      INT8 rgbtBlue;
+    };
+#endif
+/////////////////////////////////////////////////////////////////////////
 
 struct Texture
 {
@@ -36,6 +75,13 @@ struct Image
     ImageType type;
     Texture texture;
     Texture mask;
+};
+
+struct Surface
+{
+    unsigned char* pixels;
+    int w;
+    int h;
 };
 
 CLASSPTR(Image);
@@ -76,6 +122,9 @@ public:
             SpriteXY spriteXY, float x, float y, float angle);    
         
 private:
+    
+    Surface* loadBMP(const char* filename);
+    void freeSurface(Surface* surface);
     
     void initSDL();
     void initGL();

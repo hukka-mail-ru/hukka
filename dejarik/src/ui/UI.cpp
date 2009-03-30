@@ -111,7 +111,7 @@ void UI::drawMenu()
     // menu 
     mVideo.drawSprite("menu_" + menuItemName, RGB_Color(1,1,1), XY_LEFTBOTTOM,
                       3,
-                      252,
+                      152,
                       0); 
     
     TRY_RETHROW;
