@@ -110,8 +110,8 @@ void UI::drawMenu()
     
     // menu 
     mVideo.drawSprite("menu_" + menuItemName, RGB_Color(1,1,1), XY_LEFTBOTTOM,
-                      3,
-                      152,
+                      4,
+                      254,
                       0); 
     
     TRY_RETHROW;
@@ -239,7 +239,7 @@ bool UI::drawAll()
     /* Draw it to the screen */
     if(!mQuit)
     {       
-        SDL_GL_SwapBuffers();
+        swapBuffers();
     }
 
     TRY_RETHROW;
@@ -313,6 +313,7 @@ void UI::handleEvents()
               
         
         /* handle the events in the queue */
+        /*
         SDL_Event event;
         while ( SDL_PollEvent( &event ) )
         {
@@ -331,7 +332,7 @@ void UI::handleEvents()
                 break;
             }
         }
-        
+       
         // a delay before the next iteration
         if(mMoving)
         {
@@ -342,6 +343,7 @@ void UI::handleEvents()
         {
             SDL_Delay(1); // to prevent too frequent drawings
         }
+         */
     }
     
     /* clean ourselves up and exit */
