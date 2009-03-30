@@ -1,5 +1,8 @@
 #include <iostream>
 #include "Video.h"
+#include "Window.h"
+#include "Glbasic.h"
+
 
 
 using namespace std;
@@ -14,18 +17,28 @@ void Video::startup(const std::vector<std::string>& pieceNames)
 {
     TRY_BEGINS;
     
-    /* initialize SDL */
+    createEGLWindow(320, 240, "test2");
+    glClearColor(glF(0.5f), glF(0.5f), glF(0.5f), glF(0.0f));
+
+    glMatrixMode(GL_PROJECTION);
+    glLoadIdentity();
+    glOrthof(glF(0.0), glF(1.0), glF(0.0), glF(1.0), glF(-1.0), glF(1.0));
+
+    glClear(GL_COLOR_BUFFER_BIT|GL_DEPTH_BUFFER_BIT);
+    
+    /*
+    // initialize SDL 
     initSDL();
     
-    /* initialize OpenGL */
+    // initialize OpenGL 
     initGL();
 
-    /* Load all the textures */
+    // Load all the textures 
     createImages(pieceNames);
-
-    /* resize the initial window */
+    
+    // resize the initial window 
     resizeWindow( SCREEN_WIDTH, SCREEN_HEIGHT );
-
+*/
     
     TRY_RETHROW;
 }
@@ -33,22 +46,22 @@ void Video::startup(const std::vector<std::string>& pieceNames)
 void Video::stop()
 {
     TRY_BEGINS;
-    SDL_Quit();
+ //   SDL_Quit();
     TRY_RETHROW;
 }
-
+/*
 void Video::initSDL()
 {
     TRY_BEGINS;
 
-    /* initialize SDL */
+    // initialize SDL 
     if ( SDL_Init( SDL_INIT_VIDEO ) < 0 )
     {
         SDL_Quit();
         throw runtime_error("Video initialization failed");
     }
 
-    /* Fetch the video info */
+    // Fetch the video info 
     const SDL_VideoInfo* videoInfo = SDL_GetVideoInfo( );
     if ( !videoInfo )
     {
@@ -56,26 +69,26 @@ void Video::initSDL()
         throw runtime_error("Video query failed");
     }
 
-    /* the flags to pass to SDL_SetVideoMode */
-    int videoFlags  = SDL_OPENGL;          /* Enable OpenGL in SDL */
-    videoFlags |= SDL_GL_DOUBLEBUFFER; /* Enable double buffering */
-    videoFlags |= SDL_HWPALETTE;       /* Store the palette in hardware */
-    videoFlags |= SDL_RESIZABLE;       /* Enable window resizing */
+    // the flags to pass to SDL_SetVideoMode 
+    int videoFlags  = SDL_OPENGL;       
+    videoFlags |= SDL_GL_DOUBLEBUFFER; 
+    videoFlags |= SDL_HWPALETTE;       
+    videoFlags |= SDL_RESIZABLE;       
 
-    /* This checks to see if surfaces can be stored in memory */
+    // This checks to see if surfaces can be stored in memory 
     if ( videoInfo->hw_available )
         videoFlags |= SDL_HWSURFACE;
     else
         videoFlags |= SDL_SWSURFACE;
 
-    /* This checks if hardware blits can be done */
+    // This checks if hardware blits can be done 
     if ( videoInfo->blit_hw )
         videoFlags |= SDL_HWACCEL;
 
-    /* Sets up OpenGL double buffering */
+    // Sets up OpenGL double buffering 
     SDL_GL_SetAttribute( SDL_GL_DOUBLEBUFFER, 1 );
 
-    /* Verify there is a surface */
+    // Verify there is a surface 
     if (!SDL_SetVideoMode( SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_BPP, videoFlags ) )
     {
         SDL_Quit();
@@ -84,66 +97,67 @@ void Video::initSDL()
 
 
     TRY_RETHROW;
-}
+}*/
 
+/*
 void Video::initGL()
 {
     TRY_BEGINS;
 
-    /* Enable smooth shading */
+    // Enable smooth shading 
     glShadeModel( GL_SMOOTH );
 
-    /* Set the background grey */
+    // Set the background grey 
     glClearColorx( 0.5f, 0.5f, 0.5f, 0.0f );
 
-    /* Depth buffer setup */
+    // Depth buffer setup 
   //  glClearDepth( 1.0f ); // Can't work in ES. It seems we can just comment it
 
-    /* Enables Depth Testing */
+    // Enables Depth Testing 
     glEnable( GL_DEPTH_TEST );
 
-    /* The Type Of Depth Test To Do */
+    /// The Type Of Depth Test To Do 
     glDepthFunc( GL_LEQUAL );
 
-    /* Really Nice Perspective Calculations */
+    // Really Nice Perspective Calculations 
     glHint( GL_PERSPECTIVE_CORRECTION_HINT, GL_NICEST );
  
     TRY_RETHROW;
 }
-
-
+*/
+/*
 void Video::resizeWindow(unsigned width, unsigned height)
 {
     TRY_BEGINS;
-    /* Protect against a divide by zero */
+    // Protect against a divide by zero 
     if ( height == 0 )
         height = 1;
 
-    /* Height / width ration */
+    // Height / width ration 
     GLfloat ratio = ( GLfloat )width / ( GLfloat )height;
 
-    /* Setup our viewport. */
+    // Setup our viewport.
     viewport[0] = 0;
     viewport[1] = 0;
     viewport[2] = width;
     viewport[3] = height;
     glViewport(viewport[0], viewport[1], (GLsizei)viewport[2], (GLsizei)viewport[3] );
 
-    /* change to the projection matrix and set our viewing volume. */
+    // change to the projection matrix and set our viewing volume. 
     glMatrixMode( GL_PROJECTION );
     glLoadIdentity( );
 
-    /* Set our perspective */
+    // Set our perspective 
     gluPerspective( 45.0f, ratio, 0.1f, 100.0f );
 
-    /* Make sure we're chaning the model view and not the projection */
+    // Make sure we're chaning the model view and not the projection 
     glMatrixMode( GL_MODELVIEW );
 
-    /* Reset The View */
+    /// Reset The View 
     glLoadIdentity( );
    
     TRY_RETHROW;
-}
+}*/
 
 
 void Video::winToGL(float winX, float winY, float& x, float& y, float& z)
