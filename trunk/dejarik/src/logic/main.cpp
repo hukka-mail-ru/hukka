@@ -7,24 +7,31 @@ using namespace std;
 #include "Macros.h"
 #include "System.h"
 
-#ifdef LINUX_BUILD
-int main(int argc, char *argv[])
-#endif 
-
-#ifdef WIN_BUILD
+#ifdef _WIN32
 int _tmain(int argc, _TCHAR* argv[])
+#else
+int main(int argc, char *argv[]) 
 #endif
 {
     TRY_BEGINS;
 
-    if(isAppAlreadyRunning())
-        return -1;
+    cout << "main" << endl; 
     
+    if(isAppAlreadyRunning())
+    {
+        cout << "AppAlreadyRunning" << endl; 
+        return -1;
+    }
+       
     GamePtr game = GamePtr(new Game());    
     game->startup();
     
+    cout << "game started" << endl; 
+    
     UIPtr ui = UIPtr(new UI(game)); 
     ui->startup();
+    
+    cout << "ui started" << endl; 
     
     ui->handleEvents();
    

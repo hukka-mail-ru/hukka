@@ -119,8 +119,11 @@ createEGLWindow(int width, int height,  const char *name) {
 Display *dpy;
 Window window;
 
-void
-createEGLWindow(int width, int height, const char *name) {
+#include <iostream>
+using namespace std;
+
+void createEGLWindow(int width, int height, const char *name) 
+{
     EGLConfig config[4];
     EGLContext cx;
     int nconfig;
@@ -131,14 +134,19 @@ createEGLWindow(int width, int height, const char *name) {
     int vid, n;
 #endif
 
-    egldisplay = eglGetDisplay(dpy = XOpenDisplay(NULL));
+    dpy = XOpenDisplay(NULL);
+    egldisplay = eglGetDisplay(dpy);
+    
     eglInitialize(egldisplay, 0, 0);
-    if (!eglChooseConfig(egldisplay, attributeList, config, sizeof config/sizeof config[0], &nconfig)) {
-	printf("can't find requested config\n");
-	exit(1);
+    
+    if (!eglChooseConfig(egldisplay, attributeList, config, sizeof config/sizeof config[0], &nconfig)) 
+    {
+        printf("can't find requested config\n");
+        exit(1);
     }
+    
     cx = eglCreateContext(egldisplay, config[0], 0, 0);
-
+    
 #if 1
     eglGetConfigAttrib(egldisplay, config[0], EGL_NATIVE_VISUAL_ID, &vid);
     tmp.visualid = vid;

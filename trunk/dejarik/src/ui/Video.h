@@ -11,11 +11,7 @@
 
 #include <GLES/gl.h>
 
-//#include "Glbasic.h"
 
-//#ifndef OPENGL_ES_BUILD // no integration of SDL and OpenGL ES at the moment
-//    #include <SDL.h>
-//#endif
 
 
 #include "../common/Macros.h"
