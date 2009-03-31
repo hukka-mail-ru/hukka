@@ -234,17 +234,17 @@ bool UI::drawAll()
         0,1,0 
     };
 
-    mVideo.drawPolygon(&vertexArray[0], 4, RGBA_Color(1,1,1,0.5));
+ //   mVideo.drawPolygon(&vertexArray[0], 4, RGBA_Color(1,1,1,0.5));
 
-  //  drawImage(texture1, RGBA_Color(1,1,1,0.5), 0, 0, 0);
+    mVideo.drawImage("board", RGBA_Color(1,1,1,0.5), 0, 0, 0);
     //////////////////////////////////
     
-    
     /*
+    
     mVideo.drawBackground();
     drawBoard();
     drawMenu();
-*/    
+   */
     
     /* Draw it to the screen */
     if(!mQuit)
