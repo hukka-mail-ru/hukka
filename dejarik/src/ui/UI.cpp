@@ -221,20 +221,30 @@ bool UI::drawAll()
     TRY_BEGINS;
     
     /* Clear The Screen And The Depth Buffer */
-    glClear( GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT );
-    glLoadIdentity();
-    glTranslatex( 0.0f, 0.0f, -10.0f );
+ //   glClear( GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT );
+//    glLoadIdentity();
+//    glTranslatex( 0.0f, 0.0f, -10.0f );
+  
+    //////// TEST BLOCK ////////////////////
+    float vertexArray[] = 
+    {
+        0,0,0,   
+        1,0,0,     
+        1,1,0,
+        0,1,0 
+    };
+
+    mVideo.drawPolygon(&vertexArray[0], 4, RGBA_Color(1,1,1,0.5));
+
+  //  drawImage(texture1, RGBA_Color(1,1,1,0.5), 0, 0, 0);
+    //////////////////////////////////
     
+    
+    /*
     mVideo.drawBackground();
-    
-    
-    
     drawBoard();
-  //  drawActivePlayer();
-   // glTranslatex( 100.0f, -5.0f, 0.0f );
-    
     drawMenu();
-    
+*/    
     
     /* Draw it to the screen */
     if(!mQuit)
@@ -347,7 +357,7 @@ void UI::handleEvents()
     }
     
     /* clean ourselves up and exit */
-    mVideo.stop();
+   // mVideo.stop();
     
     TRY_RETHROW;
 }
