@@ -320,7 +320,8 @@ void UI::handleEvents()
         mMoving = animation.updateAll(mMoveSteps);
         
         drawAll();
-              
+             
+        sleep(1);
         
         /* handle the events in the queue */
         /*
@@ -354,6 +355,7 @@ void UI::handleEvents()
             SDL_Delay(1); // to prevent too frequent drawings
         }
          */
+        
     }
     
     /* clean ourselves up and exit */

@@ -19,13 +19,10 @@ void Video::startup(const std::vector<std::string>& pieceNames)
     TRY_BEGINS;
     
     createEGLWindow(SCREEN_WIDTH, SCREEN_HEIGHT, "dejarik");
-    glClearColorx(glF(0.5f), glF(0.5f), glF(0.5f), glF(0.0f));
  
     glMatrixMode(GL_PROJECTION);
     glLoadIdentity();   
-  //  glViewport(0, 0, (GLsizei)SCREEN_WIDTH, (GLsizei)SCREEN_HEIGHT);
-      
-    setPerspective(45.0f,(GLfloat)SCREEN_WIDTH/(GLfloat)SCREEN_HEIGHT, 1.0f, 40.0f);
+    setPerspective(45.0f,(GLfloat)SCREEN_WIDTH/(GLfloat)SCREEN_HEIGHT, 1.0f, 10.0f);
     
     glMatrixMode(GL_MODELVIEW);
     glClear(GL_COLOR_BUFFER_BIT|GL_DEPTH_BUFFER_BIT);
@@ -51,7 +48,7 @@ void Video::setPerspective(GLfloat fovy, GLfloat aspect, GLfloat zNear,  GLfloat
 
     xmin = MultiplyFixed(ymin, aspectFixed);
     xmax = MultiplyFixed(ymax, aspectFixed);  
-    glFrustumx(xmin, xmax, ymin, ymax, znearFixed, FixedFromFloat(zFar));
+    glFrustumx(xmin, xmax, ymin, ymax, 5, FixedFromFloat(zFar));
 }
 
 
