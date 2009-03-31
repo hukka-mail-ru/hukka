@@ -76,6 +76,87 @@ void Video::drawPolygon(float* vertexArray, unsigned vertNum, const RGBA_Color& 
     glDisableClientState(GL_VERTEX_ARRAY);
 }
 
+void Video::drawImage(const std::string& imageName, const RGBA_Color& color, 
+               float winX, float winY, float angle)
+{       
+    if(!images["Molator0"])
+    {
+        ostringstream os;
+        os << "Can't find name " << imageName;
+        throw runtime_error(os.str()); 
+    }
+    
+    Texture& texture = images["Molator0"]->texture;
+    
+    
+    float x1 = winX;
+    float y1 = winY;
+    float z1 = 0;
+    
+    float x2 = winX  + texture.w;
+    float y2 = winY  + texture.h;
+    float z2 = 0;
+    
+        
+    glPushMatrix();
+    glEnable( GL_TEXTURE_2D );
+
+    glBindTexture(GL_TEXTURE_2D, texture.id);
+    
+    glColor4x(
+        FixedFromFloat(color.r), 
+        FixedFromFloat(color.b), 
+        FixedFromFloat(color.g), 
+        FixedFromFloat(color.a));
+        
+    glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);  
+    glLoadIdentity();  
+
+    glTranslatex( 
+        FixedFromFloat(0.0f), 
+        FixedFromFloat(0.0f), 
+        FixedFromFloat(-10.0f) );
+/*
+    glTranslatex(FixedFromFloat((x1+x2)/2), 
+                 FixedFromFloat((y1+y2)/2), 
+                 ZERO); // rotate [move to the coordinate center]
+                 
+    glRotatex(FixedFromFloat(angle) ,ZERO, ZERO, ONE); // rotation
+    
+    glTranslatex(FixedFromFloat(-(x1+x2)/2), 
+                 FixedFromFloat(-(y1+y2)/2), 
+                 ZERO); // move back to the old position
+*/
+    const float vertices []=
+    {
+        x1,  y1, 0,
+        x2,  y1, 0,
+        x2,  y2, 0,
+        x1,  y2, 0,
+    };
+
+    const float texCoords[] = 
+    {
+        0, 0,
+        1, 0,
+        1, 1,
+        0, 1,
+    };
+
+    glVertexPointer(3, GL_FLOAT, 0, vertices);
+    glTexCoordPointer(2, GL_FLOAT, 0, texCoords);
+    glEnableClientState(GL_VERTEX_ARRAY);
+    glEnableClientState(GL_TEXTURE_COORD_ARRAY);
+
+    glDrawArrays(GL_TRIANGLE_FAN, 0, 4);
+
+    glDisableClientState(GL_VERTEX_ARRAY);
+    glDisableClientState(GL_TEXTURE_COORD_ARRAY);
+
+    glDisable( GL_TEXTURE_2D );
+    glPopMatrix();
+
+}
 
 
 void Video::winToGL(float winX, float winY, float& x, float& y, float& z)

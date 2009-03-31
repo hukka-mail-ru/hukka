@@ -161,6 +161,9 @@ public:
     
     // a new version
     void drawPolygon(float* vertexArray, unsigned vertNum, const RGBA_Color& color);
+    // a new version
+    void drawImage(const std::string& imageName, const RGBA_Color& color, 
+                   float winX, float winY, float angle);
      
     void drawShape(const std::vector<float>& xWin, const std::vector<float>& yWin, 
             const RGB_Color& color, float width);
