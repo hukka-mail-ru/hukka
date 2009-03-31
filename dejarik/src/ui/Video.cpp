@@ -17,14 +17,19 @@ void Video::startup(const std::vector<std::string>& pieceNames)
 {
     TRY_BEGINS;
     
-    createEGLWindow(320, 240, "test2");
-    glClearColor(glF(0.5f), glF(0.5f), glF(0.5f), glF(0.0f));
+    createEGLWindow(SCREEN_WIDTH, SCREEN_HEIGHT, "dejarik");
+    glClearColorx(glF(0.5f), glF(0.5f), glF(0.5f), glF(0.0f));
 
     glMatrixMode(GL_PROJECTION);
     glLoadIdentity();
-    glOrthof(glF(0.0), glF(1.0), glF(0.0), glF(1.0), glF(-1.0), glF(1.0));
+    glOrthox(glF(0.0), glF(1.0), glF(0.0), glF(1.0), glF(-1.0), glF(1.0));
 
     glClear(GL_COLOR_BUFFER_BIT|GL_DEPTH_BUFFER_BIT);
+    
+    
+    // Load all the textures 
+    createImages(pieceNames);
+    
     
     /*
     // initialize SDL 
@@ -33,8 +38,7 @@ void Video::startup(const std::vector<std::string>& pieceNames)
     // initialize OpenGL 
     initGL();
 
-    // Load all the textures 
-    createImages(pieceNames);
+
     
     // resize the initial window 
     resizeWindow( SCREEN_WIDTH, SCREEN_HEIGHT );

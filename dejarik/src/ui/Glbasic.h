@@ -2,9 +2,7 @@
 #define Glbasic_H_
 
 
-//    #define GL_GLEXT_PROTOTYPES
-
-    #include <GLES/gl.h>
+#include <GLES/gl.h>
 
 
 // just a copy-paste from GLU.
