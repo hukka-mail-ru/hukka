@@ -12,6 +12,18 @@
 #include <GLES/gl.h>
 
 
+#define PRECISION 16    
+#define ONE (1 << PRECISION)
+#define ZERO 0
+
+#define MAXPATHLEN  1024
+#define TEXTURE_FILTER_NONE 0
+#define TEXTURE_FILTER_BILINEAR 1
+#define TEXTURE_FILTER_TRILINEAR 2
+
+inline GLfixed FixedFromInt(int value) {return value << PRECISION;}
+inline GLfixed FixedFromFloat(float value) {return static_cast<GLfixed>(value * static_cast<float>(ONE));}
+inline GLfixed MultiplyFixed(GLfixed op1, GLfixed op2) {return (op1 * op2) >> PRECISION;};
 
 
 #include "../common/Macros.h"
@@ -116,6 +128,17 @@ struct RGB_Color
     float b;
 };
 
+
+struct RGBA_Color
+{
+    RGBA_Color(float r, float g, float b, float a): r(r), g(g), b(b), a(a) {}
+    float r;
+    float g;
+    float b;
+    float a;
+};
+
+
 enum SpriteXY
 {
     XY_CENTER,
@@ -135,6 +158,9 @@ public:
     
     void drawPolygon(const std::vector<float>& x, const std::vector<float>& y, 
             const RGB_Color& color, float opacity);
+    
+    // a new version
+    void drawPolygon(float* vertexArray, unsigned vertNum, const RGBA_Color& color);
      
     void drawShape(const std::vector<float>& xWin, const std::vector<float>& yWin, 
             const RGB_Color& color, float width);
@@ -146,6 +172,8 @@ private:
     
     Surface* loadBMP(const char* filename);
     void freeSurface(Surface* surface);
+    
+    void setPerspective(GLfloat fovy, GLfloat aspect, GLfloat zNear,  GLfloat zFar);
     
     void initSDL();
     void initGL();

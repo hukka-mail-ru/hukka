@@ -1,4 +1,5 @@
 #include <iostream>
+#include <math.h>
 #include "Video.h"
 #include "Window.h"
 #include "Glbasic.h"
@@ -19,149 +20,65 @@ void Video::startup(const std::vector<std::string>& pieceNames)
     
     createEGLWindow(SCREEN_WIDTH, SCREEN_HEIGHT, "dejarik");
     glClearColorx(glF(0.5f), glF(0.5f), glF(0.5f), glF(0.0f));
-
+ 
     glMatrixMode(GL_PROJECTION);
-    glLoadIdentity();
-    glOrthox(glF(0.0), glF(1.0), glF(0.0), glF(1.0), glF(-1.0), glF(1.0));
-
+    glLoadIdentity();   
+  //  glViewport(0, 0, (GLsizei)SCREEN_WIDTH, (GLsizei)SCREEN_HEIGHT);
+      
+    setPerspective(45.0f,(GLfloat)SCREEN_WIDTH/(GLfloat)SCREEN_HEIGHT, 1.0f, 40.0f);
+    
+    glMatrixMode(GL_MODELVIEW);
     glClear(GL_COLOR_BUFFER_BIT|GL_DEPTH_BUFFER_BIT);
+    glClearColorx(0, 0, 0, 0);
     
     
     // Load all the textures 
     createImages(pieceNames);
     
-    
-    /*
-    // initialize SDL 
-    initSDL();
-    
-    // initialize OpenGL 
-    initGL();
-
-
-    
-    // resize the initial window 
-    resizeWindow( SCREEN_WIDTH, SCREEN_HEIGHT );
-*/
-    
     TRY_RETHROW;
 }
 
-void Video::stop()
+//----------------------------------------------------------------------------
+void Video::setPerspective(GLfloat fovy, GLfloat aspect, GLfloat zNear,  GLfloat zFar)
 {
-    TRY_BEGINS;
- //   SDL_Quit();
-    TRY_RETHROW;
+    GLfixed xmin, xmax, ymin, ymax, aspectFixed, znearFixed;     
+
+    aspectFixed = FixedFromFloat(aspect);
+    znearFixed = FixedFromFloat(zNear);
+
+    ymax = MultiplyFixed(znearFixed, FixedFromFloat((GLfloat)tan(fovy * 3.1415962f / 360.0f)));  
+    ymin = -ymax;
+
+    xmin = MultiplyFixed(ymin, aspectFixed);
+    xmax = MultiplyFixed(ymax, aspectFixed);  
+    glFrustumx(xmin, xmax, ymin, ymax, znearFixed, FixedFromFloat(zFar));
 }
-/*
-void Video::initSDL()
+
+
+void Video::drawPolygon(float* vertexArray, unsigned vertNum, const RGBA_Color& color)
 {
-    TRY_BEGINS;
+    glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);  
+    glLoadIdentity();  
 
-    // initialize SDL 
-    if ( SDL_Init( SDL_INIT_VIDEO ) < 0 )
-    {
-        SDL_Quit();
-        throw runtime_error("Video initialization failed");
-    }
+    glTranslatex( 
+        FixedFromFloat(0.0f), 
+        FixedFromFloat(0.0f), 
+        FixedFromFloat(-10.0f) );
 
-    // Fetch the video info 
-    const SDL_VideoInfo* videoInfo = SDL_GetVideoInfo( );
-    if ( !videoInfo )
-    {
-        SDL_Quit();
-        throw runtime_error("Video query failed");
-    }
+    glColor4x(
+        FixedFromFloat(color.r), 
+        FixedFromFloat(color.b), 
+        FixedFromFloat(color.g), 
+        FixedFromFloat(color.a));
 
-    // the flags to pass to SDL_SetVideoMode 
-    int videoFlags  = SDL_OPENGL;       
-    videoFlags |= SDL_GL_DOUBLEBUFFER; 
-    videoFlags |= SDL_HWPALETTE;       
-    videoFlags |= SDL_RESIZABLE;       
+    glEnableClientState(GL_VERTEX_ARRAY);
 
-    // This checks to see if surfaces can be stored in memory 
-    if ( videoInfo->hw_available )
-        videoFlags |= SDL_HWSURFACE;
-    else
-        videoFlags |= SDL_SWSURFACE;
+    glVertexPointer(3, GL_FLOAT, 0, vertexArray);
+    glDrawArrays(GL_TRIANGLE_FAN, 0, vertNum);
 
-    // This checks if hardware blits can be done 
-    if ( videoInfo->blit_hw )
-        videoFlags |= SDL_HWACCEL;
-
-    // Sets up OpenGL double buffering 
-    SDL_GL_SetAttribute( SDL_GL_DOUBLEBUFFER, 1 );
-
-    // Verify there is a surface 
-    if (!SDL_SetVideoMode( SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_BPP, videoFlags ) )
-    {
-        SDL_Quit();
-        throw runtime_error("Video mode set failed");
-    }
-
-
-    TRY_RETHROW;
-}*/
-
-/*
-void Video::initGL()
-{
-    TRY_BEGINS;
-
-    // Enable smooth shading 
-    glShadeModel( GL_SMOOTH );
-
-    // Set the background grey 
-    glClearColorx( 0.5f, 0.5f, 0.5f, 0.0f );
-
-    // Depth buffer setup 
-  //  glClearDepth( 1.0f ); // Can't work in ES. It seems we can just comment it
-
-    // Enables Depth Testing 
-    glEnable( GL_DEPTH_TEST );
-
-    /// The Type Of Depth Test To Do 
-    glDepthFunc( GL_LEQUAL );
-
-    // Really Nice Perspective Calculations 
-    glHint( GL_PERSPECTIVE_CORRECTION_HINT, GL_NICEST );
- 
-    TRY_RETHROW;
+    glDisableClientState(GL_VERTEX_ARRAY);
 }
-*/
-/*
-void Video::resizeWindow(unsigned width, unsigned height)
-{
-    TRY_BEGINS;
-    // Protect against a divide by zero 
-    if ( height == 0 )
-        height = 1;
 
-    // Height / width ration 
-    GLfloat ratio = ( GLfloat )width / ( GLfloat )height;
-
-    // Setup our viewport.
-    viewport[0] = 0;
-    viewport[1] = 0;
-    viewport[2] = width;
-    viewport[3] = height;
-    glViewport(viewport[0], viewport[1], (GLsizei)viewport[2], (GLsizei)viewport[3] );
-
-    // change to the projection matrix and set our viewing volume. 
-    glMatrixMode( GL_PROJECTION );
-    glLoadIdentity( );
-
-    // Set our perspective 
-    gluPerspective( 45.0f, ratio, 0.1f, 100.0f );
-
-    // Make sure we're chaning the model view and not the projection 
-    glMatrixMode( GL_MODELVIEW );
-
-    /// Reset The View 
-    glLoadIdentity( );
-   
-    TRY_RETHROW;
-}*/
 
 
 void Video::winToGL(float winX, float winY, float& x, float& y, float& z)
@@ -468,6 +385,7 @@ void Video::drawShape(const vector<float>& xWin, const vector<float>& yWin, cons
     
     TRY_RETHROW;
 }
+
 
 
 void Video::drawPolygon(
