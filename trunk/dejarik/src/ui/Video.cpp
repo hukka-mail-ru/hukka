@@ -9,9 +9,11 @@
 using namespace std;
 
 /* screen width, height, and bit depth */
-#define SCREEN_WIDTH  240.0
-#define SCREEN_HEIGHT 320.0
+#define SCREEN_WIDTH  240
+#define SCREEN_HEIGHT 320
 #define SCREEN_BPP     16
+
+#define MAX_UNITS 100 // just a scale
 
 
 void Video::startup(const std::vector<std::string>& pieceNames)
@@ -19,16 +21,18 @@ void Video::startup(const std::vector<std::string>& pieceNames)
     TRY_BEGINS;
     
     createEGLWindow(SCREEN_WIDTH, SCREEN_HEIGHT, "dejarik");
-    glViewport(0, 0, SCREEN_WIDTH, SCREEN_HEIGHT);
     
     glMatrixMode(GL_PROJECTION);
     glLoadIdentity();   
-    setPerspective(45.0f,(float)(SCREEN_WIDTH/SCREEN_HEIGHT), 1.0f, 100.0f);
-    
+
+    glOrthox(FixedFromFloat(-MAX_UNITS*SCREEN_WIDTH/SCREEN_HEIGHT), 
+            FixedFromFloat(MAX_UNITS*SCREEN_WIDTH/SCREEN_HEIGHT),
+            FixedFromFloat(-MAX_UNITS), FixedFromFloat(MAX_UNITS),
+            FixedFromFloat(-MAX_UNITS) , FixedFromFloat(MAX_UNITS));
+
     glMatrixMode(GL_MODELVIEW);
     glClear(GL_COLOR_BUFFER_BIT|GL_DEPTH_BUFFER_BIT);
     glClearColorx(0, 0, 0, 0);
-    
     
     // Load all the textures 
     createImages(pieceNames);
@@ -38,25 +42,8 @@ void Video::startup(const std::vector<std::string>& pieceNames)
 
 
 
-//----------------------------------------------------------------------------
-void Video::setPerspective(GLfloat fovy, GLfloat aspect, GLfloat zNear,  GLfloat zFar)
+void Video::drawPolygon(GLshort* vertexArray, unsigned vertNum, const RGBA_Color& color)
 {
-    GLfloat ymax = zNear * tan(fovy * M_PI / 360.0);
-    GLfloat ymin = -ymax;
-
-    GLfloat xmin = ymin * aspect;
-    GLfloat xmax = ymax * aspect;
-    
-    glFrustumx(FixedFromFloat(xmin), FixedFromFloat(xmax), 
-               FixedFromFloat(ymin), FixedFromFloat(ymax), 
-               FixedFromFloat(zNear), FixedFromFloat(zFar));
-    
-}
-
-
-void Video::drawPolygon(float* vertexArray, unsigned vertNum, const RGBA_Color& color)
-{
-
     glColor4x(
         FixedFromFloat(color.r), 
         FixedFromFloat(color.b), 
@@ -65,11 +52,13 @@ void Video::drawPolygon(float* vertexArray, unsigned vertNum, const RGBA_Color& 
 
     glEnableClientState(GL_VERTEX_ARRAY);
 
-    glVertexPointer(3, GL_FLOAT, 0, vertexArray);
+    glVertexPointer(3, GL_SHORT, 0, vertexArray);
     glDrawArrays(GL_TRIANGLE_FAN, 0, vertNum);
 
     glDisableClientState(GL_VERTEX_ARRAY);
 }
+
+
 
 void Video::drawImage(const std::string& imageName, const RGBA_Color& color, 
                float winX, float winY, float angle)
@@ -82,8 +71,8 @@ void Video::drawImage(const std::string& imageName, const RGBA_Color& color,
     float y1 = winY;
     float z1 = 0;
     
-    float x2 = 1; // winX  + texture.w;
-    float y2 = 1; // winY  + texture.h;
+    float x2 = winX  + 1; //texture.w;
+    float y2 = winY + 1;//  + texture.h;
     float z2 = 0;
     
         
@@ -98,7 +87,6 @@ void Video::drawImage(const std::string& imageName, const RGBA_Color& color,
         FixedFromFloat(color.g), 
         FixedFromFloat(color.a));
         
-    glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);  
     glLoadIdentity();  
 
     glTranslatex( 

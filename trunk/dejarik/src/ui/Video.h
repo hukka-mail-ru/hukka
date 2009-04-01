@@ -139,7 +139,7 @@ public:
             const RGB_Color& color, float opacity);
     
     // a new version
-    void drawPolygon(float* vertexArray, unsigned vertNum, const RGBA_Color& color);
+    void drawPolygon(GLshort* vertexArray, unsigned vertNum, const RGBA_Color& color);
     // a new version
     void drawImage(const std::string& imageName, const RGBA_Color& color, 
                    float winX, float winY, float angle);
@@ -154,8 +154,6 @@ private:
     
     Surface* loadBMP(const char* filename);
     void freeSurface(Surface* surface);
-    
-    void setPerspective(GLfloat fovy, GLfloat aspect, GLfloat zNear,  GLfloat zFar);
     
     void initSDL();
     void initGL();
