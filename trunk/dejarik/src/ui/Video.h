@@ -29,27 +29,6 @@ inline GLfixed MultiplyFixed(GLfixed op1, GLfixed op2) {return (op1 * op2) >> PR
 #include "../common/Macros.h"
 #include "Window.h"
 
-/*#define USE_FLOAT*/
-#ifdef USE_FLOAT
-#define glF(x)  x
-#define glD(x)  x
-#define GL_F    GL_FLOAT
-typedef GLfloat GLf;
-#else
-#define glF(x)  ((GLfixed)((x)*(1<<16)))
-#define glD(x)  glF(x)
-#define GL_F    GL_FIXED
-typedef GLfixed GLf;
-
-#define glClearColor    glClearColorx
-#define glTranslatef    glTranslatex
-#define glRotatef   glRotatex
-#define glMaterialfv    glMaterialxv
-#define glMaterialf glMaterialx
-#define glOrthof    glOrthox
-#define glScalef    glScalex
-#endif
-
 /////////////////////////////////////////////////////////////////////////
 #ifdef LINUX_BUILD
     #include <X11/Xmd.h> // for INT16, INT32
