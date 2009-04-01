@@ -9,8 +9,8 @@
 using namespace std;
 
 /* screen width, height, and bit depth */
-#define SCREEN_WIDTH  240
-#define SCREEN_HEIGHT 320
+#define SCREEN_WIDTH  240.0
+#define SCREEN_HEIGHT 320.0
 #define SCREEN_BPP     16
 
 
@@ -19,10 +19,11 @@ void Video::startup(const std::vector<std::string>& pieceNames)
     TRY_BEGINS;
     
     createEGLWindow(SCREEN_WIDTH, SCREEN_HEIGHT, "dejarik");
- 
+    glViewport(0, 0, SCREEN_WIDTH, SCREEN_HEIGHT);
+    
     glMatrixMode(GL_PROJECTION);
     glLoadIdentity();   
-    setPerspective(45.0f,(GLfloat)SCREEN_WIDTH/(GLfloat)SCREEN_HEIGHT, 1.0f, 10.0f);
+    setPerspective(45.0f,(float)(SCREEN_WIDTH/SCREEN_HEIGHT), 1.0f, 100.0f);
     
     glMatrixMode(GL_MODELVIEW);
     glClear(GL_COLOR_BUFFER_BIT|GL_DEPTH_BUFFER_BIT);
@@ -35,32 +36,26 @@ void Video::startup(const std::vector<std::string>& pieceNames)
     TRY_RETHROW;
 }
 
+
+
 //----------------------------------------------------------------------------
 void Video::setPerspective(GLfloat fovy, GLfloat aspect, GLfloat zNear,  GLfloat zFar)
 {
-    GLfixed xmin, xmax, ymin, ymax, aspectFixed, znearFixed;     
+    GLfloat ymax = zNear * tan(fovy * M_PI / 360.0);
+    GLfloat ymin = -ymax;
 
-    aspectFixed = FixedFromFloat(aspect);
-    znearFixed = FixedFromFloat(zNear);
-
-    ymax = MultiplyFixed(znearFixed, FixedFromFloat((GLfloat)tan(fovy * 3.1415962f / 360.0f)));  
-    ymin = -ymax;
-
-    xmin = MultiplyFixed(ymin, aspectFixed);
-    xmax = MultiplyFixed(ymax, aspectFixed);  
-    glFrustumx(xmin, xmax, ymin, ymax, 5, FixedFromFloat(zFar));
+    GLfloat xmin = ymin * aspect;
+    GLfloat xmax = ymax * aspect;
+    
+    glFrustumx(FixedFromFloat(xmin), FixedFromFloat(xmax), 
+               FixedFromFloat(ymin), FixedFromFloat(ymax), 
+               FixedFromFloat(zNear), FixedFromFloat(zFar));
+    
 }
 
 
 void Video::drawPolygon(float* vertexArray, unsigned vertNum, const RGBA_Color& color)
 {
-    glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);  
-    glLoadIdentity();  
-
-    glTranslatex( 
-        FixedFromFloat(0.0f), 
-        FixedFromFloat(0.0f), 
-        FixedFromFloat(-10.0f) );
 
     glColor4x(
         FixedFromFloat(color.r), 
@@ -79,26 +74,20 @@ void Video::drawPolygon(float* vertexArray, unsigned vertNum, const RGBA_Color& 
 void Video::drawImage(const std::string& imageName, const RGBA_Color& color, 
                float winX, float winY, float angle)
 {       
-    if(!images["Molator0"])
-    {
-        ostringstream os;
-        os << "Can't find name " << imageName;
-        throw runtime_error(os.str()); 
-    }
+    Texture texture;
     
-    Texture& texture = images["Molator0"]->texture;
-    
+    loadTexture(texture, "img/Molator0.bmp");  
     
     float x1 = winX;
     float y1 = winY;
     float z1 = 0;
     
-    float x2 = winX  + texture.w;
-    float y2 = winY  + texture.h;
+    float x2 = 1; // winX  + texture.w;
+    float y2 = 1; // winY  + texture.h;
     float z2 = 0;
     
         
-    glPushMatrix();
+  //  glPushMatrix();
     glEnable( GL_TEXTURE_2D );
 
     glBindTexture(GL_TEXTURE_2D, texture.id);
@@ -154,7 +143,7 @@ void Video::drawImage(const std::string& imageName, const RGBA_Color& color,
     glDisableClientState(GL_TEXTURE_COORD_ARRAY);
 
     glDisable( GL_TEXTURE_2D );
-    glPopMatrix();
+ //   glPopMatrix();
 
 }
 
