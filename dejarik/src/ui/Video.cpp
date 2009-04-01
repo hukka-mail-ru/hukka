@@ -5,15 +5,10 @@
 #include "Glbasic.h"
 
 
-
 using namespace std;
 
-/* screen width, height, and bit depth */
 #define SCREEN_WIDTH  240
 #define SCREEN_HEIGHT 320
-#define SCREEN_BPP     16
-
-#define MAX_UNITS 100 // just a scale
 
 
 void Video::startup(const std::vector<std::string>& pieceNames)
@@ -25,10 +20,9 @@ void Video::startup(const std::vector<std::string>& pieceNames)
     glMatrixMode(GL_PROJECTION);
     glLoadIdentity();   
 
-    glOrthox(FixedFromFloat(-MAX_UNITS*SCREEN_WIDTH/SCREEN_HEIGHT), 
-            FixedFromFloat(MAX_UNITS*SCREEN_WIDTH/SCREEN_HEIGHT),
-            FixedFromFloat(-MAX_UNITS), FixedFromFloat(MAX_UNITS),
-            FixedFromFloat(-MAX_UNITS) , FixedFromFloat(MAX_UNITS));
+    glOrthox(FixedFromInt(-SCREEN_WIDTH/2),  FixedFromInt(SCREEN_WIDTH/2),
+     	     FixedFromInt(-SCREEN_HEIGHT/2), FixedFromInt(SCREEN_HEIGHT/2),
+    	     FixedFromInt(0) , FixedFromInt(1));
 
     glMatrixMode(GL_MODELVIEW);
     glClear(GL_COLOR_BUFFER_BIT|GL_DEPTH_BUFFER_BIT);
@@ -71,8 +65,8 @@ void Video::drawImage(const std::string& imageName, const RGBA_Color& color,
     float y1 = winY;
     float z1 = 0;
     
-    float x2 = winX  + 1; //texture.w;
-    float y2 = winY + 1;//  + texture.h;
+    float x2 = winX  + texture.w;
+    float y2 = winY + texture.h;
     float z2 = 0;
     
         
@@ -86,13 +80,13 @@ void Video::drawImage(const std::string& imageName, const RGBA_Color& color,
         FixedFromFloat(color.b), 
         FixedFromFloat(color.g), 
         FixedFromFloat(color.a));
-        
+      /*  
     glLoadIdentity();  
 
     glTranslatex( 
         FixedFromFloat(0.0f), 
         FixedFromFloat(0.0f), 
-        FixedFromFloat(-10.0f) );
+        FixedFromFloat(-10.0f) );*/
 /*
     glTranslatex(FixedFromFloat((x1+x2)/2), 
                  FixedFromFloat((y1+y2)/2), 
@@ -104,7 +98,7 @@ void Video::drawImage(const std::string& imageName, const RGBA_Color& color,
                  FixedFromFloat(-(y1+y2)/2), 
                  ZERO); // move back to the old position
 */
-    const float vertices []=
+    const GLshort vertices []=
     {
         x1,  y1, 0,
         x2,  y1, 0,
@@ -112,7 +106,7 @@ void Video::drawImage(const std::string& imageName, const RGBA_Color& color,
         x1,  y2, 0,
     };
 
-    const float texCoords[] = 
+    const GLshort texCoords[] = 
     {
         0, 0,
         1, 0,
@@ -120,8 +114,8 @@ void Video::drawImage(const std::string& imageName, const RGBA_Color& color,
         0, 1,
     };
 
-    glVertexPointer(3, GL_FLOAT, 0, vertices);
-    glTexCoordPointer(2, GL_FLOAT, 0, texCoords);
+    glVertexPointer(3, GL_SHORT, 0, vertices);
+    glTexCoordPointer(2, GL_SHORT, 0, texCoords);
     glEnableClientState(GL_VERTEX_ARRAY);
     glEnableClientState(GL_TEXTURE_COORD_ARRAY);
 
@@ -229,7 +223,7 @@ Surface* Video::loadBMP(const char* filename)
         fclose(file);
         throw runtime_error("Can't allocate memory for surface");
     }
-    memset(pixels, 0, pixelsNum);
+    //memset(pixels, 0, pixelsNum);
     base = 0;
 
     // Read the pixels
@@ -244,10 +238,14 @@ Surface* Video::loadBMP(const char* filename)
                 fclose(file);
                 throw runtime_error("Can't read BMP pixels");
             }
+            pixels[base  + 2] = rgb.rgbtRed;
+            pixels[base  + 1] = rgb.rgbtGreen;
+            pixels[base  + 0] = rgb.rgbtBlue;
+            /*
             pixels[(j*width + i)*3  + 2] = rgb.rgbtRed;
             pixels[(j*width + i)*3  + 1] = rgb.rgbtGreen;
-            pixels[(j*width + i)*3  + 0] = rgb.rgbtBlue;
-          //  base += 3;
+            pixels[(j*width + i)*3  + 0] = rgb.rgbtBlue;*/
+            base += 3;
         }
     }
 
