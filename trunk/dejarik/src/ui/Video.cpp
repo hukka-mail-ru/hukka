@@ -1,5 +1,4 @@
 #include <iostream>
-#include <math.h>
 #include "Video.h"
 #include "Window.h"
 #include "Glbasic.h"
@@ -19,14 +18,18 @@ void Video::startup(const std::vector<std::string>& pieceNames)
     
     glMatrixMode(GL_PROJECTION);
     glLoadIdentity();   
+    
+    glViewport(0,0,SCREEN_WIDTH, SCREEN_HEIGHT);
 
-    glOrthox(FixedFromInt(-SCREEN_WIDTH/2),  FixedFromInt(SCREEN_WIDTH/2),
-     	     FixedFromInt(-SCREEN_HEIGHT/2), FixedFromInt(SCREEN_HEIGHT/2),
+    // we need quit a big cube, greater than our game viewport.
+    glOrthox(FixedFromInt(-SCREEN_WIDTH*2),  FixedFromInt(SCREEN_WIDTH*2),
+     	     FixedFromInt(-SCREEN_HEIGHT*2), FixedFromInt(SCREEN_HEIGHT*2),
     	     FixedFromInt(0) , FixedFromInt(1));
 
     glMatrixMode(GL_MODELVIEW);
     glClear(GL_COLOR_BUFFER_BIT|GL_DEPTH_BUFFER_BIT);
-    glClearColorx(0, 0, 0, 0);
+   // glClearColorx(FixedFromFloat(0.5), FixedFromFloat(0.5), FixedFromFloat(0.5), FixedFromFloat(1.0));
+    
     
     // Load all the textures 
     createImages(pieceNames);
@@ -38,6 +41,8 @@ void Video::startup(const std::vector<std::string>& pieceNames)
 
 void Video::drawPolygon(GLshort* vertexArray, unsigned vertNum, const RGBA_Color& color)
 {
+    glLoadIdentity();
+    
     glColor4x(
         FixedFromFloat(color.r), 
         FixedFromFloat(color.b), 
@@ -54,21 +59,20 @@ void Video::drawPolygon(GLshort* vertexArray, unsigned vertNum, const RGBA_Color
 
 
 
-void Video::drawImage(const std::string& imageName, const RGBA_Color& color, 
+void Video::drawImage(const Texture& tex, const RGBA_Color& color, 
                float winX, float winY, float angle)
-{       
+{         
+    string path ("img/board.bmp");
     Texture texture;
-    
-    loadTexture(texture, "img/Molator0.bmp");  
-    
+    loadTexture(texture, path);
+        
     float x1 = winX;
     float y1 = winY;
-    float z1 = 0;
     
     float x2 = winX  + texture.w;
     float y2 = winY + texture.h;
-    float z2 = 0;
     
+    glLoadIdentity();
         
   //  glPushMatrix();
     glEnable( GL_TEXTURE_2D );
@@ -80,14 +84,8 @@ void Video::drawImage(const std::string& imageName, const RGBA_Color& color,
         FixedFromFloat(color.b), 
         FixedFromFloat(color.g), 
         FixedFromFloat(color.a));
-      /*  
-    glLoadIdentity();  
 
-    glTranslatex( 
-        FixedFromFloat(0.0f), 
-        FixedFromFloat(0.0f), 
-        FixedFromFloat(-10.0f) );*/
-/*
+
     glTranslatex(FixedFromFloat((x1+x2)/2), 
                  FixedFromFloat((y1+y2)/2), 
                  ZERO); // rotate [move to the coordinate center]
@@ -97,7 +95,7 @@ void Video::drawImage(const std::string& imageName, const RGBA_Color& color,
     glTranslatex(FixedFromFloat(-(x1+x2)/2), 
                  FixedFromFloat(-(y1+y2)/2), 
                  ZERO); // move back to the old position
-*/
+
     const GLshort vertices []=
     {
         x1,  y1, 0,
@@ -440,7 +438,7 @@ void Video::drawShape(const vector<float>& xWin, const vector<float>& yWin, cons
 }
 
 
-
+/*
 void Video::drawPolygon(
         const vector<float>& xWin, const vector<float>& yWin, 
         const RGB_Color& color, float opacity)
@@ -475,15 +473,15 @@ void Video::drawPolygon(
     glDisableClientState(GL_VERTEX_ARRAY);
         
     glColor4x(1, 1, 1, 0); // reset
-    glEnable( GL_DEPTH_TEST ); /* Enable Depth Testing */
-    glDisable( GL_BLEND );     /* Disable Blending     */
+    glEnable( GL_DEPTH_TEST );
+    glDisable( GL_BLEND );    
     
     
     TRY_RETHROW;
-}
+}*/
 
 void Video::drawSprite(
-        const std::string& imageName, const RGB_Color& color, 
+        const std::string& imageName, const RGBA_Color& color, 
         SpriteXY spriteXY, float winX, float winY, float angle)
 {
     TRY_BEGINS;
@@ -512,7 +510,7 @@ void Video::drawSprite(
         glDisable( GL_DEPTH_TEST );
         glBlendFunc( GL_DST_COLOR, GL_ZERO );
         
-        drawImage(images[imageName]->mask, RGB_Color(1,1,1), winX, winY, angle);
+        drawImage(images[imageName]->mask, RGBA_Color(1,1,1,1), winX, winY, angle);
 
         glBlendFunc( GL_ONE, GL_ONE );
 
@@ -526,7 +524,7 @@ void Video::drawSprite(
     TRY_RETHROW;
 }
 
-
+/*
 void Video::drawImage(const Texture& texture, const RGB_Color& color, float winX, float winY, float angle)
 {
     TRY_BEGINS;
@@ -585,6 +583,6 @@ void Video::drawImage(const Texture& texture, const RGB_Color& color, float winX
     
     
     TRY_RETHROW;
-}
+}*/
 
 

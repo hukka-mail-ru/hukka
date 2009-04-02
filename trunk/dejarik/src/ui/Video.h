@@ -135,19 +135,17 @@ public:
     
     void drawBackground();
     
-    void drawPolygon(const std::vector<float>& x, const std::vector<float>& y, 
-            const RGB_Color& color, float opacity);
     
     // a new version
     void drawPolygon(GLshort* vertexArray, unsigned vertNum, const RGBA_Color& color);
     // a new version
-    void drawImage(const std::string& imageName, const RGBA_Color& color, 
+    void drawImage(const Texture& texture, const RGBA_Color& color, 
                    float winX, float winY, float angle);
-     
+    
     void drawShape(const std::vector<float>& xWin, const std::vector<float>& yWin, 
             const RGB_Color& color, float width);
 
-    void drawSprite(const std::string& imageName, const RGB_Color& color, 
+    void drawSprite(const std::string& imageName, const RGBA_Color& color, 
             SpriteXY spriteXY, float x, float y, float angle);    
         
 private:
@@ -165,7 +163,7 @@ private:
    
     void winToGL(float winX, float winY, float& x, float& y, float& z);
     
-    void drawImage(const Texture& texture, const RGB_Color& color, float x, float y, float angle);    
+
 
     std::map<std::string, ImagePtr> images;
     

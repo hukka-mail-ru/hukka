@@ -80,7 +80,7 @@ bool UI::isCellClicked(float x, float y, CellPtr& cell)
 
 }
 
-
+/*
 void UI::drawPiece(const PiecePtr& piece)
 {
     TRY_BEGINS;
@@ -148,18 +148,18 @@ void UI::drawCell(const CellPtr& cell, bool clicked)
     TRY_RETHROW;
 }
 
-
+*/
 
 void UI::drawBoard()
 {
     TRY_BEGINS;
     
-    mVideo.drawSprite("board", RGB_Color(1,1,1), XY_LEFTBOTTOM, 1, 1, 0);
+    mVideo.drawSprite("board", RGBA_Color(1,1,1,1), XY_CENTER, 0, 0, 0);
     
     
     vector<CellPtr> cells;
     mGame->getBoard()->getCells(cells);
-    
+    /*
     // draw all but clicked cell    
     for(unsigned i = 0; i < cells.size(); i++)
     {
@@ -178,7 +178,7 @@ void UI::drawBoard()
     {
         drawPiece(pieces[i]);
     }
-    
+    */
     
      
     TRY_RETHROW;
@@ -219,21 +219,8 @@ void UI::drawActivePlayer()
 bool UI::drawAll()
 {
     TRY_BEGINS;
-    
-    /* Clear The Screen And The Depth Buffer */
- //   glClear( GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT );
-//    glLoadIdentity();
-//    glTranslatex( 0.0f, 0.0f, -10.0f );
-  /*
-    glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);  
-    glLoadIdentity();  
-
-    glTranslatex( 
-        FixedFromFloat(0.0f), 
-        FixedFromFloat(0.0f), 
-        FixedFromFloat(-10.0f) );
-    */
-    mVideo.drawImage("board", RGBA_Color(1,1,1,0.5), -1, 0, 0);
+    /*
+    mVideo.drawImage("board", RGBA_Color(1,1,1,0.5), 0, 0, 45);
     //////// TEST BLOCK ////////////////////
 
     GLshort vertexArray[] = {
@@ -254,9 +241,9 @@ bool UI::drawAll()
     };
 
     mVideo.drawPolygon(&vertexArray2[0], 4, RGBA_Color(1,0,1,0.5));
+    */
     
-    
-
+    drawBoard();
    
     //////////////////////////////////
     
