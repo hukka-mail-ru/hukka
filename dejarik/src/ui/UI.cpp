@@ -154,12 +154,10 @@ void UI::drawBoard()
 {
     TRY_BEGINS;
     
-    const GLshort h = WINDOW_HEIGHT/2 - 128;
-    
-    mVideo.drawSprite("board1", RGBA_Color(1,1,1,1), XY_LEFTBOTTOM, -128, h, 0);
-    mVideo.drawSprite("board2", RGBA_Color(1,1,1,1), XY_LEFTBOTTOM, 0, h, 0);
-    mVideo.drawSprite("board3", RGBA_Color(1,1,1,1), XY_LEFTBOTTOM, -128, h - 128, 0);
-    mVideo.drawSprite("board4", RGBA_Color(1,1,1,1), XY_LEFTBOTTOM, 0, h - 128, 0);
+    mVideo.drawSprite("board1", RGBA_Color(1,1,1,1), XY_LEFTBOTTOM, -BG_TEXTURE_WIDTH, 0, 0);
+    mVideo.drawSprite("board2", RGBA_Color(1,1,1,1), XY_LEFTBOTTOM, 0, 0, 0);
+    mVideo.drawSprite("board3", RGBA_Color(1,1,1,1), XY_LEFTBOTTOM, -BG_TEXTURE_WIDTH, - BG_TEXTURE_WIDTH, 0);
+    mVideo.drawSprite("board4", RGBA_Color(1,1,1,1), XY_LEFTBOTTOM, 0, - BG_TEXTURE_WIDTH, 0);
     
     mVideo.drawSprite("Molator0", RGBA_Color(1,1,1,1), XY_LEFTBOTTOM, 45, 45, 0);
     

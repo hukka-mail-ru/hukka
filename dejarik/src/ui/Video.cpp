@@ -21,20 +21,19 @@ void Video::startup(const std::vector<std::string>& pieceNames)
     glMatrixMode(GL_PROJECTION);
     glLoadIdentity();   
     
-    glViewport(-(SCREEN_WIDTH - WINDOW_WIDTH)/2 ,
-    		   -(SCREEN_HEIGHT - WINDOW_HEIGHT)/2 ,
+    // The center of coordinates must be at the center of the game board  
+    // (a litte upper of geometrical window center) 
+    glViewport(-(SCREEN_WIDTH - WINDOW_WIDTH)/2,
+    		   -(SCREEN_HEIGHT - WINDOW_HEIGHT)/2  + (WINDOW_HEIGHT/2 - BG_TEXTURE_WIDTH),
     		   SCREEN_WIDTH, 
     		   SCREEN_HEIGHT);
 
-    // TODO need to change 1.8 by 2
     glOrthox(FixedFromInt(-SCREEN_WIDTH/2),  FixedFromInt(SCREEN_WIDTH/2),
      	     FixedFromInt(-SCREEN_HEIGHT/2), FixedFromInt(SCREEN_HEIGHT/2),
     	     FixedFromInt(0) , FixedFromInt(1));
 
     glMatrixMode(GL_MODELVIEW);
     glClear(GL_COLOR_BUFFER_BIT|GL_DEPTH_BUFFER_BIT);
-   // glClearColorx(FixedFromFloat(0.5), FixedFromFloat(0.5), FixedFromFloat(0.5), FixedFromFloat(1.0));
-    
     
     // Load all the textures 
     createImages(pieceNames);
