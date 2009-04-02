@@ -6,24 +6,29 @@
 
 using namespace std;
 
-#define SCREEN_WIDTH  240
-#define SCREEN_HEIGHT 320
+// virtual scene size
+#define SCREEN_WIDTH  800 // must be big enough
+#define SCREEN_HEIGHT 1000 // must be big enough
+
 
 
 void Video::startup(const std::vector<std::string>& pieceNames)
 {
     TRY_BEGINS;
     
-    createEGLWindow(SCREEN_WIDTH, SCREEN_HEIGHT, "dejarik");
+    createEGLWindow(WINDOW_WIDTH, WINDOW_HEIGHT, "Dejarik");
     
     glMatrixMode(GL_PROJECTION);
     glLoadIdentity();   
     
-    glViewport(0,0,SCREEN_WIDTH, SCREEN_HEIGHT);
+    glViewport(-(SCREEN_WIDTH - WINDOW_WIDTH)/2 ,
+    		   -(SCREEN_HEIGHT - WINDOW_HEIGHT)/2 ,
+    		   SCREEN_WIDTH, 
+    		   SCREEN_HEIGHT);
 
     // TODO need to change 1.8 by 2
-    glOrthox(FixedFromInt(-SCREEN_WIDTH/1.8),  FixedFromInt(SCREEN_WIDTH/1.8),
-     	     FixedFromInt(-SCREEN_HEIGHT/1.8), FixedFromInt(SCREEN_HEIGHT/1.8),
+    glOrthox(FixedFromInt(-SCREEN_WIDTH/2),  FixedFromInt(SCREEN_WIDTH/2),
+     	     FixedFromInt(-SCREEN_HEIGHT/2), FixedFromInt(SCREEN_HEIGHT/2),
     	     FixedFromInt(0) , FixedFromInt(1));
 
     glMatrixMode(GL_MODELVIEW);
@@ -347,7 +352,7 @@ void Video::drawShape(const vector<float>& xWin, const vector<float>& yWin, cons
 
 void Video::drawSprite(
         const std::string& imageName, const RGBA_Color& color, 
-        SpriteXY spriteXY, float winX, float winY, float angle)
+        SpriteXY spriteXY, GLshort winX, GLshort winY, float angle)
 {
     TRY_BEGINS;
     
