@@ -21,9 +21,9 @@ void Video::startup(const std::vector<std::string>& pieceNames)
     
     glViewport(0,0,SCREEN_WIDTH, SCREEN_HEIGHT);
 
-    // we need quit a big cube, greater than our game viewport.
-    glOrthox(FixedFromInt(-SCREEN_WIDTH),  FixedFromInt(SCREEN_WIDTH),
-     	     FixedFromInt(-SCREEN_HEIGHT), FixedFromInt(SCREEN_HEIGHT),
+    // TODO need to change 1.8 by 2
+    glOrthox(FixedFromInt(-SCREEN_WIDTH/1.8),  FixedFromInt(SCREEN_WIDTH/1.8),
+     	     FixedFromInt(-SCREEN_HEIGHT/1.8), FixedFromInt(SCREEN_HEIGHT/1.8),
     	     FixedFromInt(0) , FixedFromInt(1));
 
     glMatrixMode(GL_MODELVIEW);
@@ -61,11 +61,7 @@ void Video::drawPolygon(GLshort* vertexArray, unsigned vertNum, const RGBA_Color
 
 void Video::drawImage(const Texture& texture, const RGBA_Color& color, 
                float winX, float winY, float angle)
-{         
- //   string path ("img/board1.bmp");
- //  Texture texture;
- //   loadTexture(texture, path);
-        
+{                
     float x1 = winX;
     float y1 = winY;
     
@@ -506,8 +502,8 @@ void Video::createImages(const std::vector<std::string>& names)
         name << "Molator" << i;
         createImage(name.str(), IT_MASKED);
     }
+*/
     
-   
     createImage("menu_default", IT_SINGLE);
     createImage("menu_kill", IT_SINGLE);
     createImage("menu_push", IT_SINGLE);
@@ -517,8 +513,7 @@ void Video::createImages(const std::vector<std::string>& names)
     createImage("segment0", IT_MASKED);
     createImage("segment", IT_MASKED);
     createImage("segment2", IT_MASKED);
-        
-    createImage("board", IT_SINGLE);
+    
     createImage("board1", IT_SINGLE);
     createImage("board2", IT_SINGLE);
     createImage("board3", IT_SINGLE);
@@ -526,12 +521,7 @@ void Video::createImages(const std::vector<std::string>& names)
     
     createImage("piece", IT_SINGLE);
     createImage("bg", IT_SINGLE);
-*/
     
-    createImage("board1", IT_SINGLE);
-    createImage("board2", IT_SINGLE);
-    createImage("board3", IT_SINGLE);
-    createImage("board4", IT_SINGLE);
     TRY_RETHROW;
 }
 
