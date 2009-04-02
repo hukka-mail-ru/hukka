@@ -308,34 +308,6 @@ void Video::loadTexture(Texture& texture, const std::string& path)
 
 
 
-void Video::drawBackground()
-{
-    TRY_BEGINS;
-    
-    float x = -40;
-    float y = -40; 
-    float w = 80; 
-    float h = 80;
-  
-    glBindTexture( GL_TEXTURE_2D, images["bg"]->texture.id);
-
-    const GLbyte vertices []=
-    {
-        x + 0,  y + 0, 0,
-        x + w,  y + 0, 0,
-        x + w,  y + h, 0,
-        x + 0,  y + h, 0
-    };
-     
-    
-    glVertexPointer(3, GL_FLOAT, 0, vertices);
-    glTexCoordPointer(2, GL_FLOAT, 0, vertices);
-    glEnableClientState(GL_VERTEX_ARRAY);
-    glEnableClientState(GL_TEXTURE_COORD_ARRAY);
-
-    TRY_RETHROW;
-}
-
 
 void Video::drawShape(const vector<float>& xWin, const vector<float>& yWin, const RGB_Color& color, float width)
 {
@@ -372,48 +344,6 @@ void Video::drawShape(const vector<float>& xWin, const vector<float>& yWin, cons
     TRY_RETHROW;
 }
 
-
-/*
-void Video::drawPolygon(
-        const vector<float>& xWin, const vector<float>& yWin, 
-        const RGB_Color& color, float opacity)
-{
-    TRY_BEGINS;
-    vector<float> vertices; 
-    
-    for(unsigned i=0; i< xWin.size(); i++)
-    {
-        float x = 0;
-        float y = 0;
-        float z = 0;
-        Video::winToGL(xWin[i], yWin[i], x, y, z);
-        
-        vertices.push_back( x );
-        vertices.push_back( y );
-        vertices.push_back( 0 );
-    }
-    
-    
-    glEnable( GL_BLEND );   
-    glDisable( GL_DEPTH_TEST );
-    glBlendFunc(GL_SRC_ALPHA,GL_ONE_MINUS_SRC_ALPHA); 
-    
-    glColor4x(color.r, color.g, color.b, opacity);
-        
-    glVertexPointer(3, GL_FLOAT, 0, &vertices[0]);
-    glEnableClientState(GL_VERTEX_ARRAY);
-
-        glDrawArrays(GL_TRIANGLE_FAN, 0, xWin.size());
-
-    glDisableClientState(GL_VERTEX_ARRAY);
-        
-    glColor4x(1, 1, 1, 0); // reset
-    glEnable( GL_DEPTH_TEST );
-    glDisable( GL_BLEND );    
-    
-    
-    TRY_RETHROW;
-}*/
 
 void Video::drawSprite(
         const std::string& imageName, const RGBA_Color& color, 
@@ -503,7 +433,11 @@ void Video::createImages(const std::vector<std::string>& names)
         createImage(name.str(), IT_MASKED);
     }
 */
+
     
+    createImage("Molator0", IT_SINGLE);
+    
+    /*
     createImage("menu_default", IT_SINGLE);
     createImage("menu_kill", IT_SINGLE);
     createImage("menu_push", IT_SINGLE);
@@ -513,77 +447,14 @@ void Video::createImages(const std::vector<std::string>& names)
     createImage("segment0", IT_MASKED);
     createImage("segment", IT_MASKED);
     createImage("segment2", IT_MASKED);
-    
+    */
     createImage("board1", IT_SINGLE);
     createImage("board2", IT_SINGLE);
     createImage("board3", IT_SINGLE);
     createImage("board4", IT_SINGLE);
     
-    createImage("piece", IT_SINGLE);
-    createImage("bg", IT_SINGLE);
+
+    
     
     TRY_RETHROW;
 }
-
-/*
-void Video::drawImage(const Texture& texture, const RGB_Color& color, float winX, float winY, float angle)
-{
-    TRY_BEGINS;
-   
-    
-    float x1 = 0;
-    float y1 = 0;
-    float z1 = 0;
-    Video::winToGL(winX, winY, x1, y1, z1);
-
-    float x2 = 0;
-    float y2 = 0;
-    float z2 = 0;
-    Video::winToGL(winX + texture.w, winY + texture.h, x2, y2, z2);
-    
-    
-    glPushMatrix();
-    glEnable( GL_TEXTURE_2D );
-    
-        glBindTexture(GL_TEXTURE_2D, texture.id);
-        glColor4x(color.r, color.g, color.b, 0); // blue
-        
-        glTranslatex((x1+x2)/2, (y1+y2)/2, 0); // rotate [move to the coordinate center]
-        glRotatex(angle ,0, 0, 1); // rotation
-        glTranslatex(-(x1+x2)/2, -(y1+y2)/2, 0); // move back to the old position
-        
-        const float vertices []=
-        {
-            x1,  y1, 0,
-            x2,  y1, 0,
-            x2,  y2, 0,
-            x1,  y2, 0,
-        };
-         
-        const float texCoords[] = 
-        {
-                0, 0,
-                1, 0,
-                1, 1,
-                0, 1,
-        };
-        
-        glVertexPointer(3, GL_FLOAT, 0, vertices);
-        glTexCoordPointer(2, GL_FLOAT, 0, texCoords);
-        glEnableClientState(GL_VERTEX_ARRAY);
-        glEnableClientState(GL_TEXTURE_COORD_ARRAY);
-
-        glDrawArrays(GL_TRIANGLE_FAN, 0, 4);
-
-        glDisableClientState(GL_VERTEX_ARRAY);
-        glDisableClientState(GL_TEXTURE_COORD_ARRAY);
-        
-        glColor4x(1, 1, 1, 0); // reset
-    glDisable( GL_TEXTURE_2D );
-    glPopMatrix();
-    
-    
-    TRY_RETHROW;
-}*/
-
-
