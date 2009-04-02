@@ -26,6 +26,10 @@ inline GLfixed FixedFromFloat(float value) {return static_cast<GLfixed>(value * 
 inline GLfixed MultiplyFixed(GLfixed op1, GLfixed op2) {return (op1 * op2) >> PRECISION;};
 
 
+#define WINDOW_WIDTH  240
+#define WINDOW_HEIGHT 320
+
+
 #include "../common/Macros.h"
 #include "Window.h"
 
@@ -144,7 +148,7 @@ public:
             const RGB_Color& color, float width);
 
     void drawSprite(const std::string& imageName, const RGBA_Color& color, 
-            SpriteXY spriteXY, float x, float y, float angle);    
+            SpriteXY spriteXY, GLshort x, GLshort y, float angle);    
         
 private:
     
