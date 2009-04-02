@@ -174,7 +174,8 @@ void createEGLWindow(int width, int height, const char *name)
 }
 #endif
 
-void
-swapBuffers(void) {
+
+void swapBuffers(void) 
+{
     eglSwapBuffers(egldisplay, eglwindow);
 }

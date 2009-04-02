@@ -159,6 +159,7 @@ void UI::drawBoard()
     mVideo.drawSprite("board3", RGBA_Color(1,1,1,1), XY_LEFTBOTTOM, -128, -128, 0);
     mVideo.drawSprite("board4", RGBA_Color(1,1,1,1), XY_LEFTBOTTOM, 0, -128, 0);
     
+    mVideo.drawSprite("Molator0", RGBA_Color(1,1,1,1), XY_LEFTBOTTOM, 45, 45, 0);
     
     vector<CellPtr> cells;
     mGame->getBoard()->getCells(cells);
@@ -323,7 +324,7 @@ void UI::handleEvents()
 {
     TRY_BEGINS;
     
-    
+    unsigned ticks = 0;
     while ( !mQuit )
     {
         long time1 = getTime(); // start the timer 
@@ -333,6 +334,9 @@ void UI::handleEvents()
         drawAll();
              
         sleep(1);
+        
+        if(ticks++ > 5)
+        	mQuit = true;
         
         /* handle the events in the queue */
         /*

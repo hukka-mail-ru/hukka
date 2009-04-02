@@ -133,8 +133,6 @@ public:
     void stop();
     
     
-    void drawBackground();
-    
     
     // a new version
     void drawPolygon(GLshort* vertexArray, unsigned vertNum, const RGBA_Color& color);
@@ -152,9 +150,7 @@ private:
     
     Surface* loadBMP(const char* filename);
     void freeSurface(Surface* surface);
-    
-    void initSDL();
-    void initGL();
+
     void createImages(const std::vector<std::string>& names);
     void createImage(const std::string& name, ImageType type);
 
