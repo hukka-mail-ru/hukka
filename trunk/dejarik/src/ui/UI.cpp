@@ -154,7 +154,10 @@ void UI::drawBoard()
 {
     TRY_BEGINS;
     
-    mVideo.drawSprite("board", RGBA_Color(1,1,1,1), XY_CENTER, 0, 0, 0);
+    mVideo.drawSprite("board1", RGBA_Color(1,1,1,1), XY_LEFTBOTTOM, -128, 0, 0);
+    mVideo.drawSprite("board2", RGBA_Color(1,1,1,1), XY_LEFTBOTTOM, 0, 0, 0);
+    mVideo.drawSprite("board3", RGBA_Color(1,1,1,1), XY_LEFTBOTTOM, -128, -128, 0);
+    mVideo.drawSprite("board4", RGBA_Color(1,1,1,1), XY_LEFTBOTTOM, 0, -128, 0);
     
     
     vector<CellPtr> cells;

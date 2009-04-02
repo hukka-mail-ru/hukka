@@ -22,8 +22,8 @@ void Video::startup(const std::vector<std::string>& pieceNames)
     glViewport(0,0,SCREEN_WIDTH, SCREEN_HEIGHT);
 
     // we need quit a big cube, greater than our game viewport.
-    glOrthox(FixedFromInt(-SCREEN_WIDTH*2),  FixedFromInt(SCREEN_WIDTH*2),
-     	     FixedFromInt(-SCREEN_HEIGHT*2), FixedFromInt(SCREEN_HEIGHT*2),
+    glOrthox(FixedFromInt(-SCREEN_WIDTH),  FixedFromInt(SCREEN_WIDTH),
+     	     FixedFromInt(-SCREEN_HEIGHT), FixedFromInt(SCREEN_HEIGHT),
     	     FixedFromInt(0) , FixedFromInt(1));
 
     glMatrixMode(GL_MODELVIEW);
@@ -59,12 +59,12 @@ void Video::drawPolygon(GLshort* vertexArray, unsigned vertNum, const RGBA_Color
 
 
 
-void Video::drawImage(const Texture& tex, const RGBA_Color& color, 
+void Video::drawImage(const Texture& texture, const RGBA_Color& color, 
                float winX, float winY, float angle)
 {         
-    string path ("img/board.bmp");
-    Texture texture;
-    loadTexture(texture, path);
+ //   string path ("img/board1.bmp");
+ //  Texture texture;
+ //   loadTexture(texture, path);
         
     float x1 = winX;
     float y1 = winY;
@@ -312,67 +312,6 @@ void Video::loadTexture(Texture& texture, const std::string& path)
 
 
 
-
-void Video::createImage(const std::string& name, ImageType type)
-{
-	TRY_BEGINS;
-
-    ImagePtr image (new Image); 
-    image->type = type;
-    
-    ostringstream fullname;
-    fullname << "img/" << name << ".bmp";
-    
-    loadTexture(image->texture, fullname.str());  
-    
-    if(type == IT_MASKED)
-    {
-        ostringstream fullmask;
-        fullmask << "img/" << name << "_mask.bmp";
-        loadTexture(image->mask, fullmask.str());
-    }
-    
-    images[name] = image;  
-
-	TRY_RETHROW;
-}
-
-void Video::createImages(const std::vector<std::string>& names)
-{
-    TRY_BEGINS;
-    
-    for(unsigned i =0; i<names.size(); ++i)
-    {
-        createImage(names[i] +"0", IT_MASKED);        
-        createImage("menu_" + names[i], IT_SINGLE);
-    }
-    
-    
-    for(unsigned i =1; i<8; ++i)
-    {
-        ostringstream name;
-        name << "Molator" << i;
-        createImage(name.str(), IT_MASKED);
-    }
-    
-   
-    createImage("menu_default", IT_SINGLE);
-    createImage("menu_kill", IT_SINGLE);
-    createImage("menu_push", IT_SINGLE);
-    createImage("menu_counter_kill", IT_SINGLE);
-    createImage("menu_counter_push", IT_SINGLE);
-    
-    createImage("segment0", IT_MASKED);
-    createImage("segment", IT_MASKED);
-    createImage("segment2", IT_MASKED);
-        
-    createImage("board", IT_SINGLE);
-    createImage("piece", IT_SINGLE);
-    createImage("bg", IT_SINGLE);
-
-    TRY_RETHROW;
-}
-
 void Video::drawBackground()
 {
     TRY_BEGINS;
@@ -521,6 +460,78 @@ void Video::drawSprite(
         glDisable( GL_BLEND );     /* Disable Blending     */
     }
     
+    TRY_RETHROW;
+}
+
+
+
+void Video::createImage(const std::string& name, ImageType type)
+{
+    TRY_BEGINS;
+
+    ImagePtr image (new Image); 
+    image->type = type;
+    
+    ostringstream fullname;
+    fullname << "img/" << name << ".bmp";
+    
+    loadTexture(image->texture, fullname.str());  
+    
+    if(type == IT_MASKED)
+    {
+        ostringstream fullmask;
+        fullmask << "img/" << name << "_mask.bmp";
+        loadTexture(image->mask, fullmask.str());
+    }
+    
+    images[name] = image;  
+
+    TRY_RETHROW;
+}
+
+void Video::createImages(const std::vector<std::string>& names)
+{
+    TRY_BEGINS;
+   /* 
+    for(unsigned i =0; i<names.size(); ++i)
+    {
+        createImage(names[i] +"0", IT_MASKED);        
+        createImage("menu_" + names[i], IT_SINGLE);
+    }
+    
+    
+    for(unsigned i =1; i<8; ++i)
+    {
+        ostringstream name;
+        name << "Molator" << i;
+        createImage(name.str(), IT_MASKED);
+    }
+    
+   
+    createImage("menu_default", IT_SINGLE);
+    createImage("menu_kill", IT_SINGLE);
+    createImage("menu_push", IT_SINGLE);
+    createImage("menu_counter_kill", IT_SINGLE);
+    createImage("menu_counter_push", IT_SINGLE);
+    
+    createImage("segment0", IT_MASKED);
+    createImage("segment", IT_MASKED);
+    createImage("segment2", IT_MASKED);
+        
+    createImage("board", IT_SINGLE);
+    createImage("board1", IT_SINGLE);
+    createImage("board2", IT_SINGLE);
+    createImage("board3", IT_SINGLE);
+    createImage("board4", IT_SINGLE);
+    
+    createImage("piece", IT_SINGLE);
+    createImage("bg", IT_SINGLE);
+*/
+    
+    createImage("board1", IT_SINGLE);
+    createImage("board2", IT_SINGLE);
+    createImage("board3", IT_SINGLE);
+    createImage("board4", IT_SINGLE);
     TRY_RETHROW;
 }
 
