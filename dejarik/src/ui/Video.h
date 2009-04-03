@@ -10,6 +10,7 @@
 #include "../common/Macros.h"
 #include "Window.h"
 
+#define BOARD_TEXTURE_WIDTH 128
 
 struct RGBA_Color
 {
