@@ -4,7 +4,7 @@
 #include <string>
 #include <vector>
 #include <boost/weak_ptr.hpp> 
-#include "../common/Macros.h"
+#include "../system/Macros.h"
 #include "Piece.h"
 #include "Board.h"
 #include "Cell.h"

@@ -7,7 +7,7 @@
 
 #include <GLES/gl.h>
 
-#include "../common/Macros.h"
+#include "../system/Macros.h"
 #include "Window.h"
 
 #define BOARD_TEXTURE_WIDTH 128

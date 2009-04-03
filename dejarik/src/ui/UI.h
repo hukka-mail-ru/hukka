@@ -2,7 +2,7 @@
 #define UI_H_
 
 
-#include "../common/Macros.h"
+#include "../system/Macros.h"
 #include "Game.h"
 #include "Animation.h"
 #include "Video.h"
