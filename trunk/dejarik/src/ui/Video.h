@@ -123,10 +123,13 @@ struct RGBA_Color
 };
 
 
-enum SpriteXY
+enum BindXY
 {
     XY_CENTER,
-    XY_LEFTBOTTOM
+    XY_LEFT_BOTTOM,
+    XY_RIGHT_BOTTOM,
+    XY_LEFT_TOP,
+    XY_RIGHT_TOP
 };
 
 
@@ -149,7 +152,7 @@ public:
             const RGB_Color& color, float width);
 
     void drawSprite(const std::string& imageName, const RGBA_Color& color, 
-            SpriteXY spriteXY, GLshort x, GLshort y, float angle);    
+            BindXY bindXY, GLshort x, GLshort y, float angle);    
         
 private:
     
