@@ -1,8 +1,8 @@
 cmake_minimum_required(VERSION 2.4)
 
-include_directories (src/common src/logic src/ui src/system) 
+include_directories (src/logic src/ui src/system) 
 set(CMAKE_CXX_FLAGS "-g -Wall")
-set(SRC src/logic/Player.cpp src/logic/Board.cpp src/logic/Game.cpp src/common/Cell.cpp src/system/System.cpp) 
+set(SRC src/logic/Player.cpp src/logic/Board.cpp src/logic/Game.cpp src/logic/Cell.cpp src/system/System.cpp) 
 set(SRC_UI src/ui/Glbasic.cpp src/ui/UI.cpp src/ui/Video.cpp src/ui/Animation.cpp src/system/Window.cpp)
 
 # DEJARIK executable
