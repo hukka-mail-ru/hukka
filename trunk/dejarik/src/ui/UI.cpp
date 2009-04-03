@@ -181,13 +181,13 @@ void UI::drawBoard()
     }
     */
     // draw Pieces 
-    /*
+    
     vector<PiecePtr> pieces = mGame->getBoard()->getPieces();
     for(unsigned i = 0; i < pieces.size(); i++)
     {
         drawPiece(pieces[i]);
     }
-    */
+    
     
      
     TRY_RETHROW;
