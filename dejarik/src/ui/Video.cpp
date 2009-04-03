@@ -505,16 +505,16 @@ void Video::createImages(const std::vector<std::string>& names)
     Klorslug0
     Molator0
 */
-    /*   
+      
     createImage("Molator0", IT_MASKED);
     createImage("Sarvip0", IT_MASKED);
     createImage("Ghhhk0", IT_MASKED);
     createImage("Monnok0", IT_MASKED);
     createImage("Strider0", IT_MASKED);
-  createImage("Ngok0", IT_MASKED);
+    createImage("Ngok0", IT_MASKED);
     createImage("Klorslug0", IT_MASKED);
     createImage("Houjix0", IT_MASKED);
-  */
+  
     
     createImage("ex", IT_SINGLE);
     /*
