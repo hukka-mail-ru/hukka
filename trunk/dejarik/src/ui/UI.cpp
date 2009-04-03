@@ -80,29 +80,9 @@ bool UI::isCellClicked(float x, float y, CellPtr& cell)
 
 }
 
-/*
-void UI::drawPiece(const PiecePtr& piece)
-{
-    TRY_BEGINS;
-    
-    RGB_Color color = (piece->player.get() == mGame->getActivePlayer()) ? RGB_Color(1,0,1) : RGB_Color(1,1,1);
 
-    if(mMoving)
-    {
-        color = RGB_Color(1,1,1);
-    }
-    
 
-    ostringstream name;
-    name << piece->name << piece->sprite;
-    mVideo.drawSprite(name.str(), color, XY_CENTER,
-                      piece->x,
-                      piece->y + VERT_OFFSET,
-                      piece->angle); 
-        
-    TRY_RETHROW;
-}
-*/
+
 
 /*
 
@@ -142,23 +122,48 @@ void UI::drawMenu()
     TRY_BEGINS;
     
     // TODO some subscriptions in the menu
-    
+    mVideo.drawSprite("menu1", RGBA_Color(1,1,1,1), XY_LEFT_TOP, -BOARD_TEXTURE_WIDTH, -BOARD_TEXTURE_WIDTH, 0);
+    mVideo.drawSprite("menu2", RGBA_Color(1,1,1,1), XY_RIGHT_TOP, 0, -BOARD_TEXTURE_WIDTH, 0);
+
+    mVideo.drawSprite("menu2", RGBA_Color(1,1,1,1), XY_LEFT_TOP, 0, -BOARD_TEXTURE_WIDTH, 180);
+    mVideo.drawSprite("menu1", RGBA_Color(1,1,1,1), XY_RIGHT_TOP, BOARD_TEXTURE_WIDTH, -BOARD_TEXTURE_WIDTH, 180);
+
     TRY_RETHROW;
 }
 
+void UI::drawPiece(const PiecePtr& piece)
+{
+    TRY_BEGINS;
+    
+    RGBA_Color color = (piece->player.get() == mGame->getActivePlayer()) ?
+            RGBA_Color(1,0,1,1) : RGBA_Color(1,1,1,1);
+
+    if(mMoving)
+    {
+        color = RGBA_Color(1,1,1,1);
+    }
+    
+
+    ostringstream name;
+    name << piece->name << piece->sprite;
+    mVideo.drawSprite(name.str(), color, XY_CENTER,
+                      piece->x,
+                      piece->y + VERT_OFFSET,
+                      piece->angle); 
+        
+    TRY_RETHROW;
+}
 
 void UI::drawBoard()
 {
     TRY_BEGINS;
     
-    mVideo.drawSprite("board1", RGBA_Color(1,1,1,1), XY_RIGHT_BOTTOM, 0, 0, 0);
-    mVideo.drawSprite("board2", RGBA_Color(1,1,1,1), XY_LEFT_BOTTOM, 0, 0, 0);
+    mVideo.drawSprite("board1", RGBA_Color(1,1,1,1), XY_RIGHT_TOP, 0, BOARD_TEXTURE_WIDTH, 0);
+    mVideo.drawSprite("board2", RGBA_Color(1,1,1,1), XY_LEFT_TOP, 0, BOARD_TEXTURE_WIDTH, 0);
     mVideo.drawSprite("board3", RGBA_Color(1,1,1,1), XY_RIGHT_TOP, 0, 0, 0);
     mVideo.drawSprite("board4", RGBA_Color(1,1,1,1), XY_LEFT_TOP, 0, 0, 0);
-    mVideo.drawSprite("board5", RGBA_Color(1,1,1,1), XY_RIGHT_TOP, 0, -128, 0);
-    mVideo.drawSprite("board6", RGBA_Color(1,1,1,1), XY_LEFT_TOP, 0, -128, 0);
-    
-    mVideo.drawSprite("Molator0", RGBA_Color(1,1,1,0), XY_LEFT_BOTTOM, 45, 45, 10);
+
+    mVideo.drawSprite("ex", RGBA_Color(1,1,1,1), XY_LEFT_TOP, 45, 45, 0);
     
     vector<CellPtr> cells;
     mGame->getBoard()->getCells(cells);
@@ -174,8 +179,9 @@ void UI::drawBoard()
     {
         drawCell(cells[i], true);
     }
-    
-    // draw Pieces
+    */
+    // draw Pieces 
+    /*
     vector<PiecePtr> pieces = mGame->getBoard()->getPieces();
     for(unsigned i = 0; i < pieces.size(); i++)
     {

@@ -62,8 +62,6 @@ inline GLfixed MultiplyFixed(GLfixed op1, GLfixed op2) {return (op1 * op2) >> PR
 #define WINDOW_WIDTH  240
 #define WINDOW_HEIGHT 320
 
-#define BG_TEXTURE_WIDTH 128
-
 // virtual scene size
 #define SCREEN_WIDTH  800 // must be big enough
 #define SCREEN_HEIGHT 1000 // must be big enough
@@ -82,7 +80,7 @@ void Video::startup(const std::vector<std::string>& pieceNames)
     // The center of coordinates must be at the center of the game board  
     // (a litte upper of geometrical window center) 
     glViewport(-(SCREEN_WIDTH - WINDOW_WIDTH)/2,
-    		   -(SCREEN_HEIGHT - WINDOW_HEIGHT)/2  + (WINDOW_HEIGHT/2 - BG_TEXTURE_WIDTH),
+    		   -(SCREEN_HEIGHT - WINDOW_HEIGHT)/2  + (WINDOW_HEIGHT/2 - BOARD_TEXTURE_WIDTH),
     		   SCREEN_WIDTH, 
     		   SCREEN_HEIGHT);
 
@@ -238,19 +236,21 @@ Video::Surface* Video::loadBMP(const char* filename)
     // Open the file
     FILE * file;
     if( !(file = fopen(filename, "rb")))
-        throw runtime_error("Can't open file");
+    {
+        throw runtime_error(string("Can't open file: ") + string(filename));
+    }
 
     // Read the bmp header and check for a valid file
     result = fread(&bmpHeader, sizeof(bmpHeader), 1, file);
     if(!result) 
     {
         fclose(file);
-        throw runtime_error("Can't read BMP header");
+        throw runtime_error(string("Can't read BMP header") + string(filename));
     }
     if(bmpHeader.bfType != BM) 
     {
         fclose(file);
-        throw runtime_error("Not a BMP file");
+        throw runtime_error(string("Not a BMP file") + string(filename));
     }
 
     // Read the infoheader
@@ -258,7 +258,7 @@ Video::Surface* Video::loadBMP(const char* filename)
     if(!result) 
     {
         fclose(file);
-        throw runtime_error("Can't read BMP info");
+        throw runtime_error(string("Can't read BMP info") + string(filename));
     }
 
     // Get the informations
@@ -269,7 +269,7 @@ Video::Surface* Video::loadBMP(const char* filename)
     if(bmpInfo.biCompression || bpp != 24) 
     {
         fclose( file );
-        throw runtime_error("Can't read compressed BMP");
+        throw runtime_error(string("Can't read compressed BMP") + string(filename));
     }
 
     unsigned pixelsNum = width * height * 3;
@@ -277,7 +277,7 @@ Video::Surface* Video::loadBMP(const char* filename)
     if(!pixels) 
     {
         fclose(file);
-        throw runtime_error("Can't allocate memory for surface");
+        throw runtime_error(string("Can't allocate memory for surface") + string(filename));
     }
     //memset(pixels, 0, pixelsNum);
     base = 0;
@@ -292,7 +292,7 @@ Video::Surface* Video::loadBMP(const char* filename)
             {
                 free(pixels);
                 fclose(file);
-                throw runtime_error("Can't read BMP pixels");
+                throw runtime_error(string("Can't read BMP pixels") + string(filename));
             }
             pixels[base  + 2] = rgb.rgbtRed;
             pixels[base  + 1] = rgb.rgbtGreen;
@@ -495,14 +495,36 @@ void Video::createImage(const std::string& name, ImageType type)
 void Video::createImages(const std::vector<std::string>& names)
 {
     TRY_BEGINS;
-   /* 
+    /*
+    Sarvip0
+    Monnok0
+    Ghhhk0
+    Houjix0
+    Strider0
+    Ngok0
+    Klorslug0
+    Molator0
+*/
+    /*   
+    createImage("Molator0", IT_MASKED);
+    createImage("Sarvip0", IT_MASKED);
+    createImage("Ghhhk0", IT_MASKED);
+    createImage("Monnok0", IT_MASKED);
+    createImage("Strider0", IT_MASKED);
+  createImage("Ngok0", IT_MASKED);
+    createImage("Klorslug0", IT_MASKED);
+    createImage("Houjix0", IT_MASKED);
+  */
+    
+    createImage("ex", IT_SINGLE);
+    /*
     for(unsigned i =0; i<names.size(); ++i)
     {
-        createImage(names[i] +"0", IT_MASKED);        
-        createImage("menu_" + names[i], IT_SINGLE);
+        createImage(names[i] +"0", IT_MASKED); 
+        cout << names[i] +"0" << endl;
     }
-    
-    
+    */
+    /* 
     for(unsigned i =1; i<8; ++i)
     {
         ostringstream name;
@@ -511,9 +533,6 @@ void Video::createImages(const std::vector<std::string>& names)
     }
 */
 
-    
-    createImage("Molator0", IT_MASKED);
-    
     
     /*
     createImage("segment0", IT_MASKED);
@@ -524,8 +543,9 @@ void Video::createImages(const std::vector<std::string>& names)
     createImage("board2", IT_SINGLE);
     createImage("board3", IT_SINGLE);
     createImage("board4", IT_SINGLE);
-    createImage("board5", IT_SINGLE);
-    createImage("board6", IT_SINGLE);
+    
+    createImage("menu1", IT_SINGLE);
+    createImage("menu2", IT_SINGLE);
     
 
     
