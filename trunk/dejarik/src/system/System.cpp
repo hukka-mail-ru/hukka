@@ -52,6 +52,11 @@ long getTime()
     return tv.tv_sec*1000000 + tv.tv_usec;
 }
 
+string getCurDir() 
+{
+    return "";
+}
+
 #endif
 
 
@@ -94,5 +99,17 @@ time_t time( time_t *inTT )
     }
     return *inTT;
 } 
+
+wstring getCurDir() // TODO change to string
+{
+    WCHAR buf[MAXPATHLEN];
+    GetModuleFileName(0, buf, MAXPATHLEN);
+    wstring dir(buf);
+    
+    size_t pos = dir.rfind(L"\\");
+    dir = dir.substr(0, pos);
+    
+    return dir;
+}
 #endif
 

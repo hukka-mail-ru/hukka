@@ -6,7 +6,7 @@ set(SRC src/logic/Player.cpp src/logic/Board.cpp src/logic/Game.cpp src/common/C
 set(SRC_UI src/ui/Glbasic.cpp src/ui/UI.cpp src/ui/Video.cpp src/ui/Animation.cpp src/system/Window.cpp)
 
 # DEJARIK executable
-add_executable (dejarik src/logic/main.cpp ${SRC} ${SRC_UI})
+add_executable (dejarik src/system/main.cpp ${SRC} ${SRC_UI})
 target_link_libraries (dejarik GLES_CM) 
 set_target_properties(dejarik PROPERTIES COMPILE_FLAGS "-D LINUX_BUILD -D OPENGL_ES_BUILD -D __lint__ -D __GL_FLOAT -D_GNU_SOURCE=1 -D_REENTRANT")
 set_target_properties(dejarik PROPERTIES LINK_FLAGS "-L/usr/lib")
