@@ -1,116 +1,14 @@
 #ifndef VIDEO_H_
 #define VIDEO_H_
 
-//#ifdef WIN_BUILD
-//#include <windows.h>
-//#endif
-
 #include <vector>
 #include <string>
 #include <map>
 
 #include <GLES/gl.h>
 
-
-#define PRECISION 16    
-#define ONE (1 << PRECISION)
-#define ZERO 0
-
-#define MAXPATHLEN  1024
-#define TEXTURE_FILTER_NONE 0
-#define TEXTURE_FILTER_BILINEAR 1
-#define TEXTURE_FILTER_TRILINEAR 2
-
-inline GLfixed FixedFromInt(int value) {return value << PRECISION;}
-inline GLfixed FixedFromFloat(float value) {return static_cast<GLfixed>(value * static_cast<float>(ONE));}
-inline GLfixed MultiplyFixed(GLfixed op1, GLfixed op2) {return (op1 * op2) >> PRECISION;};
-
-
-#define WINDOW_WIDTH  240
-#define WINDOW_HEIGHT 320
-
-#define BG_TEXTURE_WIDTH 128
-
 #include "../common/Macros.h"
 #include "Window.h"
-
-/////////////////////////////////////////////////////////////////////////
-#ifdef LINUX_BUILD
-    #include <X11/Xmd.h> // for INT16, INT32
-    #pragma pack(1)
-    struct BITMAPFILEHEADER 
-    {
-    
-        INT16 bfType;
-        INT32 bfSize;
-        INT16 bfReserved1;
-        INT16 bfReserved2;
-        INT32 bfOffBits;
-    };
-    
-    #pragma pack(1)
-    struct BITMAPINFOHEADER 
-    { 
-      INT32 biSize; 
-      INT32 biWidth; 
-      INT32 biHeight; 
-      INT16 biPlanes; 
-      INT16 biBitCount; 
-      INT32 biCompression; 
-      INT32 biSizeImage; 
-      INT32 biXPelsPerMeter; 
-      INT32 biYPelsPerMeter; 
-      INT32 biClrUsed; 
-      INT32 biClrImportant; 
-    }; 
-    
-    #pragma pack(1)
-    struct RGBTRIPLE 
-    {
-      INT8 rgbtRed;
-      INT8 rgbtGreen;
-      INT8 rgbtBlue;
-    };
-#endif
-/////////////////////////////////////////////////////////////////////////
-
-struct Texture
-{
-    unsigned id;
-    float w;
-    float h;
-};
-
-enum ImageType
-{
-    IT_SINGLE,
-    IT_MASKED
-};
-
-struct Image
-{
-    ImageType type;
-    Texture texture;
-    Texture mask;
-};
-
-struct Surface
-{
-    unsigned char* pixels;
-    int w;
-    int h;
-};
-
-CLASSPTR(Image);
-
-
-struct RGB_Color
-{
-    RGB_Color(float r, float g, float b): r(r), g(g), b(b) {}
-    float r;
-    float g;
-    float b;
-};
 
 
 struct RGBA_Color
@@ -133,23 +31,51 @@ enum BindXY
 };
 
 
+
 class Video
 {
+private:
+    
+    struct Surface // for BMP loading
+    {
+        unsigned char* pixels;
+        int w;
+        int h;
+    };
+
+    struct Texture
+    {
+        unsigned id;
+        float w;
+        float h;
+    };
+
+    enum ImageType
+    {
+        IT_SINGLE,
+        IT_MASKED
+    };
+
+    struct Image
+    {
+        ImageType type;
+        Texture texture;
+        Texture mask;
+    };
+
+
+    CLASSPTR(Image);  
     
 public:
+    
     void startup(const std::vector<std::string>& pieceNames);
     void stop();
     
-    
-    
     // a new version
     void drawPolygon(GLshort* vertexArray, unsigned vertNum, const RGBA_Color& color);
-    // a new version
-    void drawImage(const Texture& texture, const RGBA_Color& color, 
-                   float winX, float winY, float angle);
     
     void drawShape(const std::vector<float>& xWin, const std::vector<float>& yWin, 
-            const RGB_Color& color, float width);
+            const RGBA_Color& color, float width);
 
     void drawSprite(const std::string& imageName, const RGBA_Color& color, 
             BindXY bindXY, GLshort x, GLshort y, float angle);    
@@ -159,6 +85,10 @@ private:
     Surface* loadBMP(const char* filename);
     void freeSurface(Surface* surface);
 
+    // a new version
+    void drawImage(const Texture& texture, const RGBA_Color& color, 
+                   float winX, float winY, float angle);
+    
     void createImages(const std::vector<std::string>& names);
     void createImage(const std::string& name, ImageType type);
 

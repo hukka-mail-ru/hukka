@@ -102,22 +102,9 @@ void UI::drawPiece(const PiecePtr& piece)
         
     TRY_RETHROW;
 }
+*/
 
-void UI::drawMenu()
-{
-    TRY_BEGINS;
-   
-    
-    // menu 
-    mVideo.drawSprite("menu_" + menuItemName, RGB_Color(1,1,1), XY_LEFTBOTTOM,
-                      4,
-                      254,
-                      0); 
-    
-    TRY_RETHROW;
-}
-
-
+/*
 
 void UI::drawCell(const CellPtr& cell, bool clicked) 
 {
@@ -150,6 +137,16 @@ void UI::drawCell(const CellPtr& cell, bool clicked)
 
 */
 
+void UI::drawMenu()
+{
+    TRY_BEGINS;
+    
+    // TODO some subscriptions in the menu
+    
+    TRY_RETHROW;
+}
+
+
 void UI::drawBoard()
 {
     TRY_BEGINS;
@@ -158,8 +155,10 @@ void UI::drawBoard()
     mVideo.drawSprite("board2", RGBA_Color(1,1,1,1), XY_LEFT_BOTTOM, 0, 0, 0);
     mVideo.drawSprite("board3", RGBA_Color(1,1,1,1), XY_RIGHT_TOP, 0, 0, 0);
     mVideo.drawSprite("board4", RGBA_Color(1,1,1,1), XY_LEFT_TOP, 0, 0, 0);
+    mVideo.drawSprite("board5", RGBA_Color(1,1,1,1), XY_RIGHT_TOP, 0, -128, 0);
+    mVideo.drawSprite("board6", RGBA_Color(1,1,1,1), XY_LEFT_TOP, 0, -128, 0);
     
-    mVideo.drawSprite("Molator0", RGBA_Color(1,1,1,1), XY_LEFT_BOTTOM, 45, 45, 0);
+    mVideo.drawSprite("Molator0", RGBA_Color(1,1,1,0), XY_LEFT_BOTTOM, 45, 45, 10);
     
     vector<CellPtr> cells;
     mGame->getBoard()->getCells(cells);
@@ -223,40 +222,9 @@ void UI::drawActivePlayer()
 bool UI::drawAll()
 {
     TRY_BEGINS;
-    /*
-    mVideo.drawImage("board", RGBA_Color(1,1,1,0.5), 0, 0, 45);
-    //////// TEST BLOCK ////////////////////
-
-    GLshort vertexArray[] = {
-            -10,-10, 0,   
-            10, -10,0,     
-            10,10,0,
-            -10,10,0 };
-
-
-    mVideo.drawPolygon(&vertexArray[0], 4, RGBA_Color(1,1,1,0.5));
-    
-    GLshort vertexArray2[] = 
-    {
-        0,0,0,   
-        -40,0,0,     
-        -40,-40,0,
-        0,-40,0 
-    };
-
-    mVideo.drawPolygon(&vertexArray2[0], 4, RGBA_Color(1,0,1,0.5));
-    */
-    
-    drawBoard();
    
-    //////////////////////////////////
-    
-    /*
-    
-    mVideo.drawBackground();
     drawBoard();
     drawMenu();
-   */
     
     /* Draw it to the screen */
     if(!mQuit)

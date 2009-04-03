@@ -6,11 +6,69 @@
 
 using namespace std;
 
+
+/////////////////////////////////////////////////////////////////////////
+// For BMP loading
+/////////////////////////////////////////////////////////////////////////
+#ifdef LINUX_BUILD
+    #include <X11/Xmd.h> // for INT16, INT32
+    #pragma pack(1)
+    struct BITMAPFILEHEADER 
+    {
+    
+        INT16 bfType;
+        INT32 bfSize;
+        INT16 bfReserved1;
+        INT16 bfReserved2;
+        INT32 bfOffBits;
+    };
+    
+    #pragma pack(1)
+    struct BITMAPINFOHEADER 
+    { 
+      INT32 biSize; 
+      INT32 biWidth; 
+      INT32 biHeight; 
+      INT16 biPlanes; 
+      INT16 biBitCount; 
+      INT32 biCompression; 
+      INT32 biSizeImage; 
+      INT32 biXPelsPerMeter; 
+      INT32 biYPelsPerMeter; 
+      INT32 biClrUsed; 
+      INT32 biClrImportant; 
+    }; 
+    
+    #pragma pack(1)
+    struct RGBTRIPLE 
+    {
+      INT8 rgbtRed;
+      INT8 rgbtGreen;
+      INT8 rgbtBlue;
+    };
+#endif
+/////////////////////////////////////////////////////////////////////////
+
+#define PRECISION 16    
+#define ONE (1 << PRECISION)
+#define ZERO 0
+
+
+inline GLfixed FixedFromInt(int value) {return value << PRECISION;}
+inline GLfixed FixedFromFloat(float value) {return static_cast<GLfixed>(value * static_cast<float>(ONE));}
+inline GLfixed MultiplyFixed(GLfixed op1, GLfixed op2) {return (op1 * op2) >> PRECISION;};
+
+    
+#define WINDOW_WIDTH  240
+#define WINDOW_HEIGHT 320
+
+#define BG_TEXTURE_WIDTH 128
+
 // virtual scene size
 #define SCREEN_WIDTH  800 // must be big enough
 #define SCREEN_HEIGHT 1000 // must be big enough
-
-
+    
+    
 
 void Video::startup(const std::vector<std::string>& pieceNames)
 {
@@ -155,7 +213,7 @@ void Video::freeSurface(Surface* surface)
 }
 
 
-Surface* Video::loadBMP(const char* filename)
+Video::Surface* Video::loadBMP(const char* filename)
 {
     TRY_BEGINS;
     
@@ -313,7 +371,8 @@ void Video::loadTexture(Texture& texture, const std::string& path)
 
 
 
-void Video::drawShape(const vector<float>& xWin, const vector<float>& yWin, const RGB_Color& color, float width)
+void Video::drawShape(const vector<float>& xWin, const vector<float>& yWin, 
+        const RGBA_Color& color, float width)
 {
     TRY_BEGINS;
     
@@ -453,15 +512,10 @@ void Video::createImages(const std::vector<std::string>& names)
 */
 
     
-    createImage("Molator0", IT_SINGLE);
+    createImage("Molator0", IT_MASKED);
+    
     
     /*
-    createImage("menu_default", IT_SINGLE);
-    createImage("menu_kill", IT_SINGLE);
-    createImage("menu_push", IT_SINGLE);
-    createImage("menu_counter_kill", IT_SINGLE);
-    createImage("menu_counter_push", IT_SINGLE);
-    
     createImage("segment0", IT_MASKED);
     createImage("segment", IT_MASKED);
     createImage("segment2", IT_MASKED);
@@ -470,6 +524,8 @@ void Video::createImages(const std::vector<std::string>& names)
     createImage("board2", IT_SINGLE);
     createImage("board3", IT_SINGLE);
     createImage("board4", IT_SINGLE);
+    createImage("board5", IT_SINGLE);
+    createImage("board6", IT_SINGLE);
     
 
     
