@@ -154,12 +154,12 @@ void UI::drawBoard()
 {
     TRY_BEGINS;
     
-    mVideo.drawSprite("board1", RGBA_Color(1,1,1,1), XY_LEFTBOTTOM, -BG_TEXTURE_WIDTH, 0, 0);
-    mVideo.drawSprite("board2", RGBA_Color(1,1,1,1), XY_LEFTBOTTOM, 0, 0, 0);
-    mVideo.drawSprite("board3", RGBA_Color(1,1,1,1), XY_LEFTBOTTOM, -BG_TEXTURE_WIDTH, - BG_TEXTURE_WIDTH, 0);
-    mVideo.drawSprite("board4", RGBA_Color(1,1,1,1), XY_LEFTBOTTOM, 0, - BG_TEXTURE_WIDTH, 0);
+    mVideo.drawSprite("board1", RGBA_Color(1,1,1,1), XY_RIGHT_BOTTOM, 0, 0, 0);
+    mVideo.drawSprite("board2", RGBA_Color(1,1,1,1), XY_LEFT_BOTTOM, 0, 0, 0);
+    mVideo.drawSprite("board3", RGBA_Color(1,1,1,1), XY_RIGHT_TOP, 0, 0, 0);
+    mVideo.drawSprite("board4", RGBA_Color(1,1,1,1), XY_LEFT_TOP, 0, 0, 0);
     
-    mVideo.drawSprite("Molator0", RGBA_Color(1,1,1,1), XY_LEFTBOTTOM, 45, 45, 0);
+    mVideo.drawSprite("Molator0", RGBA_Color(1,1,1,1), XY_LEFT_BOTTOM, 45, 45, 0);
     
     vector<CellPtr> cells;
     mGame->getBoard()->getCells(cells);

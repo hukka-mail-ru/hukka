@@ -351,7 +351,7 @@ void Video::drawShape(const vector<float>& xWin, const vector<float>& yWin, cons
 
 void Video::drawSprite(
         const std::string& imageName, const RGBA_Color& color, 
-        SpriteXY spriteXY, GLshort winX, GLshort winY, float angle)
+        BindXY bindXY, GLshort winX, GLshort winY, float angle)
 {
     TRY_BEGINS;
     
@@ -362,12 +362,26 @@ void Video::drawSprite(
         throw runtime_error(os.str()); 
     }
     
-    if(spriteXY == XY_CENTER)
+    
+    if(bindXY == XY_CENTER)
     {
         winX -= images[imageName]->texture.w / 2;
         winY -= images[imageName]->texture.h / 2;
     }
-    
+    else if(bindXY == XY_RIGHT_BOTTOM)
+    {
+        winX -= images[imageName]->texture.w;
+    }
+    else if(bindXY == XY_LEFT_TOP)
+    {
+        winY -= images[imageName]->texture.h;
+    }
+    else if(bindXY == XY_RIGHT_TOP)
+    {
+        winX -= images[imageName]->texture.w;
+        winY -= images[imageName]->texture.h;
+    }
+
     
     if(images[imageName]->type == IT_SINGLE)
     {
