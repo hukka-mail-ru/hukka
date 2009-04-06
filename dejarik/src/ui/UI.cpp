@@ -148,7 +148,7 @@ void UI::drawPiece(const PiecePtr& piece)
     name << piece->name << piece->sprite;
     mVideo.drawSprite(name.str(), color, XY_CENTER,
                       piece->x,
-                      piece->y + VERT_OFFSET,
+                      piece->y,
                       piece->angle); 
         
     TRY_RETHROW;
@@ -163,7 +163,7 @@ void UI::drawBoard()
     mVideo.drawSprite("board3", RGBA_Color(1,1,1,1), XY_RIGHT_TOP, 0, 0, 0);
     mVideo.drawSprite("board4", RGBA_Color(1,1,1,1), XY_LEFT_TOP, 0, 0, 0);
 
-    mVideo.drawSprite("ex", RGBA_Color(1,1,1,1), XY_LEFT_TOP, 45, 45, 0);
+ //   mVideo.drawSprite("ex", RGBA_Color(1,1,1,1), XY_LEFT_TOP, 45, 45, 0);
     
     vector<CellPtr> cells;
     mGame->getBoard()->getCells(cells);
@@ -311,8 +311,8 @@ void UI::handleEvents()
              
         sleep(1);
         
-        if(ticks++ > 5)
-        	mQuit = true;
+   //     if(ticks++ > 5)
+    //    	mQuit = true;
         
         /* handle the events in the queue */
         /*
