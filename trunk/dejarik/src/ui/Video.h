@@ -39,7 +39,7 @@ private:
     
     struct Surface // for BMP loading
     {
-        unsigned char* pixels;
+        GLbyte* pixels;
         int w;
         int h;
     };
@@ -47,25 +47,11 @@ private:
     struct Texture
     {
         unsigned id;
-        float w;
-        float h;
+        GLfloat w;
+        GLfloat h;
     };
 
-    enum ImageType
-    {
-        IT_SINGLE,
-        IT_MASKED
-    };
-
-    struct Image
-    {
-        ImageType type;
-        Texture texture;
-        Texture mask;
-    };
-
-
-    CLASSPTR(Image);  
+    CLASSPTR(Texture);  
     
 public:
     
@@ -78,7 +64,7 @@ public:
     void drawShape(const std::vector<float>& xWin, const std::vector<float>& yWin, 
             const RGBA_Color& color, float width);
 
-    void drawSprite(const std::string& imageName, const RGBA_Color& color, 
+    void drawSprite(const std::string& texName, const RGBA_Color& color, 
             BindXY bindXY, GLshort x, GLshort y, float angle);    
         
 private:
@@ -87,20 +73,18 @@ private:
     void freeSurface(Surface* surface);
 
     // a new version
-    void drawImage(const Texture& texture, const RGBA_Color& color, 
-                   float winX, float winY, float angle);
+    void drawTexture(const TexturePtr& texture, const RGBA_Color& color, 
+            GLshort x, GLshort y, float angle);
     
     void createImages(const std::vector<std::string>& names);
-    void createImage(const std::string& name, ImageType type);
+    void createImage(const std::string& name);
 
-    void loadTexture(Texture& texture, const std::string& path);
+    void loadTexture(TexturePtr& texture, const std::string& path);
     void resizeWindow(unsigned width, unsigned height);
-   
-    void winToGL(float winX, float winY, float& x, float& y, float& z);
     
 
 
-    std::map<std::string, ImagePtr> images;
+    std::map<std::string, TexturePtr> textures;
     
     int viewport[4]; 
 
