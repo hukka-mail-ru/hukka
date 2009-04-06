@@ -66,7 +66,8 @@ inline GLfixed MultiplyFixed(GLfixed op1, GLfixed op2) {return (op1 * op2) >> PR
 #define SCREEN_WIDTH  800 // must be big enough
 #define SCREEN_HEIGHT 1000 // must be big enough
     
-    
+   
+
 
 void Video::startup(const std::vector<std::string>& pieceNames)
 {
@@ -119,21 +120,257 @@ void Video::drawPolygon(GLshort* vertexArray, unsigned vertNum, const RGBA_Color
 
 
 
-void Video::drawImage(const Texture& texture, const RGBA_Color& color, 
-               float winX, float winY, float angle)
-{                
-    float x1 = winX;
-    float y1 = winY;
+
+
+void Video::freeSurface(Surface* surface)
+{
+    delete[] surface->pixels;
+    delete surface;
+}
+
+
+Video::Surface* Video::loadBMP(const char* filename)
+{
+    TRY_BEGINS;
     
-    float x2 = winX  + texture.w;
-    float y2 = winY + texture.h;
+#ifndef BM
+#define BM 0x4D42
+#endif
+    
+#define COLOR_COMPONENTS 4 // RGBA 
+
+    BITMAPFILEHEADER bmpHeader = {0};
+    BITMAPINFOHEADER bmpInfo = {0};
+    RGBTRIPLE rgb = {0};
+
+    if(!filename) 
+        throw runtime_error("Filename not set");
+
+    // Open the file
+    FILE * file;
+    if( !(file = fopen(filename, "rb")))
+    {
+        throw runtime_error(string("Can't open file: ") + string(filename));
+    }
+
+    // Read the bmp header and check for a valid file
+    if(!fread(&bmpHeader, sizeof(bmpHeader), 1, file)) 
+    {
+        fclose(file);
+        throw runtime_error(string("Can't read BMP header") + string(filename));
+    }
+    if(bmpHeader.bfType != BM) 
+    {
+        fclose(file);
+        throw runtime_error(string("Not a BMP file") + string(filename));
+    }
+
+    // Read the infoheader
+    if(!fread(&bmpInfo, sizeof(bmpInfo), 1, file)) 
+    {
+        fclose(file);
+        throw runtime_error(string("Can't read BMP info") + string(filename));
+    }
+
+    // Get the informations
+    int width = bmpInfo.biWidth;
+    int height = bmpInfo.biHeight;
+    int bpp = bmpInfo.biBitCount;
+
+    if(bmpInfo.biCompression || bpp != 24) 
+    {
+        fclose( file );
+        throw runtime_error(string("Can't read compressed BMP") + string(filename));
+    }
+
+    GLbyte* pixels = new GLbyte[width * height * COLOR_COMPONENTS];
+    if(!pixels) 
+    {
+        fclose(file);
+        throw runtime_error(string("Can't allocate memory for surface") + string(filename));
+    }
+
+    // Read the pixels
+    unsigned base = 0;
+    for (int j=height-1; j >= 0 ; j--) 
+    {
+        for (int i=0; i < width; i++) 
+        {
+            if(!fread(&rgb, sizeof(rgb), 1, file)) 
+            {
+                delete[] pixels;
+                fclose(file);
+                throw runtime_error(string("Can't read BMP pixels") + string(filename));
+            }
+           
+            pixels[base + 3] = (rgb.rgbtRed == 0 && rgb.rgbtGreen == 0 && rgb.rgbtBlue == 0) ? 
+                              0 : 255;
+            pixels[base + 2] = rgb.rgbtRed;
+            pixels[base + 1] = rgb.rgbtGreen;
+            pixels[base + 0] = rgb.rgbtBlue;
+
+            base += COLOR_COMPONENTS;
+        }
+    }
+
+    fclose(file);
+
+    Surface* surface = new Surface();
+    surface->pixels = pixels;
+    surface->w = width;
+    surface->h = height;
+    
+    return surface;
+
+    TRY_RETHROW;
+}
+
+
+
+void Video::loadTexture(TexturePtr& texture, const std::string& path)
+{
+    TRY_BEGINS;
+    
+    /* Status indicator */
+    bool res = false;
+
+    /* Create storage space for the texture */
+    Surface* surface = loadBMP(path.c_str()); 
+
+    /* Load The Bitmap, Check For Errors, If Bitmap's Not Found Quit */
+    if (surface)
+    {
+
+        /* Set the status to true */
+        res = true;
+
+        /* Create The Texture */
+        glGenTextures(1, &texture->id);
+
+        /* Typical Texture Generation Using Data From The Bitmap */
+        glBindTexture(GL_TEXTURE_2D, texture->id);
+
+        /* Generate The Texture */
+        glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, surface->w, surface->h, 0, GL_RGBA, // blue chanel must be changed by red 
+                     GL_UNSIGNED_BYTE, surface->pixels );
+        
+        texture->w = surface->w;
+        texture->h = surface->h;
+
+        /* Linear Filtering */
+        glTexParameterx( GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR );
+        glTexParameterx( GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR );
+    }
+
+    /* Free up any memory we may have used */
+    if (surface)
+        freeSurface(surface);
+
+    if(!res)
+    {
+        ostringstream os;
+        os << "loadTexture failed: " << path << endl;
+        throw runtime_error(os.str());
+    }
+    
+    TRY_RETHROW;
+}
+
+
+
+
+void Video::drawShape(const vector<float>& xWin, const vector<float>& yWin, 
+        const RGBA_Color& color, float width)
+{
+    TRY_BEGINS;
+    /*
+    vector<float> vertices; 
+    
+    for(unsigned i=0; i< xWin.size(); i++)
+    {
+        float x = 0;
+        float y = 0;
+        float z = 0;
+        Video::winToGL(xWin[i], yWin[i], x, y, z);
+        
+        vertices.push_back( x );
+        vertices.push_back( y );
+        vertices.push_back( 0 );
+    }
+    
+    glColor4x(color.r, color.g, color.b, 0);
+    glLineWidthx(width);
+    
+    
+    glVertexPointer(3, GL_FLOAT, 0, &vertices[0]);
+    glEnableClientState(GL_VERTEX_ARRAY);
+
+        glDrawArrays(GL_LINE_LOOP, 0, xWin.size());
+
+    glDisableClientState(GL_VERTEX_ARRAY);
+ 
+    glColor4x(1, 1, 1, 0); // reset
+    */
+    
+    TRY_RETHROW;
+}
+
+
+void Video::drawSprite(
+        const std::string& texName, const RGBA_Color& color, 
+        BindXY bindXY, GLshort x, GLshort y, float angle)
+{
+    TRY_BEGINS;
+    
+    if(!textures[texName])
+    {
+        ostringstream os;
+        os << "Can't find name " << texName;
+        throw runtime_error(os.str()); 
+    }
+    
+    
+    if(bindXY == XY_CENTER)
+    {
+        x -= textures[texName]->w / 2;
+        y -= textures[texName]->h / 2;
+    }
+    else if(bindXY == XY_RIGHT_BOTTOM)
+    {
+        x -= textures[texName]->w;
+    }
+    else if(bindXY == XY_LEFT_TOP)
+    {
+        y -= textures[texName]->h;
+    }
+    else if(bindXY == XY_RIGHT_TOP)
+    {
+        x -= textures[texName]->w;
+        y -= textures[texName]->h;
+    }
+
+
+    drawTexture(textures[texName], color, x, y, angle);
+
+    TRY_RETHROW;
+}
+
+
+void Video::drawTexture(const TexturePtr& texture, const RGBA_Color& color, 
+        GLshort x, GLshort y, float angle)
+{                
+    GLshort x1 = x;
+    GLshort y1 = y;
+    
+    GLshort x2 = x  + texture->w;
+    GLshort y2 = y + texture->h;
     
     glLoadIdentity();
         
   //  glPushMatrix();
     glEnable( GL_TEXTURE_2D );
 
-    glBindTexture(GL_TEXTURE_2D, texture.id);
+    glBindTexture(GL_TEXTURE_2D, texture->id);
     
     glColor4x(
         FixedFromFloat(color.r), 
@@ -171,10 +408,13 @@ void Video::drawImage(const Texture& texture, const RGBA_Color& color,
     glVertexPointer(3, GL_SHORT, 0, vertices);
     glTexCoordPointer(2, GL_SHORT, 0, texCoords);
     glEnableClientState(GL_VERTEX_ARRAY);
-    glEnableClientState(GL_TEXTURE_COORD_ARRAY);
+    glEnableClientState(GL_TEXTURE_COORD_ARRAY);    
+    glEnable(GL_BLEND);
+    glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
 
     glDrawArrays(GL_TRIANGLE_FAN, 0, 4);
 
+    glDisable(GL_BLEND);
     glDisableClientState(GL_VERTEX_ARRAY);
     glDisableClientState(GL_TEXTURE_COORD_ARRAY);
 
@@ -183,311 +423,18 @@ void Video::drawImage(const Texture& texture, const RGBA_Color& color,
 
 }
 
-
-void Video::winToGL(float winX, float winY, float& x, float& y, float& z)
+void Video::createImage(const std::string& name)
 {
     TRY_BEGINS;
 
-    // TODO Rrrrhh! The magic numbers should be somehow calculated, based on GL_PROJECTION and GL_MODELVIEW
-    float modelview[16] = {1,0,0,0,0,1,0,0,0,0,1,0,0,0,-10,1} ;              
-    float projection[16] = {3.218951,0,0,0,0,2.414213,0,0,0,0,-1.002002,-1,0,0,-0.2002002,0};
-
-    
-    winY = (float)viewport[3] - winY;           // Subtract The Current Mouse Y Coordinate From The Screen Height
-    
-    GLfloat winZ = 0.990991; // A magic number :( because opengl ES doesn't have GL_DEPTH_COMPONENT   
-    // glReadPixels(winX, winY, 1, 1, GL_DEPTH_COMPONENT, GL_FLOAT, &winZ);    
-    
-    gluUnProject( winX, winY, winZ, modelview, projection, viewport, &x, &y, &z);
-    
-    TRY_RETHROW;
-}
-
-
-void Video::freeSurface(Surface* surface)
-{
-    free(surface->pixels);
-    delete surface;
-}
-
-
-Video::Surface* Video::loadBMP(const char* filename)
-{
-    TRY_BEGINS;
-    
-#ifndef BM
-#define BM 0x4D42
-#endif
-
-    unsigned char* pixels;
-    int i, j, base;
-    int result;
-    int width;
-    int height;
-    int bpp;
-
-    BITMAPFILEHEADER bmpHeader = {0};
-    BITMAPINFOHEADER bmpInfo = {0};
-    RGBTRIPLE rgb = {0};
-
-    if(!filename) 
-        throw runtime_error("Filename not set");
-
-    // Open the file
-    FILE * file;
-    if( !(file = fopen(filename, "rb")))
-    {
-        throw runtime_error(string("Can't open file: ") + string(filename));
-    }
-
-    // Read the bmp header and check for a valid file
-    result = fread(&bmpHeader, sizeof(bmpHeader), 1, file);
-    if(!result) 
-    {
-        fclose(file);
-        throw runtime_error(string("Can't read BMP header") + string(filename));
-    }
-    if(bmpHeader.bfType != BM) 
-    {
-        fclose(file);
-        throw runtime_error(string("Not a BMP file") + string(filename));
-    }
-
-    // Read the infoheader
-    result = fread(&bmpInfo, sizeof(bmpInfo), 1, file);
-    if(!result) 
-    {
-        fclose(file);
-        throw runtime_error(string("Can't read BMP info") + string(filename));
-    }
-
-    // Get the informations
-    width = bmpInfo.biWidth;
-    height = bmpInfo.biHeight;
-    bpp = bmpInfo.biBitCount;
-
-    if(bmpInfo.biCompression || bpp != 24) 
-    {
-        fclose( file );
-        throw runtime_error(string("Can't read compressed BMP") + string(filename));
-    }
-
-    unsigned pixelsNum = width * height * 3;
-    pixels = (unsigned char*)malloc(pixelsNum);
-    if(!pixels) 
-    {
-        fclose(file);
-        throw runtime_error(string("Can't allocate memory for surface") + string(filename));
-    }
-    //memset(pixels, 0, pixelsNum);
-    base = 0;
-
-    // Read the pixels
-    for (j=height-1; j >= 0 ; j--) 
-    {
-        for (i=0; i < width; i++) 
-        {
-            result = fread(&rgb, sizeof(rgb), 1, file);
-            if(!result) 
-            {
-                free(pixels);
-                fclose(file);
-                throw runtime_error(string("Can't read BMP pixels") + string(filename));
-            }
-            pixels[base  + 2] = rgb.rgbtRed;
-            pixels[base  + 1] = rgb.rgbtGreen;
-            pixels[base  + 0] = rgb.rgbtBlue;
-            /*
-            pixels[(j*width + i)*3  + 2] = rgb.rgbtRed;
-            pixels[(j*width + i)*3  + 1] = rgb.rgbtGreen;
-            pixels[(j*width + i)*3  + 0] = rgb.rgbtBlue;*/
-            base += 3;
-        }
-    }
-
-    fclose(file);
-
-    Surface* surface = new Surface();
-    surface->pixels = pixels;
-    surface->w = width;
-    surface->h = height;
-    
-    return surface;
-
-    TRY_RETHROW;
-}
-
-
-
-void Video::loadTexture(Texture& texture, const std::string& path)
-{
-    TRY_BEGINS;
-    
-    /* Status indicator */
-    bool res = false;
-
-    /* Create storage space for the texture */
-    Surface* image = loadBMP(path.c_str()); 
-
-    /* Load The Bitmap, Check For Errors, If Bitmap's Not Found Quit */
-    if (image)
-    {
-
-        /* Set the status to true */
-        res = true;
-
-        /* Create The Texture */
-        glGenTextures(1, &texture.id);
-
-        /* Typical Texture Generation Using Data From The Bitmap */
-        glBindTexture(GL_TEXTURE_2D, texture.id);
-
-        /* Generate The Texture */
-        glTexImage2D(GL_TEXTURE_2D, 0, GL_RGB, image->w, image->h, 0, GL_RGB, // blue chanel must be changed by red 
-                     GL_UNSIGNED_BYTE, image->pixels );
-        
-        texture.w = image->w;
-        texture.h = image->h;
-
-        /* Linear Filtering */
-        glTexParameterx( GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR );
-        glTexParameterx( GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR );
-    }
-
-    /* Free up any memory we may have used */
-    if (image)
-        freeSurface(image);
-
-    if(!res)
-    {
-        ostringstream os;
-        os << "loadTexture failed: " << path << endl;
-        throw runtime_error(os.str());
-    }
-    
-    TRY_RETHROW;
-}
-
-
-
-
-void Video::drawShape(const vector<float>& xWin, const vector<float>& yWin, 
-        const RGBA_Color& color, float width)
-{
-    TRY_BEGINS;
-    
-    vector<float> vertices; 
-    
-    for(unsigned i=0; i< xWin.size(); i++)
-    {
-        float x = 0;
-        float y = 0;
-        float z = 0;
-        Video::winToGL(xWin[i], yWin[i], x, y, z);
-        
-        vertices.push_back( x );
-        vertices.push_back( y );
-        vertices.push_back( 0 );
-    }
-    
-    glColor4x(color.r, color.g, color.b, 0);
-    glLineWidthx(width);
-    
-    
-    glVertexPointer(3, GL_FLOAT, 0, &vertices[0]);
-    glEnableClientState(GL_VERTEX_ARRAY);
-
-        glDrawArrays(GL_LINE_LOOP, 0, xWin.size());
-
-    glDisableClientState(GL_VERTEX_ARRAY);
- 
-    glColor4x(1, 1, 1, 0); // reset
-    
-    
-    TRY_RETHROW;
-}
-
-
-void Video::drawSprite(
-        const std::string& imageName, const RGBA_Color& color, 
-        BindXY bindXY, GLshort winX, GLshort winY, float angle)
-{
-    TRY_BEGINS;
-    
-    if(!images[imageName])
-    {
-        ostringstream os;
-        os << "Can't find name " << imageName;
-        throw runtime_error(os.str()); 
-    }
-    
-    
-    if(bindXY == XY_CENTER)
-    {
-        winX -= images[imageName]->texture.w / 2;
-        winY -= images[imageName]->texture.h / 2;
-    }
-    else if(bindXY == XY_RIGHT_BOTTOM)
-    {
-        winX -= images[imageName]->texture.w;
-    }
-    else if(bindXY == XY_LEFT_TOP)
-    {
-        winY -= images[imageName]->texture.h;
-    }
-    else if(bindXY == XY_RIGHT_TOP)
-    {
-        winX -= images[imageName]->texture.w;
-        winY -= images[imageName]->texture.h;
-    }
-
-    
-    if(images[imageName]->type == IT_SINGLE)
-    {
-        drawImage(images[imageName]->texture, color, winX, winY, angle);
-    }
-    else if(images[imageName]->type == IT_MASKED)
-    {
-        glEnable( GL_BLEND );   
-        glDisable( GL_DEPTH_TEST );
-        glBlendFunc( GL_DST_COLOR, GL_ZERO );
-        
-        drawImage(images[imageName]->mask, RGBA_Color(1,1,1,1), winX, winY, angle);
-
-        glBlendFunc( GL_ONE, GL_ONE );
-
-        
-        drawImage(images[imageName]->texture, color, winX, winY, angle);
-        
-        glEnable( GL_DEPTH_TEST ); /* Enable Depth Testing */
-        glDisable( GL_BLEND );     /* Disable Blending     */
-    }
-    
-    TRY_RETHROW;
-}
-
-
-
-void Video::createImage(const std::string& name, ImageType type)
-{
-    TRY_BEGINS;
-
-    ImagePtr image (new Image); 
-    image->type = type;
+    TexturePtr texture (new Texture); 
     
     ostringstream fullname;
     fullname << "img/" << name << ".bmp";
     
-    loadTexture(image->texture, fullname.str());  
+    loadTexture(texture, fullname.str());  
     
-    if(type == IT_MASKED)
-    {
-        ostringstream fullmask;
-        fullmask << "img/" << name << "_mask.bmp";
-        loadTexture(image->mask, fullmask.str());
-    }
-    
-    images[name] = image;  
+    textures[name] = texture;  
 
     TRY_RETHROW;
 }
@@ -506,17 +453,17 @@ void Video::createImages(const std::vector<std::string>& names)
     Molator0
 */
       
-    createImage("Molator0", IT_MASKED);
-    createImage("Sarvip0", IT_MASKED);
-    createImage("Ghhhk0", IT_MASKED);
-    createImage("Monnok0", IT_MASKED);
-    createImage("Strider0", IT_MASKED);
-    createImage("Ngok0", IT_MASKED);
-    createImage("Klorslug0", IT_MASKED);
-    createImage("Houjix0", IT_MASKED);
+    createImage("Molator0");
+    createImage("Sarvip0");
+    createImage("Ghhhk0");
+    createImage("Monnok0");
+    createImage("Strider0");
+    createImage("Ngok0");
+    createImage("Klorslug0");
+    createImage("Houjix0");
   
     
-    createImage("ex", IT_SINGLE);
+    createImage("ex");
     /*
     for(unsigned i =0; i<names.size(); ++i)
     {
@@ -539,13 +486,13 @@ void Video::createImages(const std::vector<std::string>& names)
     createImage("segment", IT_MASKED);
     createImage("segment2", IT_MASKED);
     */
-    createImage("board1", IT_SINGLE);
-    createImage("board2", IT_SINGLE);
-    createImage("board3", IT_SINGLE);
-    createImage("board4", IT_SINGLE);
+    createImage("board1");
+    createImage("board2");
+    createImage("board3");
+    createImage("board4");
     
-    createImage("menu1", IT_SINGLE);
-    createImage("menu2", IT_SINGLE);
+    createImage("menu1");
+    createImage("menu2");
     
 
     
