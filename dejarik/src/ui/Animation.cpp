@@ -210,9 +210,6 @@ float Animation::getNormalAngle(float x, float y)
     {
         return -ang + 90;
     }
-    
-    
-    return ang;
 }
 
 // helper for drawPiece

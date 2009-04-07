@@ -59,9 +59,6 @@ inline GLfixed FixedFromFloat(float value) {return static_cast<GLfixed>(value * 
 inline GLfixed MultiplyFixed(GLfixed op1, GLfixed op2) {return (op1 * op2) >> PRECISION;};
 
     
-#define WINDOW_WIDTH  240
-#define WINDOW_HEIGHT 320
-
 // virtual scene size
 #define SCREEN_WIDTH  800 // must be big enough
 #define SCREEN_HEIGHT 1000 // must be big enough

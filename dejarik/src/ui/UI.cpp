@@ -39,8 +39,6 @@ bool UI::isCellClicked(float x, float y, CellPtr& cell)
 {
     TRY_BEGINS;
     
-    y = y - VERT_OFFSET;
-    
     vector<CellPtr> cells;
     mGame->getBoard()->getCells(cells);
     
@@ -163,7 +161,7 @@ void UI::drawBoard()
     mVideo.drawSprite("board3", RGBA_Color(1,1,1,1), XY_RIGHT_TOP, 0, 0, 0);
     mVideo.drawSprite("board4", RGBA_Color(1,1,1,1), XY_LEFT_TOP, 0, 0, 0);
 
-    mVideo.drawSprite("ex", RGBA_Color(1,1,1,1), XY_LEFT_TOP, 45, 45, 45);
+ //   mVideo.drawSprite("ex", RGBA_Color(1,1,1,1), XY_LEFT_TOP, 45, 45, 45);
     
     vector<CellPtr> cells;
     mGame->getBoard()->getCells(cells);
@@ -246,18 +244,17 @@ bool UI::drawAll()
 }
 
 
-void UI::onMouseClick(int button_x, int button_y)
+void UI::onMouseClick(int x, int y)
 {
     TRY_BEGINS;
+    
+    // the coordinates center is the circle center
+    x -= WINDOW_WIDTH/2;
+    y = BOARD_TEXTURE_WIDTH - y;
      
     CellPtr cell;
-    if(isCellClicked(button_x, button_y, cell))
+    if(isCellClicked(x, y, cell))
     {
-       // cout << "mouse " << event.button.x << "." << event.button.y << endl;
-        //cout << "cell " << cell->c << "." << cell->r << endl;
-        //if(cell->piece)
-        //    cout << "piece " << cell->piece->name << " move " <<cell->piece->moveRating << endl; 
-        
         // show Menu item
         menuItemName = (cell->piece) ? cell->piece->name : "default";
         
@@ -309,22 +306,21 @@ void UI::handleEvents()
         
         drawAll();
              
-        sleep(1);
+      //  pollEvent();
         
    //     if(ticks++ > 5)
     //    	mQuit = true;
         
         /* handle the events in the queue */
-        /*
-        SDL_Event event;
-        while ( SDL_PollEvent( &event ) )
+        
+        Event event;
+        if(pollEvent(event))
         {
-            if( !mMoving && event.type == SDL_MOUSEBUTTONDOWN &&
-                 event.button.button == SDL_BUTTON_LEFT ) 
+            if( !mMoving && event.type == EVENT_MOUSEBUTTONDOWN) 
             {
                 onMouseClick(event.button.x, event.button.y);
             }
-            else if(event.type == SDL_QUIT) // handle stop
+            else if(event.type == EVENT_QUIT) // handle stop
             {
                 mQuit = true;
             }
@@ -336,7 +332,7 @@ void UI::handleEvents()
         }
        
         // a delay before the next iteration
-        if(mMoving)
+     /*   if(mMoving)
         {
             float timeForDrawing = (getTime() - time1)/1000.0;
             SDL_Delay(20 - timeForDrawing);
@@ -345,7 +341,7 @@ void UI::handleEvents()
         {
             SDL_Delay(1); // to prevent too frequent drawings
         }
-         */
+       */  
         
     }
     
