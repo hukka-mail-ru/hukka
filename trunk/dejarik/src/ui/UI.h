@@ -45,9 +45,9 @@ private:
      * Defines if the mouse click is valid (true/false).
      * if true, returns the clicked cell
      */
-    bool isCellClicked(float x, float y,  CellPtr& cell);
+    bool isCellClicked(int x, int y,  CellPtr& cell);
     
-    void onMouseClick(int button_x, int button_y);
+    void onMouseClick(int x, int y);
     
     GamePtr mGame; 
     bool mQuit;    
