@@ -35,7 +35,7 @@ void UI::startup()
     TRY_RETHROW;
 }
 
-bool UI::isCellClicked(float x, float y, CellPtr& cell)
+bool UI::isCellClicked(int x, int y, CellPtr& cell)
 {
     TRY_BEGINS;
     

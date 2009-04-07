@@ -131,12 +131,11 @@ void createEGLWindow(int width, int height, const char *name)
     EGLConfig config[4];
     EGLContext cx;
     int nconfig;
-#if 1
     XSizeHints sizehints;
     XSetWindowAttributes swa;
     XVisualInfo *vi, tmp;
     int vid, n;
-#endif
+
 
     display = XOpenDisplay(NULL);
     egldisplay = eglGetDisplay(display);
@@ -150,8 +149,7 @@ void createEGLWindow(int width, int height, const char *name)
     }
     
     cx = eglCreateContext(egldisplay, config[0], 0, 0);
-    
-#if 1
+
     eglGetConfigAttrib(egldisplay, config[0], EGL_NATIVE_VISUAL_ID, &vid);
     tmp.visualid = vid;
     vi = XGetVisualInfo(display, VisualIDMask, &tmp, &n);
@@ -178,9 +176,6 @@ void createEGLWindow(int width, int height, const char *name)
     // show window
     XMapWindow(display, window);
     XSetStandardProperties(display, window, name, name, None, 0, 0, &sizehints);
-    
-
-#endif
 
     eglwindow = eglCreateWindowSurface(egldisplay, config[0], (NativeWindowType)window, 0);
     eglMakeCurrent(egldisplay, eglwindow, eglwindow, cx);
