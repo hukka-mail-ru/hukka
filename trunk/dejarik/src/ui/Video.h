@@ -12,6 +12,10 @@
 
 #define BOARD_TEXTURE_WIDTH 128
 
+#define WINDOW_WIDTH  240
+#define WINDOW_HEIGHT 320
+
+
 struct RGBA_Color
 {
     RGBA_Color(float r, float g, float b, float a): r(r), g(g), b(b), a(a) {}

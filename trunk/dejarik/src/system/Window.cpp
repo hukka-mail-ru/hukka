@@ -34,6 +34,7 @@
 #endif
 
 #include <GLES/egl.h>
+#include <Window.h>
 
 
 EGLSurface eglwindow;
@@ -116,8 +117,11 @@ createEGLWindow(int width, int height,  const char *name) {
 }
 
 #else
-Display *dpy;
+Display* display;
 Window window;
+//Atom pnProtocol;
+Atom pnProtocol;
+Atom nWMProtocols;
 
 #include <iostream>
 using namespace std;
@@ -134,8 +138,8 @@ void createEGLWindow(int width, int height, const char *name)
     int vid, n;
 #endif
 
-    dpy = XOpenDisplay(NULL);
-    egldisplay = eglGetDisplay(dpy);
+    display = XOpenDisplay(NULL);
+    egldisplay = eglGetDisplay(display);
     
     eglInitialize(egldisplay, 0, 0);
     
@@ -150,8 +154,8 @@ void createEGLWindow(int width, int height, const char *name)
 #if 1
     eglGetConfigAttrib(egldisplay, config[0], EGL_NATIVE_VISUAL_ID, &vid);
     tmp.visualid = vid;
-    vi = XGetVisualInfo(dpy, VisualIDMask, &tmp, &n);
-    swa.colormap = XCreateColormap(dpy, RootWindow(dpy, vi->screen),
+    vi = XGetVisualInfo(display, VisualIDMask, &tmp, &n);
+    swa.colormap = XCreateColormap(display, RootWindow(display, vi->screen),
                            vi->visual, AllocNone);
     sizehints.flags = 0;
     sizehints.flags = PMinSize | PMaxSize;
@@ -161,21 +165,67 @@ void createEGLWindow(int width, int height, const char *name)
 
     swa.border_pixel = 0;
     swa.event_mask = ExposureMask | StructureNotifyMask | KeyPressMask | ButtonPressMask | ButtonReleaseMask;
-    window = XCreateWindow(dpy, RootWindow(dpy, vi->screen), 0, 0, width, height,
+    window = XCreateWindow(display, RootWindow(display, vi->screen), 0, 0, width, height,
                         0, vi->depth, InputOutput, vi->visual,
                         CWBorderPixel|CWColormap|CWEventMask, &swa);
-    XMapWindow(dpy, window);
-    XSetStandardProperties(dpy, window, name, name,
-	    None, 0, 0, &sizehints);
+    
+    // this is for correct handling of the 'close' operation
+    pnProtocol = XInternAtom (display, "WM_DELETE_WINDOW", True);
+    nWMProtocols = XInternAtom (display, "WM_PROTOCOLS", True);    
+    XSetWMProtocols (display, window, &pnProtocol, 1);
+
+    
+    // show window
+    XMapWindow(display, window);
+    XSetStandardProperties(display, window, name, name, None, 0, 0, &sizehints);
+    
+
 #endif
 
     eglwindow = eglCreateWindowSurface(egldisplay, config[0], (NativeWindowType)window, 0);
     eglMakeCurrent(egldisplay, eglwindow, eglwindow, cx);
 }
+
+
+bool pollEvent(Event& event)
+{
+    XEvent xEvent;
+    XNextEvent ( display, &xEvent );
+
+    bool res = false;
+    
+     switch ( xEvent.type ) 
+     {
+         case ButtonPress :
+             event.type = EVENT_MOUSEBUTTONDOWN;
+             event.button.x = xEvent.xbutton.x;
+             event.button.y = xEvent.xbutton.y;
+             res = true;
+             break;
+             
+         case ClientMessage :
+             if (xEvent.xclient.message_type == nWMProtocols && 
+                     xEvent.xclient.data.l[0] == pnProtocol)
+             {
+                 event.type = EVENT_QUIT;
+                 res = true;
+             } 
+             break;
+          
+         default:
+             break;
+        
+     }
+     
+     return res;
+}
 #endif
+
+
 
 
 void swapBuffers(void) 
 {
     eglSwapBuffers(egldisplay, eglwindow);
 }
+    

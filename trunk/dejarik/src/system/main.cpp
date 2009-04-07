@@ -34,8 +34,10 @@ int main(int argc, char *argv[])
     cout << "ui started" << endl; 
     
     ui->handleEvents();
-   
+           
     TRY_CATCH;
+   
+    cout << "exit." << endl;
     
     return 0;
 }

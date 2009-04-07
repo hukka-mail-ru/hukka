@@ -25,7 +25,28 @@
 #ifndef __window_h__
 #define __window_h__
 
+enum EventType
+{
+    EVENT_MOUSEBUTTONDOWN,
+    EVENT_QUIT
+};
+
+struct Button
+{
+    int x;
+    int y;
+};
+
+struct Event
+{
+    EventType type;
+    Button button;
+};
+
 void createEGLWindow(int width, int height, const char *name);
-void swapBuffers(void);
+void swapBuffers();
+bool pollEvent(Event& event);
+
+
 
 #endif
