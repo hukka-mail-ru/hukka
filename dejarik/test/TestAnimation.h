@@ -76,32 +76,32 @@ public:
         Animation anim;
         
         CPPUNIT_ASSERT_EQUAL((float)0, 
-                anim.getNormalAngle(CIRCLE_CENTER_X , CIRCLE_CENTER_Y ));
+                anim.getNormalAngle(0 , 0 ));
         
-        CPPUNIT_ASSERT_EQUAL((float)0, 
-                anim.getNormalAngle(CIRCLE_CENTER_X , CIRCLE_CENTER_Y + 10));
-
         CPPUNIT_ASSERT_EQUAL((float)180, 
-                anim.getNormalAngle(CIRCLE_CENTER_X , CIRCLE_CENTER_Y - 10));
+                anim.getNormalAngle(0 , 10));
+
+        CPPUNIT_ASSERT_EQUAL((float)0, 
+                anim.getNormalAngle(0 , - 10));
         
         CPPUNIT_ASSERT_EQUAL((float)90, 
-                anim.getNormalAngle(CIRCLE_CENTER_X + 10 , CIRCLE_CENTER_Y));
+                anim.getNormalAngle( 10 , 0));
 
-        float ang = anim.getNormalAngle(CIRCLE_CENTER_X - 10 , CIRCLE_CENTER_Y);
-        CPPUNIT_ASSERT_EQUAL((float)270, ang);
+        CPPUNIT_ASSERT_EQUAL((float)-90, 
+                anim.getNormalAngle(- 10 , 0));
         
-        
-        CPPUNIT_ASSERT_EQUAL((float)45, 
-                anim.getNormalAngle(CIRCLE_CENTER_X + 10 , CIRCLE_CENTER_Y + 10));
         
         CPPUNIT_ASSERT_EQUAL((float)135, 
-                anim.getNormalAngle(CIRCLE_CENTER_X + 10 , CIRCLE_CENTER_Y - 10));
+                anim.getNormalAngle(10 , 10));
+        
+        CPPUNIT_ASSERT_EQUAL((float)45, 
+                anim.getNormalAngle(10 , -10));
 
-        CPPUNIT_ASSERT_EQUAL((float)225, 
-                anim.getNormalAngle(CIRCLE_CENTER_X - 10 , CIRCLE_CENTER_Y - 10));
+        CPPUNIT_ASSERT_EQUAL((float)-45, 
+                anim.getNormalAngle(-10 , -10));
 
-        CPPUNIT_ASSERT_EQUAL((float)315, 
-                anim.getNormalAngle(CIRCLE_CENTER_X - 10 , CIRCLE_CENTER_Y + 10));
+        CPPUNIT_ASSERT_EQUAL((float)-135, 
+                anim.getNormalAngle(-10 , +10));
 
         TRY_CATCH;
     }

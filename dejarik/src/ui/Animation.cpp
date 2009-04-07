@@ -28,6 +28,7 @@ void Animation::initPiece(const PiecePtr& piece)
     if(piece->angle == FLOAT_UNDEFINED) 
     {
         piece->angle = getNormalAngle(piece->cell->x_center, piece->cell->y_center);
+        
     }
     if(piece->x == FLOAT_UNDEFINED) 
     {
@@ -187,26 +188,29 @@ void Animation::updatePiece(const PiecePtr& piece)
 
 // helper for drawPiece
 float Animation::getNormalAngle(float x, float y)
-{
-    const float dy = y - CIRCLE_CENTER_Y;
-    const float dx = x - CIRCLE_CENTER_X;
-    
-    if(dx == 0 && dy ==0)
+{   
+    if(x == 0 && y ==0)
         return 0.0;
     
-    float ang = atan (- dy / dx ) * 180.0 / PI;
-    if(ang > 0)
-        ang += 180;
+    float ang = atan ( fabs(y)/fabs(x) ) * 180.0 / PI;
+
+    if(x >= 0 && y >= 0)
+    {
+        return ang + 90;
+    }
+    else if (x < 0 && y >= 0)
+    {
+        return -ang - 90;
+    }
+    else if (x < 0 && y < 0)
+    {
+        return ang - 90;
+    }
+    else if (x >= 0 && y < 0)
+    {
+        return -ang + 90;
+    }
     
-    if(dy < 0)
-        ang += 180;
-    
-    if(dx < 0 && ang == 0)
-        ang += 180;
-    
-    ang +=90;
-    
-    ang = shorterAngle(ang);
     
     return ang;
 }
