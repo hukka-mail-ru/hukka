@@ -442,16 +442,6 @@ void Video::createImage(const std::string& name)
 void Video::createImages(const std::vector<std::string>& names)
 {
     TRY_BEGINS;
-    /*
-    Sarvip0
-    Monnok0
-    Ghhhk0
-    Houjix0
-    Strider0
-    Ngok0
-    Klorslug0
-    Molator0
-*/
       
     createImage("Molator0");
     createImage("Sarvip0");
@@ -480,12 +470,6 @@ void Video::createImages(const std::vector<std::string>& names)
     }
 */
 
-    
-    /*
-    createImage("segment0", IT_MASKED);
-    createImage("segment", IT_MASKED);
-    createImage("segment2", IT_MASKED);
-    */
     createImage("board1");
     createImage("board2");
     createImage("board3");

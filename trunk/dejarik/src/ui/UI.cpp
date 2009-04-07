@@ -163,7 +163,7 @@ void UI::drawBoard()
     mVideo.drawSprite("board3", RGBA_Color(1,1,1,1), XY_RIGHT_TOP, 0, 0, 0);
     mVideo.drawSprite("board4", RGBA_Color(1,1,1,1), XY_LEFT_TOP, 0, 0, 0);
 
- //   mVideo.drawSprite("ex", RGBA_Color(1,1,1,1), XY_LEFT_TOP, 45, 45, 0);
+    mVideo.drawSprite("ex", RGBA_Color(1,1,1,1), XY_LEFT_TOP, 45, 45, 45);
     
     vector<CellPtr> cells;
     mGame->getBoard()->getCells(cells);
