@@ -196,20 +196,22 @@ float Animation::getNormalAngle(float x, float y)
 
     if(x >= 0 && y >= 0)
     {
-        return ang + 90;
+        ang = ang + 90;
     }
     else if (x < 0 && y >= 0)
     {
-        return -ang - 90;
+    	ang = -ang - 90;
     }
     else if (x < 0 && y < 0)
     {
-        return ang - 90;
+    	ang = ang - 90;
     }
     else if (x >= 0 && y < 0)
     {
-        return -ang + 90;
+    	ang = -ang + 90;
     }
+    
+    return ang;
 }
 
 // helper for drawPiece

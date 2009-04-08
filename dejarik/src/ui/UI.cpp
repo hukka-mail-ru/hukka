@@ -259,7 +259,6 @@ void UI::handleEvents()
 {
     TRY_BEGINS;
     
-    unsigned ticks = 0;
     while ( !mQuit )
     {
         long time1 = getTime(); // start the timer 
