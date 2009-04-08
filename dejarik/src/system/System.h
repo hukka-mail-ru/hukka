@@ -4,7 +4,7 @@
 
 
 bool isAppAlreadyRunning();
-long getTime(); // get absolute time in microseconds 
+long getTime(); // get time in milliseconds  
 void millisleep(unsigned milliseconds);
 
 #ifdef WIN_BUILD

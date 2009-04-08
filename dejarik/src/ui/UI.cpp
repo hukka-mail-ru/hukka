@@ -289,8 +289,8 @@ void UI::handleEvents()
 
         // a delay before the next iteration
         if(mMoving)
-        {
-            float timeForDrawing = (getTime() - time1)/1000.0;
+        {        	
+            long timeForDrawing = getTime() - time1;
             millisleep(20 - timeForDrawing);
         }
         else
