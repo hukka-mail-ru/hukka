@@ -185,8 +185,29 @@ void createEGLWindow(int width, int height, const char *name)
 bool pollEvent(Event& event)
 {
     XEvent xEvent;
-    XNextEvent ( display, &xEvent );
-
+  //  XNextEvent ( display, &xEvent );
+    
+    bool res = false;
+    
+    if(XCheckWindowEvent(display, window, ButtonPress, &xEvent))
+    {
+        event.type = EVENT_MOUSEBUTTONDOWN;
+        event.button.x = xEvent.xbutton.x;
+        event.button.y = xEvent.xbutton.y;
+        res = true;
+    }
+    
+    if(XCheckWindowEvent(display, window, ClientMessage, &xEvent))
+    {
+        if (xEvent.xclient.message_type == nWMProtocols && 
+                xEvent.xclient.data.l[0] == pnProtocol)
+        {
+            event.type = EVENT_QUIT;
+            res = true;
+        } 
+    }
+    
+/*
     bool res = false;
     
      switch (xEvent.type) 
@@ -219,7 +240,7 @@ bool pollEvent(Event& event)
      XEvent event_send;
      event_send.type = VisibilityNotify;
      XSendEvent(display, window, false, 0, &event_send);
-
+*/
      return res;
 }
 #endif
