@@ -110,9 +110,12 @@ void Video::drawPolygon(const GLshort* vertexArray, unsigned vertNum, const RGBA
     glEnableClientState(GL_VERTEX_ARRAY);
 
     glVertexPointer(3, GL_SHORT, 0, vertexArray);
+    glEnable(GL_BLEND);
+    glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
     
         glDrawArrays(GL_TRIANGLE_FAN, 0, vertNum);
 
+    glDisable(GL_BLEND);
     glDisableClientState(GL_VERTEX_ARRAY);
 }
 
@@ -135,9 +138,12 @@ void Video::drawLineLoop(const GLshort* vertexArray, unsigned vertNum, const RGB
     glEnableClientState(GL_VERTEX_ARRAY);
 
     glVertexPointer(3, GL_SHORT, 0, vertexArray);
+    glEnable(GL_BLEND);
+    glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
     
         glDrawArrays(GL_LINE_LOOP, 0, vertNum);
 
+    glDisable(GL_BLEND);
     glDisableClientState(GL_VERTEX_ARRAY);
     
     TRY_RETHROW;
