@@ -85,11 +85,10 @@ void UI::drawCell(const CellPtr& cell, bool clicked)
 
     switch(cell->selected)
     {
-        case SEL_CLICKED:         color = RGBA_Color(0,0,1,1);  if(!clicked) return; cout << "cl!" << endl; break;
-        
-        case SEL_POSSIBLE_MOVE:   color = RGBA_Color(0.2, 1, 0.2,1);  if(clicked) return; break;
-        case SEL_POSSIBLE_TARGET: color = RGBA_Color(1,0,0,1);  if(clicked) return; break;
-        case SEL_POSSIBLE_PUSH:   color = RGBA_Color(1,0,1,1);  if(clicked) return; break;
+        case SEL_CLICKED:         color = RGBA_Color(0,0,1,0.5);  if(!clicked) return; break;
+        case SEL_POSSIBLE_MOVE:   color = RGBA_Color(0.2, 1, 0.2,0.5);  if(clicked) return; break;
+        case SEL_POSSIBLE_TARGET: color = RGBA_Color(1,0,0,0.5);  if(clicked) return; break;
+        case SEL_POSSIBLE_PUSH:   color = RGBA_Color(1,0,1,0.5);  if(clicked) return; break;
         case SEL_NONE:            return;
     }
 
