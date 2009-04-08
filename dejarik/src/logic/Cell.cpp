@@ -24,7 +24,7 @@ Cell::Cell(unsigned circle, unsigned radius):
     {
         for(unsigned i = 0; i < INTERIM_ANGLES*3; i++)
         {
-            float a = PI/6.0*i;
+            float a = M_PI/6.0*i;
             x.push_back(CIRCLE_CENTER_X + RADIUS_1 * cos(a));
             y.push_back(CIRCLE_CENTER_Y + RADIUS_1 * sin(a));
         }
@@ -48,8 +48,8 @@ Cell::Cell(unsigned circle, unsigned radius):
 void Cell::createSegment(float radius1, float radius2)
 {
     // angles
-    const float a1 = PI/6.0 * r;
-    const float a2 = a1 + PI/6.0;
+    const float a1 = M_PI/6.0 * r;
+    const float a2 = a1 + M_PI/6.0;
     const float interim = (a2 - a1)/INTERIM_ANGLES;        
     
     float a = a1;

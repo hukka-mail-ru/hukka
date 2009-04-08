@@ -151,11 +151,13 @@ void* catchEvents(void* arg)
 
 bool pollEvent(Event& event)
 {  
-    if(quit_event)
+    if(quit_event) // this is a special event, it can be catched in a separated thread only
     {
     	event.type = EVENT_QUIT;
     	return true;
     }
+    
+    // ordinary events: 
     
     if(xEvent.type == ButtonPress)
     {
@@ -166,6 +168,8 @@ bool pollEvent(Event& event)
         xEvent.type = LASTEvent; // reset event 
     	return true;
     }
+    
+    // here can go other events handling... 
 
     return false;
 }
