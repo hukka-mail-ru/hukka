@@ -41,7 +41,7 @@ class Video
 {
 private:
     
-    struct Surface // for BMP loading
+    struct BMPSurface // for BMP loading
     {
         GLbyte* pixels;
         int w;
@@ -62,33 +62,24 @@ public:
     void startup(const std::vector<std::string>& pieceNames);
     void stop();
     
-    // a new version
-    void drawPolygon(const GLshort* vertexArray, unsigned vertNum, const RGBA_Color& color);
+    void drawSolidPolygon(const GLshort* vertexArray, unsigned vertNum, const RGBA_Color& color);
     
     void drawLineLoop(const GLshort* vertexArray, unsigned vertNum, const RGBA_Color& color,
-            float width);
+                      float width);
 
-    void drawSprite(const std::string& texName, const RGBA_Color& color, 
-            BindXY bindXY, GLshort x, GLshort y, float angle);    
+    void drawSprite(const std::string& textureName, const RGBA_Color& color, 
+                    BindXY bindXY, GLshort x, GLshort y, float angle);    
         
 private:
     
-    Surface* loadBMP(const char* filename);
-    void freeSurface(Surface* surface);
-
+    BMPSurface* loadBMP(const char* filename);
+    void freeBMP(BMPSurface* surface);
    
     void createImages(const std::vector<std::string>& names);
     void createImage(const std::string& name);
 
-    void loadTexture(TexturePtr& texture, const std::string& path);
-    void resizeWindow(unsigned width, unsigned height);
-    
-
 
     std::map<std::string, TexturePtr> textures;
-    
-    int viewport[4]; 
-
 };
 
 #endif /*VIDEO_H_*/

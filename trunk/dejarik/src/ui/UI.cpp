@@ -100,7 +100,7 @@ void UI::drawCell(const CellPtr& cell, bool clicked)
         vertex.push_back(0);
     }
     
-    mVideo.drawPolygon(&vertex[0], vertex.size()/3, color);
+    mVideo.drawSolidPolygon(&vertex[0], vertex.size()/3, color);
     
     if(cell->c == 0) 
        mVideo.drawLineLoop(&vertex[0], vertex.size()/3, RGBA_Color(0,0,0,1), 1);
@@ -156,20 +156,6 @@ void UI::drawBoard()
     mVideo.drawSprite("board2", RGBA_Color(1,1,1,1), XY_LEFT_TOP, 0, BOARD_TEXTURE_WIDTH, 0);
     mVideo.drawSprite("board3", RGBA_Color(1,1,1,1), XY_RIGHT_TOP, 0, 0, 0);
     mVideo.drawSprite("board4", RGBA_Color(1,1,1,1), XY_LEFT_TOP, 0, 0, 0);
-
- //   mVideo.drawSprite("ex", RGBA_Color(1,1,1,1), XY_LEFT_TOP, 45, 45, 45);
-    /*
-    const GLshort vertices []=
-    {
-        0,  0, 0,
-        100,  0, 0,
-        100,  100, 0,
-        0,  100, 0,
-    };
-    
-    mVideo.drawLineLoop(vertices, 4, RGBA_Color(1,0,1,1),5);
-    */
-    
     
     vector<CellPtr> cells;
     mGame->getBoard()->getCells(cells);
@@ -199,44 +185,12 @@ void UI::drawBoard()
     TRY_RETHROW;
 }
 
-/*
-void UI::drawActivePlayer()
-{
-    TRY_BEGINS;
-    
-    if(!mGame->getActivePlayer())
-        return;
-
-    float y = 0;
-    if(mGame->getActivePlayer() == mGame->getPlayer1())
-    {
-        glColor3f(0.5f ,0.5f, 1.0f); // blue
-        y = 3;
-    }
-    else
-    {
-        glColor3f(1.0f ,0.0f, 1.0f); // pink
-        y = -3;
-    }
-    
-    glBegin( GL_POLYGON ); 
-         glVertex3f(0, y, 0);
-         glVertex3f(1, y, 0);
-         glVertex3f(1, y+0.2, 0);
-         glVertex3f(0, y+0.2, 0);
-    glEnd();
-    
-    TRY_RETHROW;
-}*/
-
 
 /* Here goes our drawing code */
 bool UI::drawAll()
 {
     TRY_BEGINS;
-   
-    glClear(GL_COLOR_BUFFER_BIT|GL_DEPTH_BUFFER_BIT);
-    
+
     drawBoard();
     drawMenu();
     
@@ -313,14 +267,8 @@ void UI::handleEvents()
         mMoving = animation.updateAll(mMoveSteps);
         
         drawAll();
-             
-      //  pollEvent();
-        
-   //     if(ticks++ > 5)
-    //    	mQuit = true;
-        
-        /* handle the events in the queue */
-        
+
+        /* handle the events in the queue */        
         Event event;
         if(pollEvent(event))
         {
@@ -339,17 +287,18 @@ void UI::handleEvents()
             }
         }
        
+
         // a delay before the next iteration
-     /*   if(mMoving)
+        if(mMoving)
         {
             float timeForDrawing = (getTime() - time1)/1000.0;
-            SDL_Delay(20 - timeForDrawing);
+            millisleep(20 - timeForDrawing);
         }
         else
         {
-            SDL_Delay(1); // to prevent too frequent drawings
+            millisleep(1); // to prevent too frequent drawings
         }
-       */  
+         
         
     }
     
