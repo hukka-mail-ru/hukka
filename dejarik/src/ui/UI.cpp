@@ -14,9 +14,6 @@
 #include "UI.h"
 #include "System.h"
 
-// TODO Hmm.. VERT_OFFSET should be in Cell.h ?
-#define VERT_OFFSET -32.0 // how many pixels is from the board center to the screen center 
-
 using namespace std;
 
 
@@ -79,41 +76,41 @@ bool UI::isCellClicked(int x, int y, CellPtr& cell)
 }
 
 
-
-
-
-/*
-
 void UI::drawCell(const CellPtr& cell, bool clicked) 
 {
     TRY_BEGINS;
     
-    RGB_Color color = RGB_Color(1,1,1);
+    RGBA_Color color = RGBA_Color(1,1,1,1);
     
 
     switch(cell->selected)
     {
-        case SEL_CLICKED:         color = RGB_Color(0,0,1);  if(!clicked) return;  break;
-        case SEL_POSSIBLE_MOVE:   color = RGB_Color(0.2, 1, 0.2);  if(clicked) return; break;
-        case SEL_POSSIBLE_TARGET: color = RGB_Color(1,0,0);  if(clicked) return; break;
-        case SEL_POSSIBLE_PUSH:   color = RGB_Color(1,0,1);  if(clicked) return; break;
+        case SEL_CLICKED:         color = RGBA_Color(0,0,1,1);  if(!clicked) return; cout << "cl!" << endl; break;
+        
+        case SEL_POSSIBLE_MOVE:   color = RGBA_Color(0.2, 1, 0.2,1);  if(clicked) return; break;
+        case SEL_POSSIBLE_TARGET: color = RGBA_Color(1,0,0,1);  if(clicked) return; break;
+        case SEL_POSSIBLE_PUSH:   color = RGBA_Color(1,0,1,1);  if(clicked) return; break;
         case SEL_NONE:            return;
     }
 
-    vector<float> celly;
-    for(unsigned i = 0; i<cell->y.size(); i++)
-        celly.push_back(cell->y[i] + VERT_OFFSET);
+    vector<GLshort> vertex;
+    for(unsigned i = 0; i<cell->x.size(); i++)
+    {
+        vertex.push_back(cell->x[i]);
+        vertex.push_back(cell->y[i]);
+        vertex.push_back(0);
+    }
     
-    mVideo.drawPolygon(cell->x, celly, color, 0.5);
+    mVideo.drawPolygon(&vertex[0], vertex.size()/3, color);
     
     if(cell->c == 0) 
-       mVideo.drawLineLoop(cell->x, celly, RGB_Color(0,0,0), 1);
+       mVideo.drawLineLoop(&vertex[0], vertex.size()/3, RGBA_Color(0,0,0,1), 1);
     
        
     TRY_RETHROW;
 }
 
-*/
+
 
 void UI::drawMenu()
 {
@@ -162,6 +159,7 @@ void UI::drawBoard()
     mVideo.drawSprite("board4", RGBA_Color(1,1,1,1), XY_LEFT_TOP, 0, 0, 0);
 
  //   mVideo.drawSprite("ex", RGBA_Color(1,1,1,1), XY_LEFT_TOP, 45, 45, 45);
+    /*
     const GLshort vertices []=
     {
         0,  0, 0,
@@ -171,12 +169,12 @@ void UI::drawBoard()
     };
     
     mVideo.drawLineLoop(vertices, 4, RGBA_Color(1,0,1,1),5);
-    
+    */
     
     
     vector<CellPtr> cells;
     mGame->getBoard()->getCells(cells);
-    /*
+    
     // draw all but clicked cell    
     for(unsigned i = 0; i < cells.size(); i++)
     {
@@ -188,7 +186,7 @@ void UI::drawBoard()
     {
         drawCell(cells[i], true);
     }
-    */
+    
     // draw Pieces 
     
     vector<PiecePtr> pieces = mGame->getBoard()->getPieces();
