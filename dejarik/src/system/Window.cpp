@@ -34,7 +34,8 @@
 #endif
 
 #include <GLES/egl.h>
-#include <Window.h>
+#include "Window.h"
+#include "System.h"
 
 
 EGLSurface eglwindow;
@@ -126,6 +127,49 @@ Atom nWMProtocols;
 #include <iostream>
 using namespace std;
 
+
+XEvent xEvent;
+
+void* catchEvents(void* arg)
+{
+	for(;;)
+	{
+	    XNextEvent(display, &xEvent);
+	    
+	    if(xEvent.type == ClientMessage &&
+	       xEvent.xclient.message_type == nWMProtocols && 
+	       xEvent.xclient.data.l[0] == pnProtocol)
+	    {
+	    	break;
+	    }
+	}
+}
+
+bool pollEvent(Event& event)
+{  
+    if(xEvent.type == ClientMessage &&
+	   xEvent.xclient.message_type == nWMProtocols && 
+	   xEvent.xclient.data.l[0] == pnProtocol)
+    {
+    	event.type = EVENT_QUIT;
+    	
+    	xEvent.type = LASTEvent; // reset event 
+    	return true;
+    }
+    
+    if(xEvent.type == ButtonPress)
+    {
+    	event.type = EVENT_MOUSEBUTTONDOWN;
+        event.button.x = xEvent.xbutton.x;
+        event.button.y = xEvent.xbutton.y;
+        
+        xEvent.type = LASTEvent; // reset event 
+    	return true;
+    }
+
+    return false;
+}
+
 void createEGLWindow(int width, int height, const char *name) 
 {
     EGLConfig config[4];
@@ -179,70 +223,16 @@ void createEGLWindow(int width, int height, const char *name)
 
     eglwindow = eglCreateWindowSurface(egldisplay, config[0], (NativeWindowType)window, 0);
     eglMakeCurrent(egldisplay, eglwindow, eglwindow, cx);
+    
+    pthread_t thread;
+    pthread_create(&thread, NULL, catchEvents, NULL);
+    pthread_detach(thread);
 }
 
 
-bool pollEvent(Event& event)
-{
-    XEvent xEvent;
-  //  XNextEvent ( display, &xEvent );
-    
-    bool res = false;
-    
-    if(XCheckWindowEvent(display, window, ButtonPress, &xEvent))
-    {
-        event.type = EVENT_MOUSEBUTTONDOWN;
-        event.button.x = xEvent.xbutton.x;
-        event.button.y = xEvent.xbutton.y;
-        res = true;
-    }
-    
-    if(XCheckWindowEvent(display, window, ClientMessage, &xEvent))
-    {
-        if (xEvent.xclient.message_type == nWMProtocols && 
-                xEvent.xclient.data.l[0] == pnProtocol)
-        {
-            event.type = EVENT_QUIT;
-            res = true;
-        } 
-    }
-    
-/*
-    bool res = false;
-    
-     switch (xEvent.type) 
-     {
-         case ButtonPress :
-             event.type = EVENT_MOUSEBUTTONDOWN;
-             event.button.x = xEvent.xbutton.x;
-             event.button.y = xEvent.xbutton.y;
-             res = true;
-             break;
-             
-         case ClientMessage :
-             if (xEvent.xclient.message_type == nWMProtocols && 
-                     xEvent.xclient.data.l[0] == pnProtocol)
-             {
-                 event.type = EVENT_QUIT;
-                 res = true;
-             } 
-             break;
-             
-         case VisibilityNotify:
-             XFlush(display);
-             break;
-          
-         default:
-             break;
-        
-     }
-     
-     XEvent event_send;
-     event_send.type = VisibilityNotify;
-     XSendEvent(display, window, false, 0, &event_send);
-*/
-     return res;
-}
+
+
+
 #endif
 
 
