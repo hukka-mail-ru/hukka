@@ -129,6 +129,7 @@ using namespace std;
 
 
 XEvent xEvent;
+bool quit_event = false;
 
 void* catchEvents(void* arg)
 {
@@ -138,22 +139,21 @@ void* catchEvents(void* arg)
 	    
 	    if(xEvent.type == ClientMessage &&
 	       xEvent.xclient.message_type == nWMProtocols && 
-	       xEvent.xclient.data.l[0] == pnProtocol)
+	       xEvent.xclient.data.l[0] == (long)pnProtocol)
 	    {
+	    	quit_event = true;
 	    	break;
 	    }
 	}
+	
+	return NULL;
 }
 
 bool pollEvent(Event& event)
 {  
-    if(xEvent.type == ClientMessage &&
-	   xEvent.xclient.message_type == nWMProtocols && 
-	   xEvent.xclient.data.l[0] == pnProtocol)
+    if(quit_event)
     {
     	event.type = EVENT_QUIT;
-    	
-    	xEvent.type = LASTEvent; // reset event 
     	return true;
     }
     
