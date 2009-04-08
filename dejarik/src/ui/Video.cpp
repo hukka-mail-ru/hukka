@@ -2,6 +2,7 @@
 #include "Video.h"
 #include "Window.h"
 #include "Glbasic.h"
+#include "System.h"
 
 
 using namespace std;
@@ -97,7 +98,7 @@ void Video::startup(const std::vector<std::string>& pieceNames)
 
 
 
-void Video::drawPolygon(const GLshort* vertexArray, unsigned vertNum, const RGBA_Color& color)
+void Video::drawSolidPolygon(const GLshort* vertexArray, unsigned vertNum, const RGBA_Color& color)
 {
     glLoadIdentity();
     
@@ -248,14 +249,14 @@ void Video::drawSprite(
 
 
 
-void Video::freeSurface(Surface* surface)
+void Video::freeBMP(BMPSurface* surface)
 {
     delete[] surface->pixels;
     delete surface;
 }
 
 
-Video::Surface* Video::loadBMP(const char* filename)
+Video::BMPSurface* Video::loadBMP(const char* filename)
 {
     TRY_BEGINS;
     
@@ -341,7 +342,7 @@ Video::Surface* Video::loadBMP(const char* filename)
 
     fclose(file);
 
-    Surface* surface = new Surface();
+    BMPSurface* surface = new BMPSurface();
     surface->pixels = pixels;
     surface->w = width;
     surface->h = height;
@@ -353,15 +354,20 @@ Video::Surface* Video::loadBMP(const char* filename)
 
 
 
-void Video::loadTexture(TexturePtr& texture, const std::string& path)
+void Video::createImage(const std::string& name)
 {
     TRY_BEGINS;
+    
+    TexturePtr texture (new Texture); 
+    
+    ostringstream path;
+    path << getCurDir() << "img/" << name << ".bmp";
     
     /* Status indicator */
     bool res = false;
 
     /* Create storage space for the texture */
-    Surface* surface = loadBMP(path.c_str()); 
+    BMPSurface* surface = loadBMP(path.str().c_str()); 
 
     /* Load The Bitmap, Check For Errors, If Bitmap's Not Found Quit */
     if (surface)
@@ -390,7 +396,7 @@ void Video::loadTexture(TexturePtr& texture, const std::string& path)
 
     /* Free up any memory we may have used */
     if (surface)
-        freeSurface(surface);
+        freeBMP(surface);
 
     if(!res)
     {
@@ -399,24 +405,11 @@ void Video::loadTexture(TexturePtr& texture, const std::string& path)
         throw runtime_error(os.str());
     }
     
-    TRY_RETHROW;
-}
-
-void Video::createImage(const std::string& name)
-{
-    TRY_BEGINS;
-
-    TexturePtr texture (new Texture); 
-    
-    ostringstream fullname;
-    fullname << "img/" << name << ".bmp";
-    
-    loadTexture(texture, fullname.str());  
-    
     textures[name] = texture;  
-
+    
     TRY_RETHROW;
 }
+
 
 void Video::createImages(const std::vector<std::string>& names)
 {

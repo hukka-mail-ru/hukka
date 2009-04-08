@@ -12,6 +12,7 @@ using namespace std;
 #include <string>
 #include <fstream>
 #include <stdexcept>
+#include <time.h>
 
 void writePID(const char* pidfile)
 {
@@ -55,6 +56,15 @@ long getTime()
 string getCurDir() 
 {
     return "";
+}
+
+void millisleep(unsigned milliseconds)
+{
+    timespec delay;
+    delay.tv_sec = 0;
+    delay.tv_nsec = milliseconds * 1000;
+
+    nanosleep(&delay, NULL);
 }
 
 #endif

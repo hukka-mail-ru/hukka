@@ -189,7 +189,7 @@ bool pollEvent(Event& event)
 
     bool res = false;
     
-     switch ( xEvent.type ) 
+     switch (xEvent.type) 
      {
          case ButtonPress :
              event.type = EVENT_MOUSEBUTTONDOWN;
@@ -206,12 +206,20 @@ bool pollEvent(Event& event)
                  res = true;
              } 
              break;
+             
+         case VisibilityNotify:
+             XFlush(display);
+             break;
           
          default:
              break;
         
      }
      
+     XEvent event_send;
+     event_send.type = VisibilityNotify;
+     XSendEvent(display, window, false, 0, &event_send);
+
      return res;
 }
 #endif
