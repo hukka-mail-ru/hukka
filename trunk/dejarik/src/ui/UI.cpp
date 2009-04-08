@@ -107,7 +107,7 @@ void UI::drawCell(const CellPtr& cell, bool clicked)
     mVideo.drawPolygon(cell->x, celly, color, 0.5);
     
     if(cell->c == 0) 
-       mVideo.drawShape(cell->x, celly, RGB_Color(0,0,0), 1);
+       mVideo.drawLineLoop(cell->x, celly, RGB_Color(0,0,0), 1);
     
        
     TRY_RETHROW;
@@ -162,6 +162,17 @@ void UI::drawBoard()
     mVideo.drawSprite("board4", RGBA_Color(1,1,1,1), XY_LEFT_TOP, 0, 0, 0);
 
  //   mVideo.drawSprite("ex", RGBA_Color(1,1,1,1), XY_LEFT_TOP, 45, 45, 45);
+    const GLshort vertices []=
+    {
+        0,  0, 0,
+        100,  0, 0,
+        100,  100, 0,
+        0,  100, 0,
+    };
+    
+    mVideo.drawLineLoop(vertices, 4, RGBA_Color(1,0,1,1),5);
+    
+    
     
     vector<CellPtr> cells;
     mGame->getBoard()->getCells(cells);
