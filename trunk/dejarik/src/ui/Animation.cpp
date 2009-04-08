@@ -92,7 +92,7 @@ float Animation::getSmallestAngle(float start, float end)
 void Animation::updatePieceImage(const PiecePtr& piece)
 {
     TRY_BEGINS;
-    
+    /*
     if(piece->name != "Molator") // TODO temorary
         return;
     
@@ -100,7 +100,7 @@ void Animation::updatePieceImage(const PiecePtr& piece)
     
     if(piece->sprite == piece->sprites)
         piece->sprite = 0; 
-    
+    */
     TRY_RETHROW;
 }
 

@@ -43,14 +43,14 @@ bool isAppAlreadyRunning()
 }
 
 
-// get time in microseconds 
+// get time in milliseconds 
 long getTime()
 {
     timeval tv;
     if(gettimeofday(&tv, NULL) == -1)
         throw runtime_error("gettimeofday failed");
     
-    return tv.tv_sec*1000000 + tv.tv_usec;
+    return tv.tv_sec*1000 + tv.tv_usec/1000;
 }
 
 string getCurDir() 
@@ -62,7 +62,7 @@ void millisleep(unsigned milliseconds)
 {
     timespec delay;
     delay.tv_sec = 0;
-    delay.tv_nsec = milliseconds * 1000;
+    delay.tv_nsec = milliseconds * 1000000;
 
     nanosleep(&delay, NULL);
 }
