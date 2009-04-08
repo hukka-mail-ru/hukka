@@ -6,7 +6,6 @@
 
 #include <vector>
 
-#define PI 3.14159265
 
 // in pixels
 #define CIRCLE_CENTER_X 0

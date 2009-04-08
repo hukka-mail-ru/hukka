@@ -192,7 +192,7 @@ float Animation::getNormalAngle(float x, float y)
     if(x == 0 && y ==0)
         return 0.0;
     
-    float ang = atan ( fabs(y)/fabs(x) ) * 180.0 / PI;
+    float ang = atan ( fabs(y)/fabs(x) ) * 180.0 / M_PI;
 
     if(x >= 0 && y >= 0)
     {
