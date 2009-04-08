@@ -97,7 +97,7 @@ void Video::startup(const std::vector<std::string>& pieceNames)
 
 
 
-void Video::drawPolygon(GLshort* vertexArray, unsigned vertNum, const RGBA_Color& color)
+void Video::drawPolygon(const GLshort* vertexArray, unsigned vertNum, const RGBA_Color& color)
 {
     glLoadIdentity();
     
@@ -110,12 +110,135 @@ void Video::drawPolygon(GLshort* vertexArray, unsigned vertNum, const RGBA_Color
     glEnableClientState(GL_VERTEX_ARRAY);
 
     glVertexPointer(3, GL_SHORT, 0, vertexArray);
-    glDrawArrays(GL_TRIANGLE_FAN, 0, vertNum);
+    
+        glDrawArrays(GL_TRIANGLE_FAN, 0, vertNum);
 
     glDisableClientState(GL_VERTEX_ARRAY);
 }
 
 
+void Video::drawLineLoop(const GLshort* vertexArray, unsigned vertNum, const RGBA_Color& color,
+        float width)
+{
+    TRY_BEGINS;
+    
+    glLoadIdentity();
+    
+    glColor4x(
+        FixedFromFloat(color.r), 
+        FixedFromFloat(color.b), 
+        FixedFromFloat(color.g), 
+        FixedFromFloat(color.a));
+    
+    glLineWidthx(FixedFromFloat(width));
+
+    glEnableClientState(GL_VERTEX_ARRAY);
+
+    glVertexPointer(3, GL_SHORT, 0, vertexArray);
+    
+        glDrawArrays(GL_LINE_LOOP, 0, vertNum);
+
+    glDisableClientState(GL_VERTEX_ARRAY);
+    
+    TRY_RETHROW;
+}
+
+void Video::drawSprite(
+        const std::string& texName, const RGBA_Color& color, 
+        BindXY bindXY, GLshort x, GLshort y, float angle)
+{
+    TRY_BEGINS;
+    
+    
+    
+    if(!textures[texName])
+    {
+        ostringstream os;
+        os << "Can't find name " << texName;
+        throw runtime_error(os.str()); 
+    }
+    
+    TexturePtr texture = textures[texName];
+    
+    if(bindXY == XY_CENTER)
+    {
+        x -= texture->w / 2;
+        y -= texture->h / 2;
+    }
+    else if(bindXY == XY_RIGHT_BOTTOM)
+    {
+        x -= texture->w;
+    }
+    else if(bindXY == XY_LEFT_TOP)
+    {
+        y -= texture->h;
+    }
+    else if(bindXY == XY_RIGHT_TOP)
+    {
+        x -= texture->w;
+        y -= texture->h;
+    }
+
+                  
+    glLoadIdentity();
+    glEnable( GL_TEXTURE_2D );
+    glBindTexture(GL_TEXTURE_2D, texture->id);
+    
+    glColor4x(
+        FixedFromFloat(color.r), 
+        FixedFromFloat(color.b), 
+        FixedFromFloat(color.g), 
+        FixedFromFloat(color.a));
+
+    GLshort x1 = x;
+    GLshort y1 = y;
+    
+    GLshort x2 = x  + texture->w;
+    GLshort y2 = y + texture->h;
+
+    glTranslatex(FixedFromFloat((x1+x2)/2), 
+                 FixedFromFloat((y1+y2)/2), 
+                 ZERO); // rotate [move to the coordinate center]
+                 
+    glRotatex(FixedFromFloat(angle) ,ZERO, ZERO, ONE); // rotation
+    
+    glTranslatex(FixedFromFloat(-(x1+x2)/2), 
+                 FixedFromFloat(-(y1+y2)/2), 
+                 ZERO); // move back to the old position
+
+    const GLshort vertices []=
+    {
+        x1,  y1, 0,
+        x2,  y1, 0,
+        x2,  y2, 0,
+        x1,  y2, 0,
+    };
+
+    const GLshort texCoords[] = 
+    {
+        0, 0,
+        1, 0,
+        1, 1,
+        0, 1,
+    };
+
+    glVertexPointer(3, GL_SHORT, 0, vertices);
+    glTexCoordPointer(2, GL_SHORT, 0, texCoords);
+    glEnableClientState(GL_VERTEX_ARRAY);
+    glEnableClientState(GL_TEXTURE_COORD_ARRAY);    
+    glEnable(GL_BLEND);
+    glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
+
+        glDrawArrays(GL_TRIANGLE_FAN, 0, 4);
+
+    glDisable(GL_BLEND);
+    glDisableClientState(GL_VERTEX_ARRAY);
+    glDisableClientState(GL_TEXTURE_COORD_ARRAY);
+
+    glDisable( GL_TEXTURE_2D );
+
+    TRY_RETHROW;
+}
 
 
 
@@ -271,153 +394,6 @@ void Video::loadTexture(TexturePtr& texture, const std::string& path)
     }
     
     TRY_RETHROW;
-}
-
-
-
-
-void Video::drawShape(const vector<float>& xWin, const vector<float>& yWin, 
-        const RGBA_Color& color, float width)
-{
-    TRY_BEGINS;
-    /*
-    vector<float> vertices; 
-    
-    for(unsigned i=0; i< xWin.size(); i++)
-    {
-        float x = 0;
-        float y = 0;
-        float z = 0;
-        Video::winToGL(xWin[i], yWin[i], x, y, z);
-        
-        vertices.push_back( x );
-        vertices.push_back( y );
-        vertices.push_back( 0 );
-    }
-    
-    glColor4x(color.r, color.g, color.b, 0);
-    glLineWidthx(width);
-    
-    
-    glVertexPointer(3, GL_FLOAT, 0, &vertices[0]);
-    glEnableClientState(GL_VERTEX_ARRAY);
-
-        glDrawArrays(GL_LINE_LOOP, 0, xWin.size());
-
-    glDisableClientState(GL_VERTEX_ARRAY);
- 
-    glColor4x(1, 1, 1, 0); // reset
-    */
-    
-    TRY_RETHROW;
-}
-
-
-void Video::drawSprite(
-        const std::string& texName, const RGBA_Color& color, 
-        BindXY bindXY, GLshort x, GLshort y, float angle)
-{
-    TRY_BEGINS;
-    
-    if(!textures[texName])
-    {
-        ostringstream os;
-        os << "Can't find name " << texName;
-        throw runtime_error(os.str()); 
-    }
-    
-    
-    if(bindXY == XY_CENTER)
-    {
-        x -= textures[texName]->w / 2;
-        y -= textures[texName]->h / 2;
-    }
-    else if(bindXY == XY_RIGHT_BOTTOM)
-    {
-        x -= textures[texName]->w;
-    }
-    else if(bindXY == XY_LEFT_TOP)
-    {
-        y -= textures[texName]->h;
-    }
-    else if(bindXY == XY_RIGHT_TOP)
-    {
-        x -= textures[texName]->w;
-        y -= textures[texName]->h;
-    }
-
-
-    drawTexture(textures[texName], color, x, y, angle);
-
-    TRY_RETHROW;
-}
-
-
-void Video::drawTexture(const TexturePtr& texture, const RGBA_Color& color, 
-        GLshort x, GLshort y, float angle)
-{                
-    GLshort x1 = x;
-    GLshort y1 = y;
-    
-    GLshort x2 = x  + texture->w;
-    GLshort y2 = y + texture->h;
-    
-    glLoadIdentity();
-        
-  //  glPushMatrix();
-    glEnable( GL_TEXTURE_2D );
-
-    glBindTexture(GL_TEXTURE_2D, texture->id);
-    
-    glColor4x(
-        FixedFromFloat(color.r), 
-        FixedFromFloat(color.b), 
-        FixedFromFloat(color.g), 
-        FixedFromFloat(color.a));
-
-
-    glTranslatex(FixedFromFloat((x1+x2)/2), 
-                 FixedFromFloat((y1+y2)/2), 
-                 ZERO); // rotate [move to the coordinate center]
-                 
-    glRotatex(FixedFromFloat(angle) ,ZERO, ZERO, ONE); // rotation
-    
-    glTranslatex(FixedFromFloat(-(x1+x2)/2), 
-                 FixedFromFloat(-(y1+y2)/2), 
-                 ZERO); // move back to the old position
-
-    const GLshort vertices []=
-    {
-        x1,  y1, 0,
-        x2,  y1, 0,
-        x2,  y2, 0,
-        x1,  y2, 0,
-    };
-
-    const GLshort texCoords[] = 
-    {
-        0, 0,
-        1, 0,
-        1, 1,
-        0, 1,
-    };
-
-    glVertexPointer(3, GL_SHORT, 0, vertices);
-    glTexCoordPointer(2, GL_SHORT, 0, texCoords);
-    glEnableClientState(GL_VERTEX_ARRAY);
-    glEnableClientState(GL_TEXTURE_COORD_ARRAY);    
-    glEnable(GL_BLEND);
-    glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
-
-    glDrawArrays(GL_TRIANGLE_FAN, 0, 4);
-
-    glDisable(GL_BLEND);
-    glDisableClientState(GL_VERTEX_ARRAY);
-    glDisableClientState(GL_TEXTURE_COORD_ARRAY);
-
-    glDisable( GL_TEXTURE_2D );
- //   glPopMatrix();
-
 }
 
 void Video::createImage(const std::string& name)

@@ -63,10 +63,10 @@ public:
     void stop();
     
     // a new version
-    void drawPolygon(GLshort* vertexArray, unsigned vertNum, const RGBA_Color& color);
+    void drawPolygon(const GLshort* vertexArray, unsigned vertNum, const RGBA_Color& color);
     
-    void drawShape(const std::vector<float>& xWin, const std::vector<float>& yWin, 
-            const RGBA_Color& color, float width);
+    void drawLineLoop(const GLshort* vertexArray, unsigned vertNum, const RGBA_Color& color,
+            float width);
 
     void drawSprite(const std::string& texName, const RGBA_Color& color, 
             BindXY bindXY, GLshort x, GLshort y, float angle);    
@@ -76,10 +76,7 @@ private:
     Surface* loadBMP(const char* filename);
     void freeSurface(Surface* surface);
 
-    // a new version
-    void drawTexture(const TexturePtr& texture, const RGBA_Color& color, 
-            GLshort x, GLshort y, float angle);
-    
+   
     void createImages(const std::vector<std::string>& names);
     void createImage(const std::string& name);
 
