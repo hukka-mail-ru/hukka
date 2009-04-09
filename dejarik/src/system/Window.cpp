@@ -48,7 +48,10 @@ static int attributeList[] = { EGL_RED_SIZE, 1, EGL_DEPTH_SIZE, 1, EGL_NONE };
 
 #ifdef _WIN32
 void
-EDR_CreateWindow(int width, int height,  const char *name) {
+EDR_CreateWindow(int width, int height,  const char *name) 
+{
+    TRY_BEGINS;
+    
     WNDCLASS	wc;
     DWORD	dwExStyle;
     DWORD	dwStyle;
@@ -77,9 +80,9 @@ EDR_CreateWindow(int width, int height,  const char *name) {
     wc.lpszMenuName	= NULL;
     wc.lpszClassName	= "OpenGL";
 
-    if (!RegisterClass(&wc)) {
-	printf("Failed To Register The Window Class.\n");
-	exit(1);
+    if (!RegisterClass(&wc)) 
+    {
+        throw runtime_error("Failed To Register The Window Class.");
     }
 	
 
@@ -91,23 +94,21 @@ EDR_CreateWindow(int width, int height,  const char *name) {
     if (!(hwnd = CreateWindowEx(dwExStyle, "OpenGL", name,
 		dwStyle | WS_CLIPSIBLINGS | WS_CLIPCHILDREN, 0, 0,
 		WindowRect.right-WindowRect.left,
-		WindowRect.bottom-WindowRect.top, NULL, NULL, hInstance, NULL))) {
-	//DestroyWin();
-	printf("Window Creation Error.\n");
-	exit(1);
+		WindowRect.bottom-WindowRect.top, NULL, NULL, hInstance, NULL))) 
+    {
+        throw runtime_error("Window Creation Error.");
     }
 
-    if (!(hdc = GetDC(hwnd))) {
-	//DestroyWin();
-	printf("Can't Create A GL Device Context.\n");
-	exit(1);
+    if (!(hdc = GetDC(hwnd))) 
+    {
+        throw runtime_error("Can't Create A GL Device Context.");
     }
 
     egldisplay = eglGetDisplay(hdc);
     eglInitialize(egldisplay, NULL, NULL);
-    if (!eglChooseConfig(egldisplay, attributeList, config, sizeof config/sizeof config[0], &nconfig)) {
-	printf("can't find requested config\n");
-	exit(1);
+    if (!eglChooseConfig(egldisplay, attributeList, config, sizeof config/sizeof config[0], &nconfig)) 
+    {
+        throw runtime_error("can't find requested config");
     }
 
     eglwindow = eglCreateWindowSurface(egldisplay, config[0], (NativeWindowType)hwnd, 0);
@@ -117,6 +118,8 @@ EDR_CreateWindow(int width, int height,  const char *name) {
     ShowWindow(hwnd, SW_SHOW);
     SetForegroundWindow(hwnd);
     SetFocus(hwnd);
+    
+    TRY_RETHROW;
 }
 
 #else
