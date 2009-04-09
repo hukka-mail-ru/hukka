@@ -42,6 +42,7 @@ EGLSurface eglwindow;
 EGLDisplay egldisplay;
 
 
+
 static int attributeList[] = { EGL_RED_SIZE, 1, EGL_DEPTH_SIZE, 1, EGL_NONE };
 
 #ifdef _WIN32
@@ -149,7 +150,7 @@ void* catchEvents(void* arg)
 	return NULL;
 }
 
-bool EDR_PollEvent(Event& event)
+bool EDR_PollEvent(EDR_Event& event)
 {  
 
     if(quit_event) // this is a special event, it can be catched in a separated thread only
