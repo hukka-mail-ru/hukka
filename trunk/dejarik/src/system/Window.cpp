@@ -151,6 +151,7 @@ void* catchEvents(void* arg)
 
 bool pollEvent(Event& event)
 {  
+
     if(quit_event) // this is a special event, it can be catched in a separated thread only
     {
     	event.type = EVENT_QUIT;
@@ -159,15 +160,27 @@ bool pollEvent(Event& event)
     
     // ordinary events: 
     
+#ifdef SUSE_BUILD 
+    // TODO figure out, why XNextEvent doesn't work in the separated thread in SuSe
+    XCheckWindowEvent(display, window, ButtonPress,  &xEvent);
+#endif
+    
     if(xEvent.type == ButtonPress)
     {
-    	event.type = EVENT_MOUSEBUTTONDOWN;
+        switch(xEvent.xbutton.button)        
+        {
+            case Button1: event.type = EVENT_LEFTMOUSEBUTTONDOWN; break;
+            case Button3: event.type = EVENT_RIGHTMOUSEBUTTONDOWN; break;
+            default: break;
+        }
+        
         event.button.x = xEvent.xbutton.x;
         event.button.y = xEvent.xbutton.y;
         
         xEvent.type = LASTEvent; // reset event 
     	return true;
     }
+
     
     // here can go other events handling... 
 
@@ -215,6 +228,7 @@ void createEGLWindow(int width, int height, const char *name)
                         0, vi->depth, InputOutput, vi->visual,
                         CWBorderPixel|CWColormap|CWEventMask, &swa);
     
+
     // this is for correct handling of the 'close' operation
     pnProtocol = XInternAtom (display, "WM_DELETE_WINDOW", True);
     nWMProtocols = XInternAtom (display, "WM_PROTOCOLS", True);    
@@ -228,9 +242,12 @@ void createEGLWindow(int width, int height, const char *name)
     eglwindow = eglCreateWindowSurface(egldisplay, config[0], (NativeWindowType)window, 0);
     eglMakeCurrent(egldisplay, eglwindow, eglwindow, cx);
     
+#ifndef SUSE_BUILD 
+    // TODO figure out, why XNextEvent doesn't work in the separated thread in SuSe
     pthread_t thread;
     pthread_create(&thread, NULL, catchEvents, NULL);
     pthread_detach(thread);
+#endif
 }
 
 
