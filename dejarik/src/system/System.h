@@ -3,9 +3,9 @@
 
 
 
-bool isAppAlreadyRunning();
-long getTime(); // get time in milliseconds  
-void millisleep(unsigned milliseconds);
+bool EDR_IsAppAlreadyRunning();
+long EDR_GetTime(); // get time in milliseconds  
+void EDR_Millisleep(unsigned milliseconds);
 
 #ifdef WIN_BUILD
     #include "stdafx.h"
@@ -13,7 +13,7 @@ void millisleep(unsigned milliseconds);
     time_t time( time_t *inTT );
 #else
     #include <string> 
-    std::string getCurDir();
+    std::string EDR_GetCurDir();
 #endif
 
 

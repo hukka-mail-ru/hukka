@@ -44,9 +44,9 @@ struct Event
     Button button;
 };
 
-void createEGLWindow(int width, int height, const char *name);
-void swapBuffers();
-bool pollEvent(Event& event);
+void EDR_CreateWindow(int width, int height, const char *name);
+void EDR_SwapBuffers();
+bool EDR_PollEvent(Event& event);
 
 
 

@@ -46,7 +46,7 @@ static int attributeList[] = { EGL_RED_SIZE, 1, EGL_DEPTH_SIZE, 1, EGL_NONE };
 
 #ifdef _WIN32
 void
-createEGLWindow(int width, int height,  const char *name) {
+EDR_CreateWindow(int width, int height,  const char *name) {
     WNDCLASS	wc;
     DWORD	dwExStyle;
     DWORD	dwStyle;
@@ -149,7 +149,7 @@ void* catchEvents(void* arg)
 	return NULL;
 }
 
-bool pollEvent(Event& event)
+bool EDR_PollEvent(Event& event)
 {  
 
     if(quit_event) // this is a special event, it can be catched in a separated thread only
@@ -187,7 +187,7 @@ bool pollEvent(Event& event)
     return false;
 }
 
-void createEGLWindow(int width, int height, const char *name) 
+void EDR_CreateWindow(int width, int height, const char *name) 
 {
     EGLConfig config[4];
     EGLContext cx;
@@ -259,7 +259,7 @@ void createEGLWindow(int width, int height, const char *name)
 
 
 
-void swapBuffers(void) 
+void EDR_SwapBuffers(void) 
 {
     eglSwapBuffers(egldisplay, eglwindow);
 }

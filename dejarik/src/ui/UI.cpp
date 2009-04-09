@@ -197,7 +197,7 @@ bool UI::drawAll()
     /* Draw it to the screen */
     if(!mQuit)
     {       
-        swapBuffers();
+        EDR_SwapBuffers();
     }
 
     TRY_RETHROW;
@@ -261,7 +261,7 @@ void UI::handleEvents()
     
     while ( !mQuit )
     {
-        long time1 = getTime(); // start the timer 
+        long time1 = EDR_GetTime(); // start the timer 
 
         mMoving = animation.updateAll(mMoveSteps);
         
@@ -269,7 +269,7 @@ void UI::handleEvents()
 
         /* handle the events in the queue */        
         Event event;
-        if(pollEvent(event))
+        if(EDR_PollEvent(event))
         {
             if( !mMoving && event.type == EVENT_LEFTMOUSEBUTTONDOWN) 
             {
@@ -290,12 +290,12 @@ void UI::handleEvents()
         // a delay before the next iteration
         if(mMoving)
         {        	
-            long timeForDrawing = getTime() - time1;
-            millisleep(20 - timeForDrawing);
+            long timeForDrawing = EDR_GetTime() - time1;
+            EDR_Millisleep(20 - timeForDrawing);
         }
         else
         {
-            millisleep(1); // to prevent too frequent drawings
+            EDR_Millisleep(1); // to prevent too frequent drawings
         }
          
         

@@ -17,7 +17,7 @@ int main(int argc, char *argv[])
 
     cout << "main" << endl; 
     
-    if(isAppAlreadyRunning())
+    if(EDR_IsAppAlreadyRunning())
     {
         cout << "AppAlreadyRunning" << endl; 
         return -1;

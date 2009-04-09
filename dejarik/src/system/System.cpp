@@ -30,7 +30,7 @@ pid_t readPID(const char* pidfile)
     return atoi(str.c_str());
 }
 
-bool isAppAlreadyRunning()
+bool EDR_IsAppAlreadyRunning()
 {
     pid_t pid = readPID("pidfile.txt");
     
@@ -44,7 +44,7 @@ bool isAppAlreadyRunning()
 
 
 // get time in milliseconds 
-long getTime()
+long EDR_GetTime()
 {
     timeval tv;
     if(gettimeofday(&tv, NULL) == -1)
@@ -53,12 +53,12 @@ long getTime()
     return tv.tv_sec*1000 + tv.tv_usec/1000;
 }
 
-string getCurDir() 
+string EDR_GetCurDir() 
 {
     return "";
 }
 
-void millisleep(unsigned milliseconds)
+void EDR_Millisleep(unsigned milliseconds)
 {
     timespec delay;
     delay.tv_sec = 0;
@@ -73,13 +73,13 @@ void millisleep(unsigned milliseconds)
 
 #ifdef WIN_BUILD
 
-bool isAppAlreadyRunning()
+bool EDR_IsAppAlreadyRunning()
 {
     // TODO not implemented yet
     return false;
 }
 
-long getTime()
+long EDR_GetTime()
 {
     // TODO not implemented yet
     return 0;
@@ -110,7 +110,7 @@ time_t time( time_t *inTT )
     return *inTT;
 } 
 
-wstring getCurDir() // TODO change to string
+wstring EDR_GetCurDir() // TODO change to string
 {
     WCHAR buf[MAXPATHLEN];
     GetModuleFileName(0, buf, MAXPATHLEN);
