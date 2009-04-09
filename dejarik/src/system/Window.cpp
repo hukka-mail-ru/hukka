@@ -119,71 +119,50 @@ EDR_CreateWindow(int width, int height,  const char *name) {
 }
 
 #else
+
 Display* display;
 Window window;
-//Atom pnProtocol;
+
 Atom pnProtocol;
 Atom nWMProtocols;
 
-#include <iostream>
-using namespace std;
-
-
-XEvent xEvent;
-bool quit_event = false;
-
-void* catchEvents(void* arg)
-{
-	for(;;)
-	{
-	    XNextEvent(display, &xEvent);
-	    
-	    if(xEvent.type == ClientMessage &&
-	       xEvent.xclient.message_type == nWMProtocols && 
-	       xEvent.xclient.data.l[0] == (long)pnProtocol)
-	    {
-	    	quit_event = true;
-	    	break;
-	    }
-	}
-	
-	return NULL;
-}
 
 bool EDR_PollEvent(EDR_Event& event)
 {  
 
-    if(quit_event) // this is a special event, it can be catched in a separated thread only
+    while (XPending(display))
     {
-    	event.type = EVENT_QUIT;
-    	return true;
-    }
-    
-    // ordinary events: 
-    
-#ifdef SUSE_BUILD 
-    // TODO figure out, why XNextEvent doesn't work in the separated thread in SuSe
-    XCheckWindowEvent(display, window, ButtonPress,  &xEvent);
-#endif
-    
-    if(xEvent.type == ButtonPress)
-    {
-        switch(xEvent.xbutton.button)        
-        {
-            case Button1: event.type = EVENT_LEFTMOUSEBUTTONDOWN; break;
-            case Button3: event.type = EVENT_RIGHTMOUSEBUTTONDOWN; break;
-            default: break;
-        }
-        
-        event.button.x = xEvent.xbutton.x;
-        event.button.y = xEvent.xbutton.y;
-        
-        xEvent.type = LASTEvent; // reset event 
-    	return true;
-    }
 
-    
-    // here can go other events handling... 
+        XEvent xEvent;
+        XNextEvent(display, &xEvent);
+        
+        switch(xEvent.type)
+        {
+            case ClientMessage:
+                if(xEvent.xclient.message_type == nWMProtocols && 
+                   xEvent.xclient.data.l[0] == (long)pnProtocol)
+                {
+                    event.type = EVENT_QUIT;
+                    return true;
+                }
+                break;
+            
+            case ButtonPress:
+                switch(xEvent.xbutton.button)        
+                {
+                    case Button1: event.type = EVENT_LEFTMOUSEBUTTONDOWN; break;
+                    case Button3: event.type = EVENT_RIGHTMOUSEBUTTONDOWN; break;
+                    default: break;
+                }
+                
+                event.button.x = xEvent.xbutton.x;
+                event.button.y = xEvent.xbutton.y;
+                return true;
+                
+            default:
+                break;
+        }
+    }
 
     return false;
 }
@@ -242,17 +221,8 @@ void EDR_CreateWindow(int width, int height, const char *name)
 
     eglwindow = eglCreateWindowSurface(egldisplay, config[0], (NativeWindowType)window, 0);
     eglMakeCurrent(egldisplay, eglwindow, eglwindow, cx);
-    
-#ifndef SUSE_BUILD 
-    // TODO figure out, why XNextEvent doesn't work in the separated thread in SuSe
-    pthread_t thread;
-    pthread_create(&thread, NULL, catchEvents, NULL);
-    pthread_detach(thread);
-#endif
+
 }
-
-
-
 
 
 #endif
