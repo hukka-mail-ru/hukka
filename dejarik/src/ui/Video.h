@@ -60,7 +60,6 @@ private:
 public:
     
     void startup(const std::vector<std::string>& pieceNames);
-    void stop();
     
     void drawSolidPolygon(const GLshort* vertexArray, unsigned vertNum, const RGBA_Color& color);
     
