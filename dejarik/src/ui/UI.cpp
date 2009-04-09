@@ -268,7 +268,7 @@ void UI::handleEvents()
         drawAll();
 
         /* handle the events in the queue */        
-        Event event;
+        EDR_Event event;
         if(EDR_PollEvent(event))
         {
             if( !mMoving && event.type == EVENT_LEFTMOUSEBUTTONDOWN) 
