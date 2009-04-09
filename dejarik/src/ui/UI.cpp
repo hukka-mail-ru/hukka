@@ -271,11 +271,11 @@ void UI::handleEvents()
         Event event;
         if(pollEvent(event))
         {
-            if( !mMoving && event.type == EVENT_MOUSEBUTTONDOWN) 
+            if( !mMoving && event.type == EVENT_LEFTMOUSEBUTTONDOWN) 
             {
                 onMouseClick(event.button.x, event.button.y);
             }
-            else if(event.type == EVENT_QUIT) // handle stop
+            else if(event.type == EVENT_QUIT || event.type == EVENT_RIGHTMOUSEBUTTONDOWN) 
             {
                 mQuit = true;
             }
