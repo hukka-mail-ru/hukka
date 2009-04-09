@@ -20,13 +20,6 @@ extern bool TestMakePush;
 extern bool TestMakeCounterPush;
 #endif
 
-// e.g. a move for 1.0 to 2.0
-// =>  TURN_SELECTION at 1.0, TURN_ACTION at 2.0
-enum TurnStage 
-{
-    TURN_SELECTION, 
-    TURN_ACTION
-};
 
 enum BattleResult
 {
