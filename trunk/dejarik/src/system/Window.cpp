@@ -36,12 +36,13 @@
 #include <GLES/egl.h>
 #include "Window.h"
 #include "System.h"
+#include "../system/Macros.h"
 
 
 EGLSurface eglwindow;
 EGLDisplay egldisplay;
 
-
+using namespace std;
 
 static int attributeList[] = { EGL_RED_SIZE, 1, EGL_DEPTH_SIZE, 1, EGL_NONE };
 
@@ -168,7 +169,9 @@ bool EDR_PollEvent(EDR_Event& event)
 }
 
 void EDR_CreateWindow(int width, int height, const char *name) 
-{
+{  
+    TRY_BEGINS;
+        
     EGLConfig config[4];
     EGLContext cx;
     int nconfig;
@@ -185,8 +188,7 @@ void EDR_CreateWindow(int width, int height, const char *name)
     
     if (!eglChooseConfig(egldisplay, attributeList, config, sizeof config/sizeof config[0], &nconfig)) 
     {
-        printf("can't find requested config\n");
-        exit(1);
+        throw runtime_error("Can't find requested config");
     }
     
     cx = eglCreateContext(egldisplay, config[0], 0, 0);
@@ -222,7 +224,9 @@ void EDR_CreateWindow(int width, int height, const char *name)
     eglwindow = eglCreateWindowSurface(egldisplay, config[0], (NativeWindowType)window, 0);
     eglMakeCurrent(egldisplay, eglwindow, eglwindow, cx);
 
+    TRY_RETHROW;
 }
+
 
 
 #endif
