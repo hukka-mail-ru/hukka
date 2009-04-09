@@ -40,12 +40,13 @@ private:
     //void drawActivePlayer();
     void drawMenu();
     
+    void createCell(const CellPtr cell);
+    void createCellSegment(const CellPtr cell, float radius1, float radius2);
     /*
      * Defines if the mouse click is valid (true/false).
      * if true, returns the clicked cell
      */
-    bool isCellClicked(int x, int y,  CellPtr& cell);
-    
+    bool isCellClicked(int x, int y,  CellPtr& cell);    
     void onMouseClick(int x, int y);
     
     GamePtr mGame; 

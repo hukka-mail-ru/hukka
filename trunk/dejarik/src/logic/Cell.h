@@ -31,7 +31,15 @@ enum Selection
 class Cell
 {
 public:
-    Cell(unsigned circle, unsigned radius);
+    Cell(unsigned circle, unsigned radius):
+        c(circle),
+        r(radius),
+        mark(0), // not marked initially
+        selected(SEL_NONE) // not selected initially
+        {
+        prev.reset();
+        piece.reset();
+        }
     
     // operator = needed 
     
