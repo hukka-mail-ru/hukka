@@ -11,10 +11,8 @@ CLASSPTR(Player)
 CLASSPTR(Piece)
 
 
-class Piece
+struct Piece
 {
-public:
-    
     Piece(const std::string& name,
           unsigned attack, unsigned defence, unsigned move):
           name(name),

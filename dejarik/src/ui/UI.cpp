@@ -30,6 +30,7 @@ void UI::startup()
          names.push_back(pieces[i]->name);
     }
     
+    // create representation of the cells
     vector<CellPtr> cells;
     mGame->getBoard()->getCells(cells);
     for(unsigned i=0; i<cells.size(); i++)
@@ -45,7 +46,6 @@ void UI::startup()
 
 void UI::createCell(const CellPtr cell)
 {
-    
     // CENTRAL CIRCLE
     if(cell->c == 0)
     {
@@ -71,7 +71,7 @@ void UI::createCell(const CellPtr cell)
     }
 }
 
-
+// a helper for createCell
 void UI::createCellSegment(const CellPtr cell, float radius1, float radius2)
 {
     // angles

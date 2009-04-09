@@ -7,14 +7,6 @@
 #include <vector>
 
 
-// in pixels
-#define CIRCLE_CENTER_X 0
-#define CIRCLE_CENTER_Y 0
-
-#define RADIUS_1 27.0 
-#define RADIUS_2 76.0
-#define RADIUS_3 114.0
-
 CLASSPTR(Cell);
 CLASSPTR(Piece);
 
@@ -28,18 +20,17 @@ enum Selection
 };
 
 
-class Cell
+struct Cell
 {
-public:
     Cell(unsigned circle, unsigned radius):
         c(circle),
         r(radius),
         mark(0), // not marked initially
         selected(SEL_NONE) // not selected initially
-        {
+    {
         prev.reset();
         piece.reset();
-        }
+    }
     
     // operator = needed 
     
@@ -60,10 +51,7 @@ public:
     PiecePtr piece;
     
     Selection selected; // by mouse or 
-    
-private:
-    
-    void createSegment(float radius1, float radius2);
+
 };
 
 
