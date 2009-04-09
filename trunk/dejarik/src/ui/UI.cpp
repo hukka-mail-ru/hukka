@@ -194,11 +194,7 @@ bool UI::drawAll()
     drawBoard();
     drawMenu();
     
-    /* Draw it to the screen */
-    if(!mQuit)
-    {       
-        EDR_SwapBuffers();
-    }
+    EDR_SwapBuffers();
 
     TRY_RETHROW;
     
@@ -244,8 +240,8 @@ void UI::onMouseClick(int x, int y)
         PlayerPtr vinner;
         if(mGame->checkVictory(vinner))
         {
-            mQuit = true;
             cout << "GAME OVER. Vinner: " << vinner->getName() << endl;
+            exit(0);
         }
         
     }   
@@ -259,7 +255,7 @@ void UI::handleEvents()
 {
     TRY_BEGINS;
     
-    while ( !mQuit )
+    for(;;)
     {
         long time1 = EDR_GetTime(); // start the timer 
 
@@ -276,11 +272,6 @@ void UI::handleEvents()
                 onMouseClick(event.button.x, event.button.y);
             }
             else if(event.type == EVENT_QUIT || event.type == EVENT_RIGHTMOUSEBUTTONDOWN) 
-            {
-                mQuit = true;
-            }
-            
-            if(mQuit)
             {
                 break;
             }
