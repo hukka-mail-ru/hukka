@@ -5,6 +5,12 @@
 #include "Cell.h"
 #include "Game.h"
 
+#define RADIUS_1 27.0 
+#define RADIUS_2 76.0
+#define RADIUS_3 114.0
+
+#define CIRCLE_CENTER_X 0
+#define CIRCLE_CENTER_Y 0
 
 class Animation
 {
