@@ -71,7 +71,7 @@ void Video::startup(const std::vector<std::string>& pieceNames)
 {
     TRY_BEGINS;
     
-    createEGLWindow(WINDOW_WIDTH, WINDOW_HEIGHT, "Dejarik");
+    EDR_CreateWindow(WINDOW_WIDTH, WINDOW_HEIGHT, "Dejarik");
     
     glMatrixMode(GL_PROJECTION);
     glLoadIdentity();   
@@ -361,7 +361,7 @@ void Video::createImage(const std::string& name)
     TexturePtr texture (new Texture); 
     
     ostringstream path;
-    path << getCurDir() << "img/" << name << ".bmp";
+    path << EDR_GetCurDir() << "img/" << name << ".bmp";
     
     /* Status indicator */
     bool res = false;
