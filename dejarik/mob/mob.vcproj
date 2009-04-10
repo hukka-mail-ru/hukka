@@ -41,7 +41,7 @@
 				Name="VCCLCompilerTool"
 				ExecutionBucket="7"
 				Optimization="0"
-				AdditionalIncludeDirectories="..\..\Vincent\include"
+				AdditionalIncludeDirectories="..\..\Vincent\include;..\..\boost;..\src\logic;..\src\system;..\src\ui"
 				PreprocessorDefinitions="_DEBUG;_WIN32_WCE=$(CEVER);UNDER_CE;$(PLATFORMDEFINES);WINCE;DEBUG;_WINDOWS;$(ARCHFAM);$(_ARCHFAM_);_UNICODE;UNICODE;POCKETPC2003_UI_MODEL;OPENGL_ES_BUILD"
 				MinimalRebuild="true"
 				RuntimeLibrary="1"
@@ -201,24 +201,68 @@
 			Filter="cpp;c;cc;cxx;def;odl;idl;hpj;bat;asm;asmx"
 			UniqueIdentifier="{4FC737F1-C7A5-4376-A066-2A32D752A2FF}"
 			>
-			<File
-				RelativePath=".\mob.cpp"
+			<Filter
+				Name="ui"
 				>
-			</File>
-			<File
-				RelativePath=".\VideoES.cpp"
+				<File
+					RelativePath="..\src\ui\Animation.cpp"
+					>
+				</File>
+				<File
+					RelativePath="..\src\ui\Glbasic.cpp"
+					>
+				</File>
+				<File
+					RelativePath="..\src\ui\UI.cpp"
+					>
+				</File>
+				<File
+					RelativePath="..\src\ui\Video.cpp"
+					>
+				</File>
+			</Filter>
+			<Filter
+				Name="system"
 				>
-			</File>
+				<File
+					RelativePath="..\src\system\main.cpp"
+					>
+				</File>
+				<File
+					RelativePath="..\src\system\stdafx.cpp"
+					>
+				</File>
+				<File
+					RelativePath="..\src\system\System.cpp"
+					>
+				</File>
+				<File
+					RelativePath="..\src\system\Window.cpp"
+					>
+				</File>
+			</Filter>
+			<Filter
+				Name="logic"
+				>
+				<File
+					RelativePath="..\src\logic\Board.cpp"
+					>
+				</File>
+				<File
+					RelativePath="..\src\logic\Game.cpp"
+					>
+				</File>
+				<File
+					RelativePath="..\src\logic\Player.cpp"
+					>
+				</File>
+			</Filter>
 		</Filter>
 		<Filter
 			Name="Header Files"
 			Filter="h;hpp;hxx;hm;inl;inc;xsd"
 			UniqueIdentifier="{93995380-89BD-4b04-88EB-625FBE52EBFB}"
 			>
-			<File
-				RelativePath=".\VideoES.h"
-				>
-			</File>
 		</Filter>
 		<Filter
 			Name="Resource Files"

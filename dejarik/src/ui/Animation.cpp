@@ -1,4 +1,5 @@
 #include "Animation.h"
+#include "System.h"
 #include <math.h>
 
 using namespace std;
