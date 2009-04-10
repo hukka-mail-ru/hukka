@@ -69,6 +69,11 @@ bool EDR_PollEvent(EDR_Event& event)
                 event.button.x = LOWORD(msg.lParam);
                 event.button.y = HIWORD(msg.lParam);
                 return true;
+            case WM_RBUTTONDOWN:
+                event.type = EVENT_RIGHTMOUSEBUTTONDOWN;
+                event.button.x = LOWORD(msg.lParam);
+                event.button.y = HIWORD(msg.lParam);
+                return true;
             default:
                 TranslateMessage(&msg);
                 DispatchMessage(&msg);
