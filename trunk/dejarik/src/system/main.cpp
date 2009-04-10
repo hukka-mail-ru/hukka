@@ -8,7 +8,7 @@ using namespace std;
 #include "System.h"
 
 #ifdef _WIN32
-int _tmain(int argc, _TCHAR* argv[])
+int  _tmain(int argc, _TCHAR* argv[])
 #else
 int main(int argc, char *argv[]) 
 #endif
