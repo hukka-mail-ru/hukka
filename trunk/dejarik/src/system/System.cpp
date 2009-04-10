@@ -116,7 +116,7 @@ void EDR_Millisleep(unsigned milliseconds)
 }
 
 #define MAXPATHLEN 1024
-wstring EDR_GetCurDir() // TODO change to string
+string EDR_GetCurDir() // TODO change to string
 {
     WCHAR buf[MAXPATHLEN];
     GetModuleFileName(0, buf, MAXPATHLEN);
@@ -125,7 +125,12 @@ wstring EDR_GetCurDir() // TODO change to string
     size_t pos = dir.rfind(L"\\");
     dir = dir.substr(0, pos);
     
-    return dir;
+    string str;
+    str.assign(dir.begin(), dir.end());
+    
+    str += "\\";
+    
+    return str;
 }
 #endif
 
