@@ -71,7 +71,7 @@ void EDR_Millisleep(unsigned milliseconds)
 
 
 
-#ifdef WIN_BUILD
+#ifdef _WIN32
 
 bool EDR_IsAppAlreadyRunning()
 {
@@ -110,6 +110,12 @@ time_t time( time_t *inTT )
     return *inTT;
 } 
 
+void EDR_Millisleep(unsigned milliseconds)
+{
+    Sleep(milliseconds);
+}
+
+#define MAXPATHLEN 1024
 wstring EDR_GetCurDir() // TODO change to string
 {
     WCHAR buf[MAXPATHLEN];

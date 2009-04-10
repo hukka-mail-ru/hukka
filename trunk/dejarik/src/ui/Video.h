@@ -55,7 +55,7 @@ private:
         GLfloat h;
     };
 
-    CLASSPTR(Texture);  
+    typedef boost::shared_ptr<Texture> TexturePtr; 
     
 public:
     

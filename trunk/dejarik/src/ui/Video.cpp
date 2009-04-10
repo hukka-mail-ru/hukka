@@ -361,7 +361,7 @@ void Video::createImage(const std::string& name)
     TexturePtr texture (new Texture); 
     
     ostringstream path;
-    path << EDR_GetCurDir() << "img/" << name << ".bmp";
+    path << EDR_GetCurDir().c_str() << "img/" << name << ".bmp";
     
     /* Status indicator */
     bool res = false;

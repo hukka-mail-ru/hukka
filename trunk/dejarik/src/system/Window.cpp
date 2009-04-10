@@ -41,6 +41,7 @@
 
 EGLSurface eglwindow;
 EGLDisplay egldisplay;
+EGLContext eglcontext;
 
 using namespace std;
 
