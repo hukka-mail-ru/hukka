@@ -229,10 +229,6 @@
 					>
 				</File>
 				<File
-					RelativePath="..\src\system\stdafx.cpp"
-					>
-				</File>
-				<File
 					RelativePath="..\src\system\System.cpp"
 					>
 				</File>
