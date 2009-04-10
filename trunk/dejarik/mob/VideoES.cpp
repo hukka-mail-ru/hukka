@@ -3,7 +3,6 @@
 
 using namespace std;
 
-Texture texture1;
 EGLDisplay egldisplay;
 EGLSurface eglwindow;
 EGLContext eglcontext;
@@ -16,33 +15,77 @@ EGLContext eglcontext;
 
 #define BOARD_TEXTURE_WIDTH 128
 
+
+#define PRECISION 16	
+#define ONE	(1 << PRECISION)
+#define ZERO 0
+
+#define MAXPATHLEN  1024
+#define TEXTURE_FILTER_NONE 0
+#define TEXTURE_FILTER_BILINEAR 1
+#define TEXTURE_FILTER_TRILINEAR 2
+
+
+inline GLfixed FixedFromInt(int value) {return value << PRECISION;}
+inline GLfixed FixedFromFloat(float value) {return static_cast<GLfixed>(value * static_cast<float>(ONE));}
+inline GLfixed MultiplyFixed(GLfixed op1, GLfixed op2) {return (op1 * op2) >> PRECISION;};
+
+
+
 HINSTANCE hInstance;
 int cmdShow;
 
 // ====================================================================================
 // ====================================================================================
 // ====================================================================================
+//void handleEvents()
+bool EDR_PollEvent(EDR_Event& event)
+{ 
+    for(;;)
+    {
+        MSG msg; //This is the message variable for the message loop
+        if(PeekMessage(&msg,NULL,0,0,PM_REMOVE))
+        {
+            if(msg.message==WM_QUIT)
+            {
+                event.type = EVENT_QUIT;
+                return true;
+            }
+            else
+            { 
+                TranslateMessage(&msg);
+                DispatchMessage(&msg);
+            }
+        }
+    }
 
-//----------------------------------------------------------------------------
-// THIS FUNCTION IS A HELPER FOR VIDEO::initWin
-LRESULT CALLBACK wndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
+}
+
+void UI::startup()
 {
-    switch (message) 
-    {		
-    case WM_PAINT:	
-        ValidateRect(hWnd,NULL); //Needed to avoid new WM_PAINT messages
-        return 0; 
+    mVideo.startup();
+}
 
-    case WM_DESTROY:
-        PostQuitMessage(0);
-        return 0;  
-    };
-    return DefWindowProc(hWnd, message, wParam, lParam);   
+void UI::handleEvents()
+{
+    for(;;)
+    {
+
+        drawAll();
+
+        /* handle the events in the queue */        
+        EDR_Event event;
+        if(EDR_PollEvent(event))
+        {
+            if(event.type == EVENT_QUIT) 
+            {
+                break;
+            }
+        }
+    }
 }
 
 
-//----------------------------------------------------------------------------
-//HWND initWin(HINSTANCE hInstance, LPCWSTR szAppName, int cmdShow)
 void EDR_CreateWindow(int width, int height,  const char *name)
 {
     WNDCLASS	wc;
@@ -56,7 +99,7 @@ void EDR_CreateWindow(int width, int height,  const char *name)
     } 
 
     wc.style          = CS_HREDRAW | CS_VREDRAW; 
-    wc.lpfnWndProc    = (WNDPROC) wndProc; 
+    wc.lpfnWndProc    = (WNDPROC)DefWindowProc;
     wc.cbClsExtra     = 0;
     wc.cbWndExtra     = 0;
     wc.hInstance      = hInstance;
@@ -126,6 +169,10 @@ void EDR_CreateWindow(int width, int height,  const char *name)
     return;
 }
 
+void EDR_SwapBuffers(void) 
+{
+    eglSwapBuffers(egldisplay, eglwindow);
+}
 
 
 
@@ -157,10 +204,6 @@ void Video::startup()
 }
 
 
-void EDR_SwapBuffers(void) 
-{
-    eglSwapBuffers(egldisplay, eglwindow);
-}
 
 void Video::drawSolidPolygon(const GLshort* vertexArray, unsigned vertNum, const RGBA_Color& color)
 {
@@ -186,7 +229,7 @@ void Video::drawSolidPolygon(const GLshort* vertexArray, unsigned vertNum, const
 
 
 //----------------------------------------------------------------------------
-void Video::drawAll()
+void UI::drawAll()
 {
 
     GLshort vertex[] =
@@ -197,7 +240,7 @@ void Video::drawAll()
         0,10,0
     };
     
-    drawSolidPolygon(vertex, 4, RGBA_Color(1,1,1,1));
+    mVideo.drawSolidPolygon(vertex, 4, RGBA_Color(1,1,1,1));
     
     EDR_SwapBuffers();
 }
