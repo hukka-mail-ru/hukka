@@ -81,8 +81,7 @@ bool EDR_IsAppAlreadyRunning()
 
 long EDR_GetTime()
 {
-    // TODO not implemented yet
-    return 0;
+    return GetTickCount();
 }
 
 time_t time( time_t *inTT )

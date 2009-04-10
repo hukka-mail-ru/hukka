@@ -320,18 +320,21 @@ void UI::onMouseClick(int x, int y)
     TRY_RETHROW;
 }
 
-
+#include <fstream>
 void UI::handleEvents()
 {
     TRY_BEGINS;
+
+    ofstream of("log.txt");
     
     for(;;)
     {
         long time1 = EDR_GetTime(); // start the timer 
 
-        mMoving = animation.updateAll(mMoveSteps);
-        
+        mMoving = animation.updateAll(mMoveSteps);        
         drawAll();
+
+        long time2 = EDR_GetTime(); // start the timer 
 
         /* handle the events in the queue */        
         EDR_Event event;
@@ -348,7 +351,15 @@ void UI::handleEvents()
         }
        
 
+        long time3 = EDR_GetTime(); // start the timer 
+
+        if(mMoving)
+        {  
+        of << "1..2: " << time2-time1 << "2..3: " << time3-time2 << endl;
+        }
+
         // a delay before the next iteration
+        
         if(mMoving)
         {        	
             long timeForDrawing = EDR_GetTime() - time1;
