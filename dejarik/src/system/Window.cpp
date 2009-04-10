@@ -47,79 +47,113 @@ using namespace std;
 static int attributeList[] = { EGL_RED_SIZE, 1, EGL_DEPTH_SIZE, 1, EGL_NONE };
 
 #ifdef _WIN32
-void
-EDR_CreateWindow(int width, int height,  const char *name) 
+
+HINSTANCE EDR_Instance;
+int EDR_CmdShow;
+
+bool EDR_PollEvent(EDR_Event& event)
+{ 
+    for(;;)
+    {
+        MSG msg; //This is the message variable for the message loop
+        if(PeekMessage(&msg,NULL,0,0,PM_REMOVE))
+        {
+            if(msg.message==WM_QUIT)
+            {
+                event.type = EVENT_QUIT;
+                return true;
+            }
+            else
+            { 
+                TranslateMessage(&msg);
+                DispatchMessage(&msg);
+            }
+        }
+    }
+
+}
+
+void EDR_CreateWindow(int width, int height,  const char *name)
 {
-    TRY_BEGINS;
-    
     WNDCLASS	wc;
-    DWORD	dwExStyle;
-    DWORD	dwStyle;
-    RECT	WindowRect;
-    HWND        hwnd;
-    HDC         hdc;
-    HINSTANCE   hInstance;
-    EGLConfig config[4];
-    EGLContext cx;
-    int nconfig;
 
-    WindowRect.left = (long)0;
-    WindowRect.right = (long)width;
-    WindowRect.top = (long)0;
-    WindowRect.bottom = (long)height;
-
-    hInstance		= GetModuleHandle(NULL);
-    wc.style		= CS_HREDRAW | CS_VREDRAW | CS_OWNDC;
-    wc.lpfnWndProc	= (WNDPROC)DefWindowProc;
-    wc.cbClsExtra	= 0;
-    wc.cbWndExtra	= 0;
-    wc.hInstance	= hInstance;
-    wc.hIcon		= LoadIcon(NULL, IDI_WINLOGO);
-    wc.hCursor		= LoadCursor(NULL, IDC_ARROW);
-    wc.hbrBackground	= NULL;
-    wc.lpszMenuName	= NULL;
-    wc.lpszClassName	= "OpenGL";
-
-    if (!RegisterClass(&wc)) 
+    LPCWSTR szAppName = L"Dejarik";
+    HWND hWnd = FindWindow(szAppName, szAppName);
+    if(hWnd) 
     {
-        throw runtime_error("Failed To Register The Window Class.");
-    }
-	
+        SetForegroundWindow((HWND)((ULONG) hWnd | 0x00000001));
+        return;
+    } 
 
-    dwExStyle = WS_EX_APPWINDOW | WS_EX_WINDOWEDGE;
-    dwStyle = WS_OVERLAPPEDWINDOW;
+    wc.style          = CS_HREDRAW | CS_VREDRAW; 
+    wc.lpfnWndProc    = (WNDPROC)DefWindowProc;
+    wc.cbClsExtra     = 0;
+    wc.cbWndExtra     = 0;
+    wc.hInstance      = EDR_Instance;
+    wc.hIcon          = LoadIcon(EDR_Instance, NULL);//Load default icon
+    wc.hCursor	      = 0; // Default cursor
+    wc.hbrBackground  = 0; //We don't care about the background color
+    wc.lpszMenuName	  = NULL; //This application does not have a menu
+    wc.lpszClassName  = szAppName; 
 
-    AdjustWindowRectEx(&WindowRect, dwStyle, FALSE, dwExStyle);
+    //Before creating the window, we must register this new window class
+    if(!RegisterClass(&wc))
+        return;
 
-    if (!(hwnd = CreateWindowEx(dwExStyle, "OpenGL", name,
-		dwStyle | WS_CLIPSIBLINGS | WS_CLIPCHILDREN, 0, 0,
-		WindowRect.right-WindowRect.left,
-		WindowRect.bottom-WindowRect.top, NULL, NULL, hInstance, NULL))) 
+    hWnd=CreateWindow(szAppName, //Class Name
+        szAppName, //Caption string
+        WS_VISIBLE,//Window style
+        CW_USEDEFAULT,CW_USEDEFAULT,//Starting [x,y] pos.
+        CW_USEDEFAULT, CW_USEDEFAULT, //Width and height
+        NULL, NULL, //Parent window and menu handle
+        EDR_Instance, NULL);
+
+    if(!hWnd) return;
+
+    //Bring the window to front, focus it and refresh it
+    ShowWindow(hWnd, EDR_CmdShow); 
+    UpdateWindow(hWnd);
+
+    ///////////////////////////////////////////////////
+    EGLConfig configs[10];
+    EGLint matchingConfigs;	
+
+    const EGLint configAttribs[] =
     {
-        throw runtime_error("Window Creation Error.");
-    }
+        EGL_RED_SIZE,       8,
+        EGL_GREEN_SIZE,     8,
+        EGL_BLUE_SIZE,      8,
+        EGL_ALPHA_SIZE,     EGL_DONT_CARE,
+        EGL_DEPTH_SIZE,     16,
+        EGL_STENCIL_SIZE,   EGL_DONT_CARE,
+        EGL_SURFACE_TYPE,   EGL_WINDOW_BIT,
+        EGL_NONE,           EGL_NONE
+    };
 
-    if (!(hdc = GetDC(hwnd))) 
-    {
-        throw runtime_error("Can't Create A GL Device Context.");
-    }
+    HDC hDC = GetWindowDC(hWnd);
+    egldisplay = eglGetDisplay(hDC);	 //Ask for an available display
 
-    egldisplay = eglGetDisplay(hdc);
-    eglInitialize(egldisplay, NULL, NULL);
-    if (!eglChooseConfig(egldisplay, attributeList, config, sizeof config/sizeof config[0], &nconfig)) 
-    {
-        throw runtime_error("can't find requested config");
-    }
+    if(!eglInitialize(egldisplay, NULL, NULL)) 
+        return;
 
-    eglwindow = eglCreateWindowSurface(egldisplay, config[0], (NativeWindowType)hwnd, 0);
-    cx = eglCreateContext(egldisplay, config[0], 0, 0);
-    eglMakeCurrent(egldisplay, eglwindow, eglwindow, cx);
+    if(!eglChooseConfig(egldisplay, configAttribs, &configs[0], 10,  &matchingConfigs)) 
+        return;
 
-    ShowWindow(hwnd, SW_SHOW);
-    SetForegroundWindow(hwnd);
-    SetFocus(hwnd);
-    
-    TRY_RETHROW;
+    if (matchingConfigs < 1)  
+        return;	  
+
+    eglwindow = eglCreateWindowSurface(egldisplay, configs[0], hWnd, configAttribs);	
+    if(!eglwindow) 
+        return;
+
+    eglcontext=eglCreateContext(egldisplay,configs[0],0,configAttribs);
+
+    if(!eglcontext) 
+        return;
+
+    eglMakeCurrent(egldisplay, eglwindow, eglwindow, eglcontext); 
+
+    return;
 }
 
 #else

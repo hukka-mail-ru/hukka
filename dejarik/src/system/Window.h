@@ -20,6 +20,11 @@ struct EDR_Event
     EDR_Button button;
 };
 
+#ifdef _WIN32
+    extern HINSTANCE EDR_Instance;
+    extern int EDR_CmdShow;
+#endif
+
 void EDR_CreateWindow(int width, int height, const char *name);
 void EDR_SwapBuffers();
 bool EDR_PollEvent(EDR_Event& event);

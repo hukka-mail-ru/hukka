@@ -6,13 +6,18 @@ using namespace std;
 #include "UI.h"
 #include "Macros.h"
 #include "System.h"
+#include "Windows.h"
 
 #ifdef _WIN32
-int  _tmain(int argc, _TCHAR* argv[])
+int WINAPI WinMain(HINSTANCE inst, HINSTANCE hPrevInstance, LPTSTR lpCmdLine, int cmdShow)
+{   
+    EDR_Instance = inst;
+    EDR_CmdShow = cmdShow;
 #else
 int main(int argc, char *argv[]) 
-#endif
 {
+#endif
+
     TRY_BEGINS;
 
     cout << "main" << endl; 
