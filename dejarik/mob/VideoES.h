@@ -47,11 +47,14 @@ struct Texture
     int h;
 };
 
+extern HINSTANCE hInstance;
+extern int cmdShow;
+
 class Video
 {
 public:
 
-    bool initGLES(HWND hWnd);// Our GL initialization function
+  //  bool initGLES(HWND hWnd);// Our GL initialization function
     void quitGLES();
 
 
@@ -59,7 +62,9 @@ public:
     ////////////////////////////////////////////////////////////////////
     void drawAll();  // Our Render function
 
+    void drawSolidPolygon(const GLshort* vertexArray, unsigned vertNum, const RGBA_Color& color);
 
+    void startup();
 
 private:
 
@@ -68,16 +73,16 @@ private:
                    float winX, float winY, float angle);
         
     void drawPolygon(float* vertexArray, unsigned vertNum, const RGBA_Color& color);   
-    int  loadTexture(HWND hWnd, LPCWSTR filename, Texture& texture); 
+    int  loadTexture(LPCWSTR filename, Texture& texture); 
     void setPerspective(HWND hWnd);
     void perspective(GLfloat fovy, GLfloat aspect, GLfloat zNear,  GLfloat zFar);
 
     std::wstring getCurDir();
       
     // OpenGL variables
-    EGLDisplay mGlesDisplay;     // EGL display
-    EGLSurface mGlesSurface;	 // EGL rendering surface
-    EGLContext mGlesContext;	 // EGL rendering context
+  //  EGLDisplay mGlesDisplay;     // EGL display
+ //   EGLSurface mGlesSurface;	 // EGL rendering surface
+ //   EGLContext mGlesContext;	 // EGL rendering context
     ////////////////////////////////////////////////////////////////////
     ////////////////////////////////////////////////////////////////////
     int viewport[4]; 
