@@ -16,8 +16,8 @@ windowing system. We need it to create a suitable context and a drawable window*
 
 /////// Window
 
-extern HINSTANCE hInstance;
-extern int cmdShow;
+extern HINSTANCE EDR_Instance;
+extern int EDR_CmdShow;
 
 enum EDR_EventType
 {

@@ -31,14 +31,9 @@ inline GLfixed FixedFromFloat(float value) {return static_cast<GLfixed>(value * 
 inline GLfixed MultiplyFixed(GLfixed op1, GLfixed op2) {return (op1 * op2) >> PRECISION;};
 
 
+HINSTANCE EDR_Instance;
+int EDR_CmdShow;
 
-HINSTANCE hInstance;
-int cmdShow;
-
-// ====================================================================================
-// ====================================================================================
-// ====================================================================================
-//void handleEvents()
 bool EDR_PollEvent(EDR_Event& event)
 { 
     for(;;)
@@ -61,31 +56,6 @@ bool EDR_PollEvent(EDR_Event& event)
 
 }
 
-void UI::startup()
-{
-    mVideo.startup();
-}
-
-void UI::handleEvents()
-{
-    for(;;)
-    {
-
-        drawAll();
-
-        /* handle the events in the queue */        
-        EDR_Event event;
-        if(EDR_PollEvent(event))
-        {
-            if(event.type == EVENT_QUIT) 
-            {
-                break;
-            }
-        }
-    }
-}
-
-
 void EDR_CreateWindow(int width, int height,  const char *name)
 {
     WNDCLASS	wc;
@@ -102,8 +72,8 @@ void EDR_CreateWindow(int width, int height,  const char *name)
     wc.lpfnWndProc    = (WNDPROC)DefWindowProc;
     wc.cbClsExtra     = 0;
     wc.cbWndExtra     = 0;
-    wc.hInstance      = hInstance;
-    wc.hIcon          = LoadIcon(hInstance, NULL);//Load default icon
+    wc.hInstance      = EDR_Instance;
+    wc.hIcon          = LoadIcon(EDR_Instance, NULL);//Load default icon
     wc.hCursor	      = 0; // Default cursor
     wc.hbrBackground  = 0; //We don't care about the background color
     wc.lpszMenuName	  = NULL; //This application does not have a menu
@@ -119,12 +89,12 @@ void EDR_CreateWindow(int width, int height,  const char *name)
         CW_USEDEFAULT,CW_USEDEFAULT,//Starting [x,y] pos.
         CW_USEDEFAULT, CW_USEDEFAULT, //Width and height
         NULL, NULL, //Parent window and menu handle
-        hInstance, NULL);
+        EDR_Instance, NULL);
 
     if(!hWnd) return;
 
     //Bring the window to front, focus it and refresh it
-    ShowWindow(hWnd, cmdShow); 
+    ShowWindow(hWnd, EDR_CmdShow); 
     UpdateWindow(hWnd);
     
     ///////////////////////////////////////////////////
@@ -227,6 +197,19 @@ void Video::drawSolidPolygon(const GLshort* vertexArray, unsigned vertNum, const
     glDisableClientState(GL_VERTEX_ARRAY);
 }
 
+//----------------------------------------------------------------------------
+void Video::quitGLES()
+{
+
+
+    if(egldisplay)
+    {
+        eglMakeCurrent(egldisplay, NULL, NULL, NULL);  
+        if(eglcontext) eglDestroyContext(egldisplay, eglcontext);
+        if(eglwindow) eglDestroySurface(egldisplay, eglwindow);
+        eglTerminate(egldisplay);
+    }
+}
 
 //----------------------------------------------------------------------------
 void UI::drawAll()
@@ -246,20 +229,30 @@ void UI::drawAll()
 }
 
 
-
-
-
-//----------------------------------------------------------------------------
-void Video::quitGLES()
+void UI::startup()
 {
-    
+    mVideo.startup();
+}
 
-    if(egldisplay)
+void UI::handleEvents()
+{
+    for(;;)
     {
-        eglMakeCurrent(egldisplay, NULL, NULL, NULL);  
-        if(eglcontext) eglDestroyContext(egldisplay, eglcontext);
-        if(eglwindow) eglDestroySurface(egldisplay, eglwindow);
-        eglTerminate(egldisplay);
+
+        drawAll();
+
+        /* handle the events in the queue */        
+        EDR_Event event;
+        if(EDR_PollEvent(event))
+        {
+            if(event.type == EVENT_QUIT) 
+            {
+                break;
+            }
+        }
     }
 }
+
+
+
 
