@@ -3,6 +3,7 @@
 
 #include <iostream> 
 #include <sstream> 
+#include <fstream>
 #include <stdexcept>
 #include <boost/shared_ptr.hpp> 
 
@@ -32,11 +33,21 @@ catch(std::runtime_error& err) \
 } \
 catch(std::runtime_error& err) \
 { \
+std::cout << "EXCEPTION in " << __FUNCTION__ << std::endl << "TRACE: "<< err.what() << std::endl;\
+std::cerr << "EXCEPTION in " << __FUNCTION__ << std::endl << "TRACE: "<< err.what() << std::endl;\
+std::ofstream out("err.txt");\
+out << "EXCEPTION in " << __FUNCTION__<< std::endl << "TRACE: "<< err.what()<< std::endl;\
+}
+/*
 std::cout << "EXCEPTION in " << __FUNCTION__ << std::endl << \
              "TRACE: "<< err.what() << std::endl << std::endl;\
 std::cerr << "EXCEPTION in " << __FUNCTION__ << std::endl << \
              "TRACE: "<< err.what() << std::endl << std::endl;\
-}
+std::ofstream out("err.txt");\
+    out << "EXCEPTION in " << __FUNCTION__ << std::endl << \
+    "TRACE: "<< err.what() << std::endl << std::endl;\             
+  
+}  */
 
 
 #define SHOW_FUNCTION_NAME \
