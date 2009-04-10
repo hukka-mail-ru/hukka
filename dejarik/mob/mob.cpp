@@ -8,31 +8,8 @@
 using namespace std;
 
 
-Video video;
+UI ui;
 
-void handleEvents()
-{
-    MSG msg; //This is the message variable for the message loop
-    bool done = FALSE; 
-    while(!done)
-    {
-        if(PeekMessage(&msg,NULL,0,0,PM_REMOVE))
-        {
-            if(msg.message==WM_QUIT)
-                done=TRUE;
-            else
-            { 
-                TranslateMessage(&msg);
-                DispatchMessage(&msg);
-            }
-        }
-        else
-        {
-            video.drawAll();
-        }
-    }
-
-}
 
 /*This is the WinMain function. Here we will create the rendering window, initialize OpenGL ES, write the message loop, and, at the end, clean all and release all used resources*/
 int WINAPI WinMain(HINSTANCE inst, HINSTANCE hPrevInstance, LPTSTR lpCmdLine,	int cmd)
@@ -40,17 +17,14 @@ int WINAPI WinMain(HINSTANCE inst, HINSTANCE hPrevInstance, LPTSTR lpCmdLine,	in
     hInstance = inst;
     cmdShow = cmd;
     
-    video.startup();
+    ui.startup();
         
-        
-        
-    video.startup();
 
     //Message Loop
-    handleEvents();
+    ui.handleEvents();
     
     //Clean up all
-    video.quitGLES();
+  //  video.quitGLES();
     
     //We have to destroy the window too
 //    DestroyWindow(hWnd);

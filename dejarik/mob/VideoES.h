@@ -12,23 +12,36 @@
 windowing system. We need it to create a suitable context and a drawable window*/
 #include <GLES/egl.h>
 
-#define PRECISION 16	
-#define ONE	(1 << PRECISION)
-#define ZERO 0
-
-#define MAXPATHLEN  1024
-#define TEXTURE_FILTER_NONE 0
-#define TEXTURE_FILTER_BILINEAR 1
-#define TEXTURE_FILTER_TRILINEAR 2
 
 
+/////// Window
 
-inline GLfixed FixedFromInt(int value) {return value << PRECISION;}
-inline GLfixed FixedFromFloat(float value) {return static_cast<GLfixed>(value * static_cast<float>(ONE));}
-inline GLfixed MultiplyFixed(GLfixed op1, GLfixed op2) {return (op1 * op2) >> PRECISION;};
+extern HINSTANCE hInstance;
+extern int cmdShow;
 
-//int WINAPI WinMain(HINSTANCE hInst, HINSTANCE hPrevInst, LPTSTR lpCmdLine,int nCmdShow);
-//LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam);
+enum EDR_EventType
+{
+    EVENT_LEFTMOUSEBUTTONDOWN,
+    EVENT_RIGHTMOUSEBUTTONDOWN,
+    EVENT_QUIT
+};
+
+struct EDR_Button
+{
+    int x;
+    int y;
+};
+
+struct EDR_Event
+{
+    EDR_EventType type;
+    EDR_Button button;
+};
+
+void EDR_CreateWindow(int width, int height,  const char *name);
+void EDR_SwapBuffers(void); 
+
+///////// Video 
 
 struct RGBA_Color
 {
@@ -40,50 +53,28 @@ struct RGBA_Color
 };
 
 
-struct Texture
-{
-    GLuint id;
-    int w;
-    int h;
-};
-
-extern HINSTANCE hInstance;
-extern int cmdShow;
-
 class Video
 {
 public:
 
-  //  bool initGLES(HWND hWnd);// Our GL initialization function
-    void quitGLES();
-
-
-    ////////////////////////////////////////////////////////////////////
-    ////////////////////////////////////////////////////////////////////
-    void drawAll();  // Our Render function
+    void startup();
 
     void drawSolidPolygon(const GLshort* vertexArray, unsigned vertNum, const RGBA_Color& color);
+      
+    void quitGLES();
+
+};
+
+
+class UI
+{
+    Video mVideo;
+public:
 
     void startup();
 
-private:
+    void drawAll();  // Our Render function
+    
+    void handleEvents();
 
-
-    void drawImage(const Texture& texture, const RGBA_Color& color, 
-                   float winX, float winY, float angle);
-        
-    void drawPolygon(float* vertexArray, unsigned vertNum, const RGBA_Color& color);   
-    int  loadTexture(LPCWSTR filename, Texture& texture); 
-    void setPerspective(HWND hWnd);
-    void perspective(GLfloat fovy, GLfloat aspect, GLfloat zNear,  GLfloat zFar);
-
-    std::wstring getCurDir();
-      
-    // OpenGL variables
-  //  EGLDisplay mGlesDisplay;     // EGL display
- //   EGLSurface mGlesSurface;	 // EGL rendering surface
- //   EGLContext mGlesContext;	 // EGL rendering context
-    ////////////////////////////////////////////////////////////////////
-    ////////////////////////////////////////////////////////////////////
-    int viewport[4]; 
 };
