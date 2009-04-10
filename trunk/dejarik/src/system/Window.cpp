@@ -55,7 +55,7 @@ int EDR_CmdShow;
 bool EDR_PollEvent(EDR_Event& event)
 { 
     MSG msg; //This is the message variable for the message loop
-    if(PeekMessage(&msg,NULL,0,0,PM_REMOVE))
+    if(PeekMessage(&msg,NULL,0,0,PM_NOREMOVE))
     {
         while( GetMessage( &msg, NULL, 0, 0 ) )
         {
@@ -72,9 +72,11 @@ bool EDR_PollEvent(EDR_Event& event)
             default:
                 TranslateMessage(&msg);
                 DispatchMessage(&msg);
+                return true;
             }
         }
     }
+    return false;
 }
 
 void EDR_CreateWindow(int width, int height,  const char *name)
