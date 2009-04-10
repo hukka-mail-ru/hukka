@@ -54,24 +54,27 @@ int EDR_CmdShow;
 
 bool EDR_PollEvent(EDR_Event& event)
 { 
-    for(;;)
+    MSG msg; //This is the message variable for the message loop
+    if(PeekMessage(&msg,NULL,0,0,PM_REMOVE))
     {
-        MSG msg; //This is the message variable for the message loop
-        if(PeekMessage(&msg,NULL,0,0,PM_REMOVE))
+        while( GetMessage( &msg, NULL, 0, 0 ) )
         {
-            if(msg.message==WM_QUIT)
+            switch(msg.message)
             {
+            case WM_QUIT:
                 event.type = EVENT_QUIT;
                 return true;
-            }
-            else
-            { 
+            case WM_LBUTTONDOWN:
+                event.type = EVENT_LEFTMOUSEBUTTONDOWN;
+                event.button.x = LOWORD(msg.lParam);
+                event.button.y = HIWORD(msg.lParam);
+                return true;
+            default:
                 TranslateMessage(&msg);
                 DispatchMessage(&msg);
             }
         }
     }
-
 }
 
 void EDR_CreateWindow(int width, int height,  const char *name)
