@@ -65,12 +65,12 @@ bool EDR_PollEvent(EDR_Event& event)
                 event.type = EVENT_QUIT;
                 return true;
             case WM_LBUTTONDOWN:
-                event.type = EVENT_LEFTMOUSEBUTTONDOWN;
+                event.type = EVENT_LBUTTONDOWN;
                 event.button.x = LOWORD(msg.lParam);
                 event.button.y = HIWORD(msg.lParam);
                 return true;
             case WM_RBUTTONDOWN:
-                event.type = EVENT_RIGHTMOUSEBUTTONDOWN;
+                event.type = EVENT_RBUTTONDOWN;
                 event.button.x = LOWORD(msg.lParam);
                 event.button.y = HIWORD(msg.lParam);
                 return true;
@@ -199,8 +199,8 @@ bool EDR_PollEvent(EDR_Event& event)
             case ButtonPress:
                 switch(xEvent.xbutton.button)        
                 {
-                    case Button1: event.type = EVENT_LEFTMOUSEBUTTONDOWN; break;
-                    case Button3: event.type = EVENT_RIGHTMOUSEBUTTONDOWN; break;
+                    case Button1: event.type = EVENT_LBUTTONDOWN; break;
+                    case Button3: event.type = EVENT_RBUTTONDOWN; break;
                     default: break;
                 }
                 
