@@ -89,7 +89,10 @@ void Video::startup(const std::vector<std::string>& pieceNames)
 
     glMatrixMode(GL_MODELVIEW);
     glClear(GL_COLOR_BUFFER_BIT|GL_DEPTH_BUFFER_BIT);
-    
+
+    // Optimization
+    glDisable(GL_DEPTH_TEST);
+
     // Load all the textures 
     createImages(pieceNames);
     
@@ -232,13 +235,20 @@ void Video::drawSprite(
     glVertexPointer(3, GL_SHORT, 0, vertices);
     glTexCoordPointer(2, GL_SHORT, 0, texCoords);
     glEnableClientState(GL_VERTEX_ARRAY);
-    glEnableClientState(GL_TEXTURE_COORD_ARRAY);    
-    glEnable(GL_BLEND);
-    glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
+    glEnableClientState(GL_TEXTURE_COORD_ARRAY); 
+
+    if(texture->blended == BLENDED_ON) // optimization
+    {
+       glEnable(GL_BLEND);
+       glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
+    }
 
         glDrawArrays(GL_TRIANGLE_FAN, 0, 4);
 
-    glDisable(GL_BLEND);
+    if(texture->blended == BLENDED_ON)
+    {
+       glDisable(GL_BLEND);
+    }
     glDisableClientState(GL_VERTEX_ARRAY);
     glDisableClientState(GL_TEXTURE_COORD_ARRAY);
 
@@ -354,11 +364,13 @@ Video::BMPSurface* Video::loadBMP(const char* filename)
 
 
 
-void Video::createImage(const std::string& name)
+void Video::createImage(const std::string& name, Blended blended)
 {
     TRY_BEGINS;
     
     TexturePtr texture (new Texture); 
+
+    texture->blended = blended;
     
     ostringstream path;
     path << EDR_GetCurDir() << "img/" << name << ".bmp";
@@ -415,14 +427,14 @@ void Video::createImages(const std::vector<std::string>& names)
 {
     TRY_BEGINS;
       
-    createImage("Molator0");
-    createImage("Sarvip0");
-    createImage("Ghhhk0");
-    createImage("Monnok0");
-    createImage("Strider0");
-    createImage("Ngok0");
-    createImage("Klorslug0");
-    createImage("Houjix0");
+    createImage("Molator0", BLENDED_ON);
+    createImage("Sarvip0", BLENDED_ON);
+    createImage("Ghhhk0", BLENDED_ON);
+    createImage("Monnok0", BLENDED_ON);
+    createImage("Strider0", BLENDED_ON);
+    createImage("Ngok0", BLENDED_ON);
+    createImage("Klorslug0", BLENDED_ON);
+    createImage("Houjix0", BLENDED_ON);
   
     
     createImage("ex");

@@ -331,16 +331,28 @@ void UI::handleEvents()
 
         mMoving = animation.updateAll(mMoveSteps);     
 
-        long time4 = EDR_GetTime(); // start the timer 
+        
 
+        static bool afterMove = false;
         if(mMoving)
         {
+            long time4 = EDR_GetTime(); // start the timer 
             drawAll();
+            long time2 = EDR_GetTime(); // start the timer 
+
+            afterMove = true;
+            
+        }
+        else if(!mMoving && afterMove) // drawAll one more time after moving
+        {
+            drawAll();
+            afterMove = false;
         }
 
-        long time2 = EDR_GetTime(); // start the timer 
 
-        /* handle the events in the queue */        
+        
+
+        // handle the events in the queue 
         EDR_Event event;
         if(EDR_PollEvent(event))
         {
@@ -355,18 +367,18 @@ void UI::handleEvents()
             }
         }
        
-        
-
-        long time3 = EDR_GetTime(); // start the timer 
-
         // a delay before the next iteration
         
         long drawingTime = EDR_GetTime() - time1;
-        if(drawingTime < MAX_FRAME_TIME && mMoving)
+        if(mMoving && drawingTime < MAX_FRAME_TIME) // we shouldn't draw too fast
         {
             EDR_Millisleep(MAX_FRAME_TIME - drawingTime);
         }
-         
+        
+        if(!mMoving) // we shouldn't call EDR_PollEvent too often.
+        {
+            EDR_Millisleep(MAX_FRAME_TIME);
+        }
         
     }
     

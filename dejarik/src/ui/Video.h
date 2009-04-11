@@ -48,12 +48,21 @@ private:
         int h;
     };
 
+    enum Blended
+    {
+        BLENDED_ON,
+        BLENDED_OFF
+    };
+
     struct Texture
     {
         unsigned id;
         GLfloat w;
         GLfloat h;
+        Blended blended;
     };
+
+
 
     typedef boost::shared_ptr<Texture> TexturePtr; 
     
@@ -70,12 +79,12 @@ public:
                     BindXY bindXY, GLshort x, GLshort y, float angle);    
         
 private:
-    
+        
     BMPSurface* loadBMP(const char* filename);
     void freeBMP(BMPSurface* surface);
    
     void createImages(const std::vector<std::string>& names);
-    void createImage(const std::string& name);
+    void createImage(const std::string& name, Blended blended = BLENDED_OFF);
 
 
     std::map<std::string, TexturePtr> textures;
