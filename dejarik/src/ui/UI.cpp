@@ -15,6 +15,7 @@
 #include "System.h"
 
 #define INTERIM_ANGLES 4 // smoothness of the circles
+#define MAX_FRAME_TIME 50 // in milliseconds
 
 using namespace std;
 
@@ -320,19 +321,22 @@ void UI::onMouseClick(int x, int y)
     TRY_RETHROW;
 }
 
-#include <fstream>
 void UI::handleEvents()
 {
     TRY_BEGINS;
 
-    ofstream of("log.txt");
-    
     for(;;)
     {
         long time1 = EDR_GetTime(); // start the timer 
 
-        mMoving = animation.updateAll(mMoveSteps);        
-        drawAll();
+        mMoving = animation.updateAll(mMoveSteps);     
+
+        long time4 = EDR_GetTime(); // start the timer 
+
+        if(mMoving)
+        {
+            drawAll();
+        }
 
         long time2 = EDR_GetTime(); // start the timer 
 
@@ -340,34 +344,27 @@ void UI::handleEvents()
         EDR_Event event;
         if(EDR_PollEvent(event))
         {
-            if( !mMoving && event.type == EVENT_LEFTMOUSEBUTTONDOWN) 
+            if( !mMoving && event.type == EVENT_LBUTTONDOWN) 
             {
                 onMouseClick(event.button.x, event.button.y);
+                drawAll();
             }
-            else if(event.type == EVENT_QUIT || event.type == EVENT_RIGHTMOUSEBUTTONDOWN) 
+            else if(event.type == EVENT_QUIT || event.type == EVENT_RBUTTONDOWN) 
             {
                 break;
             }
         }
        
+        
 
         long time3 = EDR_GetTime(); // start the timer 
 
-        if(mMoving)
-        {  
-        of << "1..2: " << time2-time1 << "2..3: " << time3-time2 << endl;
-        }
-
         // a delay before the next iteration
         
-        if(mMoving)
-        {        	
-            long timeForDrawing = EDR_GetTime() - time1;
-            EDR_Millisleep(20 - timeForDrawing);
-        }
-        else
+        long drawingTime = EDR_GetTime() - time1;
+        if(drawingTime < MAX_FRAME_TIME && mMoving)
         {
-            EDR_Millisleep(1); // to prevent too frequent drawings
+            EDR_Millisleep(MAX_FRAME_TIME - drawingTime);
         }
          
         
