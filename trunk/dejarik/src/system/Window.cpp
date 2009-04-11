@@ -51,6 +51,7 @@ static int attributeList[] = { EGL_RED_SIZE, 1, EGL_DEPTH_SIZE, 1, EGL_NONE };
 
 HINSTANCE EDR_Instance;
 int EDR_CmdShow;
+HWND EDR_HWnd;
 
 bool EDR_PollEvent(EDR_Event& event)
 { 
