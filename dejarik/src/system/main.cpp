@@ -6,7 +6,7 @@ using namespace std;
 #include "UI.h"
 #include "Macros.h"
 #include "System.h"
-#include "Windows.h"
+#include "Window.h"
 
 #ifdef _WIN32
 int WINAPI WinMain(HINSTANCE inst, HINSTANCE hPrevInstance, LPTSTR lpCmdLine, int cmdShow)
