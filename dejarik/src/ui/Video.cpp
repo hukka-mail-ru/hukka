@@ -3,52 +3,11 @@
 #include "Window.h"
 #include "Glbasic.h"
 #include "System.h"
-
+#include "BMP.h"
 
 using namespace std;
 
 
-/////////////////////////////////////////////////////////////////////////
-// For BMP loading
-/////////////////////////////////////////////////////////////////////////
-#ifdef LINUX_BUILD
-    #include <X11/Xmd.h> // for INT16, INT32
-    #pragma pack(1)
-    struct BITMAPFILEHEADER 
-    {
-    
-        INT16 bfType;
-        INT32 bfSize;
-        INT16 bfReserved1;
-        INT16 bfReserved2;
-        INT32 bfOffBits;
-    };
-    
-    #pragma pack(1)
-    struct BITMAPINFOHEADER 
-    { 
-      INT32 biSize; 
-      INT32 biWidth; 
-      INT32 biHeight; 
-      INT16 biPlanes; 
-      INT16 biBitCount; 
-      INT32 biCompression; 
-      INT32 biSizeImage; 
-      INT32 biXPelsPerMeter; 
-      INT32 biYPelsPerMeter; 
-      INT32 biClrUsed; 
-      INT32 biClrImportant; 
-    }; 
-    
-    #pragma pack(1)
-    struct RGBTRIPLE 
-    {
-      INT8 rgbtRed;
-      INT8 rgbtGreen;
-      INT8 rgbtBlue;
-    };
-#endif
-/////////////////////////////////////////////////////////////////////////
 
 #define PRECISION 16    
 #define ONE (1 << PRECISION)
@@ -94,7 +53,7 @@ void Video::startup(const std::vector<std::string>& pieceNames)
    // glDisable(GL_DEPTH_TEST);
 
     // Load all the textures 
-    createImages(pieceNames);
+    createTextures(pieceNames);
     
     TRY_RETHROW;
 }
@@ -259,112 +218,8 @@ void Video::drawSprite(
 
 
 
-void Video::freeBMP(BMPSurface* surface)
-{
-    delete[] surface->pixels;
-    delete surface;
-}
 
-
-Video::BMPSurface* Video::loadBMP(const char* filename)
-{
-    TRY_BEGINS;
-    
-#ifndef BM
-#define BM 0x4D42
-#endif
-    
-#define COLOR_COMPONENTS 4 // RGBA 
-
-    BITMAPFILEHEADER bmpHeader = {0};
-    BITMAPINFOHEADER bmpInfo = {0};
-    RGBTRIPLE rgb = {0};
-
-    if(!filename) 
-        throw runtime_error("Filename not set");
-
-    // Open the file
-    FILE * file;
-    if( !(file = fopen(filename, "rb")))
-    {
-        throw runtime_error(string("Can't open file: ") + string(filename));
-    }
-
-    // Read the bmp header and check for a valid file
-    if(!fread(&bmpHeader, sizeof(bmpHeader), 1, file)) 
-    {
-        fclose(file);
-        throw runtime_error(string("Can't read BMP header") + string(filename));
-    }
-    if(bmpHeader.bfType != BM) 
-    {
-        fclose(file);
-        throw runtime_error(string("Not a BMP file") + string(filename));
-    }
-
-    // Read the infoheader
-    if(!fread(&bmpInfo, sizeof(bmpInfo), 1, file)) 
-    {
-        fclose(file);
-        throw runtime_error(string("Can't read BMP info") + string(filename));
-    }
-
-    // Get the informations
-    int width = bmpInfo.biWidth;
-    int height = bmpInfo.biHeight;
-    int bpp = bmpInfo.biBitCount;
-
-    if(bmpInfo.biCompression || bpp != 24) 
-    {
-        fclose( file );
-        throw runtime_error(string("Can't read compressed BMP") + string(filename));
-    }
-
-    GLbyte* pixels = new GLbyte[width * height * COLOR_COMPONENTS];
-    if(!pixels) 
-    {
-        fclose(file);
-        throw runtime_error(string("Can't allocate memory for surface") + string(filename));
-    }
-
-    // Read the pixels
-    unsigned base = 0;
-    for (int j=height-1; j >= 0 ; j--) 
-    {
-        for (int i=0; i < width; i++) 
-        {
-            if(!fread(&rgb, sizeof(rgb), 1, file)) 
-            {
-                delete[] pixels;
-                fclose(file);
-                throw runtime_error(string("Can't read BMP pixels") + string(filename));
-            }
-           
-            pixels[base + 3] = (rgb.rgbtRed == 0 && rgb.rgbtGreen == 0 && rgb.rgbtBlue == 0) ? 
-                              0 : 255;
-            pixels[base + 2] = rgb.rgbtRed;
-            pixels[base + 1] = rgb.rgbtGreen;
-            pixels[base + 0] = rgb.rgbtBlue;
-
-            base += COLOR_COMPONENTS;
-        }
-    }
-
-    fclose(file);
-
-    BMPSurface* surface = new BMPSurface();
-    surface->pixels = pixels;
-    surface->w = width;
-    surface->h = height;
-    
-    return surface;
-
-    TRY_RETHROW;
-}
-
-
-
-void Video::createImage(const std::string& name, Blended blended)
+void Video::createTexture(const char* dir, const char* name, Blended blended)
 {
     TRY_BEGINS;
     
@@ -373,13 +228,13 @@ void Video::createImage(const std::string& name, Blended blended)
     texture->blended = blended;
     
     ostringstream path;
-    path << EDR_GetCurDir() << "img/" << name << ".bmp";
+    path << EDR_GetCurDir() << dir << "/" << name << ".bmp";
     
     /* Status indicator */
     bool res = false;
 
     /* Create storage space for the texture */
-    BMPSurface* surface = loadBMP(path.str().c_str()); 
+    EDR_Surface* surface = EDR_LoadBMP(path.str().c_str()); 
 
     /* Load The Bitmap, Check For Errors, If Bitmap's Not Found Quit */
     if (surface)
@@ -408,7 +263,7 @@ void Video::createImage(const std::string& name, Blended blended)
 
     /* Free up any memory we may have used */
     if (surface)
-        freeBMP(surface);
+    	EDR_FreeSurface(surface);
 
     if(!res)
     {
@@ -423,25 +278,25 @@ void Video::createImage(const std::string& name, Blended blended)
 }
 
 
-void Video::createImages(const std::vector<std::string>& names)
+void Video::createTextures(const std::vector<std::string>& names)
 {
     TRY_BEGINS;
       
-    createImage("Molator0", BLENDED_ON);
-    createImage("Sarvip0", BLENDED_ON);
-    createImage("Ghhhk0", BLENDED_ON);
-    createImage("Monnok0", BLENDED_ON);
-    createImage("Strider0", BLENDED_ON);
-    createImage("Ngok0", BLENDED_ON);
-    createImage("Klorslug0", BLENDED_ON);
-    createImage("Houjix0", BLENDED_ON);
+    createTexture("img/pieces", "Molator0", BLENDED_ON);
+    createTexture("img/pieces", "Sarvip0", BLENDED_ON);
+    createTexture("img/pieces", "Ghhhk0", BLENDED_ON);
+    createTexture("img/pieces", "Monnok0", BLENDED_ON);
+    createTexture("img/pieces", "Strider0", BLENDED_ON);
+    createTexture("img/pieces", "Ngok0", BLENDED_ON);
+    createTexture("img/pieces", "Klorslug0", BLENDED_ON);
+    createTexture("img/pieces", "Houjix0", BLENDED_ON);
   
     
-    createImage("ex");
+    createTexture("img", "ex");
     /*
     for(unsigned i =0; i<names.size(); ++i)
     {
-        createImage(names[i] +"0", IT_MASKED); 
+        createTexture(names[i] +"0", IT_MASKED); 
         cout << names[i] +"0" << endl;
     }
     */
@@ -450,17 +305,17 @@ void Video::createImages(const std::vector<std::string>& names)
     {
         ostringstream name;
         name << "Molator" << i;
-        createImage(name.str(), IT_MASKED);
+        createTexture(name.str(), IT_MASKED);
     }
 */
 
-    createImage("board1");
-    createImage("board2");
-    createImage("board3");
-    createImage("board4");
+    createTexture("img", "board1");
+    createTexture("img", "board2");
+    createTexture("img", "board3");
+    createTexture("img", "board4");
     
-    createImage("menu1");
-    createImage("menu2");
+    createTexture("img", "menu1");
+    createTexture("img", "menu2");
     
 
     
