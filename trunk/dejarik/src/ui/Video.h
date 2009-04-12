@@ -79,12 +79,10 @@ public:
                     BindXY bindXY, GLshort x, GLshort y, float angle);    
         
 private:
-        
-    BMPSurface* loadBMP(const char* filename);
-    void freeBMP(BMPSurface* surface);
+
    
-    void createImages(const std::vector<std::string>& names);
-    void createImage(const std::string& name, Blended blended = BLENDED_OFF);
+    void createTextures(const std::vector<std::string>& names);
+    void createTexture(const char* dir, const char* name, Blended blended = BLENDED_OFF);
 
 
     std::map<std::string, TexturePtr> textures;
