@@ -209,10 +209,6 @@
 					>
 				</File>
 				<File
-					RelativePath="..\src\ui\Glbasic.cpp"
-					>
-				</File>
-				<File
 					RelativePath="..\src\ui\UI.cpp"
 					>
 				</File>
@@ -224,6 +220,10 @@
 			<Filter
 				Name="system"
 				>
+				<File
+					RelativePath="..\src\system\BMP.cpp"
+					>
+				</File>
 				<File
 					RelativePath="..\src\system\main.cpp"
 					>
@@ -287,6 +287,10 @@
 				Name="system"
 				>
 				<File
+					RelativePath="..\src\system\BMP.h"
+					>
+				</File>
+				<File
 					RelativePath="..\src\system\Macros.h"
 					>
 				</File>
@@ -304,10 +308,6 @@
 				>
 				<File
 					RelativePath="..\src\ui\Animation.h"
-					>
-				</File>
-				<File
-					RelativePath="..\src\ui\Glbasic.h"
 					>
 				</File>
 				<File
