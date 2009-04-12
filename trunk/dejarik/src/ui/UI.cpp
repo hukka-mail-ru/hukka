@@ -324,6 +324,7 @@ void UI::onMouseClick(int x, int y)
 void UI::handleEvents()
 {
     TRY_BEGINS;
+    
 
     for(;;)
     {
@@ -333,7 +334,7 @@ void UI::handleEvents()
 
         
 
-        static bool afterMove = false;
+        static bool afterMove = true;
         if(mMoving)
         {
             long time4 = EDR_GetTime(); // start the timer 
