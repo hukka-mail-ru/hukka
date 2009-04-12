@@ -11,7 +11,7 @@ void EDR_Millisleep(unsigned milliseconds);
 // EDR_GetRandomNumber ? based on Random() - Windows Mobile.
 
 #ifdef _WIN32
-    #include "stdafx.h"
+    #include <windows.h>
     #include <cstdlib> 
     time_t time( time_t *inTT );
     

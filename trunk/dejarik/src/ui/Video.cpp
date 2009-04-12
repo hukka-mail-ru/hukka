@@ -1,7 +1,6 @@
 #include <iostream>
 #include "Video.h"
 #include "Window.h"
-#include "Glbasic.h"
 #include "System.h"
 #include "BMP.h"
 

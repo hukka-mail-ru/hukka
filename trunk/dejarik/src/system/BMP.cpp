@@ -43,6 +43,10 @@ using namespace std;
     };
 #endif
 
+#ifdef _WIN32
+    #include <windows.h>
+#endif
+
     
 void EDR_FreeSurface(EDR_Surface* surface)
 {
