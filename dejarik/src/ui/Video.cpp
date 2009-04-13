@@ -216,8 +216,6 @@ void Video::drawSprite(
 }
 
 
-
-
 void Video::createTexture(const char* dir, const char* name, Blended blended)
 {
     TRY_BEGINS;
@@ -251,6 +249,64 @@ void Video::createTexture(const char* dir, const char* name, Blended blended)
         /* Generate The Texture */
         glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, surface->w, surface->h, 0, GL_RGBA, // blue chanel must be changed by red 
                      GL_UNSIGNED_BYTE, surface->pixels );
+        
+        texture->w = surface->w;
+        texture->h = surface->h;
+
+        /* Linear Filtering */
+        glTexParameterx( GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR );
+        glTexParameterx( GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR );
+    }
+
+    /* Free up any memory we may have used */
+    if (surface)
+        EDR_FreeSurface(surface);
+
+    if(!res)
+    {
+        ostringstream os;
+        os << "loadTexture failed: " << path << endl;
+        throw runtime_error(os.str());
+    }
+    
+    textures[name] = texture;  
+    
+    TRY_RETHROW;
+}
+
+void Video::createCompressedTexture(const char* dir, const char* name, Blended blended)
+{
+    TRY_BEGINS;
+    
+    TexturePtr texture (new Texture); 
+
+    texture->blended = blended;
+    
+    ostringstream path;
+    path << EDR_GetCurDir() << dir << "/" << name << ".pvr";
+    
+    /* Status indicator */
+    bool res = false;
+
+    /* Create storage space for the texture */
+    EDR_Surface* surface = EDR_LoadPVR(path.str().c_str());
+
+    /* Load The Bitmap, Check For Errors, If Bitmap's Not Found Quit */
+    if (surface)
+    {
+
+        /* Set the status to true */
+        res = true;
+
+        /* Create The Texture */
+        glGenTextures(1, &texture->id);
+
+        /* Typical Texture Generation Using Data From The Bitmap */
+        glBindTexture(GL_TEXTURE_2D, texture->id);
+
+        /* Generate The Texture */
+        glCompressedTexImage2D (GL_TEXTURE_2D, 0, GL_PALETTE4_RGBA4_OES, 
+                surface->w, surface->h, 0, surface->size, surface->pixels);
         
         texture->w = surface->w;
         texture->h = surface->h;
@@ -308,7 +364,7 @@ void Video::createTextures(const std::vector<std::string>& names)
     }
 */
 
-    createTexture("img", "board1");
+    createCompressedTexture("img", "board1");
     createTexture("img", "board2");
     createTexture("img", "board3");
     createTexture("img", "board4");

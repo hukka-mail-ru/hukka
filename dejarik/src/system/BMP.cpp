@@ -1,7 +1,9 @@
 #include "BMP.h"
 #include "../system/Macros.h"
+#include "CPVRTexture.h"
 
 using namespace std;
+using namespace pvrtexlib;
 
 #define COLOR_COMPONENTS 4 // RGBA
 
@@ -54,6 +56,41 @@ void EDR_FreeSurface(EDR_Surface* surface)
     delete surface;
 }
 
+void EDR_FreePVR(EDR_Surface* surface)
+{
+    delete[] surface->pixels;
+    delete surface;
+}
+
+EDR_Surface* EDR_LoadPVR(const char* filename)
+{
+    try
+    {
+        CPVRTexture texture(filename);
+        
+        CPVRTextureData texData = texture.getData();
+        CPVRTextureHeader texHeader = texture.getHeader();
+        
+        PixelType type = texture.getPixelType(); // just interesting...
+
+        char* pixels = new char[texData.getDataSize()];
+        memcpy(pixels, texData.getData(), texData.getDataSize());
+
+        
+        EDR_Surface* surface = new EDR_Surface();
+        surface->pixels = pixels;
+        surface->w = texture.getWidth();
+        surface->h = texture.getHeight();
+        surface->size = texData.getDataSize();
+        
+        return surface;
+    }
+    PVRCATCH(exeption)
+    {
+        throw runtime_error(string("PVR ERROR: ") + exeption.what());
+    }
+    
+}
 
 EDR_Surface* EDR_LoadBMP(const char* filename)
 {
