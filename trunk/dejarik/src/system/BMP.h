@@ -4,11 +4,14 @@
 struct EDR_Surface // for BMP loading
 {
     char* pixels;
-    int w;
-    int h;
+    unsigned size;
+    unsigned w;
+    unsigned h;
 };
 
 EDR_Surface* EDR_LoadBMP(const char* filename);
+EDR_Surface* EDR_LoadPVR(const char* filename);
+
 void EDR_FreeSurface(EDR_Surface* surface);
     
 #endif /*BMP_H_*/

@@ -82,8 +82,9 @@ private:
 
    
     void createTextures(const std::vector<std::string>& names);
+    
     void createTexture(const char* dir, const char* name, Blended blended = BLENDED_OFF);
-
+    void createCompressedTexture(const char* dir, const char* name, Blended blended = BLENDED_OFF);
 
     std::map<std::string, TexturePtr> textures;
 };
