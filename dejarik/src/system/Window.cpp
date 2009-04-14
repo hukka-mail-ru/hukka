@@ -234,6 +234,7 @@ void EDR_CreateWindow(int width, int height, const char *name)
     egldisplay = eglGetDisplay(display);
     
     eglInitialize(egldisplay, 0, 0);
+     
     
     if (!eglChooseConfig(egldisplay, attributeList, config, sizeof config/sizeof config[0], &nconfig)) 
     {
@@ -258,7 +259,6 @@ void EDR_CreateWindow(int width, int height, const char *name)
     window = XCreateWindow(display, RootWindow(display, vi->screen), 0, 0, width, height,
                         0, vi->depth, InputOutput, vi->visual,
                         CWBorderPixel|CWColormap|CWEventMask, &swa);
-    
 
     // this is for correct handling of the 'close' operation
     pnProtocol = XInternAtom (display, "WM_DELETE_WINDOW", True);
@@ -270,9 +270,16 @@ void EDR_CreateWindow(int width, int height, const char *name)
     XMapWindow(display, window);
     XSetStandardProperties(display, window, name, name, None, 0, 0, &sizehints);
 
+    
     eglwindow = eglCreateWindowSurface(egldisplay, config[0], (NativeWindowType)window, 0);
-    eglMakeCurrent(egldisplay, eglwindow, eglwindow, cx);
+    if(!eglMakeCurrent(egldisplay, eglwindow, eglwindow, cx))
+    {
+        throw runtime_error("eglMakeCurrent failed");
+    }
 
+    glGetError();
+
+    
     TRY_RETHROW;
 }
 
