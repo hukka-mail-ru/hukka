@@ -305,7 +305,7 @@ void Video::createCompressedTexture(const char* dir, const char* name, Blended b
 
         /* Generate The Texture */
         glCompressedTexImage2D (GL_TEXTURE_2D, 0, GL_PALETTE4_RGBA4_OES, 
-                surface->w, surface->h, 0, surface->size, surface->pixels);
+                surface->w, surface->h, 0, 16*2+(128*128/2), surface->pixels);
         
         
         texture->w = surface->w;
@@ -323,7 +323,15 @@ void Video::createCompressedTexture(const char* dir, const char* name, Blended b
         os << "Error " << err << "; Path: " << path.str() << endl;
         throw runtime_error(os.str());
     }
-
+ 
+    /*
+ok    GL_INVALID_VALUE if if level is greater than 0 or the absolute value of level is greater than log2max, where max is the returned value of GL_MAX_TEXTURE_SIZE.
+ok?    GL_INVALID_VALUE if internalformat is not one of the accepted symbolic constants.
+ok    GL_INVALID_VALUE  if width or height is less than 0 or greater than 2 + GL_MAX_TEXTURE_SIZE, or if either cannot be represented as 2k + 2border for some integer k.
+OK    GL_INVALID_VALUE if border is not 0.
+    GL_INVALID_VALUE if imageSize is not consistent with format, dimentions, 
+    and contents of the compressed image.
+*/
     
     textures[name] = texture;  
     

@@ -164,6 +164,8 @@ void EDR_CreateWindow(int width, int height,  const char *name)
         return;
 
     eglMakeCurrent(egldisplay, eglwindow, eglwindow, eglcontext); 
+    
+    glGetError(); // empty error buffer
 
     return;
 }
@@ -277,7 +279,7 @@ void EDR_CreateWindow(int width, int height, const char *name)
         throw runtime_error("eglMakeCurrent failed");
     }
 
-    glGetError();
+    glGetError(); // empty error buffer
 
     
     TRY_RETHROW;
