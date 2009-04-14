@@ -29,7 +29,7 @@ void Video::startup(const std::vector<std::string>& pieceNames)
 {
     TRY_BEGINS;
     
-    EDR_CreateWindow(WINDOW_WIDTH, WINDOW_HEIGHT, "Dejarik");
+    EDR_CreateWindow(WINDOW_WIDTH, WINDOW_HEIGHT, "Dejarik");   
     
     glMatrixMode(GL_PROJECTION);
     glLoadIdentity();   
@@ -47,6 +47,8 @@ void Video::startup(const std::vector<std::string>& pieceNames)
 
     glMatrixMode(GL_MODELVIEW);
     glClear(GL_COLOR_BUFFER_BIT|GL_DEPTH_BUFFER_BIT);
+    
+
 
     // Optimization
    // glDisable(GL_DEPTH_TEST);
@@ -258,10 +260,11 @@ void Video::createTexture(const char* dir, const char* name, Blended blended)
         glTexParameterx( GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR );
     }
 
-    if(!res)
+    GLenum err = glGetError();
+    if(!res || err != GL_NO_ERROR)
     {
         ostringstream os;
-        os << "loadTexture failed: " << path << endl;
+        os << "Error " << err << "; Path: " << path.str() << endl;
         throw runtime_error(os.str());
     }
     
@@ -313,12 +316,14 @@ void Video::createCompressedTexture(const char* dir, const char* name, Blended b
         glTexParameterx( GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR );
     }
 
-    if(!res)
+    GLenum err = glGetError();
+    if(!res || err != GL_NO_ERROR)
     {
         ostringstream os;
-        os << "loadTexture failed: " << path << endl;
+        os << "Error " << err << "; Path: " << path.str() << endl;
         throw runtime_error(os.str());
     }
+
     
     textures[name] = texture;  
     
