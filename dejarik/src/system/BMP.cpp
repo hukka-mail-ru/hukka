@@ -1,5 +1,4 @@
 #include "BMP.h"
-#include "../system/Macros.h"
 #include "CPVRTexture.h"
 
 using namespace std;
@@ -50,19 +49,8 @@ using namespace pvrtexlib;
 #endif
 
     
-void EDR_FreeSurface(EDR_Surface* surface)
-{
-    delete[] surface->pixels;
-    delete surface;
-}
 
-void EDR_FreePVR(EDR_Surface* surface)
-{
-    delete[] surface->pixels;
-    delete surface;
-}
-
-EDR_Surface* EDR_LoadPVR(const char* filename)
+EDR_SurfacePtr EDR_LoadPVR(const char* filename)
 {
     try
     {
@@ -73,16 +61,14 @@ EDR_Surface* EDR_LoadPVR(const char* filename)
         
         PixelType type = texture.getPixelType(); // just interesting...
 
-        char* pixels = new char[texData.getDataSize()];
-        memcpy(pixels, texData.getData(), texData.getDataSize());
-
-        
-        EDR_Surface* surface = new EDR_Surface();
-        surface->pixels = pixels;
+        EDR_SurfacePtr surface (new EDR_Surface());
         surface->w = texture.getWidth();
         surface->h = texture.getHeight();
         surface->size = texData.getDataSize();
         
+        surface->pixels = new char[texData.getDataSize()];
+        memcpy(surface->pixels, texData.getData(), texData.getDataSize());
+       
         return surface;
     }
     PVRCATCH(exeption)
@@ -92,7 +78,7 @@ EDR_Surface* EDR_LoadPVR(const char* filename)
     
 }
 
-EDR_Surface* EDR_LoadBMP(const char* filename)
+EDR_SurfacePtr EDR_LoadBMP(const char* filename)
 {
     TRY_BEGINS;
     
@@ -178,7 +164,7 @@ EDR_Surface* EDR_LoadBMP(const char* filename)
 
     fclose(file);
 
-    EDR_Surface* surface = new EDR_Surface();
+    EDR_SurfacePtr surface (new EDR_Surface());
     surface->pixels = pixels;
     surface->w = width;
     surface->h = height;
