@@ -48,7 +48,7 @@ using namespace pvrtexlib;
     #include <windows.h>
 #endif
 
-    
+#include <GLES/gl.h>    
 
 EDR_SurfacePtr EDR_LoadPVR(const char* filename)
 {
@@ -68,7 +68,7 @@ EDR_SurfacePtr EDR_LoadPVR(const char* filename)
         
         surface->pixels = new char[texData.getDataSize()];
         memcpy(surface->pixels, texData.getData(), texData.getDataSize());
-       
+
         return surface;
     }
     PVRCATCH(exeption)
