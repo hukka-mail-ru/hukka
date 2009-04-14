@@ -231,7 +231,7 @@ void Video::createTexture(const char* dir, const char* name, Blended blended)
     bool res = false;
 
     /* Create storage space for the texture */
-    EDR_Surface* surface = EDR_LoadBMP(path.str().c_str()); 
+    EDR_SurfacePtr surface = EDR_LoadBMP(path.str().c_str()); 
 
     /* Load The Bitmap, Check For Errors, If Bitmap's Not Found Quit */
     if (surface)
@@ -257,10 +257,6 @@ void Video::createTexture(const char* dir, const char* name, Blended blended)
         glTexParameterx( GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR );
         glTexParameterx( GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR );
     }
-
-    /* Free up any memory we may have used */
-    if (surface)
-        EDR_FreeSurface(surface);
 
     if(!res)
     {
@@ -289,7 +285,7 @@ void Video::createCompressedTexture(const char* dir, const char* name, Blended b
     bool res = false;
 
     /* Create storage space for the texture */
-    EDR_Surface* surface = EDR_LoadPVR(path.str().c_str());
+    EDR_SurfacePtr surface = EDR_LoadPVR(path.str().c_str());
 
     /* Load The Bitmap, Check For Errors, If Bitmap's Not Found Quit */
     if (surface)
@@ -308,6 +304,7 @@ void Video::createCompressedTexture(const char* dir, const char* name, Blended b
         glCompressedTexImage2D (GL_TEXTURE_2D, 0, GL_PALETTE4_RGBA4_OES, 
                 surface->w, surface->h, 0, surface->size, surface->pixels);
         
+        
         texture->w = surface->w;
         texture->h = surface->h;
 
@@ -315,10 +312,6 @@ void Video::createCompressedTexture(const char* dir, const char* name, Blended b
         glTexParameterx( GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR );
         glTexParameterx( GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR );
     }
-
-    /* Free up any memory we may have used */
-    if (surface)
-    	EDR_FreeSurface(surface);
 
     if(!res)
     {
