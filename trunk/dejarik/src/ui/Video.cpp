@@ -273,6 +273,9 @@ void Video::createTexture(const char* dir, const char* name, Blended blended)
     TRY_RETHROW;
 }
 
+#include "OGLES/PVRTTextureAPI.h"
+#include "PVRTResourceFile.h"
+
 void Video::createCompressedTexture(const char* dir, const char* name, Blended blended)
 {
     TRY_BEGINS;
@@ -284,34 +287,52 @@ void Video::createCompressedTexture(const char* dir, const char* name, Blended b
     ostringstream path;
     path << EDR_GetCurDir() << dir << "/" << name << ".pvr";
     
-    /* Status indicator */
+    CPVRTResourceFile TexFile(path.str().c_str());
+    if (!TexFile.IsOpen())
+    {
+        ostringstream os;
+        os << "TexFile.IsOpen error. Path: " << path.str() << endl;
+        throw runtime_error(os.str());
+    }
+
+    if(!PVRTLoadPartialTextureFromPointer(TexFile.DataPtr(), NULL, 0, &texture->id, NULL))
+    {
+        ostringstream os;
+        os << "PVRTLoadPartialTextureFromPointer error. Path: " << path.str() << endl;
+        throw runtime_error(os.str());
+    }
+    
+    /*
+    TexturePtr texture (new Texture); 
+
+    texture->blended = blended;
+    
+    ostringstream path;
+    path << EDR_GetCurDir() << dir << "/" << name << ".pvr";
+    
+    // Status indicator 
     bool res = false;
 
-    /* Create storage space for the texture */
+    // Create storage space for the texture 
     EDR_SurfacePtr surface = EDR_LoadPVR(path.str().c_str());
 
-    /* Load The Bitmap, Check For Errors, If Bitmap's Not Found Quit */
+    // Load The Bitmap, Check For Errors, If Bitmap's Not Found Quit 
     if (surface)
     {
 
-        /* Set the status to true */
         res = true;
 
-        /* Create The Texture */
         glGenTextures(1, &texture->id);
 
-        /* Typical Texture Generation Using Data From The Bitmap */
         glBindTexture(GL_TEXTURE_2D, texture->id);
 
-        /* Generate The Texture */
-        glCompressedTexImage2D (GL_TEXTURE_2D, 0, GL_PALETTE4_RGBA4_OES, 
+        glCompressedTexImage2D (GL_TEXTURE_2D, 0,  GL_PALETTE4_RGB5_A1_OES, 
                 surface->w, surface->h, 0, 16*2+(128*128/2), surface->pixels);
         
         
         texture->w = surface->w;
         texture->h = surface->h;
 
-        /* Linear Filtering */
         glTexParameterx( GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR );
         glTexParameterx( GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR );
     }
@@ -323,18 +344,10 @@ void Video::createCompressedTexture(const char* dir, const char* name, Blended b
         os << "Error " << err << "; Path: " << path.str() << endl;
         throw runtime_error(os.str());
     }
- 
-    /*
-ok    GL_INVALID_VALUE if if level is greater than 0 or the absolute value of level is greater than log2max, where max is the returned value of GL_MAX_TEXTURE_SIZE.
-ok?    GL_INVALID_VALUE if internalformat is not one of the accepted symbolic constants.
-ok    GL_INVALID_VALUE  if width or height is less than 0 or greater than 2 + GL_MAX_TEXTURE_SIZE, or if either cannot be represented as 2k + 2border for some integer k.
-OK    GL_INVALID_VALUE if border is not 0.
-    GL_INVALID_VALUE if imageSize is not consistent with format, dimentions, 
-    and contents of the compressed image.
-*/
+
     
     textures[name] = texture;  
-    
+*/    
     TRY_RETHROW;
 }
 
