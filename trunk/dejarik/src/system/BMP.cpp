@@ -77,9 +77,9 @@ EDR_SurfacePtr EDR_LoadPVR(const char* filename)
             
             CARD16 first_shifted = first << 8;
             CARD16 argb = second + first_shifted;
-        
-            CARD16 rgb0 = argb << 1;
-            CARD16 a = argb >> 15;
+
+            CARD16 rgb0 = argb << 4;
+            CARD16 a = argb >> 12;
             CARD16 res = rgb0 + a;
             
             surface->pixels[i+0] = res >> 8;
