@@ -1,10 +1,10 @@
 cmake_minimum_required(VERSION 2.4)
 
-include_directories (src/logic src/ui src/system PVRTex)  
+include_directories (src/logic src/ui src/system PVRTex PVRTools PVRTools/OGLES)  
 set(CMAKE_CXX_FLAGS "-g -Wall")
 set(SRC_LOGIC src/logic/Player.cpp src/logic/Board.cpp src/logic/Game.cpp) 
 set(SRC_SYSTEM src/system/System.cpp src/system/Window.cpp src/system/BMP.cpp) 
-set(SRC_UI src/ui/UI.cpp src/ui/Video.cpp src/ui/Animation.cpp)
+set(SRC_UI src/ui/UI.cpp src/ui/Video.cpp src/ui/Animation.cpp PVRTools/PVRTResourceFile.cpp PVRTools/OGLES/PVRTTextureAPI.cpp PVRTools/PVRTTexture.cpp)
 
 # DEJARIK executable
 add_executable (dejarik src/system/main.cpp ${SRC_LOGIC} ${SRC_SYSTEM} ${SRC_UI})

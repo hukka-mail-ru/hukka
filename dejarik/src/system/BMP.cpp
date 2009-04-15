@@ -68,7 +68,24 @@ EDR_SurfacePtr EDR_LoadPVR(const char* filename)
         
         surface->pixels = new char[texData.getDataSize()];
         memcpy(surface->pixels, texData.getData(), texData.getDataSize());
-
+        
+        
+        for(int i =0; i<texData.getDataSize(); i+=2)
+        {
+            CARD8 first = surface->pixels[i+0];
+            CARD8 second = surface->pixels[i+1];
+            
+            CARD16 first_shifted = first << 8;
+            CARD16 argb = second + first_shifted;
+        
+            CARD16 rgb0 = argb << 1;
+            CARD16 a = argb >> 15;
+            CARD16 res = rgb0 + a;
+            
+            surface->pixels[i+0] = res >> 8;
+            surface->pixels[i+1] = res;
+        }
+        
         return surface;
     }
     PVRCATCH(exeption)
