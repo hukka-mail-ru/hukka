@@ -273,8 +273,7 @@ void Video::createTexture(const char* dir, const char* name, Blended blended)
     TRY_RETHROW;
 }
 
-#include "OGLES/PVRTTextureAPI.h"
-#include "PVRTResourceFile.h"
+
 
 void Video::createCompressedTexture(const char* dir, const char* name, Blended blended)
 {
