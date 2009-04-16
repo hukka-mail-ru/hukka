@@ -1,10 +1,13 @@
 #include "BMP.h"
 
 using namespace std;
-using namespace pvrtexlib;
 
 #define TWO_BYTES 2 // RGBA
 #define FOUR_BYTES 4 // RGBA
+
+#ifdef _WIN32
+#include <windows.h>
+#endif
 
 #ifdef LINUX_BUILD
     #include <X11/Xmd.h> // for INT16, INT32
@@ -42,36 +45,35 @@ using namespace pvrtexlib;
       INT8 rgbtGreen;
       INT8 rgbtBlue;
     };
-    
-    /* PVR Header */
-    struct PVRHEADER
-    {
-        INT32 dwHeaderSize;
-        INT32 dwHeight;
-        INT32 dwWidth;
-        INT32 dwMipMapCount;
-        INT32 dwpfFlags;
-        INT32 dwDataSize;
-        INT32 dwBitCount;
-        INT32 dwRBitMask;
-        INT32 dwGBitMask;
-        INT32 dwBBitMask;
-        INT32 dwAlphaBitMask;
-        INT32 dwPVR;
-        INT32 dwNumSurfs;
-    };
-    
-    struct COLOR565
-    {
-        INT8 first;
-        INT8 second;
-    };
-
 #endif
 
-#ifdef _WIN32
-    #include <windows.h>
-#endif
+/* PVR Header */
+#pragma pack(1)
+struct PVRHEADER
+{
+    INT32 dwHeaderSize;
+    INT32 dwHeight;
+    INT32 dwWidth;
+    INT32 dwMipMapCount;
+    INT32 dwpfFlags;
+    INT32 dwDataSize;
+    INT32 dwBitCount;
+    INT32 dwRBitMask;
+    INT32 dwGBitMask;
+    INT32 dwBBitMask;
+    INT32 dwAlphaBitMask;
+    INT32 dwPVR;
+    INT32 dwNumSurfs;
+};
+
+#pragma pack(1)
+struct COLOR565
+{
+    INT8 first;
+    INT8 second;
+};
+
+
 
 #include <GLES/gl.h>    
 
