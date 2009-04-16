@@ -68,7 +68,7 @@ EDR_SurfacePtr EDR_LoadPVR(const char* filename)
         
         surface->pixels = new char[texData.getDataSize()];
         memcpy(surface->pixels, texData.getData(), texData.getDataSize());
-        
+        /*
         
         for(int i =0; i<texData.getDataSize(); i+=2)
         {
@@ -84,7 +84,7 @@ EDR_SurfacePtr EDR_LoadPVR(const char* filename)
             
             surface->pixels[i+0] = res >> 8;
             surface->pixels[i+1] = res;
-        }
+        }*/
         
         return surface;
     }

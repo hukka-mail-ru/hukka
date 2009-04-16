@@ -329,8 +329,8 @@ void Video::createCompressedTexture(const char* dir, const char* name, Blended b
 
       //  glCompressedTexImage2D (GL_TEXTURE_2D, 0,  GL_PALETTE4_RGB5_A1_OES, 
       //          surface->w, surface->h, 0, 16*2+(128*128/2), surface->pixels);
-               glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, surface->w, surface->h, 0, GL_RGBA, // blue chanel must be changed by red 
-                       GL_UNSIGNED_SHORT_4_4_4_4, surface->pixels );
+               glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, surface->w, surface->h, 0, GL_RGB, // blue chanel must be changed by red 
+                       GL_UNSIGNED_SHORT_5_6_5, surface->pixels );
         
         texture->w = surface->w;
         texture->h = surface->h;
