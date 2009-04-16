@@ -279,30 +279,6 @@ void Video::createCompressedTexture(const char* dir, const char* name, Blended b
 {
     TRY_BEGINS;
     
-    /*
-    TexturePtr texture (new Texture); 
-
-    texture->blended = blended;
-    
-    ostringstream path;
-    path << EDR_GetCurDir() << dir << "/" << name << ".pvr";
-    
-    CPVRTResourceFile TexFile(path.str().c_str());
-    if (!TexFile.IsOpen())
-    {
-        ostringstream os;
-        os << "TexFile.IsOpen error. Path: " << path.str() << endl;
-        throw runtime_error(os.str());
-    }
-
-    if(!PVRTLoadPartialTextureFromPointer(TexFile.DataPtr(), NULL, 0, &texture->id, NULL))
-    {
-        ostringstream os;
-        os << "PVRTLoadPartialTextureFromPointer error. Path: " << path.str() << endl;
-        throw runtime_error(os.str());
-    }
-    
-    */
     TexturePtr texture (new Texture); 
 
     texture->blended = blended;
@@ -328,7 +304,7 @@ void Video::createCompressedTexture(const char* dir, const char* name, Blended b
 
       //  glCompressedTexImage2D (GL_TEXTURE_2D, 0,  GL_PALETTE4_RGB5_A1_OES, 
       //          surface->w, surface->h, 0, 16*2+(128*128/2), surface->pixels);
-               glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, surface->w, surface->h, 0, GL_RGB, // blue chanel must be changed by red 
+               glTexImage2D(GL_TEXTURE_2D, 0, GL_RGB, surface->w, surface->h, 0, GL_RGB, // blue chanel must be changed by red 
                        GL_UNSIGNED_SHORT_5_6_5, surface->pixels );
         
         texture->w = surface->w;
@@ -367,7 +343,7 @@ void Video::createTextures(const std::vector<std::string>& names)
     createTexture("img/pieces", "Houjix0", BLENDED_ON);
   
     
-    createTexture("img", "ex");
+   // createTexture("img", "ex");
     /*
     for(unsigned i =0; i<names.size(); ++i)
     {
@@ -385,12 +361,12 @@ void Video::createTextures(const std::vector<std::string>& names)
 */
 
     createCompressedTexture("img", "board1");
-    createTexture("img", "board2");
-    createTexture("img", "board3");
-    createTexture("img", "board4");
+    createCompressedTexture("img", "board2");
+    createCompressedTexture("img", "board3");
+    createCompressedTexture("img", "board4");
     
-    createTexture("img", "menu1");
-    createTexture("img", "menu2");
+    createCompressedTexture("img", "menu1");
+    createCompressedTexture("img", "menu2");
     
 
     
