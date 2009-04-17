@@ -100,7 +100,10 @@ struct PCXHEADER
 
 
 
-#include <GLES/gl.h>    
+#include <GLES/gl.h>  
+#include <vector>
+using namespace std;
+
 
 EDR_SurfacePtr EDR_LoadPCX(const char* filename)
 {
@@ -139,7 +142,10 @@ EDR_SurfacePtr EDR_LoadPCX(const char* filename)
     unsigned i = 0;
     int beacon = 0;
 
-    char compressed_pixels[width * height * TWO_BYTES + palette_size]; // buffer is big enough      
+    vector<char> v;
+    v.reserve( width * height * FOUR_BYTES + palette_size); // buffer is big enough  
+    v.resize( width * height * FOUR_BYTES + palette_size); // buffer is big enough         
+    char* compressed_pixels = &v[0];
     while(fread(&compressed_pixels[i], sizeof(char), 1, file)) 
     {
         if(compressed_pixels[i] == 0x0C) // memorize the beacon byte
@@ -200,6 +206,7 @@ EDR_SurfacePtr EDR_LoadPCX(const char* filename)
     surface->w = width;
     surface->h = height;
 
+    
     return surface;
 
     TRY_RETHROW;

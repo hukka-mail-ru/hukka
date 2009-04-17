@@ -408,7 +408,7 @@ void Video::createTextures(const std::vector<std::string>& names)
 
     createCompressedTexture("img", "board1");
     createTexture("img", "board2");
-    createTexture("img", "board3");
+    createCompressedTexture("img", "board3");
     createTexture("img", "board4");
     
     createTexture("img", "menu1");

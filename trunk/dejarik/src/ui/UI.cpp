@@ -227,15 +227,15 @@ void UI::drawBoard()
 {
     TRY_BEGINS;
     
-    static bool flag = true; // TODO temporary optimized
-    if(flag)
-    {
+ //   static bool flag = true; // TODO temporary optimized
+ //   if(flag)
+ //   {
         mVideo.drawSprite("board1", RGBA_Color(1,1,1,1), XY_RIGHT_TOP, 0, BOARD_TEXTURE_WIDTH, 0);
         mVideo.drawSprite("board2", RGBA_Color(1,1,1,1), XY_LEFT_TOP, 0, BOARD_TEXTURE_WIDTH, 0);
         mVideo.drawSprite("board3", RGBA_Color(1,1,1,1), XY_RIGHT_TOP, 0, 0, 0);
         mVideo.drawSprite("board4", RGBA_Color(1,1,1,1), XY_LEFT_TOP, 0, 0, 0);
-        flag = false;
-    }
+  //      flag = false;
+ //   }
     
     vector<CellPtr> cells;
     mGame->getBoard()->getCells(cells);
