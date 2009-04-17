@@ -177,6 +177,20 @@ EDR_SurfacePtr EDR_LoadPCX(const char* filename)
             pixels[k++] = color;
         }
     }
+    
+    
+    // Flip vertically
+    unsigned base = 0;
+    for (int j=height-1; j > height/2; j--) 
+    {
+        for (int i=0; i < width; i++) 
+        {
+            char temp = pixels[palette_size + j*width + i];
+            pixels[palette_size + j*width + i] = pixels[palette_size + base];
+            pixels[palette_size + base] = temp;
+            base ++;
+        }
+    }
 
 
     fclose(file);
