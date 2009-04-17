@@ -296,6 +296,8 @@ int sizeOfTexture(int format, int width, int height)
             bpp = 8;
             base = 256*2;
             break;
+            
+            
 
         case GL_PALETTE4_RGB8_OES:
             bpp = 4;
@@ -346,14 +348,10 @@ void Video::createCompressedTexture(const char* dir, const char* name, Blended b
 
         glBindTexture(GL_TEXTURE_2D, texture->id);
 
-        int bpp = 8;
-        int base = 256*4;
-        
-        
-        glCompressedTexImage2D (GL_TEXTURE_2D, 0,  GL_PALETTE8_RGBA8_OES, 
-                surface->w, surface->h, 0, sizeOfTexture(GL_PALETTE8_RGBA8_OES, 128, 128) /*base +(128*128*bpp/8)*/, surface->pixels);
-       //        glTexImage2D(GL_TEXTURE_2D, 0, GL_RGB, surface->w, surface->h, 0, GL_RGB, // blue chanel must be changed by red 
-      //                 GL_UNSIGNED_SHORT_5_6_5, surface->pixels );
+        glCompressedTexImage2D (GL_TEXTURE_2D, 0,  GL_PALETTE8_RGB8_OES, 
+                surface->w, surface->h, 0, 
+                sizeOfTexture(GL_PALETTE8_RGB8_OES, surface->w, surface->h),
+                surface->pixels);
         
         texture->w = surface->w;
         texture->h = surface->h;

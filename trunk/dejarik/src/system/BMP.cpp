@@ -133,33 +133,51 @@ EDR_SurfacePtr EDR_LoadPCX(const char* filename)
     int width = pcxHeader.xMax - pcxHeader.xMin + 1;
     int height = pcxHeader.yMax - pcxHeader.yMin + 1;
 
-    char* pixels = new char[width * height * TWO_BYTES]; // ???
-    if(!pixels) 
-    {
-        fclose(file);
-        throw runtime_error(string("Can't allocate memory for surface") + string(filename));
-    }
-
-
+    
     // Read the pixels
-    unsigned base = 0;
-    for (int j=height-1; j >= 0 ; j--) 
+    unsigned palette_size = 256*3;
+    unsigned i = 0;
+    int beacon = 0;
+
+    char compressed_pixels[width * height * TWO_BYTES + palette_size]; // buffer is big enough      
+    while(fread(&compressed_pixels[i], sizeof(char), 1, file)) 
     {
-        for (int i=0; i < width; i++) 
+        if(compressed_pixels[i] == 0x0C) // memorize the beacon byte
         {
-            char c;            
-            if(!fread(&c, sizeof(c), 1, file)) 
+            beacon = i;
+        }
+        
+        i++;
+    }
+    
+    
+    // for uncompressed pixels
+    char* pixels = new char[palette_size + width * height];
+    
+    // GL wants the palette to be before the image data
+    memcpy(pixels, compressed_pixels + beacon + 1, palette_size);
+    
+    // unpack PCX
+    int k=palette_size;
+    for(int i=0; i<beacon; i++)
+    {
+        unsigned char byte = compressed_pixels[i];
+        if(byte > 192) // Two high bits are set = Repeat
+        {
+            byte -= 192; // Repeat how many times?            
+            char color = compressed_pixels[++i];
+            for(int j=0; j<byte; j++)
             {
-                delete[] pixels;
-                fclose(file);
-                throw runtime_error(string("Can't read BMP pixels") + string(filename));
+                pixels[k++] = color;
             }
-
-            pixels[base] = c;
-
-            base++;
+        }
+        else
+        {
+            char color = byte;
+            pixels[k++] = color;
         }
     }
+
 
     fclose(file);
 
