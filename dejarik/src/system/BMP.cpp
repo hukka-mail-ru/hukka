@@ -73,9 +73,107 @@ struct COLOR565
     INT8 second;
 };
 
+#pragma pack(1)
+struct PCXHEADER
+{
+    INT8  manufacturer; // must be 0x0a
+    INT8  version;
+    INT8  encoding; // must be 0x01
+    INT8  bitsPerPixel;
+    INT16 xMin;
+    INT16 yMin;
+    INT16 xMax;
+    INT16 yMax;
+    INT16 hRes;
+    INT16 wRes;
+    INT8  colorMap[48];
+    INT8  reserved;
+    INT8  nPlanes;
+    INT16 bytesPerLine;
+    INT16 paletteInfo;
+    INT8  filler[58];
+};
+
+
+
+
+
 
 
 #include <GLES/gl.h>    
+
+EDR_SurfacePtr EDR_LoadPCX(const char* filename)
+{
+    TRY_BEGINS;
+
+    PCXHEADER pcxHeader = {0};
+
+    if(!filename) 
+        throw runtime_error("Filename not set");
+
+    // Open the file
+    FILE * file;
+    if( !(file = fopen(filename, "rb")))
+    {
+        throw runtime_error(string("Can't open file: ") + string(filename));
+    }
+
+    // Read the header 
+    if(!fread(&pcxHeader, sizeof(pcxHeader), 1, file)) 
+    {
+        fclose(file);
+        throw runtime_error(string("Can't read PVR header") + string(filename));
+    }
+    if(pcxHeader.manufacturer != 0x0a || pcxHeader.encoding != 0x01) 
+    {
+        fclose(file);
+        throw runtime_error(string("Not a PCX file") + string(filename));
+    }
+
+    int width = pcxHeader.xMax - pcxHeader.xMin + 1;
+    int height = pcxHeader.yMax - pcxHeader.yMin + 1;
+
+    char* pixels = new char[width * height * TWO_BYTES]; // ???
+    if(!pixels) 
+    {
+        fclose(file);
+        throw runtime_error(string("Can't allocate memory for surface") + string(filename));
+    }
+
+
+    // Read the pixels
+    unsigned base = 0;
+    for (int j=height-1; j >= 0 ; j--) 
+    {
+        for (int i=0; i < width; i++) 
+        {
+            char c;            
+            if(!fread(&c, sizeof(c), 1, file)) 
+            {
+                delete[] pixels;
+                fclose(file);
+                throw runtime_error(string("Can't read BMP pixels") + string(filename));
+            }
+
+            pixels[base] = c;
+
+            base++;
+        }
+    }
+
+    fclose(file);
+
+    EDR_SurfacePtr surface (new EDR_Surface());
+    surface->pixels = pixels;
+    surface->w = width;
+    surface->h = height;
+
+    return surface;
+
+    TRY_RETHROW;
+
+}
+
 
 EDR_SurfacePtr EDR_LoadPVR(const char* filename)
 {

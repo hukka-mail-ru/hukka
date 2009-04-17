@@ -274,6 +274,50 @@ void Video::createTexture(const char* dir, const char* name, Blended blended)
 }
 
 
+int sizeOfTexture(int format, int width, int height)
+{
+    int base = 0; // e.g. palette size
+    int bpp = 0;
+
+    switch (format)
+    {
+        // Palette formats
+        case GL_PALETTE8_RGB8_OES:
+            bpp = 8;
+            base = 256*3;
+            break;
+        case GL_PALETTE8_RGBA8_OES:
+            bpp = 8;
+            base = 256*4;
+            break;
+        case GL_PALETTE8_R5_G6_B5_OES:
+        case GL_PALETTE8_RGBA4_OES:
+        case GL_PALETTE8_RGB5_A1_OES:
+            bpp = 8;
+            base = 256*2;
+            break;
+
+        case GL_PALETTE4_RGB8_OES:
+            bpp = 4;
+            base = 16*3;
+            break;
+        case GL_PALETTE4_RGBA8_OES:
+            bpp = 4;
+            base = 16*4;
+            break;
+        case GL_PALETTE4_R5_G6_B5_OES:
+        case GL_PALETTE4_RGBA4_OES:
+        case GL_PALETTE4_RGB5_A1_OES:
+            bpp = 4;
+            base = 16*2;
+            break;
+    }
+
+
+   return base + (width * height * bpp / 8);
+}
+
+
 
 void Video::createCompressedTexture(const char* dir, const char* name, Blended blended)
 {
@@ -284,13 +328,13 @@ void Video::createCompressedTexture(const char* dir, const char* name, Blended b
     texture->blended = blended;
     
     ostringstream path;
-    path << EDR_GetCurDir() << dir << "/" << name << ".pvr";
+    path << EDR_GetCurDir() << dir << "/" << name << ".pcx"; 
     
     // Status indicator 
     bool res = false;
 
     // Create storage space for the texture 
-    EDR_SurfacePtr surface = EDR_LoadPVR(path.str().c_str());
+    EDR_SurfacePtr surface = EDR_LoadPCX(path.str().c_str());
 
     // Load The Bitmap, Check For Errors, If Bitmap's Not Found Quit 
     if (surface)
@@ -302,10 +346,14 @@ void Video::createCompressedTexture(const char* dir, const char* name, Blended b
 
         glBindTexture(GL_TEXTURE_2D, texture->id);
 
-      //  glCompressedTexImage2D (GL_TEXTURE_2D, 0,  GL_PALETTE4_RGB5_A1_OES, 
-      //          surface->w, surface->h, 0, 16*2+(128*128/2), surface->pixels);
-               glTexImage2D(GL_TEXTURE_2D, 0, GL_RGB, surface->w, surface->h, 0, GL_RGB, // blue chanel must be changed by red 
-                       GL_UNSIGNED_SHORT_5_6_5, surface->pixels );
+        int bpp = 8;
+        int base = 256*4;
+        
+        
+        glCompressedTexImage2D (GL_TEXTURE_2D, 0,  GL_PALETTE8_RGBA8_OES, 
+                surface->w, surface->h, 0, sizeOfTexture(GL_PALETTE8_RGBA8_OES, 128, 128) /*base +(128*128*bpp/8)*/, surface->pixels);
+       //        glTexImage2D(GL_TEXTURE_2D, 0, GL_RGB, surface->w, surface->h, 0, GL_RGB, // blue chanel must be changed by red 
+      //                 GL_UNSIGNED_SHORT_5_6_5, surface->pixels );
         
         texture->w = surface->w;
         texture->h = surface->h;
@@ -361,12 +409,12 @@ void Video::createTextures(const std::vector<std::string>& names)
 */
 
     createCompressedTexture("img", "board1");
-    createCompressedTexture("img", "board2");
-    createCompressedTexture("img", "board3");
-    createCompressedTexture("img", "board4");
+    createTexture("img", "board2");
+    createTexture("img", "board3");
+    createTexture("img", "board4");
     
-    createCompressedTexture("img", "menu1");
-    createCompressedTexture("img", "menu2");
+    createTexture("img", "menu1");
+    createTexture("img", "menu2");
     
 
     
