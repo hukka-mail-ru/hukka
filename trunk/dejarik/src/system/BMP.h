@@ -18,6 +18,7 @@ CLASSPTR(EDR_Surface);
 
 EDR_SurfacePtr EDR_LoadBMP(const char* filename);
 EDR_SurfacePtr EDR_LoadPVR(const char* filename);
+EDR_SurfacePtr EDR_LoadPCX(const char* filename);
 
     
 #endif /*BMP_H_*/

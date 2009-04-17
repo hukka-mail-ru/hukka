@@ -160,6 +160,7 @@ void UI::drawCell(const CellPtr& cell, bool clicked)
         case SEL_POSSIBLE_MOVE:   color = RGBA_Color(0.2, 1, 0.2,0.5);  if(clicked) return; break;
         case SEL_POSSIBLE_TARGET: color = RGBA_Color(1,0,0,0.5);  if(clicked) return; break;
         case SEL_POSSIBLE_PUSH:   color = RGBA_Color(1,0,1,0.5);  if(clicked) return; break;
+      //  case SEL_NONE:            color = RGBA_Color(1,0,1,1);break;
         case SEL_NONE:            return;
     }
 
@@ -200,6 +201,9 @@ void UI::drawPiece(const PiecePtr& piece)
 {
     TRY_BEGINS;
     
+    if(mMoving && piece != mMovedPiece) // optimization: draw only the moving piece
+        return;
+    
     RGBA_Color color = (piece->player.get() == mGame->getActivePlayer()) ?
             RGBA_Color(1,0,1,1) : RGBA_Color(1,1,1,1);
 
@@ -223,10 +227,15 @@ void UI::drawBoard()
 {
     TRY_BEGINS;
     
-    mVideo.drawSprite("board1", RGBA_Color(1,1,1,1), XY_RIGHT_TOP, 0, BOARD_TEXTURE_WIDTH, 0);
-    mVideo.drawSprite("board2", RGBA_Color(1,1,1,1), XY_LEFT_TOP, 0, BOARD_TEXTURE_WIDTH, 0);
-    mVideo.drawSprite("board3", RGBA_Color(1,1,1,1), XY_RIGHT_TOP, 0, 0, 0);
-    mVideo.drawSprite("board4", RGBA_Color(1,1,1,1), XY_LEFT_TOP, 0, 0, 0);
+    static bool flag = true; // TODO temporary optimized
+    if(flag)
+    {
+        mVideo.drawSprite("board1", RGBA_Color(1,1,1,1), XY_RIGHT_TOP, 0, BOARD_TEXTURE_WIDTH, 0);
+        mVideo.drawSprite("board2", RGBA_Color(1,1,1,1), XY_LEFT_TOP, 0, BOARD_TEXTURE_WIDTH, 0);
+        mVideo.drawSprite("board3", RGBA_Color(1,1,1,1), XY_RIGHT_TOP, 0, 0, 0);
+        mVideo.drawSprite("board4", RGBA_Color(1,1,1,1), XY_LEFT_TOP, 0, 0, 0);
+        flag = false;
+    }
     
     vector<CellPtr> cells;
     mGame->getBoard()->getCells(cells);
@@ -263,7 +272,13 @@ bool UI::drawAll()
     TRY_BEGINS;
 
     drawBoard();
-    drawMenu();
+    
+    static bool flag = true; // TODO temporary optimized
+    if(flag)
+    {
+        drawMenu();
+        flag = false;
+    }
     
     EDR_SwapBuffers();
 
@@ -294,7 +309,7 @@ void UI::onMouseClick(int x, int y)
         {
             mGame->getBoard()->getMoveSteps(cell, mMoveSteps);
             mMoveSteps.insert(mMoveSteps.begin(), cell->piece->cellBeforeMoving);
-            
+            mMovedPiece = cell->piece;
         }
         
         switch(res)
@@ -373,7 +388,7 @@ void UI::handleEvents()
         long drawingTime = EDR_GetTime() - time1;
         if(mMoving && drawingTime < MAX_FRAME_TIME) // we shouldn't draw too fast
         {
-            EDR_Millisleep(MAX_FRAME_TIME - drawingTime);
+        //    EDR_Millisleep(MAX_FRAME_TIME - drawingTime);
         }
         
         if(!mMoving) // we shouldn't call EDR_PollEvent too often.
