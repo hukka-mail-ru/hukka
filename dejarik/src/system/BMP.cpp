@@ -140,21 +140,18 @@ EDR_SurfacePtr EDR_LoadPCX(const char* filename)
     
     // Read the pixels
     unsigned palette_size = 256*3;
-    unsigned i = 0;
-    int beacon = 0;
-
+    int file_size = 0;
    
     char compressed_pixels[width * height * TWO_BYTES + palette_size];
-    while(fread(&compressed_pixels[i], sizeof(char), 1, file)) 
+  
+    while(fread(&compressed_pixels[file_size], sizeof(char), 1, file)) 
     {
-        if(compressed_pixels[i] == 0x0C) // memorize the beacon byte
-        {
-            beacon = i;
-        }
-        
-        i++;
+        file_size++;
     }
-    
+
+
+
+    int beacon = file_size - palette_size - 1;
     
     // for uncompressed pixels
     char* pixels = new char[palette_size + width * height];
@@ -166,8 +163,8 @@ EDR_SurfacePtr EDR_LoadPCX(const char* filename)
     int k=palette_size;
     for(int i=0; i<beacon; i++)
     {
-        if(k > palette_size + width * height) 
-            break;
+     //   if(k > palette_size + width * height) 
+     //       break;
         
         unsigned char byte = compressed_pixels[i];
         if(byte > 192) // Two high bits are set = Repeat
@@ -186,6 +183,7 @@ EDR_SurfacePtr EDR_LoadPCX(const char* filename)
         }
     }
     
+
     
     // Flip vertically
     unsigned base = 0;
