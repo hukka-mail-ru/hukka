@@ -1,6 +1,8 @@
 #include "BMP.h"
-
+#include <GLES/gl.h>  
+#include <vector>
 using namespace std;
+
 
 #define TWO_BYTES 2 // RGBA
 #define FOUR_BYTES 4 // RGBA
@@ -100,15 +102,14 @@ struct PCXHEADER
 
 
 
-#include <GLES/gl.h>  
-#include <vector>
-using namespace std;
+
 
 
 EDR_SurfacePtr EDR_LoadPCX(const char* filename)
 {
     TRY_BEGINS;
 
+    
     PCXHEADER pcxHeader = {0};
 
     if(!filename) 
@@ -142,10 +143,8 @@ EDR_SurfacePtr EDR_LoadPCX(const char* filename)
     unsigned i = 0;
     int beacon = 0;
 
-    vector<char> v;
-    v.reserve( width * height * FOUR_BYTES + palette_size); // buffer is big enough  
-    v.resize( width * height * FOUR_BYTES + palette_size); // buffer is big enough         
-    char* compressed_pixels = &v[0];
+   
+    char compressed_pixels[width * height * TWO_BYTES + palette_size];
     while(fread(&compressed_pixels[i], sizeof(char), 1, file)) 
     {
         if(compressed_pixels[i] == 0x0C) // memorize the beacon byte
@@ -167,6 +166,9 @@ EDR_SurfacePtr EDR_LoadPCX(const char* filename)
     int k=palette_size;
     for(int i=0; i<beacon; i++)
     {
+        if(k > palette_size + width * height) 
+            break;
+        
         unsigned char byte = compressed_pixels[i];
         if(byte > 192) // Two high bits are set = Repeat
         {
@@ -205,7 +207,6 @@ EDR_SurfacePtr EDR_LoadPCX(const char* filename)
     surface->pixels = pixels;
     surface->w = width;
     surface->h = height;
-
     
     return surface;
 
