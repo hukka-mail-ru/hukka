@@ -324,7 +324,7 @@ int sizeOfTexture(int format, int width, int height)
 void Video::createCompressedTexture(const char* dir, const char* name, Blended blended)
 {
     TRY_BEGINS;
-    
+
     TexturePtr texture (new Texture); 
 
     texture->blended = blended;
@@ -347,12 +347,12 @@ void Video::createCompressedTexture(const char* dir, const char* name, Blended b
         glGenTextures(1, &texture->id);
 
         glBindTexture(GL_TEXTURE_2D, texture->id);
-
+ 
         glCompressedTexImage2D (GL_TEXTURE_2D, 0,  GL_PALETTE8_RGB8_OES, 
                 surface->w, surface->h, 0, 
                 sizeOfTexture(GL_PALETTE8_RGB8_OES, surface->w, surface->h),
                 surface->pixels);
-        
+    
         texture->w = surface->w;
         texture->h = surface->h;
 
@@ -370,7 +370,7 @@ void Video::createCompressedTexture(const char* dir, const char* name, Blended b
 
     
     textures[name] = texture;  
-    
+ 
     TRY_RETHROW;
 }
 
@@ -407,12 +407,12 @@ void Video::createTextures(const std::vector<std::string>& names)
 */
 
     createCompressedTexture("img", "board1");
-    createTexture("img", "board2");
+    createCompressedTexture("img", "board2");
     createCompressedTexture("img", "board3");
-    createTexture("img", "board4");
+    createCompressedTexture("img", "board4");
     
-    createTexture("img", "menu1");
-    createTexture("img", "menu2");
+    createCompressedTexture("img", "menu1");
+    createCompressedTexture("img", "menu2");
     
 
     
