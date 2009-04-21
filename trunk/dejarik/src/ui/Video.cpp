@@ -49,9 +49,12 @@ void Video::startup(const std::vector<std::string>& pieceNames)
     glClear(GL_COLOR_BUFFER_BIT|GL_DEPTH_BUFFER_BIT);
     
 
-
-    // Optimization
-   // glDisable(GL_DEPTH_TEST);
+    // 2D rendering
+    glDisable(GL_DEPTH_TEST);
+    glDisable(GL_FOG);
+    glDisable(GL_LIGHTING);
+    glDisable(GL_ALPHA_TEST);
+    glDisable(GL_DITHER);
 
     // Load all the textures 
     createTextures(pieceNames);
@@ -74,12 +77,9 @@ void Video::drawSolidPolygon(const GLshort* vertexArray, unsigned vertNum, const
     glEnableClientState(GL_VERTEX_ARRAY);
 
     glVertexPointer(3, GL_SHORT, 0, vertexArray);
-    glEnable(GL_BLEND);
-    glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
     
-        glDrawArrays(GL_TRIANGLE_FAN, 0, vertNum);
+    glDrawArrays(GL_TRIANGLE_FAN, 0, vertNum);
 
-    glDisable(GL_BLEND);
     glDisableClientState(GL_VERTEX_ARRAY);
 }
 
@@ -102,12 +102,9 @@ void Video::drawLineLoop(const GLshort* vertexArray, unsigned vertNum, const RGB
     glEnableClientState(GL_VERTEX_ARRAY);
 
     glVertexPointer(3, GL_SHORT, 0, vertexArray);
-    glEnable(GL_BLEND);
-    glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
     
-        glDrawArrays(GL_LINE_LOOP, 0, vertNum);
+    glDrawArrays(GL_LINE_LOOP, 0, vertNum);
 
-    glDisable(GL_BLEND);
     glDisableClientState(GL_VERTEX_ARRAY);
     
     TRY_RETHROW;
@@ -197,13 +194,7 @@ void Video::drawSprite(
     glEnableClientState(GL_VERTEX_ARRAY);
     glEnableClientState(GL_TEXTURE_COORD_ARRAY); 
 
-   //    glEnable(GL_BLEND);
-  //     glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
-
         glDrawArrays(GL_TRIANGLE_FAN, 0, 4);
-
-
-   //    glDisable(GL_BLEND);
 
     glDisableClientState(GL_VERTEX_ARRAY);
     glDisableClientState(GL_TEXTURE_COORD_ARRAY);
