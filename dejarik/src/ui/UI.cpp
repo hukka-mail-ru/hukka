@@ -182,24 +182,12 @@ void UI::drawCell(const CellPtr& cell, bool clicked)
 }
 
 
-
-void UI::drawMenu()
-{
-    TRY_BEGINS;
-    
-    // TODO some subscriptions in the menu
-    mVideo.drawSprite("menu1", RGBA_Color(1,1,1,1), XY_RIGHT_TOP, 0, -BOARD_TEXTURE_WIDTH, 0);
-    mVideo.drawSprite("menu2", RGBA_Color(1,1,1,1), XY_LEFT_TOP, 0, -BOARD_TEXTURE_WIDTH, 0);
-
-    TRY_RETHROW;
-}
-
 void UI::drawPiece(const PiecePtr& piece)
 {
     TRY_BEGINS;
     
-    if(mMoving && piece != mMovedPiece) // optimization: draw only the moving piece
-        return;
+ //   if(mMoving && piece != mMovedPiece) // optimization: draw only the moving piece
+//        return;
     
     RGBA_Color color = (piece->player.get() == mGame->getActivePlayer()) ?
             RGBA_Color(1,0,1,1) : RGBA_Color(1,1,1,1);
@@ -220,20 +208,44 @@ void UI::drawPiece(const PiecePtr& piece)
     TRY_RETHROW;
 }
 
-void UI::drawBoard()
+
+void UI::drawMenu()
 {
     TRY_BEGINS;
     
- //   static bool flag = true; // TODO temporary optimized
- //   if(flag)
- //   {
-        mVideo.drawSprite("board1", RGBA_Color(1,1,1,1), XY_RIGHT_TOP, 0, BOARD_TEXTURE_WIDTH, 0);
-        mVideo.drawSprite("board2", RGBA_Color(1,1,1,1), XY_LEFT_TOP, 0, BOARD_TEXTURE_WIDTH, 0);
-        mVideo.drawSprite("board3", RGBA_Color(1,1,1,1), XY_RIGHT_TOP, 0, 0, 0);
-        mVideo.drawSprite("board4", RGBA_Color(1,1,1,1), XY_LEFT_TOP, 0, 0, 0);
-  //      flag = false;
- //   }
-        
+    // TODO some subscriptions in the menu
+    mVideo.drawSprite("menu1", RGBA_Color(1,1,1,1), XY_RIGHT_TOP, 0, -BOARD_TEXTURE_WIDTH, 0);
+    mVideo.drawSprite("menu2", RGBA_Color(1,1,1,1), XY_LEFT_TOP, 0, -BOARD_TEXTURE_WIDTH, 0);
+
+    TRY_RETHROW;
+}
+
+void UI::drawBoard()
+{
+    TRY_BEGINS;
+    mVideo.drawSprite("board1", RGBA_Color(1,1,1,1), XY_RIGHT_TOP, 0, BOARD_TEXTURE_WIDTH, 0);
+    mVideo.drawSprite("board2", RGBA_Color(1,1,1,1), XY_LEFT_TOP, 0, BOARD_TEXTURE_WIDTH, 0);
+    mVideo.drawSprite("board3", RGBA_Color(1,1,1,1), XY_RIGHT_TOP, 0, 0, 0);
+    mVideo.drawSprite("board4", RGBA_Color(1,1,1,1), XY_LEFT_TOP, 0, 0, 0);
+     
+    TRY_RETHROW;
+}
+
+
+/* Here goes our drawing code */
+bool UI::drawAll()
+{
+    TRY_BEGINS;
+
+    drawBoard();
+    
+    static bool flag = true; // TODO temporary optimized
+    if(flag)
+    {
+        drawMenu();
+        flag = false;
+    }
+    
     mVideo.enableBlend();
     
     vector<CellPtr> cells;
@@ -260,24 +272,8 @@ void UI::drawBoard()
     }
     
     mVideo.disableBlend();
-     
-    TRY_RETHROW;
-}
-
-
-/* Here goes our drawing code */
-bool UI::drawAll()
-{
-    TRY_BEGINS;
-
-    drawBoard();
     
-    static bool flag = true; // TODO temporary optimized
-    if(flag)
-    {
-        drawMenu();
-        flag = false;
-    }
+    
     
     EDR_SwapBuffers();
 
