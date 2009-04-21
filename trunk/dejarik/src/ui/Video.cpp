@@ -197,18 +197,14 @@ void Video::drawSprite(
     glEnableClientState(GL_VERTEX_ARRAY);
     glEnableClientState(GL_TEXTURE_COORD_ARRAY); 
 
-    if(texture->blended == BLENDED_ON) // optimization
-    {
-       glEnable(GL_BLEND);
-       glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
-    }
+   //    glEnable(GL_BLEND);
+  //     glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
 
         glDrawArrays(GL_TRIANGLE_FAN, 0, 4);
 
-    if(texture->blended == BLENDED_ON)
-    {
-       glDisable(GL_BLEND);
-    }
+
+   //    glDisable(GL_BLEND);
+
     glDisableClientState(GL_VERTEX_ARRAY);
     glDisableClientState(GL_TEXTURE_COORD_ARRAY);
 
@@ -218,13 +214,25 @@ void Video::drawSprite(
 }
 
 
-void Video::createTexture(const char* dir, const char* name, Blended blended)
+void Video::enableBlend()
+{
+    glEnable(GL_BLEND);
+    glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
+}
+
+
+void Video::disableBlend()
+{
+    glDisable(GL_BLEND);
+}
+
+
+
+void Video::createTexture(const char* dir, const char* name)
 {
     TRY_BEGINS;
     
     TexturePtr texture (new Texture); 
-
-    texture->blended = blended;
     
     ostringstream path;
     path << EDR_GetCurDir() << dir << "/" << name << ".bmp";
@@ -321,13 +329,11 @@ int sizeOfTexture(int format, int width, int height)
 
 
 
-void Video::createCompressedTexture(const char* dir, const char* name, Blended blended)
+void Video::createCompressedTexture(const char* dir, const char* name)
 {
     TRY_BEGINS;
 
     TexturePtr texture (new Texture); 
-
-    texture->blended = blended;
     
     ostringstream path;
     path << EDR_GetCurDir() << dir << "/" << name << ".pcx"; 
@@ -379,14 +385,14 @@ void Video::createTextures(const std::vector<std::string>& names)
 {
     TRY_BEGINS;
       
-    createTexture("img/pieces", "Molator0", BLENDED_ON);
-    createTexture("img/pieces", "Sarvip0", BLENDED_ON);
-    createTexture("img/pieces", "Ghhhk0", BLENDED_ON);
-    createTexture("img/pieces", "Monnok0", BLENDED_ON);
-    createTexture("img/pieces", "Strider0", BLENDED_ON);
-    createTexture("img/pieces", "Ngok0", BLENDED_ON);
-    createTexture("img/pieces", "Klorslug0", BLENDED_ON);
-    createTexture("img/pieces", "Houjix0", BLENDED_ON);
+    createTexture("img/pieces", "Molator0");
+    createTexture("img/pieces", "Sarvip0");
+    createTexture("img/pieces", "Ghhhk0");
+    createTexture("img/pieces", "Monnok0");
+    createTexture("img/pieces", "Strider0");
+    createTexture("img/pieces", "Ngok0");
+    createTexture("img/pieces", "Klorslug0");
+    createTexture("img/pieces", "Houjix0");
   
     
    // createTexture("img", "ex");
