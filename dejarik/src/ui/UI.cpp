@@ -236,6 +236,8 @@ void UI::drawBoard()
         mVideo.drawSprite("board4", RGBA_Color(1,1,1,1), XY_LEFT_TOP, 0, 0, 0);
   //      flag = false;
  //   }
+        
+    mVideo.enableBlend();
     
     vector<CellPtr> cells;
     mGame->getBoard()->getCells(cells);
@@ -253,7 +255,6 @@ void UI::drawBoard()
     }
     
     // draw Pieces 
-    mVideo.enableBlend();
     
     vector<PiecePtr> pieces = mGame->getBoard()->getPieces();
     for(unsigned i = 0; i < pieces.size(); i++)
