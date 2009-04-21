@@ -253,6 +253,7 @@ void UI::drawBoard()
     }
     
     // draw Pieces 
+    mVideo.enableBlend();
     
     vector<PiecePtr> pieces = mGame->getBoard()->getPieces();
     for(unsigned i = 0; i < pieces.size(); i++)
@@ -260,7 +261,7 @@ void UI::drawBoard()
         drawPiece(pieces[i]);
     }
     
-    
+    mVideo.disableBlend();
      
     TRY_RETHROW;
 }

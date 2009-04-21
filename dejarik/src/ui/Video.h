@@ -48,18 +48,11 @@ private:
         int h;
     };
 
-    enum Blended
-    {
-        BLENDED_ON,
-        BLENDED_OFF
-    };
-
     struct Texture
     {
         unsigned id;
         GLfloat w;
         GLfloat h;
-        Blended blended;
     };
 
 
@@ -77,14 +70,17 @@ public:
 
     void drawSprite(const std::string& textureName, const RGBA_Color& color, 
                     BindXY bindXY, GLshort x, GLshort y, float angle);    
+    
+    void enableBlend();
+    void disableBlend();
         
 private:
 
    
     void createTextures(const std::vector<std::string>& names);
     
-    void createTexture(const char* dir, const char* name, Blended blended = BLENDED_OFF);
-    void createCompressedTexture(const char* dir, const char* name, Blended blended = BLENDED_OFF);
+    void createTexture(const char* dir, const char* name);
+    void createCompressedTexture(const char* dir, const char* name);
 
     std::map<std::string, TexturePtr> textures;
 };

@@ -101,10 +101,6 @@ struct PCXHEADER
 
 
 
-
-
-
-
 EDR_SurfacePtr EDR_LoadPCX(const char* filename)
 {
     TRY_BEGINS;
@@ -140,10 +136,9 @@ EDR_SurfacePtr EDR_LoadPCX(const char* filename)
     
     // Read the pixels
     unsigned palette_size = 256*3;
-    int file_size = 0;
-   
     char compressed_pixels[width * height * TWO_BYTES + palette_size];
   
+    int file_size = 0;
     while(fread(&compressed_pixels[file_size], sizeof(char), 1, file)) 
     {
         file_size++;
@@ -163,9 +158,6 @@ EDR_SurfacePtr EDR_LoadPCX(const char* filename)
     int k=palette_size;
     for(int i=0; i<beacon; i++)
     {
-     //   if(k > palette_size + width * height) 
-     //       break;
-        
         unsigned char byte = compressed_pixels[i];
         if(byte > 192) // Two high bits are set = Repeat
         {
