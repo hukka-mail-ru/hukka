@@ -188,11 +188,8 @@ void UI::drawMenu()
     TRY_BEGINS;
     
     // TODO some subscriptions in the menu
-    mVideo.drawSprite("menu1", RGBA_Color(1,1,1,1), XY_LEFT_TOP, -BOARD_TEXTURE_WIDTH, -BOARD_TEXTURE_WIDTH, 0);
-    mVideo.drawSprite("menu2", RGBA_Color(1,1,1,1), XY_RIGHT_TOP, 0, -BOARD_TEXTURE_WIDTH, 0);
-
-    mVideo.drawSprite("menu2", RGBA_Color(1,1,1,1), XY_LEFT_TOP, 0, -BOARD_TEXTURE_WIDTH, 180);
-    mVideo.drawSprite("menu1", RGBA_Color(1,1,1,1), XY_RIGHT_TOP, BOARD_TEXTURE_WIDTH, -BOARD_TEXTURE_WIDTH, 180);
+    mVideo.drawSprite("menu1", RGBA_Color(1,1,1,1), XY_RIGHT_TOP, 0, -BOARD_TEXTURE_WIDTH, 0);
+    mVideo.drawSprite("menu2", RGBA_Color(1,1,1,1), XY_LEFT_TOP, 0, -BOARD_TEXTURE_WIDTH, 0);
 
     TRY_RETHROW;
 }
