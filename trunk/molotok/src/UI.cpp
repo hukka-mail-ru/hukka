@@ -72,7 +72,7 @@ void UI::handleEvents()
         // animation
         if(animation)
         {
-            mAngle += 2;
+            mAngle ++;
         }
         if(mAngle > 90)
         {
@@ -107,7 +107,7 @@ void UI::handleEvents()
         }
         
         // a delay before the next iteration
-        SDL_Delay(20);
+        SDL_Delay(10);
         
     }
     
