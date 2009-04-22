@@ -10,8 +10,6 @@
 
 #include "Macros.h"
 
-#define BOARD_TEXTURE_WIDTH 128
-
 
 #define WINDOW_WIDTH  640
 #define WINDOW_HEIGHT 480
@@ -65,7 +63,7 @@ public:
     
     void startup();
     void stop();
-    
+        
     void drawSolidPolygon(const GLshort* vertexArray, unsigned vertNum, const RGBA_Color& color);
     
     void drawLineLoop(const GLshort* vertexArray, unsigned vertNum, const RGBA_Color& color,
@@ -79,7 +77,7 @@ public:
         
 private:
 
-   
+    void initSDL();
     void createTextures();
     
     void createTexture(const char* dir, const char* name);

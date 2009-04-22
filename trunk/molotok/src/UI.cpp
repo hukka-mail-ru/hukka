@@ -1,21 +1,7 @@
-/*
- * This code was created by Jeff Molofee '99 
- * (ported to Linux/SDL by Ti Leggett '01)
- *
- * If you've found this code useful, please let me know.
- *
- * Visit Jeff at http://nehe.gamedev.net/
- * 
- * or for port-specific comments, questions, bugreports etc. 
- * email to leggett@eecs.tulane.edu
- */
 #include <math.h>
 
 #include "UI.h"
 #include "System.h"
-
-#define INTERIM_ANGLES 4 // smoothness of the circles
-#define MAX_FRAME_TIME 50 // in milliseconds
 
 using namespace std;
 
@@ -40,17 +26,17 @@ bool UI::drawAll()
     TRY_BEGINS;
 
     // Square coordinates
+    /*
     GLshort vertexArray[] = 
     {
             0,0,0,
-            0,50,0,
-            100,50,0,
-            100,0,0
+            0,10,0,
+            10,10,0,
+            10,0,0
     };
+    */
     
-    
-    // draw a scene
-    mVideo.drawSolidPolygon(vertexArray, 4, RGBA_Color(1,1,1,1));
+    mVideo.drawSprite("molotok", RGBA_Color(1,1,1,1), XY_CENTER, mX, mY, mAngle);
     
     SDL_GL_SwapBuffers();
 
@@ -77,11 +63,22 @@ void UI::handleEvents()
     /* wait for events */
     SDL_Event event;
     bool quit = false;
+    bool rotation = false;
 
     while(!quit)
     {
 
-
+        // animation
+        if(rotation)
+        {
+            mAngle += 0.5;
+        }
+        if(mAngle > 90)
+        {
+            rotation = false;
+        }
+        
+        
         drawAll();
 
         
@@ -96,6 +93,7 @@ void UI::handleEvents()
              //   GLfloat winZ = 0;
                 if( event.button.button == SDL_BUTTON_LEFT ) 
                 { 
+                    rotation = true;
                     //Get the mouse offsets 
                //     winX = event.button.x; 
                //     winY = event.button.y; 
@@ -113,7 +111,7 @@ void UI::handleEvents()
         }
         
         // a delay before the next iteration
-        SDL_Delay(MAX_FRAME_TIME);
+        SDL_Delay(1);
         
     }
     

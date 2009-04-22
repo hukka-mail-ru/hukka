@@ -11,51 +11,71 @@ using namespace std;
 #define SCREEN_HEIGHT 1000 // must be big enough
     
   
-
-
-/* function to release/destroy our resources and restoring the old desktop */
-void Quit( int returnCode )
+void Video::startup()
 {
-    /* clean up the window */
-    SDL_Quit( );
+    TRY_BEGINS;
+    
+    initSDL();
+    
+    glMatrixMode(GL_PROJECTION);
+    glLoadIdentity();   
+    
+    // The center of coordinates 
+    glViewport(-(SCREEN_WIDTH - WINDOW_WIDTH)/2,
+               -(SCREEN_HEIGHT - WINDOW_HEIGHT)/2,
+               SCREEN_WIDTH, 
+               SCREEN_HEIGHT);
 
-    /* and exit appropriately */
-    exit( returnCode );
+    glOrtho(-SCREEN_WIDTH/2,  SCREEN_WIDTH/2,
+             -SCREEN_HEIGHT/2, SCREEN_HEIGHT/2,
+             0 , 1);
+
+    glMatrixMode(GL_MODELVIEW);
+    glClear(GL_COLOR_BUFFER_BIT|GL_DEPTH_BUFFER_BIT);
+    
+
+    // 2D rendering
+    glDisable(GL_DEPTH_TEST);
+    glDisable(GL_FOG);
+    glDisable(GL_LIGHTING);
+    glDisable(GL_ALPHA_TEST);
+    glDisable(GL_DITHER);
+
+    // Load all the textures 
+    createTextures();
+    
+    TRY_RETHROW;
 }
 
-void initSDL()
+/* function to release/destroy our resources and restoring the old desktop */
+void Video::stop()
 {
-    /* Flags to pass to SDL_SetVideoMode */
-    int videoFlags;
-    /* main loop variable */
-    int done = false;
-    /* used to collect events */
-    SDL_Event event;
-    /* this holds some info about our display */
-    const SDL_VideoInfo *videoInfo;
-    /* whether or not the window is active */
-    int isActive = true;
+    /* clean up the window */
+    SDL_Quit();
+}
 
+void Video::initSDL()
+{
+    TRY_BEGINS;
+    
     /* initialize SDL */
     if ( SDL_Init( SDL_INIT_VIDEO ) < 0 )
     {
-        fprintf( stderr, "Video initialization failed: %s\n",
-             SDL_GetError( ) );
-        Quit( 1 );
+        stop();
+        throw(runtime_error("Video initialization failed"));
     }
 
     /* Fetch the video info */
-    videoInfo = SDL_GetVideoInfo( );
+    const SDL_VideoInfo* videoInfo = SDL_GetVideoInfo( );
 
     if ( !videoInfo )
     {
-        fprintf( stderr, "Video query failed: %s\n",
-             SDL_GetError( ) );
-        Quit( 1 );
+        stop();
+        throw(runtime_error("Video query failed"));
     }
 
     /* the flags to pass to SDL_SetVideoMode */
-    videoFlags  = SDL_OPENGL;          /* Enable OpenGL in SDL */
+    int videoFlags  = SDL_OPENGL;          /* Enable OpenGL in SDL */
     videoFlags |= SDL_GL_DOUBLEBUFFER; /* Enable double buffering */
     videoFlags |= SDL_HWPALETTE;       /* Store the palette in hardware */
     videoFlags |= SDL_RESIZABLE;       /* Enable window resizing */
@@ -80,55 +100,16 @@ void initSDL()
     /* Verify there is a surface */
     if ( !surface )
     {
-        fprintf( stderr,  "Video mode set failed: %s\n", SDL_GetError( ) );
-        Quit( 1 );
+        stop();
+        throw(runtime_error("Video mode set failed"));
     }
-}
-
-
-void Video::startup()
-{
-    TRY_BEGINS;
-    
-   // EDR_CreateWindow(WINDOW_WIDTH, WINDOW_HEIGHT, "Dejarik"); 
-    initSDL();
-    
-    glMatrixMode(GL_PROJECTION);
-    glLoadIdentity();   
-    
-    // The center of coordinates must be at the center of the game board  
-    // (a litte upper of geometrical window center) 
-    glViewport(-(SCREEN_WIDTH - WINDOW_WIDTH)/2,
-    		   -(SCREEN_HEIGHT - WINDOW_HEIGHT)/2  + (WINDOW_HEIGHT/2 - BOARD_TEXTURE_WIDTH),
-    		   SCREEN_WIDTH, 
-    		   SCREEN_HEIGHT);
-
-    glOrtho(-SCREEN_WIDTH/2,  SCREEN_WIDTH/2,
-     	     -SCREEN_HEIGHT/2, SCREEN_HEIGHT/2,
-    	     0 , 1);
-
-    glMatrixMode(GL_MODELVIEW);
-    glClear(GL_COLOR_BUFFER_BIT|GL_DEPTH_BUFFER_BIT);
-    
-
-    // 2D rendering
-    glDisable(GL_DEPTH_TEST);
-    glDisable(GL_FOG);
-    glDisable(GL_LIGHTING);
-    glDisable(GL_ALPHA_TEST);
-    glDisable(GL_DITHER);
-
-    // Load all the textures 
-    createTextures();
     
     TRY_RETHROW;
 }
 
 
-void Video::stop()
-{
-    Quit(0);
-}
+
+
 
 
 void Video::drawSolidPolygon(const GLshort* vertexArray, unsigned vertNum, const RGBA_Color& color)
@@ -322,7 +303,7 @@ void Video::createTexture(const char* dir, const char* name)
         glBindTexture(GL_TEXTURE_2D, texture->id);
 
         /* Generate The Texture */
-        glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, surface->w, surface->h, 0, GL_RGBA, // blue chanel must be changed by red 
+        glTexImage2D(GL_TEXTURE_2D, 0, GL_RGB, surface->w, surface->h, 0, GL_RGB, // blue chanel must be changed by red 
                      GL_UNSIGNED_BYTE, surface->pixels );
         
         texture->w = surface->w;
@@ -356,44 +337,9 @@ void Video::createTextures()
 {
     TRY_BEGINS;
       
-    /*
-    createTexture("img/pieces", "Molator0");
-    createTexture("img/pieces", "Sarvip0");
-    createTexture("img/pieces", "Ghhhk0");
-    createTexture("img/pieces", "Monnok0");
-    createTexture("img/pieces", "Strider0");
-    createTexture("img/pieces", "Ngok0");
-    createTexture("img/pieces", "Klorslug0");
-    createTexture("img/pieces", "Houjix0");
-  */
-    
-   // createTexture("img", "ex");
-    /*
-    for(unsigned i =0; i<names.size(); ++i)
-    {
-        createTexture(names[i] +"0", IT_MASKED); 
-        cout << names[i] +"0" << endl;
-    }
-    */
-    /* 
-    for(unsigned i =1; i<8; ++i)
-    {
-        ostringstream name;
-        name << "Molator" << i;
-        createTexture(name.str(), IT_MASKED);
-    }
-*/
-/*
-    createCompressedTexture("img", "board1");
-    createCompressedTexture("img", "board2");
-    createCompressedTexture("img", "board3");
-    createCompressedTexture("img", "board4");
-    
-    createCompressedTexture("img", "menu1");
-    createCompressedTexture("img", "menu2");
-  */  
+   
+    createTexture("img", "molotok");
 
-    
     
     TRY_RETHROW;
 }

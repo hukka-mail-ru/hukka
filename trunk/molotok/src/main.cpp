@@ -11,7 +11,7 @@ using namespace std;
 
 int main(int argc, char *argv[]) 
 {
-
+    
     TRY_BEGINS;
     
     if(EDR_IsAppAlreadyRunning())
@@ -19,15 +19,13 @@ int main(int argc, char *argv[])
         cout << "AppAlreadyRunning" << endl; 
         return -1;
     }
-
     UI ui;
-    
+      
     ui.startup();
     
     ui.handleEvents();
            
     TRY_CATCH;
-
     
     return 0;
 }
