@@ -1,6 +1,7 @@
 #include <iostream>
 #include "Video.h"
 #include "System.h"
+#include "BMP.h"
 
 using namespace std;
 
@@ -287,7 +288,7 @@ void Video::createTexture(const char* dir, const char* name)
     bool res = false;
 
     /* Create storage space for the texture */
-    SDL_Surface* surface = SDL_LoadBMP(path.str().c_str()); 
+    EDR_SurfacePtr surface = EDR_LoadBMP(path.str().c_str()); 
 
     /* Load The Bitmap, Check For Errors, If Bitmap's Not Found Quit */
     if (surface)
@@ -303,7 +304,7 @@ void Video::createTexture(const char* dir, const char* name)
         glBindTexture(GL_TEXTURE_2D, texture->id);
 
         /* Generate The Texture */
-        glTexImage2D(GL_TEXTURE_2D, 0, GL_RGB, surface->w, surface->h, 0, GL_RGB, // blue chanel must be changed by red 
+        glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, surface->w, surface->h, 0, GL_RGBA, // blue chanel must be changed by red 
                      GL_UNSIGNED_BYTE, surface->pixels );
         
         texture->w = surface->w;
@@ -314,7 +315,6 @@ void Video::createTexture(const char* dir, const char* name)
         glTexParameterf( GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR );
     }
     
-    delete surface;
 
     GLenum err = glGetError();
     if(!res || err != GL_NO_ERROR)
@@ -339,6 +339,7 @@ void Video::createTextures()
       
    
     createTexture("img", "molotok");
+    createTexture("img", "bg");
 
     
     TRY_RETHROW;

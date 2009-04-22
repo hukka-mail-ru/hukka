@@ -19,9 +19,10 @@ public:
     
     void handleEvents();
     
+    
 private:
     
-
+    void drawCycle();
     bool drawAll();
     void onMouseClick(int x, int y);
     
@@ -30,6 +31,8 @@ private:
     short mX;
     short mY;
     float mAngle;
+    
+
 };
 
 

@@ -98,6 +98,18 @@ molotok/fast:
 	$(MAKE) -f CMakeFiles/molotok.dir/build.make CMakeFiles/molotok.dir/build
 
 # target to build an object file
+src/BMP.o:
+	$(MAKE) -f CMakeFiles/molotok.dir/build.make CMakeFiles/molotok.dir/src/BMP.o
+
+# target to preprocess a source file
+src/BMP.i:
+	$(MAKE) -f CMakeFiles/molotok.dir/build.make CMakeFiles/molotok.dir/src/BMP.i
+
+# target to generate assembly for a file
+src/BMP.s:
+	$(MAKE) -f CMakeFiles/molotok.dir/build.make CMakeFiles/molotok.dir/src/BMP.s
+
+# target to build an object file
 src/System.o:
 	$(MAKE) -f CMakeFiles/molotok.dir/build.make CMakeFiles/molotok.dir/src/System.o
 
@@ -154,6 +166,9 @@ help::
 	@echo "... edit_cache"
 	@echo "... molotok"
 	@echo "... rebuild_cache"
+	@echo "... src/BMP.o"
+	@echo "... src/BMP.i"
+	@echo "... src/BMP.s"
 	@echo "... src/System.o"
 	@echo "... src/System.i"
 	@echo "... src/System.s"

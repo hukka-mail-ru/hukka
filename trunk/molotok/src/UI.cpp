@@ -36,7 +36,11 @@ bool UI::drawAll()
     };
     */
     
+    mVideo.drawSprite("bg", RGBA_Color(1,1,1,1), XY_LEFT_TOP, -WINDOW_WIDTH/2, WINDOW_HEIGHT/2, 0);
+    
+    mVideo.enableBlend();
     mVideo.drawSprite("molotok", RGBA_Color(1,1,1,1), XY_CENTER, mX, mY, mAngle);
+    mVideo.disableBlend();
     
     SDL_GL_SwapBuffers();
 
@@ -46,72 +50,65 @@ bool UI::drawAll()
 }
 
 
-void UI::onMouseClick(int x, int y)
-{
-    TRY_BEGINS;
-    
+bool mQuit = false;
+bool mAnimation = false;
 
+
+void* catchEvents(void* arg)
+{
+    while(!mQuit)
+    {
+        SDL_Event event;
+        /* handle the events in the queue */
+        while ( SDL_PollEvent( &event ) )
+        {
+            if( event.type == SDL_MOUSEBUTTONDOWN ) 
+            {
+                if( event.button.button == SDL_BUTTON_LEFT ) 
+                { 
+                    mAnimation = true;
+                    //onMouseClick(event.button.x, event.button.y)                    
+                }
+
+            }
+            else if(event.type == SDL_QUIT) // handle stop
+            {
+                mQuit = true;
+            }
+        }
+    }
     
-    
-    TRY_RETHROW;
+    return NULL;
 }
 
 void UI::handleEvents()
 {
     TRY_BEGINS;
     
-    /* wait for events */
-    SDL_Event event;
-    bool quit = false;
-    bool rotation = false;
+    /* catch events in a separated thred */
+    pthread_t thread;
+    pthread_create(&thread, NULL, catchEvents, NULL);
+    pthread_detach(thread);
+    
 
-    while(!quit)
+    while(!mQuit)
     {
 
         // animation
-        if(rotation)
+        if(mAnimation)
         {
-            mAngle += 0.5;
+            mAngle += 1;
         }
         if(mAngle > 90)
         {
-            rotation = false;
+            mAnimation = false;
         }
         
         
         drawAll();
-
-        
-        /* handle the events in the queue */
-        while ( SDL_PollEvent( &event ) )
-        {
-
-            if( event.type == SDL_MOUSEBUTTONDOWN ) 
-            {
-             //   GLfloat winX  = 0;
-             //   GLfloat winY = 0;
-             //   GLfloat winZ = 0;
-                if( event.button.button == SDL_BUTTON_LEFT ) 
-                { 
-                    rotation = true;
-                    //Get the mouse offsets 
-               //     winX = event.button.x; 
-               //     winY = event.button.y; 
-                    
-               //     cout << "winX: " << winX << endl; 
-               //     cout << "winY: " << winY << endl; 
-
-                }
-
-            }
-            else if(event.type == SDL_QUIT) // handle stop
-            {
-                quit = true;
-            }
-        }
         
         // a delay before the next iteration
-        SDL_Delay(1);
+        SDL_Delay(50);
         
     }
     
