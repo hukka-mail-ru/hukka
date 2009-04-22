@@ -55,14 +55,33 @@ bool UI::drawAll()
 }
 
 
-bool mQuit = false;
-bool mAnimation = false;
 
 
-void* catchEvents(void* arg)
+
+void UI::handleEvents()
 {
-    while(!mQuit)
+    TRY_BEGINS;
+    
+    bool quit = false;
+    bool animation = false;
+   
+
+    while(!quit)
     {
+
+        // animation
+        if(animation)
+        {
+            mAngle += 2;
+        }
+        if(mAngle > 90)
+        {
+            animation = false;
+        }
+        
+        
+        drawAll();
+        
         SDL_Event event;
         /* handle the events in the queue */
         while ( SDL_PollEvent( &event ) )
@@ -71,46 +90,16 @@ void* catchEvents(void* arg)
             {
                 if( event.button.button == SDL_BUTTON_LEFT ) 
                 { 
-                    mAnimation = true;
+                    animation = true;
                     //onMouseClick(event.button.x, event.button.y)                    
                 }
 
             }
             else if(event.type == SDL_QUIT) // handle stop
             {
-                mQuit = true;
+                quit = true;
             }
         }
-    }
-    
-    return NULL;
-}
-
-void UI::handleEvents()
-{
-    TRY_BEGINS;
-    
-    /* catch events in a separated thred */
-    pthread_t thread;
-    pthread_create(&thread, NULL, catchEvents, NULL);
-    pthread_detach(thread);
-    
-
-    while(!mQuit)
-    {
-
-        // animation
-        if(mAnimation)
-        {
-            mAngle += 1;
-        }
-        if(mAngle > 90)
-        {
-            mAnimation = false;
-        }
-        
-        
-        drawAll();
         
         // a delay before the next iteration
         SDL_Delay(20);
