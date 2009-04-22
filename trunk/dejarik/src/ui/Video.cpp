@@ -76,7 +76,7 @@ void Video::drawSolidPolygon(const GLshort* vertexArray, unsigned vertNum, const
 
     glEnableClientState(GL_VERTEX_ARRAY);
 
-    glVertexPointer(3, GL_SHORT, 0, vertexArray);
+    glVertexPointer(2, GL_SHORT, 0, vertexArray);
     
     glDrawArrays(GL_TRIANGLE_FAN, 0, vertNum);
 
@@ -101,7 +101,7 @@ void Video::drawLineLoop(const GLshort* vertexArray, unsigned vertNum, const RGB
 
     glEnableClientState(GL_VERTEX_ARRAY);
 
-    glVertexPointer(3, GL_SHORT, 0, vertexArray);
+    glVertexPointer(2, GL_SHORT, 0, vertexArray);
     
     glDrawArrays(GL_LINE_LOOP, 0, vertNum);
 
@@ -175,10 +175,10 @@ void Video::drawSprite(
 
     const GLshort vertices []=
     {
-        x1,  y1, 0,
-        x2,  y1, 0,
-        x2,  y2, 0,
-        x1,  y2, 0,
+        x1,  y1,
+        x2,  y1,
+        x2,  y2,
+        x1,  y2,
     };
 
     const GLshort texCoords[] = 
@@ -189,7 +189,7 @@ void Video::drawSprite(
         0, 1,
     };
 
-    glVertexPointer(3, GL_SHORT, 0, vertices);
+    glVertexPointer(2, GL_SHORT, 0, vertices);
     glTexCoordPointer(2, GL_SHORT, 0, texCoords);
     glEnableClientState(GL_VERTEX_ARRAY);
     glEnableClientState(GL_TEXTURE_COORD_ARRAY); 

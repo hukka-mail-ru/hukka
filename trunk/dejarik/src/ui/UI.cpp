@@ -169,13 +169,12 @@ void UI::drawCell(const CellPtr& cell, bool clicked)
     {
         vertex.push_back(cell->x[i]);
         vertex.push_back(cell->y[i]);
-        vertex.push_back(0);
     }
     
-    mVideo.drawSolidPolygon(&vertex[0], vertex.size()/3, color);
+    mVideo.drawSolidPolygon(&vertex[0], vertex.size()/2, color);
     
     if(cell->c == 0) 
-       mVideo.drawLineLoop(&vertex[0], vertex.size()/3, RGBA_Color(0,0,0,1), 1);
+       mVideo.drawLineLoop(&vertex[0], vertex.size()/2, RGBA_Color(0,0,0,1), 1);
     
        
     TRY_RETHROW;
