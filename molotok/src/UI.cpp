@@ -64,7 +64,7 @@ void UI::handleEvents()
     
     bool quit = false;
     bool animation = false;
-   
+    bool init = true;
 
     while(!quit)
     {
@@ -79,25 +79,30 @@ void UI::handleEvents()
             animation = false;
         }
         
-        
-        drawAll();
+        if(init || animation)
+        {
+            drawAll();
+            init = false;
+        }
         
         SDL_Event event;
         /* handle the events in the queue */
         while ( SDL_PollEvent( &event ) )
         {
-            if( event.type == SDL_MOUSEBUTTONDOWN ) 
+            switch(event.type)
             {
-                if( event.button.button == SDL_BUTTON_LEFT ) 
-                { 
-                    animation = true;
-                    //onMouseClick(event.button.x, event.button.y)                    
-                }
-
-            }
-            else if(event.type == SDL_QUIT) // handle stop
-            {
-                quit = true;
+                case SDL_MOUSEBUTTONDOWN: 
+                    if( event.button.button == SDL_BUTTON_LEFT ) 
+                    { 
+                        animation = true;
+                    }
+                    break;
+                case SDL_QUIT:
+                    quit = true;
+                    break;
+                case SDL_VIDEOEXPOSE:
+                    drawAll();
+                    break;
             }
         }
         
