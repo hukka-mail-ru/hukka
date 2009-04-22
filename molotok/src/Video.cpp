@@ -339,7 +339,7 @@ void Video::createTextures()
       
    
     createTexture("img", "molotok");
-    createTexture("img", "bg");
+    createTexture("img", "tile");
 
     
     TRY_RETHROW;
