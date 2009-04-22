@@ -78,10 +78,8 @@ public:
 private:
 
     void initSDL();
-    void createTextures();
-    
+    void createTextures();    
     void createTexture(const char* dir, const char* name);
-    void createCompressedTexture(const char* dir, const char* name);
 
     std::map<std::string, TexturePtr> textures;
 };
