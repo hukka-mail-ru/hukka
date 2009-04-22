@@ -36,7 +36,12 @@ bool UI::drawAll()
     };
     */
     
-    mVideo.drawSprite("bg", RGBA_Color(1,1,1,1), XY_LEFT_TOP, -WINDOW_WIDTH/2, WINDOW_HEIGHT/2, 0);
+    for(int j =0; j<4; j++)
+    for(int i =0; i<5; i++)
+    {
+        mVideo.drawSprite("tile", RGBA_Color(1,1,1,1), XY_LEFT_TOP, 
+                -WINDOW_WIDTH/2 + 128*i, WINDOW_HEIGHT/2- 128*j, 0);
+    }
     
     mVideo.enableBlend();
     mVideo.drawSprite("molotok", RGBA_Color(1,1,1,1), XY_CENTER, mX, mY, mAngle);
@@ -108,7 +113,7 @@ void UI::handleEvents()
         drawAll();
         
         // a delay before the next iteration
-        SDL_Delay(50);
+        SDL_Delay(20);
         
     }
     
