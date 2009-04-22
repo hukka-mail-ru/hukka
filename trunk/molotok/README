@@ -1,0 +1,14 @@
+Compilation:
+
+cmake .
+make
+
+Running:
+
+./molotok
+
+Requirements:
+
+- OpenGL headers and libraries 
+- SDL headers and libraries 
+- gcc 
