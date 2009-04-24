@@ -236,17 +236,25 @@ bool UI::drawAll()
 {
     TRY_BEGINS;
 
-    drawBoard();
-    
     static bool flag = true; // TODO temporary optimized
     if(flag)
     {
         drawMenu();
         flag = false;
     }
+
     
+    static bool init = true;    
+    if(init)
+    {
+        drawBoard();
+    }
+    else
+    {
+        mVideo.drawSprite("field", RGBA_Color(1,1,1,1), XY_RIGHT_BOTTOM, 0, 0, 0);
+    }
+
     mVideo.enableBlend();
-    
     vector<CellPtr> cells;
     mGame->getBoard()->getCells(cells);
     
@@ -272,7 +280,11 @@ bool UI::drawAll()
     
     mVideo.disableBlend();
     
-    
+    if(init)
+    {
+        mVideo.copyBuffer("field", -7, 320-128);
+        init = false;
+    }
     
     EDR_SwapBuffers();
 

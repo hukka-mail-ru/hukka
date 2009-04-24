@@ -73,6 +73,8 @@ public:
     
     void enableBlend();
     void disableBlend();
+    
+    void copyBuffer(const std::string& texName, GLint x, GLint y);
         
 private:
 
