@@ -272,6 +272,25 @@ void Video::createTexture(const char* dir, const char* name)
     TRY_RETHROW;
 }
 
+void Video::copyBuffer(const std::string& texName, GLint x, GLint y)
+{
+    TRY_BEGINS;
+    
+    if(!textures[texName])
+    {
+        ostringstream os;
+        os << "Can't find name " << texName;
+        throw runtime_error(os.str()); 
+    }
+    
+    TexturePtr texture = textures[texName];
+    
+    glBindTexture(GL_TEXTURE_2D, texture->id);
+    glCopyTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, x, y, texture->w, texture->h, 0);
+    
+    TRY_RETHROW;
+}
+
 
 void Video::createEmptyTexture(const char* name, unsigned short width)
 {
