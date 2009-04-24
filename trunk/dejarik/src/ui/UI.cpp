@@ -185,8 +185,8 @@ void UI::drawPiece(const PiecePtr& piece)
 {
     TRY_BEGINS;
     
- //   if(mMoving && piece != mMovedPiece) // optimization: draw only the moving piece
-//        return;
+    if(mMoving && piece != mMovedPiece) // optimization: draw only the moving piece
+        return;
     
     RGBA_Color color = (piece->player.get() == mGame->getActivePlayer()) ?
             RGBA_Color(1,0,1,1) : RGBA_Color(1,1,1,1);
@@ -251,7 +251,10 @@ bool UI::drawAll()
     }
     else
     {
-        mVideo.drawSprite("field", RGBA_Color(1,1,1,1), XY_RIGHT_BOTTOM, 0, 0, 0);
+        mVideo.drawSprite("field1", RGBA_Color(1,1,1,1), XY_RIGHT_BOTTOM, 0, 0, 0);
+      //  mVideo.drawSprite("field2", RGBA_Color(1,1,1,1), XY_LEFT_BOTTOM, 0, 0, 0);
+     //   mVideo.drawSprite("field3", RGBA_Color(1,1,1,1), XY_RIGHT_TOP, 0, 0, 0);
+   //     mVideo.drawSprite("field4", RGBA_Color(1,1,1,1), XY_LEFT_BOTTOM, 0, 0, 0);
     }
 
     mVideo.enableBlend();
@@ -282,7 +285,10 @@ bool UI::drawAll()
     
     if(init)
     {
-        mVideo.copyBuffer("field", -7, 320-128);
+        mVideo.copyBuffer("field1", -7, 320-128);
+    //    mVideo.copyBuffer("field2", -7+128, 320-128);
+    //    mVideo.copyBuffer("field3", -7, 320-128-128);
+     //   mVideo.copyBuffer("field4", -7+128, 320-128-128);
         init = false;
     }
     

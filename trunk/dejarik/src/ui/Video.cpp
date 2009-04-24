@@ -303,13 +303,38 @@ void Video::createEmptyTexture(const char* name, unsigned short width)
         
     /* Create The Texture */
     glGenTextures(1, &texture->id);
+    
+    
+    GLenum err = glGetError();
+    if(err != GL_NO_ERROR)
+    {
+        ostringstream os;
+        os << "glGenTextures Error 0x" << hex << err << "; Name: " << name << endl;
+        throw runtime_error(os.str());
+    }
 
     /* Typical Texture Generation Using Data From The Bitmap */
     glBindTexture(GL_TEXTURE_2D, texture->id);
+    
+    err = glGetError();
+    if(err != GL_NO_ERROR)
+    {
+        ostringstream os;
+        os << "glBindTexture Error 0x" << hex << err << "; Name: " << name << endl;
+        throw runtime_error(os.str());
+    }
 
     /* Generate The Texture */
     glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, width, width, 0, GL_RGBA, // blue chanel must be changed by red 
                  GL_UNSIGNED_BYTE, surface->pixels );
+    
+    err = glGetError();
+    if(err != GL_NO_ERROR)
+    {
+        ostringstream os;
+        os << "glTexImage2D Error 0x" << hex << err << "; Name: " << name << endl;
+        throw runtime_error(os.str());
+    }
     
     texture->w = width;
     texture->h = width;
@@ -318,11 +343,11 @@ void Video::createEmptyTexture(const char* name, unsigned short width)
     glTexParameterx( GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR );
     glTexParameterx( GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR );
 
-    GLenum err = glGetError();
+    err = glGetError();
     if(err != GL_NO_ERROR)
     {
         ostringstream os;
-        os << "Error " << err << "; Name: " << name << endl;
+        os << "glTexParameterx Error 0x" << hex << err << "; Name: " << name << endl;
         throw runtime_error(os.str());
     }
     
@@ -435,6 +460,7 @@ void Video::createTextures(const std::vector<std::string>& names)
 {
     TRY_BEGINS;
       
+    /*
     createTexture("img/pieces", "Molator0");
     createTexture("img/pieces", "Sarvip0");
     createTexture("img/pieces", "Ghhhk0");
@@ -443,6 +469,9 @@ void Video::createTextures(const std::vector<std::string>& names)
     createTexture("img/pieces", "Ngok0");
     createTexture("img/pieces", "Klorslug0");
     createTexture("img/pieces", "Houjix0");
+    */
+    
+    createTexture("img", "pieces");
   
     
    // createTexture("img", "ex");
@@ -470,7 +499,10 @@ void Video::createTextures(const std::vector<std::string>& names)
     createCompressedTexture("img", "menu1");
     createCompressedTexture("img", "menu2");
     
-    createEmptyTexture("field", 128);
+    createEmptyTexture("field1", 128);
+  //  createEmptyTexture("field3", 4);
+  //  createEmptyTexture("field3", 128);
+  //  createEmptyTexture("field4", 128);
     
     
     TRY_RETHROW;
