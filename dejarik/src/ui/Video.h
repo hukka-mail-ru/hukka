@@ -81,6 +81,7 @@ private:
     
     void createTexture(const char* dir, const char* name);
     void createCompressedTexture(const char* dir, const char* name);
+    void createEmptyTexture(const char* name, unsigned short width);
 
     std::map<std::string, TexturePtr> textures;
 };

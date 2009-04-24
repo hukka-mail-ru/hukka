@@ -273,6 +273,46 @@ void Video::createTexture(const char* dir, const char* name)
 }
 
 
+void Video::createEmptyTexture(const char* name, unsigned short width)
+{
+    TRY_BEGINS;
+    
+    TexturePtr texture (new Texture); 
+    
+    EDR_SurfacePtr surface (new EDR_Surface);
+    surface->pixels = new char[width * width * 4];
+        
+    /* Create The Texture */
+    glGenTextures(1, &texture->id);
+
+    /* Typical Texture Generation Using Data From The Bitmap */
+    glBindTexture(GL_TEXTURE_2D, texture->id);
+
+    /* Generate The Texture */
+    glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, width, width, 0, GL_RGBA, // blue chanel must be changed by red 
+                 GL_UNSIGNED_BYTE, surface->pixels );
+    
+    texture->w = width;
+    texture->h = width;
+
+    /* Linear Filtering */
+    glTexParameterx( GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR );
+    glTexParameterx( GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR );
+
+    GLenum err = glGetError();
+    if(err != GL_NO_ERROR)
+    {
+        ostringstream os;
+        os << "Error " << err << "; Name: " << name << endl;
+        throw runtime_error(os.str());
+    }
+    
+    textures[name] = texture;  
+    
+    TRY_RETHROW;
+}
+
+
 int sizeOfTexture(int format, int width, int height)
 {
     int base = 0; // e.g. palette size
@@ -411,7 +451,7 @@ void Video::createTextures(const std::vector<std::string>& names)
     createCompressedTexture("img", "menu1");
     createCompressedTexture("img", "menu2");
     
-
+    createEmptyTexture("field", 128);
     
     
     TRY_RETHROW;
