@@ -6,6 +6,7 @@
 #include <map>
 
 #include <GLES/gl.h>
+#include "BMP.h"
 
 #include "../system/Macros.h"
 #include "Window.h"
@@ -41,18 +42,10 @@ class Video
 {
 private:
     
-    struct BMPSurface // for BMP loading
-    {
-        GLbyte* pixels;
-        int w;
-        int h;
-    };
-
     struct Texture
     {
         unsigned id;
-        GLfloat w;
-        GLfloat h;
+        EDR_SurfacePtr surface;
     };
 
 
@@ -68,8 +61,8 @@ public:
     void drawLineLoop(const GLshort* vertexArray, unsigned vertNum, const RGBA_Color& color,
                       float width);
 
-    void drawSprite(const std::string& textureName, const RGBA_Color& color, 
-                    BindXY bindXY, GLshort x, GLshort y, float angle);    
+    void drawSprite(const std::string& textureName, const std::string& subTexName, 
+                    const RGBA_Color& color, BindXY bindXY, GLshort x, GLshort y, float angle);    
     
     void enableBlend();
     void disableBlend();
