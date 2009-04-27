@@ -2,7 +2,7 @@
 #include "Video.h"
 #include "Window.h"
 #include "System.h"
-#include "BMP.h"
+
 
 using namespace std;
 
@@ -111,12 +111,10 @@ void Video::drawLineLoop(const GLshort* vertexArray, unsigned vertNum, const RGB
 }
 
 void Video::drawSprite(
-        const std::string& texName, const RGBA_Color& color, 
+        const std::string& texName, const std::string& subTexName, const RGBA_Color& color, 
         BindXY bindXY, GLshort x, GLshort y, float angle)
 {
     TRY_BEGINS;
-    
-    
     
     if(!textures[texName])
     {
@@ -127,29 +125,43 @@ void Video::drawSprite(
     
     TexturePtr texture = textures[texName];
     
-    if(bindXY == XY_CENTER)
+    switch(bindXY)
     {
-        x -= texture->w / 2;
-        y -= texture->h / 2;
+        case XY_CENTER:
+            x -= texture->surface->w / 2;
+            y -= texture->surface->h / 2;
+            break;
+        case XY_RIGHT_BOTTOM:
+            x -= texture->surface->w;
+            break;
+        case XY_LEFT_TOP:
+            y -= texture->surface->h;
+            break;
+        case XY_RIGHT_TOP:
+            x -= texture->surface->w;
+            y -= texture->surface->h;
+            break;            
+        case XY_LEFT_BOTTOM:
+            break;
     }
-    else if(bindXY == XY_RIGHT_BOTTOM)
-    {
-        x -= texture->w;
-    }
-    else if(bindXY == XY_LEFT_TOP)
-    {
-        y -= texture->h;
-    }
-    else if(bindXY == XY_RIGHT_TOP)
-    {
-        x -= texture->w;
-        y -= texture->h;
-    }
-
                   
     glLoadIdentity();
     glEnable( GL_TEXTURE_2D );
     glBindTexture(GL_TEXTURE_2D, texture->id);
+    
+    if(texName == "pieces")
+    {
+        glTexSubImage2D(GL_TEXTURE_2D,
+                        0,
+                        32,//  xoffset,
+                        32,// yoffset
+                        32,
+                        32,
+                        GL_RGBA,
+                        GL_UNSIGNED_BYTE,
+                        texture->surface->pixels);
+
+    }
     
     glColor4x(
         FixedFromFloat(color.r), 
@@ -160,8 +172,8 @@ void Video::drawSprite(
     GLshort x1 = x;
     GLshort y1 = y;
     
-    GLshort x2 = x  + texture->w;
-    GLshort y2 = y + texture->h;
+    GLshort x2 = x  + texture->surface->w;
+    GLshort y2 = y + texture->surface->h;
 
     glTranslatex(FixedFromFloat((x1+x2)/2), 
                  FixedFromFloat((y1+y2)/2), 
@@ -232,10 +244,10 @@ void Video::createTexture(const char* dir, const char* name)
     bool res = false;
 
     /* Create storage space for the texture */
-    EDR_SurfacePtr surface = EDR_LoadBMP(path.str().c_str()); 
+    texture->surface = EDR_LoadBMP(path.str().c_str()); 
 
     /* Load The Bitmap, Check For Errors, If Bitmap's Not Found Quit */
-    if (surface)
+    if (texture->surface)
     {
 
         /* Set the status to true */
@@ -248,15 +260,21 @@ void Video::createTexture(const char* dir, const char* name)
         glBindTexture(GL_TEXTURE_2D, texture->id);
 
         /* Generate The Texture */
-        glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, surface->w, surface->h, 0, GL_RGBA, // blue chanel must be changed by red 
-                     GL_UNSIGNED_BYTE, surface->pixels );
-        
-        texture->w = surface->w;
-        texture->h = surface->h;
+        if(name == "pieces")
+        {
+            glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, texture->surface->w, texture->surface->h, 0, GL_RGBA, // blue chanel must be changed by red 
+                         GL_UNSIGNED_BYTE, NULL );            
+        }
+        else
+        {
+            glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, texture->surface->w, texture->surface->h, 0, GL_RGBA, // blue chanel must be changed by red 
+                         GL_UNSIGNED_BYTE, texture->surface->pixels );
+        }
 
         /* Linear Filtering */
         glTexParameterx( GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR );
         glTexParameterx( GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR );
+
     }
 
     GLenum err = glGetError();
@@ -272,6 +290,7 @@ void Video::createTexture(const char* dir, const char* name)
     TRY_RETHROW;
 }
 
+// copies the current framebuffer into a texture
 void Video::copyBuffer(const std::string& texName, GLint x, GLint y)
 {
     TRY_BEGINS;
@@ -286,7 +305,7 @@ void Video::copyBuffer(const std::string& texName, GLint x, GLint y)
     TexturePtr texture = textures[texName];
     
     glBindTexture(GL_TEXTURE_2D, texture->id);
-    glCopyTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, x, y, texture->w, texture->h, 0);
+    glCopyTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, x, y, texture->surface->w, texture->surface->h, 0);
     
     TRY_RETHROW;
 }
@@ -298,8 +317,8 @@ void Video::createEmptyTexture(const char* name, unsigned short width)
     
     TexturePtr texture (new Texture); 
     
-    EDR_SurfacePtr surface (new EDR_Surface);
-    surface->pixels = new char[width * width * 4];
+    texture->surface = EDR_SurfacePtr(new EDR_Surface());
+    texture->surface->pixels = new char[width * width * 4];
         
     /* Create The Texture */
     glGenTextures(1, &texture->id);
@@ -326,7 +345,7 @@ void Video::createEmptyTexture(const char* name, unsigned short width)
 
     /* Generate The Texture */
     glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, width, width, 0, GL_RGBA, // blue chanel must be changed by red 
-                 GL_UNSIGNED_BYTE, surface->pixels );
+                 GL_UNSIGNED_BYTE, texture->surface->pixels );
     
     err = glGetError();
     if(err != GL_NO_ERROR)
@@ -335,9 +354,6 @@ void Video::createEmptyTexture(const char* name, unsigned short width)
         os << "glTexImage2D Error 0x" << hex << err << "; Name: " << name << endl;
         throw runtime_error(os.str());
     }
-    
-    texture->w = width;
-    texture->h = width;
 
     /* Linear Filtering */
     glTexParameterx( GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR );
@@ -417,10 +433,10 @@ void Video::createCompressedTexture(const char* dir, const char* name)
     bool res = false;
 
     // Create storage space for the texture 
-    EDR_SurfacePtr surface = EDR_LoadPCX(path.str().c_str());
+    texture->surface = EDR_LoadPCX(path.str().c_str());
 
     // Load The Bitmap, Check For Errors, If Bitmap's Not Found Quit 
-    if (surface)
+    if (texture->surface)
     {
 
         res = true;
@@ -430,12 +446,9 @@ void Video::createCompressedTexture(const char* dir, const char* name)
         glBindTexture(GL_TEXTURE_2D, texture->id);
  
         glCompressedTexImage2D (GL_TEXTURE_2D, 0,  GL_PALETTE8_RGB8_OES, 
-                surface->w, surface->h, 0, 
-                sizeOfTexture(GL_PALETTE8_RGB8_OES, surface->w, surface->h),
-                surface->pixels);
-    
-        texture->w = surface->w;
-        texture->h = surface->h;
+                texture->surface->w, texture->surface->h, 0, 
+                sizeOfTexture(GL_PALETTE8_RGB8_OES, texture->surface->w, texture->surface->h),
+                texture->surface->pixels);
 
         glTexParameterx( GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR );
         glTexParameterx( GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR );
