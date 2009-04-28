@@ -264,8 +264,7 @@ bool UI::drawAll()
         drawCell(cells[i], true);
     }
     
-    // draw Pieces 
-    
+    // draw Pieces     
     vector<PiecePtr> pieces = mGame->getBoard()->getPieces();
     for(unsigned i = 0; i < pieces.size(); i++)
     {
@@ -277,14 +276,13 @@ bool UI::drawAll()
     
     if(init)
     {
-        mVideo.copyBufferIntoTexture("field1", WINDOW_WIDTH/2-BOARD_TEXTURE_WIDTH+1,  WINDOW_HEIGHT-BOARD_TEXTURE_WIDTH);
-        mVideo.copyBufferIntoTexture("field2", WINDOW_WIDTH/2,                      WINDOW_HEIGHT-BOARD_TEXTURE_WIDTH);
-        mVideo.copyBufferIntoTexture("field3", WINDOW_WIDTH/2-BOARD_TEXTURE_WIDTH+1,  WINDOW_HEIGHT-BOARD_TEXTURE_WIDTH*2);
-        mVideo.copyBufferIntoTexture("field4", WINDOW_WIDTH/2,                      WINDOW_HEIGHT-BOARD_TEXTURE_WIDTH*2);
+        mVideo.copyBufferIntoTexture("field1", WINDOW_WIDTH/2-BOARD_TEXTURE_WIDTH, WINDOW_HEIGHT-BOARD_TEXTURE_WIDTH);
+        mVideo.copyBufferIntoTexture("field2", WINDOW_WIDTH/2,                     WINDOW_HEIGHT-BOARD_TEXTURE_WIDTH);
+        mVideo.copyBufferIntoTexture("field3", WINDOW_WIDTH/2-BOARD_TEXTURE_WIDTH, WINDOW_HEIGHT-BOARD_TEXTURE_WIDTH*2);
+        mVideo.copyBufferIntoTexture("field4", WINDOW_WIDTH/2,                     WINDOW_HEIGHT-BOARD_TEXTURE_WIDTH*2);
         init = false;
     }
     
-  // mVideo.clearScreen();
     EDR_SwapBuffers();
 
     TRY_RETHROW;
