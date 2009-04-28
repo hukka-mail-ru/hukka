@@ -56,6 +56,8 @@ void Video::startup()
     glDisable(GL_ALPHA_TEST);
     glDisable(GL_DITHER);
 
+    checkError();
+    
     // Load all the textures 
     createTextures();
     
@@ -81,6 +83,8 @@ void Video::drawSolidPolygon(const GLshort* vertexArray, unsigned vertNum, const
     glDrawArrays(GL_TRIANGLE_FAN, 0, vertNum);
 
     glDisableClientState(GL_VERTEX_ARRAY);
+    
+    checkError();
 }
 
 
@@ -106,6 +110,8 @@ void Video::drawLineLoop(const GLshort* vertexArray, unsigned vertNum, const RGB
     glDrawArrays(GL_LINE_LOOP, 0, vertNum);
 
     glDisableClientState(GL_VERTEX_ARRAY);
+    
+    checkError();
     
     TRY_RETHROW;
 }
@@ -221,6 +227,8 @@ void Video::drawSprite(const std::string& texName, const unsigned fragmentID,
     glDisableClientState(GL_TEXTURE_COORD_ARRAY);
 
     glDisable( GL_TEXTURE_2D );
+    
+    checkError();
 
     TRY_RETHROW;
 }
@@ -254,6 +262,8 @@ void Video::copyBufferIntoTexture(const std::string& texName, GLint x, GLint y)
     
     glBindTexture(GL_TEXTURE_2D, texture->id);
     glCopyTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, x, y, texture->surface->w, texture->surface->h, 0);
+    
+    checkError();
     
     TRY_RETHROW;
 }
@@ -337,13 +347,7 @@ void Video::createTexture(const char* dir, const char* name, unsigned fragmentsI
                      GL_RGBA, GL_UNSIGNED_BYTE, texture->surface->pixels );
     }
 
-    GLenum err = glGetError();
-    if(!texture->surface || err != GL_NO_ERROR)
-    {
-        ostringstream os;
-        os << "Error " << err << "; Path: " << path.str() << endl;
-        throw runtime_error(os.str());
-    }
+    checkError();
     
     textures[name] = texture;  
     
@@ -363,25 +367,8 @@ void Video::createEmptyTexture(const char* name, unsigned short width)
     /* Create The Texture */
     glGenTextures(1, &texture->id);
     
-    
-    GLenum err = glGetError();
-    if(err != GL_NO_ERROR)
-    {
-        ostringstream os;
-        os << "glGenTextures Error 0x" << hex << err << "; Name: " << name << endl;
-        throw runtime_error(os.str());
-    }
-
     /* Typical Texture Generation Using Data From The Bitmap */
     glBindTexture(GL_TEXTURE_2D, texture->id);
-    
-    err = glGetError();
-    if(err != GL_NO_ERROR)
-    {
-        ostringstream os;
-        os << "glBindTexture Error 0x" << hex << err << "; Name: " << name << endl;
-        throw runtime_error(os.str());
-    }
 
     /* Generate The Texture */
     glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, width, width, 0, GL_RGBA, // blue chanel must be changed by red 
@@ -391,6 +378,8 @@ void Video::createEmptyTexture(const char* name, unsigned short width)
     glTexParameterx( GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR );
     glTexParameterx( GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR );
 
+    checkError();
+    
     textures[name] = texture;  
     
     TRY_RETHROW;
@@ -425,14 +414,7 @@ void Video::createCompressedTexture(const char* dir, const char* name)
         glTexParameterx( GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR );
     }
 
-    GLenum err = glGetError();
-    if(!texture->surface || err != GL_NO_ERROR)
-    {
-        ostringstream os;
-        os << "Error " << err << "; Path: " << path.str() << endl;
-        throw runtime_error(os.str());
-    }
-
+    checkError();
     
     textures[name] = texture;  
  
@@ -463,4 +445,16 @@ void Video::createTextures()
     
     
     TRY_RETHROW;
+}
+
+
+void Video::checkError(const std::string where)
+{
+    GLenum err = glGetError();
+    if(err != GL_NO_ERROR)
+    {
+        ostringstream os;
+        os << where << " Error 0x" << hex << err << endl;
+        throw runtime_error(os.str());
+    }
 }
