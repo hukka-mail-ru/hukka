@@ -81,7 +81,6 @@ private:
     void createEmptyTexture(const char* name, unsigned short width);
     
     int getTextureSize(int format, int width, int height);
-    void getFragmentXY(const unsigned fragmentID, GLfloat& fragmentX, GLfloat& fragmentY);
 
     std::map<std::string, TexturePtr> textures;
 };
