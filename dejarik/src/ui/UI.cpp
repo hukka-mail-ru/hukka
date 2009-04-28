@@ -285,7 +285,7 @@ bool UI::drawAll()
     
     if(init)
     {
-        mVideo.copyBuffer("field1", -7, 320-128);
+        mVideo.copyBufferIntoTexture("field1", -7, 320-128);
     //    mVideo.copyBuffer("field2", -7+128, 320-128);
     //    mVideo.copyBuffer("field3", -7, 320-128-128);
      //   mVideo.copyBuffer("field4", -7+128, 320-128-128);
