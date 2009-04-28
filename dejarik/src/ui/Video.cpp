@@ -110,14 +110,10 @@ void Video::drawLineLoop(const GLshort* vertexArray, unsigned vertNum, const RGB
     TRY_RETHROW;
 }
 
-void Video::getFragmentXY(const unsigned fragmentID, GLfloat& fragmentX, GLfloat& fragmentY)
-{
-    
-}
 
-void Video::drawSprite(
-        const std::string& texName, const unsigned fragmentID, const RGBA_Color& color, 
-        BindXY bindXY, GLshort x, GLshort y, float angle)
+void Video::drawSprite(const std::string& texName, const unsigned fragmentID, 
+                       const RGBA_Color& color, BindXY bindXY, 
+                       GLshort x, GLshort y, float angle)
 {
     TRY_BEGINS;
     
@@ -127,9 +123,17 @@ void Video::drawSprite(
         os << "Can't find name " << texName;
         throw runtime_error(os.str()); 
     }
-    
+      
     TexturePtr texture = textures[texName];
     
+    if(!texture->fragmentsInRow)
+    {   
+        ostringstream os;
+        os << "fragmentsInRow = 0 in " << texName << endl;
+        throw runtime_error(os.str());
+    }
+    
+    // position of the texture
     switch(bindXY)
     {
         case XY_CENTER:
@@ -150,48 +154,19 @@ void Video::drawSprite(
             break;
     }
 
-    
-    GLfloat fragmentWidth = 1.0;  
-    GLfloat fragmentX = 0.0;
-    GLfloat fragmentY = 0.0;
-    
-    // Deal with subtextures
-    if(texture->fragmentsInRow)
-    {            
-        fragmentWidth = 1.0 / texture->fragmentsInRow;
-        getFragmentXY(fragmentID, fragmentX, fragmentY);
-    }
-                  
-    glLoadIdentity();
-    glEnable( GL_TEXTURE_2D );
-    glBindTexture(GL_TEXTURE_2D, texture->id);
-       
-    glColor4x(
-        FixedFromFloat(color.r), 
-        FixedFromFloat(color.b), 
-        FixedFromFloat(color.g), 
-        FixedFromFloat(color.a));
-
+    // Deal with fragments (subtextures)
+    GLfloat fragmentWidth = 1.0 / texture->fragmentsInRow;  
+    GLfloat fragmentX = fragmentID % texture->fragmentsInRow * fragmentWidth;
+    GLfloat fragmentY = fragmentID / texture->fragmentsInRow * fragmentWidth;
+             
     GLshort x1 = x;
     GLshort y1 = y;
     
-    GLshort dw = texture->surface->w / texture->fragmentsInRow;
-    
-    GLshort x2 = x  + dw;
+    GLshort dw = texture->surface->w / texture->fragmentsInRow;    
+    GLshort x2 = x + dw;
     GLshort y2 = y + dw;
     
-    
-    glTranslatex(FixedFromFloat((x1+x2)/2), 
-                 FixedFromFloat((y1+y2)/2), 
-                 ZERO); // rotate [move to the coordinate center]
-                 
-    glRotatex(FixedFromFloat(angle) ,ZERO, ZERO, ONE); // rotation
-    
-    glTranslatex(FixedFromFloat(-(x1+x2)/2), 
-                 FixedFromFloat(-(y1+y2)/2), 
-                 ZERO); // move back to the old position
-
-
+    // Set arrays for drawing
     const GLshort vertices []=
     {
         x1,  y1,
@@ -207,6 +182,28 @@ void Video::drawSprite(
         FixedFromFloat(fragmentX + fragmentWidth), FixedFromFloat(fragmentY + fragmentWidth),
         FixedFromFloat(fragmentX), FixedFromFloat(fragmentY + fragmentWidth)
     };
+    
+    
+    // Draw operations
+    glLoadIdentity();
+    glEnable( GL_TEXTURE_2D );
+    glBindTexture(GL_TEXTURE_2D, texture->id);
+       
+    glColor4x(
+        FixedFromFloat(color.r), 
+        FixedFromFloat(color.b), 
+        FixedFromFloat(color.g), 
+        FixedFromFloat(color.a));    
+    
+    glTranslatex(FixedFromFloat((x1+x2)/2), 
+                 FixedFromFloat((y1+y2)/2), 
+                 ZERO); // rotate [move to the coordinate center]
+                 
+    glRotatex(FixedFromFloat(angle) ,ZERO, ZERO, ONE); // rotation
+    
+    glTranslatex(FixedFromFloat(-(x1+x2)/2), 
+                 FixedFromFloat(-(y1+y2)/2), 
+                 ZERO); // move back to the old position
 
     glVertexPointer(2, GL_SHORT, 0, vertices);
     glTexCoordPointer(2, GL_FIXED, 0, texCoords);
