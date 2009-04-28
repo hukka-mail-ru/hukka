@@ -110,13 +110,13 @@ void Video::drawLineLoop(const GLshort* vertexArray, unsigned vertNum, const RGB
     TRY_RETHROW;
 }
 
-void Video::getFragmentXY(const std::string& fragmentName, GLfloat& fragmentX, GLfloat& fragmentY)
+void Video::getFragmentXY(const unsigned fragmentID, GLfloat& fragmentX, GLfloat& fragmentY)
 {
     
 }
 
 void Video::drawSprite(
-        const std::string& texName, const std::string& fragmentName, const RGBA_Color& color, 
+        const std::string& texName, const unsigned fragmentID, const RGBA_Color& color, 
         BindXY bindXY, GLshort x, GLshort y, float angle)
 {
     TRY_BEGINS;
@@ -156,18 +156,10 @@ void Video::drawSprite(
     GLfloat fragmentY = 0.0;
     
     // Deal with subtextures
-    if(fragmentName != "")
-    {
-        if(!texture->fragmentsInRow)
-        {
-            ostringstream os;
-            os << "fragmentsInRow = 0 in " << fragmentName;
-            throw runtime_error(os.str()); 
-        }
-            
+    if(texture->fragmentsInRow)
+    {            
         fragmentWidth = 1.0 / texture->fragmentsInRow;
-
-        getFragmentXY(fragmentName, fragmentX, fragmentY);
+        getFragmentXY(fragmentID, fragmentX, fragmentY);
     }
                   
     glLoadIdentity();

@@ -17,6 +17,7 @@
 #define WINDOW_HEIGHT 320
 
 
+
 struct RGBA_Color
 {
     RGBA_Color(float r, float g, float b, float a): r(r), g(g), b(b), a(a) {}
@@ -62,7 +63,7 @@ public:
     void drawLineLoop(const GLshort* vertexArray, unsigned vertNum, const RGBA_Color& color,
                       float width);
 
-    void drawSprite(const std::string& textureName, const std::string& subTexName, 
+    void drawSprite(const std::string& textureName, const unsigned fragmentID, 
                     const RGBA_Color& color, BindXY bindXY, GLshort x, GLshort y, float angle);    
     
     void enableBlend();
@@ -80,7 +81,7 @@ private:
     void createEmptyTexture(const char* name, unsigned short width);
     
     int getTextureSize(int format, int width, int height);
-    void getFragmentXY(const std::string& fragmentName, GLfloat& fragmentX, GLfloat& fragmentY);
+    void getFragmentXY(const unsigned fragmentID, GLfloat& fragmentX, GLfloat& fragmentY);
 
     std::map<std::string, TexturePtr> textures;
 };
