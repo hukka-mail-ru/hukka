@@ -149,19 +149,6 @@ void Video::drawSprite(
     glEnable( GL_TEXTURE_2D );
     glBindTexture(GL_TEXTURE_2D, texture->id);
     
-    if(texName == "pieces")
-    {
-        glTexSubImage2D(GL_TEXTURE_2D,
-                        0,
-                        32,//  xoffset,
-                        32,// yoffset
-                        32,
-                        32,
-                        GL_RGBA,
-                        GL_UNSIGNED_BYTE,
-                        texture->surface->pixels);
-
-    }
     
     glColor4x(
         FixedFromFloat(color.r), 
@@ -172,9 +159,12 @@ void Video::drawSprite(
     GLshort x1 = x;
     GLshort y1 = y;
     
-    GLshort x2 = x  + texture->surface->w;
-    GLshort y2 = y + texture->surface->h;
-
+    GLshort dw = (texName == "pieces") ? texture->surface->w/4 : texture->surface->w;
+    
+    GLshort x2 = x  + dw;
+    GLshort y2 = y + dw;
+    
+    
     glTranslatex(FixedFromFloat((x1+x2)/2), 
                  FixedFromFloat((y1+y2)/2), 
                  ZERO); // rotate [move to the coordinate center]
@@ -185,6 +175,7 @@ void Video::drawSprite(
                  FixedFromFloat(-(y1+y2)/2), 
                  ZERO); // move back to the old position
 
+
     const GLshort vertices []=
     {
         x1,  y1,
@@ -193,16 +184,35 @@ void Video::drawSprite(
         x1,  y2,
     };
 
-    const GLshort texCoords[] = 
+    GLfixed texCoords1[] = 
     {
-        0, 0,
-        1, 0,
-        1, 1,
-        0, 1,
+        FixedFromFloat(0), FixedFromFloat(0),
+        FixedFromFloat(1), FixedFromFloat(0),
+        FixedFromFloat(1), FixedFromFloat(1),
+        FixedFromFloat(0), FixedFromFloat(1),
+    };
+    GLfixed texCoords2[] = 
+    {
+        FixedFromFloat(0), FixedFromFloat(0),
+        FixedFromFloat(0.25), FixedFromFloat(0),
+        FixedFromFloat(0.25), FixedFromFloat(0.25),
+        FixedFromFloat(0), FixedFromFloat(0.25),
     };
 
+    GLfixed* texCoords;
+    if(texName == "pieces")
+    {
+        texCoords =  texCoords2;
+    }
+    else
+    {
+        texCoords =  texCoords1;
+    }
+
+    
+
     glVertexPointer(2, GL_SHORT, 0, vertices);
-    glTexCoordPointer(2, GL_SHORT, 0, texCoords);
+    glTexCoordPointer(2, GL_FIXED, 0, texCoords);
     glEnableClientState(GL_VERTEX_ARRAY);
     glEnableClientState(GL_TEXTURE_COORD_ARRAY); 
 
@@ -229,67 +239,6 @@ void Video::disableBlend()
     glDisable(GL_BLEND);
 }
 
-
-
-void Video::createTexture(const char* dir, const char* name)
-{
-    TRY_BEGINS;
-    
-    TexturePtr texture (new Texture); 
-    
-    ostringstream path;
-    path << EDR_GetCurDir() << dir << "/" << name << ".bmp";
-    
-    /* Status indicator */
-    bool res = false;
-
-    /* Create storage space for the texture */
-    texture->surface = EDR_LoadBMP(path.str().c_str()); 
-
-    /* Load The Bitmap, Check For Errors, If Bitmap's Not Found Quit */
-    if (texture->surface)
-    {
-
-        /* Set the status to true */
-        res = true;
-
-        /* Create The Texture */
-        glGenTextures(1, &texture->id);
-
-        /* Typical Texture Generation Using Data From The Bitmap */
-        glBindTexture(GL_TEXTURE_2D, texture->id);
-
-        /* Generate The Texture */
-        if(name == "pieces")
-        {
-            glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, texture->surface->w, texture->surface->h, 0, GL_RGBA, // blue chanel must be changed by red 
-                         GL_UNSIGNED_BYTE, NULL );            
-        }
-        else
-        {
-            glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, texture->surface->w, texture->surface->h, 0, GL_RGBA, // blue chanel must be changed by red 
-                         GL_UNSIGNED_BYTE, texture->surface->pixels );
-        }
-
-        /* Linear Filtering */
-        glTexParameterx( GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR );
-        glTexParameterx( GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR );
-
-    }
-
-    GLenum err = glGetError();
-    if(!res || err != GL_NO_ERROR)
-    {
-        ostringstream os;
-        os << "Error " << err << "; Path: " << path.str() << endl;
-        throw runtime_error(os.str());
-    }
-    
-    textures[name] = texture;  
-    
-    TRY_RETHROW;
-}
-
 // copies the current framebuffer into a texture
 void Video::copyBuffer(const std::string& texName, GLint x, GLint y)
 {
@@ -311,6 +260,109 @@ void Video::copyBuffer(const std::string& texName, GLint x, GLint y)
 }
 
 
+int Video::getTextureSize(int format, int width, int height)
+{
+    int base = 0; // e.g. palette size
+    int bpp = 0;
+
+    switch (format)
+    {
+        // Palette formats
+        case GL_PALETTE8_RGB8_OES:
+            bpp = 8;
+            base = 256*3;
+            break;
+        case GL_PALETTE8_RGBA8_OES:
+            bpp = 8;
+            base = 256*4;
+            break;
+        case GL_PALETTE8_R5_G6_B5_OES:
+        case GL_PALETTE8_RGBA4_OES:
+        case GL_PALETTE8_RGB5_A1_OES:
+            bpp = 8;
+            base = 256*2;
+            break;
+            
+            
+
+        case GL_PALETTE4_RGB8_OES:
+            bpp = 4;
+            base = 16*3;
+            break;
+        case GL_PALETTE4_RGBA8_OES:
+            bpp = 4;
+            base = 16*4;
+            break;
+        case GL_PALETTE4_R5_G6_B5_OES:
+        case GL_PALETTE4_RGBA4_OES:
+        case GL_PALETTE4_RGB5_A1_OES:
+            bpp = 4;
+            base = 16*2;
+            break;
+    }
+
+
+   return base + (width * height * bpp / 8);
+}
+
+void Video::createTexture(const char* dir, const char* name)
+{
+    TRY_BEGINS;
+    
+    TexturePtr texture (new Texture); 
+    
+    ostringstream path;
+    path << EDR_GetCurDir() << dir << "/" << name << ".bmp";
+
+    /* Create storage space for the texture */
+    texture->surface = EDR_LoadBMP(path.str().c_str()); 
+
+    /* Load The Bitmap, Check For Errors, If Bitmap's Not Found Quit */
+    if (texture->surface)
+    {
+        /* Create The Texture */
+        glGenTextures(1, &texture->id);
+
+        /* Typical Texture Generation Using Data From The Bitmap */
+        glBindTexture(GL_TEXTURE_2D, texture->id);
+
+        /* Linear Filtering */
+        glTexParameterx(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_REPEAT);
+        glTexParameterx(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_REPEAT);
+        glTexParameterx(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR );
+        glTexParameterx(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR );
+        
+        /* Generate The Texture */
+        /*
+        if(texImages == TI_MANY)
+        {
+            glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, texture->surface->w, texture->surface->h, 0, 
+                         GL_RGBA, GL_UNSIGNED_BYTE, NULL);            
+        }
+        else
+        {
+            glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, texture->surface->w, texture->surface->h, 0, 
+                         GL_RGBA, GL_UNSIGNED_BYTE, texture->surface->pixels );
+        }
+        */
+        glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, texture->surface->w, texture->surface->h, 0, 
+                     GL_RGBA, GL_UNSIGNED_BYTE, texture->surface->pixels );
+    }
+
+    GLenum err = glGetError();
+    if(!texture->surface || err != GL_NO_ERROR)
+    {
+        ostringstream os;
+        os << "Error " << err << "; Path: " << path.str() << endl;
+        throw runtime_error(os.str());
+    }
+    
+    textures[name] = texture;  
+    
+    TRY_RETHROW;
+}
+
+
 void Video::createEmptyTexture(const char* name, unsigned short width)
 {
     TRY_BEGINS;
@@ -318,7 +370,7 @@ void Video::createEmptyTexture(const char* name, unsigned short width)
     TexturePtr texture (new Texture); 
     
     texture->surface = EDR_SurfacePtr(new EDR_Surface());
-    texture->surface->pixels = new char[width * width * 4];
+    texture->surface->pixels = new unsigned char[width * width * 4];
         
     /* Create The Texture */
     glGenTextures(1, &texture->id);
@@ -373,53 +425,6 @@ void Video::createEmptyTexture(const char* name, unsigned short width)
 }
 
 
-int sizeOfTexture(int format, int width, int height)
-{
-    int base = 0; // e.g. palette size
-    int bpp = 0;
-
-    switch (format)
-    {
-        // Palette formats
-        case GL_PALETTE8_RGB8_OES:
-            bpp = 8;
-            base = 256*3;
-            break;
-        case GL_PALETTE8_RGBA8_OES:
-            bpp = 8;
-            base = 256*4;
-            break;
-        case GL_PALETTE8_R5_G6_B5_OES:
-        case GL_PALETTE8_RGBA4_OES:
-        case GL_PALETTE8_RGB5_A1_OES:
-            bpp = 8;
-            base = 256*2;
-            break;
-            
-            
-
-        case GL_PALETTE4_RGB8_OES:
-            bpp = 4;
-            base = 16*3;
-            break;
-        case GL_PALETTE4_RGBA8_OES:
-            bpp = 4;
-            base = 16*4;
-            break;
-        case GL_PALETTE4_R5_G6_B5_OES:
-        case GL_PALETTE4_RGBA4_OES:
-        case GL_PALETTE4_RGB5_A1_OES:
-            bpp = 4;
-            base = 16*2;
-            break;
-    }
-
-
-   return base + (width * height * bpp / 8);
-}
-
-
-
 void Video::createCompressedTexture(const char* dir, const char* name)
 {
     TRY_BEGINS;
@@ -429,25 +434,19 @@ void Video::createCompressedTexture(const char* dir, const char* name)
     ostringstream path;
     path << EDR_GetCurDir() << dir << "/" << name << ".pcx"; 
     
-    // Status indicator 
-    bool res = false;
-
     // Create storage space for the texture 
     texture->surface = EDR_LoadPCX(path.str().c_str());
 
     // Load The Bitmap, Check For Errors, If Bitmap's Not Found Quit 
     if (texture->surface)
     {
-
-        res = true;
-
         glGenTextures(1, &texture->id);
 
         glBindTexture(GL_TEXTURE_2D, texture->id);
  
         glCompressedTexImage2D (GL_TEXTURE_2D, 0,  GL_PALETTE8_RGB8_OES, 
                 texture->surface->w, texture->surface->h, 0, 
-                sizeOfTexture(GL_PALETTE8_RGB8_OES, texture->surface->w, texture->surface->h),
+                getTextureSize(GL_PALETTE8_RGB8_OES, texture->surface->w, texture->surface->h),
                 texture->surface->pixels);
 
         glTexParameterx( GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR );
@@ -455,7 +454,7 @@ void Video::createCompressedTexture(const char* dir, const char* name)
     }
 
     GLenum err = glGetError();
-    if(!res || err != GL_NO_ERROR)
+    if(!texture->surface || err != GL_NO_ERROR)
     {
         ostringstream os;
         os << "Error " << err << "; Path: " << path.str() << endl;
@@ -485,6 +484,7 @@ void Video::createTextures(const std::vector<std::string>& names)
     */
     
     createTexture("img", "pieces");
+
   
     
    // createTexture("img", "ex");

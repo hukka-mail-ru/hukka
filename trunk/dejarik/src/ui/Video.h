@@ -48,8 +48,6 @@ private:
         EDR_SurfacePtr surface;
     };
 
-
-
     typedef boost::shared_ptr<Texture> TexturePtr; 
     
 public:
@@ -77,6 +75,8 @@ private:
     void createTexture(const char* dir, const char* name);
     void createCompressedTexture(const char* dir, const char* name);
     void createEmptyTexture(const char* name, unsigned short width);
+    
+    int getTextureSize(int format, int width, int height);
 
     std::map<std::string, TexturePtr> textures;
 };

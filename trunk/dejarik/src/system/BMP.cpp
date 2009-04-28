@@ -149,7 +149,7 @@ EDR_SurfacePtr EDR_LoadPCX(const char* filename)
     int beacon = file_size - palette_size - 1;
     
     // for uncompressed pixels
-    char* pixels = new char[palette_size + width * height];
+    GLubyte* pixels = new GLubyte[palette_size + width * height];
     
     // GL wants the palette to be before the image data
     memcpy(pixels, compressed_pixels + beacon + 1, palette_size);
@@ -158,7 +158,7 @@ EDR_SurfacePtr EDR_LoadPCX(const char* filename)
     int k=palette_size;
     for(int i=0; i<beacon; i++)
     {
-        unsigned char byte = compressed_pixels[i];
+        GLubyte byte = compressed_pixels[i];
         if(byte > 192) // Two high bits are set = Repeat
         {
             byte -= 192; // Repeat how many times?            
@@ -232,7 +232,7 @@ EDR_SurfacePtr EDR_LoadPVR(const char* filename)
     int width = pvrHeader.dwWidth;
     int height = pvrHeader.dwHeight;
     
-    char* pixels = new char[width * height * TWO_BYTES]; // 16 bits per pixel
+    GLubyte* pixels = new GLubyte[width * height * TWO_BYTES]; // 16 bits per pixel
     if(!pixels) 
     {
         fclose(file);
@@ -327,7 +327,7 @@ EDR_SurfacePtr EDR_LoadBMP(const char* filename)
         throw runtime_error(string("Can't read compressed BMP") + string(filename));
     }
 
-    char* pixels = new char[width * height * FOUR_BYTES]; // 24 bits per pixel + 8 bits alpha channel
+    GLubyte* pixels = new GLubyte[width * height * FOUR_BYTES]; // 24 bits per pixel + 8 bits alpha channel
     if(!pixels) 
     {
         fclose(file);
