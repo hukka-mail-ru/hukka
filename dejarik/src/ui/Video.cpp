@@ -68,6 +68,8 @@ void Video::startup()
 
 void Video::drawSolidPolygon(const GLshort* vertexArray, unsigned vertNum, const RGBA_Color& color)
 {
+    TRY_BEGINS;
+    
     glLoadIdentity();
     
     glColor4x(
@@ -85,6 +87,8 @@ void Video::drawSolidPolygon(const GLshort* vertexArray, unsigned vertNum, const
     glDisableClientState(GL_VERTEX_ARRAY);
     
     checkError();
+    
+    TRY_RETHROW;
 }
 
 
@@ -362,6 +366,8 @@ void Video::createEmptyTexture(const char* name, unsigned short width)
     TexturePtr texture (new Texture); 
     
     texture->surface = EDR_SurfacePtr(new EDR_Surface());
+    texture->surface->w = width;
+    texture->surface->h = width;
     texture->surface->pixels = new unsigned char[width * width * 4];
         
     /* Create The Texture */
