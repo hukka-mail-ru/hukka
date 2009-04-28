@@ -190,9 +190,7 @@ void UI::drawPiece(const PiecePtr& piece)
     }
     
 
-    ostringstream name;
-    name << piece->name << piece->sprite;
-    mVideo.drawSprite("pieces", name.str(), color, XY_CENTER,
+    mVideo.drawSprite("pieces", piece->name, color, XY_CENTER,
                       piece->x,
                       piece->y,
                       piece->angle); 
@@ -206,8 +204,8 @@ void UI::drawMenu()
     TRY_BEGINS;
     
     // TODO some subscriptions in the menu
-    mVideo.drawSprite("menu1", "", RGBA_Color(1,1,1,1), XY_RIGHT_TOP, 0, -BOARD_TEXTURE_WIDTH, 0);
-    mVideo.drawSprite("menu2", "", RGBA_Color(1,1,1,1), XY_LEFT_TOP, 0, -BOARD_TEXTURE_WIDTH, 0);
+    mVideo.drawSprite("menu1", 0, RGBA_Color(1,1,1,1), XY_RIGHT_TOP, 0, -BOARD_TEXTURE_WIDTH, 0);
+    mVideo.drawSprite("menu2", 0, RGBA_Color(1,1,1,1), XY_LEFT_TOP, 0, -BOARD_TEXTURE_WIDTH, 0);
 
     TRY_RETHROW;
 }
@@ -215,10 +213,10 @@ void UI::drawMenu()
 void UI::drawBoard()
 {
     TRY_BEGINS;
-    mVideo.drawSprite("board1", "", RGBA_Color(1,1,1,1), XY_RIGHT_TOP, 0, BOARD_TEXTURE_WIDTH, 0);
-    mVideo.drawSprite("board2", "", RGBA_Color(1,1,1,1), XY_LEFT_TOP, 0, BOARD_TEXTURE_WIDTH, 0);
-    mVideo.drawSprite("board3", "", RGBA_Color(1,1,1,1), XY_RIGHT_TOP, 0, 0, 0);
-    mVideo.drawSprite("board4", "", RGBA_Color(1,1,1,1), XY_LEFT_TOP, 0, 0, 0);
+    mVideo.drawSprite("board1", 0, RGBA_Color(1,1,1,1), XY_RIGHT_TOP, 0, BOARD_TEXTURE_WIDTH, 0);
+    mVideo.drawSprite("board2", 0, RGBA_Color(1,1,1,1), XY_LEFT_TOP, 0, BOARD_TEXTURE_WIDTH, 0);
+    mVideo.drawSprite("board3", 0, RGBA_Color(1,1,1,1), XY_RIGHT_TOP, 0, 0, 0);
+    mVideo.drawSprite("board4", 0, RGBA_Color(1,1,1,1), XY_LEFT_TOP, 0, 0, 0);
      
     TRY_RETHROW;
 }
@@ -244,7 +242,7 @@ bool UI::drawAll()
     }
     else
     {
-        mVideo.drawSprite("field1", "", RGBA_Color(1,1,1,1), XY_RIGHT_BOTTOM, 0, 0, 0);
+        mVideo.drawSprite("field1", 0, RGBA_Color(1,1,1,1), XY_RIGHT_BOTTOM, 0, 0, 0);
       //  mVideo.drawSprite("field2", RGBA_Color(1,1,1,1), XY_LEFT_BOTTOM, 0, 0, 0);
      //   mVideo.drawSprite("field3", RGBA_Color(1,1,1,1), XY_RIGHT_TOP, 0, 0, 0);
    //     mVideo.drawSprite("field4", RGBA_Color(1,1,1,1), XY_LEFT_BOTTOM, 0, 0, 0);
