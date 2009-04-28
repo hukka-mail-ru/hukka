@@ -154,11 +154,7 @@ void Video::drawSprite(const std::string& texName, const unsigned fragmentID,
             break;
     }
 
-    // Deal with fragments (subtextures)
-    GLfloat fragmentWidth = 1.0 / texture->fragmentsInRow;  
-    GLfloat fragmentX = fragmentID % texture->fragmentsInRow * fragmentWidth;
-    GLfloat fragmentY = fragmentID / texture->fragmentsInRow * fragmentWidth;
-             
+    // Set vertex array for drawing
     GLshort x1 = x;
     GLshort y1 = y;
     
@@ -166,15 +162,25 @@ void Video::drawSprite(const std::string& texName, const unsigned fragmentID,
     GLshort x2 = x + dw;
     GLshort y2 = y + dw;
     
-    // Set arrays for drawing
+    GLshort shift = texture->surface->w/2 - (x2-x1)/2; // fragmentation causes this shift
+    x1 += shift;
+    y1 += shift;
+    x2 += shift;
+    y2 += shift;
+    
     const GLshort vertices []=
     {
         x1,  y1,
         x2,  y1,
         x2,  y2,
         x1,  y2,
-    };
-
+    };   
+    
+    // Deal with fragments (subtextures)
+    GLfloat fragmentWidth = 1.0 / texture->fragmentsInRow;  
+    GLfloat fragmentX = fragmentID % texture->fragmentsInRow * fragmentWidth;
+    GLfloat fragmentY = fragmentID / texture->fragmentsInRow * fragmentWidth;
+               
     GLfixed texCoords[] = 
     {
         FixedFromFloat(fragmentX), FixedFromFloat(fragmentY),
@@ -182,8 +188,7 @@ void Video::drawSprite(const std::string& texName, const unsigned fragmentID,
         FixedFromFloat(fragmentX + fragmentWidth), FixedFromFloat(fragmentY + fragmentWidth),
         FixedFromFloat(fragmentX), FixedFromFloat(fragmentY + fragmentWidth)
     };
-    
-    
+ 
     // Draw operations
     glLoadIdentity();
     glEnable( GL_TEXTURE_2D );
