@@ -25,7 +25,7 @@ inline GLfixed MultiplyFixed(GLfixed op1, GLfixed op2) {return (op1 * op2) >> PR
    
 
 
-void Video::startup(const std::vector<std::string>& pieceNames)
+void Video::startup()
 {
     TRY_BEGINS;
     
@@ -57,7 +57,7 @@ void Video::startup(const std::vector<std::string>& pieceNames)
     glDisable(GL_DITHER);
 
     // Load all the textures 
-    createTextures(pieceNames);
+    createTextures();
     
     TRY_RETHROW;
 }
@@ -150,11 +150,12 @@ void Video::drawSprite(
             break;
     }
 
-    // Deal with subtextures
+    
     GLfloat fragmentWidth = 1.0;  
     GLfloat fragmentX = 0.0;
     GLfloat fragmentY = 0.0;
     
+    // Deal with subtextures
     if(fragmentName != "")
     {
         if(!texture->fragmentsInRow)
@@ -164,7 +165,7 @@ void Video::drawSprite(
             throw runtime_error(os.str()); 
         }
             
-        fragmentWidth = 1.0/texture->fragmentsInRow;
+        fragmentWidth = 1.0 / texture->fragmentsInRow;
 
         getFragmentXY(fragmentName, fragmentX, fragmentY);
     }
@@ -461,41 +462,13 @@ void Video::createCompressedTexture(const char* dir, const char* name)
 }
 
 
-void Video::createTextures(const std::vector<std::string>& names)
+void Video::createTextures()
 {
     TRY_BEGINS;
       
-    /*
-    createTexture("img/pieces", "Molator0");
-    createTexture("img/pieces", "Sarvip0");
-    createTexture("img/pieces", "Ghhhk0");
-    createTexture("img/pieces", "Monnok0");
-    createTexture("img/pieces", "Strider0");
-    createTexture("img/pieces", "Ngok0");
-    createTexture("img/pieces", "Klorslug0");
-    createTexture("img/pieces", "Houjix0");
-    */
-    
+
     createTexture("img", "pieces", 4);
 
-  
-    
-   // createTexture("img", "ex");
-    /*
-    for(unsigned i =0; i<names.size(); ++i)
-    {
-        createTexture(names[i] +"0", IT_MASKED); 
-        cout << names[i] +"0" << endl;
-    }
-    */
-    /* 
-    for(unsigned i =1; i<8; ++i)
-    {
-        ostringstream name;
-        name << "Molator" << i;
-        createTexture(name.str(), IT_MASKED);
-    }
-*/
 
     createCompressedTexture("img", "board1");
     createCompressedTexture("img", "board2");

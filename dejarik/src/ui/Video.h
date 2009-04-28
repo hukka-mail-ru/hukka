@@ -55,7 +55,7 @@ private:
     
 public:
     
-    void startup(const std::vector<std::string>& pieceNames);
+    void startup();
     
     void drawSolidPolygon(const GLshort* vertexArray, unsigned vertNum, const RGBA_Color& color);
     
@@ -73,7 +73,7 @@ public:
 private:
 
    
-    void createTextures(const std::vector<std::string>& names);
+    void createTextures();
     
     void createTexture(const char* dir, const char* name, unsigned fragmentsInRow);
     void createCompressedTexture(const char* dir, const char* name);
