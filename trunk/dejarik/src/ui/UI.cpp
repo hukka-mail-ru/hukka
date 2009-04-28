@@ -236,27 +236,16 @@ bool UI::drawAll()
 
     
     static bool init = true;    
-  //  if(init)
-  //  {
-        drawBoard();
- //   }
- //   else
-  //  {
- //       mVideo.drawSprite("field1", 0, RGBA_Color(1,1,1,1), XY_RIGHT_BOTTOM, 0, 0, 0);
-        /*mVideo.drawSprite("field2", 0, RGBA_Color(1,1,1,1), XY_LEFT_BOTTOM, 0, 0, 0);
-        mVideo.drawSprite("field3", 0, RGBA_Color(1,1,1,1), XY_RIGHT_TOP, 0, 0, 0);
-        mVideo.drawSprite("field4", 0, RGBA_Color(1,1,1,1), XY_LEFT_BOTTOM, 0, 0, 0);*/
-        //EDR_SwapBuffers();
-        //return true;
- //   }
-    
     if(init)
     {
-        mVideo.copyBufferIntoTexture("field1", 0, 320-128);
-        /*mVideo.copyBufferIntoTexture("field2", -7+128, 320-128);
-        mVideo.copyBufferIntoTexture("field3", -7, 320-128-128);
-        mVideo.copyBufferIntoTexture("field4", -7+128, 320-128-128);*/
-        init = false;
+        drawBoard();
+    }
+    else
+    {
+        mVideo.drawSprite("field1", 0, RGBA_Color(1,1,1,1), XY_RIGHT_BOTTOM, 0, 0, 0);
+        mVideo.drawSprite("field2", 0, RGBA_Color(1,1,1,1), XY_LEFT_BOTTOM, 0, 0, 0);
+        mVideo.drawSprite("field3", 0, RGBA_Color(1,1,1,1), XY_RIGHT_TOP, 0, 0, 0);
+        mVideo.drawSprite("field4", 0, RGBA_Color(1,1,1,1), XY_LEFT_TOP, 0, 0, 0);
     }
     
     mVideo.enableBlend();
@@ -285,6 +274,15 @@ bool UI::drawAll()
     
     mVideo.disableBlend();
     
+    
+    if(init)
+    {
+        mVideo.copyBufferIntoTexture("field1", WINDOW_WIDTH/2-BOARD_TEXTURE_WIDTH+1,  WINDOW_HEIGHT-BOARD_TEXTURE_WIDTH);
+        mVideo.copyBufferIntoTexture("field2", WINDOW_WIDTH/2,                      WINDOW_HEIGHT-BOARD_TEXTURE_WIDTH);
+        mVideo.copyBufferIntoTexture("field3", WINDOW_WIDTH/2-BOARD_TEXTURE_WIDTH+1,  WINDOW_HEIGHT-BOARD_TEXTURE_WIDTH*2);
+        mVideo.copyBufferIntoTexture("field4", WINDOW_WIDTH/2,                      WINDOW_HEIGHT-BOARD_TEXTURE_WIDTH*2);
+        init = false;
+    }
     
   // mVideo.clearScreen();
     EDR_SwapBuffers();

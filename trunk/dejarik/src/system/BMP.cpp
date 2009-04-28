@@ -122,12 +122,12 @@ EDR_SurfacePtr EDR_LoadPCX(const char* filename)
     if(!fread(&pcxHeader, sizeof(pcxHeader), 1, file)) 
     {
         fclose(file);
-        throw runtime_error(string("Can't read PVR header") + string(filename));
+        throw runtime_error(string("Can't read PVR header: ") + string(filename));
     }
     if(pcxHeader.manufacturer != 0x0a || pcxHeader.encoding != 0x01) 
     {
         fclose(file);
-        throw runtime_error(string("Not a PCX file") + string(filename));
+        throw runtime_error(string("Not a PCX file: ") + string(filename));
     }
 
     int width = pcxHeader.xMax - pcxHeader.xMin + 1;
