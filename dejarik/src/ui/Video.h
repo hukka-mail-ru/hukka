@@ -75,7 +75,8 @@ public:
     {
         glClear(GL_COLOR_BUFFER_BIT|GL_DEPTH_BUFFER_BIT);
     }
-        
+    
+           
 private:
 
    
@@ -86,6 +87,7 @@ private:
     void createEmptyTexture(const char* name, unsigned short width);
     
     int getTextureSize(int format, int width, int height);
+    void checkError(const std::string where = "");
 
     std::map<std::string, TexturePtr> textures;
 };

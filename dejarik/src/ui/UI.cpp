@@ -236,19 +236,19 @@ bool UI::drawAll()
 
     
     static bool init = true;    
-    if(init)
-    {
+  //  if(init)
+  //  {
         drawBoard();
-    }
-    else
-    {
-        mVideo.drawSprite("field1", 0, RGBA_Color(1,1,1,1), XY_RIGHT_BOTTOM, 0, 0, 0);
+ //   }
+ //   else
+  //  {
+ //       mVideo.drawSprite("field1", 0, RGBA_Color(1,1,1,1), XY_RIGHT_BOTTOM, 0, 0, 0);
         /*mVideo.drawSprite("field2", 0, RGBA_Color(1,1,1,1), XY_LEFT_BOTTOM, 0, 0, 0);
         mVideo.drawSprite("field3", 0, RGBA_Color(1,1,1,1), XY_RIGHT_TOP, 0, 0, 0);
         mVideo.drawSprite("field4", 0, RGBA_Color(1,1,1,1), XY_LEFT_BOTTOM, 0, 0, 0);*/
         //EDR_SwapBuffers();
         //return true;
-    }
+ //   }
     
     if(init)
     {
