@@ -23,14 +23,7 @@ using namespace std;
 void UI::startup()
 {
     TRY_BEGINS;
-    
-    vector<PiecePtr> pieces = mGame->getBoard()->getPieces();
-    vector<string> names;
-    for(unsigned i=0; i<pieces.size(); i++)
-    {
-         names.push_back(pieces[i]->name);
-    }
-    
+       
     // create representation of the cells
     vector<CellPtr> cells;
     mGame->getBoard()->getCells(cells);
@@ -39,7 +32,7 @@ void UI::startup()
         createCell(cells[i]);
     }
         
-    mVideo.startup(names);
+    mVideo.startup();
     TRY_RETHROW;
 }
 
@@ -312,7 +305,7 @@ void UI::onMouseClick(int x, int y)
     if(isCellClicked(x, y, cell))
     {
         // show Menu item
-        menuItemName = (cell->piece) ? cell->piece->name : "default";
+    //    menuItemName = (cell->piece) ? cell->piece->name : "default";
         
         // process the click
         BattleResult res = mGame->onCellClick(cell);

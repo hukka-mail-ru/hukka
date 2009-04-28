@@ -10,10 +10,21 @@ CLASSPTR(Cell)
 CLASSPTR(Player)
 CLASSPTR(Piece)
 
+enum PieceName
+{
+    PN_MONNOK = 0,
+    PN_MOLATOR = 1,
+    PN_KLORSLUG = 2,
+    PN_HOUJIX = 3,
+    PN_GHHK = 4,
+    PN_STRIDER = 5,
+    PN_SARVIP = 6,
+    PN_NGOK = 7
+};
 
 struct Piece
 {
-    Piece(const std::string& name,
+    Piece(PieceName name,
           unsigned attack, unsigned defence, unsigned move):
           name(name),
           attackRating(attack),
@@ -28,7 +39,7 @@ struct Piece
               cell.reset();
           }    
     
-    std::string name;
+    PieceName name;
     PlayerPtr player;
     CellPtr cell;   
     CellPtr cellBeforeMoving;     

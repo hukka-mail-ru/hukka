@@ -22,14 +22,14 @@ Board::Board()
 
 void Board::createPieces()
 {
-    mPieces.push_back(PiecePtr(new Piece("Sarvip",     6, 6, 2)));
-    mPieces.push_back(PiecePtr(new Piece("Monnok",     6, 5, 3)));
-    mPieces.push_back(PiecePtr(new Piece("Ghhhk",      4, 3, 2)));
-    mPieces.push_back(PiecePtr(new Piece("Houjix",     4, 4, 1)));
-    mPieces.push_back(PiecePtr(new Piece("Strider",    2, 7, 3)));
-    mPieces.push_back(PiecePtr(new Piece("Ngok",       3, 8, 1)));
-    mPieces.push_back(PiecePtr(new Piece("Klorslug",   7, 3, 2)));
-    mPieces.push_back(PiecePtr(new Piece("Molator",    8, 2, 2)));
+    mPieces.push_back(PiecePtr(new Piece(PN_SARVIP,     6, 6, 2)));
+    mPieces.push_back(PiecePtr(new Piece(PN_MONNOK,     6, 5, 3)));
+    mPieces.push_back(PiecePtr(new Piece(PN_GHHK,      4, 3, 2)));
+    mPieces.push_back(PiecePtr(new Piece(PN_HOUJIX,     4, 4, 1)));
+    mPieces.push_back(PiecePtr(new Piece(PN_STRIDER,    2, 7, 3)));
+    mPieces.push_back(PiecePtr(new Piece(PN_NGOK,       3, 8, 1)));
+    mPieces.push_back(PiecePtr(new Piece(PN_KLORSLUG,   7, 3, 2)));
+    mPieces.push_back(PiecePtr(new Piece(PN_MOLATOR,    8, 2, 2)));
 }
 
 void Board::getInitialCells(vector<CellPtr>& cells)
