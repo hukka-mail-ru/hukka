@@ -386,27 +386,11 @@ void Video::createEmptyTexture(const char* name, unsigned short width)
     /* Generate The Texture */
     glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, width, width, 0, GL_RGBA, // blue chanel must be changed by red 
                  GL_UNSIGNED_BYTE, texture->surface->pixels );
-    
-    err = glGetError();
-    if(err != GL_NO_ERROR)
-    {
-        ostringstream os;
-        os << "glTexImage2D Error 0x" << hex << err << "; Name: " << name << endl;
-        throw runtime_error(os.str());
-    }
 
     /* Linear Filtering */
     glTexParameterx( GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR );
     glTexParameterx( GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR );
 
-    err = glGetError();
-    if(err != GL_NO_ERROR)
-    {
-        ostringstream os;
-        os << "glTexParameterx Error 0x" << hex << err << "; Name: " << name << endl;
-        throw runtime_error(os.str());
-    }
-    
     textures[name] = texture;  
     
     TRY_RETHROW;
@@ -473,9 +457,9 @@ void Video::createTextures()
     createCompressedTexture("img", "menu2");
     
     createEmptyTexture("field1", 128);
-  //  createEmptyTexture("field3", 4);
-  //  createEmptyTexture("field3", 128);
-  //  createEmptyTexture("field4", 128);
+    createEmptyTexture("field2", 128);
+    createEmptyTexture("field3", 128);
+    createEmptyTexture("field4", 128);
     
     
     TRY_RETHROW;
