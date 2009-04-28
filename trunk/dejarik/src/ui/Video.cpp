@@ -110,8 +110,13 @@ void Video::drawLineLoop(const GLshort* vertexArray, unsigned vertNum, const RGB
     TRY_RETHROW;
 }
 
+void Video::getFragmentXY(const std::string& fragmentName, GLfloat& fragmentX, GLfloat& fragmentY)
+{
+    
+}
+
 void Video::drawSprite(
-        const std::string& texName, const std::string& subTexName, const RGBA_Color& color, 
+        const std::string& texName, const std::string& fragmentName, const RGBA_Color& color, 
         BindXY bindXY, GLshort x, GLshort y, float angle)
 {
     TRY_BEGINS;
@@ -144,12 +149,30 @@ void Video::drawSprite(
         case XY_LEFT_BOTTOM:
             break;
     }
+
+    // Deal with subtextures
+    GLfloat fragmentWidth = 1.0;  
+    GLfloat fragmentX = 0.0;
+    GLfloat fragmentY = 0.0;
+    
+    if(fragmentName != "")
+    {
+        if(!texture->fragmentsInRow)
+        {
+            ostringstream os;
+            os << "fragmentsInRow = 0 in " << fragmentName;
+            throw runtime_error(os.str()); 
+        }
+            
+        fragmentWidth = 1.0/texture->fragmentsInRow;
+
+        getFragmentXY(fragmentName, fragmentX, fragmentY);
+    }
                   
     glLoadIdentity();
     glEnable( GL_TEXTURE_2D );
     glBindTexture(GL_TEXTURE_2D, texture->id);
-    
-    
+       
     glColor4x(
         FixedFromFloat(color.r), 
         FixedFromFloat(color.b), 
@@ -159,7 +182,7 @@ void Video::drawSprite(
     GLshort x1 = x;
     GLshort y1 = y;
     
-    GLshort dw = (texName == "pieces") ? texture->surface->w/4 : texture->surface->w;
+    GLshort dw = texture->surface->w / texture->fragmentsInRow;
     
     GLshort x2 = x  + dw;
     GLshort y2 = y + dw;
@@ -184,32 +207,13 @@ void Video::drawSprite(
         x1,  y2,
     };
 
-    GLfixed texCoords1[] = 
+    GLfixed texCoords[] = 
     {
-        FixedFromFloat(0), FixedFromFloat(0),
-        FixedFromFloat(1), FixedFromFloat(0),
-        FixedFromFloat(1), FixedFromFloat(1),
-        FixedFromFloat(0), FixedFromFloat(1),
+        FixedFromFloat(fragmentX), FixedFromFloat(fragmentY),
+        FixedFromFloat(fragmentX + fragmentWidth), FixedFromFloat(fragmentY),
+        FixedFromFloat(fragmentX + fragmentWidth), FixedFromFloat(fragmentY + fragmentWidth),
+        FixedFromFloat(fragmentX), FixedFromFloat(fragmentY + fragmentWidth)
     };
-    GLfixed texCoords2[] = 
-    {
-        FixedFromFloat(0), FixedFromFloat(0),
-        FixedFromFloat(0.25), FixedFromFloat(0),
-        FixedFromFloat(0.25), FixedFromFloat(0.25),
-        FixedFromFloat(0), FixedFromFloat(0.25),
-    };
-
-    GLfixed* texCoords;
-    if(texName == "pieces")
-    {
-        texCoords =  texCoords2;
-    }
-    else
-    {
-        texCoords =  texCoords1;
-    }
-
-    
 
     glVertexPointer(2, GL_SHORT, 0, vertices);
     glTexCoordPointer(2, GL_FIXED, 0, texCoords);
@@ -239,8 +243,8 @@ void Video::disableBlend()
     glDisable(GL_BLEND);
 }
 
-// copies the current framebuffer into a texture
-void Video::copyBuffer(const std::string& texName, GLint x, GLint y)
+
+void Video::copyBufferIntoTexture(const std::string& texName, GLint x, GLint y)
 {
     TRY_BEGINS;
     
@@ -305,11 +309,12 @@ int Video::getTextureSize(int format, int width, int height)
    return base + (width * height * bpp / 8);
 }
 
-void Video::createTexture(const char* dir, const char* name)
+void Video::createTexture(const char* dir, const char* name, unsigned fragmentsInRow)
 {
     TRY_BEGINS;
     
     TexturePtr texture (new Texture); 
+    texture->fragmentsInRow = fragmentsInRow;
     
     ostringstream path;
     path << EDR_GetCurDir() << dir << "/" << name << ".bmp";
@@ -333,18 +338,6 @@ void Video::createTexture(const char* dir, const char* name)
         glTexParameterx(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR );
         
         /* Generate The Texture */
-        /*
-        if(texImages == TI_MANY)
-        {
-            glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, texture->surface->w, texture->surface->h, 0, 
-                         GL_RGBA, GL_UNSIGNED_BYTE, NULL);            
-        }
-        else
-        {
-            glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, texture->surface->w, texture->surface->h, 0, 
-                         GL_RGBA, GL_UNSIGNED_BYTE, texture->surface->pixels );
-        }
-        */
         glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, texture->surface->w, texture->surface->h, 0, 
                      GL_RGBA, GL_UNSIGNED_BYTE, texture->surface->pixels );
     }
@@ -483,7 +476,7 @@ void Video::createTextures(const std::vector<std::string>& names)
     createTexture("img/pieces", "Houjix0");
     */
     
-    createTexture("img", "pieces");
+    createTexture("img", "pieces", 4);
 
   
     

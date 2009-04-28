@@ -44,7 +44,10 @@ private:
     
     struct Texture
     {
+        Texture(): id(0), fragmentsInRow(1) {}
+        
         unsigned id;
+        unsigned fragmentsInRow; // e.g. '4' means that the texture consists of 16 fragments.  
         EDR_SurfacePtr surface;
     };
 
@@ -65,18 +68,19 @@ public:
     void enableBlend();
     void disableBlend();
     
-    void copyBuffer(const std::string& texName, GLint x, GLint y);
+    void copyBufferIntoTexture(const std::string& texName, GLint x, GLint y);
         
 private:
 
    
     void createTextures(const std::vector<std::string>& names);
     
-    void createTexture(const char* dir, const char* name);
+    void createTexture(const char* dir, const char* name, unsigned fragmentsInRow);
     void createCompressedTexture(const char* dir, const char* name);
     void createEmptyTexture(const char* name, unsigned short width);
     
     int getTextureSize(int format, int width, int height);
+    void getFragmentXY(const std::string& fragmentName, GLfloat& fragmentX, GLfloat& fragmentY);
 
     std::map<std::string, TexturePtr> textures;
 };
