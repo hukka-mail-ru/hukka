@@ -48,7 +48,7 @@ public:
     unsigned howManyPieces();
     
     
-    PiecePtr getActivePiece();    
+    PiecePtr getActivePiece() const;    
     void setActivePiece(const PiecePtr& piece);    
     void resetActivePiece();
 
