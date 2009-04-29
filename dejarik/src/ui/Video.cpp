@@ -144,21 +144,22 @@ void Video::drawSprite(const std::string& texName, const unsigned fragmentID,
     }
     
     // position of the texture
+    const unsigned width = texture->surface->width;
     switch(bindXY)
     {
         case XY_CENTER:
-            x -= texture->surface->w / 2;
-            y -= texture->surface->h / 2;
+            x -= width / 2;
+            y -= width / 2;
             break;
         case XY_RIGHT_BOTTOM:
-            x -= texture->surface->w;
+            x -= width;
             break;
         case XY_LEFT_TOP:
-            y -= texture->surface->h;
+            y -= width;
             break;
         case XY_RIGHT_TOP:
-            x -= texture->surface->w;
-            y -= texture->surface->h;
+            x -= width;
+            y -= width;
             break;            
         case XY_LEFT_BOTTOM:
             break;
@@ -168,11 +169,11 @@ void Video::drawSprite(const std::string& texName, const unsigned fragmentID,
     GLshort x1 = x;
     GLshort y1 = y;
     
-    GLshort dw = texture->surface->w / texture->fragmentsInRow;    
+    GLshort dw = width / texture->fragmentsInRow;    
     GLshort x2 = x + dw;
     GLshort y2 = y + dw;
     
-    GLshort shift = texture->surface->w/2 - (x2-x1)/2; // fragmentation causes this shift
+    GLshort shift = width/2 - (x2-x1)/2; // fragmentation causes this shift
     x1 += shift;
     y1 += shift;
     x2 += shift;
@@ -265,7 +266,9 @@ void Video::copyBufferIntoTexture(const std::string& texName, GLint x, GLint y)
     TexturePtr texture = textures[texName];
     
     glBindTexture(GL_TEXTURE_2D, texture->id);
-    glCopyTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, x, y, texture->surface->w, texture->surface->h, 0);
+    
+    const unsigned width = texture->surface->width;
+    glCopyTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, x, y, width, width, 0);
     
     checkError();
     
@@ -347,7 +350,8 @@ void Video::createTexture(const char* dir, const char* name, unsigned fragmentsI
         glTexParameterx(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR );
         
         /* Generate The Texture */
-        glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, texture->surface->w, texture->surface->h, 0, 
+        const unsigned width = texture->surface->width;
+        glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, width, width, 0, 
                      GL_RGBA, GL_UNSIGNED_BYTE, texture->surface->pixels );
     }
 
@@ -366,8 +370,7 @@ void Video::createEmptyTexture(const char* name, unsigned short width)
     TexturePtr texture (new Texture); 
     
     texture->surface = EDR_SurfacePtr(new EDR_Surface());
-    texture->surface->w = width;
-    texture->surface->h = width;
+    texture->surface->width = width;
     texture->surface->pixels = new unsigned char[width * width * 4];
         
     /* Create The Texture */
@@ -411,9 +414,10 @@ void Video::createCompressedTexture(const char* dir, const char* name)
 
         glBindTexture(GL_TEXTURE_2D, texture->id);
  
+        const unsigned width = texture->surface->width;
         glCompressedTexImage2D (GL_TEXTURE_2D, 0,  GL_PALETTE8_RGB8_OES, 
-                texture->surface->w, texture->surface->h, 0, 
-                getTextureSize(GL_PALETTE8_RGB8_OES, texture->surface->w, texture->surface->h),
+                width, width, 0, 
+                getTextureSize(GL_PALETTE8_RGB8_OES, width, width),
                 texture->surface->pixels);
 
         glTexParameterx( GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR );

@@ -5,13 +5,11 @@
 
 struct EDR_Surface // for BMP loading
 {
-    EDR_Surface(): pixels(0), size(0), w(0), h(0) {}
+    EDR_Surface(): pixels(0), width(0) {}
     ~EDR_Surface() { delete[] pixels; }
     
     unsigned char* pixels;
-    unsigned size;
-    unsigned w;
-    unsigned h;
+    unsigned width;
 };
 
 CLASSPTR(EDR_Surface);
