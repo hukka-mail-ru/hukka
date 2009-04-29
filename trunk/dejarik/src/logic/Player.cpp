@@ -127,7 +127,7 @@ void Player::movePiece(const CellPtr& cell)
 }
 
 
-PiecePtr Player::getActivePiece()
+PiecePtr Player::getActivePiece() const
 {
     return mActivePiece.lock();
 }

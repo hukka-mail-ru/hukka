@@ -71,11 +71,7 @@ public:
     
     void copyBufferIntoTexture(const std::string& texName, GLint x, GLint y);
     
-    void clearScreen()
-    {
-        glClear(GL_COLOR_BUFFER_BIT|GL_DEPTH_BUFFER_BIT);
-    }
-    
+    void clearScreen();
            
 private:
 

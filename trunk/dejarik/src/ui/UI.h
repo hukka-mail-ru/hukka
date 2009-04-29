@@ -33,12 +33,14 @@ private:
         CL_RED
     };
     
-    bool drawAll();
+    bool drawField();
     void drawBoard();
     void drawCell(const CellPtr& cell, bool clicked);
     void drawPiece(const PiecePtr& piece);
     //void drawActivePlayer();
     void drawMenu();
+    
+    void memorizeField();
     
     void createCell(const CellPtr cell);
     void createCellSegment(const CellPtr cell, float radius1, float radius2);

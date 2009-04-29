@@ -178,8 +178,8 @@ void UI::drawPiece(const PiecePtr& piece)
 {
     TRY_BEGINS;
     
-    if(mMoving && piece != mMovedPiece) // optimization: draw only the moving piece
-        return;
+  //  if(mMoving && piece != mMovedPiece) // optimization: draw only the moving piece
+  //      return;
     
     RGBA_Color color = (piece->player.get() == mGame->getActivePlayer()) ?
             RGBA_Color(1,0,1,1) : RGBA_Color(1,1,1,1);
@@ -222,72 +222,78 @@ void UI::drawBoard()
 }
 
 
-/* Here goes our drawing code */
-bool UI::drawAll()
+bool UI::drawField()
 {
     TRY_BEGINS;
 
-    static bool flag = true; // TODO temporary optimized
-    if(flag)
-    {
-        drawMenu();
-        flag = false;
-    }
+    mVideo.drawSprite("field1", 0, RGBA_Color(1,1,1,1), XY_RIGHT_BOTTOM, 0, 0, 0);
+    mVideo.drawSprite("field2", 0, RGBA_Color(1,1,1,1), XY_LEFT_BOTTOM, 0, 0, 0);
+    mVideo.drawSprite("field3", 0, RGBA_Color(1,1,1,1), XY_RIGHT_TOP, 0, 0, 0);
+    mVideo.drawSprite("field4", 0, RGBA_Color(1,1,1,1), XY_LEFT_TOP, 0, 0, 0);
 
     
-    static bool init = true;    
-    if(init)
-    {
-        drawBoard();
-    }
-    else
-    {
-        mVideo.drawSprite("field1", 0, RGBA_Color(1,1,1,1), XY_RIGHT_BOTTOM, 0, 0, 0);
-        mVideo.drawSprite("field2", 0, RGBA_Color(1,1,1,1), XY_LEFT_BOTTOM, 0, 0, 0);
-        mVideo.drawSprite("field3", 0, RGBA_Color(1,1,1,1), XY_RIGHT_TOP, 0, 0, 0);
-        mVideo.drawSprite("field4", 0, RGBA_Color(1,1,1,1), XY_LEFT_TOP, 0, 0, 0);
-    }
-    
     mVideo.enableBlend();
-    vector<CellPtr> cells;
-    mGame->getBoard()->getCells(cells);
     
-    // draw all but clicked cell    
-    for(unsigned i = 0; i < cells.size(); i++)
+    // draw all but clicked cell  
+    if(!mMoving)
     {
-        drawCell(cells[i], false);
+        vector<CellPtr> cells;
+        mGame->getBoard()->getCells(cells);
+        
+        for(unsigned i = 0; i < cells.size(); i++)
+        {
+            drawCell(cells[i], false);
+        }
+        
+        // draw clicked cell
+        for(unsigned i = 0; i < cells.size(); i++)
+        {
+            drawCell(cells[i], true);
+        }
     }
     
-    // draw clicked cell
-    for(unsigned i = 0; i < cells.size(); i++)
-    {
-        drawCell(cells[i], true);
-    }
-    
-    // draw Pieces     
+    // draw active Piece     
     vector<PiecePtr> pieces = mGame->getBoard()->getPieces();
     for(unsigned i = 0; i < pieces.size(); i++)
     {
-        drawPiece(pieces[i]);
+        if(pieces[i] == mGame->getActivePlayer()->getActivePiece())
+        {
+            drawPiece(pieces[i]);
+        }
+    }
+    
+    mVideo.disableBlend();
+  
+    TRY_RETHROW;    
+    return true;
+}
+
+
+void UI::memorizeField()
+{
+    drawBoard();
+    
+    // draw all but the active (clicked) Piece   
+    mVideo.enableBlend();
+        
+    vector<PiecePtr> pieces = mGame->getBoard()->getPieces();
+    for(unsigned i = 0; i < pieces.size(); i++)
+    {
+        if(pieces[i] != mGame->getActivePlayer()->getActivePiece())
+        {
+            drawPiece(pieces[i]);
+        }
     }
     
     mVideo.disableBlend();
     
+    // memorize 
+    mVideo.copyBufferIntoTexture("field1", WINDOW_WIDTH/2-BOARD_TEXTURE_WIDTH, WINDOW_HEIGHT-BOARD_TEXTURE_WIDTH);
+    mVideo.copyBufferIntoTexture("field2", WINDOW_WIDTH/2,                     WINDOW_HEIGHT-BOARD_TEXTURE_WIDTH);
+    mVideo.copyBufferIntoTexture("field3", WINDOW_WIDTH/2-BOARD_TEXTURE_WIDTH, WINDOW_HEIGHT-BOARD_TEXTURE_WIDTH*2);
+    mVideo.copyBufferIntoTexture("field4", WINDOW_WIDTH/2,                     WINDOW_HEIGHT-BOARD_TEXTURE_WIDTH*2);
     
-    if(init)
-    {
-        mVideo.copyBufferIntoTexture("field1", WINDOW_WIDTH/2-BOARD_TEXTURE_WIDTH, WINDOW_HEIGHT-BOARD_TEXTURE_WIDTH);
-        mVideo.copyBufferIntoTexture("field2", WINDOW_WIDTH/2,                     WINDOW_HEIGHT-BOARD_TEXTURE_WIDTH);
-        mVideo.copyBufferIntoTexture("field3", WINDOW_WIDTH/2-BOARD_TEXTURE_WIDTH, WINDOW_HEIGHT-BOARD_TEXTURE_WIDTH*2);
-        mVideo.copyBufferIntoTexture("field4", WINDOW_WIDTH/2,                     WINDOW_HEIGHT-BOARD_TEXTURE_WIDTH*2);
-        init = false;
-    }
-    
-    EDR_SwapBuffers();
-
-    TRY_RETHROW;
-    
-    return true;
+    mVideo.clearScreen();
 }
 
 
@@ -317,7 +323,7 @@ void UI::onMouseClick(int x, int y)
         
         switch(res)
         {
-            case RES_CLICK: cout << "RES_CLICK" << endl; break;
+            case RES_CLICK:  cout << "RES_CLICK" << endl; break;
             case RES_MOVE: cout << "RES_MOVE" << endl; break;
             case RES_KILL: menuItemName = "kill"; cout << "RES_KILL" << endl;break;
             case RES_PUSH: menuItemName = "push"; cout << "RES_PUSH" << endl;break;
@@ -342,19 +348,38 @@ void UI::onMouseClick(int x, int y)
 void UI::handleEvents()
 {
     TRY_BEGINS;
-    
+    static bool init = true;  
 
     for(;;)
-    {
+    {        
+        mMoving = animation.updateAll(mMoveSteps);
+        
+        if(init)
+        {
+            
+            memorizeField();
+            drawField();
+            drawMenu();
+            
+            EDR_SwapBuffers();
+            
+            
+            init = false;
+        }
+
+        
         long time1 = EDR_GetTime(); // start the timer 
 
-        mMoving = animation.updateAll(mMoveSteps);     
+             
 
-        static bool afterMove = true;
+        static bool afterMove = false;
         if(mMoving)
         {
             long time4 = EDR_GetTime(); // start the timer 
-            drawAll();
+            
+            drawField();
+            EDR_SwapBuffers();
+            
             long time2 = EDR_GetTime(); // start the timer 
 
             afterMove = true;
@@ -362,7 +387,9 @@ void UI::handleEvents()
         }
         else if(!mMoving && afterMove) // drawAll one more time after moving
         {
-            drawAll();
+            drawField();
+            EDR_SwapBuffers();
+            
             afterMove = false;
         }
 
@@ -376,7 +403,12 @@ void UI::handleEvents()
             if( !mMoving && event.type == EVENT_LBUTTONDOWN) 
             {
                 onMouseClick(event.button.x, event.button.y);
-                drawAll();
+                
+                memorizeField();
+                drawField();
+                drawMenu();
+                
+                EDR_SwapBuffers();
             }
             else if(event.type == EVENT_QUIT || event.type == EVENT_RBUTTONDOWN) 
             {
