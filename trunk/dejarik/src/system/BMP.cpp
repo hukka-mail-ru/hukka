@@ -132,6 +132,12 @@ EDR_SurfacePtr EDR_LoadPCX(const char* filename)
 
     int width = pcxHeader.xMax - pcxHeader.xMin + 1;
     int height = pcxHeader.yMax - pcxHeader.yMin + 1;
+    
+    if(width != height) 
+    {
+        fclose(file);
+        throw runtime_error(string("width != height: ") + string(filename));
+    }
 
     
     // Read the pixels
@@ -195,8 +201,7 @@ EDR_SurfacePtr EDR_LoadPCX(const char* filename)
 
     EDR_SurfacePtr surface (new EDR_Surface());
     surface->pixels = pixels;
-    surface->w = width;
-    surface->h = height;
+    surface->width = width;
     
     return surface;
 
@@ -232,6 +237,12 @@ EDR_SurfacePtr EDR_LoadPVR(const char* filename)
     int width = pvrHeader.dwWidth;
     int height = pvrHeader.dwHeight;
     
+    if(width != height) 
+    {
+        fclose(file);
+        throw runtime_error(string("width != height: ") + string(filename));
+    }
+    
     GLubyte* pixels = new GLubyte[width * height * TWO_BYTES]; // 16 bits per pixel
     if(!pixels) 
     {
@@ -264,8 +275,7 @@ EDR_SurfacePtr EDR_LoadPVR(const char* filename)
 
     EDR_SurfacePtr surface (new EDR_Surface());
     surface->pixels = pixels;
-    surface->w = width;
-    surface->h = height;
+    surface->width = width;
     
     return surface;
     
@@ -320,6 +330,12 @@ EDR_SurfacePtr EDR_LoadBMP(const char* filename)
     int width = bmpInfo.biWidth;
     int height = bmpInfo.biHeight;
     int bpp = bmpInfo.biBitCount;
+    
+    if(width != height) 
+    {
+        fclose(file);
+        throw runtime_error(string("width != height: ") + string(filename));
+    }
 
     if(bmpInfo.biCompression || bpp != 24) 
     {
@@ -361,8 +377,7 @@ EDR_SurfacePtr EDR_LoadBMP(const char* filename)
 
     EDR_SurfacePtr surface (new EDR_Surface());
     surface->pixels = pixels;
-    surface->w = width;
-    surface->h = height;
+    surface->width = width;
     
     return surface;
 
