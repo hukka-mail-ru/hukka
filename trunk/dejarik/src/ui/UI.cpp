@@ -178,8 +178,10 @@ void UI::drawPiece(const PiecePtr& piece)
 {
     TRY_BEGINS;
     
-  //  if(mMoving && piece != mMovedPiece) // optimization: draw only the moving piece
-  //      return;
+    if(!piece)
+    {
+        return;
+    }
     
     RGBA_Color color = (piece->player.get() == mGame->getActivePlayer()) ?
             RGBA_Color(1,0,1,1) : RGBA_Color(1,1,1,1);
@@ -251,17 +253,10 @@ bool UI::drawField()
             drawCell(cells[i], true);
         }
     }
-    
-    // draw active Piece     
-    vector<PiecePtr> pieces = mGame->getBoard()->getPieces();
-    for(unsigned i = 0; i < pieces.size(); i++)
-    {
-        if(pieces[i] == mGame->getActivePlayer()->getActivePiece())
-        {
-            drawPiece(pieces[i]);
-        }
-    }
-    
+
+    // only one piece   
+    drawPiece(mActivePiece);
+        
     mVideo.disableBlend();
   
     TRY_RETHROW;    
@@ -275,10 +270,15 @@ void UI::memorizeField()
     
     // draw all but the active (clicked) Piece   
     mVideo.enableBlend();
-        
+       
+    if(mActivePiece)
+    cout << "memorize all exept " << mActivePiece->name << endl;
+    else
+        cout << "memorize all" << endl;
+    
     vector<PiecePtr> pieces = mGame->getBoard()->getPieces();
     for(unsigned i = 0; i < pieces.size(); i++)
-    {
+    {        
         if(pieces[i] != mGame->getActivePlayer()->getActivePiece())
         {
             drawPiece(pieces[i]);
@@ -319,6 +319,7 @@ void UI::onMouseClick(int x, int y)
             mGame->getBoard()->getMoveSteps(cell, mMoveSteps);
             mMoveSteps.insert(mMoveSteps.begin(), cell->piece->cellBeforeMoving);
             mMovedPiece = cell->piece;
+            mActivePiece = mMovedPiece;
         }
         
         switch(res)
@@ -339,6 +340,8 @@ void UI::onMouseClick(int x, int y)
             exit(0);
         }
         
+        mActivePiece = mGame->getActivePlayer()->getActivePiece();
+      //  assert(mActivePiece);
     }   
  
     
@@ -356,13 +359,10 @@ void UI::handleEvents()
         
         if(init)
         {
-            
             memorizeField();
             drawField();
-            drawMenu();
-            
+            drawMenu();            
             EDR_SwapBuffers();
-            
             
             init = false;
         }
@@ -375,19 +375,20 @@ void UI::handleEvents()
         static bool afterMove = false;
         if(mMoving)
         {
-            long time4 = EDR_GetTime(); // start the timer 
+  //          long time4 = EDR_GetTime(); // start the timer 
             
             drawField();
             EDR_SwapBuffers();
             
-            long time2 = EDR_GetTime(); // start the timer 
+  //          long time2 = EDR_GetTime(); // start the timer 
 
-            afterMove = true;
-            
+            afterMove = true;  
         }
         else if(!mMoving && afterMove) // drawAll one more time after moving
         {
+        //    memorizeField();
             drawField();
+        //    drawMenu();            
             EDR_SwapBuffers();
             
             afterMove = false;
@@ -406,8 +407,7 @@ void UI::handleEvents()
                 
                 memorizeField();
                 drawField();
-                drawMenu();
-                
+                drawMenu();                
                 EDR_SwapBuffers();
             }
             else if(event.type == EVENT_QUIT || event.type == EVENT_RBUTTONDOWN) 

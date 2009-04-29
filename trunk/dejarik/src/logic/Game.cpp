@@ -111,7 +111,7 @@ BattleResult Game::onCellClick(const CellPtr& cell)
         }
         
         // common move
-        mActivePlayer->movePiece(cell);
+        mActivePlayer->movePiece(cell);      
         mActivePlayer->decrementLeftMoves();
         res = RES_MOVE;
         
