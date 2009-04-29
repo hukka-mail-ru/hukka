@@ -58,6 +58,7 @@ private:
     std::string menuItemName;
     bool mMoving;
     PiecePtr mMovedPiece;
+    PiecePtr mActivePiece;
 
     Video mVideo;
 };
