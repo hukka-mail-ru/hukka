@@ -57,7 +57,6 @@ private:
     Animation animation;
     std::string menuItemName;
     bool mMoving;
-    PiecePtr mMovedPiece;
     PiecePtr mActivePiece;
 
     Video mVideo;

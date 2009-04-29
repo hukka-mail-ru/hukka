@@ -271,11 +271,6 @@ void UI::memorizeField()
     // draw all but the active (clicked) Piece   
     mVideo.enableBlend();
        
-    if(mActivePiece)
-    cout << "memorize all exept " << mActivePiece->name << endl;
-    else
-        cout << "memorize all" << endl;
-    
     vector<PiecePtr> pieces = mGame->getBoard()->getPieces();
     for(unsigned i = 0; i < pieces.size(); i++)
     {        
@@ -318,8 +313,6 @@ void UI::onMouseClick(int x, int y)
         {
             mGame->getBoard()->getMoveSteps(cell, mMoveSteps);
             mMoveSteps.insert(mMoveSteps.begin(), cell->piece->cellBeforeMoving);
-            mMovedPiece = cell->piece;
-            mActivePiece = mMovedPiece;
         }
         
         switch(res)
@@ -340,9 +333,10 @@ void UI::onMouseClick(int x, int y)
             exit(0);
         }
         
-        mActivePiece = mGame->getActivePlayer()->getActivePiece();
-        
+        // Shamanize a litte, because we need the valid 'mActivePiece' value
+        // until the piece stops moving.
         static PiecePtr oldActivePiece;
+        mActivePiece = mGame->getActivePlayer()->getActivePiece();        
         if(mActivePiece)
         {
             oldActivePiece = mActivePiece;
@@ -353,7 +347,6 @@ void UI::onMouseClick(int x, int y)
         }
         
         assert(mActivePiece);
-        cout << "mActivePiece " << mActivePiece->name << endl;
     }   
  
     
@@ -387,20 +380,14 @@ void UI::handleEvents()
         static bool afterMove = false;
         if(mMoving)
         {
-  //          long time4 = EDR_GetTime(); // start the timer 
-            
             drawField();
             EDR_SwapBuffers();
-            
-  //          long time2 = EDR_GetTime(); // start the timer 
-
+  
             afterMove = true;  
         }
         else if(!mMoving && afterMove) // drawAll one more time after moving
         {
-        //    memorizeField();
             drawField();
-        //    drawMenu();            
             EDR_SwapBuffers();
             
             afterMove = false;
