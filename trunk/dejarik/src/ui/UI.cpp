@@ -254,7 +254,7 @@ bool UI::drawField()
         }
     }
 
-    // only one piece   
+    // only one piece  
     drawPiece(mActivePiece);
         
     mVideo.disableBlend();
@@ -279,7 +279,7 @@ void UI::memorizeField()
     vector<PiecePtr> pieces = mGame->getBoard()->getPieces();
     for(unsigned i = 0; i < pieces.size(); i++)
     {        
-        if(pieces[i] != mGame->getActivePlayer()->getActivePiece())
+        if(pieces[i] != mActivePiece)
         {
             drawPiece(pieces[i]);
         }
@@ -341,7 +341,19 @@ void UI::onMouseClick(int x, int y)
         }
         
         mActivePiece = mGame->getActivePlayer()->getActivePiece();
-      //  assert(mActivePiece);
+        
+        static PiecePtr oldActivePiece;
+        if(mActivePiece)
+        {
+            oldActivePiece = mActivePiece;
+        }
+        else
+        {
+            mActivePiece = oldActivePiece;
+        }
+        
+        assert(mActivePiece);
+        cout << "mActivePiece " << mActivePiece->name << endl;
     }   
  
     
