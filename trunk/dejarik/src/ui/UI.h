@@ -15,7 +15,7 @@ class UI
 public:
     
     UI(const GamePtr& game):
-        mGame(game), animation(game), menuItemName("default"), mMoving(false)
+        mGame(game), mAnimation(game), mMoving(false)
     {}
     
     void startup();
@@ -53,15 +53,14 @@ private:
     bool isCellClicked(int x, int y,  CellPtr& cell);    
     void onMouseClick(int x, int y);
     
-    GamePtr mGame; 
-    std::vector<CellPtr> mMoveSteps; 
+    GamePtr mGame;    
+    Animation mAnimation;
+    Video mVideo;
     
-    Animation animation;
-    std::string menuItemName;
     bool mMoving;
+    std::vector<CellPtr> mMoveSteps; 
     PiecePtr mActivePiece;
 
-    Video mVideo;
 };
 
 
