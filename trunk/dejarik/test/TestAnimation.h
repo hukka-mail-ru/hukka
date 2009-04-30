@@ -6,6 +6,7 @@
 
 #include "Animation.h"
 #include "Macros.h"
+#include "UI.h"
 
 class TestAnimation: public CppUnit::TestFixture 
 {
@@ -13,11 +14,61 @@ class TestAnimation: public CppUnit::TestFixture
    CPPUNIT_TEST(testGetNormalAngle);
    CPPUNIT_TEST(testGetTargetAngle);
    CPPUNIT_TEST(testGetSmallestAngle);
+   CPPUNIT_TEST(testGetActiveFields);
    CPPUNIT_TEST_SUITE_END();
          
 public:         
     void setUp() {}
     void tearDown() {}
+    
+    void testGetActiveFields()
+    {
+        TRY_BEGINS;
+        SHOW_FUNCTION_NAME;
+        
+
+        GamePtr game (new Game);    
+        UI ui(game);
+        unsigned one = 0;
+        unsigned two = 0;
+        ui.getActiveFields(10, 20, one, two);
+        CPPUNIT_ASSERT_EQUAL((unsigned)2, one);
+        CPPUNIT_ASSERT_EQUAL((unsigned)1, two);
+
+        ui.getActiveFields(40, 10, one, two);
+        CPPUNIT_ASSERT_EQUAL((unsigned)2, one);
+        CPPUNIT_ASSERT_EQUAL((unsigned)4, two);
+
+        ui.getActiveFields(10, -25, one, two);
+        CPPUNIT_ASSERT_EQUAL((unsigned)4, one);
+        CPPUNIT_ASSERT_EQUAL((unsigned)3, two);
+
+        ui.getActiveFields(-30, 1, one, two);
+        CPPUNIT_ASSERT_EQUAL((unsigned)3, one);
+        CPPUNIT_ASSERT_EQUAL((unsigned)1, two);
+
+        ui.getActiveFields(0, 0, one, two);
+        CPPUNIT_ASSERT_EQUAL((unsigned)1, one);
+        CPPUNIT_ASSERT_EQUAL((unsigned)2, two);
+
+        ui.getActiveFields(30, 0, one, two);
+        CPPUNIT_ASSERT_EQUAL((unsigned)2, one);
+        CPPUNIT_ASSERT_EQUAL((unsigned)4, two);
+
+        ui.getActiveFields(0, 30, one, two);
+        CPPUNIT_ASSERT_EQUAL((unsigned)1, one);
+        CPPUNIT_ASSERT_EQUAL((unsigned)2, two);
+
+        ui.getActiveFields(-30, 0, one, two);
+        CPPUNIT_ASSERT_EQUAL((unsigned)1, one);
+        CPPUNIT_ASSERT_EQUAL((unsigned)3, two);
+
+        ui.getActiveFields(0, -30, one, two);
+        CPPUNIT_ASSERT_EQUAL((unsigned)3, one);
+        CPPUNIT_ASSERT_EQUAL((unsigned)4, two);
+        
+        TRY_CATCH;
+    }
     
     void testGetSmallestAngle() 
     {
