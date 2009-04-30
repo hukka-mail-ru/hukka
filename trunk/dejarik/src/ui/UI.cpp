@@ -224,11 +224,12 @@ void UI::drawBoard()
 }
 
 
-bool UI::drawField()
+void UI::drawField()
 {
     TRY_BEGINS;
 
-    mVideo.drawSprite("field1", 0, RGBA_Color(1,1,1,1), XY_RIGHT_BOTTOM, 0, 0, 0);
+ 
+       mVideo.drawSprite("field1", 0, RGBA_Color(1,1,1,1), XY_RIGHT_BOTTOM, 0, 0, 0);
     mVideo.drawSprite("field2", 0, RGBA_Color(1,1,1,1), XY_LEFT_BOTTOM, 0, 0, 0);
     mVideo.drawSprite("field3", 0, RGBA_Color(1,1,1,1), XY_RIGHT_TOP, 0, 0, 0);
     mVideo.drawSprite("field4", 0, RGBA_Color(1,1,1,1), XY_LEFT_TOP, 0, 0, 0);
@@ -260,7 +261,6 @@ bool UI::drawField()
     mVideo.disableBlend();
   
     TRY_RETHROW;    
-    return true;
 }
 
 
@@ -289,6 +289,14 @@ void UI::memorizeField()
     mVideo.copyBufferIntoTexture("field4", WINDOW_WIDTH/2,                     WINDOW_HEIGHT-BOARD_TEXTURE_WIDTH*2);
     
     mVideo.clearScreen();
+}
+
+
+void UI::drawAll()
+{
+    memorizeField();
+    drawField();
+    drawMenu();       
 }
 
 
@@ -364,9 +372,7 @@ void UI::handleEvents()
         
         if(init)
         {
-            memorizeField();
-            drawField();
-            drawMenu();            
+            drawAll();            
             EDR_SwapBuffers();
             
             init = false;
@@ -400,18 +406,21 @@ void UI::handleEvents()
         EDR_Event event;
         if(EDR_PollEvent(event))
         {
-            if( !mMoving && event.type == EVENT_LBUTTONDOWN) 
+            if(event.type == EVENT_LBUTTONDOWN && !mMoving) 
             {
                 onMouseClick(event.button.x, event.button.y);
                 
-                memorizeField();
-                drawField();
-                drawMenu();                
+                drawAll();                   
                 EDR_SwapBuffers();
             }
             else if(event.type == EVENT_QUIT || event.type == EVENT_RBUTTONDOWN) 
             {
                 break;
+            }
+            else if(event.type = EVENT_EXPOSE)
+            {
+                drawAll();                  
+                EDR_SwapBuffers();
             }
         }
        

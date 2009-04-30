@@ -5,6 +5,7 @@ enum EDR_EventType
 {
     EVENT_LBUTTONDOWN,
     EVENT_RBUTTONDOWN,
+    EVENT_EXPOSE,
     EVENT_QUIT
 };
 
