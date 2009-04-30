@@ -210,6 +210,9 @@ bool EDR_PollEvent(EDR_Event& event)
                 event.button.x = xEvent.xbutton.x;
                 event.button.y = xEvent.xbutton.y;
                 return true;
+            case Expose:
+                event.type = EVENT_EXPOSE;
+                return true;
                 
             default:
                 break;
