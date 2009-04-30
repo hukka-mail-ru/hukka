@@ -12,6 +12,8 @@ CLASSPTR(UI);
 
 class UI
 {
+    friend class TestAnimation;
+    
 public:
     
     UI(const GamePtr& game):
@@ -41,6 +43,7 @@ private:
     void drawPiece(const PiecePtr& piece);
     //void drawActivePlayer();
    
+    void getActiveFields(const unsigned x, const unsigned y, unsigned& one, unsigned& two);
     
     void memorizeField();
     

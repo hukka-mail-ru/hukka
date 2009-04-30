@@ -37,7 +37,7 @@ void Video::startup()
     // The center of coordinates must be at the center of the game board  
     // (a litte upper of geometrical window center) 
     glViewport(-(SCREEN_WIDTH - WINDOW_WIDTH)/2,
-    		   -(SCREEN_HEIGHT - WINDOW_HEIGHT)/2  + (WINDOW_HEIGHT/2 - BOARD_TEXTURE_WIDTH),
+    		   -(SCREEN_HEIGHT - WINDOW_HEIGHT)/2  + (WINDOW_HEIGHT/2 - FIELD_TEXTURE_WIDTH),
     		   SCREEN_WIDTH, 
     		   SCREEN_HEIGHT);
 
@@ -448,10 +448,11 @@ void Video::createTextures()
     createCompressedTexture("img", "menu1");
     createCompressedTexture("img", "menu2");
     
-    createEmptyTexture("field1", 128);
-    createEmptyTexture("field2", 128);
-    createEmptyTexture("field3", 128);
-    createEmptyTexture("field4", 128);
+    createEmptyTexture("field1", FIELD_TEXTURE_WIDTH);
+    createEmptyTexture("field2", FIELD_TEXTURE_WIDTH);
+    createEmptyTexture("field3", FIELD_TEXTURE_WIDTH);
+    createEmptyTexture("field4", FIELD_TEXTURE_WIDTH);
+    createEmptyTexture("field_center", CENTRAL_TEXTURE_WIDTH);
     
     
     TRY_RETHROW;

@@ -13,6 +13,6 @@ set_target_properties(dejarik PROPERTIES COMPILE_FLAGS "-D LINUX_BUILD -D OPENGL
 set_target_properties(dejarik PROPERTIES LINK_FLAGS "-L/usr/lib")
 
 # UNIT TESTs 
-add_executable (test_dejarik test/test.cpp src/ui/Animation.cpp ${SRC_LOGIC}) 
-target_link_libraries (test_dejarik cppunit dl) 
-set_target_properties(test_dejarik PROPERTIES COMPILE_FLAGS "-D UNIT_TESTS")
+add_executable (test_dejarik test/test.cpp ${SRC_LOGIC} ${SRC_SYSTEM} ${SRC_UI}) 
+target_link_libraries (test_dejarik cppunit dl GLES_CM) 
+set_target_properties(test_dejarik PROPERTIES COMPILE_FLAGS "-D UNIT_TESTS -D LINUX_BUILD")

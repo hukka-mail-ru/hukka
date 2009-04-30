@@ -11,7 +11,8 @@
 #include "../system/Macros.h"
 #include "Window.h"
 
-#define BOARD_TEXTURE_WIDTH 128
+#define FIELD_TEXTURE_WIDTH 128
+#define CENTRAL_TEXTURE_WIDTH 64
 
 #define WINDOW_WIDTH  240
 #define WINDOW_HEIGHT 320

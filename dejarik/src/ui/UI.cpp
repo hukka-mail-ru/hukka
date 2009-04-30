@@ -173,6 +173,10 @@ void UI::drawCell(const CellPtr& cell, bool clicked)
     TRY_RETHROW;
 }
 
+void UI::getActiveFields(const unsigned x, const unsigned y, unsigned& one, unsigned& two)
+{
+    
+}
 
 void UI::drawPiece(const PiecePtr& piece)
 {
@@ -206,8 +210,8 @@ void UI::drawMenu()
     TRY_BEGINS;
     
     // TODO some subscriptions in the menu
-    mVideo.drawSprite("menu1", 0, RGBA_Color(1,1,1,1), XY_RIGHT_TOP, 0, -BOARD_TEXTURE_WIDTH, 0);
-    mVideo.drawSprite("menu2", 0, RGBA_Color(1,1,1,1), XY_LEFT_TOP, 0, -BOARD_TEXTURE_WIDTH, 0);
+    mVideo.drawSprite("menu1", 0, RGBA_Color(1,1,1,1), XY_RIGHT_TOP, 0, -FIELD_TEXTURE_WIDTH, 0);
+    mVideo.drawSprite("menu2", 0, RGBA_Color(1,1,1,1), XY_LEFT_TOP, 0, -FIELD_TEXTURE_WIDTH, 0);
 
     TRY_RETHROW;
 }
@@ -215,8 +219,8 @@ void UI::drawMenu()
 void UI::drawBoard()
 {
     TRY_BEGINS;
-    mVideo.drawSprite("board1", 0, RGBA_Color(1,1,1,1), XY_RIGHT_TOP, 0, BOARD_TEXTURE_WIDTH, 0);
-    mVideo.drawSprite("board2", 0, RGBA_Color(1,1,1,1), XY_LEFT_TOP, 0, BOARD_TEXTURE_WIDTH, 0);
+    mVideo.drawSprite("board1", 0, RGBA_Color(1,1,1,1), XY_RIGHT_TOP, 0, FIELD_TEXTURE_WIDTH, 0);
+    mVideo.drawSprite("board2", 0, RGBA_Color(1,1,1,1), XY_LEFT_TOP, 0, FIELD_TEXTURE_WIDTH, 0);
     mVideo.drawSprite("board3", 0, RGBA_Color(1,1,1,1), XY_RIGHT_TOP, 0, 0, 0);
     mVideo.drawSprite("board4", 0, RGBA_Color(1,1,1,1), XY_LEFT_TOP, 0, 0, 0);
      
@@ -224,15 +228,18 @@ void UI::drawBoard()
 }
 
 
+
+
 void UI::drawField()
 {
     TRY_BEGINS;
 
  
-       mVideo.drawSprite("field1", 0, RGBA_Color(1,1,1,1), XY_RIGHT_BOTTOM, 0, 0, 0);
+    mVideo.drawSprite("field1", 0, RGBA_Color(1,1,1,1), XY_RIGHT_BOTTOM, 0, 0, 0);
     mVideo.drawSprite("field2", 0, RGBA_Color(1,1,1,1), XY_LEFT_BOTTOM, 0, 0, 0);
     mVideo.drawSprite("field3", 0, RGBA_Color(1,1,1,1), XY_RIGHT_TOP, 0, 0, 0);
-    mVideo.drawSprite("field4", 0, RGBA_Color(1,1,1,1), XY_LEFT_TOP, 0, 0, 0);
+    mVideo.drawSprite("field4", 0, RGBA_Color(1,1,1,1), XY_LEFT_TOP, 0, 0, 0);    
+    mVideo.drawSprite("field_center", 0, RGBA_Color(1,1,1,1), XY_CENTER, 0, 0, 0);
 
     
     mVideo.enableBlend();
@@ -283,10 +290,11 @@ void UI::memorizeField()
     mVideo.disableBlend();
     
     // memorize 
-    mVideo.copyBufferIntoTexture("field1", WINDOW_WIDTH/2-BOARD_TEXTURE_WIDTH, WINDOW_HEIGHT-BOARD_TEXTURE_WIDTH);
-    mVideo.copyBufferIntoTexture("field2", WINDOW_WIDTH/2,                     WINDOW_HEIGHT-BOARD_TEXTURE_WIDTH);
-    mVideo.copyBufferIntoTexture("field3", WINDOW_WIDTH/2-BOARD_TEXTURE_WIDTH, WINDOW_HEIGHT-BOARD_TEXTURE_WIDTH*2);
-    mVideo.copyBufferIntoTexture("field4", WINDOW_WIDTH/2,                     WINDOW_HEIGHT-BOARD_TEXTURE_WIDTH*2);
+    mVideo.copyBufferIntoTexture("field1", WINDOW_WIDTH/2-FIELD_TEXTURE_WIDTH, WINDOW_HEIGHT-FIELD_TEXTURE_WIDTH);
+    mVideo.copyBufferIntoTexture("field2", WINDOW_WIDTH/2,                     WINDOW_HEIGHT-FIELD_TEXTURE_WIDTH);
+    mVideo.copyBufferIntoTexture("field3", WINDOW_WIDTH/2-FIELD_TEXTURE_WIDTH, WINDOW_HEIGHT-FIELD_TEXTURE_WIDTH*2);
+    mVideo.copyBufferIntoTexture("field4", WINDOW_WIDTH/2,                     WINDOW_HEIGHT-FIELD_TEXTURE_WIDTH*2);
+    mVideo.copyBufferIntoTexture("field_center", WINDOW_WIDTH/2-CENTRAL_TEXTURE_WIDTH/2,  WINDOW_HEIGHT-FIELD_TEXTURE_WIDTH-CENTRAL_TEXTURE_WIDTH/2);
     
     mVideo.clearScreen();
 }
@@ -306,7 +314,7 @@ void UI::onMouseClick(int x, int y)
     
     // the coordinates center is the circle center
     x -= WINDOW_WIDTH/2;
-    y = BOARD_TEXTURE_WIDTH - y;
+    y = FIELD_TEXTURE_WIDTH - y;
      
     CellPtr cell;
     if(isCellClicked(x, y, cell))
@@ -386,8 +394,12 @@ void UI::handleEvents()
         static bool afterMove = false;
         if(mMoving)
         {
+            long time2 = EDR_GetTime(); // start the timer 
+            
             drawField();
             EDR_SwapBuffers();
+            
+            long time3 = EDR_GetTime(); // start the timer 
   
             afterMove = true;  
         }
