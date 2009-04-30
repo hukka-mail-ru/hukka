@@ -175,7 +175,6 @@ void UI::drawCell(const CellPtr& cell, bool clicked)
 
 void UI::getActiveFields(const float x, const float y, unsigned& first, unsigned& second)
 {
-    // define 
     if(x >= 0 && y >= 0)
     {
         first = 2;
@@ -254,13 +253,47 @@ void UI::drawField()
 {
     TRY_BEGINS;
 
- 
-    mVideo.drawSprite("field1", 0, RGBA_Color(1,1,1,1), XY_RIGHT_BOTTOM, 0, 0, 0);
-    mVideo.drawSprite("field2", 0, RGBA_Color(1,1,1,1), XY_LEFT_BOTTOM, 0, 0, 0);
-    mVideo.drawSprite("field3", 0, RGBA_Color(1,1,1,1), XY_RIGHT_TOP, 0, 0, 0);
-    mVideo.drawSprite("field4", 0, RGBA_Color(1,1,1,1), XY_LEFT_TOP, 0, 0, 0);    
-    mVideo.drawSprite("field_center", 0, RGBA_Color(1,1,1,1), XY_CENTER, 0, 0, 0);
-
+    if(mActivePiece)
+    {
+        unsigned first = 0;
+        unsigned second = 0;
+        getActiveFields(mActivePiece->x, mActivePiece->y, first, second);
+    
+        ostringstream field1;
+        ostringstream field2;
+        field1 << "field" << first;
+        field2 << "field" << second;
+        
+        BindXY bind1;
+        switch(first)
+        {
+            case 1: bind1 = XY_RIGHT_BOTTOM; break;
+            case 2: bind1 = XY_LEFT_BOTTOM; break;
+            case 3: bind1 = XY_RIGHT_TOP; break;
+            case 4: bind1 = XY_LEFT_TOP; break;
+        }
+        
+        BindXY bind2;
+        switch(second)
+        {
+            case 1: bind2 = XY_RIGHT_BOTTOM; break;
+            case 2: bind2 = XY_LEFT_BOTTOM; break;
+            case 3: bind2 = XY_RIGHT_TOP; break;
+            case 4: bind2 = XY_LEFT_TOP; break;
+        }
+        
+        mVideo.drawSprite(field1.str(), 0, RGBA_Color(1,1,1,1), bind1, 0, 0, 0);
+        mVideo.drawSprite(field2.str(), 0, RGBA_Color(1,1,1,1), bind2, 0, 0, 0);
+        
+        mVideo.drawSprite("field_center", 0, RGBA_Color(1,1,1,1), XY_CENTER, 0, 0, 0);
+    }
+    else
+    {
+        mVideo.drawSprite("field1", 0, RGBA_Color(1,1,1,1), XY_RIGHT_BOTTOM, 0, 0, 0);
+        mVideo.drawSprite("field2", 0, RGBA_Color(1,1,1,1), XY_LEFT_BOTTOM, 0, 0, 0);
+        mVideo.drawSprite("field3", 0, RGBA_Color(1,1,1,1), XY_RIGHT_TOP, 0, 0, 0);
+        mVideo.drawSprite("field4", 0, RGBA_Color(1,1,1,1), XY_LEFT_TOP, 0, 0, 0);    
+    }
     
     mVideo.enableBlend();
     
