@@ -43,29 +43,29 @@ public:
         CPPUNIT_ASSERT_EQUAL((unsigned)4, one);
         CPPUNIT_ASSERT_EQUAL((unsigned)3, two);
 
-        ui.getActiveFields(-30, 1, one, two);
+        ui.getActiveFields(-30, -1, one, two);
         CPPUNIT_ASSERT_EQUAL((unsigned)3, one);
         CPPUNIT_ASSERT_EQUAL((unsigned)1, two);
 
         ui.getActiveFields(0, 0, one, two);
-        CPPUNIT_ASSERT_EQUAL((unsigned)1, one);
-        CPPUNIT_ASSERT_EQUAL((unsigned)2, two);
+        CPPUNIT_ASSERT_EQUAL((unsigned)2, one);
+        CPPUNIT_ASSERT_EQUAL((unsigned)1, two);
 
         ui.getActiveFields(30, 0, one, two);
         CPPUNIT_ASSERT_EQUAL((unsigned)2, one);
         CPPUNIT_ASSERT_EQUAL((unsigned)4, two);
 
         ui.getActiveFields(0, 30, one, two);
-        CPPUNIT_ASSERT_EQUAL((unsigned)1, one);
-        CPPUNIT_ASSERT_EQUAL((unsigned)2, two);
+        CPPUNIT_ASSERT_EQUAL((unsigned)2, one);
+        CPPUNIT_ASSERT_EQUAL((unsigned)1, two);
 
         ui.getActiveFields(-30, 0, one, two);
         CPPUNIT_ASSERT_EQUAL((unsigned)1, one);
         CPPUNIT_ASSERT_EQUAL((unsigned)3, two);
 
         ui.getActiveFields(0, -30, one, two);
-        CPPUNIT_ASSERT_EQUAL((unsigned)3, one);
-        CPPUNIT_ASSERT_EQUAL((unsigned)4, two);
+        CPPUNIT_ASSERT_EQUAL((unsigned)4, one);
+        CPPUNIT_ASSERT_EQUAL((unsigned)3, two);
         
         TRY_CATCH;
     }
