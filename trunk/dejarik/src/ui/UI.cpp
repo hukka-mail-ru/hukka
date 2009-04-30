@@ -253,6 +253,7 @@ void UI::drawField()
 {
     TRY_BEGINS;
 
+    // When moving, draw only two fields the Piece goes through and the central field.
     if(mActivePiece && mMoving)
     {
         unsigned first = 0;
