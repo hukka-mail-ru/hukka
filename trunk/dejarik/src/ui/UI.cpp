@@ -173,9 +173,29 @@ void UI::drawCell(const CellPtr& cell, bool clicked)
     TRY_RETHROW;
 }
 
-void UI::getActiveFields(const unsigned x, const unsigned y, unsigned& one, unsigned& two)
+void UI::getActiveFields(const float x, const float y, unsigned& first, unsigned& second)
 {
-    
+    // define 
+    if(x >= 0 && y >= 0)
+    {
+        first = 2;
+        second = (x > y) ? 4 : 1; 
+    }
+    else if (x < 0 && y >= 0)
+    {
+        first = 1;
+        second = (-x > y) ? 3 : 2;
+    }
+    else if (x < 0 && y < 0)
+    {
+        first = 3;
+        second = (-x > -y) ? 1 : 4;
+    }
+    else if (x >= 0 && y < 0)
+    {
+        first = 4;
+        second = (x > -y) ? 2 : 3;
+    }
 }
 
 void UI::drawPiece(const PiecePtr& piece)

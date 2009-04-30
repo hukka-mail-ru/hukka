@@ -43,7 +43,7 @@ private:
     void drawPiece(const PiecePtr& piece);
     //void drawActivePlayer();
    
-    void getActiveFields(const unsigned x, const unsigned y, unsigned& one, unsigned& two);
+    void getActiveFields(const float x, const float y, unsigned& first, unsigned& second);
     
     void memorizeField();
     
