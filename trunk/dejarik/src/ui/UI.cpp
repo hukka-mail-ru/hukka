@@ -253,7 +253,7 @@ void UI::drawField()
 {
     TRY_BEGINS;
 
-    if(mActivePiece)
+    if(mActivePiece && mMoving)
     {
         unsigned first = 0;
         unsigned second = 0;
