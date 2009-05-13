@@ -142,7 +142,7 @@ EDR_SurfacePtr EDR_LoadPCX(const char* filename)
     
     // Read the pixels
     unsigned palette_size = 256*3;
-    char compressed_pixels[width * height * TWO_BYTES + palette_size];
+    char* compressed_pixels = new char[width * height * TWO_BYTES + palette_size];
   
     int file_size = 0;
     while(fread(&compressed_pixels[file_size], sizeof(char), 1, file)) 
@@ -196,7 +196,7 @@ EDR_SurfacePtr EDR_LoadPCX(const char* filename)
         }
     }
 
-
+    delete compressed_pixels;
     fclose(file);
 
     EDR_SurfacePtr surface (new EDR_Surface());

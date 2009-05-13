@@ -344,12 +344,12 @@ void UI::memorizeField()
     mVideo.disableBlend();
     
     // memorize 
-    mVideo.copyBufferIntoTexture("field1", WINDOW_WIDTH/2-FIELD_TEXTURE_WIDTH, WINDOW_HEIGHT-FIELD_TEXTURE_WIDTH);
-    mVideo.copyBufferIntoTexture("field2", WINDOW_WIDTH/2,                     WINDOW_HEIGHT-FIELD_TEXTURE_WIDTH);
-    mVideo.copyBufferIntoTexture("field3", WINDOW_WIDTH/2-FIELD_TEXTURE_WIDTH, WINDOW_HEIGHT-FIELD_TEXTURE_WIDTH*2);
+    mVideo.copyBufferIntoTexture("field1", WINDOW_WIDTH/2-FIELD_TEXTURE_WIDTH+8, WINDOW_HEIGHT-FIELD_TEXTURE_WIDTH-21);
+//    mVideo.copyBufferIntoTexture("field2", WINDOW_WIDTH/2,                     WINDOW_HEIGHT-FIELD_TEXTURE_WIDTH);
+    mVideo.copyBufferIntoTexture("field3", WINDOW_WIDTH/2-FIELD_TEXTURE_WIDTH+8, WINDOW_HEIGHT-FIELD_TEXTURE_WIDTH*2);
     mVideo.copyBufferIntoTexture("field4", WINDOW_WIDTH/2,                     WINDOW_HEIGHT-FIELD_TEXTURE_WIDTH*2);
     mVideo.copyBufferIntoTexture("field_center", WINDOW_WIDTH/2-CENTRAL_TEXTURE_WIDTH/2,  WINDOW_HEIGHT-FIELD_TEXTURE_WIDTH-CENTRAL_TEXTURE_WIDTH/2);
-    
+   
     mVideo.clearScreen();
 }
 
@@ -416,7 +416,6 @@ void UI::onMouseClick(int x, int y)
             mActivePiece = oldActivePiece;
         }
         
-     //   assert(mActivePiece);
     }   
  
     

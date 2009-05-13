@@ -49,6 +49,8 @@ static int attributeList[] = { EGL_RED_SIZE, 1, EGL_DEPTH_SIZE, 1, EGL_NONE };
 
 #ifdef _WIN32
 
+#include <aygshell.h> // for SHFullScreen
+
 HINSTANCE EDR_Instance;
 int EDR_CmdShow;
 HWND EDR_HWnd;
@@ -124,7 +126,15 @@ void EDR_CreateWindow(int width, int height,  const char *name)
 
     //Bring the window to front, focus it and refresh it
     ShowWindow(hWnd, EDR_CmdShow); 
-    UpdateWindow(hWnd);
+    
+    // Full screen mode
+    SetWindowPos(hWnd,HWND_TOPMOST,0,0,GetSystemMetrics(SM_CXSCREEN),
+        GetSystemMetrics(SM_CYSCREEN), SWP_SHOWWINDOW);
+
+    DWORD dwState = (SHFS_HIDETASKBAR | SHFS_HIDESTARTICON | SHFS_HIDESIPBUTTON);
+    SHFullScreen(hWnd, dwState);
+    
+    //UpdateWindow(hWnd);
 
     ///////////////////////////////////////////////////
     EGLConfig configs[10];
