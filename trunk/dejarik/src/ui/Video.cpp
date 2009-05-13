@@ -268,7 +268,7 @@ void Video::copyBufferIntoTexture(const std::string& texName, GLint x, GLint y)
     glBindTexture(GL_TEXTURE_2D, texture->id);
     
     const unsigned width = texture->surface->width;
-    glCopyTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, x, y, width, width, 0);
+    glCopyTexImage2D(GL_TEXTURE_2D, 0, GL_RGB, x, y, width, width, 0);
     
     checkError();
     
