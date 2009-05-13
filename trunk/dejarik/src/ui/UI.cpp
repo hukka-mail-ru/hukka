@@ -416,7 +416,7 @@ void UI::onMouseClick(int x, int y)
             mActivePiece = oldActivePiece;
         }
         
-        assert(mActivePiece);
+     //   assert(mActivePiece);
     }   
  
     
