@@ -270,7 +270,7 @@ void Video::copyBufferIntoTexture(const std::string& texName, GLint x, GLint y)
     const unsigned width = texture->surface->width;
     glCopyTexImage2D(GL_TEXTURE_2D, 0, GL_RGB, x, y, width, width, 0);
     
-    checkError();
+  //  checkError();
     
     TRY_RETHROW;
 }
@@ -461,6 +461,7 @@ void Video::createTextures()
 
 void Video::checkError(const std::string where)
 {
+    TRY_BEGINS;
     GLenum err = glGetError();
     if(err != GL_NO_ERROR)
     {
@@ -468,6 +469,7 @@ void Video::checkError(const std::string where)
         os << where << " Error 0x" << hex << err << endl;
         throw runtime_error(os.str());
     }
+    TRY_RETHROW;
 }
 
 void Video::clearScreen()
