@@ -304,7 +304,7 @@ void UI::drawField()
     {
         vector<CellPtr> cells;
         mGame->getBoard()->getCells(cells);
-        
+         
         for(unsigned i = 0; i < cells.size(); i++)
         {
             drawCell(cells[i], false);
@@ -350,8 +350,7 @@ void UI::memorizeField()
     mVideo.copyBufferIntoTexture("field3", 0, WINDOW_HEIGHT-FIELD_TEXTURE_WIDTH*2);
     mVideo.copyBufferIntoTexture("field4", WINDOW_WIDTH/2,                     WINDOW_HEIGHT-FIELD_TEXTURE_WIDTH*2);
     mVideo.copyBufferIntoTexture("field_center", WINDOW_WIDTH/2-CENTRAL_TEXTURE_WIDTH/2,  WINDOW_HEIGHT-FIELD_TEXTURE_WIDTH-CENTRAL_TEXTURE_WIDTH/2);
-   
-    mVideo.clearScreen();
+
 }
 
 
