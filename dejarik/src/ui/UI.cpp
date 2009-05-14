@@ -17,6 +17,7 @@
 #define INTERIM_ANGLES 4 // smoothness of the circles
 #define MAX_FRAME_TIME 50 // in milliseconds
 
+
 using namespace std;
 
 
@@ -290,9 +291,9 @@ void UI::drawField()
     }
     else
     {
-        mVideo.drawSprite("field1", 0, RGBA_Color(1,1,1,1), XY_RIGHT_BOTTOM, 0, 0, 0);
+        mVideo.drawSprite("field1", 0, RGBA_Color(1,1,1,1), XY_RIGHT_BOTTOM, FIELD_TEXTURE_WIDTH - WINDOW_WIDTH/2, 0, 0);
         mVideo.drawSprite("field2", 0, RGBA_Color(1,1,1,1), XY_LEFT_BOTTOM, 0, 0, 0);
-        mVideo.drawSprite("field3", 0, RGBA_Color(1,1,1,1), XY_RIGHT_TOP, 0, 0, 0);
+        mVideo.drawSprite("field3", 0, RGBA_Color(1,1,1,1), XY_RIGHT_TOP, FIELD_TEXTURE_WIDTH - WINDOW_WIDTH/2, 0, 0);
         mVideo.drawSprite("field4", 0, RGBA_Color(1,1,1,1), XY_LEFT_TOP, 0, 0, 0);    
     }
     
@@ -344,9 +345,9 @@ void UI::memorizeField()
     mVideo.disableBlend();
     
     // memorize 
-    mVideo.copyBufferIntoTexture("field1", WINDOW_WIDTH/2-FIELD_TEXTURE_WIDTH+8, WINDOW_HEIGHT-FIELD_TEXTURE_WIDTH);
+    mVideo.copyBufferIntoTexture("field1", 0, WINDOW_HEIGHT-FIELD_TEXTURE_WIDTH);
     mVideo.copyBufferIntoTexture("field2", WINDOW_WIDTH/2,                     WINDOW_HEIGHT-FIELD_TEXTURE_WIDTH);
-    mVideo.copyBufferIntoTexture("field3", WINDOW_WIDTH/2-FIELD_TEXTURE_WIDTH+8, WINDOW_HEIGHT-FIELD_TEXTURE_WIDTH*2);
+    mVideo.copyBufferIntoTexture("field3", 0, WINDOW_HEIGHT-FIELD_TEXTURE_WIDTH*2);
     mVideo.copyBufferIntoTexture("field4", WINDOW_WIDTH/2,                     WINDOW_HEIGHT-FIELD_TEXTURE_WIDTH*2);
     mVideo.copyBufferIntoTexture("field_center", WINDOW_WIDTH/2-CENTRAL_TEXTURE_WIDTH/2,  WINDOW_HEIGHT-FIELD_TEXTURE_WIDTH-CENTRAL_TEXTURE_WIDTH/2);
    
