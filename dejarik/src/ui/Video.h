@@ -65,7 +65,7 @@ public:
                       float width);
 
     void drawSprite(const std::string& textureName, const unsigned fragmentID, 
-                    const RGBA_Color& color, BindXY bindXY, GLshort x, GLshort y, float angle);    
+                    const RGBA_Color& color, BindXY bindXY, GLfloat x, GLfloat y, float angle);    
     
     void enableBlend();
     void disableBlend();

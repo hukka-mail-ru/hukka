@@ -220,7 +220,7 @@ void UI::drawPiece(const PiecePtr& piece)
                       piece->x,
                       piece->y,
                       piece->angle); 
-        
+       
     TRY_RETHROW;
 }
 
