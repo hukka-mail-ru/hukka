@@ -167,11 +167,11 @@ void Video::drawSprite(const std::string& texName, const unsigned fragmentID,
     // Deal with fragments (subtextures) if they exist
     if(texture->fragmentsInRow > 1) 
     {
-        GLshort dw = width / texture->fragmentsInRow;    
+        GLfloat dw = width / texture->fragmentsInRow;    
         x2 = x + dw;
         y2 = y + dw;
         
-        GLshort shift = width/2 - (x2-x1)/2; 
+        GLfloat shift = width/2 - (x2-x1)/2; 
         x1 += shift;
         y1 += shift;
         x2 += shift;
@@ -211,7 +211,7 @@ void Video::drawSprite(const std::string& texName, const unsigned fragmentID,
     glRotatef(angle , 0.0, 0.0, 1.0); 
     glTranslatef(-(x1+x2)/2.0, -(y1+y2)/2.0, 0.0); 
     
-    
+    // draw
     glVertexPointer(2, GL_FLOAT, 0, vertices);
     glTexCoordPointer(2, GL_FLOAT, 0, texCoords);
     glEnableClientState(GL_VERTEX_ARRAY);
@@ -220,7 +220,7 @@ void Video::drawSprite(const std::string& texName, const unsigned fragmentID,
     //    glDrawArrays(GL_TRIANGLE_FAN, 0, 4);
 
         GLushort index[] = { 0,1,2,0,2,3};
-        glDrawElements( GL_TRIANGLE_FAN,6, GL_UNSIGNED_SHORT, index ); // Crash, but if I write glDrawArrays it works!
+        glDrawElements( GL_TRIANGLE_FAN,6, GL_UNSIGNED_SHORT, index ); 
 
         
     glDisableClientState(GL_VERTEX_ARRAY);
