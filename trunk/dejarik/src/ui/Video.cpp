@@ -7,7 +7,7 @@
 using namespace std;
 
 
-
+/*
 #define PRECISION 16    
 #define ONE (1 << PRECISION)
 #define ZERO 0
@@ -16,7 +16,7 @@ using namespace std;
 inline GLfixed FixedFromInt(int value) {return value << PRECISION;}
 inline GLfixed FixedFromFloat(float value) {return static_cast<GLfixed>(value * static_cast<float>(ONE));}
 inline GLfixed MultiplyFixed(GLfixed op1, GLfixed op2) {return (op1 * op2) >> PRECISION;};
-
+*/
     
 // virtual scene size
 #define SCREEN_WIDTH  800 // must be big enough
@@ -41,9 +41,9 @@ void Video::startup()
     		   SCREEN_WIDTH, 
     		   SCREEN_HEIGHT);
 
-    glOrthox(FixedFromInt(-SCREEN_WIDTH/2),  FixedFromInt(SCREEN_WIDTH/2),
-     	     FixedFromInt(-SCREEN_HEIGHT/2), FixedFromInt(SCREEN_HEIGHT/2),
-    	     FixedFromInt(0) , FixedFromInt(1));
+    glOrthof((-SCREEN_WIDTH/2),  (SCREEN_WIDTH/2),
+     	     (-SCREEN_HEIGHT/2), (SCREEN_HEIGHT/2),
+    	     (0) , (1));
 
     glMatrixMode(GL_MODELVIEW);
     glClear(GL_COLOR_BUFFER_BIT|GL_DEPTH_BUFFER_BIT);
@@ -72,14 +72,9 @@ void Video::drawSolidPolygon(const GLshort* vertexArray, unsigned vertNum, const
     
     glLoadIdentity();
     
-    glColor4x(
-        FixedFromFloat(color.r), 
-        FixedFromFloat(color.b), 
-        FixedFromFloat(color.g), 
-        FixedFromFloat(color.a));
+    glColor4f(color.r, color.b, color.g, color.a);    
 
     glEnableClientState(GL_VERTEX_ARRAY);
-
     glVertexPointer(2, GL_SHORT, 0, vertexArray);
     
     glDrawArrays(GL_TRIANGLE_FAN, 0, vertNum);
@@ -99,16 +94,10 @@ void Video::drawLineLoop(const GLshort* vertexArray, unsigned vertNum, const RGB
     
     glLoadIdentity();
     
-    glColor4x(
-        FixedFromFloat(color.r), 
-        FixedFromFloat(color.b), 
-        FixedFromFloat(color.g), 
-        FixedFromFloat(color.a));
+    glColor4f(color.r, color.b, color.g, color.a);    
     
-    glLineWidthx(FixedFromFloat(width));
-
+    glLineWidth(width);
     glEnableClientState(GL_VERTEX_ARRAY);
-
     glVertexPointer(2, GL_SHORT, 0, vertexArray);
     
     glDrawArrays(GL_LINE_LOOP, 0, vertNum);
@@ -123,7 +112,7 @@ void Video::drawLineLoop(const GLshort* vertexArray, unsigned vertNum, const RGB
 
 void Video::drawSprite(const std::string& texName, const unsigned fragmentID, 
                        const RGBA_Color& color, BindXY bindXY, 
-                       GLshort x, GLshort y, float angle)
+                       GLfloat x, GLfloat y, float angle)
 {
     TRY_BEGINS;
     
@@ -143,7 +132,7 @@ void Video::drawSprite(const std::string& texName, const unsigned fragmentID,
         throw runtime_error(os.str());
     }
     
-    // position of the texture
+    // position of the sprite
     const unsigned width = texture->surface->width;
     switch(bindXY)
     {
@@ -165,39 +154,49 @@ void Video::drawSprite(const std::string& texName, const unsigned fragmentID,
             break;
     }
 
-    // Set vertex array for drawing
-    GLshort x1 = x;
-    GLshort y1 = y;
+    // Set vertex coordinatex
+    GLfloat x1 = x;
+    GLfloat y1 = y;
+    GLfloat x2 = x + width;
+    GLfloat y2 = y + width;
+    // Set texture coordinates
+    GLfloat texWidth = 1.0;  
+    GLfloat texX = 0.0;
+    GLfloat texY = 0.0;
     
-    GLshort dw = width / texture->fragmentsInRow;    
-    GLshort x2 = x + dw;
-    GLshort y2 = y + dw;
+    // Deal with fragments (subtextures) if they exist
+    if(texture->fragmentsInRow > 1) 
+    {
+        GLshort dw = width / texture->fragmentsInRow;    
+        x2 = x + dw;
+        y2 = y + dw;
+        
+        GLshort shift = width/2 - (x2-x1)/2; 
+        x1 += shift;
+        y1 += shift;
+        x2 += shift;
+        y2 += shift;
+        
+        texWidth = 1.0 / texture->fragmentsInRow;  
+        texX = fragmentID % texture->fragmentsInRow * texWidth;
+        texY = fragmentID / texture->fragmentsInRow * texWidth;
+    }
     
-    GLshort shift = width/2 - (x2-x1)/2; // fragmentation causes this shift
-    x1 += shift;
-    y1 += shift;
-    x2 += shift;
-    y2 += shift;
-    
-    const GLshort vertices []=
+    // Set arrays
+    const GLfloat vertices []=
     {
         x1,  y1,
         x2,  y1,
         x2,  y2,
         x1,  y2,
     };   
-    
-    // Deal with fragments (subtextures)
-    GLfloat fragmentWidth = 1.0 / texture->fragmentsInRow;  
-    GLfloat fragmentX = fragmentID % texture->fragmentsInRow * fragmentWidth;
-    GLfloat fragmentY = fragmentID / texture->fragmentsInRow * fragmentWidth;
                
-    GLfixed texCoords[] = 
+    const GLfloat texCoords[] = 
     {
-        FixedFromFloat(fragmentX), FixedFromFloat(fragmentY),
-        FixedFromFloat(fragmentX + fragmentWidth), FixedFromFloat(fragmentY),
-        FixedFromFloat(fragmentX + fragmentWidth), FixedFromFloat(fragmentY + fragmentWidth),
-        FixedFromFloat(fragmentX), FixedFromFloat(fragmentY + fragmentWidth)
+        texX,            texY,
+        texX + texWidth, texY,
+        texX + texWidth, texY + texWidth,
+        texX,            texY + texWidth
     };
  
     // Draw operations
@@ -205,29 +204,25 @@ void Video::drawSprite(const std::string& texName, const unsigned fragmentID,
     glEnable( GL_TEXTURE_2D );
     glBindTexture(GL_TEXTURE_2D, texture->id);
        
-    glColor4x(
-        FixedFromFloat(color.r), 
-        FixedFromFloat(color.b), 
-        FixedFromFloat(color.g), 
-        FixedFromFloat(color.a));    
+    glColor4f(color.r, color.b, color.g, color.a);    
     
-    glTranslatex(FixedFromFloat((x1+x2)/2), 
-                 FixedFromFloat((y1+y2)/2), 
-                 ZERO); // rotate [move to the coordinate center]
-                 
-    glRotatex(FixedFromFloat(angle) ,ZERO, ZERO, ONE); // rotation
+    // rotation
+    glTranslatef((x1+x2)/2.0, (y1+y2)/2.0,  0.0); 
+    glRotatef(angle , 0.0, 0.0, 1.0); 
+    glTranslatef(-(x1+x2)/2.0, -(y1+y2)/2.0, 0.0); 
     
-    glTranslatex(FixedFromFloat(-(x1+x2)/2), 
-                 FixedFromFloat(-(y1+y2)/2), 
-                 ZERO); // move back to the old position
-
-    glVertexPointer(2, GL_SHORT, 0, vertices);
-    glTexCoordPointer(2, GL_FIXED, 0, texCoords);
+    
+    glVertexPointer(2, GL_FLOAT, 0, vertices);
+    glTexCoordPointer(2, GL_FLOAT, 0, texCoords);
     glEnableClientState(GL_VERTEX_ARRAY);
     glEnableClientState(GL_TEXTURE_COORD_ARRAY); 
 
-        glDrawArrays(GL_TRIANGLE_FAN, 0, 4);
+    //    glDrawArrays(GL_TRIANGLE_FAN, 0, 4);
 
+        GLushort index[] = { 0,1,2,0,2,3};
+        glDrawElements( GL_TRIANGLE_FAN,6, GL_UNSIGNED_SHORT, index ); // Crash, but if I write glDrawArrays it works!
+
+        
     glDisableClientState(GL_VERTEX_ARRAY);
     glDisableClientState(GL_TEXTURE_COORD_ARRAY);
 
