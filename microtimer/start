@@ -1,0 +1,2 @@
+gcc $(pkg-config --cflags --libs libpanelapplet-2.0) -o microtimer microtimer.c
+sudo cp microtimer /usr/lib/gnome-panel
