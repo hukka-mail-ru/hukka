@@ -9,6 +9,7 @@ PanelApplet* g_applet;
 GtkWidget* g_label;
 GtkWidget* g_event_box;
 gboolean timer_on;
+int tics;
 
 
 static gboolean run_timer(gpointer data)
@@ -16,7 +17,6 @@ static gboolean run_timer(gpointer data)
 	if(!timer_on)
 		return FALSE; // stop immediately!
 
-	static int tics = 1;
 	gtk_container_remove (GTK_CONTAINER (g_event_box), g_label);
 
 	char str[100];
@@ -34,37 +34,48 @@ static gboolean run_timer(gpointer data)
 	return timer_on;
 }
 
+static void stop_timer()
+{
+	timer_on = FALSE;
+	tics = 1;
+}
 
 
 static gboolean on_button_press (GtkWidget *event_box, GdkEventButton *event,  gpointer data)
 {
-	if(!timer_on)
+	if(event->button == 1) // LEFT BUTTON
 	{
-		g_timeout_add (1000, run_timer, NULL);
-		timer_on = TRUE;
+		if(!timer_on)
+		{
+			g_timeout_add (1000, run_timer, NULL);
+			timer_on = TRUE;
+		}
+		else
+		{
+			timer_on = FALSE;
+		}
 	}
 	else
-	{
-		timer_on = FALSE;
-	}
+	{	
+		stop_timer();
 
+		gtk_container_remove (GTK_CONTAINER (g_event_box), g_label);
+		g_label = gtk_label_new ("0:00");
+		gtk_container_add (GTK_CONTAINER (g_event_box), g_label);
+		gtk_widget_show_all (GTK_WIDGET (g_applet));		
+	}
 	return TRUE;
 }
 
 static gboolean microtimer_applet_init (PanelApplet *applet, const gchar *iid, gpointer data)
 {
-	printf("myexample_applet_fill");
-
-	
-	GtkWidget* image;
-	
-	timer_on = FALSE;
 	g_applet = applet;
 
 	if (strcmp (iid, "OAFIID:MicrotimerApplet") != 0)
 		return FALSE;
 
 	// TEXT LABEL
+	stop_timer();
 	g_label = gtk_label_new ("0:00");
 
 	// EVENT BOX
