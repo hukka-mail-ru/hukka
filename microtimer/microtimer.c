@@ -4,6 +4,7 @@
 #include <panel-applet.h>
 #include <gtk/gtklabel.h>
 
+
 PanelApplet* g_applet;
 
 static gboolean
@@ -13,14 +14,15 @@ static gboolean
   {
 	printf("on_button_press");
 
-        /*GtkWidget *label;
+        GtkWidget *label;
 	event_box = gtk_event_box_new ();
 	label = gtk_label_new ("Hello 2");
 	gtk_container_add (GTK_CONTAINER (g_applet), label);
 
         gtk_widget_show_all (GTK_WIDGET (g_applet));
-*/
+
 //	gtk_widget_hide (GTK_WIDGET (g_applet));
+
 
 	return TRUE;
   }
@@ -45,17 +47,19 @@ microtimer_applet_init (PanelApplet *applet,
 //	sprintf(str, "Number");
 	
 	
-
+	// TEXT LABEL
 	label = gtk_label_new ("Hello!");
 	gtk_container_add (GTK_CONTAINER (applet), label);
-/*
+
+	// EVENT BOX
 	event_box = gtk_event_box_new ();
 	g_signal_connect (G_OBJECT (event_box), 
 	                  "button_press_event",
 	                  G_CALLBACK (on_button_press),
  	                  NULL);
+
 	gtk_container_add (GTK_CONTAINER (applet), event_box);
-*/
+
 	gtk_widget_show_all (GTK_WIDGET (applet));
 
 
