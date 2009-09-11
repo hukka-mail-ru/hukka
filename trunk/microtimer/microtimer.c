@@ -3,6 +3,7 @@
 
 #include <panel-applet.h>
 #include <gtk/gtklabel.h>
+#include <gtk/gtk.h>
 
 
 PanelApplet* g_applet;
@@ -61,18 +62,23 @@ static gboolean on_button_press (GtkWidget *event_box, GdkEventButton *event,  g
 		{
 			timer_on = FALSE;
 		}
+		return TRUE;
 	}
 	else if(event->button == 1 && event->type == GDK_2BUTTON_PRESS) // DBL CLICK: RESET TIMER
 	{	
 		stop_timer();
 		show_label("0:00");
+		return TRUE;
 	}
-	else if(event->button == 3) // RIGHT BUTTON: CONTEXT MENU
+/*	else if(event->button == 3) // RIGHT BUTTON: CONTEXT MENU
 	{
-		exit(0);
-	}
-	return TRUE;
+             gtk_menu_popup (GTK_MENU (docklet_menu), NULL, NULL, NULL, NULL,
+                      event->button, event->time);
+	}*/
+	return FALSE;
 }
+
+
 
 static gboolean microtimer_applet_init (PanelApplet *applet, const gchar *iid, gpointer data)
 {
@@ -83,13 +89,13 @@ static gboolean microtimer_applet_init (PanelApplet *applet, const gchar *iid, g
 
 	// EVENT BOX
 	g_event_box = gtk_event_box_new ();
+	
 	g_signal_connect (G_OBJECT (g_event_box),
 	                  "button_press_event",
 	                  G_CALLBACK (on_button_press),
- 	                  NULL);
+ 	                  g_label);
 
 	gtk_container_add (GTK_CONTAINER (g_applet), g_event_box);
-
 
 	stop_timer();
 	show_label("0:00");
