@@ -20,10 +20,10 @@ static gboolean run_timer(gpointer data)
 	gtk_container_remove (GTK_CONTAINER (g_event_box), g_label);
 
 	char str[100];
-	if(tics%60 < 10)
-		sprintf(str, "%d:0%d", tics/60, tics%60);
+	if(tics/10%60 < 10)
+		sprintf(str, "%d:0%d:%d", tics/10/60, tics/10%60, tics%10);
 	else
-		sprintf(str, "%d:%d", tics/60, tics%60);
+		sprintf(str, "%d:%d:%d", tics/10/60, tics/10%60, tics%10);
 
 	g_label = gtk_label_new (str);
 
@@ -47,7 +47,7 @@ static gboolean on_button_press (GtkWidget *event_box, GdkEventButton *event,  g
 	{
 		if(!timer_on)
 		{
-			g_timeout_add (1000, run_timer, NULL);
+			g_timeout_add (100, run_timer, NULL);
 			timer_on = TRUE;
 		}
 		else
