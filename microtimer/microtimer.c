@@ -43,7 +43,7 @@ static void stop_timer()
 
 static gboolean on_button_press (GtkWidget *event_box, GdkEventButton *event,  gpointer data)
 {
-	if(event->button == 1) // LEFT BUTTON
+	if(event->button == 1 && event->type != GDK_2BUTTON_PRESS) // LEFT BUTTON: START/STOP TIMER
 	{
 		if(!timer_on)
 		{
@@ -55,14 +55,19 @@ static gboolean on_button_press (GtkWidget *event_box, GdkEventButton *event,  g
 			timer_on = FALSE;
 		}
 	}
-	else
+	else if(event->button == 1 && event->type == GDK_2BUTTON_PRESS) // DBL CLICK: RESET TIMER
 	{	
 		stop_timer();
 
 		gtk_container_remove (GTK_CONTAINER (g_event_box), g_label);
 		g_label = gtk_label_new ("0:00");
 		gtk_container_add (GTK_CONTAINER (g_event_box), g_label);
-		gtk_widget_show_all (GTK_WIDGET (g_applet));		
+		gtk_widget_show_all (GTK_WIDGET (g_applet));	
+	
+	}
+	else if(event->button == 2) // RIGHT BUTTON: CONTEXT MENU
+	{
+		g_main_loop_quit(0);
 	}
 	return TRUE;
 }
