@@ -3,27 +3,59 @@
 #include <panel-applet.h>
 #include <gtk/gtklabel.h>
 #include <gtk/gtk.h>
-
-
-PanelApplet* g_applet;
-GtkWidget* g_label;
-GtkWidget* g_event_box;
-gboolean timer_on;
-int tics;
+#include <gtk/gtkbox.h>
 
 
 
-static gboolean fastwrite_applet_init (PanelApplet *applet, const gchar *iid, gpointer data)
+gboolean on_button_press (GtkWidget *event_box, GdkEventButton *event,  gpointer data)
 {
-	g_applet = applet;
+	if(event->button == 1 && event->type != GDK_2BUTTON_PRESS) // LEFT BUTTON
+	{
+		GtkWidget* window = gtk_window_new (GTK_WINDOW_TOPLEVEL);
+		GtkWidget* box = gtk_vbox_new (TRUE, 12);
+		gtk_container_add (GTK_CONTAINER (window), box);
+
+		GtkWidget* answer = gtk_label_new ("Check this out");
+		gtk_box_pack_start (GTK_BOX (box), answer, TRUE, TRUE, 12);
+
+		gtk_widget_show_all (window);
+
+		return TRUE;
+	}
+	/*
+	else if(event->button == 1 && event->type == GDK_2BUTTON_PRESS) // DBL CLICK
+	{
+
+	}
+	else if(event->button == 3) // RIGHT BUTTON: CONTEXT MENU
+	{
+	}*/
+	return FALSE;
+}
+
+
+
+gboolean fastwrite_applet_init (PanelApplet *applet, const gchar *iid, gpointer data)
+{
 
 	if (strcmp (iid, "OAFIID:FastwriteApplet") != 0)
 		return FALSE;
 
 	// EVENT BOX
-	g_label = gtk_label_new ("Fastwrite!");
-	gtk_container_add (GTK_CONTAINER (g_applet), g_label);
-	gtk_widget_show_all (GTK_WIDGET (g_applet));	
+	GtkWidget* event_box = gtk_event_box_new ();
+
+	g_signal_connect (G_OBJECT (event_box),
+	                  "button_press_event",
+	                  G_CALLBACK (on_button_press),
+ 	                  NULL);
+
+	gtk_container_add (GTK_CONTAINER (applet), event_box);
+
+	GtkWidget* label = gtk_label_new ("Fastwrite !!");
+	gtk_container_add (GTK_CONTAINER (event_box), label);
+	gtk_widget_show_all (GTK_WIDGET (applet));
+
+
 
 	return TRUE;
 }
