@@ -21,7 +21,7 @@ static gboolean fastwrite_applet_init (PanelApplet *applet, const gchar *iid, gp
 		return FALSE;
 
 	// EVENT BOX
-	g_label = gtk_label_new ("Fastwrite");
+	g_label = gtk_label_new ("Fastwrite!");
 	gtk_container_add (GTK_CONTAINER (g_applet), g_label);
 	gtk_widget_show_all (GTK_WIDGET (g_applet));	
 
