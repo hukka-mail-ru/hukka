@@ -1,0 +1,3 @@
+killall fastwrite
+make
+sudo cp fastwrite /usr/lib/gnome-panel
