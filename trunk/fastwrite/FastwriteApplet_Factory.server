@@ -1,0 +1,26 @@
+<oaf_info>
+<oaf_server iid="OAFIID:FastwriteApplet_Factory" type="exe"
+            location="/usr/lib/gnome-panel/fastwrite">
+
+        <oaf_attribute name="repo_ids" type="stringv">
+                <item value="IDL:Bonobo/GenericFactory:1.0"/>
+                <item value="IDL:Bonobo/Unknown:1.0"/>
+        </oaf_attribute>
+        <oaf_attribute name="name" type="string" value="Fastwrite Applet Factory"/>
+        <oaf_attribute name="description" type="string" value="Factory to create the Fastwrite applet"/>
+</oaf_server>
+
+<oaf_server iid="OAFIID:FastwriteApplet" type="factory"
+            location="OAFIID:FastwriteApplet_Factory">
+
+        <oaf_attribute name="repo_ids" type="stringv">
+                <item value="IDL:GNOME/Vertigo/PanelAppletShell:1.0"/>
+                <item value="IDL:Bonobo/Control:1.0"/>
+                <item value="IDL:Bonobo/Unknown:1.0"/>
+        </oaf_attribute>
+        <oaf_attribute name="name" type="string" value="Fastwrite"/>
+        <oaf_attribute name="description" type="string" value="An applet for writing on the desktop"/>
+        <oaf_attribute name="panel:category" type="string" value="Amusements"/>
+        <oaf_attribute name="panel:icon" type="string" value="myicon.png"/>
+</oaf_server>
+</oaf_info>
