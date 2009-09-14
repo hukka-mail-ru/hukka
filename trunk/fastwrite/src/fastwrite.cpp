@@ -15,6 +15,8 @@ gboolean on_button_press (GtkWidget *event_box, GdkEventButton *event,  gpointer
 		GtkWidget* box = gtk_vbox_new (TRUE, 12);
 		gtk_container_add (GTK_CONTAINER (window), box);
 
+		gtk_window_set_keep_below ((GtkWindow*)window, TRUE);
+
 		GtkWidget* answer = gtk_label_new ("Check this out");
 		gtk_box_pack_start (GTK_BOX (box), answer, TRUE, TRUE, 12);
 
