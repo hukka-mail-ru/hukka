@@ -12,10 +12,19 @@ gboolean on_button_press (GtkWidget *event_box, GdkEventButton *event,  gpointer
 	if(event->button == 1 && event->type != GDK_2BUTTON_PRESS) // LEFT BUTTON
 	{
 		GtkWidget* window = gtk_window_new (GTK_WINDOW_TOPLEVEL);
+		gtk_window_set_keep_below ((GtkWindow*)window, TRUE);
+		gtk_window_set_decorated((GtkWindow*)window, FALSE);
+		//gtk_window_set_opacity((GtkWindow*)window, 0.5);
+
+		g_object_notify(G_OBJECT (window), "background-transparent");
+		/*g_timeout_add_full (GDK_PRIORITY_REDRAW,
+							VTE_UPDATE_TIMEOUT,
+							update_timeout, NULL,
+							NULL);*/
+
+
 		GtkWidget* box = gtk_vbox_new (TRUE, 12);
 		gtk_container_add (GTK_CONTAINER (window), box);
-
-		gtk_window_set_keep_below ((GtkWindow*)window, TRUE);
 
 		GtkWidget* answer = gtk_label_new ("Check this out");
 		gtk_box_pack_start (GTK_BOX (box), answer, TRUE, TRUE, 12);
@@ -53,7 +62,7 @@ gboolean fastwrite_applet_init (PanelApplet *applet, const gchar *iid, gpointer 
 
 	gtk_container_add (GTK_CONTAINER (applet), event_box);
 
-	GtkWidget* label = gtk_label_new ("Fastwrite !!");
+	GtkWidget* label = gtk_label_new ("Fastwrite !!!");
 	gtk_container_add (GTK_CONTAINER (event_box), label);
 	gtk_widget_show_all (GTK_WIDGET (applet));
 
