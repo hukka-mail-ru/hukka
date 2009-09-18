@@ -49,7 +49,7 @@ GdkPixmap* get_root_pixmap (void)
 #define INIT_WIDTH	400
 #define INIT_HEIGHT	600
 
-
+// =========================================================================================================
 gboolean on_expose (GtkWidget *widget, GdkEventExpose *event, gpointer data) 
 {
 	GdkWindow* gdk_window = GTK_WIDGET(widget)->window;
@@ -69,12 +69,24 @@ gboolean on_expose (GtkWidget *widget, GdkEventExpose *event, gpointer data)
 
 
 	gdk_window_invalidate_rect(gdk_window, NULL, FALSE);
+
+	return TRUE;
+}
+
+// =========================================================================================================
+gboolean on_expose_entry (GtkWidget *widget, GdkEventExpose *event, gpointer data) 
+{
+
+	GtkStyle* style = gtk_style_new ();
+	style->bg_pixmap[0] = get_root_pixmap();
+
+	gtk_widget_set_style (widget, style);
 	
 	return TRUE;
 }
 
 
-
+// =========================================================================================================
 int main( int   argc,
           char *argv[] )
 {
@@ -86,12 +98,22 @@ int main( int   argc,
 	gtk_widget_set_size_request (window, 400, 600);
 
 
-	GtkWidget* entry = gtk_entry_new_with_max_length (255);
+	GtkWidget* entry = gtk_entry_new ();
 	gtk_container_add (GTK_CONTAINER (window), entry);
 
 	gtk_signal_connect (GTK_OBJECT (window), "expose_event", GTK_SIGNAL_FUNC (on_expose), NULL);
-	//gtk_signal_connect (GTK_OBJECT (entry), "expose_event", GTK_SIGNAL_FUNC (on_expose), NULL);
+	//gtk_signal_connect (GTK_OBJECT (entry), "expose_event", GTK_SIGNAL_FUNC (on_expose_entry), NULL);
 	
+	GtkStyle* style = gtk_style_new ();
+	style->bg_pixmap[GTK_STATE_ACTIVE] = get_root_pixmap();
+
+//gtk_widget_modify_style (entry, style);
+	
+	GdkColor color;
+	color.red=65535;
+	color.green=65535;
+	color.blue=250;
+	gtk_widget_modify_base (entry,GTK_STATE_NORMAL, &color);
 
 	gtk_widget_show_all (window);
 
