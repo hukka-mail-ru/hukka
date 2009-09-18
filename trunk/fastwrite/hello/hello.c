@@ -50,7 +50,7 @@ GdkPixmap* get_root_pixmap (void)
 #define INIT_HEIGHT	600
 
 
-gboolean drawing_area_expose (GtkWidget *widget, GdkEventExpose *event, gpointer data) 
+gboolean on_expose (GtkWidget *widget, GdkEventExpose *event, gpointer data) 
 {
 	GdkWindow* gdk_window = GTK_WIDGET(widget)->window;
 
@@ -89,7 +89,9 @@ int main( int   argc,
 	GtkWidget* entry = gtk_entry_new_with_max_length (255);
 	gtk_container_add (GTK_CONTAINER (window), entry);
 
-	gtk_signal_connect (GTK_OBJECT (window), "expose_event", GTK_SIGNAL_FUNC (drawing_area_expose), NULL);
+	gtk_signal_connect (GTK_OBJECT (window), "expose_event", GTK_SIGNAL_FUNC (on_expose), NULL);
+	//gtk_signal_connect (GTK_OBJECT (entry), "expose_event", GTK_SIGNAL_FUNC (on_expose), NULL);
+	
 
 	gtk_widget_show_all (window);
 
@@ -100,53 +102,3 @@ int main( int   argc,
 	return 0;
 }
 
-/*
-// MAIN
-int main (int argc, char *argv[]) 
-{
-	g_print("Hello\n"); 
-
-	GdkWindow *window;
-	GdkWindowAttr attributes;
-	gint attributes_mask;
-	GMainLoop *mainloop;
-
-	if (!gdk_init_check (&argc, &argv)) {
-		return FALSE;
-	}
-
-	gdk_rgb_init();
-
-	attributes.window_type = GDK_WINDOW_TOPLEVEL;
-	attributes.x = 200;
-	attributes.y = 200;
-	attributes.width = INIT_WIDTH;
-	attributes.height = INIT_HEIGHT;
-	attributes.wclass = GDK_INPUT_OUTPUT;
-	attributes.colormap = gdk_rgb_get_cmap ();
-	attributes_mask = GDK_WA_COLORMAP;
-
-
-	// create my window.
-	window = gdk_window_new (NULL, &attributes, attributes_mask);
-	gdk_window_show (window);
-
-	// Copying the root window contents (background) into my window
-        gdk_draw_drawable (window,
-			   gdk_gc_new(window),
-                           get_root_pixmap(),
-                           INIT_X,INIT_Y,
-                           0,0,
-			   INIT_WIDTH,INIT_HEIGHT);
-
-
-
-
-	// Create a new main loop object. 
-	mainloop = g_main_new (TRUE);
-	g_main_run (mainloop);
-
-
-	return 0;
-}
-*/
