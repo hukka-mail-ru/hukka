@@ -2,7 +2,16 @@
 #include <stdlib.h>
 #include <gtk/gtk.h>
 
-// Get the pixmap of background (root) window
+#define INIT_XPOS	200
+#define INIT_YPOS	200
+
+#define INIT_WIDTH	100
+#define INIT_HEIGHT	200
+
+gchar *Text;
+
+// =========================================================================================================
+// Get pixmap of the background (root) window
 GdkPixmap* get_root_pixmap (void)
 {
 	GdkAtom actual_property_type = 0;
@@ -41,17 +50,8 @@ GdkPixmap* get_root_pixmap (void)
 	return pixmap;
 }
 
-
-
-
-#define INIT_X		200
-#define INIT_Y		200
-#define INIT_WIDTH	400
-#define INIT_HEIGHT	600
-
-gchar *Text;
-
 // =========================================================================================================
+// Redraw background and text subscription
 gboolean on_expose_window (GtkWidget *widget, GdkEventExpose *event, gpointer data) 
 {
 	// Draw background
@@ -66,25 +66,20 @@ gboolean on_expose_window (GtkWidget *widget, GdkEventExpose *event, gpointer da
 	gdk_draw_drawable (gdk_window,
 			   gc,
 		           get_root_pixmap(),
-		           INIT_X,INIT_Y,
-		           0,0,
+		           INIT_XPOS,INIT_YPOS, // src position
+		           0,0,           // dst position
 			   INIT_WIDTH,INIT_HEIGHT);
 
 	// Draw subscription
- 	PangoRectangle link, logical;
-
-	static  int bg_width = 200 ;
-	static  int bg_height = 200;
-	static  int logo_height = 200;
-
 	PangoLayout* text_layout = gtk_widget_create_pango_layout (widget, Text);
 
-        pango_layout_set_alignment(text_layout, PANGO_ALIGN_LEFT);
+	PangoRectangle link, logical;
         pango_layout_get_pixel_extents(text_layout, &link, &logical);
+        pango_layout_set_alignment(text_layout, PANGO_ALIGN_LEFT);
 
         gdk_draw_layout(widget->window,
                         widget->style->fg_gc[GTK_WIDGET_STATE(widget)],
-                        bg_width - logical.width, logo_height,
+                        0, 0,
                         text_layout);
 
 
@@ -92,15 +87,15 @@ gboolean on_expose_window (GtkWidget *widget, GdkEventExpose *event, gpointer da
 }
 
 // =========================================================================================================
+// Just close the application
 void on_close_window (GtkWidget *widget, GdkEventExpose *event, gpointer data) 
 {
 	gtk_main_quit ();
 }
 
 
-
-
 // =========================================================================================================
+// Hide edit control, grab its text, and show label
 void on_focus_out_window (GtkWidget *widget, GdkEventExpose *event, gpointer textview) 
 {
 	gtk_widget_hide(textview);
@@ -117,6 +112,7 @@ void on_focus_out_window (GtkWidget *widget, GdkEventExpose *event, gpointer tex
 }
 
 // =========================================================================================================
+// Show edit control
 void on_focus_in_window (GtkWidget *widget, GdkEventExpose *event, gpointer textview) 
 {
 	gtk_widget_show(textview);
@@ -129,18 +125,19 @@ int main(int argc,  char *argv[])
 	gtk_init (&argc, &argv);
 
 	GtkWidget* window = gtk_window_new (GTK_WINDOW_TOPLEVEL);
-	//gtk_container_set_border_width (GTK_CONTAINER (window), 7);
 
-	gtk_widget_set_size_request (window, 400, 600);
+	gtk_widget_set_size_request (window, INIT_WIDTH, INIT_HEIGHT);
 	gtk_window_set_decorated(GTK_WINDOW(window), FALSE);
+	gtk_window_move(GTK_WINDOW(window), INIT_XPOS, INIT_YPOS);
 
 	GtkWidget* textview = gtk_text_view_new();
+	gtk_text_view_set_wrap_mode(GTK_TEXT_VIEW (textview), TRUE);
 	gtk_container_add (GTK_CONTAINER (window), GTK_WIDGET(textview));
 
-	gtk_signal_connect (GTK_OBJECT (window), "expose_event", GTK_SIGNAL_FUNC (on_expose_window), NULL);
-	gtk_signal_connect (GTK_OBJECT (window), "delete_event", GTK_SIGNAL_FUNC (on_close_window), NULL);
+	gtk_signal_connect (GTK_OBJECT (window), "expose_event",    GTK_SIGNAL_FUNC (on_expose_window), NULL);
+	gtk_signal_connect (GTK_OBJECT (window), "delete_event",    GTK_SIGNAL_FUNC (on_close_window), NULL);
 	gtk_signal_connect (GTK_OBJECT (window), "focus_out_event", GTK_SIGNAL_FUNC (on_focus_out_window), textview);
-	gtk_signal_connect (GTK_OBJECT (window), "focus_in_event", GTK_SIGNAL_FUNC (on_focus_in_window), textview);
+	gtk_signal_connect (GTK_OBJECT (window), "focus_in_event",  GTK_SIGNAL_FUNC (on_focus_in_window), textview);
 	 
 
 
