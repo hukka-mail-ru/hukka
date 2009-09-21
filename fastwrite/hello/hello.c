@@ -49,6 +49,7 @@ GdkPixmap* get_root_pixmap (void)
 #define INIT_WIDTH	400
 #define INIT_HEIGHT	600
 
+gchar *Text;
 
 // =========================================================================================================
 gboolean on_expose_window (GtkWidget *widget, GdkEventExpose *event, gpointer data) 
@@ -76,16 +77,15 @@ gboolean on_expose_window (GtkWidget *widget, GdkEventExpose *event, gpointer da
 	static  int bg_height = 200;
 	static  int logo_height = 200;
 
-	gchar *version = g_strdup_printf ("version");
-        PangoLayout* version_layout = gtk_widget_create_pango_layout (widget, version);
+	PangoLayout* text_layout = gtk_widget_create_pango_layout (widget, Text);
 
-        pango_layout_set_alignment(version_layout, PANGO_ALIGN_RIGHT);
-        pango_layout_get_pixel_extents(version_layout, &link, &logical);
+        pango_layout_set_alignment(text_layout, PANGO_ALIGN_LEFT);
+        pango_layout_get_pixel_extents(text_layout, &link, &logical);
 
         gdk_draw_layout(widget->window,
                         widget->style->fg_gc[GTK_WIDGET_STATE(widget)],
                         bg_width - logical.width, logo_height,
-                        version_layout);
+                        text_layout);
 
 
 	return TRUE;
@@ -104,6 +104,16 @@ void on_close_window (GtkWidget *widget, GdkEventExpose *event, gpointer data)
 void on_focus_out_window (GtkWidget *widget, GdkEventExpose *event, gpointer textview) 
 {
 	gtk_widget_hide(textview);
+
+	// Obtain text from textview
+	GtkTextBuffer* buffer = gtk_text_view_get_buffer (GTK_TEXT_VIEW (textview));
+	
+	GtkTextIter start;
+	GtkTextIter end;
+	gtk_text_buffer_get_start_iter (buffer, &start);
+	gtk_text_buffer_get_end_iter (buffer, &end);
+
+	Text = gtk_text_buffer_get_text (buffer, &start, &end, FALSE);
 }
 
 // =========================================================================================================
