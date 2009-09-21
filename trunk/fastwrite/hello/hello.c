@@ -80,6 +80,7 @@ gboolean on_expose_window (GtkWidget *widget, GdkEventExpose *event, gpointer da
 
         pango_layout_set_alignment(version_layout, PANGO_ALIGN_RIGHT);
         pango_layout_get_pixel_extents(version_layout, &link, &logical);
+
         gdk_draw_layout(widget->window,
                         widget->style->fg_gc[GTK_WIDGET_STATE(widget)],
                         bg_width - logical.width, logo_height,
@@ -90,12 +91,15 @@ gboolean on_expose_window (GtkWidget *widget, GdkEventExpose *event, gpointer da
 }
 
 // =========================================================================================================
-gboolean on_close_window (GtkWidget *widget, GdkEventExpose *event, gpointer data) 
+void on_close_window (GtkWidget *widget, GdkEventExpose *event, gpointer data) 
 {
+	gtk_main_quit ();
+}
 
+// =========================================================================================================
+void on_focus_out_window (GtkWidget *widget, GdkEventExpose *event, gpointer data) 
+{
 	exit(0);
-	
-	return TRUE;
 }
 
 
@@ -109,24 +113,17 @@ int main( int   argc,
 	gtk_container_set_border_width (GTK_CONTAINER (window), 7);
 
 	gtk_widget_set_size_request (window, 400, 600);
+	gtk_window_set_decorated(window, FALSE);
 
-
-	GtkWidget* entry = gtk_entry_new ();
-	gtk_container_add (GTK_CONTAINER (window), entry);
+	GtkWidget* textview = gtk_text_view_new();
+	
+	gtk_container_add (GTK_CONTAINER (window), textview);
 
 	gtk_signal_connect (GTK_OBJECT (window), "expose_event", GTK_SIGNAL_FUNC (on_expose_window), NULL);
 	gtk_signal_connect (GTK_OBJECT (window), "delete_event", GTK_SIGNAL_FUNC (on_close_window), NULL);
-	
-	GtkStyle* style = gtk_style_new ();
-	style->bg_pixmap[GTK_STATE_ACTIVE] = get_root_pixmap();
+	gtk_signal_connect (GTK_OBJECT (window), "focus_out_event", GTK_SIGNAL_FUNC (on_focus_out_window), NULL);
+	 
 
-//gtk_widget_modify_style (entry, style);
-	
-	GdkColor color;
-	color.red=65535;
-	color.green=65535;
-	color.blue=250;
-	gtk_widget_modify_base (entry,GTK_STATE_NORMAL, &color);
 
 	gtk_widget_show_all (window);
 
