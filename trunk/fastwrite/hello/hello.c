@@ -50,7 +50,7 @@ GdkPixmap* get_root_pixmap (void)
 #define INIT_HEIGHT	600
 
 // =========================================================================================================
-gboolean on_expose (GtkWidget *widget, GdkEventExpose *event, gpointer data) 
+gboolean on_expose_window (GtkWidget *widget, GdkEventExpose *event, gpointer data) 
 {
 	GdkWindow* gdk_window = GTK_WIDGET(widget)->window;
 
@@ -74,13 +74,10 @@ gboolean on_expose (GtkWidget *widget, GdkEventExpose *event, gpointer data)
 }
 
 // =========================================================================================================
-gboolean on_expose_entry (GtkWidget *widget, GdkEventExpose *event, gpointer data) 
+gboolean on_close_window (GtkWidget *widget, GdkEventExpose *event, gpointer data) 
 {
 
-	GtkStyle* style = gtk_style_new ();
-	style->bg_pixmap[0] = get_root_pixmap();
-
-	gtk_widget_set_style (widget, style);
+	exit(0);
 	
 	return TRUE;
 }
@@ -101,8 +98,8 @@ int main( int   argc,
 	GtkWidget* entry = gtk_entry_new ();
 	gtk_container_add (GTK_CONTAINER (window), entry);
 
-	gtk_signal_connect (GTK_OBJECT (window), "expose_event", GTK_SIGNAL_FUNC (on_expose), NULL);
-	//gtk_signal_connect (GTK_OBJECT (entry), "expose_event", GTK_SIGNAL_FUNC (on_expose_entry), NULL);
+	gtk_signal_connect (GTK_OBJECT (window), "expose_event", GTK_SIGNAL_FUNC (on_expose_window), NULL);
+	gtk_signal_connect (GTK_OBJECT (window), "delete_event", GTK_SIGNAL_FUNC (on_close_window), NULL);
 	
 	GtkStyle* style = gtk_style_new ();
 	style->bg_pixmap[GTK_STATE_ACTIVE] = get_root_pixmap();
