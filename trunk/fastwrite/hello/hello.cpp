@@ -1,6 +1,9 @@
 #include <gdk/gdk.h>
-#include <stdlib.h>
 #include <gtk/gtk.h>
+#include <fstream>
+#include <string>
+
+using namespace std;
 
 #define INIT_XPOS	200
 #define INIT_YPOS	200
@@ -35,13 +38,13 @@ GdkPixmap* get_root_pixmap (void)
 
 	if(!res) {	
 		g_print("gdk_property_get failed");
-		exit (1);
+		return 0;
 	}
 
 	GdkPixmap *pixmap = gdk_pixmap_foreign_new_for_display (gdk_display_get_default(), data[0]);
 	if (!pixmap) {
 		g_print("gdk_pixmap_foreign_new_for_display failed");
-		exit (1);
+		return 0;
 	}
 
 	gdk_drawable_set_colormap (pixmap, gdk_colormap_get_system ());
@@ -74,7 +77,7 @@ gboolean on_expose_window (GtkWidget *widget, GdkEventExpose *event, gpointer te
 	GdkGC* gc = gdk_gc_new(gdk_window);
 	if(!gc) {
 		g_print("ERROR: gdk_gc_new failed\n");
-		return 1;
+		return FALSE;
 	}
 
 	gdk_draw_drawable (gdk_window,
@@ -104,16 +107,8 @@ gboolean on_expose_window (GtkWidget *widget, GdkEventExpose *event, gpointer te
 // Save text and close the application
 void on_close_window (GtkWidget *widget, GdkEventExpose *event, gpointer textview) 
 {
-        FILE *fp;
-
-        if ((fp = fopen(FILENAME, "wt")) == NULL) {
-                g_print("Can't save text into file: %s", FILENAME);
-                gtk_main_quit ();
-                return;
-        }
-
-        fprintf(fp, get_text_of(GTK_TEXT_VIEW (textview)));
-        fclose(fp);
+        ofstream out(FILENAME);
+        out << get_text_of(GTK_TEXT_VIEW (textview));
 
 	gtk_main_quit ();
 }
@@ -139,9 +134,7 @@ void on_focus_in_window (GtkWidget *widget, GdkEventExpose *event, gpointer text
 int main(int argc,  char *argv[])
 {
 	gtk_init (&argc, &argv);
-
-        // Read the saved text, if exists
-
+     
 
 	// Main window
 	GtkWidget* window = gtk_window_new (GTK_WINDOW_TOPLEVEL);
@@ -155,6 +148,20 @@ int main(int argc,  char *argv[])
 	gtk_text_view_set_wrap_mode(GTK_TEXT_VIEW (textview), wrap);
 	gtk_text_view_set_cursor_visible(GTK_TEXT_VIEW (textview), TRUE);
 	gtk_container_add (GTK_CONTAINER (window), GTK_WIDGET(textview));
+
+        // Read the saved text, if exists and populate the text edit with it
+        ifstream in(FILENAME);
+        string text;
+        string s;
+        while(getline(in, s)) {
+                text += s;
+                text += "\n";
+        }
+        
+        GtkTextBuffer* buffer = gtk_text_view_get_buffer(GTK_TEXT_VIEW (textview));
+        gtk_text_buffer_set_text(buffer, text.c_str(), text.length() );
+
+
 
 	// Events
 	gtk_signal_connect (GTK_OBJECT (window), "expose_event",    GTK_SIGNAL_FUNC (on_expose_window), textview);
