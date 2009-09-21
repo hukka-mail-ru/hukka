@@ -52,6 +52,7 @@ GdkPixmap* get_root_pixmap (void)
 // =========================================================================================================
 gboolean on_expose_window (GtkWidget *widget, GdkEventExpose *event, gpointer data) 
 {
+	// Draw background
 	GdkWindow* gdk_window = GTK_WIDGET(widget)->window;
 
 	GdkGC* gc = gdk_gc_new(gdk_window);
@@ -67,8 +68,23 @@ gboolean on_expose_window (GtkWidget *widget, GdkEventExpose *event, gpointer da
 		           0,0,
 			   INIT_WIDTH,INIT_HEIGHT);
 
+	// Draw subscription
+ 	PangoRectangle link, logical;
 
-	gdk_window_invalidate_rect(gdk_window, NULL, FALSE);
+	static  int bg_width = 200 ;
+	static  int bg_height = 200;
+	static  int logo_height = 200;
+
+	gchar *version = g_strdup_printf ("version");
+        PangoLayout* version_layout = gtk_widget_create_pango_layout (widget, version);
+
+        pango_layout_set_alignment(version_layout, PANGO_ALIGN_RIGHT);
+        pango_layout_get_pixel_extents(version_layout, &link, &logical);
+        gdk_draw_layout(widget->window,
+                        widget->style->fg_gc[GTK_WIDGET_STATE(widget)],
+                        bg_width - logical.width, logo_height,
+                        version_layout);
+
 
 	return TRUE;
 }
