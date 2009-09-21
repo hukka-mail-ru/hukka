@@ -8,6 +8,8 @@
 #define INIT_WIDTH	300
 #define INIT_HEIGHT	200
 
+#define FILENAME        "save.txt"
+
 // =========================================================================================================
 // Get pixmap of the background (root) window
 GdkPixmap* get_root_pixmap (void)
@@ -29,7 +31,7 @@ GdkPixmap* get_root_pixmap (void)
 			&actual_property_type,
 			&actual_format,
 			&actual_length,
-			(gpointer)&data);
+			(guchar**)&data);
 
 	if(!res) {	
 		g_print("gdk_property_get failed");
@@ -50,7 +52,7 @@ GdkPixmap* get_root_pixmap (void)
 
 // =========================================================================================================
 // Obtain text from textview
-gchar* get_text_of(GtkWidget* textview)
+gchar* get_text_of(GtkTextView* textview)
 {
         GtkTextBuffer* buffer = gtk_text_view_get_buffer (GTK_TEXT_VIEW (textview));
 
@@ -63,7 +65,7 @@ gchar* get_text_of(GtkWidget* textview)
 }
 
 // =========================================================================================================
-// Redraw background and text subscription
+// Redraw background, and the text from edit control
 gboolean on_expose_window (GtkWidget *widget, GdkEventExpose *event, gpointer textview) 
 {
 	// Draw background
@@ -82,8 +84,8 @@ gboolean on_expose_window (GtkWidget *widget, GdkEventExpose *event, gpointer te
 		           0,0,                 // dst position
 			   INIT_WIDTH,INIT_HEIGHT);
 
-	// Draw subscription
-	PangoLayout* text_layout = gtk_widget_create_pango_layout (widget, get_text_of(textview));
+	// Draw text
+	PangoLayout* text_layout = gtk_widget_create_pango_layout (widget, get_text_of(GTK_TEXT_VIEW (textview)));
 
 	PangoRectangle link, logical;
         pango_layout_get_pixel_extents(text_layout, &link, &logical);
@@ -100,26 +102,35 @@ gboolean on_expose_window (GtkWidget *widget, GdkEventExpose *event, gpointer te
 
 // =========================================================================================================
 // Save text and close the application
-void on_close_window (GtkWidget *widget, GdkEventExpose *event, gpointer data) 
+void on_close_window (GtkWidget *widget, GdkEventExpose *event, gpointer textview) 
 {
-        
+        FILE *fp;
+
+        if ((fp = fopen(FILENAME, "wt")) == NULL) {
+                g_print("Can't save text into file: %s", FILENAME);
+                gtk_main_quit ();
+                return;
+        }
+
+        fprintf(fp, get_text_of(GTK_TEXT_VIEW (textview)));
+        fclose(fp);
 
 	gtk_main_quit ();
 }
 
 
 // =========================================================================================================
-// Hide edit control, grab its text, and show label
+// Hide edit control
 void on_focus_out_window (GtkWidget *widget, GdkEventExpose *event, gpointer textview) 
 {
-	gtk_widget_hide(textview);
+	gtk_widget_hide(GTK_WIDGET (textview));
 }
 
 // =========================================================================================================
 // Show edit control
 void on_focus_in_window (GtkWidget *widget, GdkEventExpose *event, gpointer textview) 
 {
-	gtk_widget_show(textview);
+	gtk_widget_show(GTK_WIDGET  (textview));
         gtk_text_view_set_cursor_visible(GTK_TEXT_VIEW (textview), TRUE);
 }
 
@@ -129,6 +140,9 @@ int main(int argc,  char *argv[])
 {
 	gtk_init (&argc, &argv);
 
+        // Read the saved text, if exists
+
+
 	// Main window
 	GtkWidget* window = gtk_window_new (GTK_WINDOW_TOPLEVEL);
 	gtk_widget_set_size_request (window, INIT_WIDTH, INIT_HEIGHT);
@@ -137,13 +151,14 @@ int main(int argc,  char *argv[])
 
 	// Text edit view
 	GtkWidget* textview = gtk_text_view_new();
-	gtk_text_view_set_wrap_mode(GTK_TEXT_VIEW (textview), TRUE);
+        GtkWrapMode wrap = GTK_WRAP_WORD; // see pango_get_log_attrs()!
+	gtk_text_view_set_wrap_mode(GTK_TEXT_VIEW (textview), wrap);
 	gtk_text_view_set_cursor_visible(GTK_TEXT_VIEW (textview), TRUE);
 	gtk_container_add (GTK_CONTAINER (window), GTK_WIDGET(textview));
 
 	// Events
 	gtk_signal_connect (GTK_OBJECT (window), "expose_event",    GTK_SIGNAL_FUNC (on_expose_window), textview);
-	gtk_signal_connect (GTK_OBJECT (window), "delete_event",    GTK_SIGNAL_FUNC (on_close_window), NULL);
+	gtk_signal_connect (GTK_OBJECT (window), "delete_event",    GTK_SIGNAL_FUNC (on_close_window), textview);
 	gtk_signal_connect (GTK_OBJECT (window), "focus_out_event", GTK_SIGNAL_FUNC (on_focus_out_window), textview);
 	gtk_signal_connect (GTK_OBJECT (window), "focus_in_event",  GTK_SIGNAL_FUNC (on_focus_in_window), textview);
 	 
