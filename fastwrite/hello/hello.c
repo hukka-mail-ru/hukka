@@ -49,6 +49,7 @@ GdkPixmap* get_root_pixmap (void)
 #define INIT_WIDTH	400
 #define INIT_HEIGHT	600
 
+
 // =========================================================================================================
 gboolean on_expose_window (GtkWidget *widget, GdkEventExpose *event, gpointer data) 
 {
@@ -97,15 +98,14 @@ void on_close_window (GtkWidget *widget, GdkEventExpose *event, gpointer data)
 }
 
 // =========================================================================================================
-void on_focus_out_window (GtkWidget *widget, GdkEventExpose *event, gpointer data) 
+void on_focus_out_window (GtkWidget *widget, GdkEventExpose *event, gpointer textview) 
 {
-	exit(0);
+	gtk_container_remove (GTK_CONTAINER (widget), GTK_OBJECT(textview));
 }
 
 
 // =========================================================================================================
-int main( int   argc,
-          char *argv[] )
+int main(int argc,  char *argv[])
 {
 	gtk_init (&argc, &argv);
 
@@ -121,7 +121,7 @@ int main( int   argc,
 
 	gtk_signal_connect (GTK_OBJECT (window), "expose_event", GTK_SIGNAL_FUNC (on_expose_window), NULL);
 	gtk_signal_connect (GTK_OBJECT (window), "delete_event", GTK_SIGNAL_FUNC (on_close_window), NULL);
-	gtk_signal_connect (GTK_OBJECT (window), "focus_out_event", GTK_SIGNAL_FUNC (on_focus_out_window), NULL);
+	gtk_signal_connect (GTK_OBJECT (window), "focus_out_event", GTK_SIGNAL_FUNC (on_focus_out_window), textview);
 	 
 
 
