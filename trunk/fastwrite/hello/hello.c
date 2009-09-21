@@ -97,10 +97,23 @@ void on_close_window (GtkWidget *widget, GdkEventExpose *event, gpointer data)
 	gtk_main_quit ();
 }
 
+
+
+
 // =========================================================================================================
 void on_focus_out_window (GtkWidget *widget, GdkEventExpose *event, gpointer textview) 
 {
-	gtk_container_remove (GTK_CONTAINER (widget), GTK_OBJECT(textview));
+	g_print("focus out\n");
+	gtk_container_remove (GTK_CONTAINER (widget), GTK_WIDGET(textview));
+	gtk_widget_show(widget);
+}
+
+// =========================================================================================================
+void on_focus_in_window (GtkWidget *widget, GdkEventExpose *event, gpointer textview) 
+{
+	g_print("focus in\n");
+	gtk_container_add (GTK_CONTAINER (widget), GTK_WIDGET(textview));
+	gtk_widget_show(textview);
 }
 
 
@@ -110,18 +123,17 @@ int main(int argc,  char *argv[])
 	gtk_init (&argc, &argv);
 
 	GtkWidget* window = gtk_window_new (GTK_WINDOW_TOPLEVEL);
-	gtk_container_set_border_width (GTK_CONTAINER (window), 7);
+	//gtk_container_set_border_width (GTK_CONTAINER (window), 7);
 
 	gtk_widget_set_size_request (window, 400, 600);
-	gtk_window_set_decorated(window, FALSE);
+	gtk_window_set_decorated(GTK_WINDOW(window), FALSE);
 
 	GtkWidget* textview = gtk_text_view_new();
-	
-	gtk_container_add (GTK_CONTAINER (window), textview);
 
 	gtk_signal_connect (GTK_OBJECT (window), "expose_event", GTK_SIGNAL_FUNC (on_expose_window), NULL);
 	gtk_signal_connect (GTK_OBJECT (window), "delete_event", GTK_SIGNAL_FUNC (on_close_window), NULL);
 	gtk_signal_connect (GTK_OBJECT (window), "focus_out_event", GTK_SIGNAL_FUNC (on_focus_out_window), textview);
+	gtk_signal_connect (GTK_OBJECT (window), "focus_in_event", GTK_SIGNAL_FUNC (on_focus_in_window), textview);
 	 
 
 
