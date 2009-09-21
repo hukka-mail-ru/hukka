@@ -68,7 +68,7 @@ gchar* get_text_of(GtkTextView* textview)
 }
 
 // =========================================================================================================
-// Redraw background, and the text from edit control
+// Redraw background and the text from edit control
 gboolean on_expose_window (GtkWidget *widget, GdkEventExpose *event, gpointer textview) 
 {
 	// Draw background
@@ -90,8 +90,8 @@ gboolean on_expose_window (GtkWidget *widget, GdkEventExpose *event, gpointer te
 	// Draw text
 	PangoLayout* text_layout = gtk_widget_create_pango_layout (widget, get_text_of(GTK_TEXT_VIEW (textview)));
 
-	PangoRectangle link, logical;
-        pango_layout_get_pixel_extents(text_layout, &link, &logical);
+	//PangoRectangle link, logical;
+       // pango_layout_get_pixel_extents(text_layout, &link, &logical);
         pango_layout_set_alignment(text_layout, PANGO_ALIGN_LEFT);
 
         gdk_draw_layout(widget->window,
@@ -149,7 +149,7 @@ int main(int argc,  char *argv[])
 	gtk_text_view_set_cursor_visible(GTK_TEXT_VIEW (textview), TRUE);
 	gtk_container_add (GTK_CONTAINER (window), GTK_WIDGET(textview));
 
-        // Read the saved text, if exists and populate the text edit with it
+        // Read the saved text if exists, and populate the text edit with it
         ifstream in(FILENAME);
         string text;
         string s;
