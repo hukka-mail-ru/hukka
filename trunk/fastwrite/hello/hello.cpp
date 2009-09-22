@@ -1,17 +1,26 @@
 #include <gdk/gdk.h>
 #include <gtk/gtk.h>
+#include <stdlib.h>
 #include <fstream>
 #include <string>
 
+#include <tinyxml/tinyxml.h>
+
 using namespace std;
 
-#define INIT_XPOS	200
-#define INIT_YPOS	200
+#define DEFAULT_XPOS	200
+#define DEFAULT_YPOS	200
 
-#define INIT_WIDTH	300
-#define INIT_HEIGHT	200
+#define DEFAULT_WIDTH	300
+#define DEFAULT_HEIGHT	200
 
-#define FILENAME        "save.txt"
+#define TEXTFILE        "save.txt"
+#define CONFFILE        "config.xml"
+
+gint XPos = DEFAULT_XPOS;
+gint YPos = DEFAULT_YPOS;
+gint Width = DEFAULT_WIDTH;
+gint Height = DEFAULT_HEIGHT;
 
 // =========================================================================================================
 // Get pixmap of the background (root) window
@@ -80,12 +89,16 @@ gboolean on_expose_window (GtkWidget *widget, GdkEventExpose *event, gpointer te
 		return FALSE;
 	}
 
+        gint x = 0;
+        gint y = 0;
+        gtk_window_get_position(GTK_WINDOW(widget), &x, &y);
+
 	gdk_draw_drawable (gdk_window,
 			   gc,
 		           get_root_pixmap(),
-		           INIT_XPOS,INIT_YPOS, // src position
-		           0,0,                 // dst position
-			   INIT_WIDTH,INIT_HEIGHT);
+		           x,y, // src position
+		           0,0, // dst position
+			   DEFAULT_WIDTH,DEFAULT_HEIGHT);
 
 	// Draw text
 	PangoLayout* text_layout = gtk_widget_create_pango_layout (widget, get_text_of(GTK_TEXT_VIEW (textview)));
@@ -107,7 +120,7 @@ gboolean on_expose_window (GtkWidget *widget, GdkEventExpose *event, gpointer te
 // Save text and close the application
 void on_close_window (GtkWidget *widget, GdkEventExpose *event, gpointer textview) 
 {
-        ofstream out(FILENAME);
+        ofstream out(TEXTFILE);
         out << get_text_of(GTK_TEXT_VIEW (textview));
 
 	gtk_main_quit ();
@@ -119,6 +132,7 @@ void on_close_window (GtkWidget *widget, GdkEventExpose *event, gpointer textvie
 void on_focus_out_window (GtkWidget *widget, GdkEventExpose *event, gpointer textview) 
 {
 	gtk_widget_hide(GTK_WIDGET (textview));
+ //       gtk_window_set_decorated(GTK_WINDOW(widget), FALSE);
 }
 
 // =========================================================================================================
@@ -127,7 +141,52 @@ void on_focus_in_window (GtkWidget *widget, GdkEventExpose *event, gpointer text
 {
 	gtk_widget_show(GTK_WIDGET  (textview));
         gtk_text_view_set_cursor_visible(GTK_TEXT_VIEW (textview), TRUE);
+//        gtk_window_set_decorated(GTK_WINDOW(widget), TRUE);
 }
+
+
+int get_int(TiXmlNode* node, const char* name)
+{
+        TiXmlNode* childNode = node->FirstChild(name);
+        if ( !childNode ) {
+		g_print( "WARNING: '%s' element not found.\n", name);
+                return -1;
+	}
+
+        TiXmlElement* element = childNode->ToElement();
+        return atoi(element->GetText());
+}
+
+void load_xml_config()
+{
+        // Load config
+        TiXmlDocument doc(CONFFILE);
+	doc.LoadFile();
+	if ( doc.Error() && doc.ErrorId() == TiXmlBase::TIXML_ERROR_OPENING_FILE ) {
+		g_print( "WARNING: Config file %s not found.\n", CONFFILE);
+                return;
+	}
+
+        TiXmlNode* node_window = doc.FirstChild("Window");
+        if ( !node_window ) {
+		g_print( "WARNING: 'Window' element not found.\n");
+                return;
+	}
+
+        XPos = get_int(node_window, "XPos");
+        YPos = get_int(node_window, "YPos");
+        Width = get_int(node_window, "Width");
+        Height = get_int(node_window, "Height");
+
+        if(XPos == -1 || YPos == -1 || Width == -1 || Height == -1) {
+                g_print( "WARNING: Configuration read error. Setting values to defaults.\n");
+                XPos = DEFAULT_XPOS;
+                YPos = DEFAULT_YPOS;
+                Width = DEFAULT_WIDTH;
+                Height = DEFAULT_HEIGHT;
+        }
+}
+
 
 
 // =========================================================================================================
@@ -135,12 +194,13 @@ int main(int argc,  char *argv[])
 {
 	gtk_init (&argc, &argv);
      
+        load_xml_config();
 
 	// Main window
 	GtkWidget* window = gtk_window_new (GTK_WINDOW_TOPLEVEL);
-	gtk_widget_set_size_request (window, INIT_WIDTH, INIT_HEIGHT);
+	gtk_widget_set_size_request (window, Width, Height);
 	gtk_window_set_decorated(GTK_WINDOW(window), FALSE);
-	gtk_window_move(GTK_WINDOW(window), INIT_XPOS, INIT_YPOS);
+	gtk_window_move(GTK_WINDOW(window), XPos, YPos);
 
 	// Text edit view
 	GtkWidget* textview = gtk_text_view_new();
@@ -150,7 +210,7 @@ int main(int argc,  char *argv[])
 	gtk_container_add (GTK_CONTAINER (window), GTK_WIDGET(textview));
 
         // Read the saved text if exists, and populate the text edit with it
-        ifstream in(FILENAME);
+        ifstream in(TEXTFILE);
         string text;
         string s;
         while(getline(in, s)) {
