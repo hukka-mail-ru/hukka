@@ -141,8 +141,10 @@ GdkPixmap* get_root_pixmap (void)
 // Redraw background and the text from edit control
 gboolean on_expose_window (GtkWidget *widget, GdkEventExpose *event, gpointer textview) 
 {
+//        gtk_window_maximize(GTK_WINDOW(widget));
+
 	// Draw background
-	GdkWindow* gdk_window = GTK_WIDGET(widget)->window;
+	GdkWindow* gdk_window = widget->window;
 
 	GdkGC* gc = gdk_gc_new(gdk_window);
 	if(!gc) {
@@ -203,6 +205,15 @@ void on_focus_in_window (GtkWidget *widget, GdkEventExpose *event, gpointer text
 //        gtk_window_set_decorated(GTK_WINDOW(widget), TRUE);
 }
 
+// =========================================================================================================
+// Don't let window to be minimized
+void on_changed_state_window (GtkWidget *widget, GdkEvent *event, gpointer data) 
+{
+        GdkWindowState new_state = event->window_state.new_window_state;
+        if ((new_state & GDK_WINDOW_STATE_ICONIFIED) != 0)
+                gtk_window_deiconify(GTK_WINDOW(widget));
+}
+
 
 // =========================================================================================================
 int main(int argc,  char *argv[])
@@ -233,6 +244,7 @@ int main(int argc,  char *argv[])
 	gtk_signal_connect (GTK_OBJECT (window), "delete_event",    GTK_SIGNAL_FUNC (on_close_window), textview);
 	gtk_signal_connect (GTK_OBJECT (window), "focus_out_event", GTK_SIGNAL_FUNC (on_focus_out_window), textview);
 	gtk_signal_connect (GTK_OBJECT (window), "focus_in_event",  GTK_SIGNAL_FUNC (on_focus_in_window), textview);
+        gtk_signal_connect (GTK_OBJECT (window), "window-state-event",  GTK_SIGNAL_FUNC (on_changed_state_window), textview);
 	 
 
 	gtk_widget_show_all (window);
