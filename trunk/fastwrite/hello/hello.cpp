@@ -21,12 +21,25 @@ gint YPos = DEFAULT_YPOS;
 gint Width = DEFAULT_WIDTH;
 gint Height = DEFAULT_HEIGHT;
 
+// =========================================================================================================
+// Obtain text from textview
+gchar* get_text_of(GtkTextView* textview)
+{
+        GtkTextBuffer* buffer = gtk_text_view_get_buffer (GTK_TEXT_VIEW (textview));
+
+        GtkTextIter start;
+        GtkTextIter end;
+        gtk_text_buffer_get_start_iter (buffer, &start);
+        gtk_text_buffer_get_end_iter (buffer, &end);
+
+        return gtk_text_buffer_get_text (buffer, &start, &end, FALSE);
+}
 
 // =========================================================================================================
 // Load window parameters from config
-void  load_config()
+void  load_config(const char* filename)
 {
-        ifstream in(CONFFILE);
+        ifstream in(filename);
         string str;
         char dummy[255];
 
@@ -48,9 +61,9 @@ void  load_config()
 
 // =========================================================================================================
 // Save window parameters into config
-void save_config()
+void save_config(const char* filename)
 {
-        ofstream out(CONFFILE);
+        ofstream out(filename);
 
         out << "XPos\t" << XPos << endl;
         out << "YPos\t" << YPos << endl;
@@ -58,6 +71,30 @@ void save_config()
         out << "Height\t" << Height << endl;
 }
 
+
+// =========================================================================================================
+// Read the saved text if exists, and populate the text edit with it
+void load_text(const char* filename, GtkTextView* textview)
+{
+        ifstream in(TEXTFILE);
+        string text;
+        string s;
+        while(getline(in, s)) {
+                text += s;
+                text += "\n";
+        }
+        
+        GtkTextBuffer* buffer = gtk_text_view_get_buffer(GTK_TEXT_VIEW (textview));
+        gtk_text_buffer_set_text(buffer, text.c_str(), text.length() );
+}
+
+// =========================================================================================================
+// Saved text into the file
+void save_text(const char* filename, GtkTextView* textview)
+{
+        ofstream out(TEXTFILE);
+        out << get_text_of(GTK_TEXT_VIEW (textview));
+}
 
 // =========================================================================================================
 // Get pixmap of the background (root) window
@@ -99,19 +136,6 @@ GdkPixmap* get_root_pixmap (void)
 	return pixmap;
 }
 
-// =========================================================================================================
-// Obtain text from textview
-gchar* get_text_of(GtkTextView* textview)
-{
-        GtkTextBuffer* buffer = gtk_text_view_get_buffer (GTK_TEXT_VIEW (textview));
-
-        GtkTextIter start;
-        GtkTextIter end;
-        gtk_text_buffer_get_start_iter (buffer, &start);
-        gtk_text_buffer_get_end_iter (buffer, &end);
-
-        return gtk_text_buffer_get_text (buffer, &start, &end, FALSE);
-}
 
 // =========================================================================================================
 // Redraw background and the text from edit control
@@ -155,10 +179,8 @@ gboolean on_expose_window (GtkWidget *widget, GdkEventExpose *event, gpointer te
 // Save text and close the application
 void on_close_window (GtkWidget *widget, GdkEventExpose *event, gpointer textview) 
 {
-        ofstream out(TEXTFILE);
-        out << get_text_of(GTK_TEXT_VIEW (textview));
-
-        save_config();
+        save_text(TEXTFILE, GTK_TEXT_VIEW (textview));
+        save_config(CONFFILE);
 
 	gtk_main_quit ();
 }
@@ -182,14 +204,12 @@ void on_focus_in_window (GtkWidget *widget, GdkEventExpose *event, gpointer text
 }
 
 
-
-
 // =========================================================================================================
 int main(int argc,  char *argv[])
 {
 	gtk_init (&argc, &argv);
      
-        load_config();
+        load_config(CONFFILE);
 
 	// Main window
 	GtkWidget* window = gtk_window_new (GTK_WINDOW_TOPLEVEL);
@@ -205,17 +225,7 @@ int main(int argc,  char *argv[])
 	gtk_container_add (GTK_CONTAINER (window), GTK_WIDGET(textview));
 
         // Read the saved text if exists, and populate the text edit with it
-        ifstream in(TEXTFILE);
-        string text;
-        string s;
-        while(getline(in, s)) {
-                text += s;
-                text += "\n";
-        }
-        
-        GtkTextBuffer* buffer = gtk_text_view_get_buffer(GTK_TEXT_VIEW (textview));
-        gtk_text_buffer_set_text(buffer, text.c_str(), text.length() );
-
+        load_text(TEXTFILE, GTK_TEXT_VIEW (textview));
 
 
 	// Events
