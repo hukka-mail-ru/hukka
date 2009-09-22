@@ -4,7 +4,6 @@
 #include <fstream>
 #include <string>
 
-#include <tinyxml/tinyxml.h>
 
 using namespace std;
 
@@ -22,6 +21,35 @@ gint YPos = DEFAULT_YPOS;
 gint Width = DEFAULT_WIDTH;
 gint Height = DEFAULT_HEIGHT;
 
+
+
+// =========================================================================================================
+// Load window parameters from config
+void  load_config()
+{
+        ifstream in(CONFFILE);
+        string str;
+
+        getline(in, str);  XPos = atoi(str.c_str());
+        getline(in, str);  YPos = atoi(str.c_str());
+        getline(in, str);  Width = atoi(str.c_str());
+        getline(in, str);  Height = atoi(str.c_str());
+
+        g_print("%d %d %d %d", XPos, YPos, Width, Height);
+}
+
+
+// =========================================================================================================
+// Save window parameters into config
+void save_config()
+{
+        ofstream out(CONFFILE);
+
+        out << XPos << endl;
+        out << YPos << endl;
+        out << Width << endl;
+        out << Height << endl;
+}
 // =========================================================================================================
 // Get pixmap of the background (root) window
 GdkPixmap* get_root_pixmap (void)
@@ -89,14 +117,12 @@ gboolean on_expose_window (GtkWidget *widget, GdkEventExpose *event, gpointer te
 		return FALSE;
 	}
 
-        gint x = 0;
-        gint y = 0;
-        gtk_window_get_position(GTK_WINDOW(widget), &x, &y);
+        gtk_window_get_position(GTK_WINDOW(widget), &XPos, &YPos);
 
 	gdk_draw_drawable (gdk_window,
 			   gc,
 		           get_root_pixmap(),
-		           x,y, // src position
+		           XPos,YPos, // src position
 		           0,0, // dst position
 			   DEFAULT_WIDTH,DEFAULT_HEIGHT);
 
@@ -123,6 +149,8 @@ void on_close_window (GtkWidget *widget, GdkEventExpose *event, gpointer textvie
         ofstream out(TEXTFILE);
         out << get_text_of(GTK_TEXT_VIEW (textview));
 
+        save_config();
+
 	gtk_main_quit ();
 }
 
@@ -145,48 +173,6 @@ void on_focus_in_window (GtkWidget *widget, GdkEventExpose *event, gpointer text
 }
 
 
-int get_int(TiXmlNode* node, const char* name)
-{
-        TiXmlNode* childNode = node->FirstChild(name);
-        if ( !childNode ) {
-		g_print( "WARNING: '%s' element not found.\n", name);
-                return -1;
-	}
-
-        TiXmlElement* element = childNode->ToElement();
-        return atoi(element->GetText());
-}
-
-void load_xml_config()
-{
-        // Load config
-        TiXmlDocument doc(CONFFILE);
-	doc.LoadFile();
-	if ( doc.Error() && doc.ErrorId() == TiXmlBase::TIXML_ERROR_OPENING_FILE ) {
-		g_print( "WARNING: Config file %s not found.\n", CONFFILE);
-                return;
-	}
-
-        TiXmlNode* node_window = doc.FirstChild("Window");
-        if ( !node_window ) {
-		g_print( "WARNING: 'Window' element not found.\n");
-                return;
-	}
-
-        XPos = get_int(node_window, "XPos");
-        YPos = get_int(node_window, "YPos");
-        Width = get_int(node_window, "Width");
-        Height = get_int(node_window, "Height");
-
-        if(XPos == -1 || YPos == -1 || Width == -1 || Height == -1) {
-                g_print( "WARNING: Configuration read error. Setting values to defaults.\n");
-                XPos = DEFAULT_XPOS;
-                YPos = DEFAULT_YPOS;
-                Width = DEFAULT_WIDTH;
-                Height = DEFAULT_HEIGHT;
-        }
-}
-
 
 
 // =========================================================================================================
@@ -194,7 +180,7 @@ int main(int argc,  char *argv[])
 {
 	gtk_init (&argc, &argv);
      
-        load_xml_config();
+        load_config();
 
 	// Main window
 	GtkWidget* window = gtk_window_new (GTK_WINDOW_TOPLEVEL);
