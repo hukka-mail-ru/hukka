@@ -14,13 +14,12 @@ using namespace std;
 #define DEFAULT_HEIGHT	200
 
 #define TEXTFILE        "save.txt"
-#define CONFFILE        "config.xml"
+#define CONFFILE        "config.txt"
 
 gint XPos = DEFAULT_XPOS;
 gint YPos = DEFAULT_YPOS;
 gint Width = DEFAULT_WIDTH;
 gint Height = DEFAULT_HEIGHT;
-
 
 
 // =========================================================================================================
@@ -29,13 +28,21 @@ void  load_config()
 {
         ifstream in(CONFFILE);
         string str;
+        char dummy[255];
 
-        getline(in, str);  XPos = atoi(str.c_str());
-        getline(in, str);  YPos = atoi(str.c_str());
-        getline(in, str);  Width = atoi(str.c_str());
-        getline(in, str);  Height = atoi(str.c_str());
+        while(getline(in, str)) {
+                if(str.find("XPos") != string::npos) 
+                        sscanf(str.c_str(), "%s\t%d", dummy, &XPos);
+                else if(str.find("YPos") != string::npos) 
+                        sscanf(str.c_str(), "%s\t%d", dummy, &YPos);
+                else if(str.find("Width") != string::npos) 
+                        sscanf(str.c_str(), "%s\t%d", dummy, &Width);
+                else if(str.find("Height") != string::npos) 
+                        sscanf(str.c_str(), "%s\t%d", dummy, &Height);
+                else
+                        g_print("Unknown parameter: %s\n", str.c_str());       
 
-        g_print("%d %d %d %d", XPos, YPos, Width, Height);
+        }
 }
 
 
@@ -45,11 +52,13 @@ void save_config()
 {
         ofstream out(CONFFILE);
 
-        out << XPos << endl;
-        out << YPos << endl;
-        out << Width << endl;
-        out << Height << endl;
+        out << "XPos\t" << XPos << endl;
+        out << "YPos\t" << YPos << endl;
+        out << "Width\t" << Width << endl;
+        out << "Height\t" << Height << endl;
 }
+
+
 // =========================================================================================================
 // Get pixmap of the background (root) window
 GdkPixmap* get_root_pixmap (void)
