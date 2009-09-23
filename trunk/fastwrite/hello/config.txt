@@ -1,4 +1,4 @@
-XPos	255
-YPos	96
+XPos	220
+YPos	21
 Width	300
 Height	200
