@@ -139,10 +139,10 @@ GdkPixmap* get_root_pixmap (void)
 
 // =========================================================================================================
 // Redraw background and the text from edit control
+GtkWidget* Window;
+
 gboolean on_expose_window (GtkWidget *widget, GdkEventExpose *event, gpointer textview) 
 {
-//        gtk_window_maximize(GTK_WINDOW(widget));
-
         // Draw background
         GdkWindow* gdk_window = widget->window;
 
@@ -152,7 +152,7 @@ gboolean on_expose_window (GtkWidget *widget, GdkEventExpose *event, gpointer te
                 return FALSE;
         }
 
-        gtk_window_get_position(GTK_WINDOW(widget), &XPos, &YPos);
+        gtk_window_get_position(GTK_WINDOW(Window), &XPos, &YPos);
 
         gdk_draw_drawable (gdk_window,
                            gc,
@@ -196,32 +196,24 @@ void on_focus_out_window (GtkWidget *widget, GdkEventExpose *event, gpointer tex
 }
 
 // =========================================================================================================
-// Show edit control if window is focused 
-gboolean FocusIsSideEffect = FALSE;
-void on_focus_in_window (GtkWidget *widget, GdkEventExpose *event, gpointer textview) 
+// Show edit control if the window is focused intentionally
+static gboolean on_button_press_window (GtkWidget *event_box, GdkEventButton *event,  gpointer textview)
 {
-        if(!FocusIsSideEffect) {
-                // Normal case
-                gtk_widget_show(GTK_WIDGET  (textview));
-        } else  {
-                // This case is just a side-effect. Don't show anything.
-                FocusIsSideEffect = FALSE;
-        }
-
+        gtk_widget_show(GTK_WIDGET  (textview));
         gtk_text_view_set_cursor_visible(GTK_TEXT_VIEW (textview), TRUE);
+        return FALSE;
 }
 
 
 // =========================================================================================================
 // Don't let window to be minimized
-// We get the focus on the window as a side-effect. 
+// Here we got the focus on the window as a side-effect. 
 void on_changed_state_window (GtkWidget *widget, GdkEvent *event, gpointer textview) 
 {
         GdkWindowState new_state = event->window_state.new_window_state;
 
         if ((new_state & GDK_WINDOW_STATE_ICONIFIED) != 0) {
                 gdk_window_focus(widget->window, gtk_get_current_event_time ());
-                FocusIsSideEffect = TRUE;
         }
 }
 
@@ -236,28 +228,35 @@ int main(int argc,  char *argv[])
 
         // Main window
         GtkWidget* window = gtk_window_new (GTK_WINDOW_TOPLEVEL);
+        Window = window;
         gtk_widget_set_size_request (window, Width, Height);
         gtk_window_set_decorated(GTK_WINDOW(window), FALSE);
+        gtk_window_set_keep_below(GTK_WINDOW(window), TRUE);
         gtk_window_move(GTK_WINDOW(window), XPos, YPos);
+
+        GtkWidget* event_box = gtk_event_box_new ();
 
         // Text edit view
         GtkWidget* textview = gtk_text_view_new();
         GtkWrapMode wrap = GTK_WRAP_WORD; // see pango_get_log_attrs()!
         gtk_text_view_set_wrap_mode(GTK_TEXT_VIEW (textview), wrap);
         gtk_text_view_set_cursor_visible(GTK_TEXT_VIEW (textview), TRUE);
-        gtk_container_add (GTK_CONTAINER (window), GTK_WIDGET(textview));
+        gtk_container_add (GTK_CONTAINER (event_box), GTK_WIDGET(textview));
 
         // Read the saved text if exists, and populate the text edit with it
         load_text(TEXTFILE, GTK_TEXT_VIEW (textview));
 
 
         // Events
-        gtk_signal_connect (GTK_OBJECT (window), "expose_event",    GTK_SIGNAL_FUNC (on_expose_window), textview);
+        gtk_signal_connect (GTK_OBJECT (event_box), "expose_event",    GTK_SIGNAL_FUNC (on_expose_window), textview);
         gtk_signal_connect (GTK_OBJECT (window), "delete_event",    GTK_SIGNAL_FUNC (on_close_window), textview);
         gtk_signal_connect (GTK_OBJECT (window), "focus_out_event", GTK_SIGNAL_FUNC (on_focus_out_window), textview);
-        gtk_signal_connect (GTK_OBJECT (window), "focus_in_event",  GTK_SIGNAL_FUNC (on_focus_in_window), textview);
+     //   gtk_signal_connect (GTK_OBJECT (window), "focus_in_event",  GTK_SIGNAL_FUNC (on_focus_in_window), textview);
         gtk_signal_connect (GTK_OBJECT (window), "window-state-event",  GTK_SIGNAL_FUNC (on_changed_state_window), textview);
-         
+
+        
+        gtk_signal_connect (GTK_OBJECT (event_box), "button_press_event",  GTK_SIGNAL_FUNC (on_button_press_window), textview);
+        gtk_container_add (GTK_CONTAINER (window), event_box);
 
         gtk_widget_show_all (window);
         gtk_main ();
