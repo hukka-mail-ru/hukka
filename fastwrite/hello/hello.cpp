@@ -7,11 +7,11 @@
 
 using namespace std;
 
-#define DEFAULT_XPOS	200
-#define DEFAULT_YPOS	200
+#define DEFAULT_XPOS        200
+#define DEFAULT_YPOS        200
 
-#define DEFAULT_WIDTH	300
-#define DEFAULT_HEIGHT	200
+#define DEFAULT_WIDTH        300
+#define DEFAULT_HEIGHT        200
 
 #define TEXTFILE        "save.txt"
 #define CONFFILE        "config.txt"
@@ -100,40 +100,40 @@ void save_text(const char* filename, GtkTextView* textview)
 // Get pixmap of the background (root) window
 GdkPixmap* get_root_pixmap (void)
 {
-	GdkAtom actual_property_type = 0;
-	gint actual_format = 0;
-	gint actual_length = 0;
-	guint* data = 0;
-	gboolean res = FALSE;
+        GdkAtom actual_property_type = 0;
+        gint actual_format = 0;
+        gint actual_length = 0;
+        guint* data = 0;
+        gboolean res = FALSE;
 
-	// Get the pointer to the root window
-	res = gdk_property_get (
-			gdk_screen_get_root_window (gdk_screen_get_default()),
-			gdk_atom_intern ("_XROOTPMAP_ID", TRUE),// 	the property to retrieve. 
-			GDK_TARGET_PIXMAP, // 	the desired property type
-			0,
-			G_MAXLONG,
-			FALSE,
-			&actual_property_type,
-			&actual_format,
-			&actual_length,
-			(guchar**)&data);
+        // Get the pointer to the root window
+        res = gdk_property_get (
+                        gdk_screen_get_root_window (gdk_screen_get_default()),
+                        gdk_atom_intern ("_XROOTPMAP_ID", TRUE),//         the property to retrieve. 
+                        GDK_TARGET_PIXMAP, //         the desired property type
+                        0,
+                        G_MAXLONG,
+                        FALSE,
+                        &actual_property_type,
+                        &actual_format,
+                        &actual_length,
+                        (guchar**)&data);
 
-	if(!res) {	
-		g_print("gdk_property_get failed");
-		return 0;
-	}
+        if(!res) {        
+                g_print("gdk_property_get failed");
+                return 0;
+        }
 
-	GdkPixmap *pixmap = gdk_pixmap_foreign_new_for_display (gdk_display_get_default(), data[0]);
-	if (!pixmap) {
-		g_print("gdk_pixmap_foreign_new_for_display failed");
-		return 0;
-	}
+        GdkPixmap *pixmap = gdk_pixmap_foreign_new_for_display (gdk_display_get_default(), data[0]);
+        if (!pixmap) {
+                g_print("gdk_pixmap_foreign_new_for_display failed");
+                return 0;
+        }
 
-	gdk_drawable_set_colormap (pixmap, gdk_colormap_get_system ());
-	g_free (data);
+        gdk_drawable_set_colormap (pixmap, gdk_colormap_get_system ());
+        g_free (data);
 
-	return pixmap;
+        return pixmap;
 }
 
 
@@ -143,28 +143,28 @@ gboolean on_expose_window (GtkWidget *widget, GdkEventExpose *event, gpointer te
 {
 //        gtk_window_maximize(GTK_WINDOW(widget));
 
-	// Draw background
-	GdkWindow* gdk_window = widget->window;
+        // Draw background
+        GdkWindow* gdk_window = widget->window;
 
-	GdkGC* gc = gdk_gc_new(gdk_window);
-	if(!gc) {
-		g_print("ERROR: gdk_gc_new failed\n");
-		return FALSE;
-	}
+        GdkGC* gc = gdk_gc_new(gdk_window);
+        if(!gc) {
+                g_print("ERROR: gdk_gc_new failed\n");
+                return FALSE;
+        }
 
         gtk_window_get_position(GTK_WINDOW(widget), &XPos, &YPos);
 
-	gdk_draw_drawable (gdk_window,
-			   gc,
-		           get_root_pixmap(),
-		           XPos,YPos, // src position
-		           0,0, // dst position
-			   DEFAULT_WIDTH,DEFAULT_HEIGHT);
+        gdk_draw_drawable (gdk_window,
+                           gc,
+                           get_root_pixmap(),
+                           XPos,YPos, // src position
+                           0,0, // dst position
+                           DEFAULT_WIDTH,DEFAULT_HEIGHT);
 
-	// Draw text
-	PangoLayout* text_layout = gtk_widget_create_pango_layout (widget, get_text_of(GTK_TEXT_VIEW (textview)));
+        // Draw text
+        PangoLayout* text_layout = gtk_widget_create_pango_layout (widget, get_text_of(GTK_TEXT_VIEW (textview)));
 
-	//PangoRectangle link, logical;
+        //PangoRectangle link, logical;
        // pango_layout_get_pixel_extents(text_layout, &link, &logical);
         pango_layout_set_alignment(text_layout, PANGO_ALIGN_LEFT);
 
@@ -174,7 +174,7 @@ gboolean on_expose_window (GtkWidget *widget, GdkEventExpose *event, gpointer te
                         text_layout);
 
 
-	return TRUE;
+        return TRUE;
 }
 
 // =========================================================================================================
@@ -184,7 +184,7 @@ void on_close_window (GtkWidget *widget, GdkEventExpose *event, gpointer textvie
         save_text(TEXTFILE, GTK_TEXT_VIEW (textview));
         save_config(CONFFILE);
 
-	gtk_main_quit ();
+        gtk_main_quit ();
 }
 
 
@@ -192,64 +192,76 @@ void on_close_window (GtkWidget *widget, GdkEventExpose *event, gpointer textvie
 // Hide edit control
 void on_focus_out_window (GtkWidget *widget, GdkEventExpose *event, gpointer textview) 
 {
-	gtk_widget_hide(GTK_WIDGET (textview));
- //       gtk_window_set_decorated(GTK_WINDOW(widget), FALSE);
+        gtk_widget_hide(GTK_WIDGET (textview));
 }
 
 // =========================================================================================================
-// Show edit control
+// Show edit control if window is focused 
+gboolean FocusIsSideEffect = FALSE;
 void on_focus_in_window (GtkWidget *widget, GdkEventExpose *event, gpointer textview) 
 {
-	gtk_widget_show(GTK_WIDGET  (textview));
+        if(!FocusIsSideEffect) {
+                // Normal case
+                gtk_widget_show(GTK_WIDGET  (textview));
+        } else  {
+                // This case is just a side-effect. Don't show anything.
+                FocusIsSideEffect = FALSE;
+        }
+
         gtk_text_view_set_cursor_visible(GTK_TEXT_VIEW (textview), TRUE);
-//        gtk_window_set_decorated(GTK_WINDOW(widget), TRUE);
 }
+
 
 // =========================================================================================================
 // Don't let window to be minimized
-void on_changed_state_window (GtkWidget *widget, GdkEvent *event, gpointer data) 
+// We get the focus on the window as a side-effect. 
+void on_changed_state_window (GtkWidget *widget, GdkEvent *event, gpointer textview) 
 {
         GdkWindowState new_state = event->window_state.new_window_state;
-        if ((new_state & GDK_WINDOW_STATE_ICONIFIED) != 0)
-                gtk_window_deiconify(GTK_WINDOW(widget));
+
+        if ((new_state & GDK_WINDOW_STATE_ICONIFIED) != 0) {
+                gdk_window_focus(widget->window, gtk_get_current_event_time ());
+                FocusIsSideEffect = TRUE;
+        }
 }
+
 
 
 // =========================================================================================================
 int main(int argc,  char *argv[])
 {
-	gtk_init (&argc, &argv);
+        gtk_init (&argc, &argv);
      
         load_config(CONFFILE);
 
-	// Main window
-	GtkWidget* window = gtk_window_new (GTK_WINDOW_TOPLEVEL);
-	gtk_widget_set_size_request (window, Width, Height);
-	gtk_window_set_decorated(GTK_WINDOW(window), FALSE);
-	gtk_window_move(GTK_WINDOW(window), XPos, YPos);
+        // Main window
+        GtkWidget* window = gtk_window_new (GTK_WINDOW_TOPLEVEL);
+        gtk_widget_set_size_request (window, Width, Height);
+        gtk_window_set_decorated(GTK_WINDOW(window), FALSE);
+        gtk_window_move(GTK_WINDOW(window), XPos, YPos);
 
-	// Text edit view
-	GtkWidget* textview = gtk_text_view_new();
+        // Text edit view
+        GtkWidget* textview = gtk_text_view_new();
         GtkWrapMode wrap = GTK_WRAP_WORD; // see pango_get_log_attrs()!
-	gtk_text_view_set_wrap_mode(GTK_TEXT_VIEW (textview), wrap);
-	gtk_text_view_set_cursor_visible(GTK_TEXT_VIEW (textview), TRUE);
-	gtk_container_add (GTK_CONTAINER (window), GTK_WIDGET(textview));
+        gtk_text_view_set_wrap_mode(GTK_TEXT_VIEW (textview), wrap);
+        gtk_text_view_set_cursor_visible(GTK_TEXT_VIEW (textview), TRUE);
+        gtk_container_add (GTK_CONTAINER (window), GTK_WIDGET(textview));
 
         // Read the saved text if exists, and populate the text edit with it
         load_text(TEXTFILE, GTK_TEXT_VIEW (textview));
 
 
-	// Events
-	gtk_signal_connect (GTK_OBJECT (window), "expose_event",    GTK_SIGNAL_FUNC (on_expose_window), textview);
-	gtk_signal_connect (GTK_OBJECT (window), "delete_event",    GTK_SIGNAL_FUNC (on_close_window), textview);
-	gtk_signal_connect (GTK_OBJECT (window), "focus_out_event", GTK_SIGNAL_FUNC (on_focus_out_window), textview);
-	gtk_signal_connect (GTK_OBJECT (window), "focus_in_event",  GTK_SIGNAL_FUNC (on_focus_in_window), textview);
+        // Events
+        gtk_signal_connect (GTK_OBJECT (window), "expose_event",    GTK_SIGNAL_FUNC (on_expose_window), textview);
+        gtk_signal_connect (GTK_OBJECT (window), "delete_event",    GTK_SIGNAL_FUNC (on_close_window), textview);
+        gtk_signal_connect (GTK_OBJECT (window), "focus_out_event", GTK_SIGNAL_FUNC (on_focus_out_window), textview);
+        gtk_signal_connect (GTK_OBJECT (window), "focus_in_event",  GTK_SIGNAL_FUNC (on_focus_in_window), textview);
         gtk_signal_connect (GTK_OBJECT (window), "window-state-event",  GTK_SIGNAL_FUNC (on_changed_state_window), textview);
-	 
+         
 
-	gtk_widget_show_all (window);
-	gtk_main ();
+        gtk_widget_show_all (window);
+        gtk_main ();
 
-	return 0;
+        return 0;
 }
 
