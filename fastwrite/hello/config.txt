@@ -1,4 +1,4 @@
-XPos	177
-YPos	4
+XPos	172
+YPos	27
 Width	300
-Height	200
+Height	572

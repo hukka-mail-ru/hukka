@@ -153,13 +153,14 @@ gboolean on_window_expose (GtkWidget *widget, GdkEventExpose *event, gpointer te
         }
 
         gtk_window_get_position(GTK_WINDOW(Window), &XPos, &YPos);
+        gtk_window_get_size(GTK_WINDOW(Window), &Width, &Height);
 
         gdk_draw_drawable (gdk_window,
                            gc,
                            get_root_pixmap(),
-                           XPos,YPos, // src position
-                           0,0, // dst position
-                           DEFAULT_WIDTH,DEFAULT_HEIGHT);
+                           XPos, YPos, // src position
+                           0, 0, // dst position
+                           Width, Height);
 
         // Draw text
         PangoLayout* text_layout = gtk_widget_create_pango_layout (widget, get_text_of(GTK_TEXT_VIEW (textview)));
@@ -193,7 +194,8 @@ void on_window_close (GtkWidget *widget, GdkEventExpose *event, gpointer textvie
 void on_window_focus_out (GtkWidget *widget, GdkEventExpose *event, gpointer textview) 
 {
         g_print("on_window_focus_out\n");
-      //  gtk_window_set_decorated(GTK_WINDOW(Window), FALSE);
+    //    gtk_window_set_decorated(GTK_WINDOW(Window), FALSE);
+    //    gtk_widget_show_all (Window);
         gtk_widget_hide(GTK_WIDGET (textview));
 }
 
@@ -205,7 +207,7 @@ static gboolean on_window_button_press (GtkWidget *event_box, GdkEventButton *ev
 
         gtk_widget_show(GTK_WIDGET  (textview));
         gtk_text_view_set_cursor_visible(GTK_TEXT_VIEW (textview), TRUE);
-      //  gtk_window_set_decorated(GTK_WINDOW(Window), TRUE);
+    //    gtk_window_set_decorated(GTK_WINDOW(Window), TRUE);
      //   gtk_widget_show_all (Window);
         return FALSE;
 }
@@ -221,6 +223,14 @@ void on_window_changed_state (GtkWidget *widget, GdkEvent *event, gpointer textv
         if ((new_state & GDK_WINDOW_STATE_ICONIFIED) != 0) {
                 gdk_window_focus(Window->window, gtk_get_current_event_time ());
         }
+}
+
+// =========================================================================================================
+static void on_window_drag(GtkWidget *widget, GdkEvent *event, gpointer data) 
+{
+
+        g_print("on_window_drag\n");
+    //    return FALSE;
 }
 
 
@@ -256,11 +266,12 @@ int main(int argc,  char *argv[])
 
         // Events
         gtk_signal_connect (GTK_OBJECT (event_box), "expose_event",    GTK_SIGNAL_FUNC (on_window_expose), textview);
+        gtk_signal_connect (GTK_OBJECT (event_box), "button_press_event",  GTK_SIGNAL_FUNC (on_window_button_press), textview);
         gtk_signal_connect (GTK_OBJECT (Window), "delete_event",    GTK_SIGNAL_FUNC (on_window_close), textview);
         gtk_signal_connect (GTK_OBJECT (Window), "focus_out_event", GTK_SIGNAL_FUNC (on_window_focus_out), textview);
         gtk_signal_connect (GTK_OBJECT (Window), "window-state-event",  GTK_SIGNAL_FUNC (on_window_changed_state), textview);
-        gtk_signal_connect (GTK_OBJECT (event_box), "button_press_event",  GTK_SIGNAL_FUNC (on_window_button_press), textview);
-        // drag_begin_event 
+        gtk_signal_connect (GTK_OBJECT (event_box), "drop_enter_event",  GTK_SIGNAL_FUNC (on_window_drag), NULL);
+        // drag_request_event  
 
         gtk_widget_show_all (Window);
         gtk_widget_hide(GTK_WIDGET (textview));
