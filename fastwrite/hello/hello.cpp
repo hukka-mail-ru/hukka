@@ -228,6 +228,7 @@ void on_window_changed_state (GtkWidget *widget, GdkEvent *event, gpointer data)
 }
 
 // =========================================================================================================
+// Redraw window if it's dragged (We're monitoring it constantly)
 gboolean on_window_drag (gpointer data)
 {
         gint x = 0;
@@ -254,6 +255,8 @@ int main(int argc,  char *argv[])
         Window = gtk_window_new (GTK_WINDOW_TOPLEVEL);
         gtk_window_resize (GTK_WINDOW(Window), Width, Height);
         gtk_window_set_decorated(GTK_WINDOW(Window), FALSE);
+	gtk_window_set_skip_taskbar_hint (GTK_WINDOW (Window), TRUE);
+	gtk_window_set_skip_pager_hint (GTK_WINDOW (Window), TRUE);
         gtk_window_set_keep_below(GTK_WINDOW(Window), TRUE);
         gtk_window_move(GTK_WINDOW(Window), XPos, YPos);
 
@@ -280,7 +283,7 @@ int main(int argc,  char *argv[])
         gtk_signal_connect (GTK_OBJECT (Window), "focus_out_event", GTK_SIGNAL_FUNC (on_window_focus_out), NULL);
         gtk_signal_connect (GTK_OBJECT (Window), "window-state-event",  GTK_SIGNAL_FUNC (on_window_changed_state), NULL);
 
-        // drag_request_event 
+        // drag_event 
         g_timeout_add (25, on_window_drag, NULL); 
 
         gtk_widget_show_all (Window);
