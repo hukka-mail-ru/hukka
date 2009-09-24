@@ -22,6 +22,8 @@ gint XPos = DEFAULT_XPOS;
 gint YPos = DEFAULT_YPOS;
 gint Width = DEFAULT_WIDTH;
 gint Height = DEFAULT_HEIGHT;
+GtkWidget* Event_box;
+GtkWidget* Textview;
 
 // =========================================================================================================
 // Obtain text from textview
@@ -141,7 +143,7 @@ GdkPixmap* get_root_pixmap (void)
 
 // =========================================================================================================
 // Redraw background and the text from edit control
-gboolean on_window_expose (GtkWidget *widget, GdkEventExpose *event, gpointer textview) 
+gboolean on_window_expose (GtkWidget *widget, GdkEventExpose *event, gpointer data) 
 {
         // Draw background
         GdkWindow* gdk_window = widget->window;
@@ -163,7 +165,7 @@ gboolean on_window_expose (GtkWidget *widget, GdkEventExpose *event, gpointer te
                            Width, Height);
 
         // Draw text
-        PangoLayout* text_layout = gtk_widget_create_pango_layout (widget, get_text_of(GTK_TEXT_VIEW (textview)));
+        PangoLayout* text_layout = gtk_widget_create_pango_layout (widget, get_text_of(GTK_TEXT_VIEW (Textview)));
 
         //PangoRectangle link, logical;
        // pango_layout_get_pixel_extents(text_layout, &link, &logical);
@@ -178,11 +180,12 @@ gboolean on_window_expose (GtkWidget *widget, GdkEventExpose *event, gpointer te
         return TRUE;
 }
 
+
 // =========================================================================================================
 // Save text and close the application
-void on_window_close (GtkWidget *widget, GdkEventExpose *event, gpointer textview) 
+void on_window_close (GtkWidget *widget, GdkEventExpose *event, gpointer data) 
 {
-        save_text(TEXTFILE, GTK_TEXT_VIEW (textview));
+        save_text(TEXTFILE, GTK_TEXT_VIEW (Textview));
         save_config(CONFFILE);
 
         gtk_main_quit ();
@@ -191,22 +194,21 @@ void on_window_close (GtkWidget *widget, GdkEventExpose *event, gpointer textvie
 
 // =========================================================================================================
 // Hide edit control
-void on_window_focus_out (GtkWidget *widget, GdkEventExpose *event, gpointer textview) 
+void on_window_focus_out (GtkWidget *widget, GdkEventExpose *event, gpointer data) 
 {
-        g_print("on_window_focus_out\n");
     //    gtk_window_set_decorated(GTK_WINDOW(Window), FALSE);
     //    gtk_widget_show_all (Window);
-        gtk_widget_hide(GTK_WIDGET (textview));
+        gtk_widget_hide(GTK_WIDGET (Textview));
+        on_window_expose (Event_box, event, NULL); 
+        
 }
 
 // =========================================================================================================
 // Show edit control if the window is focused intentionally
-static gboolean on_window_button_press (GtkWidget *event_box, GdkEventButton *event,  gpointer textview)
+static gboolean on_window_button_press (GtkWidget *event_box, GdkEventButton *event,  gpointer data)
 {
-        g_print("on_window_button_press\n");
-
-        gtk_widget_show(GTK_WIDGET  (textview));
-        gtk_text_view_set_cursor_visible(GTK_TEXT_VIEW (textview), TRUE);
+        gtk_widget_show(GTK_WIDGET  (Textview));
+        gtk_text_view_set_cursor_visible(GTK_TEXT_VIEW (Textview), TRUE);
     //    gtk_window_set_decorated(GTK_WINDOW(Window), TRUE);
      //   gtk_widget_show_all (Window);
         return FALSE;
@@ -216,7 +218,7 @@ static gboolean on_window_button_press (GtkWidget *event_box, GdkEventButton *ev
 // =========================================================================================================
 // Don't let window to be minimized
 // Here we got the focus on the window as a side-effect. 
-void on_window_changed_state (GtkWidget *widget, GdkEvent *event, gpointer textview) 
+void on_window_changed_state (GtkWidget *widget, GdkEvent *event, gpointer data) 
 {
         GdkWindowState new_state = event->window_state.new_window_state;
 
@@ -226,13 +228,19 @@ void on_window_changed_state (GtkWidget *widget, GdkEvent *event, gpointer textv
 }
 
 // =========================================================================================================
-static void on_window_drag(GtkWidget *widget, GdkEvent *event, gpointer data) 
+gboolean on_window_drag (gpointer data)
 {
+        gint x = 0;
+        gint y = 0;
+        gtk_window_get_position(GTK_WINDOW(Window), &x, &y);
 
-        g_print("on_window_drag\n");
-    //    return FALSE;
+        if(x != XPos || y != YPos) {
+                XPos = x;
+                YPos = y;
+                on_window_expose (Event_box, NULL, NULL); 
+        }
+        return TRUE;
 }
-
 
 
 // =========================================================================================================
@@ -251,30 +259,32 @@ int main(int argc,  char *argv[])
 
         // Event box
         GtkWidget* event_box = gtk_event_box_new ();
+        Event_box = event_box;
         gtk_container_add (GTK_CONTAINER (Window), event_box);
 
         // Text edit view
-        GtkWidget* textview = gtk_text_view_new();
+        Textview = gtk_text_view_new();
         GtkWrapMode wrap = GTK_WRAP_WORD; // see pango_get_log_attrs()!
-        gtk_text_view_set_wrap_mode(GTK_TEXT_VIEW (textview), wrap);
-        gtk_text_view_set_cursor_visible(GTK_TEXT_VIEW (textview), TRUE);
-        gtk_container_add (GTK_CONTAINER (event_box), GTK_WIDGET(textview));
+        gtk_text_view_set_wrap_mode(GTK_TEXT_VIEW (Textview), wrap);
+        gtk_text_view_set_cursor_visible(GTK_TEXT_VIEW (Textview), TRUE);
+        gtk_container_add (GTK_CONTAINER (event_box), GTK_WIDGET(Textview));
 
         // Read the saved text if exists, and populate the text edit with it
-        load_text(TEXTFILE, GTK_TEXT_VIEW (textview));
+        load_text(TEXTFILE, GTK_TEXT_VIEW (Textview));
 
 
         // Events
-        gtk_signal_connect (GTK_OBJECT (event_box), "expose_event",    GTK_SIGNAL_FUNC (on_window_expose), textview);
-        gtk_signal_connect (GTK_OBJECT (event_box), "button_press_event",  GTK_SIGNAL_FUNC (on_window_button_press), textview);
-        gtk_signal_connect (GTK_OBJECT (Window), "delete_event",    GTK_SIGNAL_FUNC (on_window_close), textview);
-        gtk_signal_connect (GTK_OBJECT (Window), "focus_out_event", GTK_SIGNAL_FUNC (on_window_focus_out), textview);
-        gtk_signal_connect (GTK_OBJECT (Window), "window-state-event",  GTK_SIGNAL_FUNC (on_window_changed_state), textview);
-        gtk_signal_connect (GTK_OBJECT (event_box), "drop_enter_event",  GTK_SIGNAL_FUNC (on_window_drag), NULL);
-        // drag_request_event  
+        gtk_signal_connect (GTK_OBJECT (event_box), "expose_event",    GTK_SIGNAL_FUNC (on_window_expose), NULL);
+        gtk_signal_connect (GTK_OBJECT (event_box), "button_press_event",  GTK_SIGNAL_FUNC (on_window_button_press), NULL);
+        gtk_signal_connect (GTK_OBJECT (Window), "delete_event",    GTK_SIGNAL_FUNC (on_window_close), NULL);
+        gtk_signal_connect (GTK_OBJECT (Window), "focus_out_event", GTK_SIGNAL_FUNC (on_window_focus_out), NULL);
+        gtk_signal_connect (GTK_OBJECT (Window), "window-state-event",  GTK_SIGNAL_FUNC (on_window_changed_state), NULL);
+
+        // drag_request_event 
+        g_timeout_add (25, on_window_drag, NULL); 
 
         gtk_widget_show_all (Window);
-        gtk_widget_hide(GTK_WIDGET (textview));
+        gtk_widget_hide(GTK_WIDGET (Textview));
         gtk_main ();
 
         return 0;
