@@ -244,7 +244,7 @@ int main(int argc,  char *argv[])
 
         // Main window
         Window = gtk_window_new (GTK_WINDOW_TOPLEVEL);
-        gtk_widget_set_size_request (Window, Width, Height);
+        gtk_window_resize (GTK_WINDOW(Window), Width, Height);
         gtk_window_set_decorated(GTK_WINDOW(Window), FALSE);
         gtk_window_set_keep_below(GTK_WINDOW(Window), TRUE);
         gtk_window_move(GTK_WINDOW(Window), XPos, YPos);
