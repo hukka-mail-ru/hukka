@@ -3,4 +3,5 @@ dpkg -L <пакет>	куда уст. файлы
 
 MAEMO
 
-export G_DEBUG=fatal_warnings 
+export G_DEBUG=fatal_warnings
+bgfb 
