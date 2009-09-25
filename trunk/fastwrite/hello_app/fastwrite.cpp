@@ -1,3 +1,8 @@
+#include <string.h>
+
+#include <panel-applet.h>
+#include <gtk/gtklabel.h>
+#include <gtk/gtkbox.h>
 #include <gdk/gdk.h>
 #include <gtk/gtk.h>
 #include <stdlib.h>
@@ -13,6 +18,7 @@ using namespace std;
 #define DEFAULT_WIDTH        300
 #define DEFAULT_HEIGHT        200
 
+#define DIRNAME         ".fastwrite"
 #define TEXTFILE        "save.txt"
 #define CONFFILE        "config.txt"
 
@@ -24,6 +30,26 @@ gint Width = DEFAULT_WIDTH;
 gint Height = DEFAULT_HEIGHT;
 GtkWidget* Event_box;
 GtkWidget* Textview;
+
+// =========================================================================================================
+// Arrange full name from parts
+string get_full_file_name(const char* filename)
+{
+        string res = "";
+        const char* home = getenv("HOME");
+        if(!home) {
+                g_print("getenv failed. Home dir isn't set");
+                return res;
+        }
+
+        res += home;
+        res += "/";
+        res += DIRNAME;
+        res += "/";
+        res += filename;
+        
+        return res;
+}
 
 // =========================================================================================================
 // Obtain text from textview
@@ -43,7 +69,12 @@ gchar* get_text_of(GtkTextView* textview)
 // Load window parameters from config
 void  load_config(const char* filename)
 {
-        ifstream in(filename);
+        ifstream in(get_full_file_name(filename).c_str());
+        if (!in.good()) {
+               g_print("Error opening %s", get_full_file_name(filename).c_str());
+               return;
+        } 
+
         string str;
         char dummy[255];
 
@@ -67,7 +98,11 @@ void  load_config(const char* filename)
 // Save window parameters into config
 void save_config(const char* filename)
 {
-        ofstream out(filename);
+        ofstream out(get_full_file_name(filename).c_str());
+        if (!out.good()) {
+               g_print("Error opening %s", get_full_file_name(filename).c_str());
+               return;
+        } 
 
         out << "XPos\t" << XPos << endl;
         out << "YPos\t" << YPos << endl;
@@ -80,7 +115,12 @@ void save_config(const char* filename)
 // Read the saved text if exists, and populate the text edit with it
 void load_text(const char* filename, GtkTextView* textview)
 {
-        ifstream in(TEXTFILE);
+        ifstream in(get_full_file_name(TEXTFILE).c_str());
+        if (!in.good()) {
+               g_print("Error opening %s", get_full_file_name(filename).c_str());
+               return;
+        } 
+
         string text;
         string s;
         while(getline(in, s)) {
@@ -96,7 +136,12 @@ void load_text(const char* filename, GtkTextView* textview)
 // Saved text into the file
 void save_text(const char* filename, GtkTextView* textview)
 {
-        ofstream out(TEXTFILE);
+        ofstream out(get_full_file_name(TEXTFILE).c_str());
+        if (!out.good()) {
+               g_print("Error opening %s", get_full_file_name(filename).c_str());
+               return;
+        } 
+
         out << get_text_of(GTK_TEXT_VIEW (textview));
 }
 
@@ -245,10 +290,13 @@ gboolean on_window_drag (gpointer data)
 
 
 // =========================================================================================================
-int main(int argc,  char *argv[])
+// Main
+gboolean fastwrite_applet_init (PanelApplet *applet, const gchar *iid, gpointer data)
 {
-        gtk_init (&argc, &argv);
-     
+
+	if (strcmp (iid, "OAFIID:FastwriteApplet") != 0)
+		return FALSE;
+
         load_config(CONFFILE);
 
         // Main window
@@ -275,7 +323,6 @@ int main(int argc,  char *argv[])
         // Read the saved text if exists, and populate the text edit with it
         load_text(TEXTFILE, GTK_TEXT_VIEW (Textview));
 
-
         // Events
         gtk_signal_connect (GTK_OBJECT (event_box), "expose_event",    GTK_SIGNAL_FUNC (on_window_expose), NULL);
         gtk_signal_connect (GTK_OBJECT (event_box), "button_press_event",  GTK_SIGNAL_FUNC (on_window_button_press), NULL);
@@ -286,10 +333,25 @@ int main(int argc,  char *argv[])
         // drag_event 
         g_timeout_add (25, on_window_drag, NULL); 
 
+
+        // Panel Applet
+	GtkWidget* label = gtk_label_new ("Fastwrite !!!");
+	gtk_container_add (GTK_CONTAINER (applet), label);
+
+
+        // Show all        
         gtk_widget_show_all (Window);
         gtk_widget_hide(GTK_WIDGET (Textview));
-        gtk_main ();
+	gtk_widget_show_all (GTK_WIDGET (applet));
 
-        return 0;
+	return TRUE;
 }
 
+
+
+PANEL_APPLET_BONOBO_FACTORY ("OAFIID:FastwriteApplet_Factory",
+                             PANEL_TYPE_APPLET,
+                             "The Fastwrite Applet",
+                             "0",
+                             fastwrite_applet_init,
+                             NULL);
