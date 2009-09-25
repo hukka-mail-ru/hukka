@@ -1,3 +1,0 @@
-rm hello
-env LC_ALL=C g++ -g -Wall hello.cpp -o hello $(pkg-config --cflags --libs libpanelapplet-2.0)
-./hello

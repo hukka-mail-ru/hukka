@@ -1,0 +1,6 @@
+tar -zxvf	Разархивация 
+dpkg -L <пакет>	куда уст. файлы
+
+MAEMO
+
+export G_DEBUG=fatal_warnings 

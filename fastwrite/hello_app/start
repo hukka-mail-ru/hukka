@@ -1,0 +1,8 @@
+killall fastwrite
+env LC_ALL=C g++ -g -Wall fastwrite.cpp -o fastwrite $(pkg-config --cflags --libs libpanelapplet-2.0)
+sudo cp FastwriteApplet_Factory.server /usr/lib/bonobo/servers
+sudo cp fastwrite /usr/lib/gnome-panel
+
+#mkdir ~/.fastwrite
+#cp save.txt ~/.fastwrite
+#cp config.txt ~/.fastwrite
