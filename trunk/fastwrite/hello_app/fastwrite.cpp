@@ -35,6 +35,7 @@ GtkWidget* Textview;
 // Arrange full name from parts
 string get_full_file_name(const char* filename)
 {
+ 
         string res = "";
         const char* home = getenv("HOME");
         if(!home) {
@@ -241,11 +242,11 @@ void on_window_close (GtkWidget *widget, GdkEventExpose *event, gpointer data)
 // Hide edit control
 void on_window_focus_out (GtkWidget *widget, GdkEventExpose *event, gpointer data) 
 {
-    //    gtk_window_set_decorated(GTK_WINDOW(Window), FALSE);
-    //    gtk_widget_show_all (Window);
+        save_text(TEXTFILE, GTK_TEXT_VIEW (Textview));
+        save_config(CONFFILE);
+
         gtk_widget_hide(GTK_WIDGET (Textview));
         on_window_expose (Event_box, event, NULL); 
-        
 }
 
 // =========================================================================================================
@@ -254,8 +255,6 @@ static gboolean on_window_button_press (GtkWidget *event_box, GdkEventButton *ev
 {
         gtk_widget_show(GTK_WIDGET  (Textview));
         gtk_text_view_set_cursor_visible(GTK_TEXT_VIEW (Textview), TRUE);
-    //    gtk_window_set_decorated(GTK_WINDOW(Window), TRUE);
-     //   gtk_widget_show_all (Window);
         return FALSE;
 }
 
