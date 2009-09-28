@@ -6,9 +6,10 @@ TEMPLATE = app
 TARGET = TestClient
 DEPENDPATH += .
 INCLUDEPATH += src
+INCLUDEPATH += /usr/local/Trolltech/Qt-4.5.2/include/QtNetwork
 DESTDIR = bin
 OBJECTS_DIR = obj
-LIBS = -lcppunit
+LIBS = -lcppunit -lQtNetwork
 
 # Input
 SOURCES += test/test.cpp
