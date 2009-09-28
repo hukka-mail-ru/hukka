@@ -3,12 +3,13 @@
 ######################################################################
 
 TEMPLATE = app
-TARGET = test
+TARGET = TestClient
 DEPENDPATH += .
 INCLUDEPATH += src
 DESTDIR = bin
 OBJECTS_DIR = obj
+LIBS = -lcppunit
 
 # Input
 SOURCES += test/test.cpp
-SOURCES += src/client.cpp
+SOURCES += src/Client.cpp
