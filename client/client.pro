@@ -11,4 +11,4 @@ OBJECTS_DIR = obj
 
 # Input
 SOURCES += src/main.cpp
-SOURCES += src/client.cpp
+SOURCES += src/Client.cpp
