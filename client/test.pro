@@ -3,12 +3,12 @@
 ######################################################################
 
 TEMPLATE = app
-TARGET = client
+TARGET = test
 DEPENDPATH += .
 INCLUDEPATH += src
 DESTDIR = bin
 OBJECTS_DIR = obj
 
 # Input
-SOURCES += src/main.cpp
+SOURCES += test/test.cpp
 SOURCES += src/client.cpp
