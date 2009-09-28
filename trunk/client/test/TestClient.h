@@ -6,15 +6,15 @@
 
 #include "Client.h"
 
-#define RIGHT_SERVER_ADDRESS    "unknown"
-#define RIGHT_SERVER_PORT       0
+#define RIGHT_SERVER_ADDRESS    "wapserver3.wapportal.ru"
+#define RIGHT_SERVER_PORT       1234
 
 #define RIGHT_PROXY_ADDRESS     "proxy.t-systems.ru"
 #define RIGHT_PROXY_PORT        3128
 #define RIGHT_PROXY_TYPE        QNetworkProxy::HttpProxy // supports only outgoing TCP connections
 
-#define RIGTH_USER_NAME         "unknown"
-#define RIGTH_USER_PASSWD       "unknown"
+#define RIGTH_USER_NAME         "test"
+#define RIGTH_USER_PASSWD       "test"
 
 class TestClient: public CppUnit::TestFixture 
 {
