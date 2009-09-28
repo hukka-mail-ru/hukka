@@ -6,8 +6,10 @@ TEMPLATE = app
 TARGET = client
 DEPENDPATH += .
 INCLUDEPATH += src
+INCLUDEPATH += /usr/local/Trolltech/Qt-4.5.2/include/QtNetwork
 DESTDIR = bin
 OBJECTS_DIR = obj
+LIBS = -lQtNetwork
 
 # Input
 SOURCES += src/main.cpp
