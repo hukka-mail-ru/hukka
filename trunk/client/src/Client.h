@@ -23,7 +23,7 @@ class Client
 public:
         Client(): mStatus(CLI_OFFLINE) {}
 
-        ClientStatus connect(const QNetworkProxy& proxy, const QString& address, quint16 port);
+        ClientStatus connect(const QNetworkProxy& proxy, const QString& hostName, quint16 port);
         ClientStatus disconnect();
         ClientStatus status() { return mStatus; }
 
