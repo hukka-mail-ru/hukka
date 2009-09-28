@@ -6,7 +6,7 @@
 
 #include "Client.h"
 
-#define RIGHT_SERVER_ADDRESS    unknown
+#define RIGHT_SERVER_ADDRESS    "unknown"
 #define RIGHT_SERVER_PORT       0
 
 #define RIGHT_PROXY_ADDRESS     "proxy.t-systems.ru"
@@ -48,6 +48,7 @@ public:
     void testConnectOK()
     {
 //        SHOW_FUNCTION_NAME;
+        CPPUNIT_ASSERT_EQUAL(CLI_OFFLINE, client.status());
         client.connect(proxy, RIGHT_SERVER_ADDRESS, RIGHT_SERVER_PORT);
         CPPUNIT_ASSERT_EQUAL(CLI_ONLINE, client.status());
 
@@ -61,6 +62,7 @@ public:
 //        SHOW_FUNCTION_NAME;
         proxy.setHostName("wrong");
 
+        CPPUNIT_ASSERT_EQUAL(CLI_OFFLINE, client.status());
         client.connect(proxy, RIGHT_SERVER_ADDRESS, RIGHT_SERVER_PORT);
         CPPUNIT_ASSERT_EQUAL(CLI_OFFLINE, client.status());
     }
@@ -68,6 +70,7 @@ public:
     void testConnectWrongAddress()
     {
 //        SHOW_FUNCTION_NAME;
+        CPPUNIT_ASSERT_EQUAL(CLI_OFFLINE, client.status());
         client.connect(proxy, "wrong", RIGHT_SERVER_PORT);
         CPPUNIT_ASSERT_EQUAL(CLI_OFFLINE, client.status());
     }
@@ -75,6 +78,7 @@ public:
     void testConnectWrongPort()
     {
 //        SHOW_FUNCTION_NAME;
+        CPPUNIT_ASSERT_EQUAL(CLI_OFFLINE, client.status());
         client.connect(proxy, RIGHT_SERVER_ADDRESS, 0);
         CPPUNIT_ASSERT_EQUAL(CLI_OFFLINE, client.status());
     }
@@ -84,14 +88,14 @@ public:
     void testLoginOK()
     {
 //        SHOW_FUNCTION_NAME;
+        CPPUNIT_ASSERT_EQUAL(CLI_OFFLINE, client.status());
         client.connect(proxy, RIGHT_SERVER_ADDRESS, RIGHT_SERVER_PORT);
         CPPUNIT_ASSERT_EQUAL(CLI_ONLINE, client.status());
 
-        LoginStatus st = client.login(RIGTH_USER_NAME, RIGTH_USER_PASSWD);
-        CPPUNIT_ASSERT_EQUAL(LIN_OK, st);
+        CPPUNIT_ASSERT_EQUAL(LOG_OK, client.login(RIGTH_USER_NAME, RIGTH_USER_PASSWD));
 
-        LoginStatus st = client.logout(RIGTH_USER_NAME);
-        CPPUNIT_ASSERT_EQUAL(LOU_OK, st);
+        CPPUNIT_ASSERT_EQUAL(LOG_WRONG_USER, client.logout("wrong"));
+        CPPUNIT_ASSERT_EQUAL(LOG_OK, client.logout(RIGTH_USER_NAME));
 
         client.disconnect();
         CPPUNIT_ASSERT_EQUAL(CLI_OFFLINE, client.status());
@@ -99,11 +103,12 @@ public:
 
    void testLoginWrongUser()
    {
+        CPPUNIT_ASSERT_EQUAL(CLI_OFFLINE, client.status());
         client.connect(proxy, RIGHT_SERVER_ADDRESS, RIGHT_SERVER_PORT);
         CPPUNIT_ASSERT_EQUAL(CLI_ONLINE, client.status());
 
-        LoginStatus st = client.login("wrong", RIGTH_USER_PASSWD);
-        CPPUNIT_ASSERT_EQUAL(LIN_WRONG_LOGIN, st);
+        LogStatus st = client.login("wrong", RIGTH_USER_PASSWD);
+        CPPUNIT_ASSERT_EQUAL(LOG_WRONG_USER, st);
 
         client.disconnect();
         CPPUNIT_ASSERT_EQUAL(CLI_OFFLINE, client.status());
@@ -111,11 +116,12 @@ public:
 
    void testLoginWrongPasswd()
    {
+        CPPUNIT_ASSERT_EQUAL(CLI_OFFLINE, client.status());
         client.connect(proxy, RIGHT_SERVER_ADDRESS, RIGHT_SERVER_PORT);
         CPPUNIT_ASSERT_EQUAL(CLI_ONLINE, client.status());
 
-        LoginStatus st = client.login(RIGTH_USER_NAME, "wrong");
-        CPPUNIT_ASSERT_EQUAL(LIN_WRONG_PASSWD, st);
+        LogStatus st = client.login(RIGTH_USER_NAME, "wrong");
+        CPPUNIT_ASSERT_EQUAL(LOG_WRONG_PASSWD, st);
 
         client.disconnect();
         CPPUNIT_ASSERT_EQUAL(CLI_OFFLINE, client.status());
@@ -123,14 +129,13 @@ public:
 
    void testLoginAlreadyOnLine()
    {
+        CPPUNIT_ASSERT_EQUAL(CLI_OFFLINE, client.status());
         client.connect(proxy, RIGHT_SERVER_ADDRESS, RIGHT_SERVER_PORT);
         CPPUNIT_ASSERT_EQUAL(CLI_ONLINE, client.status());
 
-        LoginStatus st = client.login(RIGTH_USER_NAME, RIGTH_USER_PASSWD);
-        CPPUNIT_ASSERT_EQUAL(LIN_OK, st);
+        CPPUNIT_ASSERT_EQUAL(LOG_OK, client.login(RIGTH_USER_NAME, RIGTH_USER_PASSWD));
 
-        LoginStatus st = client.login(RIGTH_USER_NAME, RIGTH_USER_PASSWD);
-        CPPUNIT_ASSERT_EQUAL(LIN_USER_ONLINE, st);
+        CPPUNIT_ASSERT_EQUAL(LOG_USER_ONLINE, client.login(RIGTH_USER_NAME, RIGTH_USER_PASSWD));
 
         client.disconnect();
         CPPUNIT_ASSERT_EQUAL(CLI_OFFLINE, client.status());
