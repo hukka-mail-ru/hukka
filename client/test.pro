@@ -5,12 +5,12 @@
 TEMPLATE = app
 TARGET = TestClient
 DEPENDPATH += .
-INCLUDEPATH += src
-INCLUDEPATH += /usr/local/Trolltech/Qt-4.5.2/include/QtNetwork
+INCLUDEPATH += src /usr/local/Trolltech/Qt-4.5.2/include/QtNetwork
+HEADERS = src/Client.h
 DESTDIR = bin
 OBJECTS_DIR = obj
 LIBS = -lcppunit -lQtNetwork
-
+CONFIG += qt warn_on debug
+ 
 # Input
-SOURCES += test/test.cpp
-SOURCES += src/Client.cpp
+SOURCES += test/test.cpp src/Client.cpp
