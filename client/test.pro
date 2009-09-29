@@ -9,6 +9,7 @@ INCLUDEPATH += src /usr/local/Trolltech/Qt-4.5.2/include/QtNetwork
 HEADERS = src/Client.h
 DESTDIR = bin
 OBJECTS_DIR = obj
+MOC_DIR = obj
 LIBS = -lcppunit -lQtNetwork
 CONFIG += qt warn_on debug
  
