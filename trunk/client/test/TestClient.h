@@ -1,5 +1,5 @@
-#ifndef TestAnimation_H_
-#define TestAnimation_H_
+#ifndef TestClient_H_
+#define TestClient_H_
 
 
 #include <cppunit/extensions/HelperMacros.h>
@@ -34,7 +34,9 @@ class TestClient: public CppUnit::TestFixture
     Client client;
     QNetworkProxy proxy;
          
-public:         
+public:   
+    ~TestClient() {}
+              
     void setUp() 
     {   
         proxy.setHostName(RIGHT_PROXY_ADDRESS);
@@ -49,10 +51,10 @@ public:
     {
 //        SHOW_FUNCTION_NAME;
         CPPUNIT_ASSERT_EQUAL(CLI_OFFLINE, client.status());
-        client.connect(proxy, RIGHT_SERVER_ADDRESS, RIGHT_SERVER_PORT);
+        client.connectToHost(proxy, RIGHT_SERVER_ADDRESS, RIGHT_SERVER_PORT);
         CPPUNIT_ASSERT_EQUAL(CLI_ONLINE, client.status());
 
-        client.disconnect();
+        client.disconnectFromHost();
         CPPUNIT_ASSERT_EQUAL(CLI_OFFLINE, client.status());
     }
 
@@ -63,7 +65,7 @@ public:
         proxy.setHostName("wrong");
 
         CPPUNIT_ASSERT_EQUAL(CLI_OFFLINE, client.status());
-        client.connect(proxy, RIGHT_SERVER_ADDRESS, RIGHT_SERVER_PORT);
+        client.connectToHost(proxy, RIGHT_SERVER_ADDRESS, RIGHT_SERVER_PORT);
         CPPUNIT_ASSERT_EQUAL(CLI_OFFLINE, client.status());
     }
 
@@ -71,7 +73,7 @@ public:
     {
 //        SHOW_FUNCTION_NAME;
         CPPUNIT_ASSERT_EQUAL(CLI_OFFLINE, client.status());
-        client.connect(proxy, "wrong", RIGHT_SERVER_PORT);
+        client.connectToHost(proxy, "wrong", RIGHT_SERVER_PORT);
         CPPUNIT_ASSERT_EQUAL(CLI_OFFLINE, client.status());
     }
 
@@ -79,7 +81,7 @@ public:
     {
 //        SHOW_FUNCTION_NAME;
         CPPUNIT_ASSERT_EQUAL(CLI_OFFLINE, client.status());
-        client.connect(proxy, RIGHT_SERVER_ADDRESS, 0);
+        client.connectToHost(proxy, RIGHT_SERVER_ADDRESS, 0);
         CPPUNIT_ASSERT_EQUAL(CLI_OFFLINE, client.status());
     }
 
@@ -89,7 +91,7 @@ public:
     {
 //        SHOW_FUNCTION_NAME;
         CPPUNIT_ASSERT_EQUAL(CLI_OFFLINE, client.status());
-        client.connect(proxy, RIGHT_SERVER_ADDRESS, RIGHT_SERVER_PORT);
+        client.connectToHost(proxy, RIGHT_SERVER_ADDRESS, RIGHT_SERVER_PORT);
         CPPUNIT_ASSERT_EQUAL(CLI_ONLINE, client.status());
 
         CPPUNIT_ASSERT_EQUAL(LOG_OK, client.login(RIGTH_USER_NAME, RIGTH_USER_PASSWD));
@@ -97,47 +99,47 @@ public:
         CPPUNIT_ASSERT_EQUAL(LOG_WRONG_USER, client.logout("wrong"));
         CPPUNIT_ASSERT_EQUAL(LOG_OK, client.logout(RIGTH_USER_NAME));
 
-        client.disconnect();
+        client.disconnectFromHost();
         CPPUNIT_ASSERT_EQUAL(CLI_OFFLINE, client.status());
     }
 
    void testLoginWrongUser()
    {
         CPPUNIT_ASSERT_EQUAL(CLI_OFFLINE, client.status());
-        client.connect(proxy, RIGHT_SERVER_ADDRESS, RIGHT_SERVER_PORT);
+        client.connectToHost(proxy, RIGHT_SERVER_ADDRESS, RIGHT_SERVER_PORT);
         CPPUNIT_ASSERT_EQUAL(CLI_ONLINE, client.status());
 
         LogStatus st = client.login("wrong", RIGTH_USER_PASSWD);
         CPPUNIT_ASSERT_EQUAL(LOG_WRONG_USER, st);
 
-        client.disconnect();
+        client.disconnectFromHost();
         CPPUNIT_ASSERT_EQUAL(CLI_OFFLINE, client.status());
    }
 
    void testLoginWrongPasswd()
    {
         CPPUNIT_ASSERT_EQUAL(CLI_OFFLINE, client.status());
-        client.connect(proxy, RIGHT_SERVER_ADDRESS, RIGHT_SERVER_PORT);
+        client.connectToHost(proxy, RIGHT_SERVER_ADDRESS, RIGHT_SERVER_PORT);
         CPPUNIT_ASSERT_EQUAL(CLI_ONLINE, client.status());
 
         LogStatus st = client.login(RIGTH_USER_NAME, "wrong");
         CPPUNIT_ASSERT_EQUAL(LOG_WRONG_PASSWD, st);
 
-        client.disconnect();
+        client.disconnectFromHost();
         CPPUNIT_ASSERT_EQUAL(CLI_OFFLINE, client.status());
    }
 
    void testLoginAlreadyOnLine()
    {
         CPPUNIT_ASSERT_EQUAL(CLI_OFFLINE, client.status());
-        client.connect(proxy, RIGHT_SERVER_ADDRESS, RIGHT_SERVER_PORT);
+        client.connectToHost(proxy, RIGHT_SERVER_ADDRESS, RIGHT_SERVER_PORT);
         CPPUNIT_ASSERT_EQUAL(CLI_ONLINE, client.status());
 
         CPPUNIT_ASSERT_EQUAL(LOG_OK, client.login(RIGTH_USER_NAME, RIGTH_USER_PASSWD));
 
         CPPUNIT_ASSERT_EQUAL(LOG_USER_ONLINE, client.login(RIGTH_USER_NAME, RIGTH_USER_PASSWD));
 
-        client.disconnect();
+        client.disconnectFromHost();
         CPPUNIT_ASSERT_EQUAL(CLI_OFFLINE, client.status());
    }
 
@@ -148,4 +150,4 @@ public:
 
 CPPUNIT_TEST_SUITE_REGISTRATION(TestClient); 
    
-#endif /*TestAnimation_H_*/
+#endif /*TestClient_H_*/

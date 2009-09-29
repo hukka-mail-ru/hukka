@@ -1,8 +1,10 @@
 #ifndef CLIENT_H_
 #define CLIENT_H_
 
+#include <QObject>
 #include <QNetworkProxy>
 #include <QTcpSocket>
+
 
 enum ClientStatus
 {
@@ -18,18 +20,19 @@ enum LogStatus
         LOG_USER_ONLINE = 3
 };
 
-class Client
+class Client: public QObject
 {
+Q_OBJECT
 public:
-        Client(): mStatus(CLI_OFFLINE) {}
+        Client();
 
-        ClientStatus connect(const QNetworkProxy& proxy, const QString& hostName, quint16 port);
-        ClientStatus disconnect();
-        ClientStatus status() { return mStatus; }
+        ClientStatus connectToHost(const QNetworkProxy& proxy, const QString& hostName, quint16 port);
+        ClientStatus disconnectFromHost();
+        ClientStatus status();
 
         LogStatus login(const QString& username, const QString& passwd);
         LogStatus logout(const QString& username);
- 
+
 
 private:
 
@@ -40,6 +43,10 @@ private:
         // send()
         // receive()
 
+private slots:
+        
+        void onConnected();
+        void onError();         
 
 };
 
