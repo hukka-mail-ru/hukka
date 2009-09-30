@@ -26,8 +26,8 @@ Q_OBJECT
 public:
         Client();
 
-        ClientStatus connectToHost(const QNetworkProxy& proxy, const QString& hostName, quint16 port);
-        ClientStatus disconnectFromHost();
+        bool connectToHost(const QNetworkProxy& proxy, const QString& hostName, quint16 port);
+        bool disconnectFromHost();
         ClientStatus status();
 
         LogStatus login(const QString& username, const QString& passwd);
