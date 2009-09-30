@@ -10,6 +10,7 @@ using namespace std;
 #define SIZE_FIELD_ADDRESS      sizeof(quint32)
 #define SIZE_FIELD_CRC          sizeof(quint8)
 
+#define PROTOCOL_FIRST_BYTE		'Z'
 #define PROTOCOL_CURRENT_VERSION        2
 #define SERVICE_ID                      777 // TODO this number must be clarified
 
@@ -95,21 +96,44 @@ ClientStatus Client::status()
 LogStatus Client::login(const QString& username, const QString& passwd) 
 { 
         if(mSocket.state() != QAbstractSocket::ConnectedState) {
-                qDebug() << "Can't login. No connection to server:" << mSocket.peerName();   
+                qDebug() << "Can't login. No connection to server" << mSocket.peerName();   
                 return LOG_ERROR;
         }
 
+	// send LOGIN command
         QByteArray data = username.toAscii() + '0' + passwd.toAscii();
         if(!sendCmd(CMD_LOGIN, data)) {
-                qDebug() << "Can't login. Can't sent LOGIN command to server:" << mSocket.peerName();   
+                qDebug() << "Can't login. Can't sent LOGIN command to server" << mSocket.peerName();   
                 return LOG_ERROR;
         }
         
+	// ger server reply
         if(!mSocket.waitForReadyRead(WAIT_RESPONSE_TIMEOUT*1000)) {
                 qDebug() << "Can't login. Server"<< mSocket.peerName() << "does't respond to LOGIN command.";   
                 return LOG_ERROR;
         }
 
+	QByteArray reply = mSocket.readAll();
+	qDebug() << "LOGIN: Server replied"<< reply.size() << "bytes";   
+	
+	if(reply[0] != PROTOCOL_FIRST_BYTE) {
+                qDebug() << "Can't login. Server"<< mSocket.peerName() << "uses wrong protocol";   
+                return LOG_ERROR;
+        }
+
+	if((int)reply[5] != PROTOCOL_CURRENT_VERSION) {
+                qDebug() << "Can't login. Server"<< mSocket.peerName() << "uses wrong protocol version" << (int)reply[5]; 
+                return LOG_ERROR;
+        }
+	
+	// TODO check size...	
+	// TODO check CRC...
+	// TODO reply[10] or reply[11] is the response???
+
+	for(int i=0; i<reply.size(); i++) {
+		char c = reply[i];
+		qDebug() << (int)c;
+	}
 
         return LOG_OK;
 }
@@ -137,7 +161,7 @@ char getCRC(const QByteArray& infPart)
 }
 
 // ====================================================================================================
-
+// Arrange a packet and write it to Socket
 bool Client::sendCmd(Command command, const QByteArray& data)
 {
         char size[4];
@@ -155,17 +179,16 @@ bool Client::sendCmd(Command command, const QByteArray& data)
                 default: break;
         };
 
-        QByteArray message = cmd + data;
-
         QByteArray infPart;
         infPart += version;
         infPart += address;
-        infPart += message;
+        infPart += cmd;
+        infPart += data;
 
         char crc = getCRC(infPart);
 
         QByteArray packet;
-        packet += 'Z';
+        packet += PROTOCOL_FIRST_BYTE;
         packet += size;
         packet += infPart;
         packet += crc;
@@ -178,8 +201,8 @@ bool Client::sendCmd(Command command, const QByteArray& data)
         }
 
         Q_ASSERT(bytes == packet.size());
-//        waitForBytesWritten
 
+	qDebug() << "OK" << bytes << "bytes sent";   
 
         return true;
 }

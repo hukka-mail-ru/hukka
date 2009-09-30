@@ -6,8 +6,8 @@
 
 #include "Client.h"
 
-#define RIGHT_SERVER_HOSTNAME   "10.233.103.241" //"wapserver3.wapportal.ru"
-#define RIGHT_SERVER_PORT       3333 //1234
+#define RIGHT_SERVER_HOSTNAME   "wapserver3.wapportal.ru"
+#define RIGHT_SERVER_PORT       1234
 
 #define RIGHT_PROXY_HOSTNAME    "proxy.t-systems.ru"
 #define RIGHT_PROXY_PORT        3128
