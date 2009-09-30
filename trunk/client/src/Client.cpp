@@ -4,6 +4,14 @@
 using namespace std;
 
 #define WAIT_CONNECT_TIMEOUT 10 // seconds
+#define WAIT_RESPONSE_TIMEOUT 10 // seconds
+
+#define SIZE_FIELD_VERSION      sizeof(quint8)
+#define SIZE_FIELD_ADDRESS      sizeof(quint32)
+#define SIZE_FIELD_CRC          sizeof(quint8)
+
+#define PROTOCOL_CURRENT_VERSION        2
+#define SERVICE_ID                      777 // TODO this number must be clarified
 
 // ====================================================================================================
 
@@ -20,7 +28,7 @@ Client::Client(): mStatus(CLI_OFFLINE)
 bool Client::connectToHost(const QNetworkProxy& proxy, const QString& hostName, quint16 port)
 {
         if(mSocket.state() == QAbstractSocket::ConnectedState) {
-                qDebug() << "Connection to host" << hostName << ":" << port << "has been already established";   
+                qDebug() << "Connection to server" << hostName << "has been already established";   
                 return true;
         }
         
@@ -29,7 +37,7 @@ bool Client::connectToHost(const QNetworkProxy& proxy, const QString& hostName, 
 
         // wait for establishing connection
         qDebug() << "\nProxy: " << mSocket.proxy().hostName() << ":" << mSocket.proxy().port() << " type=" << mSocket.proxy().type();
-        qDebug() << "Host: " << hostName << ":" << port;
+        qDebug() << "Server: " << hostName << ":" << port;
 
         qDebug() << "waiting... ";
         if(!mSocket.waitForConnected(WAIT_CONNECT_TIMEOUT*1000)) {                
@@ -87,18 +95,21 @@ ClientStatus Client::status()
 LogStatus Client::login(const QString& username, const QString& passwd) 
 { 
         if(mSocket.state() != QAbstractSocket::ConnectedState) {
-                qDebug() << "Can't login. No connection to host" << mSocket.peerName() << ":" << mSocket.peerPort();   
+                qDebug() << "Can't login. No connection to server:" << mSocket.peerName();   
                 return LOG_ERROR;
         }
 
         QByteArray data = username.toAscii() + '0' + passwd.toAscii();
         if(!sendCmd(CMD_LOGIN, data)) {
-                qDebug() << "Can't login. Host does't accept LOGIN command:" << mSocket.peerName() << ":" << mSocket.peerPort();   
+                qDebug() << "Can't login. Can't sent LOGIN command to server:" << mSocket.peerName();   
+                return LOG_ERROR;
+        }
+        
+        if(!mSocket.waitForReadyRead(WAIT_RESPONSE_TIMEOUT*1000)) {
+                qDebug() << "Can't login. Server"<< mSocket.peerName() << "does't respond to LOGIN command.";   
                 return LOG_ERROR;
         }
 
-        
-        // TODO check server response ...
 
         return LOG_OK;
 }
@@ -107,7 +118,7 @@ LogStatus Client::login(const QString& username, const QString& passwd)
 LogStatus Client::logout(const QString& username) 
 { 
         if(mSocket.state() != QAbstractSocket::ConnectedState) {
-                qDebug() << "Can't logout. No connection to host" << mSocket.peerName() << ":" << mSocket.peerPort();   
+                qDebug() << "Can't logout. No connection to server" << mSocket.peerName() << ":" << mSocket.peerPort();   
                 return LOG_ERROR;
         }
 
@@ -126,11 +137,6 @@ char getCRC(const QByteArray& infPart)
 }
 
 // ====================================================================================================
-#define SIZE_FIELD_VERSION      sizeof(quint8)
-#define SIZE_FIELD_ADDRESS      sizeof(quint32)
-#define SIZE_FIELD_CRC          sizeof(quint8)
-
-#define PROTOCOL_CURRENT_VERSION        2
 
 bool Client::sendCmd(Command command, const QByteArray& data)
 {
@@ -139,8 +145,8 @@ bool Client::sendCmd(Command command, const QByteArray& data)
 
         char version = PROTOCOL_CURRENT_VERSION;
 
-//        char address[4];
-//        qsnprintf (address, 4, "%04d", 0); // ???
+        char address[4];
+        qsnprintf (address, 4, "%04d", SERVICE_ID);
 
         char cmd = 0;
         switch(command) {
@@ -153,7 +159,7 @@ bool Client::sendCmd(Command command, const QByteArray& data)
 
         QByteArray infPart;
         infPart += version;
-//        infPart += address;
+        infPart += address;
         infPart += message;
 
         char crc = getCRC(infPart);
