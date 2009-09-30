@@ -17,7 +17,8 @@ enum LogStatus
         LOG_OK = 0,
         LOG_WRONG_USER = 1,
         LOG_WRONG_PASSWD = 2,
-        LOG_USER_ONLINE = 3
+        LOG_USER_ONLINE = 3,
+        LOG_ERROR = 0
 };
 
 class Client: public QObject
@@ -35,18 +36,28 @@ public:
 
 
 private:
+        enum Command
+        {
+                CMD_LOGIN,
+                CMD_MY_DISCONNECT
+        };
+
+        enum Response
+        {
+                RSP_LOGIN_STATUS = 1,
+                RSP_CLOSE_CONNECTION = 2
+        };
+
+        bool sendCmd(Command command, const QByteArray& data);        
 
         QTcpSocket mSocket;
         ClientStatus mStatus;
-
-        // getCRC()
-        // send()
-        // receive()
 
 private slots:
         
         void onConnected();
         void onError();         
+
 
 };
 
