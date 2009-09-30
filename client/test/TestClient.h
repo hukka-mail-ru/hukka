@@ -6,12 +6,12 @@
 
 #include "Client.h"
 
-#define RIGHT_SERVER_HOSTNAME    "wapserver3.wapportal.ru"
-#define RIGHT_SERVER_PORT       1234
+#define RIGHT_SERVER_HOSTNAME   "10.233.103.241"//"wapserver3.wapportal.ru"
+#define RIGHT_SERVER_PORT       3333
 
-#define RIGHT_PROXY_HOSTNAME     "proxy.t-systems.ru"
-#define RIGHT_PROXY_PORT        3128
-#define RIGHT_PROXY_TYPE        QNetworkProxy::HttpProxy // supports only outgoing TCP connections
+#define RIGHT_PROXY_HOSTNAME    "proxy.t-systems.ru"
+#define RIGHT_PROXY_PORT        1080
+#define RIGHT_PROXY_TYPE        QNetworkProxy::Socks5Proxy // supports only outgoing TCP connections
 
 #define RIGTH_USER_NAME         "test"
 #define RIGTH_USER_PASSWD       "test"
@@ -33,15 +33,14 @@ class TestClient: public CppUnit::TestFixture
 
     Client client;
     QNetworkProxy proxy;
+
          
 public:   
     ~TestClient() {}
               
     void setUp() 
-    {   
-        proxy.setHostName(RIGHT_PROXY_HOSTNAME);
-        proxy.setPort(RIGHT_PROXY_PORT);
-        proxy.setType(RIGHT_PROXY_TYPE);
+    {
+        proxy=QNetworkProxy(RIGHT_PROXY_TYPE, RIGHT_PROXY_HOSTNAME, RIGHT_PROXY_PORT);
     }
 
     void tearDown() {}
