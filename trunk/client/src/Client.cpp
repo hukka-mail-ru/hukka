@@ -3,6 +3,8 @@
 
 using namespace std;
 
+#define WAIT_CONNECT_TIMEOUT 10 // seconds
+
 // ====================================================================================================
 
 Client::Client(): mStatus(CLI_OFFLINE) 
@@ -18,17 +20,6 @@ Client::Client(): mStatus(CLI_OFFLINE)
 ClientStatus Client::connectToHost(const QNetworkProxy& proxy, const QString& hostName, quint16 port)
 {
 
-                        QNetworkProxyQuery query(hostName, port);
-                        QList<QNetworkProxy> proxies = QNetworkProxyFactory::proxyForQuery(query);
-                        mSocket.setProxy(QNetworkProxy::NoProxy);
-                        foreach (const QNetworkProxy &p, proxies)
-                        {
-                                if((p.capabilities() & QNetworkProxy::TunnelingCapability) == 0)
-                                        continue;
-                                mSocket.setProxy(p);
-                                break;
-                        }
-
 
 //	mSocket.setProxy(proxy);
 	mSocket.connectToHost (hostName, port);
@@ -41,22 +32,18 @@ ClientStatus Client::connectToHost(const QNetworkProxy& proxy, const QString& ho
 */
 
         // wait for establishing connection
-        qDebug("\n\n");
-        qDebug() << mSocket.proxy().hostName();
-        qDebug() << mSocket.proxy().port();
-        qDebug() << mSocket.proxy().type();
-        qDebug("\n\n");
+        qDebug() << "\nProxy: " << mSocket.proxy().hostName() << ":" << mSocket.proxy().port() << " type=" << mSocket.proxy().type();
+        qDebug() << "Host: " << hostName << ":" << port;
 
-        qDebug() << hostName;
-        qDebug() << port;
-        qDebug("\n\n");
-        for(;;)
-        {                
-                qDebug() << "waiting... " << mSocket.state();
-                sleep(10);
+        qDebug() << "waiting... ";
+        if(!mSocket.waitForConnected(WAIT_CONNECT_TIMEOUT*1000)) {                
+                qDebug() << "Timeout reached!";                
+                return CLI_OFFLINE;
         }
 
-        qDebug() << "Client::connect finished";
+        qDebug() << "Connected! state = " << mSocket.state();
+        
+        return CLI_ONLINE;
 }
 
 
