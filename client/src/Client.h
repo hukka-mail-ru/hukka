@@ -4,6 +4,8 @@
 #include <QObject>
 #include <QNetworkProxy>
 #include <QTcpSocket>
+#include <deferror.h>
+#include <defserver.h>
 
 
 struct MessageHeader
@@ -21,15 +23,6 @@ enum ClientStatus
         CLI_OFFLINE,
 };
 
-enum LogStatus
-{
-        LOG_OK = 0,
-        LOG_WRONG_USER = 1,
-        LOG_WRONG_PASSWD = 2,
-        LOG_USER_ONLINE = 3,
-        LOG_ERROR = 0
-};
-
 
 class Client: public QObject
 {
@@ -43,7 +36,7 @@ public:
         bool disconnectFromHost();
         ClientStatus status();
 
-        LogStatus login(const QString& username, const QString& passwd);
+        int login(const QString& username, const QString& passwd);
 
 private:
 
