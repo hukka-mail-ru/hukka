@@ -1,19 +1,18 @@
 #include "Client.h"
 #include <QNetworkProxyQuery>
+#include <QtEndian>
 #include <deferror.h>
+#include <defserver.h>
 
 using namespace std;
 
-#define WAIT_CONNECT_TIMEOUT 10 // seconds
-#define WAIT_RESPONSE_TIMEOUT 10 // seconds
-
-#define SIZE_FIELD_VERSION      sizeof(quint8)
-#define SIZE_FIELD_ADDRESS      sizeof(quint32)
-#define SIZE_FIELD_CRC          sizeof(quint8)
+#define WAIT_CONNECT_TIMEOUT 3 // seconds
+#define WAIT_RESPONSE_TIMEOUT 3 // seconds
 
 #define PROTOCOL_SIGNATURE		'Z'
 #define PROTOCOL_VERSION                2
-#define SERVICE_ID                      777 // TODO this number must be clarified
+#define CMD_LOGIN                       1
+
 
 // ====================================================================================================
 
@@ -23,7 +22,18 @@ Client::Client(): mStatus(CLI_OFFLINE)
 
         QObject::connect(&mSocket, SIGNAL(connected()), this, SLOT(onConnected()));
         QObject::connect(&mSocket, SIGNAL(error(QAbstractSocket::SocketError)), this, SLOT(onError()));
-//connect(service,SIGNAL(readyRead()),SLOT(parse()));
+        //connect(service,SIGNAL(readyRead()),SLOT(parse()));
+}
+
+// ====================================================================================================
+char Client::getCRC(const QByteArray& data)
+{
+        char crc = 0;
+        for(int i = 0; i < data.size(); i++) {
+                crc ^= data[i];
+        }
+
+        return crc;
 }
 
 // ====================================================================================================
@@ -73,27 +83,6 @@ bool Client::disconnectFromHost()
 }
 
 // ====================================================================================================
-void Client::onConnected()
-{
-        qDebug() << "SIGNAL connected";
-}
-
-// ====================================================================================================
-void Client::onError()
-{
-        qDebug() << "SIGNAL error";
-}
-
-// ====================================================================================================
-ClientStatus Client::status() 
-{ 
-        if(mSocket.state() == QAbstractSocket::ConnectedState)
-                return CLI_ONLINE;
-
-        return CLI_OFFLINE; 
-}
-
-// ====================================================================================================
 LogStatus Client::login(const QString& username, const QString& passwd) 
 { 
         if(mSocket.state() != QAbstractSocket::ConnectedState) {
@@ -117,26 +106,32 @@ LogStatus Client::login(const QString& username, const QString& passwd)
 	QByteArray buf = mSocket.readAll();
 	qDebug() << "LOGIN: Server replied"<< buf.size() << "bytes";   
 
-        MessageHeader* reply = (MessageHeader*)buf.data();
+        MessageHeader* header = (MessageHeader*)buf.data();
 	
-	if(reply->sign != PROTOCOL_SIGNATURE) {
+	if(header->sign != PROTOCOL_SIGNATURE) {
                 qDebug() << "Can't login. Server"<< mSocket.peerName() << "uses wrong protocol";   
                 return LOG_ERROR;
         }
 
-	if(reply->version != PROTOCOL_VERSION) {
-                qDebug() << "Can't login. Server"<< mSocket.peerName() << "uses wrong protocol version" << (int)reply->version; 
+	if(header->version != PROTOCOL_VERSION) {
+                qDebug() << "Can't login. Server"<< mSocket.peerName() << "uses wrong protocol version" << (int)header->version; 
                 return LOG_ERROR;
         }
 
-	if(reply->cmd != NOERR) {
-                qDebug() << "Can't login. Server"<< mSocket.peerName() << "returns error" << (int)reply->cmd; 
+	if(header->cmd != NOERR) {
+                qDebug() << "Can't login. Server"<< mSocket.peerName() << "returns error" << (int)header->cmd; 
+                // TODO return different errors, depending on reply->cmd
                 return LOG_ERROR;
         }
 	
-	// TODO check size...	
-	// TODO check CRC...
-	// TODO reply[10] or reply[11] is the response???
+        quint32 size = qToLittleEndian(header->size);
+
+        QByteArray infPart((char*)header->version, size - 1);
+        if(buf[buf.size() - 1] != getCRC(infPart)) {
+                qDebug() << "Can't login. Server"<< mSocket.peerName() << "response has bad CRC"; 
+                return LOG_ERROR;
+        }
+
 /*
 	for(int i=0; i<reply.size(); i++) {
 		char c = reply[i];
@@ -146,73 +141,65 @@ LogStatus Client::login(const QString& username, const QString& passwd)
         return LOG_OK;
 }
 
-// ====================================================================================================
-LogStatus Client::logout(const QString& username) 
-{ 
-        if(mSocket.state() != QAbstractSocket::ConnectedState) {
-                qDebug() << "Can't logout. No connection to server" << mSocket.peerName() << ":" << mSocket.peerPort();   
-                return LOG_ERROR;
-        }
-
-        return LOG_OK; 
-}
-
-// ====================================================================================================
-char getCRC(const QByteArray& infPart)
-{
-        char crc = 0;
-        for(int i = 0; i < infPart.size(); i++) {
-                crc ^= infPart[i];
-        }
-
-        return crc;
-}
 
 // ====================================================================================================
 // Arrange a packet and write it to Socket
-bool Client::sendCmd(Command command, const QByteArray& data)
+bool Client::sendCmd(char command, const QByteArray& data)
 {
-        char size[4];
-        qsnprintf (size, 4, "%04d", SIZE_FIELD_VERSION + SIZE_FIELD_ADDRESS + data.length() + SIZE_FIELD_CRC);
+        char crc = 0;
 
-        char version = PROTOCOL_VERSION;
-
-        char address[4];
-        qsnprintf (address, 4, "%04d", SERVICE_ID);
-
-        char cmd = 0;
-        switch(command) {
-                case CMD_LOGIN:         cmd = 1; break;
-                case CMD_MY_DISCONNECT: cmd = 2; break;
-                default: break;
-        };
-
+        MessageHeader header;
+        header.sign    = PROTOCOL_SIGNATURE;
+        header.size    = qToBigEndian(sizeof(header.size) + sizeof(header.address) + data.length() + sizeof(crc));
+        header.version = PROTOCOL_VERSION;
+        header.address = qToBigEndian(SRV);
+        
         QByteArray infPart;
-        infPart += version;
-        infPart += address;
-        infPart += cmd;
+        infPart += header.version;
+        infPart += header.address;
+        infPart += command;
         infPart += data;
 
-        char crc = getCRC(infPart);
+        QByteArray message((char*)&header, sizeof(header));
+        message += command;
+        message += data;
+        message += getCRC(infPart);
 
-        QByteArray packet;
-        packet += PROTOCOL_SIGNATURE;
-        packet += size;
-        packet += infPart;
-        packet += crc;
-
-        qDebug() << "Sending command with id" << (int)cmd;  
-        qint64 bytes = mSocket.write(packet);
+        qDebug() << "Sending command with id" << (int)command;  
+        qint64 bytes = mSocket.write(message);
         if(bytes == -1) {
-                qDebug() << "Can't send command with id" << (int)cmd;   
+                qDebug() << "Can't send command with id" << (int)command;   
                 return false;
         }
 
-        Q_ASSERT(bytes == packet.size());
+        Q_ASSERT(bytes == message.size());
 
 	qDebug() << "OK" << bytes << "bytes sent";   
 
         return true;
+}
+
+
+
+// ====================================================================================================
+ClientStatus Client::status() 
+{ 
+        if(mSocket.state() == QAbstractSocket::ConnectedState)
+                return CLI_ONLINE;
+
+        return CLI_OFFLINE; 
+}
+
+// ====================================================================================================
+void Client::onConnected()
+{
+        qDebug() << "SIGNAL connected";
+}
+
+// ====================================================================================================
+void Client::onError()
+{
+        qDebug() << "SIGNAL error";
 }
 
 

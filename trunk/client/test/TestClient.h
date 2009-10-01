@@ -21,6 +21,7 @@
 class TestClient: public CppUnit::TestFixture 
 {
    CPPUNIT_TEST_SUITE(TestClient);
+   CPPUNIT_TEST(testGetCRC);
    CPPUNIT_TEST(testConnectOK);
  //  CPPUNIT_TEST(testConnectWrongProxy);
    CPPUNIT_TEST(testConnectWrongAddress);
@@ -49,6 +50,19 @@ public:
 
     void tearDown() {}
 
+    void testGetCRC()
+    {
+        SHOW_FUNCTION_NAME;
+
+        QByteArray arr;
+        arr.push_back(2);
+        arr.push_back(1);
+        arr.push_back((char)0);
+        arr.push_back(127);
+        arr.push_back(2);
+
+        CPPUNIT_ASSERT_EQUAL(126, (int)client.getCRC(arr));
+    }
     
     void testConnectOK()
     {
@@ -98,9 +112,6 @@ public:
         CPPUNIT_ASSERT_EQUAL(CLI_ONLINE, client.status());
 
         CPPUNIT_ASSERT_EQUAL(LOG_OK, client.login(RIGTH_USER_NAME, RIGTH_USER_PASSWD));
-
-        CPPUNIT_ASSERT_EQUAL(LOG_WRONG_USER, client.logout("wrong"));
-        CPPUNIT_ASSERT_EQUAL(LOG_OK, client.logout(RIGTH_USER_NAME));
 
         client.disconnectFromHost();
         CPPUNIT_ASSERT_EQUAL(CLI_OFFLINE, client.status());
