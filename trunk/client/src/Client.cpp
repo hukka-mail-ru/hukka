@@ -104,9 +104,21 @@ int Client::login(const QString& username, const QString& passwd)
 
 	QByteArray buf = mSocket.readAll();
 	qDebug() << "LOGIN: Server replied"<< buf.size() << "bytes";   
+/*
+	for(int i=0; i<buf.size(); i++) {
+		char c = buf[i];
+		qDebug() << (int)c;
+	}
 
+	qDebug() << "sizeof()" << sizeof(h);
+	qDebug() << "header->sign" << (int)header->sign;
+	qDebug() << "header->size" << qToLittleEndian(header->size);
+	qDebug() << "header->version" << (int)header->version;
+	qDebug() << "header->address" << qToLittleEndian(header->address);
+	qDebug() << "header->cmd" << header->cmd;
+*/	
         MessageHeader* header = (MessageHeader*)buf.data();
-	
+
 	if(header->sign != PROTOCOL_SIGNATURE) {
                 qDebug() << "Can't login. Server"<< mSocket.peerName() << "uses wrong protocol";   
                 return ERRNOSIGN;
@@ -135,12 +147,9 @@ int Client::login(const QString& username, const QString& passwd)
                 return ERRCRC;
         }
 
-/*
-	for(int i=0; i<reply.size(); i++) {
-		char c = reply[i];
-		qDebug() << (int)c;
-	}
-*/
+
+
+
         return NOERR;
 }
 
@@ -153,15 +162,22 @@ bool Client::sendCmd(char command, const QByteArray& data)
 
         MessageHeader header;
         header.sign    = PROTOCOL_SIGNATURE;
-        header.size    = qToBigEndian(sizeof(header.size) + sizeof(header.address) + data.length() + sizeof(crc));
         header.version = PROTOCOL_VERSION;
         header.address = qToBigEndian(SRV);
         
         QByteArray infPart;
         infPart += header.version;
-        infPart += header.address;
+        infPart += QByteArray::number(header.address, 16);
         infPart += command;
         infPart += data;
+
+qDebug() << "header.address" << header.address;
+
+        header.size    = qToBigEndian(infPart.length() + sizeof(crc));
+	for(int i=0; i<infPart.size(); i++) {
+		char c = infPart[i];
+		qDebug() << (int)c;
+	}
 
         QByteArray message((char*)&header, sizeof(header));
         message += command;
