@@ -22,3 +22,18 @@ LOGIN: Server reply 13 bytes
 
 126 	CRC
 
+
+
+================ testLoginOK ================ 
+
+Proxy:  "" : 0  type= 0 
+Server:  "wapserver3.wapportal.ru" : 1234 
+waiting...  
+SIGNAL connected 
+Connected! state =  QAbstractSocket::ConnectedState 
+Sending command with id 1 
+OK 21 bytes sent 
+LOGIN: Server replied 13 bytes 
+Can't login. Server "wapserver3.wapportal.ru" returns error 1 
+.....F
+

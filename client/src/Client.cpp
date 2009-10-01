@@ -163,27 +163,26 @@ bool Client::sendCmd(char command, const QByteArray& data)
         MessageHeader header;
         header.sign    = PROTOCOL_SIGNATURE;
         header.version = PROTOCOL_VERSION;
-        header.address = qToBigEndian(SRV);
+        header.address = SRV;
+	header.cmd = command;
         
         QByteArray infPart;
         infPart += header.version;
-        infPart += QByteArray::number(header.address, 16);
+        infPart += QByteArray((char*)&header.address, sizeof(header.address));
         infPart += command;
         infPart += data;
 
-qDebug() << "header.address" << header.address;
-
-        header.size    = qToBigEndian(infPart.length() + sizeof(crc));
-	for(int i=0; i<infPart.size(); i++) {
-		char c = infPart[i];
-		qDebug() << (int)c;
-	}
+        header.size = infPart.length() + sizeof(crc);
 
         QByteArray message((char*)&header, sizeof(header));
-        message += command;
         message += data;
         message += getCRC(infPart);
-
+/*
+for(int i=0; i<message.size(); i++) {
+	char c = message[i];
+	qDebug() << (int)c;
+}
+*/
         qDebug() << "Sending command with id" << (int)command;  
         qint64 bytes = mSocket.write(message);
         if(bytes == -1) {
