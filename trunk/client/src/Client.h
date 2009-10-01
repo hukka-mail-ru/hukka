@@ -6,6 +6,15 @@
 #include <QTcpSocket>
 
 
+struct MessageHeader
+{
+        char            sign;
+        quint32         size;
+        char            version;
+        quint32         address;
+        char            cmd;
+};
+
 enum ClientStatus
 {
         CLI_ONLINE,
