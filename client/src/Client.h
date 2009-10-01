@@ -30,9 +30,12 @@ enum LogStatus
         LOG_ERROR = 0
 };
 
+
 class Client: public QObject
 {
 Q_OBJECT
+friend class TestClient;
+
 public:
         Client();
 
@@ -41,23 +44,11 @@ public:
         ClientStatus status();
 
         LogStatus login(const QString& username, const QString& passwd);
-        LogStatus logout(const QString& username);
-
 
 private:
-        enum Command
-        {
-                CMD_LOGIN,
-                CMD_MY_DISCONNECT
-        };
 
-        enum Response
-        {
-                RSP_LOGIN_STATUS = 1,
-                RSP_CLOSE_CONNECTION = 2
-        };
-
-        bool sendCmd(Command command, const QByteArray& data);        
+        bool sendCmd(char command, const QByteArray& data);   
+        char getCRC(const QByteArray& data);   
 
         QTcpSocket mSocket;
         ClientStatus mStatus;
