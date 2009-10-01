@@ -111,7 +111,7 @@ public:
         client.connectToHost(proxy, RIGHT_SERVER_HOSTNAME, RIGHT_SERVER_PORT);
         CPPUNIT_ASSERT_EQUAL(CLI_ONLINE, client.status());
 
-        CPPUNIT_ASSERT_EQUAL(LOG_OK, client.login(RIGTH_USER_NAME, RIGTH_USER_PASSWD));
+        CPPUNIT_ASSERT_EQUAL(NOERR, client.login(RIGTH_USER_NAME, RIGTH_USER_PASSWD));
 
         client.disconnectFromHost();
         CPPUNIT_ASSERT_EQUAL(CLI_OFFLINE, client.status());
@@ -125,8 +125,7 @@ public:
         client.connectToHost(proxy, RIGHT_SERVER_HOSTNAME, RIGHT_SERVER_PORT);
         CPPUNIT_ASSERT_EQUAL(CLI_ONLINE, client.status());
 
-        LogStatus st = client.login("wrong", RIGTH_USER_PASSWD);
-        CPPUNIT_ASSERT_EQUAL(LOG_WRONG_USER, st);
+        CPPUNIT_ASSERT_EQUAL(ERRBADLOGIN, client.login("wrong", RIGTH_USER_PASSWD));
 
         client.disconnectFromHost();
         CPPUNIT_ASSERT_EQUAL(CLI_OFFLINE, client.status());
@@ -140,8 +139,7 @@ public:
         client.connectToHost(proxy, RIGHT_SERVER_HOSTNAME, RIGHT_SERVER_PORT);
         CPPUNIT_ASSERT_EQUAL(CLI_ONLINE, client.status());
 
-        LogStatus st = client.login(RIGTH_USER_NAME, "wrong");
-        CPPUNIT_ASSERT_EQUAL(LOG_WRONG_PASSWD, st);
+        CPPUNIT_ASSERT_EQUAL(ERRBADPASS, client.login(RIGTH_USER_NAME, "wrong"));
 
         client.disconnectFromHost();
         CPPUNIT_ASSERT_EQUAL(CLI_OFFLINE, client.status());
@@ -155,9 +153,9 @@ public:
         CPPUNIT_ASSERT_EQUAL(true, client.connectToHost(proxy, RIGHT_SERVER_HOSTNAME, RIGHT_SERVER_PORT));
         CPPUNIT_ASSERT_EQUAL(CLI_ONLINE, client.status());
 
-        CPPUNIT_ASSERT_EQUAL(LOG_OK, client.login(RIGTH_USER_NAME, RIGTH_USER_PASSWD));
+        CPPUNIT_ASSERT_EQUAL(NOERR, client.login(RIGTH_USER_NAME, RIGTH_USER_PASSWD));
 
-        CPPUNIT_ASSERT_EQUAL(LOG_USER_ONLINE, client.login(RIGTH_USER_NAME, RIGTH_USER_PASSWD));
+        CPPUNIT_ASSERT_EQUAL(ERRUSERONLINE, client.login(RIGTH_USER_NAME, RIGTH_USER_PASSWD));
 
         CPPUNIT_ASSERT_EQUAL(true, client.disconnectFromHost());
         CPPUNIT_ASSERT_EQUAL(CLI_OFFLINE, client.status());
@@ -175,7 +173,7 @@ public:
         CPPUNIT_ASSERT_EQUAL(true, client.disconnectFromHost());
         CPPUNIT_ASSERT_EQUAL(CLI_OFFLINE, client.status());
 
-        CPPUNIT_ASSERT_EQUAL(LOG_ERROR, client.login(RIGTH_USER_NAME, RIGTH_USER_PASSWD));
+        CPPUNIT_ASSERT_EQUAL(ERRUNDEF, client.login(RIGTH_USER_NAME, RIGTH_USER_PASSWD));
    }
 };
 

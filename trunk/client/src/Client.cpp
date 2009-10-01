@@ -1,8 +1,7 @@
 #include "Client.h"
 #include <QNetworkProxyQuery>
 #include <QtEndian>
-#include <deferror.h>
-#include <defserver.h>
+
 
 using namespace std;
 
@@ -83,24 +82,24 @@ bool Client::disconnectFromHost()
 }
 
 // ====================================================================================================
-LogStatus Client::login(const QString& username, const QString& passwd) 
+int Client::login(const QString& username, const QString& passwd) 
 { 
         if(mSocket.state() != QAbstractSocket::ConnectedState) {
                 qDebug() << "Can't login. No connection to server" << mSocket.peerName();   
-                return LOG_ERROR;
+                return ERRUNDEF;
         }
 
 	// send LOGIN command
         QByteArray data = username.toAscii() + '0' + passwd.toAscii();
         if(!sendCmd(CMD_LOGIN, data)) {
                 qDebug() << "Can't login. Can't sent LOGIN command to server" << mSocket.peerName();   
-                return LOG_ERROR;
+                return ERRUNDEF;
         }
         
 	// ger server reply
         if(!mSocket.waitForReadyRead(WAIT_RESPONSE_TIMEOUT*1000)) {
                 qDebug() << "Can't login. Server"<< mSocket.peerName() << "does't respond to LOGIN command.";   
-                return LOG_ERROR;
+                return ERRUNDEF;
         }
 
 	QByteArray buf = mSocket.readAll();
@@ -110,18 +109,22 @@ LogStatus Client::login(const QString& username, const QString& passwd)
 	
 	if(header->sign != PROTOCOL_SIGNATURE) {
                 qDebug() << "Can't login. Server"<< mSocket.peerName() << "uses wrong protocol";   
-                return LOG_ERROR;
+                return ERRNOSIGN;
         }
 
 	if(header->version != PROTOCOL_VERSION) {
-                qDebug() << "Can't login. Server"<< mSocket.peerName() << "uses wrong protocol version" << (int)header->version; 
-                return LOG_ERROR;
+                qDebug() << "Can't login. Server"<< mSocket.peerName() << "uses wrong protocol version:" << (int)header->version; 
+                return ERRVER;
+        }
+
+	if(qToLittleEndian(header->address) != SRV) {
+                qDebug() << "Can't login. Server"<< mSocket.peerName() << "uses wrong service:" << qToLittleEndian(header->address); 
+                return ERRUNDEF;
         }
 
 	if(header->cmd != NOERR) {
                 qDebug() << "Can't login. Server"<< mSocket.peerName() << "returns error" << (int)header->cmd; 
-                // TODO return different errors, depending on reply->cmd
-                return LOG_ERROR;
+                return header->cmd;
         }
 	
         quint32 size = qToLittleEndian(header->size);
@@ -129,7 +132,7 @@ LogStatus Client::login(const QString& username, const QString& passwd)
         QByteArray infPart((char*)header->version, size - 1);
         if(buf[buf.size() - 1] != getCRC(infPart)) {
                 qDebug() << "Can't login. Server"<< mSocket.peerName() << "response has bad CRC"; 
-                return LOG_ERROR;
+                return ERRCRC;
         }
 
 /*
@@ -138,7 +141,7 @@ LogStatus Client::login(const QString& username, const QString& passwd)
 		qDebug() << (int)c;
 	}
 */
-        return LOG_OK;
+        return NOERR;
 }
 
 
