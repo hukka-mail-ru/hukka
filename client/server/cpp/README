@@ -1,0 +1,9 @@
+START_VERSION - перед внесением изменений в libs/mysql 11.04.2007   
+XO_alpha_1 - первая запускающаяся сборка XOServer 17.04.2007
+XO_alphа_2 - работающая альфа версия службы "крестики-нолики". умеет все кроме контроля времени
+GAMMONSERVER_WO_LOGIC - собирающаяся версия нард без класса логки. все остальное реализовано. 04.06.2007 
+TABLEMANAGER_alpha_1 - добавлен протокол в tablemanager.
+BACKGAMMON_LOGIC - логика нард на основе BgLight
+BACKGAMMON_LOGIC_FIX - логика нард на основе BgLight (кое-что пофикшено)
+BACKGAMMONSERVER_alpha_1 - служба нард, первая альфа. 20.06.2007
+BACKGAMMONSERVER_alpha_1fix - служба нард, первая альфа. 20.06.2007 (кое-что пофиксено)

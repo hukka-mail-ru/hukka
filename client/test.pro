@@ -6,6 +6,8 @@ TEMPLATE = app
 TARGET = TestClient
 DEPENDPATH += .
 INCLUDEPATH += src /usr/local/Trolltech/Qt-4.5.2/include/QtNetwork
+INCLUDEPATH += server/cpp/libs/header
+
 HEADERS = src/Client.h
 DESTDIR = bin
 OBJECTS_DIR = obj

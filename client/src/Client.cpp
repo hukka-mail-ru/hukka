@@ -1,5 +1,6 @@
 #include "Client.h"
 #include <QNetworkProxyQuery>
+#include <deferror.h>
 
 using namespace std;
 
@@ -10,8 +11,8 @@ using namespace std;
 #define SIZE_FIELD_ADDRESS      sizeof(quint32)
 #define SIZE_FIELD_CRC          sizeof(quint8)
 
-#define PROTOCOL_FIRST_BYTE		'Z'
-#define PROTOCOL_CURRENT_VERSION        2
+#define PROTOCOL_SIGNATURE		'Z'
+#define PROTOCOL_VERSION                2
 #define SERVICE_ID                      777 // TODO this number must be clarified
 
 // ====================================================================================================
@@ -113,28 +114,35 @@ LogStatus Client::login(const QString& username, const QString& passwd)
                 return LOG_ERROR;
         }
 
-	QByteArray reply = mSocket.readAll();
-	qDebug() << "LOGIN: Server replied"<< reply.size() << "bytes";   
+	QByteArray buf = mSocket.readAll();
+	qDebug() << "LOGIN: Server replied"<< buf.size() << "bytes";   
+
+        MessageHeader* reply = (MessageHeader*)buf.data();
 	
-	if(reply[0] != PROTOCOL_FIRST_BYTE) {
+	if(reply->sign != PROTOCOL_SIGNATURE) {
                 qDebug() << "Can't login. Server"<< mSocket.peerName() << "uses wrong protocol";   
                 return LOG_ERROR;
         }
 
-	if((int)reply[5] != PROTOCOL_CURRENT_VERSION) {
-                qDebug() << "Can't login. Server"<< mSocket.peerName() << "uses wrong protocol version" << (int)reply[5]; 
+	if(reply->version != PROTOCOL_VERSION) {
+                qDebug() << "Can't login. Server"<< mSocket.peerName() << "uses wrong protocol version" << (int)reply->version; 
+                return LOG_ERROR;
+        }
+
+	if(reply->cmd != NOERR) {
+                qDebug() << "Can't login. Server"<< mSocket.peerName() << "returns error" << (int)reply->cmd; 
                 return LOG_ERROR;
         }
 	
 	// TODO check size...	
 	// TODO check CRC...
 	// TODO reply[10] or reply[11] is the response???
-
+/*
 	for(int i=0; i<reply.size(); i++) {
 		char c = reply[i];
 		qDebug() << (int)c;
 	}
-
+*/
         return LOG_OK;
 }
 
@@ -167,7 +175,7 @@ bool Client::sendCmd(Command command, const QByteArray& data)
         char size[4];
         qsnprintf (size, 4, "%04d", SIZE_FIELD_VERSION + SIZE_FIELD_ADDRESS + data.length() + SIZE_FIELD_CRC);
 
-        char version = PROTOCOL_CURRENT_VERSION;
+        char version = PROTOCOL_VERSION;
 
         char address[4];
         qsnprintf (address, 4, "%04d", SERVICE_ID);
@@ -188,7 +196,7 @@ bool Client::sendCmd(Command command, const QByteArray& data)
         char crc = getCRC(infPart);
 
         QByteArray packet;
-        packet += PROTOCOL_FIRST_BYTE;
+        packet += PROTOCOL_SIGNATURE;
         packet += size;
         packet += infPart;
         packet += crc;
