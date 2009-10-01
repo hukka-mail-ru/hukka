@@ -7,11 +7,11 @@
 #include <deferror.h>
 #include <defserver.h>
 
-
+#pragma pack(1)
 struct MessageHeader
 {
         char            sign;
-        quint32         size;
+        qint32	        size;
         char            version;
         quint32         address;
         char            cmd;
