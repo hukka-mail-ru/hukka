@@ -32,15 +32,15 @@ friend class TestClient;
 public:
         Client();
 
-        bool connectToHost(const QNetworkProxy& proxy, const QString& hostName, quint16 port);
-        bool disconnectFromHost();
+        void connectToHost(const QNetworkProxy& proxy, const QString& hostName, quint16 port);
+        void disconnectFromHost();
         ClientStatus status();
 
-        int login(const QString& username, const QString& passwd);
+        void login(const QString& username, const QString& passwd);
 
 private:
 
-        bool sendCmd(char command, const QByteArray& data);   
+        void sendCmd(char command, const QByteArray& data);   
         char getCRC(const QByteArray& data);   
 
         QTcpSocket mSocket;
