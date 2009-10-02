@@ -14,6 +14,18 @@ using namespace std;
 #define CMD_LOGIN                       1
 
 #define THROW_EXCEPTION(MESSAGE)            throw(Exception(__FILE__, __LINE__, MESSAGE));
+
+// ====================================================================================================
+char getCRC(const QByteArray& data)
+{
+        char crc = 0;
+        for(int i = 0; i < data.size(); i++) {
+                crc ^= data[i];
+        }
+
+        return crc;
+}
+
         
 // ====================================================================================================
 
@@ -24,17 +36,6 @@ Client::Client(): mStatus(CLI_OFFLINE)
         QObject::connect(&mSocket, SIGNAL(connected()), this, SLOT(onConnected()));
         QObject::connect(&mSocket, SIGNAL(error(QAbstractSocket::SocketError)), this, SLOT(onError()));
         //connect(service,SIGNAL(readyRead()),SLOT(parse()));
-}
-
-// ====================================================================================================
-char Client::getCRC(const QByteArray& data)
-{
-        char crc = 0;
-        for(int i = 0; i < data.size(); i++) {
-                crc ^= data[i];
-        }
-
-        return crc;
 }
 
 // ====================================================================================================
@@ -89,7 +90,7 @@ void Client::login(const QString& username, const QString& passwd)
         QByteArray data = username.toAscii() + '0' + passwd.toAscii();
         sendCmd(CMD_LOGIN, data);
         
-	// ger server reply
+	// get server reply
         if(!mSocket.waitForReadyRead(WAIT_RESPONSE_TIMEOUT*1000)) 
                 THROW_EXCEPTION("Can't login. Server " + mSocket.peerName() + " does't respond to LOGIN command.");   
 
