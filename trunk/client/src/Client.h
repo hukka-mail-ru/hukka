@@ -7,6 +7,12 @@
 #include <deferror.h>
 #include <defserver.h>
 
+//    ___ _ _            _   
+//   / __\ (_) ___ _ __ | |_ 
+//  / /  | | |/ _ \ '_ \| __|
+// / /___| | |  __/ | | | |_ 
+// \____/|_|_|\___|_| |_|\__|
+
 #pragma pack(1)
 struct MessageHeader
 {

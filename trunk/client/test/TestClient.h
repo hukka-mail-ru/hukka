@@ -2,16 +2,14 @@
 #define TestClient_H_
 
 #include <cppunit/extensions/HelperMacros.h>
-
-//  _____         _
-// |_   _|__  ___| |_
-//   | |/ _ \/ __| __|
-//   | |  __/\__ \ |_
-//   |_|\___||___/\__|
-//
-
 #include "Client.h"
 #include "Exception.h"
+
+//  _____          _       ___ _ _            _   
+// /__   \___  ___| |_    / __\ (_) ___ _ __ | |_ 
+//   / /\/ _ \/ __| __|  / /  | | |/ _ \ '_ \| __|
+//  / / |  __/\__ \ |_  / /___| | |  __/ | | | |_ 
+//  \/   \___||___/\__| \____/|_|_|\___|_| |_|\__|
 
 #define RIGHT_SERVER_HOSTNAME   "wapserver3.wapportal.ru"
 #define RIGHT_SERVER_PORT       1234
