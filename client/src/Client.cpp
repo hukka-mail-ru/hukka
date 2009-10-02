@@ -89,7 +89,7 @@ void Client::login(const QString& username, const QString& passwd)
         }
 
 	// send LOGIN command
-        QByteArray data = username.toAscii() + '0' + passwd.toAscii();
+        QByteArray data = (username + QChar(0) + passwd).toAscii();
         sendCmd(CMD_LOGIN, data);
         
 	// get server reply
@@ -166,12 +166,12 @@ void Client::sendCmd(char command, const QByteArray& data)
         QByteArray message((char*)&header, sizeof(header));
         message += data;
         message += getCRC(infPart);
-/*
+
 for(int i=0; i<message.size(); i++) {
 	char c = message[i];
 	qDebug() << (int)c;
 }
-*/
+
         qDebug() << "Sending command with id" << (int)command;  
         qint64 bytes = mSocket.write(message);
         if(bytes == -1) {
