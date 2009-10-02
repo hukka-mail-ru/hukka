@@ -3,7 +3,7 @@
 
 #include <QString>
 
-
+#define THROW_EXCEPTION(MESSAGE)        throw(Exception(__FILE__, __LINE__, MESSAGE));
 
 class Exception
 {

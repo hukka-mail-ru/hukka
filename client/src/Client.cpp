@@ -13,8 +13,6 @@ using namespace std;
 #define PROTOCOL_VERSION                2
 #define CMD_LOGIN                       1
 
-#define THROW_EXCEPTION(MESSAGE)        throw(Exception(__FILE__, __LINE__, MESSAGE));
-
 // ====================================================================================================
 char getCRC(const QByteArray& data)
 {
