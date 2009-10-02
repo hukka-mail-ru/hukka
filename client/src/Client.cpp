@@ -13,7 +13,7 @@ using namespace std;
 #define PROTOCOL_VERSION                2
 #define CMD_LOGIN                       1
 
-#define THROW_EXCEPTION(MESSAGE)            throw(Exception(__FILE__, __LINE__, MESSAGE));
+#define THROW_EXCEPTION(MESSAGE)        throw(Exception(__FILE__, __LINE__, MESSAGE));
 
 // ====================================================================================================
 char getCRC(const QByteArray& data)
@@ -50,7 +50,7 @@ void Client::connectToHost(const QNetworkProxy& proxy, const QString& hostName, 
 	mSocket.connectToHost (hostName, port);
 
         // wait for establishing connection
-        qDebug() << "\nProxy: " << mSocket.proxy().hostName() << ":" << mSocket.proxy().port() << " type=" << mSocket.proxy().type();
+        qDebug() << "Proxy: " << mSocket.proxy().hostName() << ":" << mSocket.proxy().port() << " type=" << mSocket.proxy().type();
         qDebug() << "Server: " << hostName << ":" << port;
 
         qDebug() << "waiting... ";
@@ -80,19 +80,24 @@ void Client::disconnectFromHost()
         qDebug() << "Disconnected! state = " << mSocket.state();               
 }
 
+
 // ====================================================================================================
 void Client::login(const QString& username, const QString& passwd) 
 { 
-        if(mSocket.state() != QAbstractSocket::ConnectedState) 
-                THROW_EXCEPTION("Can't login. No connection with server: " + mSocket.peerName());   
+        #define LOGIN_ERROR_HEAD     "Can't login to server " + mSocket.peerName() + ". "
+
+        if(mSocket.state() != QAbstractSocket::ConnectedState) {
+                THROW_EXCEPTION(LOGIN_ERROR_HEAD + "Connection has been lost");   
+        }
 
 	// send LOGIN command
         QByteArray data = username.toAscii() + '0' + passwd.toAscii();
         sendCmd(CMD_LOGIN, data);
         
 	// get server reply
-        if(!mSocket.waitForReadyRead(WAIT_RESPONSE_TIMEOUT*1000)) 
-                THROW_EXCEPTION("Can't login. Server " + mSocket.peerName() + " does't respond to LOGIN command.");   
+        if(!mSocket.waitForReadyRead(WAIT_RESPONSE_TIMEOUT*1000)) {
+                THROW_EXCEPTION(LOGIN_ERROR_HEAD + "Server does't respond to LOGIN command.");   
+        }
 
 	QByteArray buf = mSocket.readAll();
 	qDebug() << "LOGIN: Server replied"<< buf.size() << "bytes";   
@@ -111,28 +116,32 @@ void Client::login(const QString& username, const QString& passwd)
 */	
         MessageHeader* header = (MessageHeader*)buf.data();
 
-	if(header->sign != PROTOCOL_SIGNATURE) 
-                THROW_EXCEPTION("Can't login. Server " + mSocket.peerName() + " uses wrong protocol ");   
-
-	if(header->version != PROTOCOL_VERSION) 
-                THROW_EXCEPTION("Can't login. Server " + mSocket.peerName() + " uses wrong protocol version: " + (int)header->version); 
-
-	if(qToLittleEndian(header->address) != SRV) 
-                THROW_EXCEPTION("Can't login. Server " + mSocket.peerName() + " uses wrong service: " + qToLittleEndian(header->address)); 
-
-	if(header->cmd == ERRUSERONLINE) {
-                qDebug() << "User"<< username << "is already online"; 
-                return;
+	if(header->sign != PROTOCOL_SIGNATURE) {
+                THROW_EXCEPTION(LOGIN_ERROR_HEAD + "Server uses wrong protocol ");   
         }
 
-	if(header->cmd != NOERR) 
-                THROW_EXCEPTION("Can't login. Server " + mSocket.peerName() + " returns error " + (int)header->cmd); 
+	if(header->version != PROTOCOL_VERSION) {
+                THROW_EXCEPTION(LOGIN_ERROR_HEAD + "Server uses wrong protocol version: " + (int)header->version); 
+        }
+
+	if(qToLittleEndian(header->address) != SRV) {
+                THROW_EXCEPTION(LOGIN_ERROR_HEAD + "Server uses wrong service: " + qToLittleEndian(header->address)); 
+        }
+
+        switch(header->cmd) {
+                case NOERR:          break;
+                case ERRUSERONLINE:  qDebug() << "User"<< username << "is already online"; return; break;
+                case ERRBADLOGIN:    THROW_EXCEPTION(LOGIN_ERROR_HEAD + "Incorrect user name: " + username); break;
+                case ERRBADPASS:     THROW_EXCEPTION(LOGIN_ERROR_HEAD + "Incorrect password for user: " + username); break;
+                default:             THROW_EXCEPTION(LOGIN_ERROR_HEAD + "Internal server error " + (int)header->cmd); break;
+        } 
 	
         quint32 size = qToLittleEndian(header->size);
 
         QByteArray infPart((char*)header->version, size - 1);
-        if(buf[buf.size() - 1] != getCRC(infPart)) 
-                THROW_EXCEPTION("Can't login. Server " + mSocket.peerName() + " response has bad CRC"); 
+        if(buf[buf.size() - 1] != getCRC(infPart)) {
+                THROW_EXCEPTION(LOGIN_ERROR_HEAD + "Server response has bad CRC"); 
+        }
 }
 
 
