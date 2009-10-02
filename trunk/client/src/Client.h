@@ -37,9 +37,10 @@ public:
 
         void connectToHost(const QNetworkProxy& proxy, const QString& hostName, quint16 port);
         void disconnectFromHost();
-        ClientStatus status();
 
         void login(const QString& username, const QString& passwd);
+
+        ClientStatus status();
 
 private:
 
