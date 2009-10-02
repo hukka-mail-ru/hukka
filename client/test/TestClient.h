@@ -68,7 +68,7 @@ public:
         arr.push_back(127);
         arr.push_back(2);
 
-        CPPUNIT_ASSERT_EQUAL(126, (int)client.getCRC(arr));
+        CPPUNIT_ASSERT_EQUAL(126, (int)getCRC(arr));
     }
     
     void testConnectOK()

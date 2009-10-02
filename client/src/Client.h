@@ -24,6 +24,9 @@ enum ClientStatus
 };
 
 
+char getCRC(const QByteArray& data);
+
+
 class Client: public QObject
 {
 Q_OBJECT
@@ -41,7 +44,6 @@ public:
 private:
 
         void sendCmd(char command, const QByteArray& data);   
-        char getCRC(const QByteArray& data);   
 
         QTcpSocket mSocket;
         ClientStatus mStatus;
