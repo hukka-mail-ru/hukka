@@ -12,9 +12,9 @@ using namespace std;
 #define PROTOCOL_SIGNATURE		'Z'
 #define PROTOCOL_VERSION                2
 #define CMD_LOGIN                       1
-        
-#define THROW_EXCEPTION(msg)            throw(Exception(__FILE__, __LINE__, msg));
 
+#define THROW_EXCEPTION(MESSAGE)            throw(Exception(__FILE__, __LINE__, MESSAGE));
+        
 // ====================================================================================================
 
 Client::Client(): mStatus(CLI_OFFLINE) 
@@ -73,7 +73,7 @@ void Client::disconnectFromHost()
         qDebug() << "waiting... ";
         if(mSocket.state() != QAbstractSocket::UnconnectedState &&
           !mSocket.waitForDisconnected(WAIT_CONNECT_TIMEOUT*1000)) {  
-                throw(Exception("Disconnection failed! Can't disconnect from server: " + mSocket.peerName()));              
+                THROW_EXCEPTION("Disconnection failed! Can't disconnect from server: " + mSocket.peerName());              
         }
 
         qDebug() << "Disconnected! state = " << mSocket.state();               
@@ -83,7 +83,7 @@ void Client::disconnectFromHost()
 void Client::login(const QString& username, const QString& passwd) 
 { 
         if(mSocket.state() != QAbstractSocket::ConnectedState) 
-                throw(Exception("Can't login. No connection with server: " + mSocket.peerName()));   
+                THROW_EXCEPTION("Can't login. No connection with server: " + mSocket.peerName());   
 
 	// send LOGIN command
         QByteArray data = username.toAscii() + '0' + passwd.toAscii();
@@ -91,7 +91,7 @@ void Client::login(const QString& username, const QString& passwd)
         
 	// ger server reply
         if(!mSocket.waitForReadyRead(WAIT_RESPONSE_TIMEOUT*1000)) 
-                throw(Exception("Can't login. Server " + mSocket.peerName() + " does't respond to LOGIN command."));   
+                THROW_EXCEPTION("Can't login. Server " + mSocket.peerName() + " does't respond to LOGIN command.");   
 
 	QByteArray buf = mSocket.readAll();
 	qDebug() << "LOGIN: Server replied"<< buf.size() << "bytes";   
@@ -111,22 +111,27 @@ void Client::login(const QString& username, const QString& passwd)
         MessageHeader* header = (MessageHeader*)buf.data();
 
 	if(header->sign != PROTOCOL_SIGNATURE) 
-                throw(Exception("Can't login. Server " + mSocket.peerName() + " uses wrong protocol "));   
+                THROW_EXCEPTION("Can't login. Server " + mSocket.peerName() + " uses wrong protocol ");   
 
 	if(header->version != PROTOCOL_VERSION) 
-                throw(Exception("Can't login. Server " + mSocket.peerName() + " uses wrong protocol version: " + (int)header->version)); 
+                THROW_EXCEPTION("Can't login. Server " + mSocket.peerName() + " uses wrong protocol version: " + (int)header->version); 
 
 	if(qToLittleEndian(header->address) != SRV) 
-                throw(Exception("Can't login. Server " + mSocket.peerName() + " uses wrong service: " + qToLittleEndian(header->address) )); 
+                THROW_EXCEPTION("Can't login. Server " + mSocket.peerName() + " uses wrong service: " + qToLittleEndian(header->address)); 
+
+	if(header->cmd == ERRUSERONLINE) {
+                qDebug() << "User"<< username << "is already online"; 
+                return;
+        }
 
 	if(header->cmd != NOERR) 
-                throw(Exception("Can't login. Server " + mSocket.peerName() + " returns error " + (int)header->cmd )); 
+                THROW_EXCEPTION("Can't login. Server " + mSocket.peerName() + " returns error " + (int)header->cmd); 
 	
         quint32 size = qToLittleEndian(header->size);
 
         QByteArray infPart((char*)header->version, size - 1);
         if(buf[buf.size() - 1] != getCRC(infPart)) 
-                throw(Exception("Can't login. Server " + mSocket.peerName() + " response has bad CRC")); 
+                THROW_EXCEPTION("Can't login. Server " + mSocket.peerName() + " response has bad CRC"); 
 }
 
 
@@ -162,7 +167,7 @@ for(int i=0; i<message.size(); i++) {
         qDebug() << "Sending command with id" << (int)command;  
         qint64 bytes = mSocket.write(message);
         if(bytes == -1) {
-                throw(Exception("Can't send command  to server " + mSocket.peerName() + ". Command ID: " + (int)command));   
+                THROW_EXCEPTION("Can't send command  to server " + mSocket.peerName() + ". Command ID: " + (int)command);   
         }
 
         Q_ASSERT(bytes == message.size());

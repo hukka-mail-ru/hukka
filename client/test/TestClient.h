@@ -1,12 +1,17 @@
 #ifndef TestClient_H_
 #define TestClient_H_
 
-
 #include <cppunit/extensions/HelperMacros.h>
+
+//  _____         _
+// |_   _|__  ___| |_
+//   | |/ _ \/ __| __|
+//   | |  __/\__ \ |_
+//   |_|\___||___/\__|
+//
 
 #include "Client.h"
 #include "Exception.h"
-
 
 #define RIGHT_SERVER_HOSTNAME   "wapserver3.wapportal.ru"
 #define RIGHT_SERVER_PORT       1234
@@ -113,7 +118,7 @@ public:
         CPPUNIT_ASSERT_NO_THROW(client.connectToHost(proxy, RIGHT_SERVER_HOSTNAME, RIGHT_SERVER_PORT));
         CPPUNIT_ASSERT_EQUAL(CLI_ONLINE, client.status());
 
-        CPPUNIT_ASSERT_EQUAL(NOERR, client.login(RIGTH_USER_NAME, RIGTH_USER_PASSWD));
+        CPPUNIT_ASSERT_NO_THROW(client.login(RIGTH_USER_NAME, RIGTH_USER_PASSWD));
 
         CPPUNIT_ASSERT_NO_THROW(client.disconnectFromHost());
         CPPUNIT_ASSERT_EQUAL(CLI_OFFLINE, client.status());
@@ -127,7 +132,7 @@ public:
         CPPUNIT_ASSERT_NO_THROW(client.connectToHost(proxy, RIGHT_SERVER_HOSTNAME, RIGHT_SERVER_PORT));
         CPPUNIT_ASSERT_EQUAL(CLI_ONLINE, client.status());
 
-        CPPUNIT_ASSERT_EQUAL(ERRBADLOGIN, client.login("wrong_server_name", RIGTH_USER_PASSWD));
+        CPPUNIT_ASSERT_THROW(client.login("wrong_server_name", RIGTH_USER_PASSWD), Exception);
 
         CPPUNIT_ASSERT_NO_THROW(client.disconnectFromHost());
         CPPUNIT_ASSERT_EQUAL(CLI_OFFLINE, client.status());
@@ -141,7 +146,7 @@ public:
         CPPUNIT_ASSERT_NO_THROW(client.connectToHost(proxy, RIGHT_SERVER_HOSTNAME, RIGHT_SERVER_PORT));
         CPPUNIT_ASSERT_EQUAL(CLI_ONLINE, client.status());
 
-        CPPUNIT_ASSERT_EQUAL(ERRBADPASS, client.login(RIGTH_USER_NAME, "wrong_server_name"));
+        CPPUNIT_ASSERT_THROW(client.login(RIGTH_USER_NAME, "wrong_server_name"), Exception);
 
         CPPUNIT_ASSERT_NO_THROW(client.disconnectFromHost());
         CPPUNIT_ASSERT_EQUAL(CLI_OFFLINE, client.status());
@@ -155,9 +160,8 @@ public:
         CPPUNIT_ASSERT_NO_THROW(client.connectToHost(proxy, RIGHT_SERVER_HOSTNAME, RIGHT_SERVER_PORT));
         CPPUNIT_ASSERT_EQUAL(CLI_ONLINE, client.status());
 
-        CPPUNIT_ASSERT_EQUAL(NOERR, client.login(RIGTH_USER_NAME, RIGTH_USER_PASSWD));
-
-        CPPUNIT_ASSERT_EQUAL(ERRUSERONLINE, client.login(RIGTH_USER_NAME, RIGTH_USER_PASSWD));
+        CPPUNIT_ASSERT_NO_THROW(client.login(RIGTH_USER_NAME, RIGTH_USER_PASSWD));
+        CPPUNIT_ASSERT_NO_THROW(client.login(RIGTH_USER_NAME, RIGTH_USER_PASSWD));
 
         CPPUNIT_ASSERT_NO_THROW(client.disconnectFromHost());
         CPPUNIT_ASSERT_EQUAL(CLI_OFFLINE, client.status());
@@ -175,7 +179,7 @@ public:
         CPPUNIT_ASSERT_NO_THROW(client.disconnectFromHost());
         CPPUNIT_ASSERT_EQUAL(CLI_OFFLINE, client.status());
 
-        CPPUNIT_ASSERT_EQUAL(ERRUNDEF, client.login(RIGTH_USER_NAME, RIGTH_USER_PASSWD));
+        CPPUNIT_ASSERT_THROW(client.login(RIGTH_USER_NAME, RIGTH_USER_PASSWD), Exception);
    }
 };
 
