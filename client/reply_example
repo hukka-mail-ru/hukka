@@ -1,39 +1,26 @@
-LOGIN: Server reply 13 bytes 
-
-
-90 	'Z'
-
-8 	size
+90 
+16 
 0 
 0 
 0 
-
-================== inf part =============
-2 	version
-
-1 	address
+2 
+1 
 0 
 0 
 0 
+1 
+116 
+101 
+115 
+116 
+0 
+116 
+101 
+115 
+116 
+2 
 
-127 	cmd
-2 	data
-=========================================
-
-126 	CRC
 
 
-
-================ testLoginOK ================ 
-
-Proxy:  "" : 0  type= 0 
-Server:  "wapserver3.wapportal.ru" : 1234 
-waiting...  
-SIGNAL connected 
-Connected! state =  QAbstractSocket::ConnectedState 
-Sending command with id 1 
-OK 21 bytes sent 
-LOGIN: Server replied 13 bytes 
-Can't login. Server "wapserver3.wapportal.ru" returns error 1 
-.....F
-
+ASCII: ogre
+http://www.network-science.de/ascii/
