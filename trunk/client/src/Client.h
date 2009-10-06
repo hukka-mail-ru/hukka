@@ -15,6 +15,24 @@ enum ClientStatus
 
 char getCRC(const QByteArray& data);
 
+
+#pragma pack(1)
+struct MessageHeader
+{
+	char            sign;
+	qint32	        size;
+	char            version;
+	quint32         address;
+	char            cmd;
+};
+
+struct ErrorMessage
+{
+        MessageHeader   header;
+        char            error;
+        char            crc;
+};
+
 /*====================================================================================================
     ___ _ _            _   
    / __\ (_) ___ _ __ | |_ 
@@ -39,24 +57,9 @@ public:
         ClientStatus status();
 
 private:
-	#pragma pack(1)
-	struct MessageHeader
-	{
-		char            sign;
-		qint32	        size;
-		char            version;
-		quint32         address;
-		char            cmd;
-	};
-
-        struct ErrorMessage
-        {
-                MessageHeader   header;
-                char            error;
-                char            crc;
-        };
 
         void sendCmd(char service, char command, const QByteArray& data);   
+	ErrorMessage getReply(quint32 service, char reply);
 
         QTcpSocket mSocket;
         ClientStatus mStatus;

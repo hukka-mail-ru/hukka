@@ -1,14 +1,21 @@
 #include <QObject>
 #include <QDebug>
 
+#pragma pack(1)
+struct Hell
+{
+	char c;
+	char cp[];
+};
+
 int main()
 {
-        const char* file = "FILE";
-        int line = 10;
-        QString str;
-        QString msg = "MESSAGE";
+	Hell h;
 
-        qDebug() << "EXCEPTION! (" << file << ":" << line << ")" << msg;
+
+	h.cp = "test fgdf";
+
+        qDebug() << sizeof(h);
 
         return 0;
 }

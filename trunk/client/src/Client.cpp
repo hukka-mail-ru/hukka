@@ -126,12 +126,12 @@ try
         // get server reply
         ErrorMessage message = getReply(SRV, LOGIN_STATUS);
 
-        switch(message->error) {
+        switch(message.error) {
                 case NOERR:          break;
                 case ERRUSERONLINE:  qDebug() << "User"<< username << "is already online"; return; break;
-                case ERRBADLOGIN:    THROW_EXCEPTION(LOGIN_ERROR_HEAD + "Incorrect user name: " + username); break;
-                case ERRBADPASS:     THROW_EXCEPTION(LOGIN_ERROR_HEAD + "Incorrect password for user: " + username); break;
-                default:             THROW_EXCEPTION(LOGIN_ERROR_HEAD + "Internal server error " + (int)message->header.cmd); break;
+                case ERRBADLOGIN:    THROW_EXCEPTION("Incorrect user name: " + username); break;
+                case ERRBADPASS:     THROW_EXCEPTION("Incorrect password for user: " + username); break;
+                default:             THROW_EXCEPTION("Internal server error " + (int)message.header.cmd); break;
         } 
 } catch (Exception& e) {
         qDebug() << "Can't login to server" << mSocket.peerName() << ". " << e.what();
@@ -193,7 +193,7 @@ for(int i=0; i<message.size(); i++) {
 ( (/\ ) _)  )(     )  \  ) _) ) _/ )(__  \  / 
  \__/(___) (__)   (_)\_)(___)(_)  (____)(__/  
 ====================================================================================================*/
-ErrorMessage Client::getReply(char service, char reply)
+ErrorMessage Client::getReply(quint32 service, char reply)
 {
         if(!mSocket.waitForReadyRead(WAIT_RESPONSE_TIMEOUT*1000)) {
                 THROW_EXCEPTION("Server does't respond.");   
@@ -202,27 +202,27 @@ ErrorMessage Client::getReply(char service, char reply)
 	QByteArray buf = mSocket.readAll();
 	qDebug() << "Server replied"<< buf.size() << "bytes";   
 
-        ErrorMessage* message = (ErrorMessage*)buf.data();
+        ErrorMessage message = *(ErrorMessage*)buf.data();
 
-	if(message->header.sign != PROTOCOL_SIGNATURE) {
+	if(message.header.sign != PROTOCOL_SIGNATURE) {
                 THROW_EXCEPTION("Server uses wrong protocol ");   
         }
 
-        QByteArray infPart((char*)&message->header.version, message->header.size - sizeof(message->crc));
-        if(message->crc != getCRC(infPart)) {
+        QByteArray infPart((char*)&message.header.version, message.header.size - sizeof(message.crc));
+        if(message.crc != getCRC(infPart)) {
                 THROW_EXCEPTION("Server response has bad CRC"); 
         }
 
-	if(message->header.version != PROTOCOL_VERSION) {
-                THROW_EXCEPTION("Server uses wrong protocol version: " + (int)message->header.version); 
+	if(message.header.version != PROTOCOL_VERSION) {
+                THROW_EXCEPTION("Server uses wrong protocol version: " + (int)message.header.version); 
         }
 
-	if(message->header.address != service) {
-                THROW_EXCEPTION("Server uses wrong service: " + message->header.address); 
+	if(message.header.address != service) {
+                THROW_EXCEPTION("Server uses wrong service: " + message.header.address); 
         }
 
-	if(message->header.cmd != reply) {
-                THROW_EXCEPTION("Server returns wrong reply: " + message->header.cmd + " (expected " + LOGIN_STATUS + ")"); 
+	if(message.header.cmd != reply) {
+                THROW_EXCEPTION("Server returns wrong reply: " + message.header.cmd); 
         }
 
         return message;

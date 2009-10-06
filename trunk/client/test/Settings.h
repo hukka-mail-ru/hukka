@@ -1,7 +1,8 @@
 #ifndef Settings_H_
 #define Settings_H_
 
-#define RIGHT_SERVER_HOSTNAME   "192.168.56.101"
+#define RIGHT_SERVER_HOSTNAME    "wapserver3.wapportal.ru"
+//#define RIGHT_SERVER_HOSTNAME   "192.168.56.101"
 #define RIGHT_SERVER_PORT       1234
 
 #define RIGHT_PROXY_HOSTNAME    "proxy.t-systems.ru"
