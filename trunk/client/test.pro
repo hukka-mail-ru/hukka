@@ -8,7 +8,7 @@ DEPENDPATH += .
 INCLUDEPATH += src /usr/local/Trolltech/Qt-4.5.2/include/QtNetwork
 INCLUDEPATH += server/cpp/libs/header
 
-HEADERS = src/Client.h test/TestClient.h
+HEADERS = src/Client.h test/TestClientLogin.h test/TestClientRegisterUser.h
 DESTDIR = bin
 OBJECTS_DIR = obj
 MOC_DIR = obj

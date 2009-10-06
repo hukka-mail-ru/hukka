@@ -34,6 +34,7 @@ public:
         void disconnectFromHost();
 
         void login(const QString& username, const QString& passwd);
+        void registerUser(const QString& username, const QString& passwd);
 
         ClientStatus status();
 
@@ -55,7 +56,7 @@ private:
                 char            crc;
         };
 
-        void sendCmd(char command, const QByteArray& data);   
+        void sendCmd(char service, char command, const QByteArray& data);   
 
         QTcpSocket mSocket;
         ClientStatus mStatus;

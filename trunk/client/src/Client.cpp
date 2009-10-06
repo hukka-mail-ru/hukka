@@ -121,7 +121,7 @@ void Client::login(const QString& username, const QString& passwd)
 
 	// send LOGIN command
         QByteArray data = (username + QChar(0) + passwd).toAscii();
-        sendCmd(CMD_LOGIN, data);
+        sendCmd(SRV, CMD_LOGIN, data);
         
 	// get server reply
         if(!mSocket.waitForReadyRead(WAIT_RESPONSE_TIMEOUT*1000)) {
@@ -146,8 +146,8 @@ void Client::login(const QString& username, const QString& passwd)
                 THROW_EXCEPTION(LOGIN_ERROR_HEAD + "Server uses wrong protocol version: " + (int)message->header.version); 
         }
 
-	if(qToLittleEndian(message->header.address) != SRV) {
-                THROW_EXCEPTION(LOGIN_ERROR_HEAD + "Server uses wrong service: " + qToLittleEndian(message->header.address)); 
+	if(message->header.address != SRV) {
+                THROW_EXCEPTION(LOGIN_ERROR_HEAD + "Server uses wrong service: " + message->header.address); 
         }
 
 	if(message->header.cmd != LOGIN_STATUS) {
@@ -172,14 +172,14 @@ void Client::login(const QString& username, const QString& passwd)
 (___/(___)(_)\_)(___/    \__)(_/\/\_)(___/ 
 ====================================================================================================*/
 // Arrange a packet and write it to Socket
-void Client::sendCmd(char command, const QByteArray& data)
+void Client::sendCmd(char service, char command, const QByteArray& data)
 {
         char crc = 0;
 
         MessageHeader header;
         header.sign    = PROTOCOL_SIGNATURE;
         header.version = PROTOCOL_VERSION;
-        header.address = SRV;
+        header.address = service;
 	header.cmd = command;
         
         QByteArray infPart;
@@ -193,12 +193,12 @@ void Client::sendCmd(char command, const QByteArray& data)
         QByteArray message((char*)&header, sizeof(header));
         message += data;
         message += getCRC(infPart);
-
+/*
 for(int i=0; i<message.size(); i++) {
 	char c = message[i];
 	qDebug() << (int)c;
 }
-
+*/
         qDebug() << "Sending command with id" << (int)command;  
         qint64 bytes = mSocket.write(message);
         if(bytes == -1) {
