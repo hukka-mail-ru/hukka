@@ -42,9 +42,9 @@ class TestClientRegisterUser: public CppUnit::TestFixture
    CPPUNIT_TEST_SUITE(TestClientRegisterUser);
 
    CPPUNIT_TEST(testRegisterOK);
- //  CPPUNIT_TEST(testRegisterWrongLogin);
-//   CPPUNIT_TEST(testRegisterWrongPassword);
-//   CPPUNIT_TEST(testRegisterLoginExists);
+   CPPUNIT_TEST(testRegisterWrongLogin);
+   CPPUNIT_TEST(testRegisterWrongPassword);
+   CPPUNIT_TEST(testRegisterLoginExists);
 
    CPPUNIT_TEST_SUITE_END();
 
@@ -75,7 +75,7 @@ public:
         
         QString unique = "test-" + getGUID();
         qDebug() << "Generated user name:" << unique;
-       // CPPUNIT_ASSERT_NO_THROW(client.registerUser(unique, unique));
+        CPPUNIT_ASSERT_NO_THROW(client.registerUser(unique, unique));
 
         // TODO test connect
     }
