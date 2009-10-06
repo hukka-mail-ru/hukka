@@ -6,6 +6,38 @@
 #include "Exception.h"
 #include "Settings.h"
 
+
+/*  32-letter unique ID
+  __  ___  ____     __  _  _  __  ___  
+ / _)(  _)(_  _)   / _)( )( )(  )(   \ 
+( (/\ ) _)  )(    ( (/\ )()(  )(  ) ) )
+ \__/(___) (__)    \__/ \__/ (__)(___/  */
+QString getGUID()
+{
+        QString str;
+        srand((unsigned)time(0)); 
+
+        qDebug() << (int)'0';
+        qDebug() << (int)'F';
+
+        for(int i=0; i<32; i++) {        
+                int rnd = 0;
+                for(;;) {
+                        rnd = (rand()%(int)'F') + (int)'0';
+                        if((rnd >= 48 && rnd <=57) || (rnd >= 65 && rnd <=70))
+                                break;
+                 }
+                str += QChar(rnd);
+        }
+
+        return str;
+}
+/*
+ ____  ___  ___  ____    ___   ___   __  __  ___  ____  ___  ___  
+(_  _)(  _)/ __)(_  _)  (  ,) (  _) / _)(  )/ __)(_  _)(  _)(  ,) 
+  )(   ) _)\__ \  )(     )  \  ) _)( (/\ )( \__ \  )(   ) _) )  \ 
+ (__) (___)(___/ (__)   (_)\_)(___) \__/(__)(___/ (__) (___)(_)\_)  */
+
 class TestClientRegisterUser: public CppUnit::TestFixture 
 {
    CPPUNIT_TEST_SUITE(TestClientRegisterUser);
@@ -36,28 +68,6 @@ public:
     {
         CPPUNIT_ASSERT_NO_THROW(client.disconnectFromHost());
         CPPUNIT_ASSERT_EQUAL(CLI_OFFLINE, client.status());
-    }
-
-    // 32-letter unique ID
-    QString getGUID()
-    {
-        QString str;
-        srand((unsigned)time(0)); 
-
-                qDebug() << (int)'0';
-                qDebug() << (int)'F';
-
-        for(int i=0; i<32; i++) {        
-                int rnd = 0;
-                for(;;) {
-                        rnd = (rand()%(int)'F') + (int)'0';
-                        if((rnd >= 48 && rnd <=57) || (rnd >= 65 && rnd <=70))
-                                break;
-                }
-                str += QChar(rnd);
-        }
-
-        return str;
     }
 
     void testRegisterOK() 
