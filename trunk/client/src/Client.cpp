@@ -113,46 +113,18 @@ void Client::disconnectFromHost()
 ====================================================================================================*/
 void Client::login(const QString& username, const QString& passwd) 
 { 
-        #define LOGIN_ERROR_HEAD     "Can't login to server " + mSocket.peerName() + ". "
-
+try
+{
         if(mSocket.state() != QAbstractSocket::ConnectedState) {
-                THROW_EXCEPTION(LOGIN_ERROR_HEAD + "Connection has been lost");   
+                THROW_EXCEPTION("Connection has been lost");   
         }
 
-	// send LOGIN command
+        // send LOGIN command
         QByteArray data = (username + QChar(0) + passwd).toAscii();
         sendCmd(SRV, CMD_LOGIN, data);
         
-	// get server reply
-        if(!mSocket.waitForReadyRead(WAIT_RESPONSE_TIMEOUT*1000)) {
-                THROW_EXCEPTION(LOGIN_ERROR_HEAD + "Server does't respond to LOGIN command.");   
-        }
-
-	QByteArray buf = mSocket.readAll();
-	qDebug() << "LOGIN: Server replied"<< buf.size() << "bytes";   
-
-        ErrorMessage* message = (ErrorMessage*)buf.data();
-
-	if(message->header.sign != PROTOCOL_SIGNATURE) {
-                THROW_EXCEPTION(LOGIN_ERROR_HEAD + "Server uses wrong protocol ");   
-        }
-
-        QByteArray infPart((char*)&message->header.version, message->header.size - sizeof(message->crc));
-        if(message->crc != getCRC(infPart)) {
-                THROW_EXCEPTION(LOGIN_ERROR_HEAD + "Server response has bad CRC"); 
-        }
-
-	if(message->header.version != PROTOCOL_VERSION) {
-                THROW_EXCEPTION(LOGIN_ERROR_HEAD + "Server uses wrong protocol version: " + (int)message->header.version); 
-        }
-
-	if(message->header.address != SRV) {
-                THROW_EXCEPTION(LOGIN_ERROR_HEAD + "Server uses wrong service: " + message->header.address); 
-        }
-
-	if(message->header.cmd != LOGIN_STATUS) {
-                THROW_EXCEPTION(LOGIN_ERROR_HEAD + "Server returns wrong reply: " + message->header.cmd + " (expected " + LOGIN_STATUS + ")"); 
-        }
+        // get server reply
+        ErrorMessage message = getReply(SRV, LOGIN_STATUS);
 
         switch(message->error) {
                 case NOERR:          break;
@@ -161,7 +133,11 @@ void Client::login(const QString& username, const QString& passwd)
                 case ERRBADPASS:     THROW_EXCEPTION(LOGIN_ERROR_HEAD + "Incorrect password for user: " + username); break;
                 default:             THROW_EXCEPTION(LOGIN_ERROR_HEAD + "Internal server error " + (int)message->header.cmd); break;
         } 
-	
+} catch (Exception& e) {
+        qDebug() << "Can't login to server" << mSocket.peerName() << ". " << e.what();
+        throw e;
+}
+        	
 }
 
 
@@ -209,6 +185,49 @@ for(int i=0; i<message.size(); i++) {
 
 	qDebug() << "OK" << bytes << "bytes sent";   
 }
+
+
+/*==================================================================================================== 
+  __  ___  ____    ___   ___  ___  __    _  _ 
+ / _)(  _)(_  _)  (  ,) (  _)(  ,\(  )  ( \/ )
+( (/\ ) _)  )(     )  \  ) _) ) _/ )(__  \  / 
+ \__/(___) (__)   (_)\_)(___)(_)  (____)(__/  
+====================================================================================================*/
+ErrorMessage Client::getReply(char service, char reply)
+{
+        if(!mSocket.waitForReadyRead(WAIT_RESPONSE_TIMEOUT*1000)) {
+                THROW_EXCEPTION("Server does't respond.");   
+        }
+
+	QByteArray buf = mSocket.readAll();
+	qDebug() << "Server replied"<< buf.size() << "bytes";   
+
+        ErrorMessage* message = (ErrorMessage*)buf.data();
+
+	if(message->header.sign != PROTOCOL_SIGNATURE) {
+                THROW_EXCEPTION("Server uses wrong protocol ");   
+        }
+
+        QByteArray infPart((char*)&message->header.version, message->header.size - sizeof(message->crc));
+        if(message->crc != getCRC(infPart)) {
+                THROW_EXCEPTION("Server response has bad CRC"); 
+        }
+
+	if(message->header.version != PROTOCOL_VERSION) {
+                THROW_EXCEPTION("Server uses wrong protocol version: " + (int)message->header.version); 
+        }
+
+	if(message->header.address != service) {
+                THROW_EXCEPTION("Server uses wrong service: " + message->header.address); 
+        }
+
+	if(message->header.cmd != reply) {
+                THROW_EXCEPTION("Server returns wrong reply: " + message->header.cmd + " (expected " + LOGIN_STATUS + ")"); 
+        }
+
+        return message;
+}
+
 
 /*==================================================================================================== 
  ___  ____  __  ____  _  _  ___ 
