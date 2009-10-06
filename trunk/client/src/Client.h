@@ -47,8 +47,10 @@ private:
 		quint32         address;
 		char            cmd;
 	};
+
         struct ErrorMessage
         {
+                MessageHeader   header;
                 char            error;
                 char            crc;
         };

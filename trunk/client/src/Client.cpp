@@ -130,43 +130,28 @@ void Client::login(const QString& username, const QString& passwd)
 
 	QByteArray buf = mSocket.readAll();
 	qDebug() << "LOGIN: Server replied"<< buf.size() << "bytes";   
-/*
-	for(int i=0; i<buf.size(); i++) {
-		char c = buf[i];
-		qDebug() << (int)c;
-	}
 
-	qDebug() << "sizeof()" << sizeof(h);
-	qDebug() << "header->sign" << (int)header->sign;
-	qDebug() << "header->size" << qToLittleEndian(header->size);
-	qDebug() << "header->version" << (int)header->version;
-	qDebug() << "header->address" << qToLittleEndian(header->address);
-	qDebug() << "header->cmd" << header->cmd;
-*/	
-        MessageHeader* header = (MessageHeader*)buf.data();
-        ErrorMessage* message = (ErrorMessage*)(buf.data() + sizeof(header));
+        ErrorMessage* message = (ErrorMessage*)buf.data();
 
-	if(header->sign != PROTOCOL_SIGNATURE) {
+	if(message->header.sign != PROTOCOL_SIGNATURE) {
                 THROW_EXCEPTION(LOGIN_ERROR_HEAD + "Server uses wrong protocol ");   
         }
 
-        quint32 size = qToLittleEndian(header->size);
-
-        QByteArray infPart((char*)header->version, size - 1);
+        QByteArray infPart((char*)&message->header.version, message->header.size - sizeof(message->crc));
         if(message->crc != getCRC(infPart)) {
                 THROW_EXCEPTION(LOGIN_ERROR_HEAD + "Server response has bad CRC"); 
         }
 
-	if(header->version != PROTOCOL_VERSION) {
-                THROW_EXCEPTION(LOGIN_ERROR_HEAD + "Server uses wrong protocol version: " + (int)header->version); 
+	if(message->header.version != PROTOCOL_VERSION) {
+                THROW_EXCEPTION(LOGIN_ERROR_HEAD + "Server uses wrong protocol version: " + (int)message->header.version); 
         }
 
-	if(qToLittleEndian(header->address) != SRV) {
-                THROW_EXCEPTION(LOGIN_ERROR_HEAD + "Server uses wrong service: " + qToLittleEndian(header->address)); 
+	if(qToLittleEndian(message->header.address) != SRV) {
+                THROW_EXCEPTION(LOGIN_ERROR_HEAD + "Server uses wrong service: " + qToLittleEndian(message->header.address)); 
         }
 
-	if(header->cmd != LOGIN_STATUS) {
-                THROW_EXCEPTION(LOGIN_ERROR_HEAD + "Server returns wrong reply: " + header->cmd + " (expected " + LOGIN_STATUS + ")"); 
+	if(message->header.cmd != LOGIN_STATUS) {
+                THROW_EXCEPTION(LOGIN_ERROR_HEAD + "Server returns wrong reply: " + message->header.cmd + " (expected " + LOGIN_STATUS + ")"); 
         }
 
         switch(message->error) {
@@ -174,7 +159,7 @@ void Client::login(const QString& username, const QString& passwd)
                 case ERRUSERONLINE:  qDebug() << "User"<< username << "is already online"; return; break;
                 case ERRBADLOGIN:    THROW_EXCEPTION(LOGIN_ERROR_HEAD + "Incorrect user name: " + username); break;
                 case ERRBADPASS:     THROW_EXCEPTION(LOGIN_ERROR_HEAD + "Incorrect password for user: " + username); break;
-                default:             THROW_EXCEPTION(LOGIN_ERROR_HEAD + "Internal server error " + (int)header->cmd); break;
+                default:             THROW_EXCEPTION(LOGIN_ERROR_HEAD + "Internal server error " + (int)message->header.cmd); break;
         } 
 	
 }
