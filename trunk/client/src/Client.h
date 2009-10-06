@@ -47,6 +47,11 @@ private:
 		quint32         address;
 		char            cmd;
 	};
+        struct ErrorMessage
+        {
+                char            error;
+                char            crc;
+        };
 
         void sendCmd(char command, const QByteArray& data);   
 
