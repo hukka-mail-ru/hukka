@@ -20,6 +20,7 @@ using namespace std;
 #define PROTOCOL_SIGNATURE		'Z'
 #define PROTOCOL_VERSION                2
 #define CMD_LOGIN                       1
+#define LOGIN_STATUS                    1
 
 /*====================================================================================================
   __  ___  ____     __  ___   __ 
@@ -143,9 +144,19 @@ void Client::login(const QString& username, const QString& passwd)
 	qDebug() << "header->cmd" << header->cmd;
 */	
         MessageHeader* header = (MessageHeader*)buf.data();
+        ErrorMessage* message = (ErrorMessage*)(buf.data() + sizeof(header));
+
+        // TODO CRC Verification!
 
 	if(header->sign != PROTOCOL_SIGNATURE) {
                 THROW_EXCEPTION(LOGIN_ERROR_HEAD + "Server uses wrong protocol ");   
+        }
+
+        quint32 size = qToLittleEndian(header->size);
+
+        QByteArray infPart((char*)header->version, size - 1);
+        if(message->crc != getCRC(infPart)) {
+                THROW_EXCEPTION(LOGIN_ERROR_HEAD + "Server response has bad CRC"); 
         }
 
 	if(header->version != PROTOCOL_VERSION) {
@@ -156,7 +167,11 @@ void Client::login(const QString& username, const QString& passwd)
                 THROW_EXCEPTION(LOGIN_ERROR_HEAD + "Server uses wrong service: " + qToLittleEndian(header->address)); 
         }
 
-        switch(header->cmd) {
+	if(header->cmd != LOGIN_STATUS) {
+                THROW_EXCEPTION(LOGIN_ERROR_HEAD + "Server returns wrong reply: " + header->cmd + " (expected " + LOGIN_STATUS + ")"); 
+        }
+
+        switch(message->error) {
                 case NOERR:          break;
                 case ERRUSERONLINE:  qDebug() << "User"<< username << "is already online"; return; break;
                 case ERRBADLOGIN:    THROW_EXCEPTION(LOGIN_ERROR_HEAD + "Incorrect user name: " + username); break;
@@ -164,12 +179,6 @@ void Client::login(const QString& username, const QString& passwd)
                 default:             THROW_EXCEPTION(LOGIN_ERROR_HEAD + "Internal server error " + (int)header->cmd); break;
         } 
 	
-        quint32 size = qToLittleEndian(header->size);
-
-        QByteArray infPart((char*)header->version, size - 1);
-        if(buf[buf.size() - 1] != getCRC(infPart)) {
-                THROW_EXCEPTION(LOGIN_ERROR_HEAD + "Server response has bad CRC"); 
-        }
 }
 
 
