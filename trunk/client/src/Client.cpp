@@ -146,8 +146,6 @@ void Client::login(const QString& username, const QString& passwd)
         MessageHeader* header = (MessageHeader*)buf.data();
         ErrorMessage* message = (ErrorMessage*)(buf.data() + sizeof(header));
 
-        // TODO CRC Verification!
-
 	if(header->sign != PROTOCOL_SIGNATURE) {
                 THROW_EXCEPTION(LOGIN_ERROR_HEAD + "Server uses wrong protocol ");   
         }
