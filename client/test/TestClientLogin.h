@@ -1,33 +1,15 @@
-#ifndef TestClient_H_
-#define TestClient_H_
+#ifndef TestClientLogin_H_
+#define TestClientLogin_H_
 
 #include <cppunit/extensions/HelperMacros.h>
 #include "Client.h"
 #include "Exception.h"
+#include "Settings.h"
 
-/*====================================================================================================
-//  _____          _       ___ _ _            _   
-// /__   \___  ___| |_    / __\ (_) ___ _ __ | |_ 
-//   / /\/ _ \/ __| __|  / /  | | |/ _ \ '_ \| __|
-//  / / |  __/\__ \ |_  / /___| | |  __/ | | | |_ 
-//  \/   \___||___/\__| \____/|_|_|\___|_| |_|\__|
-====================================================================================================*/
 
-#define RIGHT_SERVER_HOSTNAME   "192.168.56.101"
-#define RIGHT_SERVER_PORT       1234
-
-#define RIGHT_PROXY_HOSTNAME    "proxy.t-systems.ru"
-#define RIGHT_PROXY_PORT        3128
-#define RIGHT_PROXY_TYPE        QNetworkProxy::HttpProxy // supports only outgoing TCP connections
-
-#define RIGTH_USER_NAME         "test"
-#define RIGTH_USER_PASSWD       "test"
-
-#define SHOW_FUNCTION_NAME      qDebug() << "================" << __FUNCTION__ << "================";
-
-class TestClient: public CppUnit::TestFixture 
+class TestClientLogin: public CppUnit::TestFixture 
 {
-   CPPUNIT_TEST_SUITE(TestClient);
+   CPPUNIT_TEST_SUITE(TestClientLogin);
    CPPUNIT_TEST(testGetCRC);
    CPPUNIT_TEST(testConnectOK);
  //  CPPUNIT_TEST(testConnectWrongProxy);
@@ -35,12 +17,11 @@ class TestClient: public CppUnit::TestFixture
    CPPUNIT_TEST(testConnectWrongPort);
 
    CPPUNIT_TEST(testLoginOK);
-/*
    CPPUNIT_TEST(testLoginWrongUser);
    CPPUNIT_TEST(testLoginWrongPasswd);
    CPPUNIT_TEST(testLoginAlreadyOnLine);
    CPPUNIT_TEST(testLoginAlreadyDisconnected);
-*/
+
    CPPUNIT_TEST_SUITE_END();
 
     Client client;
@@ -48,7 +29,7 @@ class TestClient: public CppUnit::TestFixture
 
          
 public:   
-    ~TestClient() {}
+    ~TestClientLogin() {}
               
     void setUp() 
     {
@@ -161,7 +142,7 @@ public:
         CPPUNIT_ASSERT_EQUAL(CLI_ONLINE, client.status());
 
         CPPUNIT_ASSERT_NO_THROW(client.login(RIGTH_USER_NAME, RIGTH_USER_PASSWD));
-        CPPUNIT_ASSERT_NO_THROW(client.login(RIGTH_USER_NAME, RIGTH_USER_PASSWD));
+        CPPUNIT_ASSERT_THROW(client.login(RIGTH_USER_NAME, RIGTH_USER_PASSWD), Exception);
 
         CPPUNIT_ASSERT_NO_THROW(client.disconnectFromHost());
         CPPUNIT_ASSERT_EQUAL(CLI_OFFLINE, client.status());
@@ -184,6 +165,6 @@ public:
 };
 
 
-CPPUNIT_TEST_SUITE_REGISTRATION(TestClient); 
+CPPUNIT_TEST_SUITE_REGISTRATION(TestClientLogin); 
    
-#endif /*TestClient_H_*/
+#endif /*TestClientLogin_H_*/
