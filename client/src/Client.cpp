@@ -20,7 +20,9 @@ using namespace std;
 #define PROTOCOL_SIGNATURE		'Z'
 #define PROTOCOL_VERSION                2
 #define CMD_LOGIN                       1
+#define CMD_REG				1
 #define LOGIN_STATUS                    1
+#define REG_STATUS 			1
 
 /*====================================================================================================
   __  ___  ____     __  ___   __ 
@@ -75,7 +77,7 @@ void Client::connectToHost(const QNetworkProxy& proxy, const QString& hostName, 
 
         qDebug() << "waiting... ";
         if(!mSocket.waitForConnected(WAIT_CONNECT_TIMEOUT*1000)) {                
-                THROW_EXCEPTION("Connection failed! Can't connect to server: " + hostName);
+                THROW_EXCEPTION("Connection failed! Can't connect to server: " + hostName + ".");
         }
 
         qDebug() << "Connected! state = " << mSocket.state();            
@@ -90,7 +92,7 @@ void Client::connectToHost(const QNetworkProxy& proxy, const QString& hostName, 
 void Client::disconnectFromHost() 
 { 
         if(mSocket.state() == QAbstractSocket::UnconnectedState) {
-                qDebug() << "Client has already disconnected";   
+                qDebug() << "Client has already disconnected.";   
                 return;
         }
 
@@ -99,7 +101,7 @@ void Client::disconnectFromHost()
         qDebug() << "waiting... ";
         if(mSocket.state() != QAbstractSocket::UnconnectedState &&
           !mSocket.waitForDisconnected(WAIT_CONNECT_TIMEOUT*1000)) {  
-                THROW_EXCEPTION("Disconnection failed! Can't disconnect from server: " + mSocket.peerName());              
+                THROW_EXCEPTION("Can't disconnect from server: " + mSocket.peerName() + ".");              
         }
 
         qDebug() << "Disconnected! state = " << mSocket.state();               
@@ -113,33 +115,63 @@ void Client::disconnectFromHost()
 ====================================================================================================*/
 void Client::login(const QString& username, const QString& passwd) 
 { 
-try
-{
-        if(mSocket.state() != QAbstractSocket::ConnectedState) {
-                THROW_EXCEPTION("Connection has been lost");   
-        }
+	try {
+		if(mSocket.state() != QAbstractSocket::ConnectedState) {
+		        THROW_EXCEPTION("Connection has been lost.");   
+		}
 
-        // send LOGIN command
-        QByteArray data = (username + QChar(0) + passwd).toAscii();
-        sendCmd(SRV, CMD_LOGIN, data);
-        
-        // get server reply
-        ErrorMessage message = getReply(SRV, LOGIN_STATUS);
+		// send LOGIN command
+		QByteArray data = (username + QChar(0) + passwd).toAscii();
+		sendCmd(SRV, CMD_LOGIN, data);
+		
+		// get server reply
+		ErrorMessage message = getReply(SRV, LOGIN_STATUS);
 
-        switch(message.error) {
-                case NOERR:          break;
-                case ERRUSERONLINE:  qDebug() << "User"<< username << "is already online"; return; break;
-                case ERRBADLOGIN:    THROW_EXCEPTION("Incorrect user name: " + username); break;
-                case ERRBADPASS:     THROW_EXCEPTION("Incorrect password for user: " + username); break;
-                default:             THROW_EXCEPTION("Internal server error " + (int)message.header.cmd); break;
-        } 
-} catch (Exception& e) {
-        qDebug() << "Can't login to server" << mSocket.peerName() << ". " << e.what();
-        throw e;
-}
-        	
+		switch(message.error) {
+		        case NOERR:          break;
+		        case ERRUSERONLINE:  qDebug() << "User"<< username << "is already online."; return; break;
+		        case ERRBADLOGIN:    THROW_EXCEPTION("Incorrect user name: '" + username + "'."); break;
+		        case ERRBADPASS:     THROW_EXCEPTION("Incorrect password for user: '" + username + "'."); break;
+		        default:             THROW_EXCEPTION("Internal server error " + QString::number(message.header.cmd) + "."); break;
+		} 
+	} catch (Exception& e) {
+		qDebug() << QString("Can't login to server" + mSocket.peerName() + ". " + e.what());
+		throw e;
+	}        	
 }
 
+/*==================================================================================================== 
+ ___   ___   __  __  ___  ____  ___  ___     _  _  ___  ___  ___  
+(  ,) (  _) / _)(  )/ __)(_  _)(  _)(  ,)   ( )( )/ __)(  _)(  ,) 
+ )  \  ) _)( (/\ )( \__ \  )(   ) _) )  \    )()( \__ \ ) _) )  \ 
+(_)\_)(___) \__/(__)(___/ (__) (___)(_)\_)   \__/ (___/(___)(_)\_)
+====================================================================================================*/
+void Client::registerUser(const QString& username, const QString& passwd) 
+{ 
+	try {
+		if(mSocket.state() != QAbstractSocket::ConnectedState) {
+		        THROW_EXCEPTION("Connection has been lost.");   
+		}
+
+		// send LOGIN command
+		QByteArray data = (username + QChar(0) + passwd).toAscii();
+		sendCmd(REG, CMD_REG, data);
+		
+		// get server reply
+		ErrorMessage message = getReply(REG, REG_STATUS);
+
+		switch(message.error) {
+		        case NOERR:          break;
+		        case ERRBADLOGIN:    THROW_EXCEPTION("Incorrect user name: '" + username + "'."); break;
+		        case ERRBADPASS:     THROW_EXCEPTION("Incorrect password for user: '" + username + "'."); break;
+		        case ERRLOGINEXIST:  THROW_EXCEPTION("User: '" + username + "' already exists."); break;
+		        default:             THROW_EXCEPTION("Internal server error " + QString::number(message.header.cmd) + "."); break;
+		} 
+	} catch (Exception& e) {
+		qDebug() << QString("Can't register user on server" + mSocket.peerName() + ". " + e.what());
+		throw e;
+	}        	
+}
 
 /*==================================================================================================== 
  ___  ___  _  _  ___      __  __  __  ___  
@@ -178,7 +210,7 @@ for(int i=0; i<message.size(); i++) {
         qDebug() << "Sending command with id" << (int)command;  
         qint64 bytes = mSocket.write(message);
         if(bytes == -1) {
-                THROW_EXCEPTION("Can't send command  to server " + mSocket.peerName() + ". Command ID: " + (int)command);   
+                THROW_EXCEPTION("Can't send command with ID: " + QString::number(command) + ".");   
         }
 
         Q_ASSERT(bytes == message.size());

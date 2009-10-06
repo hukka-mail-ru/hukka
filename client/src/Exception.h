@@ -11,12 +11,18 @@ public:
 
     Exception(const QString msg = QString::null): mMsg(msg) 
     { 
-        qDebug() << "EXCEPTION! " << mMsg; 
+   //     qDebug() << "EXCEPTION! " << mMsg; 
     }
     
-    Exception(const char* file, int line, const QString msg = QString::null): mMsg(msg) 
+    Exception(const char* file, int line, const QString msg = QString::null) 
     { 
-        qDebug() << "EXCEPTION! (" << file << ":" << line << ")" << msg;
+     //   qDebug() << "EXCEPTION! (" << file << ":" << line << ")" << msg;
+	mMsg += msg;
+	mMsg += " (Exception at ";
+	mMsg += file;
+	mMsg += ":";
+	mMsg += QString::number(line);
+	mMsg +=  ")";
     }
 
     QString what() const { return mMsg; }
