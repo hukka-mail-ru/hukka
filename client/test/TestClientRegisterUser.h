@@ -17,11 +17,7 @@
 QString getGUID()
 {
         QString str;
-        srand((unsigned)time(0)); 
-
-        qDebug() << (int)'0';
-        qDebug() << (int)'F';
-
+        srand((unsigned)time(0));  // TODO replace 'time' with QT func.
         for(int i=0; i<32; i++) {        
                 int rnd = 0;
                 for(;;) {
@@ -77,10 +73,7 @@ public:
     {
         SHOW_FUNCTION_NAME;
         
-        QString unique;
-        unique += "test-";
-        unique += getGUID();
-
+        QString unique = "test-" + getGUID();
         qDebug() << "Generated user name:" << unique;
        // CPPUNIT_ASSERT_NO_THROW(client.registerUser(unique, unique));
 
