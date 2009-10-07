@@ -10,9 +10,9 @@
 class TestClientLogin: public CppUnit::TestFixture 
 {
    CPPUNIT_TEST_SUITE(TestClientLogin);
+
    CPPUNIT_TEST(testGetCRC);
    CPPUNIT_TEST(testConnectOK);
- //  CPPUNIT_TEST(testConnectWrongProxy);
    CPPUNIT_TEST(testConnectWrongAddress);
    CPPUNIT_TEST(testConnectWrongPort);
 

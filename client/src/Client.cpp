@@ -135,7 +135,8 @@ void Client::login(const QString& username, const QString& passwd)
 		        default:             THROW_EXCEPTION("Internal server error " + QString::number(message.header.cmd) + "."); break;
 		} 
 	} catch (Exception& e) {
-		qDebug() << QString("Can't login to server" + mSocket.peerName() + ". " + e.what());
+                e.add("Can't login to server " + mSocket.peerName() + ". ");
+		qDebug() << e.what();
 		throw e;
 	}        	
 }
@@ -168,7 +169,8 @@ void Client::registerUser(const QString& username, const QString& passwd)
 		        default:             THROW_EXCEPTION("Internal server error " + QString::number(message.header.cmd) + "."); break;
 		} 
 	} catch (Exception& e) {
-		qDebug() << QString("Can't register user on server" + mSocket.peerName() + ". " + e.what());
+                e.add("Can't register user on server " + mSocket.peerName() + ". ");
+		qDebug() << e.what();
 		throw e;
 	}        	
 }
@@ -294,7 +296,7 @@ void Client::onConnected()
 ====================================================================================================*/
 void Client::onError()
 {
-        qDebug() << "SIGNAL error";
+        THROW_EXCEPTION("Socket error");
 }
 
 
