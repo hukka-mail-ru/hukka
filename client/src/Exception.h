@@ -9,18 +9,18 @@ class Exception
 {
 public:
 
-    Exception(const QString msg = QString::null): mMsg(msg) 
+    Exception(const QString& msg = QString::null): mMsg(msg) 
     { 
    //     qDebug() << "EXCEPTION! " << mMsg; 
     }
     
-    Exception(const char* file, int line, const QString msg = QString::null) 
+    Exception(const char* file, int line, const QString& msg) 
     { 
      //   qDebug() << "EXCEPTION! (" << file << ":" << line << ")" << msg;
 	mMsg = msg + " (Exception at " + file + ":" + QString::number(line) + ")";
     }
 
-    void add(const QString msg)
+    void add(const QString& msg)
     {
         mMsg = msg + mMsg;
     }
