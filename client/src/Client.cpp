@@ -11,6 +11,7 @@
 #include "Exception.h"
 #include <QNetworkProxyQuery>
 #include <QtEndian>
+#include <tablemanager/tbmdefs.h>
 
 using namespace std;
 
@@ -19,10 +20,21 @@ using namespace std;
 
 #define PROTOCOL_SIGNATURE		'Z'
 #define PROTOCOL_VERSION                2
+
+// server commands
 #define CMD_LOGIN                       1
 #define CMD_REG				1
+
+// server replies
 #define LOGIN_STATUS                    1
 #define REG_STATUS 			1
+
+// parameter ids in tbParameterList table
+#define PARAMETER_LIST_PASSWD           2
+#define PARAMETER_LIST_TIME2STEP        3
+#define PARAMETER_LIST_TIME2GAME        4
+#define PARAMETER_LIST_MINRATING        5
+#define PARAMETER_LIST_MAXRATING        6
 
 /*====================================================================================================
   __  ___  ____     __  ___   __ 
@@ -116,11 +128,7 @@ void Client::disconnectFromHost()
 void Client::login(const QString& username, const QString& passwd) 
 { 
 	try {
-		if(mSocket.state() != QAbstractSocket::ConnectedState) {
-		        THROW_EXCEPTION("Connection has been lost.");   
-		}
-
-		// send LOGIN command
+		// send command
 		QByteArray data = (username + QChar(0) + passwd).toAscii();
 		sendCmd(SRV, CMD_LOGIN, data);
 		
@@ -150,11 +158,7 @@ void Client::login(const QString& username, const QString& passwd)
 void Client::registerUser(const QString& username, const QString& passwd) 
 { 
 	try {
-		if(mSocket.state() != QAbstractSocket::ConnectedState) {
-		        THROW_EXCEPTION("Connection has been lost.");   
-		}
-
-		// send LOGIN command
+		// send command
 		QByteArray data = (username + QChar(0) + passwd).toAscii();
 		sendCmd(REG, CMD_REG, data);
 		
@@ -174,6 +178,55 @@ void Client::registerUser(const QString& username, const QString& passwd)
 		throw e;
 	}        	
 }
+/*==================================================================================================== 
+  __  ___   ___   __  ____  ___    ____  __   ___  __    ___ 
+ / _)(  ,) (  _) (  )(_  _)(  _)  (_  _)(  ) (  ,)(  )  (  _)
+( (_  )  \  ) _) /__\  )(   ) _)    )(  /__\  ) ,\ )(__  ) _)
+ \__)(_)\_)(___)(_)(_)(__) (___)   (__)(_)(_)(___/(____)(___)
+====================================================================================================*/
+quint32 Client::createGameTable(quint32 logicID, quint32 timeToStep, quint32 timeToGame, 
+                                quint32 minRating, quint32 maxRating)
+{
+        quint32 tableId = 0;
+
+	try {
+		// send command
+                #pragma pack(1)
+                struct Parameters {
+                       quint32 logicID;
+                       quint32 timeToStepID, timeToStepVal; 
+                       quint32 timeToGameID, timeToGameVal; 
+                       quint32 minRatingID,  minRatingVal; 
+                       quint32 maxRatingID,  maxRatingVal; 
+                } params = { logicID, 
+                             PARAMETER_LIST_TIME2STEP, timeToStep, 
+                             PARAMETER_LIST_TIME2GAME, timeToGame,
+                             PARAMETER_LIST_MINRATING, minRating, 
+                             PARAMETER_LIST_MAXRATING, maxRating };
+
+		QByteArray data = QByteArray((char*)&params, sizeof(params));
+		sendCmd(TBM, CMD_CREATE, data);
+		
+		// get server reply
+/*
+		ErrorMessage message = getReply(TBM, ANS_CREATE);
+
+		switch(message.error) {
+		        case NOERR:          break;
+		        case ERRBADLOGIN:    THROW_EXCEPTION("Incorrect user name: '" + username + "'."); break;
+		        case ERRBADPASS:     THROW_EXCEPTION("Incorrect password for user: '" + username + "'."); break;
+		        case ERRLOGINEXIST:  THROW_EXCEPTION("User: '" + username + "' already exists."); break;
+		        default:             THROW_EXCEPTION("Internal server error " + QString::number(message.header.cmd) + "."); break;
+		} */
+	} catch (Exception& e) {
+                e.add("Can't create game table on server: " + mSocket.peerName() + ". ");
+		qDebug() << e.what();
+		throw e;
+	}        
+
+        return tableId;
+}
+
 
 /*==================================================================================================== 
  ___  ___  _  _  ___      __  __  __  ___  
@@ -184,6 +237,10 @@ void Client::registerUser(const QString& username, const QString& passwd)
 // Arrange a packet and write it to Socket
 void Client::sendCmd(char service, char command, const QByteArray& data)
 {
+	if(mSocket.state() != QAbstractSocket::ConnectedState) {
+	        THROW_EXCEPTION("Connection has been lost.");   
+	}
+
         char crc = 0;
 
         MessageHeader header;
@@ -229,6 +286,10 @@ for(int i=0; i<message.size(); i++) {
 ====================================================================================================*/
 ErrorMessage Client::getReply(quint32 service, char reply)
 {
+	if(mSocket.state() != QAbstractSocket::ConnectedState) {
+	        THROW_EXCEPTION("Connection has been lost.");   
+	}
+
         if(!mSocket.waitForReadyRead(WAIT_RESPONSE_TIMEOUT*1000)) {
                 THROW_EXCEPTION("Server does't respond.");   
         }
