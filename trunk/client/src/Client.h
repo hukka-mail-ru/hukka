@@ -29,13 +29,6 @@ struct MessageHeader
 	char            cmd;
 };
 
-struct ErrorMessage
-{
-        MessageHeader   header;
-        char            error;
-        char            crc;
-};
-
 /*====================================================================================================
     ___ _ _            _   
    / __\ (_) ___ _ __ | |_ 
@@ -66,7 +59,9 @@ public:
 private:
 
         void sendCmd(char service, char command, const QByteArray& data);   
-	ErrorMessage getReply(quint32 service, char reply);
+
+        // returns data of message (all except MessageHeader and CRC)
+	QByteArray getReply(quint32 service, char reply);
 
         QTcpSocket mSocket;
         ClientStatus mStatus;
