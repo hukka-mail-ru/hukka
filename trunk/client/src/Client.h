@@ -7,6 +7,9 @@
 #include <deferror.h>
 #include <defserver.h>
 
+#define LOGIC_ID_GAMMON 		1
+#define LOGIC_ID_CHESS 			2
+
 enum ClientStatus
 {
         CLI_ONLINE,
@@ -53,6 +56,10 @@ public:
 
         void login(const QString& username, const QString& passwd);
         void registerUser(const QString& username, const QString& passwd);
+
+        // returns table id
+        quint32 createGameTable(quint32 logicID, quint32 timeToStep = INT_MAX, quint32 timeToGame = INT_MAX, 
+                                quint32 minRating = 0, quint32 maxRating = INT_MAX);
 
         ClientStatus status();
 

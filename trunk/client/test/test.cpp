@@ -10,8 +10,9 @@
 #include <cppunit/portability/Stream.h>
 
 
-#include "TestClientLogin.h"
-#include "TestClientRegisterUser.h"
+//#include "TestClientLogin.h"
+//#include "TestClientRegisterUser.h"
+#include "TestClientTable.h"
 
 using namespace std;
 
