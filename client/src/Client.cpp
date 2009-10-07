@@ -21,6 +21,8 @@ using namespace std;
 #define PROTOCOL_SIGNATURE		'Z'
 #define PROTOCOL_VERSION                2
 
+#define CRC_SIZE                        sizeof(char)
+
 // server commands
 #define CMD_LOGIN                       1
 #define CMD_REG				1
@@ -133,14 +135,15 @@ void Client::login(const QString& username, const QString& passwd)
 		sendCmd(SRV, CMD_LOGIN, data);
 		
 		// get server reply
-		ErrorMessage message = getReply(SRV, LOGIN_STATUS);
+		QByteArray message = getReply(SRV, LOGIN_STATUS);
+                Q_ASSERT(message.size() == sizeof(char));
 
-		switch(message.error) {
+		switch(message[0]) {
 		        case NOERR:          break;
 		        case ERRUSERONLINE:  qDebug() << "User"<< username << "is already online."; return; break;
 		        case ERRBADLOGIN:    THROW_EXCEPTION("Incorrect user name: '" + username + "'."); break;
 		        case ERRBADPASS:     THROW_EXCEPTION("Incorrect password for user: '" + username + "'."); break;
-		        default:             THROW_EXCEPTION("Internal server error " + QString::number(message.header.cmd) + "."); break;
+		        default:             THROW_EXCEPTION("Internal server error " + QString::number(message[0]) + "."); break;
 		} 
 	} catch (Exception& e) {
                 e.add("Can't login to server " + mSocket.peerName() + ". ");
@@ -163,14 +166,15 @@ void Client::registerUser(const QString& username, const QString& passwd)
 		sendCmd(REG, CMD_REG, data);
 		
 		// get server reply
-		ErrorMessage message = getReply(REG, REG_STATUS);
+		QByteArray message = getReply(REG, REG_STATUS);
+                Q_ASSERT(message.size() == sizeof(char));
 
-		switch(message.error) {
+		switch(message[0]) {
 		        case NOERR:          break;
 		        case ERRBADLOGIN:    THROW_EXCEPTION("Incorrect user name: '" + username + "'."); break;
 		        case ERRBADPASS:     THROW_EXCEPTION("Incorrect password for user: '" + username + "'."); break;
 		        case ERRLOGINEXIST:  THROW_EXCEPTION("User: '" + username + "' already exists."); break;
-		        default:             THROW_EXCEPTION("Internal server error " + QString::number(message.header.cmd) + "."); break;
+		        default:             THROW_EXCEPTION("Internal server error " + QString::number(message[0]) + "."); break;
 		} 
 	} catch (Exception& e) {
                 e.add("Can't register user on server " + mSocket.peerName() + ". ");
@@ -208,16 +212,19 @@ quint32 Client::createGameTable(quint32 logicID, quint32 timeToStep, quint32 tim
 		sendCmd(TBM, CMD_CREATE, data);
 		
 		// get server reply
-/*
-		ErrorMessage message = getReply(TBM, ANS_CREATE);
+                struct TableManagerReply {
+                        quint32         tableID;
+                	char            isValid;
+                };
 
-		switch(message.error) {
-		        case NOERR:          break;
-		        case ERRBADLOGIN:    THROW_EXCEPTION("Incorrect user name: '" + username + "'."); break;
-		        case ERRBADPASS:     THROW_EXCEPTION("Incorrect password for user: '" + username + "'."); break;
-		        case ERRLOGINEXIST:  THROW_EXCEPTION("User: '" + username + "' already exists."); break;
-		        default:             THROW_EXCEPTION("Internal server error " + QString::number(message.header.cmd) + "."); break;
-		} */
+		QByteArray message = getReply(TBM, ANS_CREATE);
+                TableManagerReply* reply = (TableManagerReply*)message.data();
+
+		switch(reply->isValid) {
+		        case ST_VALID:       break;
+		        case ST_NOTVALID:    THROW_EXCEPTION("Invalid parameter(s)"); break;
+		        default:             THROW_EXCEPTION("Internal server error" + QString::number(reply->isValid)); break;
+		} 
 	} catch (Exception& e) {
                 e.add("Can't create game table on server: " + mSocket.peerName() + ". ");
 		qDebug() << e.what();
@@ -260,12 +267,7 @@ void Client::sendCmd(char service, char command, const QByteArray& data)
         QByteArray message((char*)&header, sizeof(header));
         message += data;
         message += getCRC(infPart);
-/*
-for(int i=0; i<message.size(); i++) {
-	char c = message[i];
-	qDebug() << (int)c;
-}
-*/
+
         qDebug() << "Sending command with id" << (int)command;  
         qint64 bytes = mSocket.write(message);
         if(bytes == -1) {
@@ -284,7 +286,7 @@ for(int i=0; i<message.size(); i++) {
 ( (/\ ) _)  )(     )  \  ) _) ) _/ )(__  \  / 
  \__/(___) (__)   (_)\_)(___)(_)  (____)(__/  
 ====================================================================================================*/
-ErrorMessage Client::getReply(quint32 service, char reply)
+QByteArray Client::getReply(quint32 service, char reply)
 {
 	if(mSocket.state() != QAbstractSocket::ConnectedState) {
 	        THROW_EXCEPTION("Connection has been lost.");   
@@ -297,30 +299,36 @@ ErrorMessage Client::getReply(quint32 service, char reply)
 	QByteArray buf = mSocket.readAll();
 	qDebug() << "Server replied"<< buf.size() << "bytes";   
 
-        ErrorMessage message = *(ErrorMessage*)buf.data();
+        MessageHeader* header = (MessageHeader*)buf.data();
 
-	if(message.header.sign != PROTOCOL_SIGNATURE) {
+for(int i=0; i<buf.size(); i++)
+        qDebug() << i << (unsigned)buf[i];
+
+	if(header->sign != PROTOCOL_SIGNATURE) {
                 THROW_EXCEPTION("Server uses wrong protocol ");   
         }
 
-        QByteArray infPart((char*)&message.header.version, message.header.size - sizeof(message.crc));
-        if(message.crc != getCRC(infPart)) {
+        QByteArray infPart((char*)&header->version, header->size - CRC_SIZE);
+        if(buf[buf.size() - CRC_SIZE] != getCRC(infPart)) {
                 THROW_EXCEPTION("Server response has bad CRC"); 
         }
 
-	if(message.header.version != PROTOCOL_VERSION) {
-                THROW_EXCEPTION("Server uses wrong protocol version: " + (int)message.header.version); 
+	if(header->version != PROTOCOL_VERSION) {
+                THROW_EXCEPTION("Server uses wrong protocol version: " + QString::number(header->version)); 
         }
 
-	if(message.header.address != service) {
-                THROW_EXCEPTION("Server uses wrong service: " + message.header.address); 
+	if(header->address != service) {
+                THROW_EXCEPTION("Server uses wrong service: " + header->address); 
         }
 
-	if(message.header.cmd != reply) {
-                THROW_EXCEPTION("Server returns wrong reply: " + message.header.cmd); 
+	if(header->cmd != reply) {
+                THROW_EXCEPTION("Server returns wrong reply: " + QString::number(header->cmd)); 
         }
 
-        return message;
+        char* dataOffset = buf.data() + sizeof(MessageHeader);
+        unsigned dataSize = header->size - sizeof(header->version) - sizeof(header->address) - sizeof(header->cmd) - CRC_SIZE;
+
+        return QByteArray(dataOffset, dataSize);
 }
 
 
