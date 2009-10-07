@@ -195,14 +195,7 @@ quint32 Client::createGameTable(quint32 logicID, quint32 timeToStep, quint32 tim
 
 	try {
 		// send command
-                #pragma pack(1)
-                struct Parameters {
-                       quint32 logicID;
-                       quint32 timeToStepID, timeToStepVal; 
-                       quint32 timeToGameID, timeToGameVal; 
-                       quint32 minRatingID,  minRatingVal; 
-                       quint32 maxRatingID,  maxRatingVal; 
-                } params = { logicID, 
+                quint32 params[] = { logicID, 
                              PARAMETER_LIST_TIME2STEP, timeToStep, 
                              PARAMETER_LIST_TIME2GAME, timeToGame,
                              PARAMETER_LIST_MINRATING, minRating, 
