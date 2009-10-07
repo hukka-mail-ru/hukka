@@ -18,11 +18,11 @@ QString getGUID()
 {
         QString str;
         srand((unsigned)time(0));  // TODO replace 'time' with QT func.
-        for(int i=0; i<32; i++) {        
+        for(int i=0; i<12; i++) {        
                 int rnd = 0;
                 for(;;) {
-                        rnd = (rand()%(int)'F') + (int)'0';
-                        if((rnd >= 48 && rnd <=57) || (rnd >= 65 && rnd <=70))
+                        rnd = (rand()%(int)'Z') + (int)'0';
+                        if((rnd >= 48 && rnd <= 57) || (rnd >= 64 && rnd <= 90))
                                 break;
                  }
                 str += QChar(rnd);
@@ -73,11 +73,9 @@ public:
     {
         SHOW_FUNCTION_NAME;
         
-        QString unique = "test-" + getGUID();
+        QString unique = "test" + getGUID();
         qDebug() << "Generated user name:" << unique;
         CPPUNIT_ASSERT_NO_THROW(client.registerUser(unique, unique));
-
-        // TODO test connect
     }
 
     void testRegisterWrongLogin() 

@@ -17,13 +17,14 @@ public:
     Exception(const char* file, int line, const QString msg = QString::null) 
     { 
      //   qDebug() << "EXCEPTION! (" << file << ":" << line << ")" << msg;
-	mMsg += msg;
-	mMsg += " (Exception at ";
-	mMsg += file;
-	mMsg += ":";
-	mMsg += QString::number(line);
-	mMsg +=  ")";
+	mMsg = msg + " (Exception at " + file + ":" + QString::number(line) + ")";
     }
+
+    void add(const QString msg)
+    {
+        mMsg = msg + mMsg;
+    }
+    
 
     QString what() const { return mMsg; }
 
