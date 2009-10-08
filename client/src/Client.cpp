@@ -23,6 +23,11 @@ using namespace std;
 
 #define CRC_SIZE                        sizeof(char)
 
+// services (see wsUsers table)  
+#define	SRV		1
+#define	REG		2
+#define TBM		4
+
 // server commands
 #define CMD_LOGIN                       1
 #define CMD_REG				1
@@ -31,7 +36,7 @@ using namespace std;
 #define LOGIN_STATUS                    1
 #define REG_STATUS 			1
 
-// parameter ids in tbParameterList table
+// parameter ids (see tbParameterList table)
 #define PARAMETER_LIST_PASSWD           2
 #define PARAMETER_LIST_TIME2STEP        3
 #define PARAMETER_LIST_TIME2GAME        4
@@ -295,7 +300,7 @@ QByteArray Client::getReply(quint32 service, char reply)
         MessageHeader* header = (MessageHeader*)buf.data();
 
 for(int i=0; i<buf.size(); i++)
-        qDebug() << i << (unsigned)buf[i];
+        qDebug() << i << (int)buf[i];
 
 	if(header->sign != PROTOCOL_SIGNATURE) {
                 THROW_EXCEPTION("Server uses wrong protocol ");   

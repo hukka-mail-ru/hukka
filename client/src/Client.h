@@ -5,7 +5,6 @@
 #include <QNetworkProxy>
 #include <QTcpSocket>
 #include <deferror.h>
-#include <defserver.h>
 
 #define LOGIC_ID_GAMMON 		1
 #define LOGIC_ID_CHESS 			2
