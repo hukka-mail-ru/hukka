@@ -163,6 +163,8 @@ void Client::registerUser(const QString& username, const QString& passwd)
 		throw e;
 	}        	
 }
+
+
 /*==================================================================================================== 
   __  ___   ___   __  ____  ___    ____  __   ___  __    ___ 
  / _)(  ,) (  _) (  )(_  _)(  _)  (_  _)(  ) (  ,)(  )  (  _)
@@ -173,7 +175,6 @@ quint32 Client::createGameTable(quint32 logicID, quint32 timeToStep, quint32 tim
                                 quint32 minRating, quint32 maxRating)
 {
         quint32 tableId = 0;
-
 	try {
                 if(mStatus != CLI_AUTHORIZED) {
                         THROW_EXCEPTION("Client is not authorized");                 
@@ -188,13 +189,13 @@ quint32 Client::createGameTable(quint32 logicID, quint32 timeToStep, quint32 tim
 
 		QByteArray data = QByteArray((char*)&params, sizeof(params));
 		sendCmd(TBM, CMD_CREATE, data);
-		
-		// get server reply
+
+                // get server reply
                 struct TableManagerReply {
                         quint32         tableID;
-                	char            isValid;
+	                char            isValid;
                 };
-
+		
 		QByteArray message = getReply(TBM, ANS_CREATE);
                 TableManagerReply* reply = (TableManagerReply*)message.data();
 
@@ -206,12 +207,93 @@ quint32 Client::createGameTable(quint32 logicID, quint32 timeToStep, quint32 tim
                 tableId = reply->tableID;
 	} 
         catch (Exception& e) {
-                e.add("Can't create game table on server: " + mSocket.peerName() + ". ");
+                e.add("Can't create Game Table on server: " + mSocket.peerName() + ". ");
 		qDebug() << e.what();
 		throw e;
 	}        
 
         return tableId;
+}
+
+/*==================================================================================================== 
+  __  ___  ____    __  __  _  _     __   __   __  __  ___    ____  __   ___  __    ___ 
+ / _)(  _)(_  _)  (  \/  )( \/ )   / _) (  ) (  \/  )(  _)  (_  _)(  ) (  ,)(  )  (  _)
+( (/\ ) _)  )(     )    (  \  /   ( (/\ /__\  )    (  ) _)    )(  /__\  ) ,\ )(__  ) _)
+ \__/(___) (__)   (_/\/\_)(__/     \__/(_)(_)(_/\/\_)(___)   (__)(_)(_)(___/(____)(___)
+====================================================================================================*/
+quint32 Client::getMyGameTable(quint32 logicID)
+{
+        quint32 tableId = 0;
+	try {
+                if(mStatus != CLI_AUTHORIZED) {
+                        THROW_EXCEPTION("Client is not authorized");                 
+                }
+
+		QByteArray data = QByteArray((char*)&logicID, sizeof(logicID));
+		sendCmd(TBM, CMD_GETMYTBL, data);
+
+                // get server reply
+                struct TableManagerReply {
+                        quint32         tableID;
+	                char            isValid;
+                };
+
+                QByteArray message = getReply(TBM, ANS_MYTBL);
+                TableManagerReply* reply = (TableManagerReply*)message.data();
+
+		switch(reply->isValid) {
+		        case ST_VALID:       tableId = reply->tableID;  break;
+		        case ST_NOTVALID:    tableId = 0;  break;
+		        default:             THROW_EXCEPTION("Internal server error" + QString::number(reply->isValid)); break;
+		} 
+	} 
+        catch (Exception& e) {
+                e.add("Can't get my Game Table on server: " + mSocket.peerName() + ". ");
+		qDebug() << e.what();
+		throw e;
+	}        
+
+        return tableId;
+}
+
+/*==================================================================================================== 
+ ___  ___  __    ___  ____  ___     __   __   __  __  ___    ____  __   ___  __    ___ 
+(   \(  _)(  )  (  _)(_  _)(  _)   / _) (  ) (  \/  )(  _)  (_  _)(  ) (  ,)(  )  (  _)
+ ) ) )) _) )(__  ) _)  )(   ) _)  ( (/\ /__\  )    (  ) _)    )(  /__\  ) ,\ )(__  ) _)
+(___/(___)(____)(___) (__) (___)   \__/(_)(_)(_/\/\_)(___)   (__)(_)(_)(___/(____)(___)
+====================================================================================================*/
+void Client::deleteGameTable(quint32 logicID, quint32 tableID)
+{
+	try {
+                if(mStatus != CLI_AUTHORIZED) {
+                        THROW_EXCEPTION("Client is not authorized");                 
+                }
+
+                quint32 params[] = { logicID, tableID };
+		QByteArray data = QByteArray((char*)&params, sizeof(params));
+		sendCmd(TBM, CMD_DELETE, data);
+
+                // get server reply
+                struct TableManagerReply {
+                        quint32         logicID;
+                        quint32         tableID;
+	                char            isValid;
+                };
+
+                QByteArray message = getReply(TBM, ANS_DELETE);
+                TableManagerReply* reply = (TableManagerReply*)message.data();
+
+		switch(reply->isValid) {
+		        case ST_VALID:       break;
+		        case ST_NOTVALID:    THROW_EXCEPTION("Invalid parameter. Attempt to delete wrong Game Table?");  break;
+		        default:             THROW_EXCEPTION("Internal server error" + QString::number(reply->isValid)); break;
+		} 
+	} 
+        catch (Exception& e) {
+                e.add("Can't delete Game Table on server: " + mSocket.peerName() + ". ");
+		qDebug() << e.what();
+		throw e;
+	}       
 }
 
 
