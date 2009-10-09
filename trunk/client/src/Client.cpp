@@ -119,7 +119,7 @@ void Client::login(const QString& username, const QString& passwd)
 
 		switch(message[0]) {
 		        case NOERR:          break;
-		        case ERRUSERONLINE:  qDebug() << "User"<< username << "is already online."; return; break;
+		        case ERRUSERONLINE:  THROW_EXCEPTION("User '" + username + "' is already online."); break;
 		        case ERRBADLOGIN:    THROW_EXCEPTION("Incorrect user name: '" + username + "'."); break;
 		        case ERRBADPASS:     THROW_EXCEPTION("Incorrect password for user: '" + username + "'."); break;
 		        default:             THROW_EXCEPTION("Internal server error " + QString::number(message[0]) + "."); break;
@@ -279,8 +279,10 @@ QByteArray Client::getReply(quint32 service, char reply)
 
         MessageHeader* header = (MessageHeader*)buf.data();
 
+QString str;
 for(int i=0; i<buf.size(); i++)
-        qDebug() << (int)buf[i] << " ";
+        str += QString::number((int)buf[i]) + " ";
+qDebug() << str;
 
 	if(header->sign != PROTOCOL_SIGNATURE) {
                 THROW_EXCEPTION("Server uses wrong protocol ");   
