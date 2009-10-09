@@ -300,7 +300,7 @@ QByteArray Client::getReply(quint32 service, char reply)
         MessageHeader* header = (MessageHeader*)buf.data();
 
 for(int i=0; i<buf.size(); i++)
-        qDebug() << i << (int)buf[i];
+        qDebug() << (int)buf[i] << " ";
 
 	if(header->sign != PROTOCOL_SIGNATURE) {
                 THROW_EXCEPTION("Server uses wrong protocol ");   
