@@ -12,7 +12,8 @@ class TestClientTable: public CppUnit::TestFixture
    CPPUNIT_TEST_SUITE(TestClientTable);
 
    CPPUNIT_TEST(testTableCreateOK);
-   CPPUNIT_TEST(testTableCreateWithoutAuthorization);
+  // CPPUNIT_TEST(testTableCreateWithoutAuthorization);
+  // CPPUNIT_TEST(testTableGetMy);
 
    CPPUNIT_TEST_SUITE_END();
 
@@ -42,9 +43,15 @@ public:
     void testTableCreateOK()
     {
         SHOW_FUNCTION_NAME;
-        quint32 id = 0;
+
+        quint32 id = client.getMyGameTable(LOGIC_ID_CHESS);
+        if(id) {
+                CPPUNIT_ASSERT_NO_THROW(client.deleteGameTable(LOGIC_ID_CHESS, id));
+        }
+
         CPPUNIT_ASSERT_NO_THROW(id = client.createGameTable(LOGIC_ID_CHESS));
         CPPUNIT_ASSERT(id > 0);
+        CPPUNIT_ASSERT(id == client.getMyGameTable(LOGIC_ID_CHESS));
     }
 
     void testTableCreateWithoutAuthorization()
@@ -56,6 +63,14 @@ public:
         CPPUNIT_ASSERT_EQUAL(CLI_CONNECTED, client.status());
 
         CPPUNIT_ASSERT_THROW(client.createGameTable(LOGIC_ID_CHESS), Exception);
+    }
+
+    void testTableGetMy()
+    {
+        SHOW_FUNCTION_NAME;
+        quint32 id = 0;
+        CPPUNIT_ASSERT_NO_THROW(id = client.getMyGameTable(LOGIC_ID_CHESS));
+        qDebug() << "My table: " << QString::number(id);
     }
 
 };

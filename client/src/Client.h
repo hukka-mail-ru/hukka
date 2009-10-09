@@ -90,6 +90,9 @@ public:
                                 quint32 minRating = 0, 
                                 quint32 maxRating = 0);
 
+        quint32 getMyGameTable(quint32 logicID);
+        void deleteGameTable(quint32 logicID, quint32 tableID);
+
         ClientStatus status() { return mStatus; }
 
 private:
