@@ -203,7 +203,9 @@ quint32 Client::createGameTable(quint32 logicID, quint32 timeToStep, quint32 tim
 		        case ST_NOTVALID:    THROW_EXCEPTION("Invalid parameter(s)"); break;
 		        default:             THROW_EXCEPTION("Internal server error" + QString::number(reply->isValid)); break;
 		} 
-	} catch (Exception& e) {
+                tableId = reply->tableID;
+	} 
+        catch (Exception& e) {
                 e.add("Can't create game table on server: " + mSocket.peerName() + ". ");
 		qDebug() << e.what();
 		throw e;
