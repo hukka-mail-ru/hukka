@@ -9,8 +9,8 @@
 #define RIGHT_PROXY_PORT        3128
 #define RIGHT_PROXY_TYPE        QNetworkProxy::HttpProxy // supports only outgoing TCP connections
 
-#define RIGTH_USER_NAME         "tsrv"
-#define RIGTH_USER_PASSWD       "tsrv"
+#define RIGTH_USER_NAME         "test"
+#define RIGTH_USER_PASSWD       "test"
 
 #define SHOW_FUNCTION_NAME      qDebug() << "================" << __FUNCTION__ << "================";
 
