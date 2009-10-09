@@ -277,11 +277,9 @@ QByteArray Client::getReply(quint32 service, char reply)
         }
 
 	QByteArray buf = mSocket.readAll();
-	qDebug() << "Server replied"<< buf.size() << "bytes";   
-
         MessageHeader* header = (MessageHeader*)buf.data();
 
-QString str;
+QString str = "SERVER REPLY: ";
 for(int i=0; i<buf.size(); i++)
         str += QString::number((int)buf[i]) + " ";
 qDebug() << str;
