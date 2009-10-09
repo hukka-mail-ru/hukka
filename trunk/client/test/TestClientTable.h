@@ -12,8 +12,8 @@ class TestClientTable: public CppUnit::TestFixture
    CPPUNIT_TEST_SUITE(TestClientTable);
 
    CPPUNIT_TEST(testTableCreateOK);
-  // CPPUNIT_TEST(testTableCreateWithoutAuthorization);
-  // CPPUNIT_TEST(testTableGetMy);
+   CPPUNIT_TEST(testTableCreateWithoutAuthorization);
+   CPPUNIT_TEST(testTableGetMy);
 
    CPPUNIT_TEST_SUITE_END();
 
