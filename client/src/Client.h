@@ -6,13 +6,47 @@
 #include <QTcpSocket>
 #include <deferror.h>
 
+#define WAIT_CONNECT_TIMEOUT 3 // seconds
+#define WAIT_RESPONSE_TIMEOUT 3 // seconds
+
+#define PROTOCOL_SIGNATURE		'Z'
+#define PROTOCOL_VERSION                2
+
+#define CRC_SIZE                        sizeof(char)
+
+// services (see wsUsers table)  
+#define	SRV		1
+#define	REG		2
+#define TBM		4
+
+// server commands
+#define CMD_LOGIN                       1
+#define CMD_REG				1
+
+// server replies
+#define LOGIN_STATUS                    1
+#define REG_STATUS 			1
+
+// game logic ids (see tbLogicList table)
 #define LOGIC_ID_GAMMON 		1
 #define LOGIC_ID_CHESS 			2
 
+// game table parameter ids (see tbParameterList table)
+#define PARAMETER_ID_PASSWD           2
+#define PARAMETER_ID_TIME2STEP        3
+#define PARAMETER_ID_TIME2GAME        4
+#define PARAMETER_ID_MINRATING        5
+#define PARAMETER_ID_MAXRATING        6
+
+// game table parameter constrains (see tbParamList table)
+#define PARAMETER_MAX_TIME2STEP       420
+#define PARAMETER_MAX_TIME2GAME       7200
+
 enum ClientStatus
 {
-        CLI_ONLINE,
-        CLI_OFFLINE,
+        CLI_CONNECTED,   
+        CLI_DISCONNECTED,
+        CLI_AUTHORIZED 
 };
 
 char getCRC(const QByteArray& data);
@@ -50,10 +84,13 @@ public:
         void registerUser(const QString& username, const QString& passwd);
 
         // returns table id
-        quint32 createGameTable(quint32 logicID, quint32 timeToStep = INT_MAX, quint32 timeToGame = INT_MAX, 
-                                quint32 minRating = 0, quint32 maxRating = INT_MAX);
+        quint32 createGameTable(quint32 logicID, 
+                                quint32 timeToStep = PARAMETER_MAX_TIME2STEP, 
+                                quint32 timeToGame = PARAMETER_MAX_TIME2GAME, 
+                                quint32 minRating = 0, 
+                                quint32 maxRating = 0);
 
-        ClientStatus status();
+        ClientStatus status() { return mStatus; }
 
 private:
 

@@ -55,12 +55,12 @@ public:
     void testConnectOK()
     { 
         SHOW_FUNCTION_NAME;
-        CPPUNIT_ASSERT_EQUAL(CLI_OFFLINE, client.status());
+        CPPUNIT_ASSERT_EQUAL(CLI_DISCONNECTED, client.status());
         CPPUNIT_ASSERT_NO_THROW(client.connectToHost(proxy, RIGHT_SERVER_HOSTNAME, RIGHT_SERVER_PORT));
-        CPPUNIT_ASSERT_EQUAL(CLI_ONLINE, client.status());
+        CPPUNIT_ASSERT_EQUAL(CLI_CONNECTED, client.status());
 
         CPPUNIT_ASSERT_NO_THROW(client.disconnectFromHost());
-        CPPUNIT_ASSERT_EQUAL(CLI_OFFLINE, client.status());
+        CPPUNIT_ASSERT_EQUAL(CLI_DISCONNECTED, client.status());
     }
 
 
@@ -69,25 +69,25 @@ public:
         SHOW_FUNCTION_NAME;
         proxy.setHostName("wrong_server_name");
 
-        CPPUNIT_ASSERT_EQUAL(CLI_OFFLINE, client.status());
+        CPPUNIT_ASSERT_EQUAL(CLI_DISCONNECTED, client.status());
         CPPUNIT_ASSERT_THROW(client.connectToHost(proxy, RIGHT_SERVER_HOSTNAME, RIGHT_SERVER_PORT), Exception);
-        CPPUNIT_ASSERT_EQUAL(CLI_OFFLINE, client.status());
+        CPPUNIT_ASSERT_EQUAL(CLI_DISCONNECTED, client.status());
     }
 
     void testConnectWrongAddress()
     {
         SHOW_FUNCTION_NAME;
-        CPPUNIT_ASSERT_EQUAL(CLI_OFFLINE, client.status());
+        CPPUNIT_ASSERT_EQUAL(CLI_DISCONNECTED, client.status());
         CPPUNIT_ASSERT_THROW(client.connectToHost(proxy, "wrong_server_name", RIGHT_SERVER_PORT), Exception);
-        CPPUNIT_ASSERT_EQUAL(CLI_OFFLINE, client.status());
+        CPPUNIT_ASSERT_EQUAL(CLI_DISCONNECTED, client.status());
     }
 
     void testConnectWrongPort()
     {
         SHOW_FUNCTION_NAME;
-        CPPUNIT_ASSERT_EQUAL(CLI_OFFLINE, client.status());
+        CPPUNIT_ASSERT_EQUAL(CLI_DISCONNECTED, client.status());
         CPPUNIT_ASSERT_THROW(client.connectToHost(proxy, RIGHT_SERVER_HOSTNAME, 0), Exception);
-        CPPUNIT_ASSERT_EQUAL(CLI_OFFLINE, client.status());
+        CPPUNIT_ASSERT_EQUAL(CLI_DISCONNECTED, client.status());
     }
 
 
@@ -95,57 +95,61 @@ public:
     void testLoginOK()
     {
         SHOW_FUNCTION_NAME;
-        CPPUNIT_ASSERT_EQUAL(CLI_OFFLINE, client.status());
+        CPPUNIT_ASSERT_EQUAL(CLI_DISCONNECTED, client.status());
         CPPUNIT_ASSERT_NO_THROW(client.connectToHost(proxy, RIGHT_SERVER_HOSTNAME, RIGHT_SERVER_PORT));
-        CPPUNIT_ASSERT_EQUAL(CLI_ONLINE, client.status());
+        CPPUNIT_ASSERT_EQUAL(CLI_CONNECTED, client.status());
 
         CPPUNIT_ASSERT_NO_THROW(client.login(RIGTH_USER_NAME, RIGTH_USER_PASSWD));
+        CPPUNIT_ASSERT_EQUAL(CLI_AUTHORIZED, client.status());
 
         CPPUNIT_ASSERT_NO_THROW(client.disconnectFromHost());
-        CPPUNIT_ASSERT_EQUAL(CLI_OFFLINE, client.status());
+        CPPUNIT_ASSERT_EQUAL(CLI_DISCONNECTED, client.status());
     }
 
    void testLoginWrongUser()
    {
         SHOW_FUNCTION_NAME;
 
-        CPPUNIT_ASSERT_EQUAL(CLI_OFFLINE, client.status());
+        CPPUNIT_ASSERT_EQUAL(CLI_DISCONNECTED, client.status());
         CPPUNIT_ASSERT_NO_THROW(client.connectToHost(proxy, RIGHT_SERVER_HOSTNAME, RIGHT_SERVER_PORT));
-        CPPUNIT_ASSERT_EQUAL(CLI_ONLINE, client.status());
+        CPPUNIT_ASSERT_EQUAL(CLI_CONNECTED, client.status());
 
         CPPUNIT_ASSERT_THROW(client.login("wrong_server_name", RIGTH_USER_PASSWD), Exception);
+        CPPUNIT_ASSERT_EQUAL(CLI_CONNECTED, client.status());
 
         CPPUNIT_ASSERT_NO_THROW(client.disconnectFromHost());
-        CPPUNIT_ASSERT_EQUAL(CLI_OFFLINE, client.status());
+        CPPUNIT_ASSERT_EQUAL(CLI_DISCONNECTED, client.status());
    }
 
    void testLoginWrongPasswd()
    {
         SHOW_FUNCTION_NAME;
 
-        CPPUNIT_ASSERT_EQUAL(CLI_OFFLINE, client.status());
+        CPPUNIT_ASSERT_EQUAL(CLI_DISCONNECTED, client.status());
         CPPUNIT_ASSERT_NO_THROW(client.connectToHost(proxy, RIGHT_SERVER_HOSTNAME, RIGHT_SERVER_PORT));
-        CPPUNIT_ASSERT_EQUAL(CLI_ONLINE, client.status());
+        CPPUNIT_ASSERT_EQUAL(CLI_CONNECTED, client.status());
 
         CPPUNIT_ASSERT_THROW(client.login(RIGTH_USER_NAME, "wrong_server_name"), Exception);
+        CPPUNIT_ASSERT_EQUAL(CLI_CONNECTED, client.status());
 
         CPPUNIT_ASSERT_NO_THROW(client.disconnectFromHost());
-        CPPUNIT_ASSERT_EQUAL(CLI_OFFLINE, client.status());
+        CPPUNIT_ASSERT_EQUAL(CLI_DISCONNECTED, client.status());
    }
 
    void testLoginAlreadyOnLine()
    {
         SHOW_FUNCTION_NAME;
 
-        CPPUNIT_ASSERT_EQUAL(CLI_OFFLINE, client.status());
+        CPPUNIT_ASSERT_EQUAL(CLI_DISCONNECTED, client.status());
         CPPUNIT_ASSERT_NO_THROW(client.connectToHost(proxy, RIGHT_SERVER_HOSTNAME, RIGHT_SERVER_PORT));
-        CPPUNIT_ASSERT_EQUAL(CLI_ONLINE, client.status());
+        CPPUNIT_ASSERT_EQUAL(CLI_CONNECTED, client.status());
 
         CPPUNIT_ASSERT_NO_THROW(client.login(RIGTH_USER_NAME, RIGTH_USER_PASSWD));
         CPPUNIT_ASSERT_THROW(client.login(RIGTH_USER_NAME, RIGTH_USER_PASSWD), Exception);
+        CPPUNIT_ASSERT_EQUAL(CLI_AUTHORIZED, client.status());
 
         CPPUNIT_ASSERT_NO_THROW(client.disconnectFromHost());
-        CPPUNIT_ASSERT_EQUAL(CLI_OFFLINE, client.status());
+        CPPUNIT_ASSERT_EQUAL(CLI_DISCONNECTED, client.status());
    }
 
 
@@ -153,12 +157,12 @@ public:
    {
         SHOW_FUNCTION_NAME;
 
-        CPPUNIT_ASSERT_EQUAL(CLI_OFFLINE, client.status());
+        CPPUNIT_ASSERT_EQUAL(CLI_DISCONNECTED, client.status());
         CPPUNIT_ASSERT_NO_THROW(client.connectToHost(proxy, RIGHT_SERVER_HOSTNAME, RIGHT_SERVER_PORT));
-        CPPUNIT_ASSERT_EQUAL(CLI_ONLINE, client.status());
+        CPPUNIT_ASSERT_EQUAL(CLI_CONNECTED, client.status());
 
         CPPUNIT_ASSERT_NO_THROW(client.disconnectFromHost());
-        CPPUNIT_ASSERT_EQUAL(CLI_OFFLINE, client.status());
+        CPPUNIT_ASSERT_EQUAL(CLI_DISCONNECTED, client.status());
 
         CPPUNIT_ASSERT_THROW(client.login(RIGTH_USER_NAME, RIGTH_USER_PASSWD), Exception);
    }
