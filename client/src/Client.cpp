@@ -191,17 +191,17 @@ quint32 Client::createGameTable(quint32 logicID, quint32 timeToStep, quint32 tim
 		sendCmd(TBM, CMD_CREATE, data);
 
                 // get server reply
-                struct TableManagerReply {
+                struct Reply {
                         quint32         tableID;
 	                char            isValid;
                 };
 		
 		QByteArray message = getReply(TBM, ANS_CREATE);
-                TableManagerReply* reply = (TableManagerReply*)message.data();
+                Reply* reply = (Reply*)message.data();
 
 		switch(reply->isValid) {
 		        case ST_VALID:       break;
-		        case ST_NOTVALID:    THROW_EXCEPTION("Invalid parameter(s)"); break;
+		        case ST_NOTVALID:    THROW_EXCEPTION("Invalid parameter(s)"); break; // TODO What parameter is wrong (exactly)?
 		        default:             THROW_EXCEPTION("Internal server error" + QString::number(reply->isValid)); break;
 		} 
                 tableId = reply->tableID;
@@ -233,13 +233,13 @@ quint32 Client::getMyGameTable(quint32 logicID)
 		sendCmd(TBM, CMD_GETMYTBL, data);
 
                 // get server reply
-                struct TableManagerReply {
+                struct Reply {
                         quint32         tableID;
 	                char            isValid;
                 };
 
                 QByteArray message = getReply(TBM, ANS_MYTBL);
-                TableManagerReply* reply = (TableManagerReply*)message.data();
+                Reply* reply = (Reply*)message.data();
 
 		switch(reply->isValid) {
 		        case ST_VALID:       tableId = reply->tableID;  break;
@@ -274,14 +274,14 @@ void Client::deleteGameTable(quint32 logicID, quint32 tableID)
 		sendCmd(TBM, CMD_DELETE, data);
 
                 // get server reply
-                struct TableManagerReply {
+                struct Reply {
                         quint32         logicID;
                         quint32         tableID;
 	                char            isValid;
                 };
 
                 QByteArray message = getReply(TBM, ANS_DELETE);
-                TableManagerReply* reply = (TableManagerReply*)message.data();
+                Reply* reply = (Reply*)message.data();
 
 		switch(reply->isValid) {
 		        case ST_VALID:       break;
