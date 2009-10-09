@@ -49,6 +49,7 @@ public:
 
     void testTableCreateWithoutAuthorization()
     {
+        SHOW_FUNCTION_NAME;
         CPPUNIT_ASSERT_NO_THROW(client.disconnectFromHost());
         CPPUNIT_ASSERT_EQUAL(CLI_DISCONNECTED, client.status());
         CPPUNIT_ASSERT_NO_THROW(client.connectToHost(proxy, RIGHT_SERVER_HOSTNAME, RIGHT_SERVER_PORT));

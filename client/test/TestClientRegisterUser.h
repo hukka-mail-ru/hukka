@@ -58,15 +58,15 @@ public:
     {
         proxy=QNetworkProxy(RIGHT_PROXY_TYPE, RIGHT_PROXY_HOSTNAME, RIGHT_PROXY_PORT);
 
-        CPPUNIT_ASSERT_EQUAL(CLI_OFFLINE, client.status());
+        CPPUNIT_ASSERT_EQUAL(CLI_DISCONNECTED, client.status());
         CPPUNIT_ASSERT_NO_THROW(client.connectToHost(proxy, RIGHT_SERVER_HOSTNAME, RIGHT_SERVER_PORT));
-        CPPUNIT_ASSERT_EQUAL(CLI_ONLINE, client.status());
+        CPPUNIT_ASSERT_EQUAL(CLI_CONNECTED, client.status());
     }
 
     void tearDown() 
     {
         CPPUNIT_ASSERT_NO_THROW(client.disconnectFromHost());
-        CPPUNIT_ASSERT_EQUAL(CLI_OFFLINE, client.status());
+        CPPUNIT_ASSERT_EQUAL(CLI_DISCONNECTED, client.status());
     }
 
     void testRegisterOK() 
