@@ -15,34 +15,6 @@
 
 using namespace std;
 
-#define WAIT_CONNECT_TIMEOUT 3 // seconds
-#define WAIT_RESPONSE_TIMEOUT 3 // seconds
-
-#define PROTOCOL_SIGNATURE		'Z'
-#define PROTOCOL_VERSION                2
-
-#define CRC_SIZE                        sizeof(char)
-
-// services (see wsUsers table)  
-#define	SRV		1
-#define	REG		2
-#define TBM		4
-
-// server commands
-#define CMD_LOGIN                       1
-#define CMD_REG				1
-
-// server replies
-#define LOGIN_STATUS                    1
-#define REG_STATUS 			1
-
-// parameter ids (see tbParameterList table)
-#define PARAMETER_LIST_PASSWD           2
-#define PARAMETER_LIST_TIME2STEP        3
-#define PARAMETER_LIST_TIME2GAME        4
-#define PARAMETER_LIST_MINRATING        5
-#define PARAMETER_LIST_MAXRATING        6
-
 /*====================================================================================================
   __  ___  ____     __  ___   __ 
  / _)(  _)(_  _)   / _)(  ,) / _)
@@ -66,7 +38,7 @@ char getCRC(const QByteArray& data)
 ( (_( () ))  ( \__ \  )(   )  \ )()(( (_   )( ( () ))  \ 
  \__)\__/(_)\_)(___/ (__) (_)\_)\__/ \__) (__) \__/(_)\_)
 ====================================================================================================*/    
-Client::Client(): mStatus(CLI_OFFLINE) 
+Client::Client(): mStatus(CLI_DISCONNECTED) 
 {
 //        int metaType=qRegisterMetaType<QAbstractSocket::SocketError>("QAbstractSocket::SocketError"); 
 
@@ -99,6 +71,7 @@ void Client::connectToHost(const QNetworkProxy& proxy, const QString& hostName, 
                 THROW_EXCEPTION("Connection failed! Can't connect to server: " + hostName + ".");
         }
 
+        mStatus = CLI_CONNECTED;
         qDebug() << "Connected! state = " << mSocket.state();            
 }
 
@@ -123,6 +96,7 @@ void Client::disconnectFromHost()
                 THROW_EXCEPTION("Can't disconnect from server: " + mSocket.peerName() + ".");              
         }
 
+        mStatus = CLI_DISCONNECTED;
         qDebug() << "Disconnected! state = " << mSocket.state();               
 }
 
@@ -149,8 +123,10 @@ void Client::login(const QString& username, const QString& passwd)
 		        case ERRBADLOGIN:    THROW_EXCEPTION("Incorrect user name: '" + username + "'."); break;
 		        case ERRBADPASS:     THROW_EXCEPTION("Incorrect password for user: '" + username + "'."); break;
 		        default:             THROW_EXCEPTION("Internal server error " + QString::number(message[0]) + "."); break;
-		} 
-	} catch (Exception& e) {
+		}                 
+                mStatus = CLI_AUTHORIZED;
+	} 
+        catch (Exception& e) {
                 e.add("Can't login to server " + mSocket.peerName() + ". ");
 		qDebug() << e.what();
 		throw e;
@@ -199,12 +175,16 @@ quint32 Client::createGameTable(quint32 logicID, quint32 timeToStep, quint32 tim
         quint32 tableId = 0;
 
 	try {
+                if(mStatus != CLI_AUTHORIZED) {
+                        THROW_EXCEPTION("Client is not authorized");                 
+                }
+
 		// send command
                 quint32 params[] = { logicID, 
-                             PARAMETER_LIST_TIME2STEP, timeToStep, 
-                             PARAMETER_LIST_TIME2GAME, timeToGame,
-                             PARAMETER_LIST_MINRATING, minRating, 
-                             PARAMETER_LIST_MAXRATING, maxRating };
+                             PARAMETER_ID_TIME2STEP, timeToStep, 
+                             PARAMETER_ID_TIME2GAME, timeToGame,
+                             PARAMETER_ID_MINRATING, minRating, 
+                             PARAMETER_ID_MAXRATING, maxRating };
 
 		QByteArray data = QByteArray((char*)&params, sizeof(params));
 		sendCmd(TBM, CMD_CREATE, data);
@@ -329,20 +309,6 @@ for(int i=0; i<buf.size(); i++)
         return QByteArray(dataOffset, dataSize);
 }
 
-
-/*==================================================================================================== 
- ___  ____  __  ____  _  _  ___ 
-/ __)(_  _)(  )(_  _)( )( )/ __)
-\__ \  )(  /__\  )(   )()( \__ \
-(___/ (__)(_)(_)(__)  \__/ (___/
-====================================================================================================*/
-ClientStatus Client::status() 
-{ 
-        if(mSocket.state() == QAbstractSocket::ConnectedState)
-                return CLI_ONLINE;
-
-        return CLI_OFFLINE; 
-}
 
 /*==================================================================================================== 
   __  _  _     __  __  _  _  _  _  ___   __  ____  ___  ___  
