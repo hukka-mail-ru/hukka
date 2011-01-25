@@ -1,0 +1,59 @@
+#include "WaitJoinDialog.h"
+#include "MainWindow.h"
+#include "Client.h"
+#include "UI.h"
+
+
+WaitJoinDialog::WaitJoinDialog(QWidget *parent):   QDialog(parent)
+{
+    label = new QLabel(tr("Wait for oppponent..."), this);
+    exitButton = new QPushButton(tr("Exit"), this);
+    connect(exitButton, SIGNAL(clicked()), this, SLOT(onExitClicked()));
+
+    layout = new QVBoxLayout(this);
+    layout->addWidget(label);
+    layout->addWidget(exitButton);
+    this->setLayout(layout);
+
+    connect(Client::instance(), SIGNAL(opponentJoined()), this, SLOT(onOpponentJoined()));
+    connect(Client::instance(), SIGNAL(gameStarted()), this, SLOT(onGameStarted()));
+
+    this->show();
+}
+
+
+
+void WaitJoinDialog::onExitClicked()
+{
+    MainWindow::instance()->setMode(MW_WAIT);
+    connect(Client::instance(), SIGNAL(gameTableDeleted()), this, SLOT(onGameTableDeleted()));
+    Client::instance()->deleteGameTable(LOGIC_ID_CHESS, UI::instance()->getGameTable());
+}
+
+void  WaitJoinDialog::onGameTableDeleted()
+{
+    MainWindow::instance()->showMainMenu();
+}
+
+
+void WaitJoinDialog::onOpponentJoined()
+{
+    qDebug() << "opponent joined";
+    if(MainWindow::instance()->showQuestion(tr("Opponent joined. Do you want to start game?")))
+    {
+        MainWindow::instance()->setMode(MW_WAIT);
+        int tableID = UI::instance()->getGameTable();
+        qDebug() << "UI::instance()->getGameTable(): " << tableID;
+        Client::instance()->agreeToStartGame(tableID);
+    }
+    else
+    {
+        // TODO refuse
+    }
+}
+
+void WaitJoinDialog::onGameStarted()
+{
+    MainWindow::instance()->showGameScene(PC_WHITE);
+    UI::instance()->startGame();
+}

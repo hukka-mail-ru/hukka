@@ -1,0 +1,258 @@
+<xml>
+
+  <MainWindow>
+    <color value = "black" />
+    <portrait>
+      <width value="800" />
+      <height value="480" />
+    </portrait>
+    <landscape>
+      <width value="800" />
+      <height value="480" />
+    </landscape>
+  </MainWindow>
+
+  <Scene>
+    <margin>
+       <width value="5" />
+    </margin>
+    <portrait>
+      <x value="0" />
+      <y value="0" />
+      <width value="400" />
+      <height value="750" />
+    </portrait>
+    <landscape>
+      <x value="0" />
+      <y value="0" />
+      <width value="750" />
+      <height value="400" />
+    </landscape>
+  </Scene>
+
+
+  <Splash>
+    <portrait>
+      <x value="-60" />
+      <y value="20" />
+    </portrait>
+    <landscape>
+      <x value="0" />
+      <y value="0" />
+    </landscape>
+  </Splash>
+
+  <CommonChat>
+    <font>
+      <family value="Helvetica [Cronyx]" />
+      <size value="10" />
+      <color value="white" />
+    </font>
+    <border>
+      <color value="white" />
+      <width value="1" />
+    </border>
+    <textOffset value="25" />
+    <portrait>
+      <x value="5" />
+      <y value="20" />
+      <width value="400" />
+      <height value="200" />
+    </portrait>
+    <landscape>
+      <x value="5" />
+      <y value="5" />
+      <width value="500" />
+      <height value="200" />
+    </landscape>
+  </CommonChat>
+
+  <TableChat>
+    <font>
+      <family value="Helvetica [Cronyx]" />
+      <size value="10" />
+      <color value="white" />
+    </font>
+    <border>
+      <color value="white" />
+      <width value="1" />
+    </border>
+    <textOffset value="25" />
+    <portrait>
+      <x value="200" />
+      <y value="450" />
+      <width value="200" />
+      <height value="200" />
+    </portrait>
+    <landscape>
+      <x value="5" />
+      <y value="220" />
+      <width value="200" />
+      <height value="170" />
+    </landscape>
+  </TableChat>
+
+
+  <Buttons>
+    <width value="192" />
+    <height value="170" />
+    <textOffset value="120" />
+    <font>
+      <family value="Helvetica [Cronyx]" />
+      <size value="16" />
+      <color value="white" />
+    </font>
+
+      <Exit>
+        <portrait>
+          <x value="380" />
+          <y value="-10" />
+        </portrait>
+        <landscape>
+          <x value="700" />
+          <y value="-30" />
+        </landscape>
+      </Exit>
+
+      <NewGame>
+        <portrait>
+          <x value="0" />
+          <y value="350" />
+        </portrait>
+        <landscape>
+          <x value="0" />
+          <y value="260" />
+        </landscape>
+      </NewGame>
+
+      <FindGame>
+        <portrait>
+          <x value="192" />
+          <y value="350" />
+        </portrait>
+        <landscape>
+          <x value="192" />
+          <y value="260" />
+        </landscape>
+      </FindGame>
+
+      <Chat>
+        <portrait>
+          <x value="0" />
+          <y value="550" />
+        </portrait>
+        <landscape>
+          <x value="384" />
+          <y value="260" />
+        </landscape>
+      </Chat>
+
+      <Options>
+        <portrait>
+          <x value="192" />
+          <y value="550" />
+        </portrait>
+        <landscape>
+          <x value="576" />
+          <y value="260" />
+        </landscape>
+      </Options>
+
+
+      <GameMenu>
+        <portrait>
+          <x value="5" />
+          <y value="550" />
+        </portrait>
+        <landscape>
+          <x value="5" />
+          <y value="-25" />
+        </landscape>
+      </GameMenu>
+
+  </Buttons>
+
+
+  <Cell>
+    <width value="50" />
+  </Cell>
+
+  <Piece>
+    <width value="21" />
+    <height value="50" />
+  </Piece>
+
+  <Board>
+    <width value="400" />
+    <border>
+      <color value="white" />
+    </border>
+    <portrait>
+      <x value="0" />
+      <y value="50" />
+    </portrait>
+    <landscape>
+      <x value="295" />
+      <y value="15" />
+    </landscape>
+  </Board>
+
+
+  <Clocks>
+    <MoveClock>
+        <font>
+          <family value="Helvetica [Cronyx]" />
+          <size value="16" />
+          <color>
+            <active value="white" />
+            <inactive value="grey" />
+          </color>
+        </font>
+        <portrait>
+          <x value="5" />
+          <y value="450" />
+        </portrait>
+        <landscape>
+          <x value="5" />
+          <y value="160" />
+        </landscape>
+    </MoveClock>
+
+    <GameClock>
+        <font>
+          <family value="Helvetica [Cronyx]" />
+          <size value="10" />
+          <color>
+            <active value="white" />
+            <inactive value="grey" />
+          </color>
+        </font>
+        <portrait>
+          <x value="5" />
+          <y value="480" />
+        </portrait>
+        <landscape>
+          <x value="5" />
+          <y value="190" />
+        </landscape>
+    </GameClock>
+  </Clocks>
+
+
+  <GameStateText>
+        <font>
+          <family value="Helvetica [Cronyx]" />
+          <size value="16" />
+          <color value = "white" />
+        </font>
+        <portrait>
+          <x value="5" />
+          <y value="5" />
+        </portrait>
+        <landscape>
+          <x value="295" />
+          <y value="-25" />
+        </landscape>
+  </GameStateText>
+
+</xml>

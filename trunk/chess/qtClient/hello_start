@@ -1,0 +1,7 @@
+rm bin/hello
+qmake hello.pro
+make
+
+cd bin
+./hello
+cd ..

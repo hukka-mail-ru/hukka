@@ -1,0 +1,218 @@
+#include <assert.h>
+#include <QDebug>
+#include "UI.h"
+#include "Exception.h"
+#include "Client.h"
+#include "MainWindow.h"
+#include "Pixmaps.h"
+
+
+UI::UI():
+    mGameTable(0),
+    mPlayerAuthotized(false)
+{
+}
+
+UI::~UI()
+{
+    qDebug() << "UI::~UI()";
+}
+
+void UI::initialize(QApplication* app)
+{
+    qDebug() << "UI::initialize()";
+
+    connect(Client::instance(), SIGNAL(error(const QString&)), this, SLOT(onError(const QString&)));
+
+    MainWindow::instance()->initialize();
+
+    mApp = app;
+
+    qDebug() << "UI::initialize() ok";
+}
+
+
+void UI::shutdown()
+{
+    qDebug() << "UI::shutdown()";
+
+   // delete MainWindow::instance();
+    delete Client::instance();
+
+    mApp->exit(0);
+}
+
+
+
+void UI::startGame()
+{
+    MainWindow::instance()->deleteCurrentDialog();
+
+    if(mPlayerColor == PC_WHITE)
+    {
+        mGameState = GS_WAIT_FOR_PLAYER_TOUCH;
+    }
+    else
+    {
+        mGameState = GS_WAIT_FOR_SERVER;
+    }
+
+    connect(Client::instance(), SIGNAL(invalidMove()), this, SLOT(onInvalidMove()));
+    connect(Client::instance(), SIGNAL(gameOver(const QString&)), this, SLOT(onGameOver(const QString&)));
+    connect(Client::instance(), SIGNAL(drawOffered()), this, SLOT(onDrawOffered()));
+
+    assert(mGameTable);
+
+    Client::instance()->getField(mGameTable);
+
+    Client::instance()->joinTableChat(LOGIC_ID_CHESS, mGameTable);
+}
+
+void UI::onGameOver(const QString& message)
+{
+    MainWindow::instance()->showMessage(message);
+    MainWindow::instance()->showMainMenu();
+}
+
+
+void UI::onInvalidMove()
+{
+    mGameState = GS_INVALID_MOVE;
+}
+
+void UI::onDrawOffered()
+{
+    bool accept = MainWindow::instance()->showQuestion(tr("Your opponent has offered a draw. Agree?"));
+
+    Client::instance()->replyDraw(UI::instance()->getGameTable(), accept);
+}
+
+void UI::onError(const QString& what)
+{
+    qDebug() << "UI::onError";
+    MainWindow::instance()->showError(what);
+}
+
+
+bool UI::isEnemyPiece(CELLID cell)
+{
+    bool res = false;
+    if(mPlayerColor == PC_WHITE)
+    {
+        // qDebug() <<"isEnemyPiece" << cell << (mField.cells[cell] == PIX_BLACK_ROOK);
+
+        res = (mField[cell] == PIX_BLACK_PAWN) ||
+              (mField[cell] == PIX_BLACK_ROOK) ||
+              (mField[cell] == PIX_BLACK_KNIGHT) ||
+              (mField[cell] == PIX_BLACK_BISHOP) ||
+              (mField[cell] == PIX_BLACK_QUEEN) ||
+              (mField[cell] == PIX_BLACK_KING);
+    }
+    else if(mPlayerColor == PC_BLACK)
+    {
+        res = (mField[cell] == PIX_WHITE_PAWN) ||
+              (mField[cell] == PIX_WHITE_ROOK) ||
+              (mField[cell] == PIX_WHITE_KNIGHT) ||
+              (mField[cell] == PIX_WHITE_BISHOP) ||
+              (mField[cell] == PIX_WHITE_QUEEN) ||
+              (mField[cell] == PIX_WHITE_KING);
+    }
+
+    return res;
+}
+
+
+void UI::cellClicked(CELLID cell)
+{
+
+    switch(mGameState)
+    {
+    case GS_WAIT_FOR_SERVER:
+
+        // qDebug() << "No action - GS_WAIT_FOR_SERVER";
+        return;
+
+    case GS_WAIT_FOR_OPPONENT:
+
+        // qDebug() << "No action - GS_WAIT_FOR_OPPONENT";
+        return;
+
+    case GS_WAIT_FOR_PLAYER_TOUCH:
+
+        if(mField[cell] == PIX_NONE || isEnemyPiece(cell))
+        {
+            // qDebug() << "No action - Epmty field or Enemy piece";
+            return;
+        }
+        else
+        {
+            MainWindow::instance()->highlightGameSceneCell(cell);
+
+            mMove.srcCell = cell;
+            mGameState = GS_WAIT_FOR_PLAYER_MOVE;
+            // qDebug() << "OK! mSourceCell = " << cell;
+        }
+
+        break;
+
+    case GS_WAIT_FOR_PLAYER_MOVE:
+
+        if(mField[cell] == PIX_NONE || isEnemyPiece(cell))
+        {
+            mMove.dstCell = cell;
+            // qDebug() << "OK! mDestinationCell = " << cell;
+
+            MainWindow::instance()->highlightGameSceneCell(cell);
+
+            // TODO Replace by UI::showNote, use QDialog
+       //     mScene->showNote("Checking the move");
+            assert(mGameTable);
+
+            Client::instance()->step(mGameTable, mMove);
+
+            // TODO send a move to server
+            mGameState = GS_WAIT_FOR_SERVER;
+        }
+        else
+        {
+            MainWindow::instance()->removeGameSceneHighlight();
+            MainWindow::instance()->highlightGameSceneCell(cell);
+
+            mMove.srcCell = cell;
+            mGameState = GS_WAIT_FOR_PLAYER_MOVE;
+            // qDebug() << "OK! mSourceCell = " << cell;
+        }
+
+        break;
+
+    default:
+        THROW_EXCEPTION("Switch error");
+        break;
+    }
+
+
+
+}
+
+
+GameState UI::updateField(const Field& field, bool myMove, bool iAmWhite)
+{
+    mField = field;
+
+    // pass the move
+    mPlayerColor = iAmWhite ? PC_WHITE : PC_BLACK;
+
+    mGameState = myMove ? GS_WAIT_FOR_PLAYER_TOUCH : GS_WAIT_FOR_OPPONENT;
+
+
+    return mGameState;
+}
+
+
+
+
+
+
+
+
+

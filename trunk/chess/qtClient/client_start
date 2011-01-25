@@ -1,0 +1,47 @@
+if [ "$PLATFORM" = "" ] ; then
+    echo "Please set PLATFORM variable first!"
+	exit
+fi
+
+if [ "$QTPATH" = "" ] ; then
+    echo "Please set QTPATH variable first!"
+	exit
+fi
+
+if [ "$WAPSERVERPATH" = "" ] ; then
+    echo "Please set WAPSERVERPATH variable first!"
+	exit
+fi
+
+lupdate client.pro
+lrelease client.pro
+
+
+CONFIGDIR=~/.wpchess
+if [ -d $CONFIGDIR ]
+then
+    echo $CONFIGDIR already exists
+else
+    echo create $CONFIGDIR
+    mkdir $CONFIGDIR
+fi
+
+cp config/config.xml $CONFIGDIR
+
+
+
+rm bin/client
+qmake client.pro
+make
+cd bin
+
+
+if [ "$PLATFORM" = "LINUX" ] ; then
+    ./client
+fi
+
+if [ "$PLATFORM" = "MAEMO" ] ; then
+    run-standalone.sh ./client
+fi
+
+cd ..

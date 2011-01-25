@@ -1,0 +1,44 @@
+
+search_wildcards := $(addsuffix /*.cpp, $(source_dirs))
+
+ifndef ver
+ver := debug
+clean_dirs := ../../bin/release/$(TARGET) ../../bin
+endif
+
+ifeq ($(ver),debug)
+override compile_flags := -O0 -g -Wno-deprecated -pthread -DTBM_MGR
+build_path := ../../bin
+ifndef clean_dirs
+clean_dirs := ../../bin
+endif
+endif
+
+ifeq ($(ver),release)
+override compile_flags := -O3 -funroll-loops -fomit-frame-pointer -Wno-deprecated -pthread -DTBM_MGR
+build_path := ../../bin/release
+ifndef clean_dirs
+clean_dirs := ../../bin/release
+endif
+endif	
+
+$(build_path)/$(TARGET): $(build_path) $(obj_dir) $(addprefix $(obj_dir), $(notdir $(patsubst %.cpp, %.o, $(wildcard $(search_wildcards) ) ) ) )
+	mkdir -p $(build_path)
+	g++ $(addprefix $(obj_dir), $(notdir $(patsubst %.cpp, %.o, $(wildcard $(search_wildcards) ) ) ) ) $(compile_flags) -o $@ $(addprefix -L, $(libs_dirs) ) $(addprefix -l, $(libs) ) 
+		
+
+VPATH := $(source_dirs)
+
+$(build_path):
+	mkdir -p $(build_path)
+
+$(obj_dir):
+	mkdir -p $(obj_dir)
+	
+$(obj_dir)%.o: %.cpp
+	g++ -c -MD $(addprefix -I, $(source_dirs)) $(addprefix -I, $(include_dirs)) $(compile_flags) $< -o $@
+	
+include $(wildcard $(obj_dir)*.d)
+
+clean:
+	rm -f $(obj_dir)*.o $(obj_dir)*.d $(clean_dirs)/$(TARGET)						
