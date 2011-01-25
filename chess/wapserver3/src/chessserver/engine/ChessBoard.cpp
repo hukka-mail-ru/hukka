@@ -3,17 +3,17 @@
 // ChessBoard.cpp: implementation of the ChessBoard class.
 //
 // Copyright (C) 2003 Tristan Miller <psychonaut@nothingisreal.com>
-//  
+//
 // This program is free software; you can redistribute it and/or
 // modify it under the terms of the GNU General Public License as
 // published by the Free Software Foundation; either version 2 of the
 // License, or (at your option) any later version.
-// 
+//
 // This program is distributed in the hope that it will be useful, but
 // WITHOUT ANY WARRANTY; without even the implied warranty of
 // MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
 // General Public License for more details.
-// 
+//
 // You should have received a copy of the GNU General Public License
 // along with this program; if not, write to the Free Software
 // Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA
@@ -23,6 +23,7 @@
 
 #include "stdafx.h"
 #include "ChessBoard.h"
+#include <stdlib.h>
 
 //////////////////////////////////////////////////////////////////////
 // Global functions
@@ -259,13 +260,13 @@ ChessGameStatus ChessBoard::do_move(int from, int to, piece_type promotion) {
         if (is_colour(m_CurPos.square[i], m_CurPos.w_turn)) {
             switch (make_neutral(m_CurPos.square[i])) {
             case King:
-                moves=mobility_king(i); 
+                moves=mobility_king(i);
                 break;
             case Pawn:
                 moves=mobility_pawn(i);
                 break;
             case Knight:
-                moves=mobility_knight(i); 
+                moves=mobility_knight(i);
                 break;
             case Bishop:
                 moves=mobility_bishop(i);
@@ -370,13 +371,13 @@ bool ChessBoard::can_move(int from, int to, piece_type promotion) const {
     move_list moves;
     switch (make_neutral(m_CurPos.square[from])) {
     case King:
-        moves=mobility_king(from); 
+        moves=mobility_king(from);
         break;
     case Pawn:
         moves=mobility_pawn(from);
         break;
     case Knight:
-        moves=mobility_knight(from); 
+        moves=mobility_knight(from);
         break;
     case Bishop:
         moves=mobility_bishop(from);
@@ -621,10 +622,10 @@ bool ChessBoard::is_attacked(bool by_white, int to) const {
         return true;
 
     // Check for bishop/queen attacks
-    static const int b_increment[]={-Rank-File, Rank-File, -Rank+File, 
+    static const int b_increment[]={-Rank-File, Rank-File, -Rank+File,
         Rank+File};
     for(i=0;i<4;i++) {
-        for (from=to+b_increment[i]; is_on_board(from) && 
+        for (from=to+b_increment[i]; is_on_board(from) &&
             abs(which_file(from)-which_file(from-b_increment[i]))==1;
             from+=b_increment[i]) {
             if (m_CurPos.square[from]==make_colour(Bishop, by_white) ||
@@ -638,7 +639,7 @@ bool ChessBoard::is_attacked(bool by_white, int to) const {
     // Check for rook/queen attacks
     static const int r_increment[]={-Rank, Rank, -File, File};
     for(i=0;i<4;i++) {
-        for (from=to+r_increment[i]; is_on_board(from) && 
+        for (from=to+r_increment[i]; is_on_board(from) &&
             abs(which_file(from)-which_file(from-r_increment[i]))<=1;
             from+=r_increment[i]) {
             if (m_CurPos.square[from]==make_colour(Rook, by_white) ||
@@ -670,7 +671,7 @@ bool ChessBoard::is_attacked(bool by_white, int to) const {
     }
 
     // Check for en passant attacks
-    if (to-ahead*Rank==m_CurPos.en_passant && 
+    if (to-ahead*Rank==m_CurPos.en_passant &&
         (m_CurPos.square[to-File]==make_colour(Pawn, by_white) ||
                 m_CurPos.square[to+File]==make_colour(Pawn, by_white)))
         return true;
@@ -686,7 +687,7 @@ bool ChessBoard::causes_check(const SMove& m) const {
     ChessBoard c=*this;
     piece_type promotion=m.promotion;
 
-    if (c.m_CurPos.square[m.from]==w_Pawn && c.m_CurPos.square[m.to]==Empty && 
+    if (c.m_CurPos.square[m.from]==w_Pawn && c.m_CurPos.square[m.to]==Empty &&
         m.to!=m.from+Rank) {
         c.m_CurPos.square[m.to]=w_Pawn;                      // White captures en-passant
         c.m_CurPos.square[m.from]=c.m_CurPos.square[m.to-Rank]=Empty;
@@ -720,5 +721,5 @@ void ChessBoard::setPosition( SPosition* _pCurPos )
 
 SPosition* ChessBoard::getPosition()
 {
-    return &m_CurPos;    
+    return &m_CurPos;
 }

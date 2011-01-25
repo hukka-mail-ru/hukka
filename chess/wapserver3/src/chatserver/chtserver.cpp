@@ -4,6 +4,7 @@
 #include "../socket/sendedmsg.h"
 
 #include "chatdefs.h"
+#include <stdlib.h>
 
 #define MYDEBUG
 
@@ -14,19 +15,19 @@ CCHTServer* CCHTServer::Instance()
 {
 	if( m_pSelf == 0 )
 		m_pSelf = new CCHTServer;
-	
+
 	++m_nRefCount;
-	
+
 	return m_pSelf;
 }
 
 void CCHTServer::FreeInst()
 {
 	--m_nRefCount;
-	
+
 	if( m_nRefCount > 0 )
 		return;
-	
+
 	KillObject();
 }
 
@@ -34,7 +35,7 @@ void CCHTServer::KillObject()
 {
 	if( m_pSelf != 0 )
 		delete m_pSelf;
-	
+
 	m_pSelf = 0;
 	m_nRefCount = 0;
 }
@@ -59,7 +60,7 @@ void CCHTServer::DoAllMsg( CMySocket* _pSocket )
 	{
 		switch( inMsg.GetTo() )
 		{
-		case SRV:	
+		case SRV:
             break;
 		default:	newMsg( &inMsg );
 		};
@@ -82,14 +83,14 @@ bool CCHTServer::checkParticipation( uint32_t _nPlayerID, uint32_t _nLogicID, ui
             {
                 return false;
             }
-            
+
             if ( tbl.empty() )
             {
                 return false;
             }
             return true;
         }
-        
+
         if ( !sqlChatTable.Select( "TableID", strWhere.c_str(), &tbl ) )
         {
             return false;
@@ -99,7 +100,7 @@ bool CCHTServer::checkParticipation( uint32_t _nPlayerID, uint32_t _nLogicID, ui
             return false;
         }
         return true;
-            
+
     }
     return false;
 }
@@ -117,7 +118,7 @@ bool CCHTServer::getGameOnlineUsersTable( uint32_t _nLogicID, CSqlTable* _pRes )
     }
     else
         return false;
-    
+
 }
 
 bool CCHTServer::getLogicChatTable( uint32_t _nLogicID, CSqlTable* _pRes )
@@ -155,16 +156,16 @@ void CCHTServer::joinToChat( uint32_t _nPlayerID, uint32_t _nLogicID, uint32_t _
 #ifdef MYDEBUG
     std::cerr << "CCHTServer::joinToCommonChat() _PlayerID: " << _nPlayerID << " _LogicID: " << _nLogicID << " _nTableID: " << _nTableID << std::endl;
 #endif
-    
+
     CSqlTable sqlGameOnlineUsersTable("");
-    
+
     if ( getGameOnlineUsersTable(_nLogicID, &sqlGameOnlineUsersTable) )
     {
         TVecChar strInComChat;
         CMyStr strPlayerIDv = CMyStr(_nPlayerID);
         CMyStr strTableIDv = CMyStr(_nTableID);
         CMyStr strInComChatv;
-                
+
         if (sqlGameOnlineUsersTable.SelectToStr("InComChat", "PlayerID", strPlayerIDv.c_str(), &strInComChat))
         {
             if ( _nTableID )
@@ -180,36 +181,36 @@ void CCHTServer::joinToChat( uint32_t _nPlayerID, uint32_t _nLogicID, uint32_t _
         else
         {
             TVecMyStr fields, values;
-                        
+
             CMyStr strPlayerIDf = CMyStr("PlayerID");
             CMyStr strTableIDf = CMyStr("TableID");
             CMyStr strInComChatf = CMyStr("InComChat");
-            
+
             fields.push_back(&strPlayerIDf);
             fields.push_back(&strTableIDf);
             fields.push_back(&strInComChatf);
-            
+
             values.push_back(&strPlayerIDv);
             values.push_back(&strTableIDv);
-            
+
             if ( _nTableID )
             {
-                
-                strInComChatv = CMyStr("FALSE");                
+
+                strInComChatv = CMyStr("FALSE");
             }
             else
             {
-                strInComChatv = CMyStr("TRUE");                
+                strInComChatv = CMyStr("TRUE");
             }
-            
+
             values.push_back(&strInComChatv);
-            
+
             sqlGameOnlineUsersTable.Insert( fields, values );
-            
+
         }
-        
+
         ///TODO send last 10 messages
-        
+
     }
     else
     {
@@ -217,16 +218,16 @@ void CCHTServer::joinToChat( uint32_t _nPlayerID, uint32_t _nLogicID, uint32_t _
         std::cerr << "CCHTServer::joinToCommonChat() can't open DB" << std::endl;
 #endif
     }
-    
-    
-    
+
+
+
 }
 
 void CCHTServer::newMsg( CClientMsg* _pMsg )
 {
     TVecChar vecCmd;
     _pMsg->GetData( CClientMsg::etpCommand, &vecCmd );
-    
+
 #ifdef MYDEBUG
     std::cerr << "MSG: " << ( uint32_t )_pMsg->GetTo() << "-" << ( uint32_t ) _pMsg->GetCommand() << "-" << ( uint32_t ) vecCmd[0] << " vecCmd size:" << vecCmd.size() << std::endl;
 //  syslog( LOG_INFO | LOG_LOCAL0, "input message from:%d CMD:%d PARAM:%d", ( uint32_t )_pMsg->GetTo(), ( uint32_t ) _pMsg->GetCommand(), ( uint32_t ) vecCmd[0] );
@@ -237,7 +238,7 @@ void CCHTServer::newMsg( CClientMsg* _pMsg )
     }
     std::cout << std::endl;
 #endif
-    
+
     switch( _pMsg->GetCommand() )
     {
         case CMD_CHAT_MSG:
@@ -258,31 +259,31 @@ void CCHTServer::newMsg( CClientMsg* _pMsg )
             if (vecCmd.size() == sizeof(uint32_t) )
             {
                 joinToChat( _pMsg->GetTo(), (uint32_t) vecCmd.at(0) );
-            }            
+            }
             break;
         case CMD_GAME_CHAT_LEAVE:
             if (vecCmd.size() == sizeof(uint32_t) )
             {
                 leaveChat( _pMsg->GetTo(), (uint32_t) vecCmd.at(0) );
-            }            
+            }
             break;
         case CMD_TBL_CHAT_JOIN:
             if (vecCmd.size() == sizeof(uint32_t) * 2 )
             {
                 joinToChat( _pMsg->GetTo(), (uint32_t) vecCmd.at(0), (uint32_t) vecCmd.at(sizeof(uint32_t)) );
-            }            
+            }
             break;
         case CMD_TBL_CHAT_LEAVE:
             if (vecCmd.size() == sizeof(uint32_t) *2 )
             {
                 leaveChat( _pMsg->GetTo(), (uint32_t) vecCmd.at(0), (uint32_t) vecCmd.at(sizeof(uint32_t)) );
-            }            
+            }
             break;
         default:
             break;
     }
 
-    
+
 }
 
 void CCHTServer::leaveChat( uint32_t _nPlayerID, uint32_t _nLogicID, uint32_t _nTableID )
@@ -290,16 +291,16 @@ void CCHTServer::leaveChat( uint32_t _nPlayerID, uint32_t _nLogicID, uint32_t _n
 #ifdef MYDEBUG
     std::cerr << "CCHTServer::leaveChat() _PlayerID: " << _nPlayerID << " _LogicID: " << _nLogicID << " _nTableID: " << _nTableID << std::endl;
 #endif
-    
+
     CSqlTable sqlGameOnlineUsersTable("");
-    
+
     if ( getGameOnlineUsersTable(_nLogicID, &sqlGameOnlineUsersTable) )
     {
         TVecChar strInComChat, strInBoardChat;
         CMyStr strPlayerIDv = CMyStr(_nPlayerID);
         CMyStr strTableIDv = CMyStr(_nTableID);
         CMyStr strInComChatv, strInBoardChatv;
-                
+
         if (sqlGameOnlineUsersTable.SelectToStr("InComChat", "PlayerID", strPlayerIDv.c_str(), &strInComChat))
         {
             if ( sqlGameOnlineUsersTable.SelectToStr("TableID", "PlayerID", strPlayerIDv.c_str(), &strInBoardChat))
@@ -319,7 +320,7 @@ void CCHTServer::leaveChat( uint32_t _nPlayerID, uint32_t _nLogicID, uint32_t _n
                     {
                         sqlGameOnlineUsersTable.Update("InComChat", "0", "PlayerID", strPlayerIDv.c_str());
                     }
-                    else                        
+                    else
                     {
                         sqlGameOnlineUsersTable.Delete("PlayerID", strPlayerIDv.c_str());
                     }
@@ -330,7 +331,7 @@ void CCHTServer::leaveChat( uint32_t _nPlayerID, uint32_t _nLogicID, uint32_t _n
                 }
             }
         }
-        
+
     }
     else
     {
@@ -350,9 +351,9 @@ void CCHTServer::messageToChat( uint32_t _nPlayerID, uint32_t _nLogicID,
     {
         return;
     }
-    
+
     CSqlTable sqlChatTable("");
-    
+
     if ( _vecData->empty() )
     {
 #ifdef MYDEBUG
@@ -360,15 +361,15 @@ void CCHTServer::messageToChat( uint32_t _nPlayerID, uint32_t _nLogicID,
 #endif
         return;
     }
-    
+
     CMyStr strMsg = CMyStr((char*)_vecData);
-    
+
     TVecMyStr vecCol, vecVal;
     CMyStr strTableID, strTableIDVal;
-    
+
     if ( _nTableID )
     {
-        getBoardChatTable( _nLogicID, &sqlChatTable );        
+        getBoardChatTable( _nLogicID, &sqlChatTable );
         strTableID = "TableID";
         strTableIDVal = CMyStr( _nTableID );
         vecCol.push_back(&strTableID);
@@ -378,65 +379,65 @@ void CCHTServer::messageToChat( uint32_t _nPlayerID, uint32_t _nLogicID,
     {
         getLogicChatTable(_nLogicID, &sqlChatTable);
     }
-    
+
     TVecChar vecChar;
     CSqlTableUsers wsUsers;
-            
+
     if ( wsUsers.GetUserName( _nPlayerID, &vecChar ) )
     {
         CMyStr strUserName = CMyStr(&vecChar);
         strMsg = "'" + strUserName + ": " + strMsg + "'";
     }
-        
+
     CMyStr strMsgCol = CMyStr("Msg");
-                
+
 #ifdef MYDEBUG
     std::cout << "CCHTServer::messageToChat() Message: " << strMsg << std::endl;
 #endif
-    
+
     vecCol.push_back(&strMsgCol);
     vecVal.push_back(&strMsg);
-    
+
     sqlChatTable.Insert(vecCol, vecVal);
-    
-    sendMsgToChat( _nLogicID, &strMsg, _nTableID );            
+
+    sendMsgToChat( _nLogicID, &strMsg, _nTableID );
 
 }
 
 void CCHTServer::sendMsgToChat( uint32_t _nLogicID, CMyStr* _strMsg, uint32_t _nTableID )
-{    
+{
 #ifdef MYDEBUG
     std::cout << "CCHTServer::sendMsgToChat()" << std::endl;
 #endif
-    
+
     CSqlTable sqlChatTable("");
     TTable tbl;
-    
+
     if ( getGameOnlineUsersTable( _nLogicID, &sqlChatTable ) )
     {
         CMyStr strWhere;
-        CSendedMsg sendedMsg;      
-        
+        CSendedMsg sendedMsg;
+
         if ( _nTableID )
         {
-            sendedMsg.addData((char)ANS_MSG_TBL);  
+            sendedMsg.addData((char)ANS_MSG_TBL);
             strWhere = "TableID = " + CMyStr(_nTableID);
         }
         else
         {
-            sendedMsg.addData((char)ANS_MSG);  
+            sendedMsg.addData((char)ANS_MSG);
             strWhere = "InComChat = 1";
         }
-        
+
         sqlChatTable.Select( "PlayerID", strWhere.c_str(), &tbl );
-        
-        
+
+
         sendedMsg.addData(_strMsg);
-        
+
 #ifdef MYDEBUG
         std::cout << "CCHTServer::sendMsgToChat() nTo: " << std::endl;
 #endif
-        
+
         for(TTable::const_iterator it = tbl.begin(); it != tbl.end(); ++it)
         {
             uint32_t nTo = atoi(it->at(0).c_str());
@@ -444,14 +445,14 @@ void CCHTServer::sendMsgToChat( uint32_t _nLogicID, CMyStr* _strMsg, uint32_t _n
             std::cout << nTo << " ";
 #endif
             sendMsg( nTo, &sendedMsg );
-        }   
+        }
 #ifdef MYDEBUG
         std::cout << std::endl;
 #endif
-                             
-        
+
+
     }
-                
+
 }
 
 void CCHTServer::sendMsg( uint32_t _nTo, CSendedMsg *_pMsg )
