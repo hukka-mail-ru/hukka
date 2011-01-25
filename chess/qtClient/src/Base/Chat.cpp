@@ -18,11 +18,10 @@ Chat::Chat(QGraphicsScene* parentScene, ChatType type):
     //   mScrollArea->setPalette(palette);
 
     // HEADER
-    QList<QString> path;
     QString chatNode = (mChatType == CT_COMMON_CHAT) ? XML_NODE_COMMON_CHAT : XML_NODE_TABLE_CHAT;
-    QString family = XML::instance().readValue(XML_ITEMS_FILENAME, path << chatNode << XML_NODE_FONT << XML_NODE_FAMILY); path.clear();
-    int size =       XML::instance().readValue(XML_ITEMS_FILENAME, path << chatNode << XML_NODE_FONT << XML_NODE_SIZE).toInt(); path.clear();
-    QString color  = XML::instance().readValue(XML_ITEMS_FILENAME, path << chatNode << XML_NODE_FONT << XML_NODE_COLOR); path.clear();
+    QString family = XML::instance().readValue(XML_ITEMS_FILENAME, QList<QString>() << chatNode << XML_NODE_FONT << XML_NODE_FAMILY);
+    int size =       XML::instance().readValue(XML_ITEMS_FILENAME, QList<QString>() << chatNode << XML_NODE_FONT << XML_NODE_SIZE).toInt();
+    QString color  = XML::instance().readValue(XML_ITEMS_FILENAME, QList<QString>() << chatNode << XML_NODE_FONT << XML_NODE_COLOR);
 
     mHeader = mParentScene->addText(tr("Game chat"), QFont(family, size));
     mHeader->setDefaultTextColor( QColor(color) );
@@ -39,7 +38,7 @@ Chat::Chat(QGraphicsScene* parentScene, ChatType type):
 
 
     // CHAT BORDER
-    QString border_color  = XML::instance().readValue(XML_ITEMS_FILENAME, path << chatNode << XML_NODE_BORDER << XML_NODE_COLOR); path.clear();
+    QString border_color  = XML::instance().readValue(XML_ITEMS_FILENAME, QList<QString>() << chatNode << XML_NODE_BORDER << XML_NODE_COLOR);
     mBorder = mParentScene->addRect (0, 0, 0, 0, QPen(QColor(border_color)));
 
     if(mChatType == CT_TABLE_CHAT)

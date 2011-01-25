@@ -21,11 +21,10 @@ Clock::Clock(QGraphicsScene* parentScene, const QString& header,
     mHeader(header),
     mXMLNodeName(xmlNodeName)
 {
-    QList<QString> path;
-    QString family = XML::instance().readValue(XML_ITEMS_FILENAME, path << XML_NODE_CLOCKS << mXMLNodeName << XML_NODE_FONT << XML_NODE_FAMILY); path.clear();
-    int size =       XML::instance().readValue(XML_ITEMS_FILENAME, path << XML_NODE_CLOCKS << mXMLNodeName << XML_NODE_FONT << XML_NODE_SIZE).toInt(); path.clear();
-    mActiveColor =   XML::instance().readValue(XML_ITEMS_FILENAME, path << XML_NODE_CLOCKS << mXMLNodeName << XML_NODE_FONT << XML_NODE_COLOR << XML_NODE_ACTIVE); path.clear();
-    mInactiveColor = XML::instance().readValue(XML_ITEMS_FILENAME, path << XML_NODE_CLOCKS << mXMLNodeName << XML_NODE_FONT << XML_NODE_COLOR << XML_NODE_INACTIVE); path.clear();
+    QString family = XML::instance().readValue(XML_ITEMS_FILENAME, QList<QString>() << XML_NODE_CLOCKS << mXMLNodeName << XML_NODE_FONT << XML_NODE_FAMILY);
+    int size =       XML::instance().readValue(XML_ITEMS_FILENAME, QList<QString>() << XML_NODE_CLOCKS << mXMLNodeName << XML_NODE_FONT << XML_NODE_SIZE).toInt();
+    mActiveColor =   XML::instance().readValue(XML_ITEMS_FILENAME, QList<QString>() << XML_NODE_CLOCKS << mXMLNodeName << XML_NODE_FONT << XML_NODE_COLOR << XML_NODE_ACTIVE);
+    mInactiveColor = XML::instance().readValue(XML_ITEMS_FILENAME, QList<QString>() << XML_NODE_CLOCKS << mXMLNodeName << XML_NODE_FONT << XML_NODE_COLOR << XML_NODE_INACTIVE);
 
     mText = mParentScene->addText("",QFont(family, size));
 
@@ -57,9 +56,8 @@ void Clock::updatePos(OrientationStatus orientation)
 {
     QString orientNode = (orientation == OrientationHorizontal) ? XML_NODE_LANDSCAPE : XML_NODE_PORTRAIT;
 
-    QList<QString> path;
-    int x = XML::instance().readValue(XML_ITEMS_FILENAME, path << XML_NODE_CLOCKS << mXMLNodeName << orientNode << XML_NODE_X).toInt(); path.clear();
-    int y = XML::instance().readValue(XML_ITEMS_FILENAME, path << XML_NODE_CLOCKS << mXMLNodeName << orientNode << XML_NODE_Y).toInt(); path.clear();
+    int x = XML::instance().readValue(XML_ITEMS_FILENAME, QList<QString>() << XML_NODE_CLOCKS << mXMLNodeName << orientNode << XML_NODE_X).toInt();
+    int y = XML::instance().readValue(XML_ITEMS_FILENAME, QList<QString>() << XML_NODE_CLOCKS << mXMLNodeName << orientNode << XML_NODE_Y).toInt();
 
     mText->setPos(x, y);
 }

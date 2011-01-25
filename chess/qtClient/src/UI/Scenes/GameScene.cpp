@@ -35,8 +35,7 @@ void GameScene::initialize()
 {
 
     // BOARD
-    QList<QString> path;
-    QString border_color =  XML::instance().readValue(XML_ITEMS_FILENAME, path << XML_NODE_BOARD << XML_NODE_BORDER << XML_NODE_COLOR); path.clear();
+    QString border_color =  XML::instance().readValue(XML_ITEMS_FILENAME, QList<QString>() << XML_NODE_BOARD << XML_NODE_BORDER << XML_NODE_COLOR);
     mBoard = addRect (0, 0, 0, 0, QPen(QColor(border_color)));
 
     // MENU BUTTON
@@ -48,9 +47,9 @@ void GameScene::initialize()
     QObject::connect(mExitButton, SIGNAL(clicked()), this, SLOT(onExitClicked()));
 
 
-    QString family = XML::instance().readValue(XML_ITEMS_FILENAME, path << XML_NODE_GAME_STATE_TEXT << XML_NODE_FONT << XML_NODE_FAMILY); path.clear();
-    int size =       XML::instance().readValue(XML_ITEMS_FILENAME, path << XML_NODE_GAME_STATE_TEXT << XML_NODE_FONT << XML_NODE_SIZE).toInt(); path.clear();
-    QString color =  XML::instance().readValue(XML_ITEMS_FILENAME, path << XML_NODE_GAME_STATE_TEXT << XML_NODE_FONT << XML_NODE_COLOR); path.clear();
+    QString family = XML::instance().readValue(XML_ITEMS_FILENAME, QList<QString>() << XML_NODE_GAME_STATE_TEXT << XML_NODE_FONT << XML_NODE_FAMILY);
+    int size =       XML::instance().readValue(XML_ITEMS_FILENAME, QList<QString>() << XML_NODE_GAME_STATE_TEXT << XML_NODE_FONT << XML_NODE_SIZE).toInt();
+    QString color =  XML::instance().readValue(XML_ITEMS_FILENAME, QList<QString>() << XML_NODE_GAME_STATE_TEXT << XML_NODE_FONT << XML_NODE_COLOR);
 
     mGameStateText = addText("", QFont(family, size));
     mGameStateText->setDefaultTextColor( QColor(color) );
@@ -78,13 +77,12 @@ void GameScene::updateItemsPositions(OrientationStatus orientation)
 {
     // TODO copy-paste!
     QString orientNode = (orientation == OrientationHorizontal) ? XML_NODE_LANDSCAPE : XML_NODE_PORTRAIT;
-    QList<QString> path;
 
     // scene
-    int scene_x      = XML::instance().readValue(XML_ITEMS_FILENAME, path << XML_NODE_SCENE << orientNode << XML_NODE_X).toInt(); path.clear();
-    int scene_y      = XML::instance().readValue(XML_ITEMS_FILENAME, path << XML_NODE_SCENE << orientNode << XML_NODE_Y).toInt(); path.clear();
-    int scene_width  = XML::instance().readValue(XML_ITEMS_FILENAME, path << XML_NODE_SCENE << orientNode << XML_NODE_WIDTH).toInt(); path.clear();
-    int scene_height = XML::instance().readValue(XML_ITEMS_FILENAME, path << XML_NODE_SCENE << orientNode << XML_NODE_HEIGHT).toInt(); path.clear();
+    int scene_x      = XML::instance().readValue(XML_ITEMS_FILENAME, QList<QString>() << XML_NODE_SCENE << orientNode << XML_NODE_X).toInt();
+    int scene_y      = XML::instance().readValue(XML_ITEMS_FILENAME, QList<QString>() << XML_NODE_SCENE << orientNode << XML_NODE_Y).toInt();
+    int scene_width  = XML::instance().readValue(XML_ITEMS_FILENAME, QList<QString>() << XML_NODE_SCENE << orientNode << XML_NODE_WIDTH).toInt();
+    int scene_height = XML::instance().readValue(XML_ITEMS_FILENAME, QList<QString>() << XML_NODE_SCENE << orientNode << XML_NODE_HEIGHT).toInt();
     setSceneRect( scene_x, scene_y, scene_width, scene_height );
 
     // border
@@ -92,9 +90,9 @@ void GameScene::updateItemsPositions(OrientationStatus orientation)
     mExitButton->updatePos(orientation);
 
     // board and field
-    int board_x = XML::instance().readValue(XML_ITEMS_FILENAME, path << XML_NODE_BOARD << orientNode << XML_NODE_X).toInt(); path.clear();
-    int board_y = XML::instance().readValue(XML_ITEMS_FILENAME, path << XML_NODE_BOARD << orientNode << XML_NODE_Y).toInt(); path.clear();
-    int board_width = XML::instance().readValue(XML_ITEMS_FILENAME, path << XML_NODE_BOARD << XML_NODE_WIDTH).toInt(); path.clear();
+    int board_x = XML::instance().readValue(XML_ITEMS_FILENAME, QList<QString>() << XML_NODE_BOARD << orientNode << XML_NODE_X).toInt();
+    int board_y = XML::instance().readValue(XML_ITEMS_FILENAME, QList<QString>() << XML_NODE_BOARD << orientNode << XML_NODE_Y).toInt();
+    int board_width = XML::instance().readValue(XML_ITEMS_FILENAME, QList<QString>() << XML_NODE_BOARD << XML_NODE_WIDTH).toInt();
 
     mBoard->setRect(board_x, board_y, board_width,  board_width);
     updateGameField(mField, mWhite);
@@ -104,8 +102,8 @@ void GameScene::updateItemsPositions(OrientationStatus orientation)
     mGameClock.updatePos(orientation);
 
     // text
-    int text_x = XML::instance().readValue(XML_ITEMS_FILENAME, path << XML_NODE_GAME_STATE_TEXT << orientNode << XML_NODE_X).toInt(); path.clear();
-    int text_y = XML::instance().readValue(XML_ITEMS_FILENAME, path << XML_NODE_GAME_STATE_TEXT << orientNode << XML_NODE_Y).toInt(); path.clear();
+    int text_x = XML::instance().readValue(XML_ITEMS_FILENAME, QList<QString>() << XML_NODE_GAME_STATE_TEXT << orientNode << XML_NODE_X).toInt();
+    int text_y = XML::instance().readValue(XML_ITEMS_FILENAME, QList<QString>() << XML_NODE_GAME_STATE_TEXT << orientNode << XML_NODE_Y).toInt();
     mGameStateText->setPos(text_x , text_y);
 
     // chat

@@ -12,9 +12,8 @@ AuthorizationDialog::AuthorizationDialog(QWidget *parent): Dialog(parent)
 {
     setWindowTitle(tr("Authorization"));
 
-    QList<QString> path;
-    QString login = XML::instance().readValue(XML_CONFIG_FILENAME, path << XML_NODE_USER << XML_NODE_LOGIN); path.clear();
-    QString pwd = XML::instance().readValue(XML_CONFIG_FILENAME, path << XML_NODE_USER << XML_NODE_PASSWORD); path.clear();
+    QString login = XML::instance().readValue(XML_CONFIG_FILENAME, QList<QString>() << XML_NODE_USER << XML_NODE_LOGIN);
+    QString pwd = XML::instance().readValue(XML_CONFIG_FILENAME, QList<QString>() << XML_NODE_USER << XML_NODE_PASSWORD);
 
     loginLabel = new QLabel(tr("Login"), this);
     pwdLabel = new QLabel(tr("Password"), this);

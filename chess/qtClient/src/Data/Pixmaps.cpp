@@ -43,9 +43,8 @@ void Pixmaps::loadPixmaps()
     ////////////////////////////////////////////////////////////////////////////////////
     loadPixmap(PIX_PIECES, ":/images/pieces.png");
 
-    QList<QString> path;
-    int pieceWidth  = XML::instance().readValue(XML_ITEMS_FILENAME, QList<QString>() << XML_NODE_PIECE << XML_NODE_PIECE << XML_NODE_WIDTH).toInt();
-    int pieceHeight = XML::instance().readValue(XML_ITEMS_FILENAME, path << XML_NODE_PIECE << XML_NODE_HEIGHT).toInt(); path.clear();
+    int pieceWidth  = XML::instance().readValue(XML_ITEMS_FILENAME, QList<QString>() << XML_NODE_PIECE << XML_NODE_WIDTH).toInt();
+    int pieceHeight = XML::instance().readValue(XML_ITEMS_FILENAME, QList<QString>() << XML_NODE_PIECE << XML_NODE_HEIGHT).toInt();
 
     mPixmaps.insert(PIX_WHITE_KING,   mPixmaps[PIX_PIECES].copy(pieceWidth * 0, 0, pieceWidth, pieceHeight ));
     mPixmaps.insert(PIX_WHITE_QUEEN,  mPixmaps[PIX_PIECES].copy(pieceWidth * 1, 0, pieceWidth, pieceHeight ));

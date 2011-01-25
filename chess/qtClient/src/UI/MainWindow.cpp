@@ -44,8 +44,7 @@ MainWindow::MainWindow(QWidget *parent):
 
     centralwidget = new QWidget(this);
 
-    QList<QString> path;
-    QString color = XML::instance().readValue(XML_ITEMS_FILENAME, path << XML_NODE_MAIN_WINDOW << XML_NODE_COLOR);
+    QString color = XML::instance().readValue(XML_ITEMS_FILENAME, QList<QString>() << XML_NODE_MAIN_WINDOW << XML_NODE_COLOR);
     centralwidget->setPalette(QPalette(QColor(color)));
 
     /*
@@ -85,16 +84,15 @@ void MainWindow::onOrientationChanged(OrientationStatus orientation)
     if(!initialized)
     {
         // load items' properities
-        QList<QString> path;
-        int width = XML::instance().readValue(XML_ITEMS_FILENAME, path << XML_NODE_BUTTONS << XML_NODE_WIDTH).toInt(); path.clear();
-        int height = XML::instance().readValue(XML_ITEMS_FILENAME, path << XML_NODE_BUTTONS << XML_NODE_HEIGHT).toInt(); path.clear();
-        int text_offset = XML::instance().readValue(XML_ITEMS_FILENAME, path << XML_NODE_BUTTONS << XML_NODE_TEXT_OFFSET).toInt(); path.clear();
+        int width = XML::instance().readValue(XML_ITEMS_FILENAME, QList<QString>() << XML_NODE_BUTTONS << XML_NODE_WIDTH).toInt();
+        int height = XML::instance().readValue(XML_ITEMS_FILENAME, QList<QString>() << XML_NODE_BUTTONS << XML_NODE_HEIGHT).toInt();
+        int text_offset = XML::instance().readValue(XML_ITEMS_FILENAME, QList<QString>() << XML_NODE_BUTTONS << XML_NODE_TEXT_OFFSET).toInt();
 
         Button::setWidth(width);
         Button::setHeight(height);
         Button::setTextOffset(text_offset);
 
-        int cellWidth = XML::instance().readValue(XML_ITEMS_FILENAME, path << XML_NODE_CELL << XML_NODE_WIDTH).toInt(); path.clear();
+        int cellWidth = XML::instance().readValue(XML_ITEMS_FILENAME, QList<QString>() << XML_NODE_CELL << XML_NODE_WIDTH).toInt();
         Cell::setWidth(cellWidth);
 
         // load pixmaps

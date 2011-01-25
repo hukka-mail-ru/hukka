@@ -16,8 +16,7 @@ int main(int argc, char *argv[])
     {
         QApplication app(argc, argv);
 
-        QList<QString> path;
-        QString languageIndex = XML::instance().readValue(XML_CONFIG_FILENAME, path << XML_NODE_CLIENT << XML_NODE_LANGUAGE);
+        QString languageIndex = XML::instance().readValue(XML_CONFIG_FILENAME, QList<QString>() << XML_NODE_CLIENT << XML_NODE_LANGUAGE);
 
         // Translation
         QTranslator qtTranslator;

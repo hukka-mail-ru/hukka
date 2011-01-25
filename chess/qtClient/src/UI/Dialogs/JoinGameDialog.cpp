@@ -45,8 +45,7 @@ JoinGameDialog::JoinGameDialog(const QList<TABLEID>& tableIDs, QWidget *parent):
     this->setLayout(layout);
     this->show();
 
-    QList<QString> path;
-    int margin = XML::instance().readValue(XML_ITEMS_FILENAME, path << XML_NODE_SCENE << XML_NODE_MARGIN << XML_NODE_WIDTH).toInt(); path.clear();
+    int margin = XML::instance().readValue(XML_ITEMS_FILENAME, QList<QString>() << XML_NODE_SCENE << XML_NODE_MARGIN << XML_NODE_WIDTH).toInt();
 
     tableWidget->setColumnWidth(COLUMN_FOR_NAME,      MainWindow::instance()->width()/NUMBER_OF_COLUMNS - 2 * margin);
     tableWidget->setColumnWidth(COLUMN_FOR_RATING,    MainWindow::instance()->width()/NUMBER_OF_COLUMNS - 2 * margin);
