@@ -1,0 +1,19 @@
+rm GAME_TABLE_CREATED
+touch GAME_TABLE_CREATED
+
+rm bin/opponent
+cd module_test/opponent
+qmake opponent.pro
+make
+cd ../..
+
+rm bin/player
+cd module_test/player
+qmake player.pro
+make
+cd ../..
+
+
+bin/opponent&
+bin/player&
+

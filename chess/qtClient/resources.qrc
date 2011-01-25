@@ -1,0 +1,11 @@
+ <!DOCTYPE RCC><RCC version="1.0">
+ <qresource>
+     <file>images/buttons.png</file>
+     <file>images/exit.png</file>
+     <file>images/cells.png</file>
+     <file>images/pieces.png</file>
+     <file>images/splash.png</file>
+     <file>translate/strings_ru.qm</file>
+     <file>config/items.xml</file>
+ </qresource>
+ </RCC>

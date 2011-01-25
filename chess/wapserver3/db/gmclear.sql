@@ -1,0 +1,1 @@
+delete from tbGammonTableList where 1;

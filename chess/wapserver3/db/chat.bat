@@ -1,0 +1,1 @@
+mysql < add_chat.txt > log.txt

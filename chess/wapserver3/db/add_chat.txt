@@ -1,0 +1,23 @@
+USE WapServer3DB;
+
+CREATE TABLE IF NOT EXISTS tbChessChat
+(
+      Msg TEXT NOT NULL,
+      CreateTime TIMESTAMP	
+) ROW_FORMAT=fixed;
+
+CREATE TABLE IF NOT EXISTS tbChessChatTbl
+(
+      TableID INT UNSIGNED NOT NULL,
+      Msg TEXT NOT NULL,
+      CreateTime TIMESTAMP,	
+      PRIMARY KEY(TableID)
+) ROW_FORMAT=fixed;
+
+CREATE TABLE IF NOT EXISTS tbChessChatUserOnline
+(
+      PlayerID INT UNSIGNED NOT NULL DEFAULT '0',
+      TableID INT UNSIGNED NOT NULL DEFAULT '0',
+      InComChat BOOLEAN DEFAULT FALSE,
+      PRIMARY KEY(PlayerID)
+);

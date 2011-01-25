@@ -1,4 +1,0 @@
-rm bin/hello
-qmake hello.pro
-make
-bin/hello

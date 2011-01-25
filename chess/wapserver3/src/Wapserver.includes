@@ -1,0 +1,16 @@
+chatserver
+chessserver/engine
+chessserver/utests
+chessserver
+gammonserver/bglight
+gammonserver/testbglight
+gammonserver
+libs/gameserver
+libs/header
+libs/server
+libs/socket
+libs/sql/testsql
+libs/sql
+libs/tools
+tablemanager/testtbm
+tablemanager

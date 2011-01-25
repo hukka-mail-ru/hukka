@@ -1,0 +1,20 @@
+
+ASCII: ogre, serifcap
+http://www.network-science.de/ascii/
+
+
+4-1-2 Create a game table
+6-1-1 Join the game table
+
+
+
+Eclipse:
+
+New - Project - Makefile Project - Choose dir 
+
+
+
+Rotate xephyr:
+
+xrandr -d :2 -o left
+xrandr -d :2 -o normal

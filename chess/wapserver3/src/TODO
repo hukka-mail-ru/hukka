@@ -1,0 +1,30 @@
+1.(+) CVS structure must be :
+        wapserver3
+            |
+             ---/cpp
+            |
+             ---/java
+	    |     |
+            |      ---/j2me
+            |     |
+            |      ---/j2ee
+            |
+             ---/db
+             
+2.(+) Доработать CConnector для применения к любому сереру, а не только в чату
+
+3.(+) Доработать CSqlTable для возможности работать с BLOB
+
+4.(+) Нет авторизации при использовании CAccessInfo( "lxo", "lxo" ). lxo в БД прописаны.
+
+5.(+) Исправить в socketserver проблему с отправкой очереди сообщений с малыми промежутками времени
+
+6.    Replace pointer char* to CMyStr (where this pointer is null terminate string )
+
+7.    Переименовать chservice в chessserver
+
+8.    Перенести chessserver (бывшый chservice) в ./wapserver3
+
+9.    Структуру директориев в chessserver привести в соответсвие с gammonserver (отделить код службы, сторонний код движка и код юнит-тестов)
+
+10.   Зарезервировать первые ID столов и пользователей для тестов (до 100000) 
