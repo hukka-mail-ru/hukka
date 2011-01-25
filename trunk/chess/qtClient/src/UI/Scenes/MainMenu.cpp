@@ -160,9 +160,8 @@ void MainMenu::onChatClicked()
 
 void MainMenu::connectToGameServer()
 {
-    QList<QString> path;
-    QString serverName = XML::instance().readValue(XML_CONFIG_FILENAME, path << XML_NODE_SERVER << XML_NODE_NAME); path.clear();
-    QString serverPort = XML::instance().readValue(XML_CONFIG_FILENAME, path << XML_NODE_SERVER << XML_NODE_PORT); path.clear();
+    QString serverName = XML::instance().readValue(XML_CONFIG_FILENAME, QList<QString>() << XML_NODE_SERVER << XML_NODE_NAME);
+    QString serverPort = XML::instance().readValue(XML_CONFIG_FILENAME, QList<QString>() << XML_NODE_SERVER << XML_NODE_PORT);
 
     connect(Client::instance(), SIGNAL(connectedToHost()), this, SLOT(onConnectedToHost()));
     Client::instance()->connectToHost(DEFAULT_PROXY, serverName, serverPort.toInt());

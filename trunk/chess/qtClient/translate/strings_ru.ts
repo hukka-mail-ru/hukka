@@ -16,27 +16,27 @@
         <translation>Авторизация</translation>
     </message>
     <message>
-        <location filename="../src/UI/Dialogs/AuthorizationDialog.cpp" line="19"/>
+        <location filename="../src/UI/Dialogs/AuthorizationDialog.cpp" line="18"/>
         <source>Login</source>
         <translation>Логин</translation>
     </message>
     <message>
-        <location filename="../src/UI/Dialogs/AuthorizationDialog.cpp" line="20"/>
+        <location filename="../src/UI/Dialogs/AuthorizationDialog.cpp" line="19"/>
         <source>Password</source>
         <translation>Пароль</translation>
     </message>
     <message>
-        <location filename="../src/UI/Dialogs/AuthorizationDialog.cpp" line="26"/>
+        <location filename="../src/UI/Dialogs/AuthorizationDialog.cpp" line="25"/>
         <source>Register new user</source>
         <translation>Создать нового пользователя</translation>
     </message>
     <message>
-        <location filename="../src/UI/Dialogs/AuthorizationDialog.cpp" line="29"/>
+        <location filename="../src/UI/Dialogs/AuthorizationDialog.cpp" line="28"/>
         <source>OK</source>
         <translation>ОК</translation>
     </message>
     <message>
-        <location filename="../src/UI/Dialogs/AuthorizationDialog.cpp" line="30"/>
+        <location filename="../src/UI/Dialogs/AuthorizationDialog.cpp" line="29"/>
         <source>Exit</source>
         <translation>Выход</translation>
     </message>
@@ -44,7 +44,7 @@
 <context>
     <name>Chat</name>
     <message>
-        <location filename="../src/Base/Chat.cpp" line="27"/>
+        <location filename="../src/Base/Chat.cpp" line="26"/>
         <source>Game chat</source>
         <translation>Чат игры</translation>
     </message>
@@ -415,17 +415,17 @@
         <translation type="unfinished">Игра: </translation>
     </message>
     <message>
-        <location filename="../src/UI/Scenes/GameScene.cpp" line="43"/>
+        <location filename="../src/UI/Scenes/GameScene.cpp" line="42"/>
         <source>Game menu</source>
         <translation type="unfinished">Меню игры</translation>
     </message>
     <message>
-        <location filename="../src/UI/Scenes/GameScene.cpp" line="138"/>
+        <location filename="../src/UI/Scenes/GameScene.cpp" line="136"/>
         <source>Your move</source>
         <translation type="unfinished">Ваш ход</translation>
     </message>
     <message>
-        <location filename="../src/UI/Scenes/GameScene.cpp" line="139"/>
+        <location filename="../src/UI/Scenes/GameScene.cpp" line="137"/>
         <source>Opponent&apos;s move</source>
         <translation type="unfinished">Ход противника</translation>
     </message>
@@ -494,7 +494,7 @@
 <context>
     <name>MainWindow</name>
     <message>
-        <location filename="../src/UI/MainWindow.cpp" line="65"/>
+        <location filename="../src/UI/MainWindow.cpp" line="64"/>
         <source>Chess</source>
         <translation>Шахматы</translation>
     </message>
@@ -530,42 +530,42 @@
         <translation>Настройки</translation>
     </message>
     <message>
-        <location filename="../src/UI/Dialogs/OptionsDialog.cpp" line="27"/>
+        <location filename="../src/UI/Dialogs/OptionsDialog.cpp" line="26"/>
         <source>Server</source>
         <translation>Сервер</translation>
     </message>
     <message>
-        <location filename="../src/UI/Dialogs/OptionsDialog.cpp" line="28"/>
+        <location filename="../src/UI/Dialogs/OptionsDialog.cpp" line="27"/>
         <source>Port</source>
         <translation>Порт</translation>
     </message>
     <message>
-        <location filename="../src/UI/Dialogs/OptionsDialog.cpp" line="29"/>
+        <location filename="../src/UI/Dialogs/OptionsDialog.cpp" line="28"/>
         <source>Language</source>
         <translation>Язык</translation>
     </message>
     <message>
-        <location filename="../src/UI/Dialogs/OptionsDialog.cpp" line="35"/>
+        <location filename="../src/UI/Dialogs/OptionsDialog.cpp" line="34"/>
         <source>English</source>
         <translation>Английский</translation>
     </message>
     <message>
-        <location filename="../src/UI/Dialogs/OptionsDialog.cpp" line="36"/>
+        <location filename="../src/UI/Dialogs/OptionsDialog.cpp" line="35"/>
         <source>Russian</source>
         <translation>Русский</translation>
     </message>
     <message>
-        <location filename="../src/UI/Dialogs/OptionsDialog.cpp" line="54"/>
+        <location filename="../src/UI/Dialogs/OptionsDialog.cpp" line="53"/>
         <source>OK</source>
         <translation>ОК</translation>
     </message>
     <message>
-        <location filename="../src/UI/Dialogs/OptionsDialog.cpp" line="55"/>
+        <location filename="../src/UI/Dialogs/OptionsDialog.cpp" line="54"/>
         <source>Exit</source>
         <translation>Выход</translation>
     </message>
     <message>
-        <location filename="../src/UI/Dialogs/OptionsDialog.cpp" line="92"/>
+        <location filename="../src/UI/Dialogs/OptionsDialog.cpp" line="91"/>
         <source>Please restart the game to apply the language settings</source>
         <translation>Пожалуйста перезапустите игру, чтобы настройки языка вступили в силу</translation>
     </message>

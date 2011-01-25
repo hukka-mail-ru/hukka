@@ -77,6 +77,7 @@ MainWindow::~MainWindow()
 
 void MainWindow::onOrientationChanged(OrientationStatus orientation)
 {
+
     qDebug() << "onOrientationChanged: " << orientation;
 
     static bool initialized = false;
@@ -134,7 +135,8 @@ void MainWindow::onOrientationChanged(OrientationStatus orientation)
 void MainWindow::initialize()
 {
     // the initialization was moved into 'onOrientationChanged'
-    onOrientationChanged(mOrientation.getActualOrientation());
+    //onOrientationChanged(mOrientation.getActualOrientation());
+    onOrientationChanged(OrientationHorizontal);
     setMode(MW_NORMAL);
 }
 
