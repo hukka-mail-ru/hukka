@@ -51,7 +51,7 @@ void MainMenu::initialize()
     mSplash = addPixmap(Pixmaps::get(PIX_SPLASH));
     mSplash->setZValue(Z_CELLS_LAYER);
 
-    QList<QString> path;
+
     createGameButton = newButton(Pixmaps::get(PIX_BUTTON_CREATE_GAME), SLOT(onCreateGameClicked()), tr("New Game"), XML_NODE_NEW_GAME);
     findGameButton   = newButton(Pixmaps::get(PIX_BUTTON_FIND_GAME),   SLOT(onFindGameClicked()), tr("Find game"), XML_NODE_FIND_GAME);
     chatButton       = newButton(Pixmaps::get(PIX_BUTTON_CHAT),        SLOT(onChatClicked()), tr("Chat"), XML_NODE_CHAT);
@@ -65,13 +65,13 @@ void MainMenu::updateItemsPositions(OrientationStatus orientation)
 {
     // TODO copy-paste!
     QString orientNode = (orientation == OrientationHorizontal) ? XML_NODE_LANDSCAPE : XML_NODE_PORTRAIT;
-    QList<QString> path;
+
 
     // scene
-    int scene_x      = XML::instance().readValue(XML_ITEMS_FILENAME, path << XML_NODE_SCENE << orientNode << XML_NODE_X).toInt(); path.clear();
-    int scene_y      = XML::instance().readValue(XML_ITEMS_FILENAME, path << XML_NODE_SCENE << orientNode << XML_NODE_Y).toInt(); path.clear();
-    int scene_width  = XML::instance().readValue(XML_ITEMS_FILENAME, path << XML_NODE_SCENE << orientNode << XML_NODE_WIDTH).toInt(); path.clear();
-    int scene_height = XML::instance().readValue(XML_ITEMS_FILENAME, path << XML_NODE_SCENE << orientNode << XML_NODE_HEIGHT).toInt(); path.clear();
+    int scene_x      = XML::instance().readValue(XML_ITEMS_FILENAME, QList<QString>() << XML_NODE_SCENE << orientNode << XML_NODE_X).toInt();
+    int scene_y      = XML::instance().readValue(XML_ITEMS_FILENAME, QList<QString>() << XML_NODE_SCENE << orientNode << XML_NODE_Y).toInt();
+    int scene_width  = XML::instance().readValue(XML_ITEMS_FILENAME, QList<QString>() << XML_NODE_SCENE << orientNode << XML_NODE_WIDTH).toInt();
+    int scene_height = XML::instance().readValue(XML_ITEMS_FILENAME, QList<QString>() << XML_NODE_SCENE << orientNode << XML_NODE_HEIGHT).toInt();
 
     qDebug() << scene_x << scene_y << scene_width << scene_height;
     setSceneRect( scene_x, scene_y, scene_width, scene_height );
@@ -84,8 +84,8 @@ void MainMenu::updateItemsPositions(OrientationStatus orientation)
     exitButton->updatePos(orientation);
 
     // splash
-    int x = XML::instance().readValue(XML_ITEMS_FILENAME, path << XML_NODE_SPLASH << orientNode << XML_NODE_X).toInt(); path.clear();
-    int y = XML::instance().readValue(XML_ITEMS_FILENAME, path << XML_NODE_SPLASH << orientNode << XML_NODE_Y).toInt(); path.clear();
+    int x = XML::instance().readValue(XML_ITEMS_FILENAME, QList<QString>() << XML_NODE_SPLASH << orientNode << XML_NODE_X).toInt();
+    int y = XML::instance().readValue(XML_ITEMS_FILENAME, QList<QString>() << XML_NODE_SPLASH << orientNode << XML_NODE_Y).toInt();
 
     mSplash->setPos(x, y);
 

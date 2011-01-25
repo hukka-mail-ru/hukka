@@ -19,10 +19,9 @@ OptionsDialog::OptionsDialog(QWidget *parent):
 {
     setWindowTitle(tr("Options"));
 
-    QList<QString> path;
-    QString serverName = XML::instance().readValue(XML_CONFIG_FILENAME, path << XML_NODE_SERVER << XML_NODE_NAME); path.clear();
-    QString serverPort = XML::instance().readValue(XML_CONFIG_FILENAME, path << XML_NODE_SERVER << XML_NODE_PORT); path.clear();
-    mLanguageIndex = XML::instance().readValue(XML_CONFIG_FILENAME, path << XML_NODE_CLIENT << XML_NODE_LANGUAGE); path.clear();
+    QString serverName = XML::instance().readValue(XML_CONFIG_FILENAME, QList<QString>() << XML_NODE_SERVER << XML_NODE_NAME);
+    QString serverPort = XML::instance().readValue(XML_CONFIG_FILENAME, QList<QString>() << XML_NODE_SERVER << XML_NODE_PORT);
+    mLanguageIndex = XML::instance().readValue(XML_CONFIG_FILENAME, QList<QString>() << XML_NODE_CLIENT << XML_NODE_LANGUAGE);
 
     serverNameLabel = new QLabel(tr("Server"), this);
     serverPortLabel = new QLabel(tr("Port"), this);
