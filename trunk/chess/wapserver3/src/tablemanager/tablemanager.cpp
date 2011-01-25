@@ -38,9 +38,9 @@
 
 int StartService()
 {
-	
+
 	openlog( "tablemanager", LOG_CONS, LOG_LOCAL0 );
-	
+
 	CTblMgrServer* pTblMgrServer = CTblMgrServer::Instance();
 
 	CConnector Connector( static_cast<ISocketManager*>( pTblMgrServer ) );
@@ -65,7 +65,7 @@ int StartService()
 void StartUTests()
 {
 	TMCTest utests;
-	
+
 	utests.Run();
 }
 
@@ -83,7 +83,7 @@ int main(int argc, char *argv[])
 	{
 		StartService();
 	}
-	
-	return EXIT_SUCCESS;	
+
+	return 0;
 }
 
