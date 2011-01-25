@@ -33,7 +33,7 @@ QString XML::readValue(QString filename, const QList<QString>& nodenames)
             }
             err +=  " is null";
             qDebug()  << err;
-            THROW_EXCEPTION("Node is null");
+            THROW_EXCEPTION("Can't read XML value. Node is null");
         }
     }
 
