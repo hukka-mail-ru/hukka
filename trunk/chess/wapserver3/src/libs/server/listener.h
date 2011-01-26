@@ -5,12 +5,12 @@
 #include <sys/types.h>
 #include "srvserver.h"
 
-class CListener : public ICallBack
+class Listener : public ICallBack
 {
 public:
 
-	CListener();
-	virtual ~CListener();
+	Listener();
+	virtual ~Listener();
 
 	int			Listen( uint16_t );
 	int			Close();
@@ -24,7 +24,7 @@ private:
 
 	int			m_nSocket;
 
-	CSRVServer*	m_pSRVServer;
+	SRVServer*	m_pSRVServer;
 };
 
 #endif

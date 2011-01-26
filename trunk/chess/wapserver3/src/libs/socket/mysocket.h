@@ -6,18 +6,18 @@
 #include "queuemsg.h"
 #include "../header/interface.h"
 
-class CClientMsg;
-class CSocketManager;
+class ClientMsg;
+class SocketManager;
 
-class CMySocket : public ICallBack, public ISender, public CSocket
+class MySocket : public ICallBack, public ISender, public CSocket
 {
 public:
 
-	CMySocket( int _nSocket = -1, ISocketManager* = 0 );
-	~CMySocket();
+	MySocket( int _nSocket = -1, ISocketManager* = 0 );
+	~MySocket();
 //ISender
-	void				AddMsg( const CClientMsg& );
-	bool				GetMsg( CClientMsg& );
+	void				AddMsg( const ClientMsg& );
+	bool				GetMsg( ClientMsg& );
 private:
 //ICallBack
 	void				DoRead();
@@ -28,7 +28,7 @@ private:
 
 	CBuffer			m_Buffer;
 
-   	CClientMsg      m_clientMsg;
+   	ClientMsg      m_clientMsg;
 
 	CQueueMsg			m_inQueueMsg;
 	CQueueMsg			m_outQueueMsg;
@@ -38,6 +38,6 @@ private:
 
 };
 
-typedef std::queue<CMySocket*> TQueSocket;
+typedef std::queue<MySocket*> TQueSocket;
 
 #endif

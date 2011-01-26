@@ -31,7 +31,7 @@
 
 #define MIN_USERID  100
 
-class CTblMgrServer : public CSocketManager, public CAccessInfo
+class CTblMgrServer : public SocketManager, public AccessInfo
 {
     public:
 
@@ -73,15 +73,15 @@ class CTblMgrServer : public CSocketManager, public CAccessInfo
 
         void    Random( uint32_t _nUserID, const TVecChar* _vecData );
 
-        void	DoAllMsg( CMySocket* );
-        void	setSocket( CMySocket * _pSocket );
-        void	newMsg( CClientMsg* _pMsg );
+        void	DoAllMsg( MySocket* );
+        void	setSocket( MySocket * _pSocket );
+        void	newMsg( ClientMsg* _pMsg );
         void	sendMsg( uint32_t _nTo, void* _pMsg, int _nSize );
         void    sendMsg( uint32_t _nTo, CSendedMsg* _pMsg );
     private:
 
-        CMySocket			*m_pSocket;
-        CTbmCommands			m_TbmCommands;
+        MySocket			*m_pSocket;
+        TbmCommands			m_TbmCommands;
         static CTblMgrServer*		m_pSelf;
         static int			m_nRefCount;
 

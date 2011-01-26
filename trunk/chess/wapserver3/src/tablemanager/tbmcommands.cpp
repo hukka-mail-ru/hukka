@@ -11,7 +11,7 @@
 #define RANDOM_BUFFER 100
 #define TABLE_OPEN 1
 
-CTbmCommands::CTbmCommands()
+TbmCommands::TbmCommands()
 : m_nLastId(0)
 {
 	CSqlTable paramsTable("tbParamList");
@@ -26,12 +26,12 @@ CTbmCommands::CTbmCommands()
 
 }
 
-CTbmCommands::~CTbmCommands()
+TbmCommands::~TbmCommands()
 {
 
 }
 
-bool CTbmCommands::CheckParams(const TVecPrms &_vecPrms)
+bool TbmCommands::CheckParams(const TVecPrms &_vecPrms)
 {
 	CMyStr strWhere;
 	TTable tbl;
@@ -61,7 +61,7 @@ bool CTbmCommands::CheckParams(const TVecPrms &_vecPrms)
 	return true;
 }
 
-bool CTbmCommands::GetLogicTable(int _nLogicID, CSqlTable* _pRes)
+bool TbmCommands::GetLogicTable(int _nLogicID, CSqlTable* _pRes)
 {
 	CMyStr strLogicTable;
 
@@ -76,13 +76,13 @@ bool CTbmCommands::GetLogicTable(int _nLogicID, CSqlTable* _pRes)
 
 }
 
-CTbmCommands::CrRes CTbmCommands::Create(uint32_t _nLogicID, uint32_t _nPlayerID,
+TbmCommands::CrRes TbmCommands::Create(uint32_t _nLogicID, uint32_t _nPlayerID,
 					 const TVecPrms &_vecPrms, const CMyStr* _strPswd )
 {
 	if (GetMyTable(_nLogicID, _nPlayerID, 0))
 	{
 #ifdef MYDEBUG
-	    	std::cout << "CTbmCommands::Create return false! (GetMyTable return true)" << std::endl;
+	    	std::cout << "TbmCommands::Create return false! (GetMyTable return true)" << std::endl;
 #endif
 		return TABEX;
 	}
@@ -135,13 +135,13 @@ CTbmCommands::CrRes CTbmCommands::Create(uint32_t _nLogicID, uint32_t _nPlayerID
             if (!sqlLogicTable.Insert(fields, values))
             {
 #ifdef MYDEBUG
-        	    std::cout << "CTbmCommands::Create return false! (GetLogicTable return false)" << std::endl;
+        	    std::cout << "TbmCommands::Create return false! (GetLogicTable return false)" << std::endl;
 #endif
                 return NVPAR;
             }
 		    m_nLastId = sqlLogicTable.LastInsertId();
 #ifdef MYDEBUG
-    	    std::cout << "CTbmCommands::Create : create table ID: "  << m_nLastId << std::endl;
+    	    std::cout << "TbmCommands::Create : create table ID: "  << m_nLastId << std::endl;
 #endif
             return DONE;
 
@@ -152,25 +152,25 @@ CTbmCommands::CrRes CTbmCommands::Create(uint32_t _nLogicID, uint32_t _nPlayerID
 		m_nLastId = sqlLogicTable.LastInsertId();
 
 #ifdef MYDEBUG
-	    std::cout << "CTbmCommands::Create : create table ID: "  << m_nLastId << std::endl;
+	    std::cout << "TbmCommands::Create : create table ID: "  << m_nLastId << std::endl;
 #endif
         return DONE;
 	}
 	else
 	{
 #ifdef MYDEBUG
-	    std::cout << "CTbmCommands::Create return false! (GetLogicTable return false)" << std::endl;
+	    std::cout << "TbmCommands::Create return false! (GetLogicTable return false)" << std::endl;
 #endif
 		return NVPAR;
 	}
 }
 
-bool CTbmCommands::Find(uint32_t _nLogicID, uint32_t _nPlayerID, uint32_t _nCount, const TVecFindPrms* _pvecPrms, TVecUINT* _pvecRes)
+bool TbmCommands::Find(uint32_t _nLogicID, uint32_t _nPlayerID, uint32_t _nCount, const TVecFindPrms* _pvecPrms, TVecUINT* _pvecRes)
 {
     TVecPrms vecPrms;
 
 #ifdef MYDEBUG
-            std::cout << "CTbmCommands::Find _pvecPrms->size() = " << CMyStr(_pvecPrms->size()) << std::endl;
+            std::cout << "TbmCommands::Find _pvecPrms->size() = " << CMyStr(_pvecPrms->size()) << std::endl;
 #endif
     if (!_pvecPrms)
     {
@@ -196,7 +196,7 @@ bool CTbmCommands::Find(uint32_t _nLogicID, uint32_t _nPlayerID, uint32_t _nCoun
         if ((_pvecPrms->at(i).m_nCondition > 2)||(_pvecPrms->at(i).m_nLogic > 2))
         {
 #ifdef MYDEBUG
-            std::cout << "CTbmCommands::Find - Not valid condition or logic parameter" << std::endl;
+            std::cout << "TbmCommands::Find - Not valid condition or logic parameter" << std::endl;
 #endif
             return false;
         }
@@ -208,12 +208,12 @@ bool CTbmCommands::Find(uint32_t _nLogicID, uint32_t _nPlayerID, uint32_t _nCoun
     if ( !CheckParams( vecPrms ) )
     {
 #ifdef MYDEBUG
-        std::cout << "CTbmCommands::Find - Not valid parameters" << std::endl;
+        std::cout << "TbmCommands::Find - Not valid parameters" << std::endl;
 #endif
         return false;
     }
 #ifdef MYDEBUG
-        std::cout << "CTbmCommands::Find - Valid parameters" << std::endl;
+        std::cout << "TbmCommands::Find - Valid parameters" << std::endl;
 #endif
 
     TTable tbl;
@@ -259,7 +259,7 @@ bool CTbmCommands::Find(uint32_t _nLogicID, uint32_t _nPlayerID, uint32_t _nCoun
 
             CMyStr strWhere1 = "ParamID = " + CMyStr(_pvecPrms->at(i).m_nParameter);
 #ifdef MYDEBUG
-            std::cout << "CTbmCommands::Find() strWhere: " << strWhere1 << std::endl;
+            std::cout << "TbmCommands::Find() strWhere: " << strWhere1 << std::endl;
 #endif
             paramsTable.Select("ParamName", strWhere1.c_str(), &tbl);
 
@@ -280,20 +280,20 @@ bool CTbmCommands::Find(uint32_t _nLogicID, uint32_t _nPlayerID, uint32_t _nCoun
         }
 
 #ifdef MYDEBUG
-        std::cout << "CTbmCommands::Find() strWhere: " << strWhere << std::endl;
+        std::cout << "TbmCommands::Find() strWhere: " << strWhere << std::endl;
 #endif
         sqlLogicTable.Select("TableID", strWhere.c_str(), &tbl);
 
         if ( tbl.size() == 0 )
         {
 #ifdef MYDEBUG
-            std::cout << "CTbmCommands::Find() tables not founded" << std::endl;
+            std::cout << "TbmCommands::Find() tables not founded" << std::endl;
 #endif
             return false;
         }
         else
         {
-            std::cout << "CTbmCommands::Find() db return " << CMyStr(tbl.size()) << " tables" << std::endl;
+            std::cout << "TbmCommands::Find() db return " << CMyStr(tbl.size()) << " tables" << std::endl;
         }
 
 
@@ -327,13 +327,13 @@ bool CTbmCommands::Find(uint32_t _nLogicID, uint32_t _nPlayerID, uint32_t _nCoun
     else
     {
 #ifdef MYDEBUG
-        std::cout << "CTbmCommands::Find() !GetLogicTable" << std::endl;
+        std::cout << "TbmCommands::Find() !GetLogicTable" << std::endl;
 #endif
         return false;
     }
 }
 
-bool CTbmCommands::Delete(uint32_t _nLogicID, uint32_t _nPlayerID, uint32_t _nTableID)
+bool TbmCommands::Delete(uint32_t _nLogicID, uint32_t _nPlayerID, uint32_t _nTableID)
 {
     TVecUINT vecTableIDs;
 
@@ -372,7 +372,7 @@ bool CTbmCommands::Delete(uint32_t _nLogicID, uint32_t _nPlayerID, uint32_t _nTa
     return true;
 }
 
-bool CTbmCommands::FindEmpty(int _nLogicID, int _nPlayerID, TVecUINT* vecRes )
+bool TbmCommands::FindEmpty(int _nLogicID, int _nPlayerID, TVecUINT* vecRes )
 {
 
     CSqlTable sqlLogicTable("");
@@ -403,7 +403,7 @@ bool CTbmCommands::FindEmpty(int _nLogicID, int _nPlayerID, TVecUINT* vecRes )
 	}
 }
 
-bool CTbmCommands::GetTableParams(int _nLogicID, int _nTableID, const TVecUINT& _vecParIDs, TVecPrms *_pvecPrms)
+bool TbmCommands::GetTableParams(int _nLogicID, int _nTableID, const TVecUINT& _vecParIDs, TVecPrms *_pvecPrms)
 {
 	CSqlTable paramsTable("tbParamList");
 	CSqlTable sqlLogicTable("");
@@ -441,7 +441,7 @@ bool CTbmCommands::GetTableParams(int _nLogicID, int _nTableID, const TVecUINT& 
 	return true;
 }
 
-bool CTbmCommands::GetAllTables( uint32_t _nLogicID, TVecUINT* _pvecRes )
+bool TbmCommands::GetAllTables( uint32_t _nLogicID, TVecUINT* _pvecRes )
 {
     CSqlTable sqlLogicTable("");
 
@@ -471,7 +471,7 @@ bool CTbmCommands::GetAllTables( uint32_t _nLogicID, TVecUINT* _pvecRes )
 	}
 }
 
-bool  CTbmCommands::GetMyTable(int _nLogicID, int _nPlayerID, TVecUINT* vecRes)
+bool  TbmCommands::GetMyTable(int _nLogicID, int _nPlayerID, TVecUINT* vecRes)
 {
 	///TODO change the query to database with using tbParamList and 'isPlayerID' field
     	CSqlTable sqlLogicTable("");
@@ -508,12 +508,12 @@ bool  CTbmCommands::GetMyTable(int _nLogicID, int _nPlayerID, TVecUINT* vecRes)
 
 }
 
-uint32_t CTbmCommands::LastInsertId()
+uint32_t TbmCommands::LastInsertId()
 {
     return m_nLastId;
 }
 
-uint32_t CTbmCommands::RandomOpponent(uint32_t _nLogicID, uint32_t _nPlayerID, const TVecFindPrms* _pvecPrms )
+uint32_t TbmCommands::RandomOpponent(uint32_t _nLogicID, uint32_t _nPlayerID, const TVecFindPrms* _pvecPrms )
 {
 
     TVecUINT vecPlayerTables, vecResult, vecTmp;

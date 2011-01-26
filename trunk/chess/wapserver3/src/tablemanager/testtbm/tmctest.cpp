@@ -82,9 +82,9 @@ void TMCTest::Run()
 
 bool TMCTest::CheckParams()
 {
-	std::cerr << "CTbmCommands::CheckParams() ";
+	std::cerr << "TbmCommands::CheckParams() ";
 	
-	CTbmCommands TbmCommands;
+	TbmCommands TbmCommands;
 	TVecPrms vecPrmsNV, vecPrmsV;
 	
 	const int cnLogicId = 1;
@@ -92,14 +92,14 @@ bool TMCTest::CheckParams()
 	
 	vecPrmsNV.push_back( std::make_pair<int, int> (3,-10) );
 	
-	if ( TbmCommands.Create(cnLogicId, cnPlayer1Id, vecPrmsNV) != CTbmCommands::NVPAR )
+	if ( TbmCommands.Create(cnLogicId, cnPlayer1Id, vecPrmsNV) != TbmCommands::NVPAR )
 	{
 		return false;
 	}
 	
 	vecPrmsV.push_back( std::make_pair<int, int> (3,100) );
 	
-	if ( TbmCommands.Create(cnLogicId, cnPlayer1Id, vecPrmsV) != CTbmCommands::DONE )
+	if ( TbmCommands.Create(cnLogicId, cnPlayer1Id, vecPrmsV) != TbmCommands::DONE )
 	{
 		return false;
 	}
@@ -110,9 +110,9 @@ bool TMCTest::CheckParams()
 
 bool TMCTest::Create()
 {
-	std::cerr << "CTbmCommands::Create() && CTbmCommands::LastInsertId() ";
+	std::cerr << "TbmCommands::Create() && TbmCommands::LastInsertId() ";
 	
-	CTbmCommands TbmCommands;
+	TbmCommands TbmCommands;
 
 	TVecPrms vecPrms;
 
@@ -120,14 +120,14 @@ bool TMCTest::Create()
 	const int cnPlayer1Id = 105;
 	const int cnPlayer2Id = 104;
 
-	if ( TbmCommands.Create(cnLogicId, cnPlayer1Id, vecPrms) != CTbmCommands::DONE )
+	if ( TbmCommands.Create(cnLogicId, cnPlayer1Id, vecPrms) != TbmCommands::DONE )
 	{
 		return false;
 	}
 
 	int nIndex = TbmCommands.LastInsertId();
 
-	if ( TbmCommands.Create(cnLogicId, cnPlayer2Id, vecPrms) != CTbmCommands::DONE )
+	if ( TbmCommands.Create(cnLogicId, cnPlayer2Id, vecPrms) != TbmCommands::DONE )
 	{
 		return false;
 	}
@@ -140,9 +140,9 @@ bool TMCTest::Create()
 
 bool TMCTest::Find()
 {
-	std::cerr << "CTbmCommands::Find() ";
+	std::cerr << "TbmCommands::Find() ";
 /*	
-	CTbmCommands TbmCommands;
+	TbmCommands TbmCommands;
 
 	TVecUINT vecRes;
 	TVecPrms vecPrms;
@@ -157,7 +157,7 @@ bool TMCTest::Find()
 
 	int nSize0 = vecRes.size();
 
-	if ( TbmCommands.Create(cnLogicId, cnPlayer1Id2, vecPrms) != CTbmCommands::DONE )
+	if ( TbmCommands.Create(cnLogicId, cnPlayer1Id2, vecPrms) != TbmCommands::DONE )
 	{
 		return false;
 	}
@@ -174,9 +174,9 @@ bool TMCTest::Find()
 
 bool TMCTest::GetTableParams()
 {
-	std::cerr << "CTbmCommands::GetTableParams() ";
+	std::cerr << "TbmCommands::GetTableParams() ";
 	
-	CTbmCommands TbmCommands;	
+	TbmCommands TbmCommands;	
 	TVecUINT vecParamIDs;
 	TVecPrms vecParams;
 	
@@ -201,9 +201,9 @@ bool TMCTest::GetTableParams()
 
 bool TMCTest::GetMyTable()
 {
-	std::cerr << "CTbmCommands::GetMyTable() ";
+	std::cerr << "TbmCommands::GetMyTable() ";
 	
-	CTbmCommands TbmCommands;
+	TbmCommands TbmCommands;
 
 	const int cnLogicId = 1;
 	const int cnPlayer1Id = 107;
@@ -226,9 +226,9 @@ bool TMCTest::GetMyTable()
 
 bool TMCTest::RandomOpponent()
 {
-	std::cerr << "CTbmCommands::RandomOpponent() ";
+	std::cerr << "TbmCommands::RandomOpponent() ";
 /*
-	CTbmCommands TbmCommands;
+	TbmCommands TbmCommands;
 
 	const int cnLogicId = 1;
 	const int cnPlayer1Id = 105;

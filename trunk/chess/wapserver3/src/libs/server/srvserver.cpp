@@ -7,20 +7,20 @@
 
 using namespace std;
 
-CSRVServer* CSRVServer::m_pSelf = 0;
-int CSRVServer::m_nRefCount = 0;
+SRVServer* SRVServer::m_pSelf = 0;
+int SRVServer::m_nRefCount = 0;
 
-CSRVServer* CSRVServer::Instance()
+SRVServer* SRVServer::Instance()
 {
 	if( m_pSelf == 0 )
-		m_pSelf = new CSRVServer;
+		m_pSelf = new SRVServer;
 
 	++m_nRefCount;
 
 	return m_pSelf;
 }
 
-void CSRVServer::FreeInst()
+void SRVServer::FreeInst()
 {
 	--m_nRefCount;
 
@@ -30,7 +30,7 @@ void CSRVServer::FreeInst()
 	KillObject();
 }
 
-void CSRVServer::KillObject()
+void SRVServer::KillObject()
 {
 	if( m_pSelf != 0 )
 		delete m_pSelf;
@@ -39,69 +39,69 @@ void CSRVServer::KillObject()
 	m_nRefCount = 0;
 }
 
-void CSRVServer::AddSocket( int _nSocket, const sockaddr_in* _pAddr )
+void SRVServer::AddSocket( int _nSocket, const sockaddr_in* _pAddr )
 {
-	CClientSocket* pClientSocket = new CClientSocket( _nSocket, static_cast<ISocketManager*>( this ) );
+	ClientSocket* pClientSocket = new ClientSocket( _nSocket, static_cast<ISocketManager*>( this ) );
 
-	cout << "CSRVServer::AddSocket AddHandle" << endl;
+	cout << "SRVServer::AddSocket AddHandle" << endl;
 	//m_pSelector->AddHandle( _nSocket, EVFILT_READ, EV_ADD, static_cast<ICallBack*>( pClientSocket ) );
-	m_pSelector->AddHandle( _nSocket, EPOLL_CTL_ADD, EPOLLIN, static_cast<ICallBack*>( pClientSocket ) );
+	m_pSelector->AddHandle( _nSocket, EPOLLIN, static_cast<ICallBack*>( pClientSocket ) );
 }
 
-void CSRVServer::OnClose( CMySocket* _pSocket )
+void SRVServer::OnClose( MySocket* _pSocket )
 {
-	CClientSocket* pClientSocket = reinterpret_cast<CClientSocket*>( _pSocket );
+	ClientSocket* pClientSocket = reinterpret_cast<ClientSocket*>( _pSocket );
 
 	if( pClientSocket )
 		if( int32_t nID = pClientSocket->GetID() )
 			m_pOnLineManager->OffLine( nID );
 
-	CSocketManager::OnClose( _pSocket );
+	SocketManager::OnClose( _pSocket );
 }
 
-CSRVServer::CSRVServer()
+SRVServer::SRVServer()
 {
-	m_pOnLineManager = COnLineManager::Instance();
+	m_pOnLineManager = OnLineManager::Instance();
 }
 
-CSRVServer::~CSRVServer()
+SRVServer::~SRVServer()
 {
-	COnLineManager::FreeInst();
+	OnLineManager::FreeInst();
 }
 
-void CSRVServer::DoAllMsg( CMySocket* _pSocket )
+void SRVServer::DoAllMsg( MySocket* _pSocket )
 {
-	CClientSocket* pClientSocket = reinterpret_cast<CClientSocket*>( _pSocket );
+	ClientSocket* pClientSocket = reinterpret_cast<ClientSocket*>( _pSocket );
 
 	DoAllMsg( pClientSocket );
 }
 
-void CSRVServer::DoAllMsg( CClientSocket* _pSocket )
+void SRVServer::DoAllMsg( ClientSocket* _pSocket )
 {
-	CClientMsg inMsg, outMsg;
+	ClientMsg inMsg, outMsg;
 
 	while( _pSocket->GetMsg( inMsg ) )
 	{
 		bool isOutMsg;
 
-       std::cerr << "CSRVServer::DoAllMsg TO: " << (int)_pSocket->GetID() << std::endl;
+       std::cerr << "SRVServer::DoAllMsg TO: " << (int)_pSocket->GetID() << std::endl;
 
 		if( _pSocket->GetID() == 0 )
-			isOutMsg = UnRegister( &inMsg, &outMsg, static_cast<CRegInfo*>( _pSocket ), static_cast<ISender*>( _pSocket ) );
+			isOutMsg = UnRegister( &inMsg, &outMsg, static_cast<RegInfo*>( _pSocket ), static_cast<ISender*>( _pSocket ) );
 		else
-			isOutMsg = Register( &inMsg, &outMsg, static_cast<CRegInfo*>( _pSocket ) );
+			isOutMsg = Register( &inMsg, &outMsg, static_cast<RegInfo*>( _pSocket ) );
 
 		if( isOutMsg )
 			_pSocket->AddMsg( outMsg );
 	}
 }
 
-bool CSRVServer::UnRegister( const CClientMsg* _pinMsg, CClientMsg* _poutMsg, CRegInfo* _pRegInfo, ISender* _pSender )
+bool SRVServer::UnRegister( const ClientMsg* _pinMsg, ClientMsg* _poutMsg, RegInfo* _pRegInfo, ISender* _pSender )
 {
 	uint32_t nID;
 	TVecChar vecData;
 	char nErr = ERRUNDEF;
-	_pinMsg->GetData( CClientMsg::etpCommand, &vecData );
+	_pinMsg->GetData( ClientMsg::etpCommand, &vecData );
 
 	switch ( _pinMsg->GetTo() )
 	{
@@ -132,7 +132,7 @@ bool CSRVServer::UnRegister( const CClientMsg* _pinMsg, CClientMsg* _poutMsg, CR
 	return true;
 }
 
-bool CSRVServer::Register( const CClientMsg* _pinMsg, CClientMsg* _poutMsg, CRegInfo* _pRegInfo )
+bool SRVServer::Register( const ClientMsg* _pinMsg, ClientMsg* _poutMsg, RegInfo* _pRegInfo )
 {
 	bool isRes = false;
 	ISender* pSender = 0;
@@ -159,8 +159,8 @@ bool CSRVServer::Register( const CClientMsg* _pinMsg, CClientMsg* _poutMsg, CReg
 			{
 				std::cout << "no err addr" << std::endl;
 				TVecChar vecData;
-				CClientMsg clientMsg;
-				_pinMsg->GetData( CClientMsg::etpExHead, &vecData );
+				ClientMsg clientMsg;
+				_pinMsg->GetData( ClientMsg::etpExHead, &vecData );
 				clientMsg.InitMsg( _pRegInfo->GetID(), vecData );
 				std::cout << "SRVServer::Register() - 1" << std::endl;
 				pSender->AddMsg( clientMsg );

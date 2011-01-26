@@ -6,17 +6,17 @@
 #include "../socket/mysocket.h"
 #include "../server/accessinfo.h"
 
-class CConnector : public CMySocket
+class Connector : public MySocket
 {
 public:
 
-	CConnector( ISocketManager* _pISocketManager );
-	~CConnector();
+	Connector( ISocketManager* _pISocketManager );
+	~Connector();
 
-	bool			Connect( in_port_t, const char*, const CAccessInfo* );
+	bool			Connect( in_port_t, const char*, const AccessInfo* );
 private:
 
-	bool			Register( const CAccessInfo* );
+	bool			Register( const AccessInfo* );
 };
 
 #endif

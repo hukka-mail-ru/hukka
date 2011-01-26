@@ -3,12 +3,12 @@
 
 #include "../tools/mystr.h"
 
-class CAccessInfo
+class AccessInfo
 {
 public:
 
-	CAccessInfo( const char*, const char* );
-	~CAccessInfo();
+	AccessInfo( const char*, const char* );
+	~AccessInfo();
 
 	const char*	GetLogin()	const;
 	const char*	GetPassword()	const;

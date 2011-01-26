@@ -15,20 +15,20 @@ using namespace std;
 const int on = 1;
 const int tm = 20;
 
-CListener::CListener()
+Listener::Listener()
 	:m_nSocket( -1 )
 {
-	m_pSRVServer = CSRVServer::Instance();
+	m_pSRVServer = SRVServer::Instance();
 }
 
-CListener::~CListener()
+Listener::~Listener()
 {
 	Close();
 
-	CSRVServer::FreeInst();
+	SRVServer::FreeInst();
 }
 
-int CListener::Listen( uint16_t _nPort )
+int Listener::Listen( uint16_t _nPort )
 {
 	m_nSocket = socket( AF_INET, SOCK_STREAM, 0 );
 
@@ -47,18 +47,20 @@ int CListener::Listen( uint16_t _nPort )
 	if( bind( m_nSocket, (sockaddr*)&addr, sizeof( addr ) ) != 0 )
 		return errno;
 
-	if( listen( m_nSocket, 1024 ) != 0 )
+	cout << "Listener::Listen. Socket " << m_nSocket << ". OPEN SOCKET" << endl;
+
+	if( listen( m_nSocket, 1024 ) != 0 ) // 1024 is maximum number of connections
 		return errno;
 
-	cout << "CListener::Listen AddHandle" << endl;
-    CSelector::Instance()->AddHandle( m_nSocket, EPOLL_CTL_ADD, EPOLLIN, static_cast<ICallBack*>( this ) );
-	//CSelector::Instance()->AddHandle( m_nSocket, EVFILT_READ, EV_ADD, static_cast<ICallBack*>( this ) );
-	CSelector::FreeInst();
+	cout << "Listener::Listen. Socket " << m_nSocket << ". PREPARE TO ACCEPT CONNECTIONS... " << endl;
+    Selector::Instance()->AddHandle( m_nSocket, EPOLLIN, static_cast<ICallBack*>( this ) );
+	//Selector::Instance()->AddHandle( m_nSocket, EVFILT_READ, EV_ADD, static_cast<ICallBack*>( this ) );
+	Selector::FreeInst();
 
 	return 0;
 }
 
-int CListener::Close()
+int Listener::Close()
 {
     cout << "Close socket : " << m_nSocket << endl;
 
@@ -71,12 +73,12 @@ int CListener::Close()
 	m_nSocket = -1;
 }
 
-int CListener::GetSocket() const
+int Listener::GetSocket() const
 {
 	return m_nSocket;
 }
 
-void CListener::DoRead()
+void Listener::DoRead()
 {
     cout << "Read socket : " << m_nSocket << endl;
 
@@ -92,7 +94,7 @@ void CListener::DoRead()
 
 }
 
-void CListener::DoWrite()
+void Listener::DoWrite()
 {
 
 }

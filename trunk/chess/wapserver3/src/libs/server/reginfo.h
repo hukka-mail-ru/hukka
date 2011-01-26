@@ -4,12 +4,12 @@
 #include <sys/types.h>
 #include <stdint.h>
 
-class CRegInfo
+class RegInfo
 {
 public:
 
-	CRegInfo();
-	~CRegInfo();
+	RegInfo();
+	~RegInfo();
 
 	uint32_t		GetID() const;
 	void			SetID( uint32_t );

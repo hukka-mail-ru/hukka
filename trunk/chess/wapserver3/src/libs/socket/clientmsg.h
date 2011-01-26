@@ -27,15 +27,15 @@ struct SMsgError : public SCommandMsg
 };
 #pragma pack()
 
-class CClientMsg
+class ClientMsg
 {
 public:
 
 	enum ETypeData { etpExHead, etpCommand };
 public:
 
-	CClientMsg();
-	virtual ~CClientMsg();
+	ClientMsg();
+	virtual ~ClientMsg();
 
 	void				InitError( uint32_t, char, char );
 	void				InitMsg( uint32_t, TVecChar );

@@ -8,27 +8,28 @@
 
 typedef std::vector<struct kevent> TVecKevent;
 
-class CSelector
+class Selector
 {
 public:
 
-	static CSelector*		Instance();
+	static Selector*		Instance();
 	static void			FreeInst();
 	static void			KillObject();
 
-	void					AddHandle( int, unsigned, unsigned, ICallBack*);
+	void AddHandle   ( int _Socket, unsigned _Flags, ICallBack* _pCallBack);
+	void RemoveHandle( int _Socket, unsigned _Flags, ICallBack* _pCallBack);
 
 	int					StartLoop();
 	void					StopLoop();
 private:
 
-	CSelector();
-	virtual ~CSelector();
+	Selector();
+	virtual ~Selector();
 
 	int					MainLoop();
 private:
 
-	static CSelector*		m_pSelf;
+	static Selector*		m_pSelf;
 	static int			m_nRefCount;
 
 	pthread_mutex_t		m_mutLoop;

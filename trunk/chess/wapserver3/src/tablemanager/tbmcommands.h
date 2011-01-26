@@ -23,14 +23,14 @@ typedef std::vector<SFindParameters> TVecFindPrms;
  * @brief Main class of tablemanager
  */
 
-class CTbmCommands
+class TbmCommands
 {
 
 public:
 
-	CTbmCommands();
+	TbmCommands();
 
-	virtual ~CTbmCommands();
+	virtual ~TbmCommands();
 
 	enum CrRes { DONE, TABEX, NVPAR };
 

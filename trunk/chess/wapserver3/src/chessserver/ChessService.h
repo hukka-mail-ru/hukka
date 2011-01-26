@@ -7,7 +7,7 @@
 #include "ChessLogic.h"
 
 #include "../libs/gameserver/gamestructs.h"
-#include "../libs/gameserver/CGameService.h"
+#include "../libs/gameserver/GameService.h"
 
 
 #define CH_FIELD_SIZE 66
@@ -15,9 +15,9 @@
 #define CH_CUR_MOVE 65
 
 #pragma pack(1)
-struct SChessBigMsg: public SGameMsgBase
+struct ChessBigMsg: public GameMsgBase
 {
-	SChessBigMsg()
+	ChessBigMsg()
 	{
 		memset((void*)m_arField, 0, sizeof(m_arField) );
 	}
@@ -26,16 +26,16 @@ struct SChessBigMsg: public SGameMsgBase
 };
 #pragma pack()
 
-typedef CGameService<ChessLogic> TChessServiseBase;
+typedef GameService<ChessLogic> ChessServiseBase;
 
-class CChessService : public TChessServiseBase
+class ChessService : public ChessServiseBase
 {
 	
 public:
 
-	CChessService();
+	ChessService();
 	
-	virtual ~CChessService();
+	virtual ~ChessService();
 	
 	void sendAnsStart(uint32_t _nTableID, uint32_t nPlayer1, uint32_t nPlayer2);
 	
@@ -43,13 +43,13 @@ public:
 
 	void cmdGetField( uint32_t _nPlayerID, uint32_t _nTableID );
 	
-	CSqlGameTable* GetSqlGameTable() { return &m_SqlChessTable; }
+	SqlGameTable* GetSqlGameTable() { return &m_SqlChessTable; }
 	
 	enum Color { White = 0, Black };
 	
 private:
 	
-	CSqlChessTable m_SqlChessTable;
+	SqlChessTable m_SqlChessTable;
 	
 };
 

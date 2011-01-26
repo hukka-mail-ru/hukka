@@ -1,7 +1,7 @@
 #include "SqlChessTable.h"
 
-CSqlChessTable::CSqlChessTable() :
-	CSqlGameTable("tbChessTableList",
+SqlChessTable::SqlChessTable() :
+	SqlGameTable("tbChessTableList",
 	   "TableID INT UNSIGNED NOT NULL AUTO_INCREMENT,\
 		State TINYINT UNSIGNED NOT NULL DEFAULT '1',\
 		IDPlayer0 INT UNSIGNED NOT NULL,\
@@ -24,6 +24,6 @@ CSqlChessTable::CSqlChessTable() :
 {
 }
 
-CSqlChessTable::~CSqlChessTable()
+SqlChessTable::~SqlChessTable()
 {
 }

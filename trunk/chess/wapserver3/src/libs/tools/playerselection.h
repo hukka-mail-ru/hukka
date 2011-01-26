@@ -13,7 +13,7 @@
 class CPlayerSelection
 {
 public:
-	CPlayerSelection( CSqlGameTable *_pGameTable, CSqlRatingTable *_pRatingTable );
+	CPlayerSelection( SqlGameTable *_pGameTable, CSqlRatingTable *_pRatingTable );
 	
 	~CPlayerSelection();
 	
@@ -21,7 +21,7 @@ public:
 	
 private:
 	
-	CSqlGameTable	*m_pGameTable;
+	SqlGameTable	*m_pGameTable;
 	CSqlRatingTable *m_pRatingTable;
 
 };

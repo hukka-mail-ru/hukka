@@ -12,20 +12,20 @@
 
 using namespace std;
 
-CSelector* CSelector::m_pSelf = 0;
-int CSelector::m_nRefCount = 0;
+Selector* Selector::m_pSelf = 0;
+int Selector::m_nRefCount = 0;
 
-CSelector* CSelector::Instance()
+Selector* Selector::Instance()
 {
 	if( m_pSelf == 0 )
-		m_pSelf = new CSelector;
+		m_pSelf = new Selector;
 
 	++m_nRefCount;
 
 	return m_pSelf;
 }
 
-void CSelector::FreeInst()
+void Selector::FreeInst()
 {
 	--m_nRefCount;
 
@@ -35,7 +35,7 @@ void CSelector::FreeInst()
 	KillObject();
 }
 
-void CSelector::KillObject()
+void Selector::KillObject()
 {
 	if( m_pSelf != 0 )
 		delete m_pSelf;
@@ -44,7 +44,7 @@ void CSelector::KillObject()
 	m_nRefCount = 0;
 }
 
-void CSelector::AddHandle( int _Socket, unsigned _Event, unsigned _Flags, ICallBack* _pCallBack)
+void Selector::AddHandle( int _Socket, unsigned _Flags, ICallBack* _pCallBack)
 {
 
     struct epoll_event ev;
@@ -52,22 +52,14 @@ void CSelector::AddHandle( int _Socket, unsigned _Event, unsigned _Flags, ICallB
     ev.events = _Flags;
     ev.data.ptr = _pCallBack;
 
-    int res = epoll_ctl(m_epfd, _Event, _Socket, &ev);
+    int res = epoll_ctl(m_epfd, EPOLL_CTL_ADD, _Socket, &ev);
 
- /*   cout << "epoll_ctl ADD (" << (unsigned)_pCallBack << "): Socket: " << _Socket << ", Flags : "<< _Flags << endl;
-    if(res != 0)
-    {
-        cout << "ERROR " << errno << ": " << strerror(errno) << endl;
-    }
-*/
-    if(_Event == EPOLL_CTL_ADD && errno == EEXIST)
+    if(res != 0 && errno == EEXIST) // if already exists...
     {
         int res = epoll_ctl(m_epfd, EPOLL_CTL_MOD, _Socket, &ev);
 
-   //     cout << "epoll_ctl MOD: Socket: " << _Socket << ", Flags : "<< _Flags << endl;
         if(res != 0)
         {
-    //        cout << "ERROR " << errno << ": " << strerror(errno) << endl;
             exit(1);
         }
     }
@@ -76,6 +68,8 @@ void CSelector::AddHandle( int _Socket, unsigned _Event, unsigned _Flags, ICallB
     {
         m_WritingSocket = _Socket;
     }
+
+    cout << "Selector::AddHandle. Socket " << _Socket << ". HANDLE ADDED (epoll_ctl) " << endl;
 
     /*
 	struct kevent kev;
@@ -87,7 +81,27 @@ void CSelector::AddHandle( int _Socket, unsigned _Event, unsigned _Flags, ICallB
 	*/
 }
 
-int CSelector::StartLoop()
+
+void Selector::RemoveHandle( int _Socket, unsigned _Flags, ICallBack* _pCallBack)
+{
+
+    struct epoll_event ev;
+
+    ev.events = _Flags;
+    ev.data.ptr = _pCallBack;
+
+    int res = epoll_ctl(m_epfd, EPOLL_CTL_DEL, _Socket, &ev);
+    if(res != 0)
+     {
+ //        cout << "ERROR " << errno << ": " << strerror(errno) << endl;
+         exit(1);
+     }
+
+    cout << "Selector::RemoveHandle. Socket " << _Socket << ". HANDLE REMOVED (epoll_ctl) " << endl;
+
+}
+
+int Selector::StartLoop()
 {
 	if( pthread_mutex_trylock( &m_mutLoop ) == EBUSY )
 		return 0;
@@ -99,7 +113,7 @@ int CSelector::StartLoop()
 	return nRes;
 }
 
-void CSelector::StopLoop()
+void Selector::StopLoop()
 {
 	m_isContinue = false;
 
@@ -110,7 +124,7 @@ void CSelector::StopLoop()
 #define MAX_EPOLL_EVENTS_PER_RUN 1024
 #define EPOLL_RUN_TIMEOUT 1000 //milliseconds
 
-CSelector::CSelector():
+Selector::Selector():
 	 m_isContinue( false )
 {
 
@@ -135,18 +149,21 @@ CSelector::CSelector():
 	*/
 }
 
-CSelector::~CSelector()
+Selector::~Selector()
 {
 
 }
 
-int CSelector::MainLoop()
+int Selector::MainLoop()
 {
 	m_isContinue = true;
+
+    cout << "Selector::MainLoop. WAITING FOR EVENTS (epoll_wait)" << endl;
 
 	while( m_isContinue )
 	{
 	    epoll_event events[MAX_EPOLL_EVENTS_PER_RUN];
+
 
         int nfds = epoll_wait(m_epfd, events, MAX_EPOLL_EVENTS_PER_RUN, EPOLL_RUN_TIMEOUT);
 
@@ -161,12 +178,15 @@ int CSelector::MainLoop()
         {
             if(events[i].events & EPOLLIN)
             {
+                cout << "Selector::MainLoop. EPOLLIN" << endl;
                 //cout << "DoRead <" << (unsigned)events[i].data.ptr << ">" << endl;
                 static_cast<ICallBack*>(events[i].data.ptr)->DoRead();
             }
             else if(events[i].events & EPOLLOUT)
             {
-                cout << "DoWrite {" << (unsigned)events[i].data.ptr << "}" << endl;
+                cout << "Selector::MainLoop. EPOLLOUT" << endl;
+
+                cout << "Selector::MainLoop. DoWrite {" << (unsigned)events[i].data.ptr << "}" << endl;
                 static_cast<ICallBack*>(events[i].data.ptr)->DoWrite();
 
                // cout << "DoWrite ends" << endl;
@@ -174,20 +194,24 @@ int CSelector::MainLoop()
                // if(events[i].events & EPOLLONESHOT)
               //  {
                  //   cout << "Rearm" << endl;
-                    AddHandle(m_WritingSocket, EPOLL_CTL_ADD, EPOLLIN, static_cast<ICallBack*>(events[i].data.ptr));
+                    AddHandle(m_WritingSocket, EPOLLIN, static_cast<ICallBack*>(events[i].data.ptr));
              //   }
             }
             else if(events[i].events & EPOLLPRI)
             {
-                cout << "EPOLLPRI" << endl;
+                cout << "Selector::MainLoop. EPOLLPRI" << endl;
             }
             else if(events[i].events & EPOLLERR)
             {
-                cout << "EPOLLERR" << endl;
+                cout << "Selector::MainLoop. EPOLLERR" << endl;
             }
             else if(events[i].events & EPOLLHUP)
             {
-                cout << "EPOLLHUP" << endl;
+                cout << "Selector::MainLoop. EPOLLHUP" << endl;
+            }
+            else
+            {
+                cout << "Selector::MainLoop. UNDEFINED EVENT" << endl;
             }
         }
 
@@ -218,31 +242,31 @@ int CSelector::MainLoop()
 			if( pKevent->filter == EVFILT_SIGNAL )
 			{
 				//syslog( LOG_INFO | LOG_LOCAL0, "MainLoop()-Signal" );
-				//std::cout << "CSocketManager::MainLoop()-Signal" << std::endl;
+				//std::cout << "SocketManager::MainLoop()-Signal" << std::endl;
 				continue;
 			}
 			if( ( pCallBack = static_cast<ICallBack*>(pKevent->udata) ) == 0 )
 			{
 				//syslog( LOG_INFO | LOG_LOCAL0, "MainLoop()-NULL-Err!!!" );
-				//std::cout << "CSocketManager::MainLoop()-NULL-Err!!!" << std::endl;
+				//std::cout << "SocketManager::MainLoop()-NULL-Err!!!" << std::endl;
 				continue;
 			}
 			if( pKevent->filter == EVFILT_READ )
 			{
 				//syslog( LOG_INFO | LOG_LOCAL0, "MainLoop()-EVFILT_READ" );
-				//std::cout << "CSocketManager::MainLoop()-EVFILT_READ "<< pKevent->ident << std::endl;
+				//std::cout << "SocketManager::MainLoop()-EVFILT_READ "<< pKevent->ident << std::endl;
 				pCallBack->DoRead();
 			}
 			else if( pKevent->filter == EVFILT_WRITE )
 			{
 				//syslog( LOG_INFO | LOG_LOCAL0, "MainLoop()-EVFILT_WRITE" );
-				//std::cout << "CSocketManager::MainLoop()-EVFILT_WRITE "<< pKevent->ident  << std::endl;
+				//std::cout << "SocketManager::MainLoop()-EVFILT_WRITE "<< pKevent->ident  << std::endl;
 				pCallBack->DoWrite();
 			}
 			else
 			{
 				//syslog( LOG_INFO | LOG_LOCAL0, "MainLoop()-Unknown" );
-				//std::cout << "CSocketManager::MainLoop()-Unknoun" << std::endl;
+				//std::cout << "SocketManager::MainLoop()-Unknoun" << std::endl;
 			}
 		}
 		*/

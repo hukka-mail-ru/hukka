@@ -9,7 +9,7 @@
 #include "accessinfo.h"
 #include "socketmanager.h"
 
-class CCHTServer : public CSocketManager, public CAccessInfo
+class CCHTServer : public SocketManager, public AccessInfo
 {
 public:
 
@@ -21,7 +21,7 @@ private:
 	CCHTServer();
 	~CCHTServer();
 
-	void				DoAllMsg( CMySocket* );
+	void				DoAllMsg( MySocket* );
     
     bool                checkParticipation( uint32_t _nPlayerID, uint32_t _nLogicID, uint32_t _nTableID = 0 );
     
@@ -29,7 +29,7 @@ private:
     bool                getLogicChatTable( uint32_t _nLogicID, CSqlTable* _pRes );
     bool                getBoardChatTable( uint32_t _nLogicID, CSqlTable* _pRes );
     
-    void                newMsg( CClientMsg* _pMsg );
+    void                newMsg( ClientMsg* _pMsg );
         
     void                joinToChat( uint32_t _nPlayerID, uint32_t _nLogicID, uint32_t _nTableID = 0 );
     void                leaveChat( uint32_t _nPlayerID, uint32_t _nLogicID, uint32_t _nTableID = 0 );
@@ -37,12 +37,12 @@ private:
                                        const TVecChar* _vecData, uint32_t _nTableID = 0 );
     void                sendMsgToChat( uint32_t _nLogicID, CMyStr* _strMsg, uint32_t _nTableID = 0 );
     void                sendMsg( uint32_t _nTo, CSendedMsg *_pMsg );
-    void                setSocket( CMySocket * _pSocket );
+    void                setSocket( MySocket * _pSocket );
 private:
 
 	static CCHTServer*		m_pSelf;
 	static int			m_nRefCount;
-    CMySocket*          m_pSocket;
+    MySocket*          m_pSocket;
     CSqlLogicList       m_sqlLogicList;
 };
 

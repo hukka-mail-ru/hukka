@@ -10,12 +10,12 @@
 
 typedef std::vector< uint32_t > TVecUINT;
 
-class CSqlGameTable : protected CSqlTable
+class SqlGameTable : protected CSqlTable
 {
 public:
-	CSqlGameTable( char* _cTableName, char* _cTableStruct );
+	SqlGameTable( char* _cTableName, char* _cTableStruct );
 
-	~CSqlGameTable();
+	~SqlGameTable();
 
 	bool getState( uint32_t _nTableID, uint8_t &_nState );
 

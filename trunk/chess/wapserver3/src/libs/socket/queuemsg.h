@@ -4,7 +4,7 @@
 #include <queue>
 #include "clientmsg.h"
 
-typedef std::queue<CClientMsg> TQueueMsg;
+typedef std::queue<ClientMsg> TQueueMsg;
 
 class CQueueMsg
 {
@@ -13,8 +13,8 @@ public:
 	CQueueMsg();
 	~CQueueMsg();
 
-	bool				AddMsg( const CClientMsg& );
-	bool				GetMsg( CClientMsg& );
+	bool				AddMsg( const ClientMsg& );
+	bool				GetMsg( ClientMsg& );
 
     int                 size() { m_queueMsg.size(); } 
 private:

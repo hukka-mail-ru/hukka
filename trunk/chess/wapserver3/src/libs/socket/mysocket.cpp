@@ -8,27 +8,27 @@
 
 pthread_mutex_t	m_mutRW = PTHREAD_MUTEX_INITIALIZER;
 
-CMySocket::CMySocket( int _nSocket, ISocketManager* _pSocketManager )
+MySocket::MySocket( int _nSocket, ISocketManager* _pSocketManager )
 	:CSocket( _nSocket ),
 	 m_pSocketManager( _pSocketManager )
 {
 
 }
 
-CMySocket::~CMySocket()
+MySocket::~MySocket()
 {
 
 }
 
-void CMySocket::AddMsg( const CClientMsg& _clientMsg )
+void MySocket::AddMsg( const ClientMsg& _clientMsg )
 {
 	pthread_mutex_lock( &m_mutRW );
 #ifdef GMS_DEBUG
-    std::cerr << "CMySocket::AddMsg() to : " << _clientMsg.GetTo() << std::endl;
-    std::cerr << "CMySocket::AddMsg() m_outQueueMsg.size() = " << m_outQueueMsg.size() << std::endl;
-    std::cerr << "CMySocket::AddMsg() m_nSocket = " << m_nSocket << std::endl;
-	std::cerr << "CMySocket::AddMsg() _clientMsg.GetBuffMsg()->size() = " << _clientMsg.GetBuffMsg()->size() << std::endl;
-    std::cerr << "CMySocket::AddMsg() _clientMsg.GetBuffMsg() = [ ";
+    std::cerr << "MySocket::AddMsg() to : " << _clientMsg.GetTo() << std::endl;
+    std::cerr << "MySocket::AddMsg() m_outQueueMsg.size() = " << m_outQueueMsg.size() << std::endl;
+    std::cerr << "MySocket::AddMsg() m_nSocket = " << m_nSocket << std::endl;
+	std::cerr << "MySocket::AddMsg() _clientMsg.GetBuffMsg()->size() = " << _clientMsg.GetBuffMsg()->size() << std::endl;
+    std::cerr << "MySocket::AddMsg() _clientMsg.GetBuffMsg() = [ ";
     for(int i = 0; i < _clientMsg.GetBuffMsg()->size(); ++i)
           std::cerr << (int)( _clientMsg.GetBuffMsg()->at(i) ) << " ";
     std::cerr << " ] " << std::endl;
@@ -42,7 +42,7 @@ void CMySocket::AddMsg( const CClientMsg& _clientMsg )
 	pthread_mutex_unlock( &m_mutRW );
 }
 
-bool CMySocket::GetMsg( CClientMsg& _clienMsg )
+bool MySocket::GetMsg( ClientMsg& _clienMsg )
 {
 	pthread_mutex_lock( &m_mutRW );
 	bool res = m_inQueueMsg.GetMsg( _clienMsg );
@@ -50,11 +50,11 @@ bool CMySocket::GetMsg( CClientMsg& _clienMsg )
 	return res;
 }
 
-void CMySocket::DoRead()
+void MySocket::DoRead()
 {
 	pthread_mutex_lock( &m_mutRW );	
 #ifdef GMS_DEBUG_READ
-	std::cout << "CMySocket::DoRead()-Y" << std::endl;
+	std::cout << "MySocket::DoRead()-Y" << std::endl;
 #endif //GMS_DEBUG_READ
 
 	int nErr;
@@ -63,14 +63,14 @@ void CMySocket::DoRead()
 	{
 
 #ifdef GMS_DEBUG_READ
-	    std::cerr << "CMySocket::DoRead() m_Buffer.FreeSize()  = " << m_Buffer.FreeSize() << std::endl;
+	    std::cerr << "MySocket::DoRead() m_Buffer.FreeSize()  = " << m_Buffer.FreeSize() << std::endl;
 #endif //GMS_DEBUG_READ
 
         int nSize = Recv( m_Buffer.GetDataEnd(), m_Buffer.FreeSize() );
 
 #ifdef GMS_DEBUG_READ
-        std::cerr << "CMySocket::DoRead() nSize = " << nSize << " m_Buffer.FreeSize()  = " << m_Buffer.FreeSize() << std::endl;
-	    std::cerr << "CMySocket::DoRead()  m_Buffer = [ ";
+        std::cerr << "MySocket::DoRead() nSize = " << nSize << " m_Buffer.FreeSize()  = " << m_Buffer.FreeSize() << std::endl;
+	    std::cerr << "MySocket::DoRead()  m_Buffer = [ ";
 		for(char* c = m_Buffer.GetDataEnd(); c !=  m_Buffer.GetDataEnd() + nSize; ++c)
 		{
 			if ( (int) *c > 31)
@@ -92,7 +92,7 @@ void CMySocket::DoRead()
 		else if( ( nSize  == 0 ) || ( ( nSize < 0 ) && ( nErr != EAGAIN ) && ( nErr != EINTR ) ) )
 		{
 #ifdef GMS_DEBUG_READ
-			std::cout << "CMySocket::DoRead()-R" << std::endl;
+			std::cout << "MySocket::DoRead()-R" << std::endl;
 #endif //GMS_DEBUG_READ
 			DoClose();
 			pthread_mutex_unlock( &m_mutRW );
@@ -102,15 +102,15 @@ void CMySocket::DoRead()
 	while( isBuffFull || ( nErr == EINTR ) );
 
 	int nError = 0;
-	CClientMsg clientMsg;
+	ClientMsg clientMsg;
 
 	while( clientMsg.ParseData( &m_Buffer, nError ) )
 	{
 #ifdef GMS_DEBUG_READ
-    	std::cerr << "CMySocket::DoRead() to : " << clientMsg.GetTo() << std::endl;
-    	std::cerr << "CMySocket::DoRead() m_inQueueMsg.size() = " << m_inQueueMsg.size() << std::endl;
-		std::cerr << "CMySocket::DoRead() clientMsg.GetBuffMsg()->size() = " << clientMsg.GetBuffMsg()->size() << std::endl;
-    	std::cerr << "CMySocket::DoRead() clientMsg.GetBuffMsg() = [ ";
+    	std::cerr << "MySocket::DoRead() to : " << clientMsg.GetTo() << std::endl;
+    	std::cerr << "MySocket::DoRead() m_inQueueMsg.size() = " << m_inQueueMsg.size() << std::endl;
+		std::cerr << "MySocket::DoRead() clientMsg.GetBuffMsg()->size() = " << clientMsg.GetBuffMsg()->size() << std::endl;
+    	std::cerr << "MySocket::DoRead() clientMsg.GetBuffMsg() = [ ";
     	for(int i = 0; i < clientMsg.GetBuffMsg()->size(); ++i)
         	  std::cerr << (int)( clientMsg.GetBuffMsg()->at(i) ) << " ";
     	std::cerr << " ] " << std::endl;
@@ -118,27 +118,27 @@ void CMySocket::DoRead()
 		if( m_inQueueMsg.AddMsg( clientMsg ) && m_pSocketManager )
 		{
 #ifdef GMS_DEBUG_READ
-			std::cout << "CMySocket::DoRead()-AddInMsg" << std::endl;
+			std::cout << "MySocket::DoRead()-AddInMsg" << std::endl;
 #endif //GMS_DEBUG_READ		
 			m_pSocketManager->AddInMsg( this );
 		}
 #ifdef GMS_DEBUG_READ
 		else
-			std::cout << "CMySocket::DoRead()-No AddInMsg" << std::endl;
+			std::cout << "MySocket::DoRead()-No AddInMsg" << std::endl;
 #endif //GMS_DEBUG_READ		
 	}
 
 	if( nError != NOERR )
 	{	
 #ifdef GMS_DEBUG_READ
-		std::cout << "CMySocket::DoRead()-R" << std::endl;
+		std::cout << "MySocket::DoRead()-R" << std::endl;
 
-	    std::cerr << "CMySocket::DoRead() nError = " << nError << std::endl;
-	    std::cerr << "CMySocket::DoRead() Close( SHUT_RD ) - beg" << std::endl;
+	    std::cerr << "MySocket::DoRead() nError = " << nError << std::endl;
+	    std::cerr << "MySocket::DoRead() Close( SHUT_RD ) - beg" << std::endl;
 #endif //GMS_DEBUG_READ
 		Close( SHUT_RD );
 #ifdef GMS_DEBUG_READ
-	    std::cerr << "CMySocket::DoRead() Close( SHUT_RD ) - end" << std::endl;
+	    std::cerr << "MySocket::DoRead() Close( SHUT_RD ) - end" << std::endl;
 #endif //GMS_DEBUG_READ
 		clientMsg.InitError( 1, ERRUNDEF, nError );
 		m_outQueueMsg.AddMsg( clientMsg );
@@ -147,27 +147,27 @@ void CMySocket::DoRead()
 	}
 #ifdef GMS_DEBUG_READ
 	else
-		std::cout << "CMySocket::DoRead()-G" << std::endl;
+		std::cout << "MySocket::DoRead()-G" << std::endl;
 #endif //GMS_DEBUG_READ
 		
 	pthread_mutex_unlock( &m_mutRW );
 }
 
-void CMySocket::DoWrite()
+void MySocket::DoWrite()
 {
 	pthread_mutex_lock( &m_mutRW );
 	
-	CClientMsg m_clientMsg;
+	ClientMsg m_clientMsg;
 	while( m_outQueueMsg.GetMsg( m_clientMsg ) )
 	{
 		const TVecChar* pVecMsg = m_clientMsg.GetBuffMsg();
 
 #ifdef GMS_DEBUG
-    std::cerr << "CMySocket::DoWrite() to : " << m_clientMsg.GetTo() << std::endl;
-    std::cerr << "CMySocket::DoWrite() m_outQueueMsg.size() = " << m_outQueueMsg.size() << std::endl;
-    std::cerr << "CMySocket::DoWrite() m_nSocket = " << m_nSocket << std::endl;
-	std::cerr << "CMySocket::DoWrite() pVecMsg->size() = " << pVecMsg->size() << std::endl;
-    std::cerr << "CMySocket::DoWrite()  pVecMsg = [ ";
+    std::cerr << "MySocket::DoWrite() to : " << m_clientMsg.GetTo() << std::endl;
+    std::cerr << "MySocket::DoWrite() m_outQueueMsg.size() = " << m_outQueueMsg.size() << std::endl;
+    std::cerr << "MySocket::DoWrite() m_nSocket = " << m_nSocket << std::endl;
+	std::cerr << "MySocket::DoWrite() pVecMsg->size() = " << pVecMsg->size() << std::endl;
+    std::cerr << "MySocket::DoWrite()  pVecMsg = [ ";
     for(int i = 0; i < pVecMsg->size(); ++i)
           std::cerr << (int)( pVecMsg->at(i) ) << " ";
     std::cerr << " ] " << std::endl;
@@ -178,7 +178,7 @@ void CMySocket::DoWrite()
 	pthread_mutex_unlock( &m_mutRW );
 }
 
-void CMySocket::DoClose()
+void MySocket::DoClose()
 {
 	if( m_pSocketManager )
 		m_pSocketManager->OnClose( this );

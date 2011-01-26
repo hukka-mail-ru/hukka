@@ -13,23 +13,23 @@
 
 
 
-template<class TGameLogic> class CGameService : public CSocketManager, public CAccessInfo
+template<class TGameLogic> class GameService : public SocketManager, public AccessInfo
 {
 public:
 	
-	CGameService( const char* _cszLogin, const char* _cszPwd, const char* _cszTableRatingName, CSqlGameTable* _pSqlGameTable)	
-		: CAccessInfo(_cszLogin, _cszPwd), 
+	GameService( const char* _cszLogin, const char* _cszPwd, const char* _cszTableRatingName, SqlGameTable* _pSqlGameTable)	
+		: AccessInfo(_cszLogin, _cszPwd), 
 		  m_RatingTable( _cszTableRatingName, 1000 )
     {
 		m_pPlayerSelection = new CPlayerSelection(_pSqlGameTable, &m_RatingTable);
     } 
 	
-	virtual ~CGameService()
+	virtual ~GameService()
 	{
 		delete m_pPlayerSelection;
 	}
 	
-	virtual CSqlGameTable* GetSqlGameTable() = 0;
+	virtual SqlGameTable* GetSqlGameTable() = 0;
 	
 	virtual void sendAnsStart(uint32_t _nTableID, uint32_t nPlayer1, uint32_t nPlayer2) = 0;
 	
@@ -45,7 +45,7 @@ protected:
 	    
 	    vecCmd.assign( (char*)_spCmd, (char*)(_spCmd) + _nSize );
 	    
-	    CClientMsg Msg;
+	    ClientMsg Msg;
 	    
 	    Msg.InitMsg( _nTO, vecCmd );
 	    
@@ -58,13 +58,13 @@ private:
 	
 	enum EDrawState { no, offer, reject };
 	
-	void newMsg( CClientMsg *_pClientMsg )
+	void newMsg( ClientMsg *_pClientMsg )
 	{
-		std::cout << "CGameService::newMsg..." <<  std::endl;
+		std::cout << "GameService::newMsg..." <<  std::endl;
 		TVecChar vecCmd;
-		_pClientMsg->GetData( CClientMsg::etpCommand, &vecCmd );
+		_pClientMsg->GetData( ClientMsg::etpCommand, &vecCmd );
 		
-		std::cout << "CGameService::newMsg vecCmd[" << vecCmd.size() << "] " << std::endl;
+		std::cout << "GameService::newMsg vecCmd[" << vecCmd.size() << "] " << std::endl;
 		for(TVecChar::const_iterator it = vecCmd.begin(); it != vecCmd.end(); ++it)
 			std::cout << (uint32_t)(*it) << " ";
 		std::cout << std::endl;
@@ -92,7 +92,7 @@ private:
 
 		if( cmd == CMD_JOIN )
 		{
-			std::cout << "CGameService::newMsg from = " << _pClientMsg->GetTo() << " cmd = CMD_JOIN" <<  std::endl;
+			std::cout << "GameService::newMsg from = " << _pClientMsg->GetTo() << " cmd = CMD_JOIN" <<  std::endl;
 			uint32_t *nTableID = (uint32_t*) &vecCmd[0];
 			
 			cmdJoin( _pClientMsg->GetTo(), *nTableID );
@@ -100,12 +100,12 @@ private:
 		}
 		else if( cmd == CMD_STEP )
 		{		
-			std::cout << "CGameService::newMsg from = " << _pClientMsg->GetTo() << " cmd = CMD_STEP" <<  std::endl;
+			std::cout << "GameService::newMsg from = " << _pClientMsg->GetTo() << " cmd = CMD_STEP" <<  std::endl;
 			cmdStep( _pClientMsg->GetTo(), &vecCmd );
 		}
 		else if( cmd == CMD_GET_FIELD )
 		{
-			std::cout << "CGameService::newMsg from = " << _pClientMsg->GetTo() << " cmd = CMD_GET_FIELD" <<  std::endl;
+			std::cout << "GameService::newMsg from = " << _pClientMsg->GetTo() << " cmd = CMD_GET_FIELD" <<  std::endl;
 			uint32_t *nTableID = (uint32_t*) &vecCmd[0];
 				
 			uint32_t _nPlayer = _pClientMsg->GetTo();
@@ -117,7 +117,7 @@ private:
 		}
 		else if( cmd == CMD_LOOSE )
 		{
-			std::cout << "CGameService::newMsg from = " << _pClientMsg->GetTo() << " cmd = CMD_LOOSE" <<  std::endl;
+			std::cout << "GameService::newMsg from = " << _pClientMsg->GetTo() << " cmd = CMD_LOOSE" <<  std::endl;
 			uint32_t *nTableID = (uint32_t*) &vecCmd[0];
 				
 			cmdLoose( _pClientMsg->GetTo(), *nTableID );
@@ -125,7 +125,7 @@ private:
 		}
 		else if( cmd == CMD_OPAGREE )
 		{
-			std::cout << "CGameService::newMsg from = " << _pClientMsg->GetTo() << " cmd = CMD_OPAGREE" <<  std::endl;
+			std::cout << "GameService::newMsg from = " << _pClientMsg->GetTo() << " cmd = CMD_OPAGREE" <<  std::endl;
 			uint32_t *nTableID = (uint32_t*) &vecCmd[0];
 			
 			cmdOpAgree( _pClientMsg->GetTo(), *nTableID );
@@ -133,7 +133,7 @@ private:
 		}
 		else if( cmd == CMD_OPREJECT )
 		{
-			std::cout << "CGameService::newMsg from = " << _pClientMsg->GetTo() << " cmd = CMD_OPREJECT" <<  std::endl;
+			std::cout << "GameService::newMsg from = " << _pClientMsg->GetTo() << " cmd = CMD_OPREJECT" <<  std::endl;
 			uint32_t *nTableID = (uint32_t*) &vecCmd[0];	
 				
 			cmdOpReject( _pClientMsg->GetTo(), *nTableID );
@@ -141,35 +141,35 @@ private:
 		}
 		else if( cmd == CMD_DRAW )
 		{
-			std::cout << "CGameService::newMsg from = " << _pClientMsg->GetTo() << " cmd = CMD_DRAW" <<  std::endl;
+			std::cout << "GameService::newMsg from = " << _pClientMsg->GetTo() << " cmd = CMD_DRAW" <<  std::endl;
 			uint32_t *nTableID = (uint32_t*) &vecCmd[0];	
 				
 			cmdDraw( _pClientMsg->GetTo(), *nTableID );
 		}
 		else if( cmd == CMD_DRAGREE )
 		{
-			std::cout << "CGameService::newMsg from = " << _pClientMsg->GetTo() << " cmd = CMD_DRAGREE" <<  std::endl;
+			std::cout << "GameService::newMsg from = " << _pClientMsg->GetTo() << " cmd = CMD_DRAGREE" <<  std::endl;
 			uint32_t *nTableID = (uint32_t*) &vecCmd[0];
 				
 			cmdDrAgree( _pClientMsg->GetTo(), *nTableID, vecCmd[sizeof(*nTableID)] );
 		}
 		else if ( cmd == CMD_CHECK_TIME )
 		{
-			std::cout << "CGameService::newMsg from = " << _pClientMsg->GetTo() << " cmd = CMD_CHECK_TIME" <<  std::endl;
+			std::cout << "GameService::newMsg from = " << _pClientMsg->GetTo() << " cmd = CMD_CHECK_TIME" <<  std::endl;
 			uint32_t *nTableID = (uint32_t*) &vecCmd[0];
 				
 			cmdCheckTime( _pClientMsg->GetTo(), *nTableID );
 		}
 		else	
 		{
-			std::cout << "CGameService::newMsg from = " << _pClientMsg->GetTo() << " cmd = ??? " << (int)_pClientMsg->GetCommand() << std::endl;
+			std::cout << "GameService::newMsg from = " << _pClientMsg->GetTo() << " cmd = ??? " << (int)_pClientMsg->GetCommand() << std::endl;
 		}
 	}
 
-	void DoAllMsg( CMySocket * _pSocket )
+	void DoAllMsg( MySocket * _pSocket )
 	{
 		m_pSocket = _pSocket;
-		CClientMsg inMsg;
+		ClientMsg inMsg;
 		
 		while( _pSocket->GetMsg( inMsg ) )
 		{
@@ -177,7 +177,7 @@ private:
 		}
 	}
 
-	void OnClose( CMySocket* ) {};
+	void OnClose( MySocket* ) {};
 	
 	void cmdJoin(uint32_t _nPlayerID, uint32_t _nTableID) 
 	{
@@ -188,9 +188,9 @@ private:
 		char strData;
 
 		TVecChar vecCmd;
-		CClientMsg Msg;
+		ClientMsg Msg;
 
-		std::cout << "CGameService::cmdJoin _nPlayerID =" << _nPlayerID << " _nTableID " <<  _nTableID;
+		std::cout << "GameService::cmdJoin _nPlayerID =" << _nPlayerID << " _nTableID " <<  _nTableID;
 		
 		if (joinToTable(_nPlayerID, _nTableID) )
 		{
@@ -226,7 +226,7 @@ private:
 	    if ( GetSqlGameTable()->getIDPlayer0( _nTableID, nPlayer0 ) )
 		{
 			TVecChar vecCmd;
-			CClientMsg Msg;
+			ClientMsg Msg;
 			
 			vecCmd.assign( (char*)&sCmd, (char*)(&sCmd)+sizeof(sCmd ));
 	
@@ -339,7 +339,7 @@ private:
 			GetSqlGameTable()->setPlayerGameTime( _nTableID, 1, nTime2Game );
 		}
 
-		std::cout << "CGameService::startGame  sendAnsStart( _nTableID = " << _nTableID << ", nPlayer0 = " << nPlayer0 << ", nPlayer1 = " << nPlayer1 << std::endl;
+		std::cout << "GameService::startGame  sendAnsStart( _nTableID = " << _nTableID << ", nPlayer0 = " << nPlayer0 << ", nPlayer1 = " << nPlayer1 << std::endl;
 	    sendAnsStart(_nTableID, nPlayer0, nPlayer1);
         
         delete GameLogic;
@@ -421,7 +421,7 @@ private:
 		        
 		    vecFieldState.reserve( 500 );
 	
-			std::cout << "CGameService::cmdStep  nTableID = " << nTableID << ", nPlayer0 = " << nPlayer0 << ", nPlayer1 = " << nPlayer1 << std::endl;	        
+			std::cout << "GameService::cmdStep  nTableID = " << nTableID << ", nPlayer0 = " << nPlayer0 << ", nPlayer1 = " << nPlayer1 << std::endl;	        
 		    
 		    if ( GetSqlGameTable()->getFieldState( nTableID, &vecFieldState ) )
 		    {
@@ -474,7 +474,7 @@ private:
 	    }    
 	    else if ( Result == IGameLogic::NotValid )
 	    {
-   		    std::cout << "CGameService::cmdStep NotValid nTableID = " << nTableID << ", _nPlayerID = " << _nPlayerID  << std::endl;
+   		    std::cout << "GameService::cmdStep NotValid nTableID = " << nTableID << ", _nPlayerID = " << _nPlayerID  << std::endl;
    		    
    		   	SGameMsg sCmd;
 			sCmd.m_chCmd = ANS_STEP;
@@ -514,7 +514,7 @@ private:
 				return endGame( _nTableID, IGameLogic::TimeOut );
 			}
 					
-			std::cout << "CGameService::setNewTime new GameTime nTableID = " << _nTableID << ", nTime = " << nTime << ", nGameTime = " << nGameTime << ", nCurPlayer = " << nCurPlayer << std::endl;
+			std::cout << "GameService::setNewTime new GameTime nTableID = " << _nTableID << ", nTime = " << nTime << ", nGameTime = " << nGameTime << ", nCurPlayer = " << nCurPlayer << std::endl;
 					
 			GetSqlGameTable()->setPlayerGameTime( _nTableID, nCurPlayer, nGameTime - nTime );
 		}
@@ -626,7 +626,7 @@ private:
 	    }
 	    else    
 	    {
-			std::cout << "CGameService::endGame  ERROR: unknown _Result = " << _Result << std::endl;	    	
+			std::cout << "GameService::endGame  ERROR: unknown _Result = " << _Result << std::endl;	    	
 	    }
 	    
 	    sendMsg( nPlayer0, &sCmd0, sizeof( sCmd0 ) );
@@ -871,7 +871,7 @@ private:
 			if( nTime > nTime2Step)
 			{
 				endGame( _nTableID, IGameLogic::TimeOut );			
-				std::cout << "CGameService::checkTime Step TimeOut - END GAME! nTableID = " << _nTableID << ", nTime = " << nTime << ", nTime2Step = " << nTime2Step << std::endl;
+				std::cout << "GameService::checkTime Step TimeOut - END GAME! nTableID = " << _nTableID << ", nTime = " << nTime << ", nTime2Step = " << nTime2Step << std::endl;
 				return 	TimeOutError;
 			}
 			else if (isSendTime)
@@ -892,7 +892,7 @@ private:
 			if( nTime > nGameTime )
 			{
 				endGame( _nTableID, IGameLogic::TimeOut );
-				std::cout << "CGameService::checkTime Game TimeOut - END GAME! nTableID = " << _nTableID << ", nTime = " << nTime << ", nGameTime = " << nGameTime << std::endl;
+				std::cout << "GameService::checkTime Game TimeOut - END GAME! nTableID = " << _nTableID << ", nTime = " << nTime << ", nGameTime = " << nGameTime << std::endl;
 				return 	TimeOutError;
 			}
 			else if (isSendTime)
@@ -913,7 +913,7 @@ private:
 	{
 		if ( checkTime( _nPlayerID, _nTableID, true ) == TimeNotSet )
 		{
-			SGameMsgBase sCmd;
+			GameMsgBase sCmd;
 		    sCmd.m_chCmd = ANS_CHECK_TIME_NOT_SET;
 		    sCmd.m_nTableID = _nTableID;
 	        sendMsg( _nPlayerID, &sCmd, sizeof( sCmd ) );
@@ -926,7 +926,7 @@ private:
 	
 	CSqlRatingTable		m_RatingTable;
 	
-	CMySocket			*m_pSocket;
+	MySocket			*m_pSocket;
 	
 };
 

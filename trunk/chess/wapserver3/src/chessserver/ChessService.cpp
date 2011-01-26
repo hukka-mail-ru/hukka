@@ -1,23 +1,23 @@
 #include "ChessService.h"
-#include "../libs/gameserver/CGameService.h"
+#include "../libs/gameserver/GameService.h"
 #include "../libs/header/defservice.h"
 
  
 #include "ChessLogic.h"
 
-CChessService::CChessService() : 
-	TChessServiseBase("chs","*3F56B91ACCF798E83CC98141594C30420D26FE6B", "tbGhessRating", &m_SqlChessTable)
+ChessService::ChessService() : 
+	ChessServiseBase("chs","*3F56B91ACCF798E83CC98141594C30420D26FE6B", "tbGhessRating", &m_SqlChessTable)
 {
 }
 
-CChessService::~CChessService()
+ChessService::~ChessService()
 {
 }
 
-void CChessService::sendAnsStart(uint32_t _nTableID, uint32_t nPlayer1, uint32_t nPlayer2)
+void ChessService::sendAnsStart(uint32_t _nTableID, uint32_t nPlayer1, uint32_t nPlayer2)
 {
 //TODO INIT FIELD!	
-    SChessBigMsg Msg;
+    ChessBigMsg Msg;
     Msg.m_chCmd = ANS_START;
     Msg.m_nTableID = _nTableID;    
     
@@ -38,7 +38,7 @@ void CChessService::sendAnsStart(uint32_t _nTableID, uint32_t nPlayer1, uint32_t
     Msg.m_arField[CH_CUR_MOVE] = (nXPlayer == 0) ? 1 : 0;
     sendMsg( nPlayer1, &Msg, sizeof( Msg ) );
     
-    std::cout << " CChessService::sendAnsStart: Msg.m_chCmd = " << (int) Msg.m_chCmd; 
+    std::cout << " ChessService::sendAnsStart: Msg.m_chCmd = " << (int) Msg.m_chCmd; 
     std::cout << " Msg.m_nTableID = " << (int) Msg.m_nTableID << " ";
     std::cout << " Msg.m_nPlayerNbr = " << (int) Msg.m_nPlayerNbr << " " << std::endl; 
     std::cout << " Msg.m_arField = [ " ;
@@ -51,14 +51,14 @@ void CChessService::sendAnsStart(uint32_t _nTableID, uint32_t nPlayer1, uint32_t
     delete logic;
 }
 
-void CChessService::cmdGetField( uint32_t _nPlayerID, uint32_t _nTableID )
+void ChessService::cmdGetField( uint32_t _nPlayerID, uint32_t _nTableID )
 {
     
     TVecChar vecField;
     const TVecChar *pvecMsgField;
     uint32_t nPlayer0 = 0, nCurPlayer = 0;
     
-    SChessBigMsg sCmd;
+    ChessBigMsg sCmd;
     m_SqlChessTable.getIDPlayer0( _nTableID, nPlayer0 );
 
 	if ( nPlayer0 == 0 || _nPlayerID == nPlayer0)
@@ -117,7 +117,7 @@ void CChessService::cmdGetField( uint32_t _nPlayerID, uint32_t _nTableID )
 
 }
 
-uint8_t CChessService::GetCurColor(const TVecChar* pField)
+uint8_t ChessService::GetCurColor(const TVecChar* pField)
 {
 	SPosition pos;
 	

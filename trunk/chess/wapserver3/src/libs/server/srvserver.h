@@ -8,35 +8,35 @@
 #include "onlinemanager.h"
 #include "accessmanager.h"
 
-class CSRVServer : public CSocketManager
+class SRVServer : public SocketManager
 {
 public:
 
-	static CSRVServer*		Instance();
+	static SRVServer*		Instance();
 	static void			FreeInst();
 	static void			KillObject();
 
 	void					AddSocket( int, const sockaddr_in* );
 
-	void					OnClose( CMySocket* );
+	void					OnClose( MySocket* );
 private:
 
-	CSRVServer();
-	~CSRVServer();
+	SRVServer();
+	~SRVServer();
 
-	void					DoAllMsg( CMySocket* );
+	void					DoAllMsg( MySocket* );
 
-	void					DoAllMsg( CClientSocket* );
-	bool					UnRegister( const CClientMsg*, CClientMsg*, CRegInfo*, ISender* );
-	bool					Register( const CClientMsg*, CClientMsg*, CRegInfo* );
+	void					DoAllMsg( ClientSocket* );
+	bool					UnRegister( const ClientMsg*, ClientMsg*, RegInfo*, ISender* );
+	bool					Register( const ClientMsg*, ClientMsg*, RegInfo* );
 private:
 
-	static CSRVServer*		m_pSelf;
+	static SRVServer*		m_pSelf;
 	static int			m_nRefCount;
 
-	CAccessManager			m_accessManager;
+	AccessManager			m_accessManager;
 
-	COnLineManager*		m_pOnLineManager;
+	OnLineManager*		m_pOnLineManager;
 };
 
 #endif

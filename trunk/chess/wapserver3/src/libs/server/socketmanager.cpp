@@ -4,7 +4,7 @@
 
 using namespace std;
 
-void CSocketManager::AddInMsg( CMySocket* _pMySocket )
+void SocketManager::AddInMsg( MySocket* _pMySocket )
 {
 	pthread_mutex_lock( &m_mutDeqSocket );
 	m_queSocket.push( _pMySocket );
@@ -13,22 +13,22 @@ void CSocketManager::AddInMsg( CMySocket* _pMySocket )
 	sem_post( &m_semDeqSocket );
 }
 
-void CSocketManager::AddOutMsg( CMySocket* _pSocket )
+void SocketManager::AddOutMsg( MySocket* _pSocket )
 {
-    cout << "CSocketManager::AddOutMsg AddHandle to socket " << _pSocket->GetSocket() << endl;
-	m_pSelector->AddHandle( _pSocket->GetSocket(), EPOLL_CTL_ADD, EPOLLOUT | EPOLLONESHOT, static_cast<ICallBack*>( _pSocket ) );
+    cout << "SocketManager::AddOutMsg AddHandle to socket " << _pSocket->GetSocket() << endl;
+	m_pSelector->AddHandle( _pSocket->GetSocket(), EPOLLOUT | EPOLLONESHOT, static_cast<ICallBack*>( _pSocket ) );
 }
 
-void CSocketManager::OnClose( CMySocket* _pSocket )
+void SocketManager::OnClose( MySocket* _pSocket )
 {
-    cout << "CSocketManager::OnClose AddHandle" << endl;
-	m_pSelector->AddHandle( _pSocket->GetSocket(), EPOLL_CTL_DEL, EPOLLIN | EPOLLOUT, static_cast<ICallBack*>( _pSocket ) );
+    cout << "SocketManager::OnClose AddHandle" << endl;
+	m_pSelector->RemoveHandle( _pSocket->GetSocket(), EPOLLIN | EPOLLOUT, static_cast<ICallBack*>( _pSocket ) );
 }
 
-CSocketManager::CSocketManager( int _nCountThread )
+SocketManager::SocketManager( int _nCountThread )
 {
     pthread_mutex_init(&this->m_mutDeqSocket, NULL);
-	m_pSelector = CSelector::Instance();
+	m_pSelector = Selector::Instance();
 
 	sem_init( &m_semDeqSocket, 0 , 0 );
 
@@ -36,18 +36,18 @@ CSocketManager::CSocketManager( int _nCountThread )
 		StartLoop();
 }
 
-CSocketManager::~CSocketManager()
+SocketManager::~SocketManager()
 {
-	CSelector::FreeInst();
+	Selector::FreeInst();
 }
 
-int CSocketManager::Run()
+int SocketManager::Run()
 {
 	for(;;)
 	{
 		sem_wait( &m_semDeqSocket );
 
-		CMySocket* pSocket = 0;
+		MySocket* pSocket = 0;
 
 		pthread_mutex_lock( &m_mutDeqSocket );
 

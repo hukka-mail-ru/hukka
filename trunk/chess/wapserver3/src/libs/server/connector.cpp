@@ -7,21 +7,21 @@
 
 using namespace std;
 
-CConnector::CConnector( ISocketManager* _pISocketManager )
-	:CMySocket( -1, _pISocketManager )
+Connector::Connector( ISocketManager* _pISocketManager )
+	:MySocket( -1, _pISocketManager )
 {
 
 }
 
-CConnector::~CConnector()
+Connector::~Connector()
 {
 #ifdef GMS_DEBUG
-	std::cerr << "CConnector::~CConnector()" << std::endl;
+	std::cerr << "Connector::~Connector()" << std::endl;
 #endif
 	Close( SHUT_RDWR );
 }
 
-bool CConnector::Connect( in_port_t _nPort, const char* _cAddr, const CAccessInfo* _pAccessInfo )
+bool Connector::Connect( in_port_t _nPort, const char* _cAddr, const AccessInfo* _pAccessInfo )
 {
 	if( ( m_nSocket = socket( AF_INET, SOCK_STREAM, 0 ) ) < 1 )
 		return false;
@@ -35,22 +35,22 @@ bool CConnector::Connect( in_port_t _nPort, const char* _cAddr, const CAccessInf
 	if( connect( m_nSocket, (sockaddr*)&servaddr, sizeof( servaddr ) ) != 0 )
 		return false;
 
-	cout << "CConnector::Connect AddHandle" << endl;
-	CSelector::Instance()->AddHandle( m_nSocket, EPOLL_CTL_ADD, EPOLLIN, static_cast<ICallBack*>( this ) );
-	//CSelector::Instance()->AddHandle( m_nSocket, EVFILT_READ, EV_ADD, static_cast<ICallBack*>( this ) );
-	CSelector::FreeInst();
+	cout << "Connector::Connect AddHandle" << endl;
+	Selector::Instance()->AddHandle( m_nSocket, EPOLLIN, static_cast<ICallBack*>( this ) );
+	//Selector::Instance()->AddHandle( m_nSocket, EVFILT_READ, EV_ADD, static_cast<ICallBack*>( this ) );
+	Selector::FreeInst();
 
 	Register( _pAccessInfo );
 
 	return true;
 }
 
-bool CConnector::Register( const CAccessInfo* _pAccessInfo )
+bool Connector::Register( const AccessInfo* _pAccessInfo )
 {
 	const char* pLogin = _pAccessInfo->GetLogin();
 	const char* pPassword = _pAccessInfo->GetPassword();
 
-	CClientMsg clientMsg;
+	ClientMsg clientMsg;
 	TVecChar vecData;
 	vecData.assign( strlen( pLogin )+1+strlen( pPassword ), 0 );
 	memcpy( &vecData[0], pLogin, strlen( pLogin ) );

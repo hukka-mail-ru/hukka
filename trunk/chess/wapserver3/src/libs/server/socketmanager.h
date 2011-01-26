@@ -6,22 +6,22 @@
 #include "../socket/mysocket.h"
 #include "selector.h"
 
-class CSocketManager : public ISocketManager, private CMyThread
+class SocketManager : public ISocketManager, private CMyThread
 {
 public:
 
-	CSocketManager( int = 1 );
-	~CSocketManager();
+	SocketManager( int = 1 );
+	~SocketManager();
 // ISocketManager
-	void				OnClose( CMySocket* );
-	void				AddInMsg( CMySocket* );
-	void				AddOutMsg( CMySocket* );
+	void				OnClose( MySocket* );
+	void				AddInMsg( MySocket* );
+	void				AddOutMsg( MySocket* );
 protected:
 
-	CSelector*		m_pSelector;
+	Selector*		m_pSelector;
 private:
 
-	virtual void		DoAllMsg( CMySocket* ) = 0;
+	virtual void		DoAllMsg( MySocket* ) = 0;
 
 	int				Run();
 private:
