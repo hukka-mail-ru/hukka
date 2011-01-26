@@ -4,13 +4,13 @@
 
 #include <iostream>
 
-CClientSocket::CClientSocket( int _nSocket, ISocketManager* _pSocketManager )
-	:CMySocket( _nSocket, _pSocketManager )
+ClientSocket::ClientSocket( int _nSocket, ISocketManager* _pSocketManager )
+	:MySocket( _nSocket, _pSocketManager )
 {
 
 }
 
-CClientSocket::~CClientSocket()
+ClientSocket::~ClientSocket()
 {
 
 }

@@ -3,11 +3,11 @@
 
 #include "../libs/sql/sqlgametable.h"
 
-class CSqlChessTable : public CSqlGameTable
+class SqlChessTable : public SqlGameTable
 {
 public:
-	CSqlChessTable();
-	virtual ~CSqlChessTable();
+	SqlChessTable();
+	virtual ~SqlChessTable();
 };
 
 #endif /*SQLCHESSTABLE_H_*/

@@ -6,12 +6,12 @@
 
 //#include <syslog.h>
 
-CSqlGameTable::CSqlGameTable( char* _cTableName, char* _cTableStruct )
+SqlGameTable::SqlGameTable( char* _cTableName, char* _cTableStruct )
 	: CSqlTable( _cTableName, _cTableStruct)
 {
 }
 
-bool CSqlGameTable::getIDPlayer0( uint32_t _nTableID, uint32_t &_nIDCreator )
+bool SqlGameTable::getIDPlayer0( uint32_t _nTableID, uint32_t &_nIDCreator )
 {
 	TVecChar vecData;
 
@@ -23,7 +23,7 @@ bool CSqlGameTable::getIDPlayer0( uint32_t _nTableID, uint32_t &_nIDCreator )
 	return true;
 }
 
-bool CSqlGameTable::getIDPlayer1( uint32_t _nTableID, uint32_t &_nIDPlayer2 )
+bool SqlGameTable::getIDPlayer1( uint32_t _nTableID, uint32_t &_nIDPlayer2 )
 {
 	TVecChar vecData;
 
@@ -35,7 +35,7 @@ bool CSqlGameTable::getIDPlayer1( uint32_t _nTableID, uint32_t &_nIDPlayer2 )
 	return true;
 }
 
-bool CSqlGameTable::getMaxRating( uint32_t _nTableID, uint32_t &_nMaxRating )
+bool SqlGameTable::getMaxRating( uint32_t _nTableID, uint32_t &_nMaxRating )
 {
 	TVecChar vecData;
 
@@ -50,7 +50,7 @@ bool CSqlGameTable::getMaxRating( uint32_t _nTableID, uint32_t &_nMaxRating )
 	return true;
 }
 
-bool CSqlGameTable::getMinRating( uint32_t _nTableID, uint32_t &_nMinRating )
+bool SqlGameTable::getMinRating( uint32_t _nTableID, uint32_t &_nMinRating )
 {
 	TVecChar vecData;
 
@@ -64,7 +64,7 @@ bool CSqlGameTable::getMinRating( uint32_t _nTableID, uint32_t &_nMinRating )
 	return true;
 }
 
-bool CSqlGameTable::getPassword( uint32_t _nTableID, TVecChar *_strPassword )
+bool SqlGameTable::getPassword( uint32_t _nTableID, TVecChar *_strPassword )
 {
 	if( !SelectToStr( "Password", "TableID", CMyStr( _nTableID ).c_str(), _strPassword ) )
 		return false;
@@ -72,7 +72,7 @@ bool CSqlGameTable::getPassword( uint32_t _nTableID, TVecChar *_strPassword )
 	return true;
 }
 
-bool CSqlGameTable::getState( uint32_t _nTableID, uint8_t &_nState )
+bool SqlGameTable::getState( uint32_t _nTableID, uint8_t &_nState )
 {
 	TVecChar vecData;
 
@@ -86,7 +86,7 @@ bool CSqlGameTable::getState( uint32_t _nTableID, uint8_t &_nState )
 	return true;
 }
 
-bool CSqlGameTable::getDrawState( uint32_t _nTableID, uint8_t &_nDrawState )
+bool SqlGameTable::getDrawState( uint32_t _nTableID, uint8_t &_nDrawState )
 {
 	TVecChar vecData;
 
@@ -101,28 +101,28 @@ bool CSqlGameTable::getDrawState( uint32_t _nTableID, uint8_t &_nDrawState )
 }
 
 
-bool CSqlGameTable::setState( uint32_t _nTableID, uint8_t _nState )
+bool SqlGameTable::setState( uint32_t _nTableID, uint8_t _nState )
 {
 	CSqlTable::Update( "State", CMyStr( _nState ).c_str(), "TableID", CMyStr( _nTableID ).c_str() );
 	return true;
 }
 
 
-bool CSqlGameTable::setDrawState( uint32_t _nTableID, uint8_t _nDrawState )
+bool SqlGameTable::setDrawState( uint32_t _nTableID, uint8_t _nDrawState )
 {
 	CSqlTable::Update( "DrawState", CMyStr( _nDrawState ).c_str(), "TableID", CMyStr( _nTableID ).c_str() );
 	return true;
 }
 
 
-CSqlGameTable::~CSqlGameTable()
+SqlGameTable::~SqlGameTable()
 {
 }
 
 /*!
-    \fn CSqlGameTable::getTime2Step( uint32_t _nTableID, uint32_t &_nTime2Step )
+    \fn SqlGameTable::getTime2Step( uint32_t _nTableID, uint32_t &_nTime2Step )
  */
-bool CSqlGameTable::getTime2Step( uint32_t _nTableID, uint32_t &_nTime2Step )
+bool SqlGameTable::getTime2Step( uint32_t _nTableID, uint32_t &_nTime2Step )
 {
 	TVecChar vecData;
 
@@ -136,9 +136,9 @@ bool CSqlGameTable::getTime2Step( uint32_t _nTableID, uint32_t &_nTime2Step )
 
 
 /*!
-    \fn CSqlGameTable::getTime2Game( uint32_t _nTableID, uint32_t &_nTime2Game )
+    \fn SqlGameTable::getTime2Game( uint32_t _nTableID, uint32_t &_nTime2Game )
  */
-bool CSqlGameTable::getTime2Game( uint32_t _nTableID, uint32_t &_nTime2Game )
+bool SqlGameTable::getTime2Game( uint32_t _nTableID, uint32_t &_nTime2Game )
 {
 	TVecChar vecData;
 
@@ -151,9 +151,9 @@ bool CSqlGameTable::getTime2Game( uint32_t _nTableID, uint32_t &_nTime2Game )
 }
 
 /*!
-    \fn CSqlGameTable::setIDPlayer1( uint32_t _nTableID, uint32_t _nIDPlayer2 )
+    \fn SqlGameTable::setIDPlayer1( uint32_t _nTableID, uint32_t _nIDPlayer2 )
  */
-void CSqlGameTable::setIDPlayer1( uint32_t _nTableID, uint32_t _nIDPlayer2 )
+void SqlGameTable::setIDPlayer1( uint32_t _nTableID, uint32_t _nIDPlayer2 )
 {
 	if (_nIDPlayer2 > 0)
 		CSqlTable::Update( "IDPlayer1", CMyStr( _nIDPlayer2 ).c_str(), "TableID", CMyStr( _nTableID ).c_str() );
@@ -161,12 +161,12 @@ void CSqlGameTable::setIDPlayer1( uint32_t _nTableID, uint32_t _nIDPlayer2 )
 		CSqlTable::Update( "IDPlayer1", "NULL", "TableID", CMyStr( _nTableID ).c_str() );
 }
 
-void CSqlGameTable::delIDPlayer1( uint32_t _nTableID)
+void SqlGameTable::delIDPlayer1( uint32_t _nTableID)
 {
 	CSqlTable::Update( "IDPlayer1", "NULL", "TableID", CMyStr( _nTableID ).c_str() );
 }
 
-void CSqlGameTable::setXPlayer( uint32_t _nTableID, uint32_t _nXPlayer )
+void SqlGameTable::setXPlayer( uint32_t _nTableID, uint32_t _nXPlayer )
 {
 	if (_nXPlayer > 0)
 		CSqlTable::Update( "XPlayer", CMyStr( _nXPlayer ).c_str(), "TableID", CMyStr( _nTableID ).c_str() );
@@ -176,9 +176,9 @@ void CSqlGameTable::setXPlayer( uint32_t _nTableID, uint32_t _nXPlayer )
 
 
 /*!
-    \fn CSqlGameTable::updateFieldState( uint32_t _nTableID, const TVecChar *_vecData )
+    \fn SqlGameTable::updateFieldState( uint32_t _nTableID, const TVecChar *_vecData )
  */
-void CSqlGameTable::updateFieldState( uint32_t _nTableID, const TVecChar *_vecData )
+void SqlGameTable::updateFieldState( uint32_t _nTableID, const TVecChar *_vecData )
 {
 	CMyStr strBLOB;
 
@@ -192,15 +192,15 @@ void CSqlGameTable::updateFieldState( uint32_t _nTableID, const TVecChar *_vecDa
 	CSqlTable::Update( "FieldState", strBLOB.c_str(), "TableID", CMyStr( _nTableID ).c_str() );
 
 #ifdef GMS_DEBUG
-        std::cerr << "CSqlGameTable::playerStep strBLOB"  <<  strBLOB.c_str() << std::endl << std::endl;
+        std::cerr << "SqlGameTable::playerStep strBLOB"  <<  strBLOB.c_str() << std::endl << std::endl;
 #endif
 }
 
 
 /*!
-    \fn CSqlGameTable::getStepNum( uint32_t _nTableID, uint32_t &_nStepNum )
+    \fn SqlGameTable::getStepNum( uint32_t _nTableID, uint32_t &_nStepNum )
  */
-bool CSqlGameTable::getStepNum( uint32_t _nTableID, uint32_t &_nStepNum )
+bool SqlGameTable::getStepNum( uint32_t _nTableID, uint32_t &_nStepNum )
 {
 	TVecChar vecData;
 
@@ -214,18 +214,18 @@ bool CSqlGameTable::getStepNum( uint32_t _nTableID, uint32_t &_nStepNum )
 
 
 /*!
-    \fn CSqlGameTable::setStepNum( uint32_t _nTableID, uint32_t _nStepNum )
+    \fn SqlGameTable::setStepNum( uint32_t _nTableID, uint32_t _nStepNum )
  */
-void CSqlGameTable::setStepNum( uint32_t _nTableID, uint32_t _nStepNum )
+void SqlGameTable::setStepNum( uint32_t _nTableID, uint32_t _nStepNum )
 {
 	CSqlTable::Update( "StepNum", CMyStr( _nStepNum ).c_str(), "TableID", CMyStr( _nTableID ).c_str() );
 }
 
 
 /*!
-    \fn CSqlGameTable::selectFromStatus( uint8_t _nStatus, TVecUINT* vecRes )
+    \fn SqlGameTable::selectFromStatus( uint8_t _nStatus, TVecUINT* vecRes )
  */
-bool CSqlGameTable::selectFromStatus( uint8_t _nStatus, TVecUINT* vecRes )
+bool SqlGameTable::selectFromStatus( uint8_t _nStatus, TVecUINT* vecRes )
 {
 	TTable tbl;
 
@@ -242,12 +242,12 @@ bool CSqlGameTable::selectFromStatus( uint8_t _nStatus, TVecUINT* vecRes )
 	return true;
 }
 
-void CSqlGameTable::setCurPlayer( uint32_t _nTableID, uint32_t _nValue )
+void SqlGameTable::setCurPlayer( uint32_t _nTableID, uint32_t _nValue )
 {
 	CSqlTable::Update( "CurPlayer", CMyStr( _nValue ).c_str(), "TableID", CMyStr( _nTableID ).c_str() );
 }
 
-void CSqlGameTable::setPlayerGameTime( uint32_t _nTableID, uint8_t _nPlayerNum, uint32_t _nValue )
+void SqlGameTable::setPlayerGameTime( uint32_t _nTableID, uint8_t _nPlayerNum, uint32_t _nValue )
 {
 	switch ( _nPlayerNum )
 	{
@@ -261,17 +261,17 @@ void CSqlGameTable::setPlayerGameTime( uint32_t _nTableID, uint8_t _nPlayerNum, 
 }
 
 /*!
-    \fn CSqlGameTable::setPlayerStepTime( uint32_t _nTableID, uint32_t _nValue )
+    \fn SqlGameTable::setPlayerStepTime( uint32_t _nTableID, uint32_t _nValue )
  */
-void CSqlGameTable::setPlayerStepTime( uint32_t _nTableID, uint32_t _nValue )
+void SqlGameTable::setPlayerStepTime( uint32_t _nTableID, uint32_t _nValue )
 {
 	CSqlTable::Update( "PlayerStepTime", CMyStr( _nValue ).c_str(), "TableID", CMyStr( _nTableID ).c_str() );
 }
 
 /*!
-    \fn CSqlGameTable::getFieldState( uint32_t _nTableID, TVecChar* _vecField )
+    \fn SqlGameTable::getFieldState( uint32_t _nTableID, TVecChar* _vecField )
  */
-bool CSqlGameTable::getFieldState( uint32_t _nTableID, TVecChar* _vecField )
+bool SqlGameTable::getFieldState( uint32_t _nTableID, TVecChar* _vecField )
 {
 	if( !SelectToStr( "FieldState", "TableID", CMyStr( _nTableID ).c_str(), _vecField ) )
 		return false;
@@ -279,7 +279,7 @@ bool CSqlGameTable::getFieldState( uint32_t _nTableID, TVecChar* _vecField )
 	return true;
 }
 
-bool CSqlGameTable::getXPlayer( uint32_t _nTableID, uint32_t &_nCurPlayer )
+bool SqlGameTable::getXPlayer( uint32_t _nTableID, uint32_t &_nCurPlayer )
 {
 	TVecChar vecData;
 
@@ -292,10 +292,10 @@ bool CSqlGameTable::getXPlayer( uint32_t _nTableID, uint32_t &_nCurPlayer )
 }
 
 /*!
-    \fn CSqlGameTable::getCurPlayer( uint32_t _nTableID, uint32_t &_nCurPlayer )
+    \fn SqlGameTable::getCurPlayer( uint32_t _nTableID, uint32_t &_nCurPlayer )
  */
 
-bool CSqlGameTable::getCurPlayer( uint32_t _nTableID, uint32_t &_nCurPlayer )
+bool SqlGameTable::getCurPlayer( uint32_t _nTableID, uint32_t &_nCurPlayer )
 {
 	TVecChar vecData;
 
@@ -308,9 +308,9 @@ bool CSqlGameTable::getCurPlayer( uint32_t _nTableID, uint32_t &_nCurPlayer )
 }
 
 /*!
-    \fn CSqlGameTable::getPlayerStepTime( uint32_t _nTableID, uint32_t &_nStepTime )
+    \fn SqlGameTable::getPlayerStepTime( uint32_t _nTableID, uint32_t &_nStepTime )
  */
-bool CSqlGameTable::getPlayerStepTime( uint32_t _nTableID, uint32_t &_nStepTime )
+bool SqlGameTable::getPlayerStepTime( uint32_t _nTableID, uint32_t &_nStepTime )
 {
 	TVecChar vecData;
 
@@ -324,9 +324,9 @@ bool CSqlGameTable::getPlayerStepTime( uint32_t _nTableID, uint32_t &_nStepTime 
 
 
 /*!
-    \fn CSqlGameTable::getPlayerGameTime( uint32_t _nTableID, uint32_t &_nGameTime )
+    \fn SqlGameTable::getPlayerGameTime( uint32_t _nTableID, uint32_t &_nGameTime )
  */
-bool CSqlGameTable::getPlayerGameTime( uint32_t _nTableID, uint8_t _nPlayerNum, uint32_t &_nGameTime )
+bool SqlGameTable::getPlayerGameTime( uint32_t _nTableID, uint8_t _nPlayerNum, uint32_t &_nGameTime )
 {
 	TVecChar vecData;
 	const char* cszFieldName = 0;
@@ -354,7 +354,7 @@ bool CSqlGameTable::getPlayerGameTime( uint32_t _nTableID, uint8_t _nPlayerNum, 
 	return true;
 }
 
-int CSqlGameTable::vec2i(TVecChar *_pvecData)
+int SqlGameTable::vec2i(TVecChar *_pvecData)
 {
     std::string str(_pvecData->begin(), _pvecData->end());
 

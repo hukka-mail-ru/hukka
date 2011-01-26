@@ -5,20 +5,20 @@
 
 #define MYDEBUG
 
-int COnLineManager::m_nRefCount = 0;
-COnLineManager* COnLineManager::m_pSelf = 0;
+int OnLineManager::m_nRefCount = 0;
+OnLineManager* OnLineManager::m_pSelf = 0;
 
-COnLineManager* COnLineManager::Instance()
+OnLineManager* OnLineManager::Instance()
 {
 	if( m_pSelf == 0 )
-		m_pSelf = new COnLineManager;
+		m_pSelf = new OnLineManager;
 
 	++m_nRefCount;
 
 	return m_pSelf;
 }
 
-void COnLineManager::FreeInst()
+void OnLineManager::FreeInst()
 {
 	--m_nRefCount;
 
@@ -28,7 +28,7 @@ void COnLineManager::FreeInst()
 	KillObject();
 }
 
-void COnLineManager::KillObject()
+void OnLineManager::KillObject()
 {
 	if( m_pSelf != 0 )
 		delete m_pSelf;
@@ -37,7 +37,7 @@ void COnLineManager::KillObject()
 	m_nRefCount = 0;
 }
 
-ISender* COnLineManager::IsOnLine( int32_t _nID )
+ISender* OnLineManager::IsOnLine( int32_t _nID )
 {
 	pthread_mutex_lock( &m_mutMap );
 	TMapRegSocket::iterator It = m_mapRegSocket.find( _nID );
@@ -47,7 +47,7 @@ ISender* COnLineManager::IsOnLine( int32_t _nID )
 	return pSender;
 }
 
-char COnLineManager::OnLine( int32_t _nID, ISender* _pSender )
+char OnLineManager::OnLine( int32_t _nID, ISender* _pSender )
 {
 	char nErr = NOERR;
 
@@ -75,19 +75,19 @@ char COnLineManager::OnLine( int32_t _nID, ISender* _pSender )
 	return nErr;
 }
 
-void COnLineManager::OffLine( int32_t _nID )
+void OnLineManager::OffLine( int32_t _nID )
 {
 	pthread_mutex_lock( &m_mutMap );
 	m_mapRegSocket.erase( _nID );
 	pthread_mutex_unlock( &m_mutMap );
 }
 
-COnLineManager::COnLineManager()
+OnLineManager::OnLineManager()
 {
     pthread_mutex_init(&this->m_mutMap, NULL);
 }
 
-COnLineManager::~COnLineManager()
+OnLineManager::~OnLineManager()
 {
 
 }

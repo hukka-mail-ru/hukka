@@ -5,17 +5,17 @@
 	Структура исходящего короткого сообщения типа КОМАНДА <TableID> <Параметр>
 */
 #pragma pack(1)
-struct SGameMsgBase
+struct GameMsgBase
 {
 	uint8_t m_chCmd;
 	uint32_t m_nTableID;
 };
-struct SGameMsg : public SGameMsgBase
+struct SGameMsg : public GameMsgBase
 {
 	uint8_t m_chData;
 };
 
-struct SNGameMsg : public SGameMsgBase
+struct SNGameMsg : public GameMsgBase
 {
 	uint32_t m_nData;
 };

@@ -32,7 +32,7 @@ int main(int argc, char *argv[])
 
 	connect( sockfd, (sockaddr*)&servaddr, sizeof( servaddr ) );
 
-	CClientMsg clientMsg;
+	ClientMsg clientMsg;
 	TVecChar vecData;
 	vecData.assign( strlen( cL )+1+strlen( cP ), 0 );
 	memcpy( &vecData[0], cL, strlen( cL ) );
@@ -62,7 +62,7 @@ int main(int argc, char *argv[])
 	if( clientMsg.ParseData( &Buffer, nErr ) )
 	{
 		TVecChar vecData;
-		clientMsg.GetData( CClientMsg::etpCommand, &vecData );
+		clientMsg.GetData( ClientMsg::etpCommand, &vecData );
 
 		switch ( vecData[0] )
 		{
@@ -88,7 +88,7 @@ int main(int argc, char *argv[])
 	if( clientMsg.ParseData( &Buffer, nErr ) )
 	{
 		TVecChar vecData;
-		clientMsg.GetData( CClientMsg::etpCommand, &vecData );
+		clientMsg.GetData( ClientMsg::etpCommand, &vecData );
 
 		std::cout << endl;
 

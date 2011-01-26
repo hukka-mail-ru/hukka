@@ -6,15 +6,15 @@
 #include <syslog.h>
 
 #include "ChessService.h"
-#include "../libs/gameserver/CGameServer.h"
+#include "../libs/gameserver/GameServer.h"
 
 using namespace std;
 
 int main(int argc, char *argv[])
 {	
-	CChessService GammonService;
+	ChessService GammonService;
 
-	CGameServer<CChessService> GameServer;
+	GameServer<ChessService> GameServer;
 	
 	int res = GameServer.start(&GammonService); 
 	

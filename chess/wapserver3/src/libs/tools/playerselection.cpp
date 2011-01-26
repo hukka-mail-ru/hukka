@@ -3,7 +3,7 @@
 
 #include <syslog.h>
 
-CPlayerSelection::CPlayerSelection( CSqlGameTable *_pGameTable, CSqlRatingTable *_pRatingTable )
+CPlayerSelection::CPlayerSelection( SqlGameTable *_pGameTable, CSqlRatingTable *_pRatingTable )
 {
 	m_pGameTable = _pGameTable;
 	m_pRatingTable = _pRatingTable;

@@ -43,19 +43,19 @@ int StartService()
 
 	CTblMgrServer* pTblMgrServer = CTblMgrServer::Instance();
 
-	CConnector Connector( static_cast<ISocketManager*>( pTblMgrServer ) );
+	Connector Connector( static_cast<ISocketManager*>( pTblMgrServer ) );
 
-	if( !Connector.Connect( 1234, "localhost", static_cast<CAccessInfo*>( pTblMgrServer ) ) )
+	if( !Connector.Connect( 1234, "localhost", static_cast<AccessInfo*>( pTblMgrServer ) ) )
 	{
 		std::cerr << "server not found" << std::endl;
 		return -1;
 	}
 
-	CSelector::Instance()->StartLoop();
+	Selector::Instance()->StartLoop();
 
 	Connector.Close( SHUT_RDWR );
 
-	CSelector::KillObject();
+	Selector::KillObject();
 
 	CTblMgrServer::KillObject();
 

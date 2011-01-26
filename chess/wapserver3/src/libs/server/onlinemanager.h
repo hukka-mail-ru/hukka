@@ -7,11 +7,11 @@
 
 typedef std::map<int32_t,ISender*> TMapRegSocket;
 
-class COnLineManager
+class OnLineManager
 {
 public:
 
-	static COnLineManager*	Instance();
+	static OnLineManager*	Instance();
 	static void		FreeInst();
 	static void		KillObject();
 
@@ -20,11 +20,11 @@ public:
 	void			OffLine( int32_t );
 private:
 
-	COnLineManager();
-	~COnLineManager();
+	OnLineManager();
+	~OnLineManager();
 private:
 
-	static COnLineManager*	m_pSelf;
+	static OnLineManager*	m_pSelf;
 	static int		m_nRefCount;
 
 	mutable pthread_mutex_t	m_mutMap;

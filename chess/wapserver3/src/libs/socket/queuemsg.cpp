@@ -13,7 +13,7 @@ CQueueMsg::~CQueueMsg()
 
 }
 
-bool CQueueMsg::AddMsg( const CClientMsg& _clientMsg )
+bool CQueueMsg::AddMsg( const ClientMsg& _clientMsg )
 {
 	pthread_mutex_lock( &m_mutQueue );
 	bool isRes = m_isGetEmpty;
@@ -30,7 +30,7 @@ bool CQueueMsg::AddMsg( const CClientMsg& _clientMsg )
 	return isRes;
 }
 
-bool CQueueMsg::GetMsg( CClientMsg& _clientMsg )
+bool CQueueMsg::GetMsg( ClientMsg& _clientMsg )
 {
 	bool isRes = false;
 

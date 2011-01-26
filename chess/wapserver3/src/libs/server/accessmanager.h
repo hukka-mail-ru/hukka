@@ -4,16 +4,16 @@
 #include "../socket/clientmsg.h"
 #include "../sql/sqltableusers.h"
 
-class COnLineManager;
+class OnLineManager;
 
-class CAccessManager
+class AccessManager
 {
 public:
 
-	CAccessManager();
-	~CAccessManager();
+	AccessManager();
+	~AccessManager();
 
-//	uint32_t			GetAccessID( uint32_t, CClientMsg&, CClientMsg* );
+//	uint32_t			GetAccessID( uint32_t, ClientMsg&, ClientMsg* );
 	char				GetAccessID( char, const TVecChar&, uint32_t& );
 	char				RegAccessID( char, const TVecChar&, uint32_t& );
 private:
@@ -22,7 +22,7 @@ private:
 private:
 
 	CSqlTableUsers		m_sqlTableUsers;
-	COnLineManager*	m_pOnLineManager;
+	OnLineManager*	m_pOnLineManager;
 };
 
 #endif

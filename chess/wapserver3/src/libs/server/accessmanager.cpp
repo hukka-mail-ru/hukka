@@ -4,17 +4,17 @@
 #include "../header/deferror.h"
 #include "onlinemanager.h"
 
-CAccessManager::CAccessManager()
+AccessManager::AccessManager()
 {
-	m_pOnLineManager = COnLineManager::Instance();
+	m_pOnLineManager = OnLineManager::Instance();
 }
 
-CAccessManager::~CAccessManager()
+AccessManager::~AccessManager()
 {
-	COnLineManager::FreeInst();
+	OnLineManager::FreeInst();
 }
 
-char CAccessManager::GetAccessID( char _nCommand, const TVecChar& _vecData, uint32_t& _nID )
+char AccessManager::GetAccessID( char _nCommand, const TVecChar& _vecData, uint32_t& _nID )
 {
 	TVecChar vecL, vecP;
 	
@@ -27,7 +27,7 @@ char CAccessManager::GetAccessID( char _nCommand, const TVecChar& _vecData, uint
 	return m_sqlTableUsers.IsUserReg( &vecL[0], &vecP[0], _nID );
 }
 
-char CAccessManager::RegAccessID( char _nCommand, const TVecChar& _vecData, uint32_t& _nID )
+char AccessManager::RegAccessID( char _nCommand, const TVecChar& _vecData, uint32_t& _nID )
 {
 	TVecChar vecL, vecP;
 	
@@ -40,7 +40,7 @@ char CAccessManager::RegAccessID( char _nCommand, const TVecChar& _vecData, uint
 	return m_sqlTableUsers.DoUserReg( &vecL[0], &vecP[0], _nID );
 }
 
-bool CAccessManager::Parse2str( const TVecChar& _vecD, TVecChar* _pvecL, TVecChar* _pvecP )
+bool AccessManager::Parse2str( const TVecChar& _vecD, TVecChar* _pvecL, TVecChar* _pvecP )
 {
 	TVecChar::const_iterator It = std::find( _vecD.begin(), _vecD.end(), 0 );
 

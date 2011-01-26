@@ -19,17 +19,17 @@ char EvalCRC( const char* const _pB, const char* const _pE )
 	return EvalCRC( _pB, _pE-_pB );
 }
 
-CClientMsg::CClientMsg()
+ClientMsg::ClientMsg()
 {
 
 }
 
-CClientMsg::~CClientMsg()
+ClientMsg::~ClientMsg()
 {
 
 }
 
-void CClientMsg::InitError( uint32_t _nFrom, char _nCommand, char _nErr )
+void ClientMsg::InitError( uint32_t _nFrom, char _nCommand, char _nErr )
 {
 	m_vecDataMsg.resize( sizeof( SMsgError ) );
 
@@ -44,7 +44,7 @@ void CClientMsg::InitError( uint32_t _nFrom, char _nCommand, char _nErr )
 	psMsgError->m_nCRC = EvalCRC( &psMsgError->m_cVersion, &psMsgError->m_nCRC );
 }
 
-void CClientMsg::InitMsg( uint32_t _nTo, TVecChar _vecData )
+void ClientMsg::InitMsg( uint32_t _nTo, TVecChar _vecData )
 {
 	m_vecDataMsg.resize( sizeof( SExHeadMsg )+_vecData.size()+1 );
 
@@ -58,7 +58,7 @@ void CClientMsg::InitMsg( uint32_t _nTo, TVecChar _vecData )
 	m_vecDataMsg[m_vecDataMsg.size()-1] = EvalCRC( &psExMsg->m_cVersion, &m_vecDataMsg[m_vecDataMsg.size()-1] );
 }
 
-void CClientMsg::InitMsg( uint32_t _nTo, char _nCommand, TVecChar _vecData )
+void ClientMsg::InitMsg( uint32_t _nTo, char _nCommand, TVecChar _vecData )
 {
 	m_vecDataMsg.resize( sizeof( SCommandMsg )+_vecData.size()+1 );
 
@@ -73,7 +73,7 @@ void CClientMsg::InitMsg( uint32_t _nTo, char _nCommand, TVecChar _vecData )
 	m_vecDataMsg[m_vecDataMsg.size()-1] = EvalCRC( &psCommandMsg->m_cVersion, &m_vecDataMsg[m_vecDataMsg.size()-1] );
 }
 
-bool CClientMsg::ParseData( CBuffer* _pBuffer, int& _nError )
+bool ClientMsg::ParseData( CBuffer* _pBuffer, int& _nError )
 {
 	char* pErrMsg = 0;
 	SExHeadMsg* psExHeadMsg;
@@ -132,19 +132,19 @@ bool CClientMsg::ParseData( CBuffer* _pBuffer, int& _nError )
 	return false;
 }
 
-uint32_t CClientMsg::GetTo() const
+uint32_t ClientMsg::GetTo() const
 {
 	SExHeadMsg* psExHeadMsg = (SExHeadMsg*)&m_vecDataMsg[0];
 	return psExHeadMsg->m_nFromTo;
 }
 
-char CClientMsg::GetCommand() const
+char ClientMsg::GetCommand() const
 {
 	SCommandMsg* psCommandMsg = (SCommandMsg*)&m_vecDataMsg[0];
 	return psCommandMsg->m_nCommand;
 }
 
-TVecChar* CClientMsg::GetData( ETypeData _typeData, TVecChar* _pvecData ) const
+TVecChar* ClientMsg::GetData( ETypeData _typeData, TVecChar* _pvecData ) const
 {
 	int nPos = 0;
 
@@ -159,7 +159,7 @@ TVecChar* CClientMsg::GetData( ETypeData _typeData, TVecChar* _pvecData ) const
     return _pvecData;
 }
 
-const TVecChar* CClientMsg::GetBuffMsg() const
+const TVecChar* ClientMsg::GetBuffMsg() const
 {
 	return &m_vecDataMsg;
 }

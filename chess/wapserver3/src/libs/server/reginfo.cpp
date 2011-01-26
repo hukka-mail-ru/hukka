@@ -1,22 +1,22 @@
 #include "reginfo.h"
 
-CRegInfo::CRegInfo()
+RegInfo::RegInfo()
 	:m_nID( 0 )
 {
 
 }
 
-CRegInfo::~CRegInfo()
+RegInfo::~RegInfo()
 {
 
 }
 
-uint32_t CRegInfo::GetID() const
+uint32_t RegInfo::GetID() const
 {
 	return m_nID;
 }
 
-void CRegInfo::SetID( uint32_t _nID )
+void RegInfo::SetID( uint32_t _nID )
 {
 	m_nID = _nID;
 }

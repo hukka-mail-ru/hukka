@@ -1,7 +1,7 @@
 #include "accessinfo.h"
 #include <string.h>
 
-CAccessInfo::CAccessInfo( const char* _pcntLogin, const char* _pcntPassword ):
+AccessInfo::AccessInfo( const char* _pcntLogin, const char* _pcntPassword ):
 m_strLogin(_pcntLogin), 
 m_strPassword(_pcntPassword)
 {
@@ -11,18 +11,18 @@ m_strPassword(_pcntPassword)
 //	memcpy( m_pcPassword, _pcntPassword, strlen( _pcntPassword ) );
 }
 
-CAccessInfo::~CAccessInfo()
+AccessInfo::~AccessInfo()
 {
 //	delete[] m_pcLogin;
 //	delete[] m_pcPassword;
 }
 
-const char* CAccessInfo::GetLogin() const
+const char* AccessInfo::GetLogin() const
 {
 	return m_strLogin.c_str();
 }
 
-const char* CAccessInfo::GetPassword() const
+const char* AccessInfo::GetPassword() const
 {
 	return m_strPassword.c_str();
 }

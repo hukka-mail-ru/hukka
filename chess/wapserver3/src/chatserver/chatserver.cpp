@@ -33,17 +33,17 @@ int main(int argc, char *argv[])
 {
 	CCHTServer* pCHTServer = CCHTServer::Instance();
 
-	CConnector Connector( static_cast<ISocketManager*>( pCHTServer ) );
+	Connector Connector( static_cast<ISocketManager*>( pCHTServer ) );
 
-//	if( !Connector.Connect( 1234, "82.146.42.150", static_cast<CAccessInfo*>( pCHTServer ) ) )
-	if( !Connector.Connect( 1234, "localhost", static_cast<CAccessInfo*>( pCHTServer ) ) )
+//	if( !Connector.Connect( 1234, "82.146.42.150", static_cast<AccessInfo*>( pCHTServer ) ) )
+	if( !Connector.Connect( 1234, "localhost", static_cast<AccessInfo*>( pCHTServer ) ) )
 		return -1;
 
-	CSelector::Instance()->StartLoop();
+	Selector::Instance()->StartLoop();
 
 	Connector.Close( SHUT_RDWR );
 
-	CSelector::KillObject();
+	Selector::KillObject();
 
 	CCHTServer::KillObject();
 

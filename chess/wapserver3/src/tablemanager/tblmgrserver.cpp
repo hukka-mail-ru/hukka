@@ -44,7 +44,7 @@ void CTblMgrServer::KillObject()
 }
 
 CTblMgrServer::CTblMgrServer()
-	:CAccessInfo( "tbm", "*96CD954E820BAB0F2C7D96E90A6D59B2CF4B8A96" )
+	:AccessInfo( "tbm", "*96CD954E820BAB0F2C7D96E90A6D59B2CF4B8A96" )
 {
 
 }
@@ -54,10 +54,10 @@ CTblMgrServer::~CTblMgrServer()
 
 }
 
-void CTblMgrServer::DoAllMsg( CMySocket* _pSocket )
+void CTblMgrServer::DoAllMsg( MySocket* _pSocket )
 {
 	setSocket( _pSocket );
-	CClientMsg inMsg;
+	ClientMsg inMsg;
 
 	while( _pSocket->GetMsg( inMsg ) )
 	{
@@ -67,21 +67,21 @@ void CTblMgrServer::DoAllMsg( CMySocket* _pSocket )
 
 
 /*!
-    \fn CTblMgrServer::setSocket( CMySocket * _pSocket )
+    \fn CTblMgrServer::setSocket( MySocket * _pSocket )
  */
-void CTblMgrServer::setSocket( CMySocket * _pSocket )
+void CTblMgrServer::setSocket( MySocket * _pSocket )
 {
 	m_pSocket = _pSocket;
 }
 
 
 /*!
-    \fn CTblMgrServer::newMsg( CClientMsg* _pMsg )
+    \fn CTblMgrServer::newMsg( ClientMsg* _pMsg )
  */
-void CTblMgrServer::newMsg( CClientMsg* _pMsg )
+void CTblMgrServer::newMsg( ClientMsg* _pMsg )
 {
 	TVecChar vecCmd;
-	_pMsg->GetData( CClientMsg::etpCommand, &vecCmd );
+	_pMsg->GetData( ClientMsg::etpCommand, &vecCmd );
 	
 #ifdef MYDEBUG
 	std::cerr << "MSG: " << ( uint32_t )_pMsg->GetTo() << "-" << ( uint32_t ) _pMsg->GetCommand() << "-" << ( uint32_t ) vecCmd[0] << std::endl;
@@ -191,7 +191,7 @@ void CTblMgrServer::Create( uint32_t _nUserID, const TVecChar* _vecData )
 	uint32_t nParamID, nParam;
 	CMyStr strPassword = "";
 	sMsg.m_chCmd = ANS_CREATE;
-	CTbmCommands::CrRes Result;
+	TbmCommands::CrRes Result;
 	
 	if ( (nVecSize > sizeof(uint32_t)) && (nVecSize - sizeof(uint32_t)) <= sizeof(uint32_t) )
 	{		
@@ -204,7 +204,7 @@ void CTblMgrServer::Create( uint32_t _nUserID, const TVecChar* _vecData )
 	    {
 		    if ( i >= ( nVecSize - sizeof( uint32_t ) ) )
 		    {
-			    Result = CTbmCommands::NVPAR;
+			    Result = TbmCommands::NVPAR;
 			    break;
 		    }
 		    nParamID = (uint32_t) _vecData->at(i);
@@ -228,12 +228,12 @@ void CTblMgrServer::Create( uint32_t _nUserID, const TVecChar* _vecData )
 	    
 	    switch ( Result )
 	    {
-		    case CTbmCommands::DONE:			    
+		    case TbmCommands::DONE:			    
 			    sMsg.m_nTableID = m_TbmCommands.LastInsertId();
 			    sMsg.m_chData = ST_VALID;
 			    break;
-		    case CTbmCommands::TABEX:
-		    case CTbmCommands::NVPAR:
+		    case TbmCommands::TABEX:
+		    case TbmCommands::NVPAR:
 			    sMsg.m_nTableID = pLogicID;			   
 			    sMsg.m_chData = ST_NOTVALID;
 			    break;			    
@@ -481,7 +481,7 @@ void CTblMgrServer::GetParams( uint32_t _nUserID, const TVecChar* _vecData )
 
 void CTblMgrServer::sendMsg( uint32_t _nTo, CSendedMsg *_pMsg )
 {
-    CClientMsg Msg;
+    ClientMsg Msg;
     TVecChar vecCmd = _pMsg->getDataVec();
 #ifdef MYDEBUG
     for (TVecChar::const_iterator it = vecCmd.begin(); it != vecCmd.end(); ++it)
@@ -517,7 +517,7 @@ void CTblMgrServer::sendMsg( uint32_t _nTO, void* _pMsg, int _nSize )
     std::cout << std::endl;
 #endif
 	
-	CClientMsg Msg;
+	ClientMsg Msg;
 	
 	Msg.InitMsg( _nTO, vecCmd );
 	

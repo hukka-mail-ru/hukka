@@ -26,8 +26,8 @@
 
 #include <vector>
 
-class CClientMsg;
-class CMySocket;
+class ClientMsg;
+class MySocket;
 
 class ICallBack
 {
@@ -41,16 +41,16 @@ class ISender
 {
 public:
 
-	virtual void		AddMsg( const CClientMsg& ) = 0;
+	virtual void		AddMsg( const ClientMsg& ) = 0;
 };
 
 class ISocketManager
 {
 public:
 
-	virtual void		OnClose( CMySocket* ) = 0;
-	virtual void		AddInMsg( CMySocket* ) = 0;
-	virtual void		AddOutMsg( CMySocket* ) = 0;
+	virtual void		OnClose( MySocket* ) = 0;
+	virtual void		AddInMsg( MySocket* ) = 0;
+	virtual void		AddOutMsg( MySocket* ) = 0;
 };
 
 typedef std::vector<char> TVByte;

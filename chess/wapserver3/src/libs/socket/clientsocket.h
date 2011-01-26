@@ -4,12 +4,12 @@
 #include "../server/reginfo.h"
 #include "mysocket.h"
 
-class CClientSocket : public CMySocket, public CRegInfo
+class ClientSocket : public MySocket, public RegInfo
 {
 public:
 
-	CClientSocket( int, ISocketManager*  );
-	virtual ~CClientSocket();
+	ClientSocket( int, ISocketManager*  );
+	virtual ~ClientSocket();
 };
 
 #endif

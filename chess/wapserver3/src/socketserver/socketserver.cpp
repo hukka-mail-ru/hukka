@@ -12,14 +12,14 @@ int main(int argc, char *argv[])
 {
 	openlog( "socketserver", LOG_CONS, LOG_LOCAL0 );
 	
-	CListener Listener;
+	Listener Listener;
 	Listener.Listen( 1234 );
 
-	CSelector::Instance()->StartLoop();
+	Selector::Instance()->StartLoop();
 
 	Listener.Close();
 
-	CSelector::KillObject();
+	Selector::KillObject();
 
 	return 0;
 }

@@ -41,7 +41,7 @@ void CCHTServer::KillObject()
 }
 
 CCHTServer::CCHTServer()
-    :CAccessInfo( "cht", "*EF73C5727E601156FC22161D49B42AC88324678C" )
+    :AccessInfo( "cht", "*EF73C5727E601156FC22161D49B42AC88324678C" )
 {
 
 }
@@ -51,9 +51,9 @@ CCHTServer::~CCHTServer()
 
 }
 
-void CCHTServer::DoAllMsg( CMySocket* _pSocket )
+void CCHTServer::DoAllMsg( MySocket* _pSocket )
 {
-	CClientMsg inMsg;
+	ClientMsg inMsg;
     setSocket( _pSocket );
 
 	while( _pSocket->GetMsg( inMsg ) )
@@ -223,10 +223,10 @@ void CCHTServer::joinToChat( uint32_t _nPlayerID, uint32_t _nLogicID, uint32_t _
 
 }
 
-void CCHTServer::newMsg( CClientMsg* _pMsg )
+void CCHTServer::newMsg( ClientMsg* _pMsg )
 {
     TVecChar vecCmd;
-    _pMsg->GetData( CClientMsg::etpCommand, &vecCmd );
+    _pMsg->GetData( ClientMsg::etpCommand, &vecCmd );
 
 #ifdef MYDEBUG
     std::cerr << "MSG: " << ( uint32_t )_pMsg->GetTo() << "-" << ( uint32_t ) _pMsg->GetCommand() << "-" << ( uint32_t ) vecCmd[0] << " vecCmd size:" << vecCmd.size() << std::endl;
@@ -457,14 +457,14 @@ void CCHTServer::sendMsgToChat( uint32_t _nLogicID, CMyStr* _strMsg, uint32_t _n
 
 void CCHTServer::sendMsg( uint32_t _nTo, CSendedMsg *_pMsg )
 {
-    CClientMsg Msg;
+    ClientMsg Msg;
     TVecChar vecCmd = _pMsg->getDataVec();
     Msg.InitMsg(_nTo, vecCmd);
     m_pSocket->AddMsg(Msg);
 }
 
 
-void CCHTServer::setSocket( CMySocket * _pSocket )
+void CCHTServer::setSocket( MySocket * _pSocket )
 {
     m_pSocket = _pSocket;
 }
