@@ -54,7 +54,7 @@ int main(int argc, char *argv[])
 
 	poll( &pFd, 1, -1 );
 
-	CBuffer Buffer;
+	Buffer Buffer;
 	Buffer.AddDataSize( recv( sockfd, Buffer.GetDataEnd(), Buffer.FreeSize(), MSG_DONTWAIT ) );
 
 	int nErr;

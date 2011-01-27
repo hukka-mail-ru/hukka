@@ -26,7 +26,7 @@ private:
 	void				DoClose();
 private:
 
-	CBuffer			m_Buffer;
+	Buffer			m_Buffer;
 
    	ClientMsg      m_clientMsg;
 

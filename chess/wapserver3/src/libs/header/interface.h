@@ -48,25 +48,25 @@ class ISocketManager
 {
 public:
 
-	virtual void		OnClose( MySocket* ) = 0;
+	virtual void		RemoveSocket( MySocket* ) = 0;
 	virtual void		AddInMsg( MySocket* ) = 0;
 	virtual void		AddOutMsg( MySocket* ) = 0;
 };
 
 typedef std::vector<char> TVByte;
 
-class IGameLogic  
+class IGameLogic
 {
-	
+
 public:
 
 	enum StepRes  { NotValid /*= 0*/,  Valid, Win, Loose, Draw, TimeOut };
-	
+
 	virtual bool SetPos(const TVByte& _vecbtPos) = 0;		// Установить позицию на доске.
-	
+
 	virtual IGameLogic::StepRes StepAnl( TVByte* _pvecbtPos ) = 0;
 
-	virtual const TVByte* GetPosForDB() = 0;					// Получить текущую плзицию 
+	virtual const TVByte* GetPosForDB() = 0;					// Получить текущую плзицию
 
     virtual const TVByte* GetPosForClient() = 0;
 };

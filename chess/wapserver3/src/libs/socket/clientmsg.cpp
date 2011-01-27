@@ -1,6 +1,9 @@
 #include "clientmsg.h"
 #include "../header/deferror.h"
 #include <string.h>
+#include <iostream>
+
+using namespace std;
 
 const char cntProtCurrVer = 2;
 
@@ -31,58 +34,81 @@ ClientMsg::~ClientMsg()
 
 void ClientMsg::InitError( uint32_t _nFrom, char _nCommand, char _nErr )
 {
-	m_vecDataMsg.resize( sizeof( SMsgError ) );
+    if(_nErr == NOERR)
+    {
+        cout << "--- OUTGOING REPLY 'OK' ---  FROM: " << _nFrom <<"; COMMAND: " << ( uint32_t ) _nCommand << endl;
+    }
+    else
+    {
+        cout << "--- OUTGOING ERORR ---  FROM: " << _nFrom <<"; COMMAND: " << ( uint32_t ) _nCommand <<
+                       ";  ERR: " << (uint32_t)_nErr << endl;
+    }
 
-	SMsgError* psMsgError = (SMsgError*)&m_vecDataMsg[0];
+	m_vecDataMsg.resize( sizeof( MsgError ) );
 
-	psMsgError->m_cSign = 'Z';
-	psMsgError->m_nSize = m_vecDataMsg.size()-sizeof( SHeadMsg );
-	psMsgError->m_cVersion = cntProtCurrVer;
-	psMsgError->m_nFromTo = _nFrom;
-	psMsgError->m_nCommand = _nCommand;
-	psMsgError->m_nError = _nErr;
-	psMsgError->m_nCRC = EvalCRC( &psMsgError->m_cVersion, &psMsgError->m_nCRC );
+	MsgError* pMsgError = (MsgError*)&m_vecDataMsg[0];
+
+	pMsgError->m_cSign = 'Z';
+	pMsgError->m_nSize = m_vecDataMsg.size()-sizeof( HeadMsg );
+	pMsgError->m_cVersion = cntProtCurrVer;
+	pMsgError->m_nFromTo = _nFrom;
+	pMsgError->m_nCommand = _nCommand;
+	pMsgError->m_nError = _nErr;
+	pMsgError->m_nCRC = EvalCRC( &pMsgError->m_cVersion, &pMsgError->m_nCRC );
 }
 
 void ClientMsg::InitMsg( uint32_t _nTo, TVecChar _vecData )
 {
-	m_vecDataMsg.resize( sizeof( SExHeadMsg )+_vecData.size()+1 );
+    cout << "--- OUTGOING MSG --- TO: " << _nTo <<
+                   ";  DATA: ";
+    for(int i=0; i<_vecData.size(); ++i)
+        cout << (uint32_t)_vecData[i] << " ";
+    cout << endl;
 
-	SExHeadMsg* psExMsg = (SExHeadMsg*)&m_vecDataMsg[0];
+	m_vecDataMsg.resize( sizeof( ExHeadMsg )+_vecData.size()+1 );
+
+	ExHeadMsg* psExMsg = (ExHeadMsg*)&m_vecDataMsg[0];
 
 	psExMsg->m_cSign = 'Z';
-	psExMsg->m_nSize = m_vecDataMsg.size()-sizeof( SHeadMsg );
+	psExMsg->m_nSize = m_vecDataMsg.size()-sizeof( HeadMsg );
 	psExMsg->m_cVersion = cntProtCurrVer;
 	psExMsg->m_nFromTo = _nTo;
-	memcpy( &m_vecDataMsg[sizeof( SExHeadMsg )], &_vecData[0], _vecData.size() );
+	memcpy( &m_vecDataMsg[sizeof( ExHeadMsg )], &_vecData[0], _vecData.size() );
 	m_vecDataMsg[m_vecDataMsg.size()-1] = EvalCRC( &psExMsg->m_cVersion, &m_vecDataMsg[m_vecDataMsg.size()-1] );
 }
 
 void ClientMsg::InitMsg( uint32_t _nTo, char _nCommand, TVecChar _vecData )
 {
-	m_vecDataMsg.resize( sizeof( SCommandMsg )+_vecData.size()+1 );
+    cout << "--- OUTGOING MSG --- TO: " << _nTo <<
+                   ";  COMMAND: " << ( uint32_t ) _nCommand <<
+                   ";  DATA: ";
+    for(int i=0; i<_vecData.size(); ++i)
+        cout << (uint32_t)_vecData[i] << " ";
+    cout << endl;
 
-	SCommandMsg* psCommandMsg = (SCommandMsg*)&m_vecDataMsg[0];
+	m_vecDataMsg.resize( sizeof( CommandMsg )+_vecData.size()+1 );
+
+	CommandMsg* psCommandMsg = (CommandMsg*)&m_vecDataMsg[0];
 
 	psCommandMsg->m_cSign = 'Z';
-	psCommandMsg->m_nSize = m_vecDataMsg.size()-sizeof( SHeadMsg );
+	psCommandMsg->m_nSize = m_vecDataMsg.size()-sizeof( HeadMsg );
 	psCommandMsg->m_cVersion = cntProtCurrVer;
 	psCommandMsg->m_nFromTo = _nTo;
 	psCommandMsg->m_nCommand = _nCommand;
-	memcpy( &m_vecDataMsg[sizeof( SCommandMsg )], &_vecData[0], _vecData.size() );
+	memcpy( &m_vecDataMsg[sizeof( CommandMsg )], &_vecData[0], _vecData.size() );
 	m_vecDataMsg[m_vecDataMsg.size()-1] = EvalCRC( &psCommandMsg->m_cVersion, &m_vecDataMsg[m_vecDataMsg.size()-1] );
 }
 
-bool ClientMsg::ParseData( CBuffer* _pBuffer, int& _nError )
+bool ClientMsg::ParseData( Buffer* _pBuffer, int& _nError )
 {
 	char* pErrMsg = 0;
-	SExHeadMsg* psExHeadMsg;
+	ExHeadMsg* psExHeadMsg;
 
 	_nError = 0;
 
-	for( char* pChar = _pBuffer->GetDataStart() ; pChar+sizeof( SExHeadMsg )+1 < _pBuffer->GetDataEnd() ; ++pChar )
+	for( char* pChar = _pBuffer->GetDataStart() ; pChar+sizeof( ExHeadMsg )+1 < _pBuffer->GetDataEnd() ; ++pChar )
 	{
-		psExHeadMsg = (SExHeadMsg*)pChar;
+		psExHeadMsg = (ExHeadMsg*)pChar;
 
 		_nError = _nError < ERRNOSIGN ? ERRNOSIGN : _nError;
 
@@ -99,7 +125,7 @@ bool ClientMsg::ParseData( CBuffer* _pBuffer, int& _nError )
 		if( psExHeadMsg->m_nSize >= 256*256 )
 			continue;
 
-		if( ( sizeof( SHeadMsg )+psExHeadMsg->m_nSize ) > ( _pBuffer->GetDataEnd()-pChar ) )
+		if( ( sizeof( HeadMsg )+psExHeadMsg->m_nSize ) > ( _pBuffer->GetDataEnd()-pChar ) )
 		{
 			_nError = ERRNOEND;
 			pErrMsg = pErrMsg ? pErrMsg : pChar;
@@ -111,9 +137,9 @@ bool ClientMsg::ParseData( CBuffer* _pBuffer, int& _nError )
 
 		char cCRC = EvalCRC( &psExHeadMsg->m_cVersion, psExHeadMsg->m_nSize-1 );
 
-		if( cCRC == pChar[sizeof( SHeadMsg )+psExHeadMsg->m_nSize-1] )
+		if( cCRC == pChar[sizeof( HeadMsg )+psExHeadMsg->m_nSize-1] )
 		{
-			m_vecDataMsg.assign( pChar, pChar+sizeof( SHeadMsg )+psExHeadMsg->m_nSize );
+			m_vecDataMsg.assign( pChar, pChar+sizeof( HeadMsg )+psExHeadMsg->m_nSize );
 			_pBuffer->RemoveData( pChar+m_vecDataMsg.size() );
 
 			return true;
@@ -134,24 +160,24 @@ bool ClientMsg::ParseData( CBuffer* _pBuffer, int& _nError )
 
 uint32_t ClientMsg::GetTo() const
 {
-	SExHeadMsg* psExHeadMsg = (SExHeadMsg*)&m_vecDataMsg[0];
+	ExHeadMsg* psExHeadMsg = (ExHeadMsg*)&m_vecDataMsg[0];
 	return psExHeadMsg->m_nFromTo;
 }
 
 char ClientMsg::GetCommand() const
 {
-	SCommandMsg* psCommandMsg = (SCommandMsg*)&m_vecDataMsg[0];
+	CommandMsg* psCommandMsg = (CommandMsg*)&m_vecDataMsg[0];
 	return psCommandMsg->m_nCommand;
 }
 
-TVecChar* ClientMsg::GetData( ETypeData _typeData, TVecChar* _pvecData ) const
+TVecChar* ClientMsg::GetData( TypeData _typeData, TVecChar* _pvecData ) const
 {
 	int nPos = 0;
 
 	switch( _typeData )
 	{
-	case etpExHead:	nPos = sizeof( SExHeadMsg );	break;
-	case etpCommand:	nPos = sizeof( SCommandMsg );	break;
+	case etpExHead:	nPos = sizeof( ExHeadMsg );	break;
+	case etpCommand:	nPos = sizeof( CommandMsg );	break;
 	}
 
 	_pvecData->assign( &m_vecDataMsg[ nPos ] , &m_vecDataMsg[ m_vecDataMsg.size()-1 ] );

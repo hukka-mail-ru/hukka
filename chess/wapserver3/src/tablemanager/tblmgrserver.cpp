@@ -18,19 +18,19 @@ CTblMgrServer* CTblMgrServer::Instance()
 {
 	if( m_pSelf == 0 )
 		m_pSelf = new CTblMgrServer;
-	
+
 	++m_nRefCount;
-	
+
 	return m_pSelf;
 }
 
 void CTblMgrServer::FreeInst()
 {
 	--m_nRefCount;
-	
+
 	if( m_nRefCount > 0 )
 		return;
-	
+
 	KillObject();
 }
 
@@ -38,7 +38,7 @@ void CTblMgrServer::KillObject()
 {
 	if( m_pSelf != 0 )
 		delete m_pSelf;
-	
+
 	m_pSelf = 0;
 	m_nRefCount = 0;
 }
@@ -82,16 +82,17 @@ void CTblMgrServer::newMsg( ClientMsg* _pMsg )
 {
 	TVecChar vecCmd;
 	_pMsg->GetData( ClientMsg::etpCommand, &vecCmd );
-	
+
 #ifdef MYDEBUG
-	std::cerr << "MSG: " << ( uint32_t )_pMsg->GetTo() << "-" << ( uint32_t ) _pMsg->GetCommand() << "-" << ( uint32_t ) vecCmd[0] << std::endl;
-//	syslog( LOG_INFO | LOG_LOCAL0, "input message from:%d CMD:%d PARAM:%d", ( uint32_t )_pMsg->GetTo(), ( uint32_t ) _pMsg->GetCommand(), ( uint32_t ) vecCmd[0] );
-    std::cout << "vecCmd: ";
+	std::cout << "--- INCOMING MSG --- FROM: " << ( uint32_t )_pMsg->GetTo() <<
+	             ";  COMMAND: " << ( uint32_t ) _pMsg->GetCommand() <<
+	             ";  DATA: ";
     for ( int i = 0; i < vecCmd.size(); ++i )
     {
         std::cout << (int) vecCmd[i] << " ";
     }
     std::cout << std::endl;
+
 #endif
 	if ( _pMsg->GetTo() == SRV )
 	{
@@ -103,36 +104,36 @@ void CTblMgrServer::newMsg( ClientMsg* _pMsg )
 			}
 			else
 			    syslog( LOG_INFO | LOG_LOCAL0, "started" );
-			 
+
 	}
-		
+
 	if ( _pMsg->GetTo() < 100 )
 		return;
-	//std::cerr << 
-	
-		
+	//std::cerr <<
+
+
 	switch( _pMsg->GetCommand() )
 	{
 		case CMD_CREATE:
-		{			
+		{
 			Create( _pMsg->GetTo(), &vecCmd );
 			break;
 		}
         case CMD_GET_PARAMS:
         {
             GetParams( _pMsg->GetTo(), &vecCmd );
-            break;               
+            break;
         }
 		case CMD_RANDOM_OP:
-		{		
-		    Random( _pMsg->GetTo(), &vecCmd );	
+		{
+		    Random( _pMsg->GetTo(), &vecCmd );
 			break;
 		}
 		case CMD_FIND:
 		{
 			Find( _pMsg->GetTo(), &vecCmd );
-			
-			break;			
+
+			break;
 		}
         case CMD_DELETE:
         {
@@ -140,9 +141,9 @@ void CTblMgrServer::newMsg( ClientMsg* _pMsg )
             {
                 return;
             }
-            
+
             uint32_t *pTableID = (uint32_t*) &vecCmd[sizeof(uint32_t)];
-            
+
             DeleteTable(_pMsg->GetTo(), vecCmd[0], *pTableID);
             break;
         }
@@ -153,30 +154,30 @@ void CTblMgrServer::newMsg( ClientMsg* _pMsg )
 		case CMD_GETMYTBL:
 		{
 			uint32_t *pLogicID = (uint32_t*) &vecCmd[0];
-			
+
 			TVecUINT vec;
-			
+
 			STbmCmd sMsg;
 			sMsg.m_chCmd = ANS_MYTBL;
-			
+
 			if ( ! m_TbmCommands.GetMyTable( *pLogicID, _pMsg->GetTo(), &vec ) )
 			{
-              sMsg.m_nTableID = *pLogicID;   
+              sMsg.m_nTableID = *pLogicID;
               sMsg.m_chData = ST_NOTVALID;
 			}
 			else
 			{
-				sMsg.m_nTableID = vec.back();	
+				sMsg.m_nTableID = vec.back();
                 sMsg.m_chData = ST_VALID;
 			}
-						
+
 			sendMsg( _pMsg->GetTo(), &sMsg, sizeof (sMsg ) );
-			
+
 //			cmdLoose( _pMsg->GetTo(), *nTableID );
-			
+
 			break;
 		}
-		default:	
+		default:
 			break;
 	}
 }
@@ -185,21 +186,21 @@ void CTblMgrServer::Create( uint32_t _nUserID, const TVecChar* _vecData )
 {
 	uint32_t pLogicID = ( uint32_t ) _vecData->at(0);
 	int nVecSize = _vecData->size();
-	
+
 	TVecPrms vec;
 	STbmCmd sMsg;
 	uint32_t nParamID, nParam;
 	CMyStr strPassword = "";
 	sMsg.m_chCmd = ANS_CREATE;
 	TbmCommands::CrRes Result;
-	
+
 	if ( (nVecSize > sizeof(uint32_t)) && (nVecSize - sizeof(uint32_t)) <= sizeof(uint32_t) )
-	{		
+	{
 		sMsg.m_nTableID = pLogicID;
 		sMsg.m_chData = ST_NOTVALID;
 	}
-	else	
-	{		
+	else
+	{
 	    for ( int i = sizeof( uint32_t ); i < nVecSize; i += 2*sizeof( uint32_t ) )
 	    {
 		    if ( i >= ( nVecSize - sizeof( uint32_t ) ) )
@@ -208,10 +209,10 @@ void CTblMgrServer::Create( uint32_t _nUserID, const TVecChar* _vecData )
 			    break;
 		    }
 		    nParamID = (uint32_t) _vecData->at(i);
-		    
+
 		    if ( nParamID == m_TbmCommands.GetPasswordID() )
 		    {
-			    
+
 			    strPassword = (char*)_vecData->at(i+sizeof(uint32_t));
 			    break;
 		    }
@@ -219,28 +220,28 @@ void CTblMgrServer::Create( uint32_t _nUserID, const TVecChar* _vecData )
 		    {
 			    nParam = *(uint32_t*) &_vecData->at(i+sizeof(uint32_t));
 		    }
-		    
+
 		    vec.push_back(std::make_pair<int,int>(nParamID, nParam));
-			    
+
 	    }
-	    
+
 	    Result = m_TbmCommands.Create( pLogicID, _nUserID, vec, &strPassword );
-	    
+
 	    switch ( Result )
 	    {
-		    case TbmCommands::DONE:			    
+		    case TbmCommands::DONE:
 			    sMsg.m_nTableID = m_TbmCommands.LastInsertId();
 			    sMsg.m_chData = ST_VALID;
 			    break;
 		    case TbmCommands::TABEX:
 		    case TbmCommands::NVPAR:
-			    sMsg.m_nTableID = pLogicID;			   
+			    sMsg.m_nTableID = pLogicID;
 			    sMsg.m_chData = ST_NOTVALID;
-			    break;			    
+			    break;
 	    }
 	}
-							
-	sendMsg( _nUserID, &sMsg, sizeof (sMsg ) );	
+
+	sendMsg( _nUserID, &sMsg, sizeof (sMsg ) );
 }
 
 
@@ -248,7 +249,7 @@ void CTblMgrServer::Find( uint32_t _nUserID, const TVecChar* _vecData )
 {
 #ifdef MYDEBUG
     std::cout << "CTblMgrServer::Find()" << std::endl;
-#endif	
+#endif
     uint32_t pLogicID = ( uint32_t ) _vecData->at(0);
     uint32_t nCount = (uint32_t) _vecData->at(sizeof(uint32_t));
 #ifdef MYDEBUG
@@ -258,7 +259,7 @@ void CTblMgrServer::Find( uint32_t _nUserID, const TVecChar* _vecData )
     std::cout << "_vecData size: " << CMyStr(_vecData->size()) << std::endl;
 #endif
 	int nVecSize = _vecData->size();
-	
+
 	TVecFindPrms vec;
     TVecUINT vecRes;
     TVecUINT vecMsgData;
@@ -266,13 +267,13 @@ void CTblMgrServer::Find( uint32_t _nUserID, const TVecChar* _vecData )
     sendedMsg.addData((char)ANS_TABLE);
 
     int nParam, nValue, nCond, nLogic;
-    
+
 
     if ( (_vecData->size() - sizeof(uint32_t)*2)%(sizeof(uint32_t)*4) != 0 )
     {
         vecMsgData.push_back(pLogicID);
         vecMsgData.push_back(0);
-        
+
         sendedMsg.addData(&vecMsgData);
 
         sendMsg( _nUserID, &sendedMsg );
@@ -308,7 +309,7 @@ void CTblMgrServer::Find( uint32_t _nUserID, const TVecChar* _vecData )
 #endif
         vecMsgData.push_back(pLogicID);
         vecMsgData.push_back(0);
-        
+
         sendedMsg.addData(&vecMsgData);
 
         sendMsg( _nUserID, &sendedMsg );
@@ -318,7 +319,7 @@ void CTblMgrServer::Find( uint32_t _nUserID, const TVecChar* _vecData )
 
     vecMsgData.push_back(pLogicID);
     std::copy(vecRes.begin(), vecRes.end(), std::back_inserter(vecMsgData));
-    
+
     sendedMsg.addData(&vecMsgData);
 
     sendMsg( _nUserID, &sendedMsg );
@@ -335,20 +336,20 @@ void CTblMgrServer::Random( uint32_t _nUserID, const TVecChar* _vecData )
     std::cout << "_vecData size: " << CMyStr(_vecData->size()) << std::endl;
 #endif
 	int nVecSize = _vecData->size();
-	
+
 	TVecFindPrms vec;
     TVecUINT vecMsgData;
     CSendedMsg sendedMsg;
     sendedMsg.addData((char)ANS_RANDOM_OP);
 
     int nParam, nValue, nCond, nLogic;
-    
+
 
     if ( (_vecData->size() - sizeof(uint32_t))%(sizeof(uint32_t)*4) != 0 )
     {
         vecMsgData.push_back(pLogicID);
         vecMsgData.push_back(0);
-        
+
         sendedMsg.addData(&vecMsgData);
 
         sendMsg( _nUserID, &sendedMsg );
@@ -384,7 +385,7 @@ void CTblMgrServer::Random( uint32_t _nUserID, const TVecChar* _vecData )
 
     vecMsgData.push_back(pLogicID);
     vecMsgData.push_back(nRes);
-    
+
     sendedMsg.addData(&vecMsgData);
 
     sendMsg( _nUserID, &sendedMsg );
@@ -393,13 +394,13 @@ void CTblMgrServer::Random( uint32_t _nUserID, const TVecChar* _vecData )
 
 void CTblMgrServer::GetParams( uint32_t _nUserID, const TVecChar* _vecData )
 {
-    
+
     uint32_t pLogicID = ( uint32_t ) _vecData->at(0);
-    
+
     CMyStr strLogicTable;
     CSendedMsg sendedMsg;
     TVecUINT vecMsgData, vecParamIDs;
-    TVecPrms vecPrms;    
+    TVecPrms vecPrms;
 
     if ( !m_TbmCommands.getSqlLogicList()->GetLogicName(pLogicID, &strLogicTable) )
     {
@@ -407,43 +408,43 @@ void CTblMgrServer::GetParams( uint32_t _nUserID, const TVecChar* _vecData )
         sendedMsg.addData((char)ST_NOTVALID);
 
         sendMsg( _nUserID, &sendedMsg );
-        return;        
+        return;
     }
-    
+
     strLogicTable = "tb" + strLogicTable + "Rating";
-    
+
     CSqlRatingTable sqlRatingTable( strLogicTable.c_str(), 0 );
-        
+
     sendedMsg.addData((char)ANS_GET_PARAMS);
-    
+
     if ( (_vecData->size() < sizeof(uint32_t)*3) || (_vecData->size()%sizeof(uint32_t) != 0) )
     {
         sendedMsg.addData(pLogicID);
         sendedMsg.addData((char)ST_NOTVALID);
 
         sendMsg( _nUserID, &sendedMsg );
-        return;        
+        return;
     }
-            
+
     uint32_t nTableID = *(uint32_t*) &_vecData->at(sizeof(uint32_t));
-    
+
     for ( int i = sizeof(uint32_t)*2; i < _vecData->size(); i+=sizeof(uint32_t) )
     {
         vecParamIDs.push_back( (uint32_t) _vecData->at(i) );
     }
-    
+
     if ( !m_TbmCommands.GetTableParams(pLogicID, nTableID, vecParamIDs, &vecPrms) )
-    {        
+    {
         sendedMsg.addData(pLogicID);
         sendedMsg.addData((char) ST_NOTVALID);
 
         sendMsg( _nUserID, &sendedMsg );
-        return;        
+        return;
     }
-    
+
     sendedMsg.addData((uint32_t) nTableID );
     sendedMsg.addData((char)ST_VALID);
-    
+
     for ( int i = 0; i < vecPrms.size(); ++i )
     {
         if ( vecPrms.at(i).first >= 2)
@@ -451,32 +452,32 @@ void CTblMgrServer::GetParams( uint32_t _nUserID, const TVecChar* _vecData )
             sendedMsg.addData( (uint32_t)vecPrms.at(i).first );
             sendedMsg.addData( (uint32_t)vecPrms.at(i).second );
         }
-        
+
         else
         {
             TVecChar vecChar;
             CSqlTableUsers wsUsers;
-            
+
             if ( wsUsers.GetUserName( vecPrms.at(i).second, &vecChar ) )
             {
 
 #ifdef MYDEBUG
                 std::cout << "CTblMgrServer::GetParams sqlRatingTable.getRating()" << std::endl;
 #endif
-                
+
                 uint32_t nRating = sqlRatingTable.getRating( vecPrms.at(i).second );
-                
+
                 sendedMsg.addData( (uint32_t)vecPrms.at(i).first );
                 sendedMsg.addData( &vecChar );
                 sendedMsg.addData( (char) 0 );
                 sendedMsg.addData( nRating );
             }
         }
-        
+
     }
-        
+
     sendMsg( _nUserID, &sendedMsg );
-    
+
 }
 
 void CTblMgrServer::sendMsg( uint32_t _nTo, CSendedMsg *_pMsg )
@@ -488,7 +489,7 @@ void CTblMgrServer::sendMsg( uint32_t _nTo, CSendedMsg *_pMsg )
     {
       std::cout << (uint32_t) *it << " ";
     }
-    std::cout << std::endl;    
+    std::cout << std::endl;
 #endif
     Msg.InitMsg(_nTo, vecCmd);
     m_pSocket->AddMsg(Msg);
@@ -508,7 +509,7 @@ void CTblMgrServer::sendMsg( uint32_t _nTO, void* _pMsg, int _nSize )
         std::cout << (uint32_t)*((char*)_pMsg+i) << " ";
     }
     std::cout << std::endl;
-	//syslog( LOG_INFO | LOG_LOCAL0, "Send to %d CMD: %d TableID: %d Param: %d",_nTO, (int)(( STbmCmd* ) _pMsg)->m_chCmd,(( STbmCmd* ) _pMsg)->m_nTableID, (int)(( STbmCmd* ) _pMsg)->m_chData );		
+	//syslog( LOG_INFO | LOG_LOCAL0, "Send to %d CMD: %d TableID: %d Param: %d",_nTO, (int)(( STbmCmd* ) _pMsg)->m_chCmd,(( STbmCmd* ) _pMsg)->m_nTableID, (int)(( STbmCmd* ) _pMsg)->m_chData );
     for (TVecChar::const_iterator it = vecCmd.begin(); it != vecCmd.end(); ++it)
     {
 
@@ -516,11 +517,11 @@ void CTblMgrServer::sendMsg( uint32_t _nTO, void* _pMsg, int _nSize )
     }
     std::cout << std::endl;
 #endif
-	
+
 	ClientMsg Msg;
-	
+
 	Msg.InitMsg( _nTO, vecCmd );
-	
+
 	m_pSocket->AddMsg( Msg );
 
 }
@@ -528,29 +529,29 @@ void CTblMgrServer::sendMsg( uint32_t _nTO, void* _pMsg, int _nSize )
 void CTblMgrServer::SetParams( uint32_t _nUserID, const TVecChar *_vecData )
 {
 }
-        
+
 void CTblMgrServer::DeleteTable( uint32_t _nUserID, uint32_t _nLogicID, uint32_t _nTableID )
 {
-    
+
 #ifdef MYDEBUG
     std::cout << "CTblMgrServer::DeleteTable() _nTableID = " << _nTableID << std::endl;
 #endif
-    
+
     CSendedMsg sendedMsg;
-    
+
     sendedMsg.addData((char)ANS_DELETE);
     sendedMsg.addData(_nLogicID);
     sendedMsg.addData(_nTableID);
-    
+
     if (!m_TbmCommands.Delete(_nLogicID, _nUserID, _nTableID))
     {
         sendedMsg.addData((char)ST_NOTVALID);
     }
     else
     {
-        sendedMsg.addData((char)ST_VALID);        
+        sendedMsg.addData((char)ST_VALID);
     }
-    
+
     sendMsg( _nUserID, &sendedMsg );
-    
+
 }

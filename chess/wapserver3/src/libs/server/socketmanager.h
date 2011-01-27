@@ -13,7 +13,7 @@ public:
 	SocketManager( int = 1 );
 	~SocketManager();
 // ISocketManager
-	void				OnClose( MySocket* );
+	void				RemoveSocket( MySocket* );
 	void				AddInMsg( MySocket* );
 	void				AddOutMsg( MySocket* );
 protected:

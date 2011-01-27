@@ -69,16 +69,9 @@ void Selector::AddHandle( int _Socket, unsigned _Flags, ICallBack* _pCallBack)
         m_WritingSocket = _Socket;
     }
 
-    cout << "Selector::AddHandle. Socket " << _Socket << ". HANDLE ADDED (epoll_ctl) " << endl;
-
-    /*
-	struct kevent kev;
-	EV_SET( &kev, _Socket, _Events, _Flags, 0, 0, _pCallBack );
-
-	pthread_mutex_lock( &m_mutAddE );
-	m_vecEvChange.push_back( kev );
-	pthread_mutex_unlock( &m_mutAddE );
-	*/
+#ifdef LOW_LEVEL_DEBUG
+    cout << "SOCKET " << _Socket << " Selector::AddHandle. HANDLE ADDED (epoll_ctl) " << endl;
+#endif
 }
 
 
@@ -93,12 +86,12 @@ void Selector::RemoveHandle( int _Socket, unsigned _Flags, ICallBack* _pCallBack
     int res = epoll_ctl(m_epfd, EPOLL_CTL_DEL, _Socket, &ev);
     if(res != 0)
      {
- //        cout << "ERROR " << errno << ": " << strerror(errno) << endl;
          exit(1);
      }
 
-    cout << "Selector::RemoveHandle. Socket " << _Socket << ". HANDLE REMOVED (epoll_ctl) " << endl;
-
+#ifdef LOW_LEVEL_DEBUG
+    cout << "SOCKET " << _Socket << " Selector::RemoveHandle. HANDLE REMOVED (epoll_ctl) " << endl;
+#endif
 }
 
 int Selector::StartLoop()
@@ -158,7 +151,9 @@ int Selector::MainLoop()
 {
 	m_isContinue = true;
 
+#ifdef LOW_LEVEL_DEBUG
     cout << "Selector::MainLoop. WAITING FOR EVENTS (epoll_wait)" << endl;
+#endif
 
 	while( m_isContinue )
 	{
@@ -178,15 +173,18 @@ int Selector::MainLoop()
         {
             if(events[i].events & EPOLLIN)
             {
-                cout << "Selector::MainLoop. EPOLLIN" << endl;
-                //cout << "DoRead <" << (unsigned)events[i].data.ptr << ">" << endl;
+#ifdef LOW_LEVEL_DEBUG
+                cout << "Selector::MainLoop. EPOLLIN. DoRead <" << (unsigned)events[i].data.ptr << ">" << endl;
+#endif
+
                 static_cast<ICallBack*>(events[i].data.ptr)->DoRead();
             }
             else if(events[i].events & EPOLLOUT)
             {
-                cout << "Selector::MainLoop. EPOLLOUT" << endl;
 
-                cout << "Selector::MainLoop. DoWrite {" << (unsigned)events[i].data.ptr << "}" << endl;
+#ifdef LOW_LEVEL_DEBUG
+                cout << "Selector::MainLoop. EPOLLOUT. DoWrite {" << (unsigned)events[i].data.ptr << "}" << endl;
+#endif
                 static_cast<ICallBack*>(events[i].data.ptr)->DoWrite();
 
                // cout << "DoWrite ends" << endl;

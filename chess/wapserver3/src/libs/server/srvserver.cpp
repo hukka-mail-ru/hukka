@@ -43,12 +43,15 @@ void SRVServer::AddSocket( int _nSocket, const sockaddr_in* _pAddr )
 {
 	ClientSocket* pClientSocket = new ClientSocket( _nSocket, static_cast<ISocketManager*>( this ) );
 
-	cout << "SRVServer::AddSocket AddHandle" << endl;
+#ifdef LOW_LEVEL_DEBUG
+	cout << "SOCKET " << _nSocket << " SRVServer::AddSocket. NEW SOCKET" << endl;
+#endif
+
 	//m_pSelector->AddHandle( _nSocket, EVFILT_READ, EV_ADD, static_cast<ICallBack*>( pClientSocket ) );
 	m_pSelector->AddHandle( _nSocket, EPOLLIN, static_cast<ICallBack*>( pClientSocket ) );
 }
 
-void SRVServer::OnClose( MySocket* _pSocket )
+void SRVServer::RemoveSocket( MySocket* _pSocket )
 {
 	ClientSocket* pClientSocket = reinterpret_cast<ClientSocket*>( _pSocket );
 
@@ -56,7 +59,11 @@ void SRVServer::OnClose( MySocket* _pSocket )
 		if( int32_t nID = pClientSocket->GetID() )
 			m_pOnLineManager->OffLine( nID );
 
-	SocketManager::OnClose( _pSocket );
+#ifdef LOW_LEVEL_DEBUG
+    cout << "SOCKET " << _pSocket->GetSocket() << " SRVServer::RemoveSocket. DELETE SOCKET" << endl;
+#endif
+
+	SocketManager::RemoveSocket( _pSocket );
 }
 
 SRVServer::SRVServer()
@@ -84,7 +91,9 @@ void SRVServer::DoAllMsg( ClientSocket* _pSocket )
 	{
 		bool isOutMsg;
 
-       std::cerr << "SRVServer::DoAllMsg TO: " << (int)_pSocket->GetID() << std::endl;
+#ifdef LOW_LEVEL_DEBUG
+		cout << "SOCKET " << _pSocket->GetSocket() << " SRVServer::DoAllMsg. PROCESS MESSAGES" << endl;
+#endif
 
 		if( _pSocket->GetID() == 0 )
 			isOutMsg = UnRegister( &inMsg, &outMsg, static_cast<RegInfo*>( _pSocket ), static_cast<ISender*>( _pSocket ) );
@@ -138,7 +147,10 @@ bool SRVServer::Register( const ClientMsg* _pinMsg, ClientMsg* _poutMsg, RegInfo
 	ISender* pSender = 0;
 	uint32_t nTo = _pinMsg->GetTo();
 
+
+#ifdef LOW_LEVEL_DEBUG
 	std::cout << "SRVServer::Register()" << std::endl;
+#endif
 
 	switch( nTo )
 	{
@@ -148,28 +160,35 @@ bool SRVServer::Register( const ClientMsg* _pinMsg, ClientMsg* _poutMsg, RegInfo
 		{
 			pSender = m_pOnLineManager->IsOnLine( nTo );
 
+#ifdef LOW_LEVEL_DEBUG
 			std::cout << "SRVServer::Register() nTo = " << nTo << " pSender = " << pSender << std::endl;
+#endif
 
 			if( isRes = ( pSender == 0 ) )
 			{
+#ifdef LOW_LEVEL_DEBUG
 				std::cout << "err addr" << std::endl;
+#endif
 				_poutMsg->InitError( SRV, nTo, ERRNOADDR );
 			}
 			else
 			{
+#ifdef LOW_LEVEL_DEBUG
 				std::cout << "no err addr" << std::endl;
+#endif
+
 				TVecChar vecData;
 				ClientMsg clientMsg;
 				_pinMsg->GetData( ClientMsg::etpExHead, &vecData );
 				clientMsg.InitMsg( _pRegInfo->GetID(), vecData );
-				std::cout << "SRVServer::Register() - 1" << std::endl;
 				pSender->AddMsg( clientMsg );
-				std::cout << "SRVServer::Register() - 2" << std::endl;
 			}
 		}
 	}
 
+#ifdef LOW_LEVEL_DEBUG
 	std::cout << "!SRVServer::Register()" << std::endl;
+#endif
 
 	return isRes;
 }

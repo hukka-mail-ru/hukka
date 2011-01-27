@@ -6,6 +6,8 @@
 
 #include <iostream>
 
+using namespace std;
+
 pthread_mutex_t	m_mutRW = PTHREAD_MUTEX_INITIALIZER;
 
 MySocket::MySocket( int _nSocket, ISocketManager* _pSocketManager )
@@ -22,6 +24,10 @@ MySocket::~MySocket()
 
 void MySocket::AddMsg( const ClientMsg& _clientMsg )
 {
+#ifdef LOW_LEVEL_DEBUG
+    cout << "SOCKET " << m_nSocket << " MySocket::AddMsg. ADD MSG" << endl;
+#endif
+
 	pthread_mutex_lock( &m_mutRW );
 #ifdef GMS_DEBUG
     std::cerr << "MySocket::AddMsg() to : " << _clientMsg.GetTo() << std::endl;
@@ -38,7 +44,7 @@ void MySocket::AddMsg( const ClientMsg& _clientMsg )
 
 	if( m_pSocketManager )
 		m_pSocketManager->AddOutMsg( this );
-		
+
 	pthread_mutex_unlock( &m_mutRW );
 }
 
@@ -52,7 +58,7 @@ bool MySocket::GetMsg( ClientMsg& _clienMsg )
 
 void MySocket::DoRead()
 {
-	pthread_mutex_lock( &m_mutRW );	
+	pthread_mutex_lock( &m_mutRW );
 #ifdef GMS_DEBUG_READ
 	std::cout << "MySocket::DoRead()-Y" << std::endl;
 #endif //GMS_DEBUG_READ
@@ -77,8 +83,8 @@ void MySocket::DoRead()
 				std::cerr << *c;
 			else
 				std::cerr << '?';
-		}		
-		std::cerr << " ]" << std::endl;	         
+		}
+		std::cerr << " ]" << std::endl;
 #endif //GMS_DEBUG_READ
 		nErr = errno;
 
@@ -114,22 +120,22 @@ void MySocket::DoRead()
     	for(int i = 0; i < clientMsg.GetBuffMsg()->size(); ++i)
         	  std::cerr << (int)( clientMsg.GetBuffMsg()->at(i) ) << " ";
     	std::cerr << " ] " << std::endl;
-#endif //GMS_DEBUG_READ		
+#endif //GMS_DEBUG_READ
 		if( m_inQueueMsg.AddMsg( clientMsg ) && m_pSocketManager )
 		{
 #ifdef GMS_DEBUG_READ
 			std::cout << "MySocket::DoRead()-AddInMsg" << std::endl;
-#endif //GMS_DEBUG_READ		
+#endif //GMS_DEBUG_READ
 			m_pSocketManager->AddInMsg( this );
 		}
 #ifdef GMS_DEBUG_READ
 		else
 			std::cout << "MySocket::DoRead()-No AddInMsg" << std::endl;
-#endif //GMS_DEBUG_READ		
+#endif //GMS_DEBUG_READ
 	}
 
 	if( nError != NOERR )
-	{	
+	{
 #ifdef GMS_DEBUG_READ
 		std::cout << "MySocket::DoRead()-R" << std::endl;
 
@@ -149,14 +155,14 @@ void MySocket::DoRead()
 	else
 		std::cout << "MySocket::DoRead()-G" << std::endl;
 #endif //GMS_DEBUG_READ
-		
+
 	pthread_mutex_unlock( &m_mutRW );
 }
 
 void MySocket::DoWrite()
 {
 	pthread_mutex_lock( &m_mutRW );
-	
+
 	ClientMsg m_clientMsg;
 	while( m_outQueueMsg.GetMsg( m_clientMsg ) )
 	{
@@ -181,7 +187,7 @@ void MySocket::DoWrite()
 void MySocket::DoClose()
 {
 	if( m_pSocketManager )
-		m_pSocketManager->OnClose( this );
+		m_pSocketManager->RemoveSocket( this );
 
 	Close( SHUT_RDWR );
 }

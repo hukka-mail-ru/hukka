@@ -4,10 +4,14 @@
 
 using namespace std;
 
-void SocketManager::AddInMsg( MySocket* _pMySocket )
+void SocketManager::AddInMsg( MySocket* _pSocket )
 {
+#ifdef LOW_LEVEL_DEBUG
+    cout << "SOCKET " << _pSocket->GetSocket() << " SocketManager::AddInMsg" << endl;
+#endif
+
 	pthread_mutex_lock( &m_mutDeqSocket );
-	m_queSocket.push( _pMySocket );
+	m_queSocket.push( _pSocket );
 	pthread_mutex_unlock( &m_mutDeqSocket );
 
 	sem_post( &m_semDeqSocket );
@@ -15,13 +19,18 @@ void SocketManager::AddInMsg( MySocket* _pMySocket )
 
 void SocketManager::AddOutMsg( MySocket* _pSocket )
 {
-    cout << "SocketManager::AddOutMsg AddHandle to socket " << _pSocket->GetSocket() << endl;
+#ifdef LOW_LEVEL_DEBUG
+    cout << "SOCKET " << _pSocket->GetSocket() << " SocketManager::AddOutMsg" << endl;
+#endif
+
 	m_pSelector->AddHandle( _pSocket->GetSocket(), EPOLLOUT | EPOLLONESHOT, static_cast<ICallBack*>( _pSocket ) );
 }
 
-void SocketManager::OnClose( MySocket* _pSocket )
+void SocketManager::RemoveSocket( MySocket* _pSocket )
 {
-    cout << "SocketManager::OnClose AddHandle" << endl;
+#ifdef LOW_LEVEL_DEBUG
+    cout << "SOCKET " << _pSocket->GetSocket() << " SocketManager::RemoveSocket" << endl;
+#endif
 	m_pSelector->RemoveHandle( _pSocket->GetSocket(), EPOLLIN | EPOLLOUT, static_cast<ICallBack*>( _pSocket ) );
 }
 

@@ -47,12 +47,16 @@ int Listener::Listen( uint16_t _nPort )
 	if( bind( m_nSocket, (sockaddr*)&addr, sizeof( addr ) ) != 0 )
 		return errno;
 
-	cout << "Listener::Listen. Socket " << m_nSocket << ". OPEN SOCKET" << endl;
+#ifdef LOW_LEVEL_DEBUG
+	cout << "SOCKET " << m_nSocket <<  " Listener::Listen. OPEN SOCKET" << endl;
+#endif
 
 	if( listen( m_nSocket, 1024 ) != 0 ) // 1024 is maximum number of connections
 		return errno;
 
-	cout << "Listener::Listen. Socket " << m_nSocket << ". PREPARE TO ACCEPT CONNECTIONS... " << endl;
+#ifdef LOW_LEVEL_DEBUG
+	cout << "SOCKET " << m_nSocket << " Listener::Listen. PREPARE TO ACCEPT CONNECTIONS... " << endl;
+#endif
     Selector::Instance()->AddHandle( m_nSocket, EPOLLIN, static_cast<ICallBack*>( this ) );
 	//Selector::Instance()->AddHandle( m_nSocket, EVFILT_READ, EV_ADD, static_cast<ICallBack*>( this ) );
 	Selector::FreeInst();
@@ -62,7 +66,9 @@ int Listener::Listen( uint16_t _nPort )
 
 int Listener::Close()
 {
-    cout << "Close socket : " << m_nSocket << endl;
+#ifdef LOW_LEVEL_DEBUG
+    cout << "SOCKET " << m_nSocket << " Listener::Close. CLOSE SOCKET" << endl;
+#endif
 
 	if( m_nSocket < 0 )
 		return 0;
@@ -80,14 +86,18 @@ int Listener::GetSocket() const
 
 void Listener::DoRead()
 {
-    cout << "Read socket : " << m_nSocket << endl;
+#ifdef LOW_LEVEL_DEBUG
+    cout << "SOCKET " << m_nSocket << " Listener::DoRead. READ FROM SOCKET" << endl;
+#endif
 
 	sockaddr_in addr;
 	socklen_t len = sizeof( addr );
 
 	int nSocket = accept( m_nSocket, (sockaddr*)&addr, &len );
 
-    cout << "Accept socket : " << nSocket << endl;
+#ifdef LOW_LEVEL_DEBUG
+    cout << "SOCKET " << m_nSocket << " Listener::DoRead. CONNECTED WITH SOCKET: " << nSocket << endl;
+#endif
 
 	if( nSocket != -1 )
 		m_pSRVServer->AddSocket( nSocket, &addr );
