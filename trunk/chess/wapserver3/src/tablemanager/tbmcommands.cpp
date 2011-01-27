@@ -14,7 +14,7 @@
 TbmCommands::TbmCommands()
 : m_nLastId(0)
 {
-	CSqlTable paramsTable("tbParamList");
+	SqlTable paramsTable("tbParamList");
 	CMyStr strWhere = "isPassword != 0";
 	TTable tbl;
 	paramsTable.Select("ParamId", strWhere.c_str(), &tbl);
@@ -36,7 +36,7 @@ bool TbmCommands::CheckParams(const TVecPrms &_vecPrms)
 	CMyStr strWhere;
 	TTable tbl;
 
-	CSqlTable paramsTable("tbParamList");
+	SqlTable paramsTable("tbParamList");
 
 	for (TVecPrms::const_iterator i = _vecPrms.begin(); i != _vecPrms.end(); ++i)
 	{
@@ -61,7 +61,7 @@ bool TbmCommands::CheckParams(const TVecPrms &_vecPrms)
 	return true;
 }
 
-bool TbmCommands::GetLogicTable(int _nLogicID, CSqlTable* _pRes)
+bool TbmCommands::GetLogicTable(int _nLogicID, SqlTable* _pRes)
 {
 	CMyStr strLogicTable;
 
@@ -87,7 +87,7 @@ TbmCommands::CrRes TbmCommands::Create(uint32_t _nLogicID, uint32_t _nPlayerID,
 		return TABEX;
 	}
 
-	CSqlTable sqlLogicTable("");
+	SqlTable sqlLogicTable("");
 
 	TTable tbl;
 
@@ -106,7 +106,7 @@ TbmCommands::CrRes TbmCommands::Create(uint32_t _nLogicID, uint32_t _nPlayerID,
 				return NVPAR;
             }
 
-			CSqlTable paramsTable("tbParamList");
+			SqlTable paramsTable("tbParamList");
             std::vector<CMyStr> strField, strValue;
             TVecMyStr fields, values;
 
@@ -217,8 +217,8 @@ bool TbmCommands::Find(uint32_t _nLogicID, uint32_t _nPlayerID, uint32_t _nCount
 #endif
 
     TTable tbl;
-    CSqlTable sqlLogicTable("");
-    CSqlTable paramsTable("tbParamList");
+    SqlTable sqlLogicTable("");
+    SqlTable paramsTable("tbParamList");
 
     if ( GetLogicTable(_nLogicID, &sqlLogicTable) )
     {
@@ -347,7 +347,7 @@ bool TbmCommands::Delete(uint32_t _nLogicID, uint32_t _nPlayerID, uint32_t _nTab
         return false;
     }
 
-    CSqlTable sqlLogicTable("");
+    SqlTable sqlLogicTable("");
     CMyStr strWhere;
     TTable tbl;
 
@@ -375,7 +375,7 @@ bool TbmCommands::Delete(uint32_t _nLogicID, uint32_t _nPlayerID, uint32_t _nTab
 bool TbmCommands::FindEmpty(int _nLogicID, int _nPlayerID, TVecUINT* vecRes )
 {
 
-    CSqlTable sqlLogicTable("");
+    SqlTable sqlLogicTable("");
 
 	if ( GetLogicTable(_nLogicID, &sqlLogicTable) )
 	{
@@ -405,8 +405,8 @@ bool TbmCommands::FindEmpty(int _nLogicID, int _nPlayerID, TVecUINT* vecRes )
 
 bool TbmCommands::GetTableParams(int _nLogicID, int _nTableID, const TVecUINT& _vecParIDs, TVecPrms *_pvecPrms)
 {
-	CSqlTable paramsTable("tbParamList");
-	CSqlTable sqlLogicTable("");
+	SqlTable paramsTable("tbParamList");
+	SqlTable sqlLogicTable("");
 	CMyStr strWhere;
 	TTable tbl1, tbl2;
 
@@ -443,7 +443,7 @@ bool TbmCommands::GetTableParams(int _nLogicID, int _nTableID, const TVecUINT& _
 
 bool TbmCommands::GetAllTables( uint32_t _nLogicID, TVecUINT* _pvecRes )
 {
-    CSqlTable sqlLogicTable("");
+    SqlTable sqlLogicTable("");
 
 	if ( GetLogicTable(_nLogicID, &sqlLogicTable) )
 	{
@@ -474,7 +474,7 @@ bool TbmCommands::GetAllTables( uint32_t _nLogicID, TVecUINT* _pvecRes )
 bool  TbmCommands::GetMyTable(int _nLogicID, int _nPlayerID, TVecUINT* vecRes)
 {
 	///TODO change the query to database with using tbParamList and 'isPlayerID' field
-    	CSqlTable sqlLogicTable("");
+    	SqlTable sqlLogicTable("");
 
 	if ( GetLogicTable(_nLogicID, &sqlLogicTable) )
 	{

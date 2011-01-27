@@ -142,11 +142,11 @@ private:
 	/**
 	 * @brief Method get database table for actual logic
  	 * @param _nLogicID: uint32_t ID of game logic
-	 * @param _pRes: CSqlTable* database table for actual logic
+	 * @param _pRes: SqlTable* database table for actual logic
 	 * @return TRUE if database table was founded, FALSE else
 	 */
 
-    bool GetLogicTable(int _nLogicID, CSqlTable* _pRes);
+    bool GetLogicTable(int _nLogicID, SqlTable* _pRes);
 
     bool GetAllTables(uint32_t _nLogicID, TVecUINT* _pvecRes);
 

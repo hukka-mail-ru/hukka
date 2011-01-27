@@ -9,7 +9,7 @@
 class ClientMsg;
 class SocketManager;
 
-class MySocket : public ICallBack, public ISender, public CSocket
+class MySocket : public ICallBack, public ISender, public Socket
 {
 public:
 
@@ -30,8 +30,8 @@ private:
 
    	ClientMsg      m_clientMsg;
 
-	CQueueMsg			m_inQueueMsg;
-	CQueueMsg			m_outQueueMsg;
+	QueueMsg			m_inQueueMsg;
+	QueueMsg			m_outQueueMsg;
 
 	ISocketManager*	m_pSocketManager;
 	

@@ -26,8 +26,8 @@
 #include "../libs/sql/sqltable.h"
 #include <stdio.h>
 
-CSqlTable tstBlob(0, 0, "TestDB", "tstBlob");
-CSqlTable tstSelect(0, 0, "TestDB", "tstSelect");
+SqlTable tstBlob(0, 0, "TestDB", "tstBlob");
+SqlTable tstSelect(0, 0, "TestDB", "tstSelect");
 
 int main(int argc, char *argv[])
 {
@@ -126,7 +126,7 @@ int TestUpdate()
 
 	CMyStr strBlob;
 
-	CSqlTable::ar2blob(vecByte, &strBlob);
+	SqlTable::ar2blob(vecByte, &strBlob);
 
 	tstBlob.Update("arr", strBlob.c_str(),"nbr","3");
 

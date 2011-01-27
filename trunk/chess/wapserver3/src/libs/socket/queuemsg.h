@@ -6,12 +6,12 @@
 
 typedef std::queue<ClientMsg> TQueueMsg;
 
-class CQueueMsg
+class QueueMsg
 {
 public:
 
-	CQueueMsg();
-	~CQueueMsg();
+	QueueMsg();
+	~QueueMsg();
 
 	bool				AddMsg( const ClientMsg& );
 	bool				GetMsg( ClientMsg& );

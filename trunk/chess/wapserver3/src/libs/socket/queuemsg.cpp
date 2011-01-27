@@ -2,26 +2,26 @@
 
 #include <iostream>
 
-CQueueMsg::CQueueMsg():
+QueueMsg::QueueMsg():
 	 m_isGetEmpty( true )
 {
     pthread_mutex_init(&this->m_mutQueue, NULL);
 }
 
-CQueueMsg::~CQueueMsg()
+QueueMsg::~QueueMsg()
 {
 
 }
 
-bool CQueueMsg::AddMsg( const ClientMsg& _clientMsg )
+bool QueueMsg::AddMsg( const ClientMsg& _clientMsg )
 {
 	pthread_mutex_lock( &m_mutQueue );
 	bool isRes = m_isGetEmpty;
 /*
 	if( isRes )
-		std::cout << "CQueueMsg::AddMsg-Empty" << std::endl;
+		std::cout << "QueueMsg::AddMsg-Empty" << std::endl;
 	else
-		std::cout << "CQueueMsg::AddMsg-No Empty"  << std::endl;
+		std::cout << "QueueMsg::AddMsg-No Empty"  << std::endl;
 */
 	m_queueMsg.push( _clientMsg );
 	m_isGetEmpty = false;
@@ -30,20 +30,20 @@ bool CQueueMsg::AddMsg( const ClientMsg& _clientMsg )
 	return isRes;
 }
 
-bool CQueueMsg::GetMsg( ClientMsg& _clientMsg )
+bool QueueMsg::GetMsg( ClientMsg& _clientMsg )
 {
 	bool isRes = false;
 
 	pthread_mutex_lock( &m_mutQueue );
 	if( isRes = !m_queueMsg.empty() )
 	{
-//		std::cout << "CQueueMsg::GetMsg-No Empty" << std::endl;
+//		std::cout << "QueueMsg::GetMsg-No Empty" << std::endl;
 		_clientMsg = m_queueMsg.front();
 		m_queueMsg.pop();
 	}
 	else
 	{
-//		std::cout << "CQueueMsg::GetMsg-Empty" << std::endl;
+//		std::cout << "QueueMsg::GetMsg-Empty" << std::endl;
 		m_isGetEmpty = true;
 	}
 	pthread_mutex_unlock( &m_mutQueue );

@@ -21,7 +21,7 @@ private:
 	bool				Parse2str( const TVecChar&, TVecChar*, TVecChar* );
 private:
 
-	CSqlTableUsers		m_sqlTableUsers;
+	SqlTableUsers		m_sqlTableUsers;
 	OnLineManager*	m_pOnLineManager;
 };
 

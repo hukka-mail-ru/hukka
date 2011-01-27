@@ -26,7 +26,7 @@
 #include "../libs/sql/sqltable.h"
 #include <map>
 
-class CSqlLogicList : private CSqlTable
+class CSqlLogicList : private SqlTable
 {
 
 public: 

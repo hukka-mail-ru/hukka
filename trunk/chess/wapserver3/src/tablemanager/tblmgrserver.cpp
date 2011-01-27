@@ -456,7 +456,7 @@ void CTblMgrServer::GetParams( uint32_t _nUserID, const TVecChar* _vecData )
         else
         {
             TVecChar vecChar;
-            CSqlTableUsers wsUsers;
+            SqlTableUsers wsUsers;
 
             if ( wsUsers.GetUserName( vecPrms.at(i).second, &vecChar ) )
             {

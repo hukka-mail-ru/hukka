@@ -2,7 +2,7 @@
 
 void* ThreadFunc( void* _pParam )
 {
-	CMyThread* pMyThread = static_cast<CMyThread*>( _pParam );
+	MyThread* pMyThread = static_cast<MyThread*>( _pParam );
 
 	if( pMyThread )
 		int nRes = pMyThread->Run();
@@ -10,37 +10,37 @@ void* ThreadFunc( void* _pParam )
 	return pMyThread;
 }
 
-CMyThread::CMyThread()
+MyThread::MyThread()
 	:m_hThread( NULL )
 {
 	
 }
 
-CMyThread::~CMyThread()
+MyThread::~MyThread()
 {
 
 }
 
-pthread_t CMyThread::GetID() const
+pthread_t MyThread::GetID() const
 {
 	return m_hThread;
 }
 
-int CMyThread::StartLoop()
+int MyThread::StartLoop()
 {
 	return Continue();
 }
 
-void CMyThread::StopLoop()
+void MyThread::StopLoop()
 {
 	pthread_cancel( m_hThread );
 	pthread_join( m_hThread, NULL );
 }
 
-int CMyThread::Continue()
+int MyThread::Continue()
 {
 //	if( m_hThread )
 //		return 0;
 
-	return pthread_create( &m_hThread, 0, ThreadFunc, static_cast<CMyThread*>( this ) );
+	return pthread_create( &m_hThread, 0, ThreadFunc, static_cast<MyThread*>( this ) );
 }

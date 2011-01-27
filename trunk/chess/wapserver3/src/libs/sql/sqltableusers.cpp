@@ -31,18 +31,18 @@
 #define MIN_USER_PASSWORD_LENGTH	4
 #define MAX_USER_PASSWORD_LENGTH	39
 
-CSqlTableUsers::CSqlTableUsers()
-	:CSqlTable( "wsUsers", "User TEXT NOT NULL, Password TEXT NOT NULL, GUID INT PRIMARY KEY AUTO_INCREMENT, UNIQUE KEY(User(16))" )
+SqlTableUsers::SqlTableUsers()
+	:SqlTable( "wsUsers", "User TEXT NOT NULL, Password TEXT NOT NULL, GUID INT PRIMARY KEY AUTO_INCREMENT, UNIQUE KEY(User(16))" )
 {
 
 }
 
-CSqlTableUsers::~CSqlTableUsers()
+SqlTableUsers::~SqlTableUsers()
 {
 
 }
 
-char CSqlTableUsers::IsUserReg( char* _pcL, char* _pcP, uint32_t& _nID )
+char SqlTableUsers::IsUserReg( char* _pcL, char* _pcP, uint32_t& _nID )
 {
 	TVecChar vecP;
 	if( !GetPass( _pcL, &vecP ) )
@@ -63,7 +63,7 @@ char CSqlTableUsers::IsUserReg( char* _pcL, char* _pcP, uint32_t& _nID )
 	return NOERR;
 }
 
-char CSqlTableUsers::DoUserReg( char* _pcL, char* _pcP, uint32_t& _nID )
+char SqlTableUsers::DoUserReg( char* _pcL, char* _pcP, uint32_t& _nID )
 {
 	int nSize = strlen( _pcL );
 
@@ -87,12 +87,12 @@ char CSqlTableUsers::DoUserReg( char* _pcL, char* _pcP, uint32_t& _nID )
 	return NOERR;
 }
 
-bool CSqlTableUsers::GetPass( char* _pcL, TVecChar* _pvecP )
+bool SqlTableUsers::GetPass( char* _pcL, TVecChar* _pvecP )
 {
 	return SelectToStr( "Password", "User", _pcL, _pvecP );
 }
 
-bool CSqlTableUsers::GetID( char* _pcL, uint32_t& _nID )
+bool SqlTableUsers::GetID( char* _pcL, uint32_t& _nID )
 {
 	TVecChar vecData;
 
@@ -105,7 +105,7 @@ bool CSqlTableUsers::GetID( char* _pcL, uint32_t& _nID )
 	return true;
 }
 
-bool CSqlTableUsers::GetUserName( uint32_t _nPlayerID, TVecChar* _pvecData)
+bool SqlTableUsers::GetUserName( uint32_t _nPlayerID, TVecChar* _pvecData)
 {
     CMyStr strGUID = CMyStr(_nPlayerID);
 
@@ -115,14 +115,14 @@ bool CSqlTableUsers::GetUserName( uint32_t _nPlayerID, TVecChar* _pvecData)
     return true;
 }
 
-void CSqlTableUsers::Insert( char* _pcL, char* _pcP )
+void SqlTableUsers::Insert( char* _pcL, char* _pcP )
 {
 	CMyStr strValue( "'"+CMyStr( _pcL )+"' , '"+CMyStr( _pcP )+"' , 0" );
 
-	CSqlTable::Insert( strValue.c_str() );
+	SqlTable::Insert( strValue.c_str() );
 }
 
-bool CSqlTableUsers::CheckCharSet( const char* _pC ) const
+bool SqlTableUsers::CheckCharSet( const char* _pC ) const
 {
 	while( *_pC != 0 )
 	if( ( *_pC < 48 ) || ( 122 < *_pC++ ) )

@@ -10,7 +10,7 @@
 
 typedef std::vector< uint32_t > TVecUINT;
 
-class SqlGameTable : protected CSqlTable
+class SqlGameTable : protected SqlTable
 {
 public:
 	SqlGameTable( char* _cTableName, char* _cTableStruct );
