@@ -6,21 +6,21 @@
 #include "../tools/structs.h"
 
 #pragma pack(1)
-struct SHeadMsg
+struct HeadMsg
 {
 	char			m_cSign;
 	uint32_t		m_nSize;
 };
-struct SExHeadMsg : public SHeadMsg
+struct ExHeadMsg : public HeadMsg
 {
 	char			m_cVersion;
 	uint32_t		m_nFromTo;
 };
-struct SCommandMsg : public SExHeadMsg
+struct CommandMsg : public ExHeadMsg
 {
 	char			m_nCommand;
 }; 
-struct SMsgError : public SCommandMsg 
+struct MsgError : public CommandMsg 
 {
 	char			m_nError;
 	char			m_nCRC;
@@ -31,7 +31,7 @@ class ClientMsg
 {
 public:
 
-	enum ETypeData { etpExHead, etpCommand };
+	enum TypeData { etpExHead, etpCommand };
 public:
 
 	ClientMsg();
@@ -41,11 +41,11 @@ public:
 	void				InitMsg( uint32_t, TVecChar );
 	void				InitMsg( uint32_t, char, TVecChar );
 
-	bool				ParseData( CBuffer*, int& );
+	bool				ParseData( Buffer*, int& );
 
 	uint32_t			GetTo() const;
 	char				GetCommand() const;
-	TVecChar*			GetData( ETypeData, TVecChar* ) const;
+	TVecChar*			GetData( TypeData, TVecChar* ) const;
 
 	const TVecChar*	GetBuffMsg() const;
 private:

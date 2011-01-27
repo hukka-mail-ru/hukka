@@ -3,39 +3,39 @@
 
 const int cntBufSize = 256*256;
 
-CBuffer::CBuffer()
+Buffer::Buffer()
 	:m_nBuffSize( cntBufSize ),
 	 m_nDataSize( 0 )
 {
 	m_pBuff = new char[cntBufSize];
 }
 
-CBuffer::~CBuffer()
+Buffer::~Buffer()
 {
 	delete[] m_pBuff;
 }
 
-char* CBuffer::GetDataStart()
+char* Buffer::GetDataStart()
 {
 	return m_pBuff;
 }
 
-char* CBuffer::GetDataEnd()
+char* Buffer::GetDataEnd()
 {
 	return m_pBuff+m_nDataSize;
 }
 
-int CBuffer::DataSize() const
+int Buffer::DataSize() const
 {
 	return m_nDataSize;
 }
 
-int CBuffer::FreeSize() const
+int Buffer::FreeSize() const
 {
 	return m_nBuffSize-m_nDataSize;
 }
 
-void CBuffer::IncBuffer()
+void Buffer::IncBuffer()
 {
 	char* pNewBuff = new char[m_nBuffSize+cntBufSize];
 
@@ -47,12 +47,12 @@ void CBuffer::IncBuffer()
 	m_nBuffSize += cntBufSize;
 }
 
-void CBuffer::AddDataSize( int _nSize )
+void Buffer::AddDataSize( int _nSize )
 {
 	m_nDataSize += _nSize;
 }
 
-void CBuffer::RemoveData( char* _pPos )
+void Buffer::RemoveData( char* _pPos )
 {
 	if( GetDataStart() == _pPos )
 		return;

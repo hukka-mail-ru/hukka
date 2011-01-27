@@ -24,12 +24,12 @@
 #ifndef _BUFFER_H
 #define _BUFFER_H
 
-class CBuffer
+class Buffer
 {
 public:
 
-	CBuffer();
-	~CBuffer();
+	Buffer();
+	~Buffer();
 
 	char*	GetDataStart();
 	char*	GetDataEnd();
