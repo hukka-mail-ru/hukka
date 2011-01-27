@@ -25,12 +25,12 @@
 
 #include "pthread.h"
 
-class CMyThread
+class MyThread
 {
 public:
 	
-	CMyThread();
-	virtual ~CMyThread();
+	MyThread();
+	virtual ~MyThread();
 
 	pthread_t		GetID() const;
 

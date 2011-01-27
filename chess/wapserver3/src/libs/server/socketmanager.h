@@ -6,7 +6,7 @@
 #include "../socket/mysocket.h"
 #include "selector.h"
 
-class SocketManager : public ISocketManager, private CMyThread
+class SocketManager : public ISocketManager, private MyThread
 {
 public:
 

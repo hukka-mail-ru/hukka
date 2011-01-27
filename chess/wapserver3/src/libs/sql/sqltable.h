@@ -31,17 +31,17 @@ typedef std::vector<CMyStr> TRow;
 typedef std::vector<TRow> TTable; 
 
 
-class CSqlTable
+class SqlTable
 {
 public:
 
-	CSqlTable( const char* _cTableName, const char* _cTableStruct);
+	SqlTable( const char* _cTableName, const char* _cTableStruct);
 
-	CSqlTable( const char* cszLogin, const char* cszPassword, const char* cszDBName, const char* _cTableName );
+	SqlTable( const char* cszLogin, const char* cszPassword, const char* cszDBName, const char* _cTableName );
 
-	CSqlTable( const char* _cTableName );
+	SqlTable( const char* _cTableName );
 
-	~CSqlTable();
+	~SqlTable();
 
     void Open( const char* _cTableName );
 

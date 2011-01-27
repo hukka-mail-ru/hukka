@@ -192,9 +192,9 @@ bool CHEOPSEngine::setPosition( const TVByte *_pPosition )
 
     if ( _pPosition->size() != sizeof(position) )
     {
-        for (int i = 0; i < _pPosition->size(); ++i)
-            std::cout << (int) _pPosition->at(i) << " ";
-        std::cout << std::endl;
+        //for (int i = 0; i < _pPosition->size(); ++i)
+        //    std::cout << (int) _pPosition->at(i) << " ";
+        //std::cout << std::endl;
 
         return false;
     }

@@ -9,25 +9,25 @@
 #include "accessinfo.h"
 #include "socketmanager.h"
 
-class CCHTServer : public SocketManager, public AccessInfo
+class CHTServer : public SocketManager, public AccessInfo
 {
 public:
 
-	static CCHTServer*		Instance();
+	static CHTServer*		Instance();
 	static void			FreeInst();
 	static void			KillObject();
 private:
 
-	CCHTServer();
-	~CCHTServer();
+	CHTServer();
+	~CHTServer();
 
 	void				DoAllMsg( MySocket* );
     
     bool                checkParticipation( uint32_t _nPlayerID, uint32_t _nLogicID, uint32_t _nTableID = 0 );
     
-    bool                getGameOnlineUsersTable( uint32_t _nLogicID, CSqlTable* _pRes );
-    bool                getLogicChatTable( uint32_t _nLogicID, CSqlTable* _pRes );
-    bool                getBoardChatTable( uint32_t _nLogicID, CSqlTable* _pRes );
+    bool                getGameOnlineUsersTable( uint32_t _nLogicID, SqlTable* _pRes );
+    bool                getLogicChatTable( uint32_t _nLogicID, SqlTable* _pRes );
+    bool                getBoardChatTable( uint32_t _nLogicID, SqlTable* _pRes );
     
     void                newMsg( ClientMsg* _pMsg );
         
@@ -40,7 +40,7 @@ private:
     void                setSocket( MySocket * _pSocket );
 private:
 
-	static CCHTServer*		m_pSelf;
+	static CHTServer*		m_pSelf;
 	static int			m_nRefCount;
     MySocket*          m_pSocket;
     CSqlLogicList       m_sqlLogicList;

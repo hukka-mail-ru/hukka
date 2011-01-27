@@ -27,12 +27,12 @@
 #include "sqltable.h"
 #include "../tools/structs.h"
 
-class CSqlTableUsers : private CSqlTable
+class SqlTableUsers : private SqlTable
 {
 public:
 
-	CSqlTableUsers();
-	~CSqlTableUsers();
+	SqlTableUsers();
+	~SqlTableUsers();
 
 	char		IsUserReg( char*, char*, uint32_t& );
 	char		DoUserReg( char*, char*, uint32_t& );

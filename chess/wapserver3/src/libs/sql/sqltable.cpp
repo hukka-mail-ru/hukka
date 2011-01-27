@@ -35,7 +35,7 @@ const char* g_cszDefDbPassword = 0;
 const char* g_cszDefDbName = 0;*/
 
 
-CSqlTable::CSqlTable(const char* _cTableName, const char* _cTableStruct )
+SqlTable::SqlTable(const char* _cTableName, const char* _cTableStruct )
 	:m_strTableName( _cTableName )
 {
 	CMyStr strQuery( "CREATE TABLE IF NOT EXISTS "+m_strTableName+" ("+_cTableStruct+")" );
@@ -43,29 +43,29 @@ CSqlTable::CSqlTable(const char* _cTableName, const char* _cTableStruct )
 	m_sqlBase.FreeRes( m_sqlBase.Query( strQuery.c_str() ) );
 }
 
-CSqlTable::CSqlTable( const char* cszLogin, const char* cszPassword, const char* cszDBName, const char* _cTableName ) :
+SqlTable::SqlTable( const char* cszLogin, const char* cszPassword, const char* cszDBName, const char* _cTableName ) :
      m_sqlBase(cszLogin, cszPassword, cszDBName ),
      m_strTableName( _cTableName )
 {
 }
 
-CSqlTable::CSqlTable( const char* _cTableName ) :
+SqlTable::SqlTable( const char* _cTableName ) :
 	 m_strTableName( _cTableName )
 {
 }
 
-void CSqlTable::Open( const char* _cTableName )
+void SqlTable::Open( const char* _cTableName )
 {
     m_strTableName = _cTableName;
 }
 
 
-CSqlTable::~CSqlTable()
+SqlTable::~SqlTable()
 {
 
 }
 /* SELECT <_pcFlt> FROM <m_strTableName> WHERE <_pcKey> ='< _pcVal>' */
-bool CSqlTable::SelectToStr(const char* _pcFlt, const char* _pcKey,const char* _pcVal, TVecChar* _pvecRes )
+bool SqlTable::SelectToStr(const char* _pcFlt, const char* _pcKey,const char* _pcVal, TVecChar* _pvecRes )
 {
 	bool	isRes;
 
@@ -93,13 +93,13 @@ bool CSqlTable::SelectToStr(const char* _pcFlt, const char* _pcKey,const char* _
 	else
 		isnRes = 0;
 
-	syslog( LOG_INFO | LOG_LOCAL0, "CSqlTable::SelectToStr return %d", isnRes );*/
+	syslog( LOG_INFO | LOG_LOCAL0, "SqlTable::SelectToStr return %d", isnRes );*/
 
 	return isRes;
 }
 
 /* DELETE FROM <m_strTableName> WHERE <_pcKey> ='< _pcVal>' */
-void CSqlTable::Delete(const char* _pcKey, const char* _pcVal)
+void SqlTable::Delete(const char* _pcKey, const char* _pcVal)
 {
     CMyStr strQuery;
 
@@ -122,7 +122,7 @@ void CSqlTable::Delete(const char* _pcKey, const char* _pcVal)
 }
 
 /* SELECT <_pcFlt> FROM <m_strTableName> WHERE <_pcKey> ='< _pcVal>' */
-bool CSqlTable::Select(const char* _pcFlt, const char* _pcKey,const char* _pcVal, TTable* _pTable )
+bool SqlTable::Select(const char* _pcFlt, const char* _pcKey,const char* _pcVal, TTable* _pTable )
 {
     CMyStr strQuery;
 
@@ -147,7 +147,7 @@ bool CSqlTable::Select(const char* _pcFlt, const char* _pcKey,const char* _pcVal
 }
 
 /* SELECT <_pcFlt> FROM <m_strTableName> WHERE <_pcKey> */
-bool CSqlTable::Select(const char* _pcFlt, const char* _pcKey, TTable* _pTable )
+bool SqlTable::Select(const char* _pcFlt, const char* _pcKey, TTable* _pTable )
 {
     CMyStr strQuery;
 
@@ -165,7 +165,7 @@ bool CSqlTable::Select(const char* _pcFlt, const char* _pcKey, TTable* _pTable )
 	return true;
 }
 
-void CSqlTable::CopyToTable(TTable* _pTable, MYSQL_RES* pRes)
+void SqlTable::CopyToTable(TTable* _pTable, MYSQL_RES* pRes)
 {
 	unsigned int nNumFields = mysql_num_fields(pRes);
 
@@ -189,7 +189,7 @@ void CSqlTable::CopyToTable(TTable* _pTable, MYSQL_RES* pRes)
 
 }
 
-void CSqlTable::Insert( const CMyStr* strCol, const CMyStr* strVal )
+void SqlTable::Insert( const CMyStr* strCol, const CMyStr* strVal )
 {
 	TVecMyStr vecCol(1);
 	TVecMyStr vecVal(1);
@@ -202,7 +202,7 @@ void CSqlTable::Insert( const CMyStr* strCol, const CMyStr* strVal )
 }
 
 /* INSERT INTO <m_strTableName> VALUE (<_cszVal>) */
-void CSqlTable::Insert( const char* _cszVal )
+void SqlTable::Insert( const char* _cszVal )
 {
 	CMyStr strQuery( "INSERT INTO "+m_strTableName+" VALUE ("+CMyStr( _cszVal )+")" );
 
@@ -212,7 +212,7 @@ void CSqlTable::Insert( const char* _cszVal )
 }
 
 /* INSERT INTO <m_strTableName> (_vecCols[0] ... _vecCols[n])  VALUES (_vecValues[0] ... _vecValues[n]) */
-bool CSqlTable::Insert(const TVecMyStr& _vecCols, const TVecMyStr& _vecValues )
+bool SqlTable::Insert(const TVecMyStr& _vecCols, const TVecMyStr& _vecValues )
 {
 	if (_vecCols.size() != _vecValues.size() )
 		return false;
@@ -242,7 +242,7 @@ bool CSqlTable::Insert(const TVecMyStr& _vecCols, const TVecMyStr& _vecValues )
 }
 
 /* UPDATE <m_strTableName> SET  <_cszCol>=<_cszNewVal> WHERE <_cszKey> =< _cszVal>;*/
-void CSqlTable::Update( const char* _cszCol, const char* _cszNewVal, const char* _cszKey, const char* _cszVal )
+void SqlTable::Update( const char* _cszCol, const char* _cszNewVal, const char* _cszKey, const char* _cszVal )
 {
 	CMyStr strQuery( "UPDATE " + m_strTableName + " SET "+ _cszCol + "=" + _cszNewVal +
 		            " WHERE "+ _cszKey +"="+_cszVal );
@@ -252,7 +252,7 @@ void CSqlTable::Update( const char* _cszCol, const char* _cszNewVal, const char*
 	m_sqlBase.FreeRes( pRes );
 }
 
-void CSqlTable::ar2blob(const TVecByte& _cvecIn, CMyStr* _pRes)
+void SqlTable::ar2blob(const TVecByte& _cvecIn, CMyStr* _pRes)
 {
     std::strstream str;
     str << "0x";

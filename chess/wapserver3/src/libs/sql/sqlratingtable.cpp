@@ -7,7 +7,7 @@
 #define MYDEBUG
 
 CSqlRatingTable::CSqlRatingTable( const char* _strTableName, uint32_t _nInitialRating )
-: CSqlTable( _strTableName,
+: SqlTable( _strTableName,
 	"PlayerID INT UNSIGNED NOT NULL,\
 Rating INT UNSIGNED NOT NULL,\
 PRIMARY KEY ( PlayerID )" )
@@ -63,11 +63,11 @@ void CSqlRatingTable::setRating( uint32_t _nPlayerID, uint32_t _nRating )
 
 	if ( !SelectToStr( "Rating", "PlayerID", CMyStr( _nPlayerID ).c_str(), &vecTmp ) )
     {
-        CSqlTable::Insert( strvecCol, strvecVal );
+        SqlTable::Insert( strvecCol, strvecVal );
     }
 	else
     {
-        CSqlTable::Update( "Rating", CMyStr( _nRating ).c_str(),
+        SqlTable::Update( "Rating", CMyStr( _nRating ).c_str(),
 				   "PlayerID", CMyStr( _nPlayerID ).c_str() );
     }
 }

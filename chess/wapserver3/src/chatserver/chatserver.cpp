@@ -31,7 +31,7 @@
 
 int main(int argc, char *argv[])
 {
-	CCHTServer* pCHTServer = CCHTServer::Instance();
+	CHTServer* pCHTServer = CHTServer::Instance();
 
 	Connector Connector( static_cast<ISocketManager*>( pCHTServer ) );
 
@@ -45,7 +45,7 @@ int main(int argc, char *argv[])
 
 	Selector::KillObject();
 
-	CCHTServer::KillObject();
+	CHTServer::KillObject();
 
 	return 0;
 }

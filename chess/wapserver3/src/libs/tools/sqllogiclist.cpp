@@ -29,7 +29,7 @@
 #include "sqllogiclist.h"
 
 CSqlLogicList::CSqlLogicList():
-CSqlTable(DB_LOGIN, DB_PASSWORD, DB_NAME, "tbLogicList")
+SqlTable(DB_LOGIN, DB_PASSWORD, DB_NAME, "tbLogicList")
 {
 	TTable tbl;
 

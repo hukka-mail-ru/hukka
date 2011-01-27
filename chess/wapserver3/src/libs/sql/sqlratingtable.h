@@ -6,7 +6,7 @@
 /**
 	@author WapPortal.RU <office@wapportal.ru>
 */
-class CSqlRatingTable : private CSqlTable
+class CSqlRatingTable : private SqlTable
 {
 public:
 	CSqlRatingTable(const char* _strTableName, uint32_t _nInitialRating );

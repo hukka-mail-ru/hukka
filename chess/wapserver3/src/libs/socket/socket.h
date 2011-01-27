@@ -4,12 +4,12 @@
 #include <sys/types.h>
 #include <sys/socket.h>
 
-class CSocket
+class Socket
 {
 public:
 	
-	CSocket( int _nSocket );
-	virtual ~CSocket();
+	Socket( int _nSocket );
+	virtual ~Socket();
 	
 	int		GetSocket() const;
 	

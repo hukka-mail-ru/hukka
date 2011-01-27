@@ -11,7 +11,7 @@ using namespace std;
 pthread_mutex_t	m_mutRW = PTHREAD_MUTEX_INITIALIZER;
 
 MySocket::MySocket( int _nSocket, ISocketManager* _pSocketManager )
-	:CSocket( _nSocket ),
+	:Socket( _nSocket ),
 	 m_pSocketManager( _pSocketManager )
 {
 

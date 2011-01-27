@@ -60,6 +60,7 @@ void Selector::AddHandle( int _Socket, unsigned _Flags, ICallBack* _pCallBack)
 
         if(res != 0)
         {
+            cout << "Selector::AddHandle. epoll_ctl failed" << endl;
             exit(1);
         }
     }
@@ -86,6 +87,7 @@ void Selector::RemoveHandle( int _Socket, unsigned _Flags, ICallBack* _pCallBack
     int res = epoll_ctl(m_epfd, EPOLL_CTL_DEL, _Socket, &ev);
     if(res != 0)
      {
+         cout << "Selector::RemoveHandle. epoll_ctl failed" << endl;
          exit(1);
      }
 
@@ -149,6 +151,7 @@ Selector::~Selector()
 
 int Selector::MainLoop()
 {
+
 	m_isContinue = true;
 
 #ifdef LOW_LEVEL_DEBUG
@@ -159,11 +162,13 @@ int Selector::MainLoop()
 	{
 	    epoll_event events[MAX_EPOLL_EVENTS_PER_RUN];
 
-
         int nfds = epoll_wait(m_epfd, events, MAX_EPOLL_EVENTS_PER_RUN, EPOLL_RUN_TIMEOUT);
 
-        if(nfds > 0)
+        if(nfds < 0)
         {
+            cout << "epoll_wait error" << endl;
+            return -1;
+
       //      cout << "wait: got " << nfds << " event(s). ERROR " << errno << ": " << strerror(errno) << endl;
         }
 
@@ -182,17 +187,19 @@ int Selector::MainLoop()
             else if(events[i].events & EPOLLOUT)
             {
 
+
 #ifdef LOW_LEVEL_DEBUG
                 cout << "Selector::MainLoop. EPOLLOUT. DoWrite {" << (unsigned)events[i].data.ptr << "}" << endl;
 #endif
                 static_cast<ICallBack*>(events[i].data.ptr)->DoWrite();
 
+                  cout << "Rearm" << endl;
+                  AddHandle(m_WritingSocket, EPOLLIN , static_cast<ICallBack*>(events[i].data.ptr));
+
                // cout << "DoWrite ends" << endl;
                 // rearm
                // if(events[i].events & EPOLLONESHOT)
               //  {
-                 //   cout << "Rearm" << endl;
-                    AddHandle(m_WritingSocket, EPOLLIN, static_cast<ICallBack*>(events[i].data.ptr));
              //   }
             }
             else if(events[i].events & EPOLLPRI)
@@ -212,6 +219,7 @@ int Selector::MainLoop()
                 cout << "Selector::MainLoop. UNDEFINED EVENT" << endl;
             }
         }
+
 
 	    /*
     int nKq, n;
@@ -269,4 +277,5 @@ int Selector::MainLoop()
 		}
 		*/
 	}
+
 }

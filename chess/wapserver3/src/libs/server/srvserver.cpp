@@ -152,6 +152,9 @@ bool SRVServer::Register( const ClientMsg* _pinMsg, ClientMsg* _poutMsg, RegInfo
 	std::cout << "SRVServer::Register()" << std::endl;
 #endif
 
+	std::cout << "--- FORWARD --- FROM " << nTo << " TO " << _pRegInfo->GetID() << std::endl;
+
+
 	switch( nTo )
 	{
 	case SRV:

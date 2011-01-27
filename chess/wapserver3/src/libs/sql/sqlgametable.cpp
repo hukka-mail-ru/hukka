@@ -7,7 +7,7 @@
 //#include <syslog.h>
 
 SqlGameTable::SqlGameTable( char* _cTableName, char* _cTableStruct )
-	: CSqlTable( _cTableName, _cTableStruct)
+	: SqlTable( _cTableName, _cTableStruct)
 {
 }
 
@@ -103,14 +103,14 @@ bool SqlGameTable::getDrawState( uint32_t _nTableID, uint8_t &_nDrawState )
 
 bool SqlGameTable::setState( uint32_t _nTableID, uint8_t _nState )
 {
-	CSqlTable::Update( "State", CMyStr( _nState ).c_str(), "TableID", CMyStr( _nTableID ).c_str() );
+	SqlTable::Update( "State", CMyStr( _nState ).c_str(), "TableID", CMyStr( _nTableID ).c_str() );
 	return true;
 }
 
 
 bool SqlGameTable::setDrawState( uint32_t _nTableID, uint8_t _nDrawState )
 {
-	CSqlTable::Update( "DrawState", CMyStr( _nDrawState ).c_str(), "TableID", CMyStr( _nTableID ).c_str() );
+	SqlTable::Update( "DrawState", CMyStr( _nDrawState ).c_str(), "TableID", CMyStr( _nTableID ).c_str() );
 	return true;
 }
 
@@ -156,22 +156,22 @@ bool SqlGameTable::getTime2Game( uint32_t _nTableID, uint32_t &_nTime2Game )
 void SqlGameTable::setIDPlayer1( uint32_t _nTableID, uint32_t _nIDPlayer2 )
 {
 	if (_nIDPlayer2 > 0)
-		CSqlTable::Update( "IDPlayer1", CMyStr( _nIDPlayer2 ).c_str(), "TableID", CMyStr( _nTableID ).c_str() );
+		SqlTable::Update( "IDPlayer1", CMyStr( _nIDPlayer2 ).c_str(), "TableID", CMyStr( _nTableID ).c_str() );
 	else
-		CSqlTable::Update( "IDPlayer1", "NULL", "TableID", CMyStr( _nTableID ).c_str() );
+		SqlTable::Update( "IDPlayer1", "NULL", "TableID", CMyStr( _nTableID ).c_str() );
 }
 
 void SqlGameTable::delIDPlayer1( uint32_t _nTableID)
 {
-	CSqlTable::Update( "IDPlayer1", "NULL", "TableID", CMyStr( _nTableID ).c_str() );
+	SqlTable::Update( "IDPlayer1", "NULL", "TableID", CMyStr( _nTableID ).c_str() );
 }
 
 void SqlGameTable::setXPlayer( uint32_t _nTableID, uint32_t _nXPlayer )
 {
 	if (_nXPlayer > 0)
-		CSqlTable::Update( "XPlayer", CMyStr( _nXPlayer ).c_str(), "TableID", CMyStr( _nTableID ).c_str() );
+		SqlTable::Update( "XPlayer", CMyStr( _nXPlayer ).c_str(), "TableID", CMyStr( _nTableID ).c_str() );
 	else
-		CSqlTable::Update( "XPlayer", "NULL", "TableID", CMyStr( _nTableID ).c_str() );
+		SqlTable::Update( "XPlayer", "NULL", "TableID", CMyStr( _nTableID ).c_str() );
 }
 
 
@@ -189,7 +189,7 @@ void SqlGameTable::updateFieldState( uint32_t _nTableID, const TVecChar *_vecDat
 
 	ar2blob( vecField, &strBLOB );
 
-	CSqlTable::Update( "FieldState", strBLOB.c_str(), "TableID", CMyStr( _nTableID ).c_str() );
+	SqlTable::Update( "FieldState", strBLOB.c_str(), "TableID", CMyStr( _nTableID ).c_str() );
 
 #ifdef GMS_DEBUG
         std::cerr << "SqlGameTable::playerStep strBLOB"  <<  strBLOB.c_str() << std::endl << std::endl;
@@ -218,7 +218,7 @@ bool SqlGameTable::getStepNum( uint32_t _nTableID, uint32_t &_nStepNum )
  */
 void SqlGameTable::setStepNum( uint32_t _nTableID, uint32_t _nStepNum )
 {
-	CSqlTable::Update( "StepNum", CMyStr( _nStepNum ).c_str(), "TableID", CMyStr( _nTableID ).c_str() );
+	SqlTable::Update( "StepNum", CMyStr( _nStepNum ).c_str(), "TableID", CMyStr( _nTableID ).c_str() );
 }
 
 
@@ -229,7 +229,7 @@ bool SqlGameTable::selectFromStatus( uint8_t _nStatus, TVecUINT* vecRes )
 {
 	TTable tbl;
 
-	if ( ! CSqlTable::Select("TableID","State", CMyStr( _nStatus ).c_str(), &tbl) )
+	if ( ! SqlTable::Select("TableID","State", CMyStr( _nStatus ).c_str(), &tbl) )
 		return false;
 
 	vecRes->resize(tbl.size());
@@ -244,7 +244,7 @@ bool SqlGameTable::selectFromStatus( uint8_t _nStatus, TVecUINT* vecRes )
 
 void SqlGameTable::setCurPlayer( uint32_t _nTableID, uint32_t _nValue )
 {
-	CSqlTable::Update( "CurPlayer", CMyStr( _nValue ).c_str(), "TableID", CMyStr( _nTableID ).c_str() );
+	SqlTable::Update( "CurPlayer", CMyStr( _nValue ).c_str(), "TableID", CMyStr( _nTableID ).c_str() );
 }
 
 void SqlGameTable::setPlayerGameTime( uint32_t _nTableID, uint8_t _nPlayerNum, uint32_t _nValue )
@@ -252,10 +252,10 @@ void SqlGameTable::setPlayerGameTime( uint32_t _nTableID, uint8_t _nPlayerNum, u
 	switch ( _nPlayerNum )
 	{
 		case 0:
-			CSqlTable::Update( "Player0GameTime", CMyStr( _nValue ).c_str(), "TableID", CMyStr( _nTableID ).c_str() );
+			SqlTable::Update( "Player0GameTime", CMyStr( _nValue ).c_str(), "TableID", CMyStr( _nTableID ).c_str() );
 			break;
 		case 1:
-			CSqlTable::Update( "Player1GameTime", CMyStr( _nValue ).c_str(), "TableID", CMyStr( _nTableID ).c_str() );
+			SqlTable::Update( "Player1GameTime", CMyStr( _nValue ).c_str(), "TableID", CMyStr( _nTableID ).c_str() );
 			break;
 	}
 }
@@ -265,7 +265,7 @@ void SqlGameTable::setPlayerGameTime( uint32_t _nTableID, uint8_t _nPlayerNum, u
  */
 void SqlGameTable::setPlayerStepTime( uint32_t _nTableID, uint32_t _nValue )
 {
-	CSqlTable::Update( "PlayerStepTime", CMyStr( _nValue ).c_str(), "TableID", CMyStr( _nTableID ).c_str() );
+	SqlTable::Update( "PlayerStepTime", CMyStr( _nValue ).c_str(), "TableID", CMyStr( _nTableID ).c_str() );
 }
 
 /*!
