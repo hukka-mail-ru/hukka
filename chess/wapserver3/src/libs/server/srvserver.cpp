@@ -48,7 +48,7 @@ void SRVServer::AddSocket( int _nSocket, const sockaddr_in* _pAddr )
 #endif
 
 	//m_pSelector->AddHandle( _nSocket, EVFILT_READ, EV_ADD, static_cast<ICallBack*>( pClientSocket ) );
-	m_pSelector->AddHandle( _nSocket, EPOLLIN, static_cast<ICallBack*>( pClientSocket ) );
+	m_pSelector->AddReadHandle( _nSocket, static_cast<ICallBack*>( pClientSocket ) );
 }
 
 void SRVServer::RemoveSocket( MySocket* _pSocket )
@@ -152,7 +152,7 @@ bool SRVServer::Register( const ClientMsg* _pinMsg, ClientMsg* _poutMsg, RegInfo
 	std::cout << "SRVServer::Register()" << std::endl;
 #endif
 
-	std::cout << "--- FORWARD --- FROM " << nTo << " TO " << _pRegInfo->GetID() << std::endl;
+	std::cout << "--- FORWARD --- FROM " << _pRegInfo->GetID() << " TO " << nTo << std::endl;
 
 
 	switch( nTo )

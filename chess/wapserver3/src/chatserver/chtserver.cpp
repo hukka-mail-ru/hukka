@@ -415,6 +415,8 @@ void CHTServer::sendMsgToChat( uint32_t _nLogicID, CMyStr* _strMsg, uint32_t _nT
 
     if ( getGameOnlineUsersTable( _nLogicID, &sqlChatTable ) )
     {
+        std::cout << "CHTServer::sendMsgToChat() 1" << std::endl;
+
         CMyStr strWhere;
         CSendedMsg sendedMsg;
 
@@ -444,12 +446,15 @@ void CHTServer::sendMsgToChat( uint32_t _nLogicID, CMyStr* _strMsg, uint32_t _nT
 #ifdef MYDEBUG
             std::cout << nTo << " ";
 #endif
+            std::cout << "CHTServer::sendMsgToChat() 2 " << std::endl;
+
             sendMsg( nTo, &sendedMsg );
         }
 #ifdef MYDEBUG
         std::cout << std::endl;
 #endif
 
+        std::cout << "CHTServer::sendMsgToChat() 3 " << std::endl;
 
     }
 

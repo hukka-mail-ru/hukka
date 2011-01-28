@@ -16,8 +16,9 @@ public:
 	static void			FreeInst();
 	static void			KillObject();
 
-	void AddHandle   ( int _Socket, unsigned _Flags, ICallBack* _pCallBack);
-	void RemoveHandle( int _Socket, unsigned _Flags, ICallBack* _pCallBack);
+	void AddReadHandle ( int _Socket, ICallBack* _pCallBack);
+    void AddWriteHandle( int _Socket, ICallBack* _pCallBack);
+	void RemoveHandle  ( int _Socket, ICallBack* _pCallBack);
 
 	int					StartLoop();
 	void					StopLoop();
@@ -34,6 +35,7 @@ private:
 
 	pthread_mutex_t		m_mutLoop;
 	pthread_mutex_t		m_mutAddE;
+	pthread_mutex_t     m_mutWritingSocket;
 
 //	TVecKevent			m_vecEvChange;
 

@@ -35,8 +35,7 @@ bool Connector::Connect( in_port_t _nPort, const char* _cAddr, const AccessInfo*
 	if( connect( m_nSocket, (sockaddr*)&servaddr, sizeof( servaddr ) ) != 0 )
 		return false;
 
-	cout << "Connector::Connect AddHandle" << endl;
-	Selector::Instance()->AddHandle( m_nSocket, EPOLLIN, static_cast<ICallBack*>( this ) );
+	Selector::Instance()->AddReadHandle( m_nSocket, static_cast<ICallBack*>( this ) );
 	//Selector::Instance()->AddHandle( m_nSocket, EVFILT_READ, EV_ADD, static_cast<ICallBack*>( this ) );
 	Selector::FreeInst();
 

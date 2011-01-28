@@ -2,6 +2,8 @@
 #include <unistd.h>
 #include <iostream>
 
+using namespace std;
+
 Socket::Socket( int _nSocket )
 	:m_nSocket( _nSocket )
 {
@@ -27,7 +29,12 @@ int Socket::Send( const void * _pBuf, int _nSize )
 {
 	int res = send( m_nSocket, _pBuf, _nSize, 0 );
 
-//#ifdef GMS_DEBUG
+	if(res < 0)
+	{
+	    cout << " Socket::Send failed" << endl;
+	}
+
+#ifdef GMS_DEBUG
 	    std::cerr << "Socket::Send() _nSize = " << _nSize << std::endl;
 	    std::cerr << "Socket::Send()  _pBuf = [ ";
 		for(char* c = (char*)_pBuf; c !=  (char*)_pBuf + _nSize; ++c)
@@ -38,7 +45,7 @@ int Socket::Send( const void * _pBuf, int _nSize )
 				std::cerr << '?';
 		}
 		std::cerr << " ]" << std::endl;
-//#endif
+#endif
 
 	return res;
 }

@@ -57,7 +57,7 @@ int Listener::Listen( uint16_t _nPort )
 #ifdef LOW_LEVEL_DEBUG
 	cout << "SOCKET " << m_nSocket << " Listener::Listen. PREPARE TO ACCEPT CONNECTIONS... " << endl;
 #endif
-    Selector::Instance()->AddHandle( m_nSocket, EPOLLIN, static_cast<ICallBack*>( this ) );
+    Selector::Instance()->AddReadHandle( m_nSocket, static_cast<ICallBack*>( this ) );
 	//Selector::Instance()->AddHandle( m_nSocket, EVFILT_READ, EV_ADD, static_cast<ICallBack*>( this ) );
 	Selector::FreeInst();
 
