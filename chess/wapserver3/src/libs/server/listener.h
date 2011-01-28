@@ -5,7 +5,7 @@
 #include <sys/types.h>
 #include "srvserver.h"
 
-class Listener : public ICallBack
+class Listener : public IReaderWriter
 {
 public:
 

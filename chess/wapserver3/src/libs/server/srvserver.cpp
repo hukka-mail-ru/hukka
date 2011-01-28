@@ -47,8 +47,8 @@ void SRVServer::AddSocket( int _nSocket, const sockaddr_in* _pAddr )
 	cout << "SOCKET " << _nSocket << " SRVServer::AddSocket. NEW SOCKET" << endl;
 #endif
 
-	//m_pSelector->AddHandle( _nSocket, EVFILT_READ, EV_ADD, static_cast<ICallBack*>( pClientSocket ) );
-	m_pSelector->AddReadHandle( _nSocket, static_cast<ICallBack*>( pClientSocket ) );
+	//m_pSelector->AddHandle( _nSocket, EVFILT_READ, EV_ADD, static_cast<IReaderWriter*>( pClientSocket ) );
+	m_pSelector->AddReadHandle( _nSocket, static_cast<IReaderWriter*>( pClientSocket ) );
 }
 
 void SRVServer::RemoveSocket( MySocket* _pSocket )

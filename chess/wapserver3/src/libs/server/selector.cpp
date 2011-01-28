@@ -44,12 +44,11 @@ void Selector::KillObject()
 	m_nRefCount = 0;
 }
 
-void Selector::AddReadHandle( int _Socket, ICallBack* _pCallBack)
+void Selector::AddReadHandle( int _Socket, IReaderWriter* _pReaderWriter)
 {
     struct epoll_event ev;
-
-    ev.events = EPOLLIN;
-    ev.data.ptr = _pCallBack;
+    ev.events = EPOLLIN | EPOLLET;
+    ev.data.ptr = _pReaderWriter;
 
     int res = epoll_ctl(m_epfd, EPOLL_CTL_ADD, _Socket, &ev);
 
@@ -65,12 +64,11 @@ void Selector::AddReadHandle( int _Socket, ICallBack* _pCallBack)
     }
 }
 
-void Selector::AddWriteHandle( int _Socket, ICallBack* _pCallBack)
+void Selector::AddWriteHandle( int _Socket, IReaderWriter* _pReaderWriter)
 {
     struct epoll_event ev;
-
     ev.events = EPOLLOUT | EPOLLONESHOT;
-    ev.data.ptr = _pCallBack;
+    ev.data.ptr = _pReaderWriter;
 
     int res = epoll_ctl(m_epfd, EPOLL_CTL_ADD, _Socket, &ev);
 
@@ -91,13 +89,12 @@ void Selector::AddWriteHandle( int _Socket, ICallBack* _pCallBack)
 
 }
 
-void Selector::RemoveHandle( int _Socket, ICallBack* _pCallBack)
+void Selector::RemoveHandle( int _Socket, IReaderWriter* _pReaderWriter)
 {
 
     struct epoll_event ev;
-
     ev.events = EPOLLIN | EPOLLOUT;
-    ev.data.ptr = _pCallBack;
+    ev.data.ptr = _pReaderWriter;
 
     int res = epoll_ctl(m_epfd, EPOLL_CTL_DEL, _Socket, &ev);
     if(res != 0)
@@ -186,11 +183,7 @@ int Selector::MainLoop()
         {
             cout << "epoll_wait error" << endl;
             return -1;
-
-      //      cout << "wait: got " << nfds << " event(s). ERROR " << errno << ": " << strerror(errno) << endl;
         }
-
-        assert(nfds >= 0);
 
         for(int i = 0; i < nfds; i++)
         {
@@ -199,26 +192,20 @@ int Selector::MainLoop()
 #ifdef LOW_LEVEL_DEBUG
                 cout << "Selector::MainLoop. EPOLLIN. DoRead <" << (unsigned)events[i].data.ptr << ">" << endl;
 #endif
-
-                static_cast<ICallBack*>(events[i].data.ptr)->DoRead();
+                // call MySocket::DoRead()
+                static_cast<IReaderWriter*>(events[i].data.ptr)->DoRead();
             }
             else if(events[i].events & EPOLLOUT)
             {
-
-
 #ifdef LOW_LEVEL_DEBUG
                 cout << "Selector::MainLoop. EPOLLOUT. DoWrite {" << (unsigned)events[i].data.ptr << "}" << endl;
 #endif
-                static_cast<ICallBack*>(events[i].data.ptr)->DoWrite();
+                // call MySocket::DoWrite()
+                static_cast<IReaderWriter*>(events[i].data.ptr)->DoWrite();
 
-                  cout << "Rearm" << endl;
-                  AddReadHandle(m_WritingSocket, static_cast<ICallBack*>(events[i].data.ptr));
+                cout << "Rearm" << endl;
+                AddReadHandle(m_WritingSocket, static_cast<IReaderWriter*>(events[i].data.ptr));
 
-               // cout << "DoWrite ends" << endl;
-                // rearm
-               // if(events[i].events & EPOLLONESHOT)
-              //  {
-             //   }
             }
             else if(events[i].events & EPOLLPRI)
             {
@@ -241,7 +228,7 @@ int Selector::MainLoop()
 
 	    /*
     int nKq, n;
-    ICallBack* pCallBack;
+    IReaderWriter* pCallBack;
     TVecKevent vecEvChange, vecEvList;
     vecEvList.resize( 1024 );
 
@@ -269,7 +256,7 @@ int Selector::MainLoop()
 				//std::cout << "SocketManager::MainLoop()-Signal" << std::endl;
 				continue;
 			}
-			if( ( pCallBack = static_cast<ICallBack*>(pKevent->udata) ) == 0 )
+			if( ( pCallBack = static_cast<IReaderWriter*>(pKevent->udata) ) == 0 )
 			{
 				//syslog( LOG_INFO | LOG_LOCAL0, "MainLoop()-NULL-Err!!!" );
 				//std::cout << "SocketManager::MainLoop()-NULL-Err!!!" << std::endl;

@@ -9,7 +9,7 @@
 class ClientMsg;
 class SocketManager;
 
-class MySocket : public ICallBack, public ISender, public Socket
+class MySocket : public IReaderWriter, public ISender, public Socket
 {
 public:
 
@@ -19,7 +19,7 @@ public:
 	void				AddMsg( const ClientMsg& );
 	bool				GetMsg( ClientMsg& );
 private:
-//ICallBack
+//IReaderWriter
 	void				DoRead();
 	void				DoWrite();
 

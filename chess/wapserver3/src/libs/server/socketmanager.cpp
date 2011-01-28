@@ -23,7 +23,7 @@ void SocketManager::AddOutMsg( MySocket* _pSocket )
     cout << "SOCKET " << _pSocket->GetSocket() << " SocketManager::AddOutMsg" << endl;
 #endif
 
-	m_pSelector->AddWriteHandle( _pSocket->GetSocket(), static_cast<ICallBack*>( _pSocket ) );
+	m_pSelector->AddWriteHandle( _pSocket->GetSocket(), static_cast<IReaderWriter*>( _pSocket ) );
 }
 
 void SocketManager::RemoveSocket( MySocket* _pSocket )
@@ -31,7 +31,7 @@ void SocketManager::RemoveSocket( MySocket* _pSocket )
 #ifdef LOW_LEVEL_DEBUG
     cout << "SOCKET " << _pSocket->GetSocket() << " SocketManager::RemoveSocket" << endl;
 #endif
-	m_pSelector->RemoveHandle( _pSocket->GetSocket(), static_cast<ICallBack*>( _pSocket ) );
+	m_pSelector->RemoveHandle( _pSocket->GetSocket(), static_cast<IReaderWriter*>( _pSocket ) );
 }
 
 SocketManager::SocketManager( int _nCountThread )
