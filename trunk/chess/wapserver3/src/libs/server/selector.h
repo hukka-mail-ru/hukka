@@ -16,9 +16,9 @@ public:
 	static void			FreeInst();
 	static void			KillObject();
 
-	void AddReadHandle ( int _Socket, ICallBack* _pCallBack);
-    void AddWriteHandle( int _Socket, ICallBack* _pCallBack);
-	void RemoveHandle  ( int _Socket, ICallBack* _pCallBack);
+	void AddReadHandle ( int _Socket, IReaderWriter* _pReaderWriter);
+    void AddWriteHandle( int _Socket, IReaderWriter* _pReaderWriter);
+	void RemoveHandle  ( int _Socket, IReaderWriter* _pReaderWriter);
 
 	int					StartLoop();
 	void					StopLoop();

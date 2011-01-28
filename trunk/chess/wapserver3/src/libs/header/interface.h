@@ -29,7 +29,7 @@
 class ClientMsg;
 class MySocket;
 
-class ICallBack
+class IReaderWriter
 {
 public:
 
