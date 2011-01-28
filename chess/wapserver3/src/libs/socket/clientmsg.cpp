@@ -71,7 +71,7 @@ void ClientMsg::InitMsg( uint32_t _nTo, TVecChar _vecData )
     gettimeofday(&tv, &tz);
     tm=localtime(&tv.tv_sec);
 
-    cout << tm->tm_sec  << "." << tv.tv_usec << "--- OUTGOING MSG --- TO: " << _nTo <<
+    cout << "--- OUTGOING MSG --- ("<< tm->tm_sec << "." << tv.tv_usec << ") TO: " << _nTo <<
                    ";  DATA: ";
     for(int i=0; i<_vecData.size(); ++i)
         cout << (uint32_t)_vecData[i] << " ";
@@ -98,7 +98,7 @@ void ClientMsg::InitMsg( uint32_t _nTo, char _nCommand, TVecChar _vecData )
     gettimeofday(&tv, &tz);
     tm=localtime(&tv.tv_sec);
 
-    cout << tm->tm_sec << "." << tv.tv_usec << "--- OUTGOING MSG --- TO: " << _nTo <<
+    cout << "--- OUTGOING MSG --- ("<< tm->tm_sec << "." << tv.tv_usec << ") TO: " << _nTo <<
                    ";  COMMAND: " << ( uint32_t ) _nCommand <<
                    ";  DATA: ";
     for(int i=0; i<_vecData.size(); ++i)

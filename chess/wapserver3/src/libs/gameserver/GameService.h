@@ -880,7 +880,11 @@ private:
 				SNGameMsg sCmd;
 			    sCmd.m_chCmd = ANS_CHECK_TIME_STEP;
 			    sCmd.m_nTableID = _nTableID;
-			    sCmd.m_nData = nTime;
+			    sCmd.m_nData = nTime2Step - nTime;
+
+			    std::cout << "GameService::checkTime ANS_CHECK_TIME_STEP nTableID = " << _nTableID
+			              << ", nTime = " << nTime << ", sCmd.m_nData = " << sCmd.m_nData << std::endl;
+
 		        sendMsg( _nPlayerID, &sCmd, sizeof( sCmd ) );
 			}
 
