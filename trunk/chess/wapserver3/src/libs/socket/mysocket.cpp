@@ -169,7 +169,7 @@ void MySocket::DoWrite()
 		const TVecChar* pVecMsg = m_clientMsg.GetBuffMsg();
 
 #ifdef GMS_DEBUG
-    std::cerr << "MySocket::DoWrite() to : " << m_clientMsg.GetTo() << std::endl;
+    std::cerr << "+++ MySocket::DoWrite() to : " << m_clientMsg.GetTo() << std::endl;
     std::cerr << "MySocket::DoWrite() m_outQueueMsg.size() = " << m_outQueueMsg.size() << std::endl;
     std::cerr << "MySocket::DoWrite() m_nSocket = " << m_nSocket << std::endl;
 	std::cerr << "MySocket::DoWrite() pVecMsg->size() = " << pVecMsg->size() << std::endl;

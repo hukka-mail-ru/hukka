@@ -23,7 +23,7 @@ void SocketManager::AddOutMsg( MySocket* _pSocket )
     cout << "SOCKET " << _pSocket->GetSocket() << " SocketManager::AddOutMsg" << endl;
 #endif
 
-	m_pSelector->AddHandle( _pSocket->GetSocket(), EPOLLOUT | EPOLLONESHOT, static_cast<ICallBack*>( _pSocket ) );
+	m_pSelector->AddWriteHandle( _pSocket->GetSocket(), static_cast<ICallBack*>( _pSocket ) );
 }
 
 void SocketManager::RemoveSocket( MySocket* _pSocket )
@@ -31,7 +31,7 @@ void SocketManager::RemoveSocket( MySocket* _pSocket )
 #ifdef LOW_LEVEL_DEBUG
     cout << "SOCKET " << _pSocket->GetSocket() << " SocketManager::RemoveSocket" << endl;
 #endif
-	m_pSelector->RemoveHandle( _pSocket->GetSocket(), EPOLLIN | EPOLLOUT, static_cast<ICallBack*>( _pSocket ) );
+	m_pSelector->RemoveHandle( _pSocket->GetSocket(), static_cast<ICallBack*>( _pSocket ) );
 }
 
 SocketManager::SocketManager( int _nCountThread )
@@ -59,6 +59,9 @@ int SocketManager::Run()
 		MySocket* pSocket = 0;
 
 		pthread_mutex_lock( &m_mutDeqSocket );
+
+	//	for(int i=0; i<m_queSocket.size(); i++)
+	//	    cout << "SOCK QUEUE size " << m_queSocket.size() << endl;
 
 		if( !m_queSocket.empty() )
 		{
