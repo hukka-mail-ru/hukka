@@ -228,16 +228,15 @@ void CHTServer::newMsg( ClientMsg* _pMsg )
     TVecChar vecCmd;
     _pMsg->GetData( ClientMsg::etpCommand, &vecCmd );
 
-#ifdef MYDEBUG
-    std::cerr << "MSG: " << ( uint32_t )_pMsg->GetTo() << "-" << ( uint32_t ) _pMsg->GetCommand() << "-" << ( uint32_t ) vecCmd[0] << " vecCmd size:" << vecCmd.size() << std::endl;
-//  syslog( LOG_INFO | LOG_LOCAL0, "input message from:%d CMD:%d PARAM:%d", ( uint32_t )_pMsg->GetTo(), ( uint32_t ) _pMsg->GetCommand(), ( uint32_t ) vecCmd[0] );
-    std::cout << "vecCmd: ";
+    std::cout << "--- INCOMING MSG --- FROM: " << ( uint32_t )_pMsg->GetTo() <<
+                  ";  COMMAND: " << ( uint32_t ) _pMsg->GetCommand() <<
+                  ";  DATA: ";
     for ( int i = 0; i < vecCmd.size(); ++i )
     {
         std::cout << (int) vecCmd[i] << " ";
     }
     std::cout << std::endl;
-#endif
+
 
     switch( _pMsg->GetCommand() )
     {
