@@ -3,6 +3,10 @@
 #include <string.h>
 #include <iostream>
 
+#include <stdlib.h>
+#include <sys/time.h>
+
+
 using namespace std;
 
 const char cntProtCurrVer = 2;
@@ -34,6 +38,7 @@ ClientMsg::~ClientMsg()
 
 void ClientMsg::InitError( uint32_t _nFrom, char _nCommand, char _nErr )
 {
+
     if(_nErr == NOERR)
     {
         cout << "--- OUTGOING REPLY 'OK' ---  FROM: " << _nFrom <<"; COMMAND: " << ( uint32_t ) _nCommand << endl;
@@ -59,7 +64,14 @@ void ClientMsg::InitError( uint32_t _nFrom, char _nCommand, char _nErr )
 
 void ClientMsg::InitMsg( uint32_t _nTo, TVecChar _vecData )
 {
-    cout << "--- OUTGOING MSG --- TO: " << _nTo <<
+
+    struct timeval tv;
+    struct timezone tz;
+    struct tm *tm;
+    gettimeofday(&tv, &tz);
+    tm=localtime(&tv.tv_sec);
+
+    cout << tm->tm_sec  << "." << tv.tv_usec << "--- OUTGOING MSG --- TO: " << _nTo <<
                    ";  DATA: ";
     for(int i=0; i<_vecData.size(); ++i)
         cout << (uint32_t)_vecData[i] << " ";
@@ -79,7 +91,14 @@ void ClientMsg::InitMsg( uint32_t _nTo, TVecChar _vecData )
 
 void ClientMsg::InitMsg( uint32_t _nTo, char _nCommand, TVecChar _vecData )
 {
-    cout << "--- OUTGOING MSG --- TO: " << _nTo <<
+
+    struct timeval tv;
+    struct timezone tz;
+    struct tm *tm;
+    gettimeofday(&tv, &tz);
+    tm=localtime(&tv.tv_sec);
+
+    cout << tm->tm_sec << "." << tv.tv_usec << "--- OUTGOING MSG --- TO: " << _nTo <<
                    ";  COMMAND: " << ( uint32_t ) _nCommand <<
                    ";  DATA: ";
     for(int i=0; i<_vecData.size(); ++i)

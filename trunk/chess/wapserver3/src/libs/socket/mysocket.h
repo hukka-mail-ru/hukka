@@ -28,13 +28,11 @@ private:
 
 	Buffer			m_Buffer;
 
-   	ClientMsg      m_clientMsg;
-
 	QueueMsg			m_inQueueMsg;
 	QueueMsg			m_outQueueMsg;
 
 	ISocketManager*	m_pSocketManager;
-	
+
 
 };
 

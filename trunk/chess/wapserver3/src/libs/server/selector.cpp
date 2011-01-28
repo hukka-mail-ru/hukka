@@ -9,6 +9,9 @@
 #include <syslog.h>
 #include <stdlib.h>
 #include <errno.h>
+#include <stdlib.h>
+#include <sys/time.h>
+
 
 using namespace std;
 
@@ -130,7 +133,7 @@ void Selector::StopLoop()
 
 #define MAX_LISTEN_PORT_NUM 1024
 #define MAX_EPOLL_EVENTS_PER_RUN 1024
-#define EPOLL_RUN_TIMEOUT 1000 //milliseconds
+#define EPOLL_ETERNAL_WAIT -1 //milliseconds
 
 Selector::Selector():
 	 m_isContinue( false )
@@ -174,10 +177,10 @@ int Selector::MainLoop()
 
 	while( m_isContinue )
 	{
-	//    cout << "WAITING FOR EVENTS (epoll_wait). m_epfd " << m_epfd << endl;
+//	    cout << tm->tm_sec << "." << tv.tv_usec << " WAITING FOR EVENTS " << endl;
 	    epoll_event events[MAX_EPOLL_EVENTS_PER_RUN];
 
-        int nfds = epoll_wait(m_epfd, events, MAX_EPOLL_EVENTS_PER_RUN, EPOLL_RUN_TIMEOUT);
+        int nfds = epoll_wait(m_epfd, events, MAX_EPOLL_EVENTS_PER_RUN, EPOLL_ETERNAL_WAIT);
 
         if(nfds < 0)
         {
@@ -189,17 +192,17 @@ int Selector::MainLoop()
         {
             if(events[i].events & EPOLLIN)
             {
-#ifdef LOW_LEVEL_DEBUG
-                cout << "Selector::MainLoop. EPOLLIN. DoRead <" << (unsigned)events[i].data.ptr << ">" << endl;
-#endif
+//#ifdef LOW_LEVEL_DEBUG
+//                cout << "Selector::MainLoop. EPOLLIN. DoRead " << endl;
+//#endif
                 // call MySocket::DoRead()
                 static_cast<IReaderWriter*>(events[i].data.ptr)->DoRead();
             }
             else if(events[i].events & EPOLLOUT)
             {
-#ifdef LOW_LEVEL_DEBUG
-                cout << "Selector::MainLoop. EPOLLOUT. DoWrite {" << (unsigned)events[i].data.ptr << "}" << endl;
-#endif
+//#ifdef LOW_LEVEL_DEBUG
+//                cout << "Selector::MainLoop. EPOLLOUT. DoWrite " << endl;
+//#endif
                 // call MySocket::DoWrite()
                 static_cast<IReaderWriter*>(events[i].data.ptr)->DoWrite();
 

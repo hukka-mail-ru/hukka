@@ -24,6 +24,11 @@ MySocket::~MySocket()
 
 void MySocket::AddMsg( const ClientMsg& _clientMsg )
 {
+    // NOT SO FAST, BABY! We need the delay on Linux because the server can reply faster,
+    // then epoll_wait in the Selector has been rearmed.
+    // (So, the Selector doesn't get a Read Event and the reply message hangs in the queue)
+    usleep(500);
+
 #ifdef LOW_LEVEL_DEBUG
     cout << "SOCKET " << m_nSocket << " MySocket::AddMsg. ADD MSG" << endl;
 #endif
@@ -163,13 +168,13 @@ void MySocket::DoWrite()
 {
 	pthread_mutex_lock( &m_mutRW );
 
-	ClientMsg m_clientMsg;
-	while( m_outQueueMsg.GetMsg( m_clientMsg ) )
+	ClientMsg clientMsg;
+	while( m_outQueueMsg.GetMsg( clientMsg ) )
 	{
-		const TVecChar* pVecMsg = m_clientMsg.GetBuffMsg();
+		const TVecChar* pVecMsg = clientMsg.GetBuffMsg();
 
 #ifdef GMS_DEBUG
-    std::cerr << "+++ MySocket::DoWrite() to : " << m_clientMsg.GetTo() << std::endl;
+    std::cerr << "+++ MySocket::DoWrite() to : " << clientMsg.GetTo() << std::endl;
     std::cerr << "MySocket::DoWrite() m_outQueueMsg.size() = " << m_outQueueMsg.size() << std::endl;
     std::cerr << "MySocket::DoWrite() m_nSocket = " << m_nSocket << std::endl;
 	std::cerr << "MySocket::DoWrite() pVecMsg->size() = " << pVecMsg->size() << std::endl;
