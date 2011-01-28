@@ -151,14 +151,6 @@ Selector::Selector():
 	assert(m_epfd >= 0);
 	pthread_mutex_unlock( &m_mutFd );
 
-/*
-	struct kevent kev;
-	EV_SET( &kev, SIGUSR1, EVFILT_SIGNAL, EV_ADD, 0, 0, 0 );
-
-	pthread_mutex_lock( &m_mutAddE );
-	m_vecEvChange.push_back( kev );
-	pthread_mutex_unlock( &m_mutAddE );
-	*/
 }
 
 Selector::~Selector()
@@ -192,23 +184,13 @@ int Selector::MainLoop()
         {
             if(events[i].events & EPOLLIN)
             {
-//#ifdef LOW_LEVEL_DEBUG
-//                cout << "Selector::MainLoop. EPOLLIN. DoRead " << endl;
-//#endif
-                // call MySocket::DoRead()
                 static_cast<IReaderWriter*>(events[i].data.ptr)->DoRead();
             }
             else if(events[i].events & EPOLLOUT)
             {
-//#ifdef LOW_LEVEL_DEBUG
-//                cout << "Selector::MainLoop. EPOLLOUT. DoWrite " << endl;
-//#endif
-                // call MySocket::DoWrite()
                 static_cast<IReaderWriter*>(events[i].data.ptr)->DoWrite();
-
-                cout << "Rearm" << endl;
+//                cout << "Rearm" << endl;
                 AddReadHandle(m_WritingSocket, static_cast<IReaderWriter*>(events[i].data.ptr));
-
             }
             else if(events[i].events & EPOLLPRI)
             {
@@ -228,62 +210,6 @@ int Selector::MainLoop()
             }
         }
 
-
-	    /*
-    int nKq, n;
-    IReaderWriter* pCallBack;
-    TVecKevent vecEvChange, vecEvList;
-    vecEvList.resize( 1024 );
-
-    timespec tmStep;
-    tmStep.tv_sec = 0;
-    tmStep.tv_nsec = 500000000;
-
-
-    if( ( nKq = kqueue() ) < 0 )
-        return errno;
-
-		pthread_mutex_lock( &m_mutAddE );
-		vecEvChange.assign( m_vecEvChange.begin(), m_vecEvChange.end() );
-		m_vecEvChange.clear();
-		pthread_mutex_unlock( &m_mutAddE );
-
-		if( ( n = kevent( nKq, &vecEvChange[0], vecEvChange.size(), &vecEvList[0], vecEvList.size(), &tmStep ) ) == -1 )
-			return errno;
-
-		for( struct kevent* pKevent = &vecEvList[0] ; pKevent < &vecEvList[n] ; ++pKevent )
-		{
-			if( pKevent->filter == EVFILT_SIGNAL )
-			{
-				//syslog( LOG_INFO | LOG_LOCAL0, "MainLoop()-Signal" );
-				//std::cout << "SocketManager::MainLoop()-Signal" << std::endl;
-				continue;
-			}
-			if( ( pCallBack = static_cast<IReaderWriter*>(pKevent->udata) ) == 0 )
-			{
-				//syslog( LOG_INFO | LOG_LOCAL0, "MainLoop()-NULL-Err!!!" );
-				//std::cout << "SocketManager::MainLoop()-NULL-Err!!!" << std::endl;
-				continue;
-			}
-			if( pKevent->filter == EVFILT_READ )
-			{
-				//syslog( LOG_INFO | LOG_LOCAL0, "MainLoop()-EVFILT_READ" );
-				//std::cout << "SocketManager::MainLoop()-EVFILT_READ "<< pKevent->ident << std::endl;
-				pCallBack->DoRead();
-			}
-			else if( pKevent->filter == EVFILT_WRITE )
-			{
-				//syslog( LOG_INFO | LOG_LOCAL0, "MainLoop()-EVFILT_WRITE" );
-				//std::cout << "SocketManager::MainLoop()-EVFILT_WRITE "<< pKevent->ident  << std::endl;
-				pCallBack->DoWrite();
-			}
-			else
-			{
-				//syslog( LOG_INFO | LOG_LOCAL0, "MainLoop()-Unknown" );
-				//std::cout << "SocketManager::MainLoop()-Unknoun" << std::endl;
-			}
-		}
-		*/
 	}
 
 }
