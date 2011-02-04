@@ -10,7 +10,7 @@
 #include "Client.h"
 #include "Exception.h"
 #include <assert.h>
-#include <QNetworkProxyQuery>
+#include <QtNetwork/QNetworkProxyQuery>
 #include <QtEndian>
 #include <QTime>
 #include <QTimer>
@@ -1282,7 +1282,7 @@ void Client::processMessageCHS(const MessageHeader& header, const QByteArray& bu
         Reply* reply = (Reply*)buffer.data();
 
         emit gotMoveTime(reply->time2step);
-        //qDebug() << "time2step: " << reply->time2step;
+        qDebug() << "tableID: " << reply->tableID << " time2step: " << reply->time2step;
     }
     else if(header.cmd == ANS_CHECK_TIME_GAME)
     {

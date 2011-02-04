@@ -45,3 +45,10 @@ RESOURCES = resources.qrc
 TRANSLATIONS = translate/strings_ru.ts
 
 
+
+QT       += core gui
+CONFIG += meegotouch
+TEMPLATE = app
+target.path=/usr/local/bin
+INSTALLS=target
+
