@@ -3,7 +3,7 @@
 
 #include <QString>
 #include <QList>
-#include <QDomNode>
+#include <QtXml/QDomNode>
 
 
 #define XML_CONFIG_FILENAME     QDir::homePath() + "/.wpchess/config.xml"

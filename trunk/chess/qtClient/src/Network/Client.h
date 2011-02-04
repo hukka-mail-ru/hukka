@@ -3,8 +3,8 @@
 
 
 #include <QObject>
-#include <QNetworkProxy>
-#include <QTcpSocket>
+#include <QtNetwork/QNetworkProxy>
+#include <QtNetwork/QTcpSocket>
 #include <QThread>
 #include <QList>
 #include <QReadWriteLock>
