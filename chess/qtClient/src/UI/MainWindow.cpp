@@ -59,7 +59,8 @@ MainWindow::MainWindow(QWidget *parent):
     vboxLayout->addWidget(mGraphicsView);
 
     setCentralWidget(centralwidget);
-    centralwidget->showFullScreen();
+    // centralwidget->showFullScreen(); // This may be redundant
+    this->showFullScreen(); // This is TRUE! Tested on Meego Emulator.
 
     setWindowTitle(tr("Chess"));
     Q_UNUSED(this);
