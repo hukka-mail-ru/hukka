@@ -71,15 +71,15 @@ void FindGameDialog::onRandomGameClicked()
 
 void FindGameDialog::onGotGameTables(const QList<TABLEID>& ids)
 {
-    if(!ids.empty())
-    {
-        qDebug() << "onGotGameTables(const QList<TABLEID>& ids) " << ids.size();
-        MainWindow::instance()->showJoinGameDialog(ids);
-    }
-    else
+    if(ids.empty() || (ids.size() == 1 && ids[0] == 0))
     {
         MainWindow::instance()->showError(tr("No game table found"));
         MainWindow::instance()->showFindGameDialog();
+    }
+    else
+    {
+        qDebug() << "onGotGameTables(const QList<TABLEID>& ids) " << ids.size();
+        MainWindow::instance()->showJoinGameDialog(ids);
     }
 }
 
