@@ -886,6 +886,11 @@ private:
 			              << ", nTime = " << nTime << ", sCmd.m_nData = " << sCmd.m_nData << std::endl;
 
 		        sendMsg( _nPlayerID, &sCmd, sizeof( sCmd ) );
+
+		        // NOT SO FAST, BABY!
+		        // Wee need this because ANS_CHECK_TIME_STEP and ANS_CHECK_TIME_GAME can glue together
+		        // and the client won't parse it.
+		        usleep(200000);
 			}
 
 		}
