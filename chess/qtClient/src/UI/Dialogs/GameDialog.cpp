@@ -50,5 +50,5 @@ void GameDialog::onDrawClicked()
 
 void GameDialog::onReturnClicked()
 {
-    MainWindow::instance()->hideCurrentDialog();
+    close();
 }
