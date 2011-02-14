@@ -29,7 +29,7 @@ WaitDrawDialog::WaitDrawDialog(QWidget *parent):  QDialog(parent)
 void WaitDrawDialog::onError(const QString& what)
 {
     qDebug() << "WaitDrawDialog::onError";
-    this->close();
+    close();
 }
 
 void WaitDrawDialog::onExitClicked()
@@ -45,5 +45,5 @@ void WaitDrawDialog::onExitClicked()
 void WaitDrawDialog::onDrawRejected(const QString& message)
 {
     MainWindow::instance()->showMessage(message);
-    MainWindow::instance()->hideCurrentDialog();
+    close();
 }

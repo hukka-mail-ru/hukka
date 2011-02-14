@@ -44,8 +44,6 @@ public:
 
     void initialize();
 
-    void deleteCurrentDialog();
-
     // dialogs
     void showAuthorizationDialog();
     void showCreateGameDialog();
@@ -54,6 +52,8 @@ public:
     void showGameDialog();
     void showOptionsDialog();
     void showSendMessageDialog(ChatType chatType);
+
+    void closeCurrentDialog();
 
     // scenes
     void showMainMenu();
@@ -67,9 +67,6 @@ public:
 
     void highlightGameSceneCell(CELLID cell);
     void removeGameSceneHighlight();
-
-    void hideCurrentDialog(); // TODO replace by this->hide
-    bool isCurrentDialog() { return mCurrentDialog != NULL; }
 
     // should be called only if dialogs are hidden
     void showError(const QString& text);
@@ -88,6 +85,7 @@ public:
     void setHeight(int height) { mHeight = height; }
 
 private:
+
 
     void setCurrentDialog(QDialog* dialog);
     int showMessageBox(QMessageBox::Icon icon, const QString &title, const QString &text);

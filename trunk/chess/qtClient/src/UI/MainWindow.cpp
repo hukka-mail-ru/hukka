@@ -146,7 +146,7 @@ void MainWindow::setMode(MainWindowMode mode)
 {
     if(mode == MW_WAIT)
     {
-        hideCurrentDialog();
+        closeCurrentDialog();
         setCursor(QCursor(Qt::WaitCursor));
 
         mMainMenu->disableItems();
@@ -164,7 +164,7 @@ void MainWindow::setMode(MainWindowMode mode)
 
 void MainWindow::setCurrentDialog(QDialog* dialog)
 {
-    deleteCurrentDialog();
+    closeCurrentDialog();
     mCurrentDialog = dialog;
 
     // bind dialog to the current scene
@@ -176,15 +176,8 @@ void MainWindow::setCurrentDialog(QDialog* dialog)
     proxy->setZValue(Z_DIALOG_LAYER);
 }
 
-void MainWindow::hideCurrentDialog()
-{
-    if(mCurrentDialog)
-    {
-        mCurrentDialog->hide();
-    }
-}
 
-void MainWindow::deleteCurrentDialog()
+void MainWindow::closeCurrentDialog()
 {
   //  delete mCurrentDialog;
   //  mCurrentDialog = 0;
@@ -331,7 +324,7 @@ void MainWindow::showSendMessageDialog(ChatType chatType)
 void MainWindow::showMainMenu()
 {
 
-    deleteCurrentDialog();
+    closeCurrentDialog();
     mGraphicsView->setScene(mMainMenu);
 
     show();

@@ -46,7 +46,7 @@ void UI::shutdown()
 
 void UI::startGame()
 {
-    MainWindow::instance()->deleteCurrentDialog();
+    MainWindow::instance()->closeCurrentDialog();
 
     if(mPlayerColor == PC_WHITE)
     {
