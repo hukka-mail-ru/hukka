@@ -16,17 +16,9 @@ WaitAgreeDialog::WaitAgreeDialog(QWidget *parent):  QDialog(parent)
 
 
     connect(Client::instance(), SIGNAL(gameStarted()), this, SLOT(onGameStarted()));
-    connect(Client::instance(), SIGNAL(error(const QString&)), this, SLOT(onError(const QString&)));
 
     this->show();
 }
-
-void WaitAgreeDialog::onError(const QString& what)
-{
-    qDebug() << "WaitAgreeDialog::onError";
-    this->close();
-}
-
 
 
 void WaitAgreeDialog::onExitClicked()

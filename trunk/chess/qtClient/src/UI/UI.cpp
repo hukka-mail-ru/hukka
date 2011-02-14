@@ -90,6 +90,7 @@ void UI::onDrawOffered()
 void UI::onError(const QString& what)
 {
     qDebug() << "UI::onError";
+    MainWindow::instance()->closeCurrentDialog();
     MainWindow::instance()->showError(what);
 }
 

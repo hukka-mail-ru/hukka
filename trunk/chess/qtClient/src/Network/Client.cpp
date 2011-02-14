@@ -985,6 +985,15 @@ void Client::processMessageSRV(const MessageHeader& header, const QByteArray& bu
             default:             emit error(tr("Internal server error ") + QString::number(buffer[0]) + "."); break;
         }
     }
+    else
+    {
+        struct Reply {
+            char        err;
+        };
+
+        Reply* reply = (Reply*)buffer.data();
+        emit error(tr("SRV Error: ") + QString::number((int)reply->err));
+    }
 }
 
 /*====================================================================================================
@@ -1005,6 +1014,15 @@ void Client::processMessageREG(const MessageHeader& header, const QByteArray& bu
             case ERRLOGINEXIST:  emit error(tr("User already exists.")); break;
             default:             emit error(tr("Internal server error ") + QString::number(buffer[0]) + "."); break;
         }
+    }
+    else
+    {
+        struct Reply {
+            char        err;
+        };
+
+        Reply* reply = (Reply*)buffer.data();
+        emit error(tr("REG Error: ") + QString::number((int)reply->err));
     }
 }
 
@@ -1148,6 +1166,15 @@ void Client::processMessageTBM(const MessageHeader& header, const QByteArray& bu
 
 
 
+    }
+    else
+    {
+        struct Reply {
+            char        err;
+        };
+
+        Reply* reply = (Reply*)buffer.data();
+        emit error(tr("TBM Error: ") + QString::number((int)reply->err));
     }
 }
 
@@ -1298,6 +1325,15 @@ void Client::processMessageCHS(const MessageHeader& header, const QByteArray& bu
         emit gotGameTime(reply->time2game);
        // qDebug() << "time2game: " << reply->time2game;
     }
+    else
+    {
+        struct Reply {
+            char        err;
+        };
+
+        Reply* reply = (Reply*)buffer.data();
+        emit error(tr("CHS Error: ") + QString::number((int)reply->err));
+    }
 }
 
 
@@ -1310,6 +1346,15 @@ void Client::processMessageCHAT(const MessageHeader& header, const QByteArray& b
     else if(header.cmd == ANS_MSG_TBL)
     {
         emit tableChatMessage(buffer.data());
+    }
+    else
+    {
+        struct Reply {
+            char        err;
+        };
+
+        Reply* reply = (Reply*)buffer.data();
+        emit error(tr("CHAT Error: ") + QString::number((int)reply->err));
     }
 
 }
