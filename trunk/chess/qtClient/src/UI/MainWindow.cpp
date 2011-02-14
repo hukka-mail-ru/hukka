@@ -60,7 +60,7 @@ MainWindow::MainWindow(QWidget *parent):
 
     setCentralWidget(centralwidget);
     // centralwidget->showFullScreen(); // This may be redundant
-    this->showFullScreen(); // This is TRUE! Tested on Meego Emulator.
+   // this->showFullScreen(); // This is TRUE! Tested on Meego Emulator.
 
     setWindowTitle(tr("Chess"));
     Q_UNUSED(this);
@@ -186,8 +186,12 @@ void MainWindow::hideCurrentDialog()
 
 void MainWindow::deleteCurrentDialog()
 {
-    delete mCurrentDialog;
-    mCurrentDialog = 0;
+  //  delete mCurrentDialog;
+  //  mCurrentDialog = 0;
+    if(mCurrentDialog)
+    {
+        mCurrentDialog->close();
+    }
 }
 
 
@@ -301,6 +305,7 @@ void MainWindow::showOptionsDialog()
 
 void MainWindow::showWaitDrawDialog()
 {
+    qDebug() << "MainWindow::showWaitDrawDialog";
     setCurrentDialog(new WaitDrawDialog(this));
     setMode(MW_NORMAL);
 }

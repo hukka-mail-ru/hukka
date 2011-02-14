@@ -84,7 +84,7 @@ void Client::connectToHost(const QNetworkProxy& proxy, const QString& hostName, 
      //     mSocket.setProxy(proxy);
 
         mTimer = new QTimer(this);
-        connect(mTimer, SIGNAL(timeout()), this, SLOT(onTimeout()));
+     //   connect(mTimer, SIGNAL(timeout()), this, SLOT(onTimeout()));
         mTimer->start(WAIT_CONNECT_TIMEOUT * 1000);
 
         mSocket.connectToHost (hostName, port);
@@ -851,8 +851,10 @@ void Client::sendCmd(char service, char command, const QByteArray& data)
 {
     QT_TRACEOUT;
 
-    if(mSocket.state() != QAbstractSocket::ConnectedState) {
-        THROW_EXCEPTION(tr("Connection has been lost."));
+    if(mSocket.state() != QAbstractSocket::ConnectedState)
+    {
+        return;
+        //THROW_EXCEPTION(tr("Connection has been lost."));
     }
 
     char crc = 0;
@@ -1263,7 +1265,7 @@ void Client::processMessageCHS(const MessageHeader& header, const QByteArray& bu
         switch(reply->status) {
             case P_OFFER:      emit drawOffered(); break;
             case P_WAIT:        break; // TODO send a message "Please wait"
-            case P_ACCEPT:     emit drawAccepted(); break;
+            case P_ACCEPT:     emit gameOver(tr("Your opponent accepted the draw.")); break;
             case P_REJECT:     emit drawRejected(tr("Your opponent rejected the draw")); break;
             case P_NOTALLOWED: emit drawRejected(tr("Please wait for your next move to offer a draw")); break;
             default:           emit error(tr("Internal server error ") + QString::number(reply->status)); break;
@@ -1344,7 +1346,7 @@ void Client::onDisconnected()
 ====================================================================================================*/
 void Client::onError()
 {
-    qDebug() << "onError: " << mSocket.errorString();
+    qDebug() << "Client::onError: " << mSocket.errorString();
     emit error(mSocket.errorString());
 }
 

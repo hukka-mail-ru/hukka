@@ -20,6 +20,8 @@ private:
 private slots:
     void onExitClicked();
     void onDrawRejected(const QString&);
+    void onError(const QString& what);
+
 };
 
 
