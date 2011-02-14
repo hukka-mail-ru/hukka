@@ -68,6 +68,8 @@ void CreateGameDialog::onOkClicked()
 
 void CreateGameDialog::onGotMyGameTable(TABLEID id)
 {
+    qDebug() << "onGotMyGameTable: TABLEID = " << id;
+
     if(id)
     {
         MainWindow::instance()->showMessage(
@@ -109,6 +111,8 @@ void CreateGameDialog::onGotMyGameTable(TABLEID id)
 
         Client::instance()->createGameTable(LOGIC_ID_CHESS, params);
     }
+
+    disconnect(Client::instance(), SIGNAL(gotMyGameTable(TABLEID)), this, SLOT(onGotMyGameTable(TABLEID)));
 }
 
 
