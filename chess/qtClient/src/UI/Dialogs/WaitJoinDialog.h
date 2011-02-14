@@ -22,7 +22,6 @@ private slots:
     void onOpponentJoined();
     void onGameStarted();
     void onGameTableDeleted();
-    void onError(const QString& what);
 };
 
 #endif /* WaitJoinDialog_H_ */
