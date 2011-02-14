@@ -17,11 +17,16 @@ WaitJoinDialog::WaitJoinDialog(QWidget *parent):   QDialog(parent)
 
     connect(Client::instance(), SIGNAL(opponentJoined()), this, SLOT(onOpponentJoined()));
     connect(Client::instance(), SIGNAL(gameStarted()), this, SLOT(onGameStarted()));
+    connect(Client::instance(), SIGNAL(error(const QString&)), this, SLOT(onError(const QString&)));
 
     this->show();
 }
 
-
+void WaitJoinDialog::onError(const QString& what)
+{
+    qDebug() << "WaitJoinDialog::onError";
+    this->close();
+}
 
 void WaitJoinDialog::onExitClicked()
 {

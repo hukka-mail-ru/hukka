@@ -20,6 +20,8 @@ private:
 private slots:
     void onExitClicked();
     void onGameStarted();
+    void onError(const QString& what);
+
 };
 
 

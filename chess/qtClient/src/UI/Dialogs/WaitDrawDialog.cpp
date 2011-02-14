@@ -5,6 +5,8 @@
 
 WaitDrawDialog::WaitDrawDialog(QWidget *parent):  QDialog(parent)
 {
+    qDebug() << "WaitDrawDialog::WaitDrawDialog";
+
     label = new QLabel(tr("Wait for oppponent response..."), this);
     exitButton = new QPushButton(tr("Exit"), this);
     connect(exitButton, SIGNAL(clicked()), this, SLOT(onExitClicked()));
@@ -14,12 +16,21 @@ WaitDrawDialog::WaitDrawDialog(QWidget *parent):  QDialog(parent)
     layout->addWidget(exitButton);
     this->setLayout(layout);
 
-    connect(Client::instance(), SIGNAL(drawAccepted()), this, SLOT(onDrawAccepted()));
+    qDebug() << "WaitDrawDialog::WaitDrawDialog connect";
     connect(Client::instance(), SIGNAL(drawRejected(const QString&)), this, SLOT(onDrawRejected(const QString&)));
+    connect(Client::instance(), SIGNAL(error(const QString&)), this, SLOT(onError(const QString&)));
 
+    qDebug() << "WaitDrawDialog::WaitDrawDialog show ";
     this->show();
+
+    qDebug() << "WaitDrawDialog::WaitDrawDialog end";
 }
 
+void WaitDrawDialog::onError(const QString& what)
+{
+    qDebug() << "WaitDrawDialog::onError";
+    this->close();
+}
 
 void WaitDrawDialog::onExitClicked()
 {

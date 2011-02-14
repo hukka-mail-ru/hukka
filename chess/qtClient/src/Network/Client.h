@@ -129,7 +129,6 @@ signals:
         void gameTableDeleted();
 
         void drawOffered();
-        void drawAccepted();
         void drawRejected(const QString& message);
 
         void gotMyGameTable(TABLEID id);
