@@ -911,14 +911,15 @@ void Client::onReadyRead()
         return;
     }
 
-
     QByteArray buf = mSocket.readAll();
-    MessageHeader* header = (MessageHeader*)buf.data();
 
-    if(buf.size() == 0) {
-        qDebug("No data available");
-        return;
-    }
+
+
+    // >>> goto here
+    while(buf.size() > 0)
+    {
+
+        MessageHeader* header = (MessageHeader*)buf.data();
 
 qDebug() << "----------\n" << mName << "MESSAGE RECEIVED"
          << serviceToString((quint32)header->service)
@@ -928,40 +929,47 @@ for(int i=0; i<buf.size(); i++)
     str += QString::number((int)(unsigned char)buf[i]) + " ";
 qDebug() << str;
 
+        if(header->sign != PROTOCOL_SIGNATURE) {
+            qDebug("Server uses wrong protocol ");
+            return;
+        }
+
+        unsigned mesSize = sizeof(header->sign) + sizeof(header->size) + header->size;
+
+        QByteArray infPart((char*)&header->version, header->size - CRC_SIZE);
+        if(buf[mesSize - CRC_SIZE] != getCRC(infPart)) {
+            qDebug() << "Server response has bad CRC: mesSize: " << mesSize;
+            return;
+        }
+
+        if(header->version != PROTOCOL_VERSION) {
+            qDebug("Server uses wrong protocol version: ");// + QString::number(header->version) +
+                  //  " (expected " + QString::number(PROTOCOL_VERSION) + ").");
+            return;
+        }
+
+        // save message in the pool
+
+        char* dataOffset = buf.data() + sizeof(MessageHeader);
+        unsigned dataSize = header->size - sizeof(header->version) - sizeof(header->service) - sizeof(header->cmd) - CRC_SIZE;
+
+        QByteArray message(dataOffset, dataSize);
 
 
-    if(header->sign != PROTOCOL_SIGNATURE) {
-        qDebug("Server uses wrong protocol ");
-        return;
-    }
 
-    QByteArray infPart((char*)&header->version, header->size - CRC_SIZE);
-    if(buf[buf.size() - CRC_SIZE] != getCRC(infPart)) {
-        qDebug("Server response has bad CRC");
-        return;
-    }
+        switch(header->service)
+        {
+            case SRV:   processMessageSRV (*header, message); break;
+            case TBM:   processMessageTBM (*header, message); break;
+            case CHS:   processMessageCHS (*header, message); break;
+            case REG:   processMessageREG (*header, message); break;
+            case CHAT:  processMessageCHAT(*header, message); break;
+            default:    THROW_EXCEPTION(tr("Logic error"));
+        }
 
-    if(header->version != PROTOCOL_VERSION) {
-        qDebug("Server uses wrong protocol version: ");// + QString::number(header->version) +
-              //  " (expected " + QString::number(PROTOCOL_VERSION) + ").");
-        return;
-    }
-
-    // save message in the pool
-
-    char* dataOffset = buf.data() + sizeof(MessageHeader);
-    unsigned dataSize = header->size - sizeof(header->version) - sizeof(header->service) - sizeof(header->cmd) - CRC_SIZE;
-
-    QByteArray buffer(dataOffset, dataSize);
-
-    switch(header->service)
-    {
-        case SRV:   processMessageSRV (*header, buffer); break;
-        case TBM:   processMessageTBM (*header, buffer); break;
-        case CHS:   processMessageCHS (*header, buffer); break;
-        case REG:   processMessageREG (*header, buffer); break;
-        case CHAT:  processMessageCHAT(*header, buffer); break;
-        default:    THROW_EXCEPTION(tr("Logic error"));
+        // The buffer probably has got another message
+        QByteArray newbuf(buf.data() + mesSize, buf.size() - mesSize);
+        buf = newbuf;
     }
 }
 
@@ -1101,7 +1109,6 @@ void Client::processMessageTBM(const MessageHeader& header, const QByteArray& bu
             TABLEID     tableID;
             char        isValid;
         };
-
         Reply* reply = (Reply*)buffer.data();
 
         switch(reply->isValid) {
