@@ -31,8 +31,7 @@ FindGameDialog::FindGameDialog(QWidget *parent): Dialog(parent)
     layout->addLayout(upperLayout);
     layout->addLayout(lowerLayout);
 
-    this->setLayout(layout);
-    this->show();
+    setLayout(layout);
 }
 
 void FindGameDialog::onOkClicked()

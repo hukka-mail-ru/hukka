@@ -66,9 +66,6 @@ OptionsDialog::OptionsDialog(QWidget *parent):
 
     connect(okButton, SIGNAL(clicked()), this, SLOT(onOkClicked()));
     connect(exitButton, SIGNAL(clicked()), this, SLOT(onExitClicked()));
-
-
-    this->show();
 }
 
 

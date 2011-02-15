@@ -20,8 +20,6 @@ SendMessageDialog::SendMessageDialog(ChatType chatType, QWidget *parent):
     this->setLayout(layout);
 
     connect(okButton, SIGNAL(clicked()), this, SLOT(onOkClicked()));
-
-    this->show();
 }
 
 

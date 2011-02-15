@@ -16,8 +16,6 @@ WaitAgreeDialog::WaitAgreeDialog(QWidget *parent):  QDialog(parent)
 
 
     connect(Client::instance(), SIGNAL(gameStarted()), this, SLOT(onGameStarted()));
-
-    this->show();
 }
 
 

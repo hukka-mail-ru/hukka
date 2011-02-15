@@ -42,8 +42,7 @@ JoinGameDialog::JoinGameDialog(const QList<TABLEID>& tableIDs, QWidget *parent):
     layout->addLayout(lowerLayout);
 
 
-    this->setLayout(layout);
-    this->show();
+    setLayout(layout);
 
     int margin = XML::instance().readValue(XML_ITEMS_FILENAME, QList<QString>() << XML_NODE_SCENE << XML_NODE_MARGIN << XML_NODE_WIDTH).toInt();
 

@@ -15,8 +15,6 @@ WaitDrawDialog::WaitDrawDialog(QWidget *parent):  QDialog(parent)
     this->setLayout(layout);
 
     connect(Client::instance(), SIGNAL(drawRejected(const QString&)), this, SLOT(onDrawRejected(const QString&)));
-
-    this->show();
 }
 
 
