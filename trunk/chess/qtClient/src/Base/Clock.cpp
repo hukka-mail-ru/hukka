@@ -65,6 +65,8 @@ void Clock::updatePos(OrientationStatus orientation)
 
 void Clock::onTimeout()
 {
+    disconnect(mTimer, SIGNAL(timeout()), this, SLOT(onTimeout()));
+
     if(mSeconds > 0)
         mSeconds--;
 
@@ -72,6 +74,8 @@ void Clock::onTimeout()
 
     QString color = (UI::instance()->getGameState() == GS_WAIT_FOR_OPPONENT) ? mInactiveColor : mActiveColor;
     mText->setDefaultTextColor( QColor(color) );
+
+    connect(mTimer, SIGNAL(timeout()), this, SLOT(onTimeout()));
 }
 
 
