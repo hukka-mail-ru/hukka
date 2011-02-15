@@ -24,6 +24,8 @@ void WaitDrawDialog::onExitClicked()
 {
     if((MainWindow::instance()->showQuestion(tr("Exiting now means you surrender. Are you sure?"))))
     {
+        disconnect(Client::instance(), SIGNAL(drawRejected(const QString&)), this, SLOT(onDrawRejected(const QString&)));
+
         MainWindow::instance()->setMode(MW_WAIT);
         Client::instance()->surrender(UI::instance()->getGameTable());
     }
