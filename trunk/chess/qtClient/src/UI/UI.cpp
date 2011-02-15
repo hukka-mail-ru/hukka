@@ -70,6 +70,10 @@ void UI::startGame()
 
 void UI::onGameOver(const QString& message)
 {
+    disconnect(Client::instance(), SIGNAL(invalidMove()), this, SLOT(onInvalidMove()));
+    disconnect(Client::instance(), SIGNAL(gameOver(const QString&)), this, SLOT(onGameOver(const QString&)));
+    disconnect(Client::instance(), SIGNAL(drawOffered()), this, SLOT(onDrawOffered()));
+
     MainWindow::instance()->showMessage(message);
     MainWindow::instance()->showMainMenu();
 }
@@ -82,16 +86,24 @@ void UI::onInvalidMove()
 
 void UI::onDrawOffered()
 {
+    disconnect(Client::instance(), SIGNAL(drawOffered()), this, SLOT(onDrawOffered()));
+
     bool accept = MainWindow::instance()->showQuestion(tr("Your opponent has offered a draw. Agree?"));
 
     Client::instance()->replyDraw(UI::instance()->getGameTable(), accept);
+
+    connect(Client::instance(), SIGNAL(drawOffered()), this, SLOT(onDrawOffered()));
 }
 
 void UI::onError(const QString& what)
 {
+    disconnect(Client::instance(), SIGNAL(error(const QString&)), this, SLOT(onError(const QString&)));
+
     qDebug() << "UI::onError";
     MainWindow::instance()->closeCurrentDialog();
     MainWindow::instance()->showError(what);
+
+    connect(Client::instance(), SIGNAL(error(const QString&)), this, SLOT(onError(const QString&)));
 }
 
 
