@@ -237,7 +237,7 @@ int MainWindow::showMessageBox(QMessageBox::Icon icon, const QString &title, con
 
 
     // prevent too wide messages
-    msgBox.setFixedWidth(min(mGraphicsView->scene()->width(), mGraphicsView->scene()->height()));
+   // msgBox.setFixedWidth(min(mGraphicsView->scene()->width(), mGraphicsView->scene()->height()));
 
     QGraphicsProxyWidget* proxy = mGraphicsView->scene()->addWidget(&msgBox);
     proxy->setZValue(Z_MESSAGE_LAYER);
