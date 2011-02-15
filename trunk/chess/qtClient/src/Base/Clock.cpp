@@ -29,14 +29,14 @@ Clock::Clock(QGraphicsScene* parentScene, const QString& header,
     mText = mParentScene->addText("",QFont(family, size));
 
     QObject::connect(Client::instance(), updateSignal, this, SLOT(onGotTime(quint32)));
+
+    mTimer = new QTimer(this);
+    connect(mTimer, SIGNAL(timeout()), this, SLOT(onTimeout()));
 }
 
 void Clock::start()
 {
-    mTimer = new QTimer(this);
-    connect(mTimer, SIGNAL(timeout()), this, SLOT(onTimeout()));
     mTimer->start(1000);
-
 }
 
 
@@ -65,8 +65,6 @@ void Clock::updatePos(OrientationStatus orientation)
 
 void Clock::onTimeout()
 {
-    disconnect(mTimer, SIGNAL(timeout()), this, SLOT(onTimeout()));
-
     if(mSeconds > 0)
         mSeconds--;
 
@@ -74,8 +72,6 @@ void Clock::onTimeout()
 
     QString color = (UI::instance()->getGameState() == GS_WAIT_FOR_OPPONENT) ? mInactiveColor : mActiveColor;
     mText->setDefaultTextColor( QColor(color) );
-
-    connect(mTimer, SIGNAL(timeout()), this, SLOT(onTimeout()));
 }
 
 
