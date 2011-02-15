@@ -170,10 +170,12 @@ void MainWindow::setCurrentDialog(QDialog* dialog)
     // bind dialog to the current scene
     QGraphicsScene* curScene = mGraphicsView->scene();
     QGraphicsProxyWidget* proxy = curScene->addWidget(mCurrentDialog);
-//    proxy->setPos(curScene->width()/2  - mCurrentDialog->width()/2,
-//                  curScene->height()/2 - mCurrentDialog->height()/ 2);
+    proxy->setPos(curScene->width()/2  - mCurrentDialog->width()/2,
+                  curScene->height()/2 - mCurrentDialog->height()/ 2);
 
     proxy->setZValue(Z_DIALOG_LAYER);
+
+    mCurrentDialog->show();
 }
 
 
@@ -227,14 +229,6 @@ int MainWindow::showMessageBox(QMessageBox::Icon icon, const QString &title, con
 
     QMessageBox msgBox(icon, title, text, buttons, this);
 
-    msgBox.show();
-    msgBox.raise();
-    msgBox.activateWindow();
-
-    // a modal QMessageBox can't be added to a scene!
-    msgBox.setModal(false);
-
-
 
     // prevent too wide messages
    // msgBox.setFixedWidth(min(mGraphicsView->scene()->width(), mGraphicsView->scene()->height()));
@@ -242,9 +236,18 @@ int MainWindow::showMessageBox(QMessageBox::Icon icon, const QString &title, con
     QGraphicsProxyWidget* proxy = mGraphicsView->scene()->addWidget(&msgBox);
     proxy->setZValue(Z_MESSAGE_LAYER);
 
- //   QGraphicsScene* curScene = mGraphicsView->scene();
- //   proxy->setPos(curScene->width()/2  - msgBox.width()/2,
- //                 curScene->height()/2 - msgBox.height()/ 2);
+    QGraphicsScene* curScene = mGraphicsView->scene();
+    proxy->setPos(curScene->width()/2  - msgBox.width()/2,
+                  curScene->height()/2 - msgBox.height()/ 2);
+
+
+    msgBox.show();
+    msgBox.raise();
+    msgBox.activateWindow();
+
+    // a modal QMessageBox can't be added to a scene!
+    msgBox.setModal(false);
+
 
     // simulate modality
     mMode = MW_WAIT;

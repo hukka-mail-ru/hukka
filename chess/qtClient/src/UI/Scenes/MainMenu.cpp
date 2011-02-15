@@ -169,6 +169,7 @@ void MainMenu::connectToGameServer()
 
 void MainMenu::onConnectedToHost()
 {
+    disconnect(Client::instance(), SIGNAL(connectedToHost()), this, SLOT(onConnectedToHost()));
     assert(mClickedButton);
 
     if(UI::instance()->isPlayerAuthorized())
@@ -185,6 +186,9 @@ void MainMenu::onConnectedToHost()
 
 void MainMenu::onAuthorized()
 {
+    disconnect(Client::instance(), SIGNAL(registered()), this, SLOT(onAuthorized()));
+    disconnect(Client::instance(), SIGNAL(authorized()), this, SLOT(onAuthorized()));
+
     qDebug() << "MainMenu::onAuthorized";
 
     assert(mClickedButton);

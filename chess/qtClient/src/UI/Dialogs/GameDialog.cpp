@@ -21,8 +21,7 @@ GameDialog::GameDialog(QWidget *parent): Dialog(parent)
     layout->addWidget(returnButton);
     layout->addStretch();
 
-    this->setLayout(layout);
-    this->show();
+    setLayout(layout);
 }
 
 void GameDialog::onSurrenderClicked()
