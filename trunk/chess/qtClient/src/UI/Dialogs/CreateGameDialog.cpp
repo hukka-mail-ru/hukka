@@ -50,7 +50,6 @@ CreateGameDialog::CreateGameDialog(QWidget *parent): Dialog(parent)
 
     connect(okButton, SIGNAL(clicked()), this, SLOT(onOkClicked()));
     connect(exitButton, SIGNAL(clicked()), this, SLOT(onExitClicked()));
-    connect(Client::instance(), SIGNAL(gameTableCreated(TABLEID)), this, SLOT(onGameTableCreated(TABLEID)));
 
     this->setLayout(layout);
     this->show();
@@ -68,7 +67,7 @@ void CreateGameDialog::onOkClicked()
 
 void CreateGameDialog::onGotMyGameTable(TABLEID id)
 {
-    qDebug() << "onGotMyGameTable: TABLEID = " << id;
+    disconnect(Client::instance(), SIGNAL(gotMyGameTable(TABLEID)), this, SLOT(onGotMyGameTable(TABLEID)));
 
     if(id)
     {
@@ -109,10 +108,10 @@ void CreateGameDialog::onGotMyGameTable(TABLEID id)
         << " minRating.value " << minRating.value
         << " maxRating.value " << maxRating.value;
 
+        connect(Client::instance(), SIGNAL(gameTableCreated(TABLEID)), this, SLOT(onGameTableCreated(TABLEID)));
         Client::instance()->createGameTable(LOGIC_ID_CHESS, params);
     }
 
-    disconnect(Client::instance(), SIGNAL(gotMyGameTable(TABLEID)), this, SLOT(onGotMyGameTable(TABLEID)));
 }
 
 
@@ -123,8 +122,9 @@ void CreateGameDialog::onExitClicked()
 
 void CreateGameDialog::onGameTableCreated(TABLEID id)
 {
-    qDebug() << "onGameTableCreated : " << id;
+    disconnect(Client::instance(), SIGNAL(gameTableCreated(TABLEID)), this, SLOT(onGameTableCreated(TABLEID)));
 
     UI::instance()->setGameTable(id);
     MainWindow::instance()->showWaitJoinDialog();
+
 }

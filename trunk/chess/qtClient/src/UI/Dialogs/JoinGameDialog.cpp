@@ -121,6 +121,8 @@ void JoinGameDialog::onOkClicked()
 
 void JoinGameDialog::onJoined(TABLEID id)
 {
+    disconnect(Client::instance(), SIGNAL(joined(TABLEID)), this, SLOT(onJoined(TABLEID)));
+
     UI::instance()->setGameTable(id);
     MainWindow::instance()->showWaitAgreeDialog();
 }

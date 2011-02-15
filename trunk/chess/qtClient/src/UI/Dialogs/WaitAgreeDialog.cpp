@@ -30,6 +30,8 @@ void WaitAgreeDialog::onExitClicked()
 
 void WaitAgreeDialog::onGameStarted()
 {
+    disconnect(Client::instance(), SIGNAL(gameStarted()), this, SLOT(onGameStarted()));
+
     MainWindow::instance()->showGameScene(PC_BLACK);
     UI::instance()->startGame();
 }
