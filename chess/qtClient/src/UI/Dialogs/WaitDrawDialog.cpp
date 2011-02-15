@@ -32,6 +32,8 @@ void WaitDrawDialog::onExitClicked()
 
 void WaitDrawDialog::onDrawRejected(const QString& message)
 {
+    disconnect(Client::instance(), SIGNAL(drawRejected(const QString&)), this, SLOT(onDrawRejected(const QString&)));
+
     MainWindow::instance()->showMessage(message);
     close();
 }

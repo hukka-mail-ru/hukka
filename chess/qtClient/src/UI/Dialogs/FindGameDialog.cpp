@@ -71,6 +71,8 @@ void FindGameDialog::onRandomGameClicked()
 
 void FindGameDialog::onGotGameTables(const QList<TABLEID>& ids)
 {
+    disconnect(Client::instance(), SIGNAL(gotGameTables(const QList<TABLEID>&)), this, SLOT(onGotGameTables(const QList<TABLEID>&)));
+
     if(ids.empty() || (ids.size() == 1 && ids[0] == 0))
     {
         MainWindow::instance()->showError(tr("No game table found"));

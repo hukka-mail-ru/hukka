@@ -16,7 +16,6 @@ WaitJoinDialog::WaitJoinDialog(QWidget *parent):   QDialog(parent)
     this->setLayout(layout);
 
     connect(Client::instance(), SIGNAL(opponentJoined()), this, SLOT(onOpponentJoined()));
-    connect(Client::instance(), SIGNAL(gameStarted()), this, SLOT(onGameStarted()));
 
     this->show();
 }
@@ -36,12 +35,15 @@ void  WaitJoinDialog::onGameTableDeleted()
 
 void WaitJoinDialog::onOpponentJoined()
 {
-    qDebug() << "opponent joined";
+    disconnect(Client::instance(), SIGNAL(opponentJoined()), this, SLOT(onOpponentJoined()));
+
     if(MainWindow::instance()->showQuestion(tr("Opponent joined. Do you want to start game?")))
     {
         MainWindow::instance()->setMode(MW_WAIT);
         int tableID = UI::instance()->getGameTable();
         qDebug() << "UI::instance()->getGameTable(): " << tableID;
+
+        connect(Client::instance(), SIGNAL(gameStarted()), this, SLOT(onGameStarted()));
         Client::instance()->agreeToStartGame(tableID);
     }
     else
@@ -52,6 +54,8 @@ void WaitJoinDialog::onOpponentJoined()
 
 void WaitJoinDialog::onGameStarted()
 {
+    disconnect(Client::instance(), SIGNAL(gameStarted()), this, SLOT(onGameStarted()));
+
     MainWindow::instance()->showGameScene(PC_WHITE);
     UI::instance()->startGame();
 }

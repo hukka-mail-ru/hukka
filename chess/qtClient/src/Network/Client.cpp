@@ -938,12 +938,12 @@ qDebug() << str;
 
         QByteArray infPart((char*)&header->version, header->size - CRC_SIZE);
         if(buf[mesSize - CRC_SIZE] != getCRC(infPart)) {
-            qDebug() << "Server response has bad CRC: mesSize: " << mesSize;
+            qDebug() << "Server response has bad CRC";
             return;
         }
 
         if(header->version != PROTOCOL_VERSION) {
-            qDebug("Server uses wrong protocol version: ");// + QString::number(header->version) +
+            qDebug("Server uses another protocol, version: ");// + QString::number(header->version) +
                   //  " (expected " + QString::number(PROTOCOL_VERSION) + ").");
             return;
         }
@@ -1197,16 +1197,16 @@ void Client::processMessageCHS(const MessageHeader& header, const QByteArray& bu
     if(header.cmd == ANS_OPPONENT)
     {
         mGameStatus = GAM_OPPONENT_JOINED;
-        emit opponentJoined();
         qDebug() << mName << "GAM_OPPONENT_JOINED";
+        emit opponentJoined();
     }
 
     // GAME STARTED
     else if(header.cmd == ANS_START)
     {
         mGameStatus = GAM_STARTED;
-        emit gameStarted();
         qDebug() << mName << "GAM_STARTED";
+        emit gameStarted();
     }
 
     // GET FIELD
