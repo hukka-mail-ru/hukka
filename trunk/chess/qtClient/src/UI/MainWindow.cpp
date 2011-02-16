@@ -57,8 +57,7 @@ MainWindow::MainWindow(QWidget *parent):
     mGraphicsView  = new QGraphicsView(centralwidget);
 
     vboxLayout->addWidget(mGraphicsView);
-
-    vboxLayout->setContentsMargins(0,0,0,0);
+    vboxLayout->setContentsMargins(0,0,0,0); // no margins around the scene
 
     setCentralWidget(centralwidget);
     // centralwidget->showFullScreen(); // This may be redundant

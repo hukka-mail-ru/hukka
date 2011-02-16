@@ -3,7 +3,7 @@
 #include "Client.h"
 #include "UI.h"
 
-GameDialog::GameDialog(QWidget *parent): Dialog(parent)
+GameDialog::GameDialog(QWidget *parent): MyDialog(parent)
 {
     setWindowTitle(tr("Game"));
 

@@ -4,7 +4,7 @@
 #include "UI.h"
 
 
-CreateGameDialog::CreateGameDialog(QWidget *parent): Dialog(parent)
+CreateGameDialog::CreateGameDialog(QWidget *parent): MyDialog(parent)
 {
     setWindowTitle(tr("Create Game"));
 

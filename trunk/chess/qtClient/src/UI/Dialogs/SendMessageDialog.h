@@ -9,7 +9,7 @@
 #include <QPushButton>
 #include <QCheckBox>
 #include <QGridLayout>
-#include <Dialog.h>
+#include <QDialog>
 #include <Defines.h>
 
 

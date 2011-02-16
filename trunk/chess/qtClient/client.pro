@@ -28,13 +28,13 @@ OBJECTS_DIR = obj
 MOC_DIR = obj
 LIBS = -lQtNetwork -lQtXml
 
-HEADERS += $$BASE/Chat.h $$BASE/Clock.h $$BASE/Button.h $$BASE/Dialog.h  $$BASE/Exception.h $$BASE/Defines.h   $$BASE/Cell.h $$BASE/orientation.h $$BASE/orientthread.h
+HEADERS += $$BASE/Chat.h $$BASE/Clock.h $$BASE/Button.h $$BASE/MyDialog.h  $$BASE/Exception.h $$BASE/Defines.h   $$BASE/Cell.h $$BASE/orientation.h $$BASE/orientthread.h
 HEADERS += $$DATA/XML.h $$DATA/Pixmaps.h  
 HEADERS += $$SCENES/GameScene.h $$SCENES/MainMenu.h 
 HEADERS += $$DIALOGS/AuthorizationDialog.h $$DIALOGS/CreateGameDialog.h $$DIALOGS/WaitJoinDialog.h $$DIALOGS/JoinGameDialog.h $$DIALOGS/FindGameDialog.h $$DIALOGS/WaitAgreeDialog.h $$DIALOGS/GameDialog.h $$DIALOGS/WaitDrawDialog.h  $$DIALOGS/SendMessageDialog.h  $$DIALOGS/OptionsDialog.h
 HEADERS += $$UI/UI.h $$NETWORK/Client.h $$UI/MainWindow.h
 
-SOURCES += $$BASE/Chat.cpp $$BASE/Clock.cpp $$BASE/Button.cpp $$BASE/Dialog.cpp $$BASE/Cell.cpp $$BASE/orientation.cpp $$BASE/orientthread.cpp
+SOURCES += $$BASE/Chat.cpp $$BASE/Clock.cpp $$BASE/Button.cpp $$BASE/MyDialog.cpp $$BASE/Cell.cpp $$BASE/orientation.cpp $$BASE/orientthread.cpp
 SOURCES += $$DATA/Pixmaps.cpp $$DATA/XML.cpp
 SOURCES += $$SCENES/GameScene.cpp $$SCENES/MainMenu.cpp  
 SOURCES += $$DIALOGS/AuthorizationDialog.cpp $$DIALOGS/CreateGameDialog.cpp $$DIALOGS/WaitJoinDialog.cpp $$DIALOGS/JoinGameDialog.cpp $$DIALOGS/FindGameDialog.cpp $$DIALOGS/WaitAgreeDialog.cpp $$DIALOGS/GameDialog.cpp $$DIALOGS/WaitDrawDialog.cpp $$DIALOGS/SendMessageDialog.cpp  $$DIALOGS/OptionsDialog.cpp

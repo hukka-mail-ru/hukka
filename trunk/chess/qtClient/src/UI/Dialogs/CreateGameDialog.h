@@ -7,11 +7,11 @@
 #include <QLabel>
 #include <QPushButton>
 #include <QGridLayout>
-#include "Dialog.h"
+#include "MyDialog.h"
 #include "Defines.h"
 
 
-class CreateGameDialog: public Dialog
+class CreateGameDialog: public MyDialog
 {
     Q_OBJECT
 public:

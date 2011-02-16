@@ -8,10 +8,10 @@
 #include <QPushButton>
 #include <QCheckBox>
 #include <QGridLayout>
-#include "Dialog.h"
+#include "MyDialog.h"
 
 
-class AuthorizationDialog: public Dialog
+class AuthorizationDialog: public MyDialog
 {
     Q_OBJECT
 public:

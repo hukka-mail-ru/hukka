@@ -8,10 +8,10 @@
 #include <QVBoxLayout>
 #include <QTableWidget>
 #include <QList>
-#include "Dialog.h"
+#include "MyDialog.h"
 #include "Defines.h"
 
-class JoinGameDialog: public Dialog
+class JoinGameDialog: public MyDialog
 {
 Q_OBJECT
 public:

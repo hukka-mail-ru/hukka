@@ -12,12 +12,12 @@
 #include <QString>
 #define DEFAULT_TEXT "DEFAULT"
 
-class Dialog: public QDialog
+class MyDialog: public QDialog
 {
 Q_OBJECT
 public:
-    Dialog(QWidget *parent = 0, Qt::WindowFlags flags = 0);
-    virtual ~Dialog();
+    MyDialog(QWidget *parent = 0, Qt::WindowFlags flags = 0);
+    virtual ~MyDialog();
 
 };
 

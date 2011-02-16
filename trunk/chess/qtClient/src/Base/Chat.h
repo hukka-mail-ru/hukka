@@ -6,7 +6,7 @@
 #include <QLabel>
 #include <QPushButton>
 #include <QGraphicsScene>
-#include <Dialog.h>
+#include <MyDialog.h>
 
 #include <QGraphicsPixmapItem>
 #include <Defines.h>
