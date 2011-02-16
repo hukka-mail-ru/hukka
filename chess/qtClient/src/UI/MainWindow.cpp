@@ -58,6 +58,8 @@ MainWindow::MainWindow(QWidget *parent):
 
     vboxLayout->addWidget(mGraphicsView);
 
+    vboxLayout->setContentsMargins(0,0,0,0);
+
     setCentralWidget(centralwidget);
     // centralwidget->showFullScreen(); // This may be redundant
    // this->showFullScreen(); // This is TRUE! Tested on Meego Emulator.
@@ -123,7 +125,7 @@ void MainWindow::onOrientationChanged(OrientationStatus orientation)
     QList<QString> path;
     mWidth = XML::instance().readValue(XML_ITEMS_FILENAME, path << XML_NODE_MAIN_WINDOW << orientNode << XML_NODE_WIDTH).toInt(); path.clear();
     mHeight = XML::instance().readValue(XML_ITEMS_FILENAME, path << XML_NODE_MAIN_WINDOW << orientNode << XML_NODE_HEIGHT).toInt(); path.clear();
-    resize(mWidth, mHeight);
+    setFixedSize(mWidth, mHeight);
 
 
     mMainMenu->updateItemsPositions(orientation);
@@ -167,13 +169,15 @@ void MainWindow::setCurrentDialog(QDialog* dialog)
     closeCurrentDialog();
     mCurrentDialog = dialog;
 
+
+
     // bind dialog to the current scene
     QGraphicsScene* curScene = mGraphicsView->scene();
-    QGraphicsProxyWidget* proxy = curScene->addWidget(mCurrentDialog);
-    proxy->setPos(curScene->width()/2  - mCurrentDialog->width()/2,
-                  curScene->height()/2 - mCurrentDialog->height()/ 2);
+  //  QGraphicsProxyWidget* proxy = curScene->addWidget(mCurrentDialog);
+  //  proxy->setPos(curScene->width()/2  - mCurrentDialog->width()/2,
+ //                 curScene->height()/2 - mCurrentDialog->height()/ 2);
 
-    proxy->setZValue(Z_DIALOG_LAYER);
+  //  proxy->setZValue(Z_DIALOG_LAYER);
 
     mCurrentDialog->show();
 }
@@ -356,6 +360,11 @@ void MainWindow::showGameScene(PlayerColor color)
         showMessage(e.what());
     }
 
+}
+
+QRectF MainWindow::sceneRect()
+{
+    return mGameScene->sceneRect();
 }
 
 

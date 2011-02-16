@@ -19,8 +19,6 @@ public:
     Dialog(QWidget *parent = 0, Qt::WindowFlags flags = 0);
     virtual ~Dialog();
 
-
-
 };
 
 #endif /* DIALOG_H_ */

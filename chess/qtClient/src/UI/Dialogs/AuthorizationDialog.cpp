@@ -18,9 +18,26 @@ AuthorizationDialog::AuthorizationDialog(QWidget *parent): Dialog(parent)
     loginLabel = new QLabel(tr("Login"), this);
     pwdLabel = new QLabel(tr("Password"), this);
 
+    QString colour = "white";
+    QString text = tr("Login");
+//////
+    QString fonttemplate = tr("<font color='%1'>%2</font>");
+    loginLabel->setText(fonttemplate.arg( colour, text ));
+//////
+
+
     loginEdit = new QLineEdit(login, this);
     pwdEdit = new QLineEdit(pwd, this);
     pwdEdit->setEchoMode(QLineEdit::Password);
+
+//////
+    QPalette palette( loginEdit->palette() );
+    palette.setColor( QPalette::Base, QColor(Qt::black) );
+    palette.setColor( QPalette::Text, QColor(Qt::white) );
+    loginEdit->setPalette(palette);
+
+
+//////
 
     registerCheckBox = new QCheckBox(tr("Register new user"), this);
     registerCheckBox->setCheckState(Qt::Unchecked);
