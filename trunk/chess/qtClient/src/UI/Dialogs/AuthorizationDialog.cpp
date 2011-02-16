@@ -18,11 +18,11 @@ AuthorizationDialog::AuthorizationDialog(QWidget *parent): MyDialog(parent)
     loginLabel = new QLabel(tr("Login"), this);
     pwdLabel = new QLabel(tr("Password"), this);
 
-    QString colour = "white";
-    QString text = tr("Login");
 //////
-    QString fonttemplate = tr("<font color='%1'>%2</font>");
-    loginLabel->setText(fonttemplate.arg( colour, text ));
+ //   QString colour = "white";
+  //  QString text = tr("Login");
+ //   QString fonttemplate = tr("<font color='%1'>%2</font>");
+ //   loginLabel->setText(fonttemplate.arg( colour, text ));
 //////
 
 
@@ -31,10 +31,10 @@ AuthorizationDialog::AuthorizationDialog(QWidget *parent): MyDialog(parent)
     pwdEdit->setEchoMode(QLineEdit::Password);
 
 //////
-    QPalette palette( loginEdit->palette() );
-    palette.setColor( QPalette::Base, QColor(Qt::black) );
-    palette.setColor( QPalette::Text, QColor(Qt::white) );
-    loginEdit->setPalette(palette);
+ //   QPalette palette( loginEdit->palette() );
+//    palette.setColor( QPalette::Base, QColor(Qt::black) );
+//    palette.setColor( QPalette::Text, QColor(Qt::white) );
+//    loginEdit->setPalette(palette);
 
 
 //////
