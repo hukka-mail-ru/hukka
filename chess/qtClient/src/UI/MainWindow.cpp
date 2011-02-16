@@ -214,55 +214,78 @@ bool MainWindow::showQuestion(const QString& text)
     return false;
 }
 
+// A workaround for changing the size of QMessageBox
+// TODO Move into a separate h-file
+class MyMessageBox : public QMessageBox {
+public:
+    MyMessageBox(Icon icon, const QString &title, const QString &text,
+                StandardButtons buttons = NoButton, QWidget *parent = 0,
+                Qt::WindowFlags flags = Qt::Dialog | Qt::MSWindowsFixedSizeDialogHint):
+                    QMessageBox(icon, title, text, buttons, parent, flags) {}
+protected:
+void showEvent(QShowEvent* event)
+{
+    QMessageBox::showEvent(event);
+    setFixedSize(MainWindow::instance()->width(), MainWindow::instance()->height()/2);
+}
+};
+
+
 int MainWindow::showMessageBox(QMessageBox::Icon icon, const QString &title, const QString &text)
 {
-    qDebug() << "MainWindow::showMessageBox";
     setMode(MW_NORMAL);
 
     QMessageBox::StandardButtons buttons;
     if(icon == QMessageBox::Question)
     {
         buttons = QMessageBox::Yes | QMessageBox::No;
-        qDebug() << "QUESTION:";
     }
     else
     {
         buttons = QMessageBox::Ok;
     }
 
-    QMessageBox msgBox(icon, title, text, buttons, this);
+    MyMessageBox msgBox(icon, title, text, buttons, this);
 
 
     // prevent too wide messages
-   // msgBox.setFixedWidth(min(mGraphicsView->scene()->width(), mGraphicsView->scene()->height()));
 
-    QGraphicsProxyWidget* proxy = mGraphicsView->scene()->addWidget(&msgBox);
-    proxy->setZValue(Z_MESSAGE_LAYER);
+  //  QGraphicsProxyWidget* proxy = mGraphicsView->scene()->addWidget(&msgBox);
+  //  proxy->setZValue(Z_MESSAGE_LAYER);
 
-    QGraphicsScene* curScene = mGraphicsView->scene();
-    proxy->setPos(curScene->width()/2  - msgBox.width()/2,
-                  curScene->height()/2 - msgBox.height()/ 2);
+ //   QGraphicsScene* curScene = mGraphicsView->scene();
+ //   msgBox.setFixedSize(MainWindow::instance()->width(), MainWindow::instance()->height()/2);
+ //   msgBox.move(0, MainWindow::instance()->height()/2);
+
+//    proxy->setPos(curScene->width()/2  - msgBox.width()/2,
+ //                 curScene->height()/2 - msgBox.height()/ 2);
+ //   proxy->setPos(0, MainWindow::instance()->height()/2);
 
 
-    msgBox.show();
-    msgBox.raise();
-    msgBox.activateWindow();
+  //  msgBox.show();
+   // msgBox.raise();
+  //  msgBox.activateWindow();
 
     // a modal QMessageBox can't be added to a scene!
-    msgBox.setModal(false);
+  //  msgBox.setModal(false);
+
+    msgBox.setWindowFlags(Qt::Widget);
+    msgBox.setStyleSheet("QMessageBox { background: grey;}");
+    msgBox.move(0, MainWindow::instance()->height()/2);
+
 
 
     // simulate modality
-    mMode = MW_WAIT;
-    mMainMenu->disableItems();
-    proxy->setOpacity(OPAQUE_NORMAL);
+  //  mMode = MW_WAIT;
+ //   mMainMenu->disableItems();
+ //   proxy->setOpacity(OPAQUE_NORMAL);
 
     int res = msgBox.exec();
 
     // clean-up
-    mGraphicsView->scene()->removeItem(proxy);
-    mMainMenu->enableItems();
-    mMode = MW_NORMAL;
+  //  mGraphicsView->scene()->removeItem(proxy);
+  //  mMainMenu->enableItems();
+ //   mMode = MW_NORMAL;
 
     return res;
 }
