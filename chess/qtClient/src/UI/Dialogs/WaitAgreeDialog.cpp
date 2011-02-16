@@ -3,7 +3,7 @@
 #include "Client.h"
 #include "UI.h"
 
-WaitAgreeDialog::WaitAgreeDialog(QWidget *parent):  QDialog(parent)
+WaitAgreeDialog::WaitAgreeDialog(QWidget *parent):  MyDialog(parent)
 {
     label = new QLabel(tr("Wait for start..."), this);
     exitButton = new QPushButton(tr("Exit"), this);

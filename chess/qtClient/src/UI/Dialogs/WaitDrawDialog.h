@@ -1,12 +1,12 @@
 #ifndef WAITDRAWDIALOG_H_
 #define WAITDRAWDIALOG_H_
 
-#include <QDialog>
+#include <MyDialog.h>
 #include <QPushButton>
 #include <QLabel>
 #include <QVBoxLayout>
 
-class WaitDrawDialog: public QDialog
+class WaitDrawDialog: public MyDialog
 {
 Q_OBJECT
 public:

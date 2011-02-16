@@ -1,12 +1,13 @@
 #ifndef WAITAGREEDIALOG_H_
 #define WAITAGREEDIALOG_H_
 
-#include <QDialog>
 #include <QPushButton>
 #include <QLabel>
 #include <QVBoxLayout>
 
-class WaitAgreeDialog: public QDialog
+#include <MyDialog.h>
+
+class WaitAgreeDialog: public MyDialog
 {
 Q_OBJECT
 public:

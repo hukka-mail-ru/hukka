@@ -4,7 +4,7 @@
 #include "UI.h"
 
 
-WaitJoinDialog::WaitJoinDialog(QWidget *parent):   QDialog(parent)
+WaitJoinDialog::WaitJoinDialog(QWidget *parent):   MyDialog(parent)
 {
     label = new QLabel(tr("Wait for oppponent..."), this);
     exitButton = new QPushButton(tr("Exit"), this);
