@@ -14,10 +14,10 @@
 #include <QComboBox>
 #include <QGridLayout>
 
-#include <Dialog.h>
+#include <MyDialog.h>
 
 
-class OptionsDialog: public Dialog
+class OptionsDialog: public MyDialog
 {
     Q_OBJECT
 public:

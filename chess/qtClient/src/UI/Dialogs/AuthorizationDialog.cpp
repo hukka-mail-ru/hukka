@@ -8,7 +8,7 @@
 
 #include <QVBoxLayout>
 
-AuthorizationDialog::AuthorizationDialog(QWidget *parent): Dialog(parent)
+AuthorizationDialog::AuthorizationDialog(QWidget *parent): MyDialog(parent)
 {
     setWindowTitle(tr("Authorization"));
 

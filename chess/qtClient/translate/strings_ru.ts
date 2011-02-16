@@ -17,6 +17,7 @@
     </message>
     <message>
         <location filename="../src/UI/Dialogs/AuthorizationDialog.cpp" line="18"/>
+        <location filename="../src/UI/Dialogs/AuthorizationDialog.cpp" line="22"/>
         <source>Login</source>
         <translation>Логин</translation>
     </message>
@@ -26,17 +27,22 @@
         <translation>Пароль</translation>
     </message>
     <message>
-        <location filename="../src/UI/Dialogs/AuthorizationDialog.cpp" line="25"/>
+        <location filename="../src/UI/Dialogs/AuthorizationDialog.cpp" line="24"/>
+        <source>&lt;font color=&apos;%1&apos;&gt;%2&lt;/font&gt;</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/UI/Dialogs/AuthorizationDialog.cpp" line="42"/>
         <source>Register new user</source>
         <translation>Создать нового пользователя</translation>
     </message>
     <message>
-        <location filename="../src/UI/Dialogs/AuthorizationDialog.cpp" line="28"/>
+        <location filename="../src/UI/Dialogs/AuthorizationDialog.cpp" line="45"/>
         <source>OK</source>
         <translation>ОК</translation>
     </message>
     <message>
-        <location filename="../src/UI/Dialogs/AuthorizationDialog.cpp" line="29"/>
+        <location filename="../src/UI/Dialogs/AuthorizationDialog.cpp" line="46"/>
         <source>Exit</source>
         <translation>Выход</translation>
     </message>
@@ -190,114 +196,135 @@
         <translation>Невозможно послать команду с ID: </translation>
     </message>
     <message>
-        <location filename="../src/Network/Client.cpp" line="964"/>
+        <location filename="../src/Network/Client.cpp" line="967"/>
         <source>Logic error</source>
         <translation>Ошибка логики</translation>
     </message>
     <message>
-        <location filename="../src/Network/Client.cpp" line="982"/>
+        <location filename="../src/Network/Client.cpp" line="990"/>
         <source>User is already online.</source>
         <translation>Пользователь с таким именем уже зашел на сервер.</translation>
     </message>
     <message>
-        <location filename="../src/Network/Client.cpp" line="983"/>
+        <location filename="../src/Network/Client.cpp" line="991"/>
         <source>Incorrect user name.</source>
         <translation>Неправильное имя пользователя.</translation>
     </message>
     <message>
-        <location filename="../src/Network/Client.cpp" line="984"/>
+        <location filename="../src/Network/Client.cpp" line="992"/>
         <source>Incorrect password.</source>
         <translation>Неправильный пароль.</translation>
     </message>
     <message>
-        <location filename="../src/Network/Client.cpp" line="985"/>
-        <location filename="../src/Network/Client.cpp" line="1006"/>
-        <location filename="../src/Network/Client.cpp" line="1232"/>
-        <location filename="../src/Network/Client.cpp" line="1251"/>
-        <location filename="../src/Network/Client.cpp" line="1271"/>
+        <location filename="../src/Network/Client.cpp" line="993"/>
+        <location filename="../src/Network/Client.cpp" line="1023"/>
+        <location filename="../src/Network/Client.cpp" line="1266"/>
+        <location filename="../src/Network/Client.cpp" line="1285"/>
+        <location filename="../src/Network/Client.cpp" line="1305"/>
         <source>Internal server error </source>
         <translation>Внутренняя ошибка сервера </translation>
     </message>
     <message>
         <location filename="../src/Network/Client.cpp" line="1003"/>
+        <source>SRV Error: </source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/Network/Client.cpp" line="1020"/>
         <source>Incorrect user name</source>
         <translation>Неправильное имя пользователя</translation>
     </message>
     <message>
-        <location filename="../src/Network/Client.cpp" line="1004"/>
+        <location filename="../src/Network/Client.cpp" line="1021"/>
         <source>Incorrect password</source>
         <translation>Неправильный пароль</translation>
     </message>
     <message>
-        <location filename="../src/Network/Client.cpp" line="1005"/>
+        <location filename="../src/Network/Client.cpp" line="1022"/>
         <source>User already exists.</source>
         <translation>Такой пользователь уже существует.</translation>
     </message>
     <message>
-        <location filename="../src/Network/Client.cpp" line="1032"/>
+        <location filename="../src/Network/Client.cpp" line="1033"/>
+        <source>REG Error: </source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/Network/Client.cpp" line="1058"/>
         <source>Invalid parameter or table already exists</source>
         <translation>Неправильный параметр (или такой стол уже существует)</translation>
     </message>
     <message>
-        <location filename="../src/Network/Client.cpp" line="1033"/>
-        <location filename="../src/Network/Client.cpp" line="1051"/>
-        <location filename="../src/Network/Client.cpp" line="1092"/>
-        <location filename="../src/Network/Client.cpp" line="1214"/>
+        <location filename="../src/Network/Client.cpp" line="1059"/>
+        <location filename="../src/Network/Client.cpp" line="1077"/>
+        <location filename="../src/Network/Client.cpp" line="1117"/>
+        <location filename="../src/Network/Client.cpp" line="1248"/>
         <source>Internal server error</source>
         <translation>Внутренняя ошибка сервера</translation>
     </message>
     <message>
-        <location filename="../src/Network/Client.cpp" line="1050"/>
+        <location filename="../src/Network/Client.cpp" line="1076"/>
         <source>Invalid parameter. Attempt to delete wrong Game Table?</source>
         <translation>Неправильный параметр. Попытка удалить неправильный игровой стол?</translation>
     </message>
     <message>
-        <location filename="../src/Network/Client.cpp" line="1231"/>
+        <location filename="../src/Network/Client.cpp" line="1184"/>
+        <source>TBM Error: </source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/Network/Client.cpp" line="1265"/>
         <source>Can&apos;t join to the game table</source>
         <translation>Невозможно присоединиться к игровому столу</translation>
     </message>
     <message>
-        <location filename="../src/Network/Client.cpp" line="1246"/>
+        <location filename="../src/Network/Client.cpp" line="1280"/>
         <source>Victory!</source>
         <translation>Победа!</translation>
     </message>
     <message>
-        <location filename="../src/Network/Client.cpp" line="1247"/>
+        <location filename="../src/Network/Client.cpp" line="1281"/>
         <source>You have lost!</source>
         <translation>Вы проиграли!</translation>
     </message>
     <message>
-        <location filename="../src/Network/Client.cpp" line="1248"/>
+        <location filename="../src/Network/Client.cpp" line="1282"/>
         <source>Time&apos;s up. You have lost!</source>
         <translation>Время вышло. Вы проиграли!</translation>
     </message>
     <message>
-        <location filename="../src/Network/Client.cpp" line="1249"/>
+        <location filename="../src/Network/Client.cpp" line="1283"/>
+        <location filename="../src/Network/Client.cpp" line="1302"/>
         <source>A draw.</source>
         <translation>Ничья.</translation>
     </message>
     <message>
-        <location filename="../src/Network/Client.cpp" line="1250"/>
+        <location filename="../src/Network/Client.cpp" line="1284"/>
         <source>Game over. The rating is not affected because of too few number of moves</source>
         <translation>Игра окончена. Ваш рейтинг не изменился, т.к. в партии было сделано слишком мало ходов</translation>
     </message>
     <message>
-        <location filename="../src/Network/Client.cpp" line="1268"/>
-        <source>Your opponent accepted the draw.</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../src/Network/Client.cpp" line="1269"/>
+        <location filename="../src/Network/Client.cpp" line="1303"/>
         <source>Your opponent rejected the draw</source>
         <translation>Ваш противник не согласен на ничью</translation>
     </message>
     <message>
-        <location filename="../src/Network/Client.cpp" line="1270"/>
+        <location filename="../src/Network/Client.cpp" line="1304"/>
         <source>Please wait for your next move to offer a draw</source>
         <translation>Подождите своего хода, а затем предложите ничью</translation>
     </message>
     <message>
-        <location filename="../src/Network/Client.cpp" line="1365"/>
+        <location filename="../src/Network/Client.cpp" line="1342"/>
+        <source>CHS Error: </source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/Network/Client.cpp" line="1364"/>
+        <source>CHAT Error: </source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/Network/Client.cpp" line="1417"/>
         <source>Server doesn&apos;t respond</source>
         <translation>Сервер не отвечает</translation>
     </message>
@@ -368,7 +395,7 @@
         <translation>Отмена</translation>
     </message>
     <message>
-        <location filename="../src/UI/Dialogs/FindGameDialog.cpp" line="76"/>
+        <location filename="../src/UI/Dialogs/FindGameDialog.cpp" line="77"/>
         <source>No game table found</source>
         <translation>Игры не найдены</translation>
     </message>
@@ -396,12 +423,12 @@
         <translation>Назад к игре</translation>
     </message>
     <message>
-        <location filename="../src/UI/Dialogs/GameDialog.cpp" line="30"/>
+        <location filename="../src/UI/Dialogs/GameDialog.cpp" line="29"/>
         <source>Do you want to surrender?</source>
         <translation>Хотите сдаться?</translation>
     </message>
     <message>
-        <location filename="../src/UI/Dialogs/GameDialog.cpp" line="40"/>
+        <location filename="../src/UI/Dialogs/GameDialog.cpp" line="39"/>
         <source>Do you want to offer a draw?</source>
         <translation>Хотите предложить ничью?</translation>
     </message>
@@ -498,7 +525,7 @@
 <context>
     <name>MainWindow</name>
     <message>
-        <location filename="../src/UI/MainWindow.cpp" line="65"/>
+        <location filename="../src/UI/MainWindow.cpp" line="66"/>
         <source>Chess</source>
         <translation>Шахматы</translation>
     </message>
@@ -569,7 +596,7 @@
         <translation>Выход</translation>
     </message>
     <message>
-        <location filename="../src/UI/Dialogs/OptionsDialog.cpp" line="91"/>
+        <location filename="../src/UI/Dialogs/OptionsDialog.cpp" line="88"/>
         <source>Please restart the game to apply the language settings</source>
         <translation>Пожалуйста перезапустите игру, чтобы настройки языка вступили в силу</translation>
     </message>
@@ -613,7 +640,7 @@
 <context>
     <name>UI</name>
     <message>
-        <location filename="../src/UI/UI.cpp" line="85"/>
+        <location filename="../src/UI/UI.cpp" line="92"/>
         <source>Your opponent has offered a draw. Agree?</source>
         <translation type="unfinished">Ваш противник предлагает ничью. Согласны?</translation>
     </message>
@@ -660,7 +687,7 @@
         <translation type="obsolete">Сдаться</translation>
     </message>
     <message>
-        <location filename="../src/UI/Dialogs/WaitDrawDialog.cpp" line="31"/>
+        <location filename="../src/UI/Dialogs/WaitDrawDialog.cpp" line="23"/>
         <source>Exiting now means you surrender. Are you sure?</source>
         <translation>Выход означает, что вы сдаетесь. Согласны?</translation>
     </message>
@@ -694,9 +721,8 @@
         <translation type="obsolete">Противник присоединен</translation>
     </message>
     <message>
-        <location filename="../src/UI/Dialogs/WaitJoinDialog.cpp" line="47"/>
         <source>Opponent joined. Do you want to start game?</source>
-        <translation>Противник присоединился к вам. Начать игру?</translation>
+        <translation type="obsolete">Противник присоединился к вам. Начать игру?</translation>
     </message>
 </context>
 </TS>

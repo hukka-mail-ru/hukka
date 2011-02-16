@@ -3,10 +3,10 @@
 
 #include <QPushButton>
 #include <QVBoxLayout>
-#include "Dialog.h"
+#include "MyDialog.h"
 
 
-class GameDialog: public Dialog
+class GameDialog: public MyDialog
 {
     Q_OBJECT
 public:

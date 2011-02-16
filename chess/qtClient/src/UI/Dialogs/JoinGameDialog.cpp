@@ -13,7 +13,7 @@
 #define NUMBER_OF_COLUMNS 4
 
 JoinGameDialog::JoinGameDialog(const QList<TABLEID>& tableIDs, QWidget *parent):
-    Dialog(parent),
+    MyDialog(parent),
     mGameTableIDs(tableIDs),
     mCounter(0)
 {

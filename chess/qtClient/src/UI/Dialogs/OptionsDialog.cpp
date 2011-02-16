@@ -14,7 +14,7 @@
 
 
 OptionsDialog::OptionsDialog(QWidget *parent):
-    Dialog(parent),
+    MyDialog(parent),
     mLanguageIndex(LANGUAGE_RUSSIAN)
 {
     setWindowTitle(tr("Options"));

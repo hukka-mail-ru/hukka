@@ -3,7 +3,7 @@
 #include "Client.h"
 #include "UI.h"
 
-FindGameDialog::FindGameDialog(QWidget *parent): Dialog(parent)
+FindGameDialog::FindGameDialog(QWidget *parent): MyDialog(parent)
 {
     setWindowTitle(tr("Find Game"));
 

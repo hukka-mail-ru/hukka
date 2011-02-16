@@ -7,10 +7,10 @@
 #include <QHBoxLayout>
 #include <QVBoxLayout>
 #include <QGridLayout>
-#include "Dialog.h"
+#include "MyDialog.h"
 #include "Defines.h"
 
-class FindGameDialog: public Dialog
+class FindGameDialog: public MyDialog
 {
 Q_OBJECT
 public:
