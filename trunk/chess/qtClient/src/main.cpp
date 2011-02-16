@@ -30,6 +30,7 @@ int main(int argc, char *argv[])
             app.installTranslator(&appTranslator);
         }
 
+
         // RUN
         UI::instance()->initialize(&app);
 
