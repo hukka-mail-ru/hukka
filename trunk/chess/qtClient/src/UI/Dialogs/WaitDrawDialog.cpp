@@ -3,7 +3,7 @@
 #include "Client.h"
 #include "UI.h"
 
-WaitDrawDialog::WaitDrawDialog(QWidget *parent):  QDialog(parent)
+WaitDrawDialog::WaitDrawDialog(QWidget *parent):  MyDialog(parent)
 {
     label = new QLabel(tr("Wait for oppponent response..."), this);
     exitButton = new QPushButton(tr("Exit"), this);
