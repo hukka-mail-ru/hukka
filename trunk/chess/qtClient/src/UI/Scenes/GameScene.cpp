@@ -17,10 +17,11 @@ GameScene::GameScene(QObject *parent):
        QGraphicsScene(parent),
        mParent(parent),
        mBoard(NULL), mCells(NULL), mPieces(NULL), mHighlights(NULL),  mGameStateText(NULL),
-       mChat(this, CT_TABLE_CHAT),
+       mChat(NULL),//MainWindow::instance(), CT_TABLE_CHAT),
        mMoveClock(this, tr("Move: "), SIGNAL(gotMoveTime(quint32)), XML_NODE_MOVE_CLOCK),
        mGameClock(this, tr("Game: "), SIGNAL(gotGameTime(quint32)), XML_NODE_GAME_CLOCK)
 {
+
 }
 
 GameScene::~GameScene()
@@ -107,7 +108,8 @@ void GameScene::updateItemsPositions(OrientationStatus orientation)
     mGameStateText->setPos(text_x , text_y);
 
     // chat
-    mChat.updatePos(orientation);
+    if(mChat)
+        mChat->updatePos(orientation);
 }
 
 

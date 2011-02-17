@@ -28,7 +28,7 @@
 #include "Dialogs/WaitJoinDialog.h"
 #include "Dialogs/WaitAgreeDialog.h"
 #include "Dialogs/WaitDrawDialog.h"
-#include "Dialogs/SendMessageDialog.h"
+#include "Dialogs/ChatMessageDialog.h"
 #include "Dialogs/OptionsDialog.h"
 #include "Pixmaps.h"
 
@@ -284,9 +284,9 @@ void MainWindow::showWaitAgreeDialog()
     setMode(MW_NORMAL);
 }
 
-void MainWindow::showSendMessageDialog(ChatType chatType)
+void MainWindow::showChatMessageDialog(ChatType chatType)
 {
-    setCurrentDialog(new SendMessageDialog(chatType, this));
+    setCurrentDialog(new ChatMessageDialog(chatType, this));
     setMode(MW_NORMAL);
 }
 

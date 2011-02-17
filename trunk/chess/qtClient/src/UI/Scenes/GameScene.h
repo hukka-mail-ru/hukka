@@ -58,7 +58,7 @@ private:
 
     void loadImages();
 
-    Chat mChat;
+    Chat* mChat;
 
     Clock mMoveClock;
     Clock mGameClock;

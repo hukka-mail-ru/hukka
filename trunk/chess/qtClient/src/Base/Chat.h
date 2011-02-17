@@ -5,19 +5,17 @@
 #include <QScrollArea>
 #include <QLabel>
 #include <QPushButton>
-#include <QGraphicsScene>
-#include <MyDialog.h>
-
+#include <QDialog>
 #include <QGraphicsPixmapItem>
 #include <Defines.h>
 #include <orientation.h>
 
 
-class Chat: public QObject
+class Chat: public QDialog
 {
 Q_OBJECT
 public:
-    Chat(QGraphicsScene* parentScene, ChatType type);
+    Chat(QWidget* parent, ChatType type);
 
     ~Chat();
 
@@ -30,7 +28,7 @@ private:
     class ChatHistory: public QLabel
     {
     public:
-        ChatHistory(ChatType type): mChatType(type) {}
+        ChatHistory(QWidget* parent, ChatType type): QLabel(parent), mChatType(type)  { }
     protected:
         virtual void mouseReleaseEvent(QMouseEvent * event);
     private:

@@ -52,7 +52,7 @@ public:
     void showJoinGameDialog(const QList<TABLEID>& tableIDs);
     void showGameDialog();
     void showOptionsDialog();
-    void showSendMessageDialog(ChatType chatType);
+    void showChatMessageDialog(ChatType chatType);
 
     void closeCurrentDialog();
 
