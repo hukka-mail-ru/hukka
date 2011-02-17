@@ -181,6 +181,18 @@
         <translation>Невозможно послать сообщение общего чата на сервере: </translation>
     </message>
     <message>
+        <location filename="../src/Network/Client.cpp" line="1265"/>
+        <source>Can&apos;t join to the game table.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/Network/Client.cpp" line="1284"/>
+        <source>Game over. 
+The rating is not affected because of too few number of moves.</source>
+        <translation>Игра окончена. 
+Ваш рейтинг не изменился, т.к. в партии было сделано слишком мало ходов.</translation>
+    </message>
+    <message>
         <source>Connection has been lost.</source>
         <translation type="obsolete">Соединение разорвано.</translation>
     </message>
@@ -267,9 +279,8 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/Network/Client.cpp" line="1265"/>
         <source>Can&apos;t join to the game table</source>
-        <translation>Невозможно присоединиться к игровому столу</translation>
+        <translation type="obsolete">Невозможно присоединиться к игровому столу</translation>
     </message>
     <message>
         <location filename="../src/Network/Client.cpp" line="1280"/>
@@ -291,11 +302,6 @@
         <location filename="../src/Network/Client.cpp" line="1302"/>
         <source>A draw.</source>
         <translation>Ничья.</translation>
-    </message>
-    <message>
-        <location filename="../src/Network/Client.cpp" line="1284"/>
-        <source>Game over. The rating is not affected because of too few number of moves</source>
-        <translation>Игра окончена. Ваш рейтинг не изменился, т.к. в партии было сделано слишком мало ходов</translation>
     </message>
     <message>
         <location filename="../src/Network/Client.cpp" line="1303"/>
@@ -362,8 +368,10 @@
     </message>
     <message>
         <location filename="../src/UI/Dialogs/CreateGameDialog.cpp" line="74"/>
-        <source>You have an unfinished game. Please finish it first, then create a new game</source>
-        <translation>Предыдущая игра не была завершена. Сначала завершите ее, а потом создайте новую игру</translation>
+        <source>You have an unfinished game. 
+Please finish it first, then create a new game.</source>
+        <translation>Предыдущая игра не была завершена. 
+Сначала завершите ее, а потом создайте новую игру.</translation>
     </message>
 </context>
 <context>
