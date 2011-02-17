@@ -19,6 +19,7 @@
 #include <XML.h>
 #include <math.h>
 
+
 #include "Dialogs/AuthorizationDialog.h"
 #include "Dialogs/CreateGameDialog.h"
 #include "Dialogs/JoinGameDialog.h"
@@ -194,19 +195,19 @@ void MainWindow::closeCurrentDialog()
 
 void MainWindow::showMessage(const QString& text)
 {
-    showMessageBox(QMessageBox::Information, tr("Message"), text);
+    showMessageBox(MB_OK, text);
 }
 
 
 void MainWindow::showError(const QString& text)
 {
     qDebug() << "MainWindow::showError";
-    showMessageBox(QMessageBox::Critical, tr("Error"), text);
+    showMessageBox(MB_ERROR, text);
 }
 
 bool MainWindow::showQuestion(const QString& text)
 {
-    if(showMessageBox(QMessageBox::Question, tr("Question"), text) == QMessageBox::Yes)
+    if(showMessageBox(MB_QUESTION, text) == QDialog::Accepted)
     {
         return true;
     }
@@ -214,80 +215,15 @@ bool MainWindow::showQuestion(const QString& text)
     return false;
 }
 
-// A workaround for changing the size of QMessageBox
-// TODO Move into a separate h-file
-class MyMessageBox : public QMessageBox {
-public:
-    MyMessageBox(Icon icon, const QString &title, const QString &text,
-                StandardButtons buttons = NoButton, QWidget *parent = 0,
-                Qt::WindowFlags flags = Qt::Dialog | Qt::MSWindowsFixedSizeDialogHint):
-                    QMessageBox(icon, title, text, buttons, parent, flags) {}
-protected:
-void showEvent(QShowEvent* event)
-{
-    QMessageBox::showEvent(event);
-    setFixedSize(MainWindow::instance()->width(), MainWindow::instance()->height()/2);
-}
-};
-
-
-int MainWindow::showMessageBox(QMessageBox::Icon icon, const QString &title, const QString &text)
+int MainWindow::showMessageBox(MyMessageBoxType type, const QString &text)
 {
     setMode(MW_NORMAL);
 
-    QMessageBox::StandardButtons buttons;
-    if(icon == QMessageBox::Question)
-    {
-        buttons = QMessageBox::Yes | QMessageBox::No;
-    }
-    else
-    {
-        buttons = QMessageBox::Ok;
-    }
+    MyMessageBox msgBox(this, type, text);
 
-    MyMessageBox msgBox(icon, title, text, buttons, this);
+    msgBox.exec();
 
-
-    // prevent too wide messages
-
-  //  QGraphicsProxyWidget* proxy = mGraphicsView->scene()->addWidget(&msgBox);
-  //  proxy->setZValue(Z_MESSAGE_LAYER);
-
- //   QGraphicsScene* curScene = mGraphicsView->scene();
- //   msgBox.setFixedSize(MainWindow::instance()->width(), MainWindow::instance()->height()/2);
- //   msgBox.move(0, MainWindow::instance()->height()/2);
-
-//    proxy->setPos(curScene->width()/2  - msgBox.width()/2,
- //                 curScene->height()/2 - msgBox.height()/ 2);
- //   proxy->setPos(0, MainWindow::instance()->height()/2);
-
-
-  //  msgBox.show();
-   // msgBox.raise();
-  //  msgBox.activateWindow();
-
-    // a modal QMessageBox can't be added to a scene!
-  //  msgBox.setModal(false);
-
-    msgBox.setWindowFlags(Qt::Widget);
-    msgBox.setStyleSheet("QMessageBox { background: grey;}");
-    msgBox.move(0, MainWindow::instance()->height()/2);
-
-
-
-    // simulate modality
-  //  mMode = MW_WAIT;
- //   mMainMenu->disableItems();
- //   proxy->setOpacity(OPAQUE_NORMAL);
-
-    int res = msgBox.exec();
-
-    // clean-up
-  //  mGraphicsView->scene()->removeItem(proxy);
-  //  mMainMenu->enableItems();
- //   mMode = MW_NORMAL;
-
-    return res;
+    return msgBox.retCode();
 }
 
 

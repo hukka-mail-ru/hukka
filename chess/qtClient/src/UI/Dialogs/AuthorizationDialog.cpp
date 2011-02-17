@@ -25,6 +25,7 @@ AuthorizationDialog::AuthorizationDialog(QWidget *parent): MyDialog(parent)
  //   loginLabel->setText(fonttemplate.arg( colour, text ));
 //////
 
+  //  setStyleSheet("QLabel { color: red;}");
 
     loginEdit = new QLineEdit(login, this);
     pwdEdit = new QLineEdit(pwd, this);
