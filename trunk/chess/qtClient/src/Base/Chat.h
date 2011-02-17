@@ -19,7 +19,11 @@ Q_OBJECT
 public:
     Chat(QGraphicsScene* parentScene, ChatType type);
 
+    ~Chat();
+
     void updatePos(OrientationStatus orientation);
+
+    void close();
 
 private:
 
