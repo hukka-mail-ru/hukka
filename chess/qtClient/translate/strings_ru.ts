@@ -50,6 +50,24 @@
     </message>
 </context>
 <context>
+    <name>ChatMessageDialog</name>
+    <message>
+        <location filename="../src/UI/Dialogs/ChatMessageDialog.cpp" line="9"/>
+        <source>Send Message</source>
+        <translation type="unfinished">Послать сообщение</translation>
+    </message>
+    <message>
+        <location filename="../src/UI/Dialogs/ChatMessageDialog.cpp" line="11"/>
+        <source>Your chat message:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/UI/Dialogs/ChatMessageDialog.cpp" line="13"/>
+        <source>OK</source>
+        <translation type="unfinished">ОК</translation>
+    </message>
+</context>
+<context>
     <name>Client</name>
     <message>
         <location filename="../src/Network/Client.cpp" line="136"/>
@@ -644,14 +662,12 @@ Please finish it first, then create a new game.</source>
 <context>
     <name>SendMessageDialog</name>
     <message>
-        <location filename="../src/UI/Dialogs/SendMessageDialog.cpp" line="9"/>
         <source>Send Message</source>
-        <translation>Послать сообщение</translation>
+        <translation type="obsolete">Послать сообщение</translation>
     </message>
     <message>
-        <location filename="../src/UI/Dialogs/SendMessageDialog.cpp" line="12"/>
         <source>OK</source>
-        <translation>ОК</translation>
+        <translation type="obsolete">ОК</translation>
     </message>
 </context>
 <context>

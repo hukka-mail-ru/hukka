@@ -89,7 +89,7 @@ void MainMenu::updateItemsPositions(OrientationStatus orientation)
 
     mSplash->setPos(x, y);
 
-
+    qDebug() << "MainMenu::updateItemsPositions " << orientation;
     // chat
     if(mChat)
     {
@@ -142,6 +142,12 @@ void MainMenu::onChatClicked()
 {
     if(!mChat) // create chat window
     {
+        /*MyDialog* test = new MyDialog(MainWindow::instance());
+        test->resize(300,300);
+        test->move(100,100);
+        test->show();*/
+
+
         MainWindow::instance()->setMode(MW_WAIT);
         mClickedButton = chatButton;
         connectToGameServer();
@@ -202,8 +208,9 @@ void MainMenu::onAuthorized()
     {
         Client::instance()->joinCommonChat(LOGIC_ID_CHESS);
 
-        mChat = new Chat(this, CT_COMMON_CHAT);
+        mChat = new Chat(MainWindow::instance(), CT_COMMON_CHAT);
         mChat->updatePos(MainWindow::instance()->getOrientation());
+        mChat->show();
       //  delete mSplash;
 
         MainWindow::instance()->setMode(MW_NORMAL);

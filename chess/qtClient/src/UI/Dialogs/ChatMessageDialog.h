@@ -1,6 +1,6 @@
 
-#ifndef SendMessageDialog_H_
-#define SendMessageDialog_H_
+#ifndef ChatMessageDialog_H_
+#define ChatMessageDialog_H_
 
 #include <QLineEdit>
 #include <QHBoxLayout>
@@ -9,24 +9,24 @@
 #include <QPushButton>
 #include <QCheckBox>
 #include <QGridLayout>
-#include <QDialog>
+#include <MyDialog.h>
 #include <Defines.h>
 
 
-class SendMessageDialog: public QDialog
+class ChatMessageDialog: public MyDialog
 {
     Q_OBJECT
 public:
-    SendMessageDialog(ChatType chatType, QWidget *parent = 0);
+    ChatMessageDialog(ChatType chatType, QWidget *parent = 0);
 
 private:
 
-
+    QLabel* label;
     QLineEdit* mEdit;
 
     QPushButton* okButton;
 
-    QHBoxLayout* layout;
+    QVBoxLayout* layout;
 
     ChatType mChatType;
 
@@ -39,4 +39,4 @@ private slots:
 
 };
 
-#endif /* SendMessageDialog_H_ */
+#endif /* ChatMessageDialog_H_ */
