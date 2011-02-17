@@ -8,12 +8,13 @@
 #include <QVBoxLayout>
 #include <QWidget>
 #include <QDialog>
-#include <QMessageBox>
 
 #include <Scenes/GameScene.h>
 #include <Scenes/MainMenu.h>
 #include <Defines.h>
 #include <orientation.h>
+
+#include "MyMessageBox.h"
 
 class MainMenu;
 
@@ -90,7 +91,7 @@ private:
 
 
     void setCurrentDialog(QDialog* dialog);
-    int showMessageBox(QMessageBox::Icon icon, const QString &title, const QString &text);
+    int showMessageBox(MyMessageBoxType type, const QString &text);
 
     QWidget *centralwidget;
     QVBoxLayout *vboxLayout;

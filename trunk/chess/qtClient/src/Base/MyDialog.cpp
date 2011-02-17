@@ -15,7 +15,13 @@ MyDialog::MyDialog(QWidget *parent, Qt::WindowFlags flags): QDialog(parent, flag
     setWindowFlags(Qt::Widget);
 
     // Background
-    setStyleSheet("MyDialog { background: grey;}");
+    setStyleSheet("MyDialog    { background: grey;} "
+                  "QLineEdit   { font-size: 18px; } "
+                  "QLabel      { font-size: 18px; color: white; }"
+                  "QCheckBox   { font-size: 18px; color: white; }"
+                  "QComboBox   { font-size: 18px; }"
+                  "QPushButton { font-size: 18px; }"
+                  "QTableWidget { font-size: 18px; }");
 }
 
 MyDialog::~MyDialog()

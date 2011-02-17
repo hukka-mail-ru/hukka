@@ -17,7 +17,6 @@
     </message>
     <message>
         <location filename="../src/UI/Dialogs/AuthorizationDialog.cpp" line="18"/>
-        <location filename="../src/UI/Dialogs/AuthorizationDialog.cpp" line="22"/>
         <source>Login</source>
         <translation>Логин</translation>
     </message>
@@ -27,22 +26,17 @@
         <translation>Пароль</translation>
     </message>
     <message>
-        <location filename="../src/UI/Dialogs/AuthorizationDialog.cpp" line="24"/>
-        <source>&lt;font color=&apos;%1&apos;&gt;%2&lt;/font&gt;</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../src/UI/Dialogs/AuthorizationDialog.cpp" line="42"/>
+        <location filename="../src/UI/Dialogs/AuthorizationDialog.cpp" line="43"/>
         <source>Register new user</source>
         <translation>Создать нового пользователя</translation>
     </message>
     <message>
-        <location filename="../src/UI/Dialogs/AuthorizationDialog.cpp" line="45"/>
+        <location filename="../src/UI/Dialogs/AuthorizationDialog.cpp" line="46"/>
         <source>OK</source>
         <translation>ОК</translation>
     </message>
     <message>
-        <location filename="../src/UI/Dialogs/AuthorizationDialog.cpp" line="46"/>
+        <location filename="../src/UI/Dialogs/AuthorizationDialog.cpp" line="47"/>
         <source>Exit</source>
         <translation>Выход</translation>
     </message>
@@ -525,7 +519,7 @@
 <context>
     <name>MainWindow</name>
     <message>
-        <location filename="../src/UI/MainWindow.cpp" line="66"/>
+        <location filename="../src/UI/MainWindow.cpp" line="67"/>
         <source>Chess</source>
         <translation>Шахматы</translation>
     </message>
@@ -534,23 +528,38 @@
         <translation type="obsolete">Ваш противник предлагает ничью. Согласны?</translation>
     </message>
     <message>
-        <location filename="../src/UI/MainWindow.cpp" line="204"/>
         <source>Error</source>
-        <translation>Ошибка</translation>
+        <translation type="obsolete">Ошибка</translation>
     </message>
     <message>
         <source>OK</source>
         <translation type="obsolete">ОК</translation>
     </message>
     <message>
-        <location filename="../src/UI/MainWindow.cpp" line="197"/>
         <source>Message</source>
-        <translation>Сообщение</translation>
+        <translation type="obsolete">Сообщение</translation>
     </message>
     <message>
-        <location filename="../src/UI/MainWindow.cpp" line="209"/>
         <source>Question</source>
-        <translation>Вопрос</translation>
+        <translation type="obsolete">Вопрос</translation>
+    </message>
+</context>
+<context>
+    <name>MyMessageBox</name>
+    <message>
+        <location filename="../src/Base/MyMessageBox.cpp" line="28"/>
+        <source>OK</source>
+        <translation type="unfinished">ОК</translation>
+    </message>
+    <message>
+        <location filename="../src/Base/MyMessageBox.cpp" line="34"/>
+        <source>Yes</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/Base/MyMessageBox.cpp" line="35"/>
+        <source>No</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
