@@ -73,11 +73,12 @@ void Chat::updatePos(OrientationStatus orientation)
     // HISTORY
     y = y + textOffset; // TODO move mHistory and header into HBox
 
+    mScrollArea->move(x, y);
+    mScrollArea->setFixedSize(width, height);
+
     mHistory->move(x, y);
     mHistory->setMinimumSize(width, height);
 
-    mScrollArea->move(x, y);
-    mScrollArea->setFixedSize(width, height);
 
     qDebug() << "Chat: " << x << y;
 
