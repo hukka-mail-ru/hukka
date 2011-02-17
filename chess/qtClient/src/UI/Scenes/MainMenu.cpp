@@ -140,21 +140,16 @@ void MainMenu::onFindGameClicked()
 
 void MainMenu::onChatClicked()
 {
-    if(mChat)
+    if(!mChat) // create chat window
     {
-        qDebug() << "onChatClicked delete";
+        MainWindow::instance()->setMode(MW_WAIT);
+        mClickedButton = chatButton;
+        connectToGameServer();
+    }
+    else // delete chat window
+    {
         delete mChat;
         mChat = NULL;
-    }
-    else
-    {
-        qDebug() << "onChatClicked create";
-
-        MainWindow::instance()->setMode(MW_WAIT);
-
-        mClickedButton = chatButton;
-
-        connectToGameServer();
     }
 }
 
