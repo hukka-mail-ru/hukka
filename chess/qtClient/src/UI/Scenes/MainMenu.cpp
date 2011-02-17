@@ -145,16 +145,17 @@ void MainMenu::onChatClicked()
         qDebug() << "onChatClicked delete";
         delete mChat;
         mChat = NULL;
-        return;
     }
+    else
+    {
+        qDebug() << "onChatClicked create";
 
-    qDebug() << "onChatClicked create";
+        MainWindow::instance()->setMode(MW_WAIT);
 
-    MainWindow::instance()->setMode(MW_WAIT);
+        mClickedButton = chatButton;
 
-    mClickedButton = chatButton;
-
-    connectToGameServer();
+        connectToGameServer();
+    }
 }
 
 

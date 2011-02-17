@@ -30,12 +30,11 @@ Chat::Chat(QGraphicsScene* parentScene, ChatType type):
     mHistory->setAlignment(Qt::AlignLeft | Qt::AlignBottom);
     mHistory->setWordWrap(true);
 
-    mScrollArea = new QScrollArea;
+    mScrollArea = new QScrollArea();
     mScrollArea->setAlignment(Qt::AlignLeft | Qt::AlignBottom);
     mScrollArea->setWidget(mHistory);
 
     mParentScene->addWidget(mScrollArea);
-
 
     // CHAT BORDER
     QString border_color  = XML::instance().readValue(XML_ITEMS_FILENAME, QList<QString>() << chatNode << XML_NODE_BORDER << XML_NODE_COLOR);
@@ -113,4 +112,13 @@ void Chat::onChatMessage(const QString& originalMessage)
 }
 
 
+Chat::~Chat()
+{
+    delete mScrollArea;
+    mScrollArea = 0;
 
+
+    mParentScene->removeItem(mBorder);
+    mParentScene->removeItem(mHeader);
+
+}
