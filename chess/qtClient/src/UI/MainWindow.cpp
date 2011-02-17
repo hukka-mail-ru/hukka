@@ -308,6 +308,7 @@ void MainWindow::showGameScene(PlayerColor color)
     try
     {
         mGameScene->startClocks();
+        mGameScene->showChat();
 
         mGraphicsView->setScene(mGameScene);
 
