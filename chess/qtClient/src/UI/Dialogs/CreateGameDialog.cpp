@@ -71,7 +71,7 @@ void CreateGameDialog::onGotMyGameTable(TABLEID id)
     if(id)
     {
         MainWindow::instance()->showMessage(
-                tr("You have an unfinished game. Please finish it first, then create a new game"));
+                tr("You have an unfinished game. \nPlease finish it first, then create a new game."));
 
         Client::instance()->setGameStatus(GAM_STARTED);
 

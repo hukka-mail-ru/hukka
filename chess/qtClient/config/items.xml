@@ -55,9 +55,9 @@
     <textOffset value="25" />
     <portrait>
       <x value="5" />
-      <y value="20" />
-      <width value="400" />
-      <height value="200" />
+      <y value="0" />
+      <width value="500" />
+      <height value="220" />
     </portrait>
     <landscape>
       <x value="5" />

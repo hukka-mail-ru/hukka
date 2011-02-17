@@ -1262,7 +1262,7 @@ void Client::processMessageCHS(const MessageHeader& header, const QByteArray& bu
 
         switch(reply->status) {
             case P_DONE:       emit joined(reply->tableID); break;
-            case P_FAILED:     emit error(tr("Can't join to the game table"));  break;
+            case P_FAILED:     emit error(tr("Can't join to the game table."));  break;
             default:           emit error(tr("Internal server error ") + QString::number(reply->status)); break;
         }
     }
@@ -1281,7 +1281,7 @@ void Client::processMessageCHS(const MessageHeader& header, const QByteArray& bu
             case P_LOOSE:      emit gameOver(tr("You have lost!"));  break;
             case P_LOOSE_TIME: emit gameOver(tr("Time's up. You have lost!"));  break;
             case P_DRAW:       emit gameOver(tr("A draw."));  break;
-            case ST_NO_RES:    emit gameOver(tr("Game over. The rating is not affected because of too few number of moves")); break;
+            case ST_NO_RES:    emit gameOver(tr("Game over. \nThe rating is not affected because of too few number of moves.")); break;
             default:           emit error(tr("Internal server error ") + QString::number(reply->status)); break;
         }
     }
