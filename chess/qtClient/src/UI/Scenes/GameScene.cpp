@@ -35,7 +35,14 @@ void GameScene::showChat()
 {
     mChat = new Chat(MainWindow::instance(), CT_TABLE_CHAT);
     mChat->updatePos(OrientationHorizontal);
+    //this->addWidget(mChat);
     mChat->show();
+}
+
+void GameScene::hide()
+{
+   if(mChat && mChat->isVisible())
+       mChat->hide();
 }
 
 void GameScene::initialize()

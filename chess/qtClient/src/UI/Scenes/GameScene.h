@@ -34,6 +34,8 @@ public:
 
     void updateItemsPositions(OrientationStatus orientation);
 
+    void hide();
+
 private:
 
     void updateClocks();
