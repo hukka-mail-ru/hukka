@@ -86,6 +86,7 @@ public:
         // communication with Chess Server
         // Master
         void agreeToStartGame    (TABLEID tableID);
+        void rejectGame          (TABLEID tableID);
         // Slave
         void joinGameTable       (TABLEID tableID);
         // Both
@@ -120,10 +121,11 @@ signals:
         void registered();
         void joined(TABLEID id);
 
-        void opponentJoined();
+        void opponentJoined(PLAYERID opponentID);
         void opponentAgreed();
 
         void gameStarted();
+        void gameRejected();
         void gameOver(const QString& message);
         void gameTableCreated(TABLEID id);
         void gameTableDeleted();

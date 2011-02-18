@@ -16,6 +16,7 @@ WaitAgreeDialog::WaitAgreeDialog(QWidget *parent):  MyDialog(parent)
 
 
     connect(Client::instance(), SIGNAL(gameStarted()), this, SLOT(onGameStarted()));
+    connect(Client::instance(), SIGNAL(gameRejected()), this, SLOT(onGameRejected()));
 }
 
 
@@ -29,7 +30,17 @@ void WaitAgreeDialog::onExitClicked()
 void WaitAgreeDialog::onGameStarted()
 {
     disconnect(Client::instance(), SIGNAL(gameStarted()), this, SLOT(onGameStarted()));
+    disconnect(Client::instance(), SIGNAL(gameRejected()), this, SLOT(onGameRejected()));
 
     MainWindow::instance()->showGameScene(PC_BLACK);
     UI::instance()->startGame();
+}
+
+void WaitAgreeDialog::onGameRejected()
+{
+    disconnect(Client::instance(), SIGNAL(gameStarted()), this, SLOT(onGameStarted()));
+    disconnect(Client::instance(), SIGNAL(gameRejected()), this, SLOT(onGameRejected()));
+
+    MainWindow::instance()->showMessage("The game host hasn't agreed to start the game.");
+    close();
 }

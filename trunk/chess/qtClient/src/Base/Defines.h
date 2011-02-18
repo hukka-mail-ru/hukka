@@ -109,6 +109,7 @@ typedef quint32 GameTableStatus;
 typedef quint32             CELLID;
 typedef quint32             TABLEID;
 typedef quint32             LOGICID;
+typedef quint32             PLAYERID;
 
 enum GameState
 {
