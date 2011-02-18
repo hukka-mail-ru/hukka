@@ -27,7 +27,7 @@ void MySocket::AddMsg( const ClientMsg& _clientMsg )
     // NOT SO FAST, BABY! We need the delay on Linux because the server can reply faster,
     // then epoll_wait in the Selector has been rearmed.
     // (So, the Selector doesn't get a Read Event and the reply message hangs in the queue)
-    usleep(50000);
+    usleep(1000);
 
 #ifdef LOW_LEVEL_DEBUG
     cout << "SOCKET " << m_nSocket << " MySocket::AddMsg. ADD MSG" << endl;

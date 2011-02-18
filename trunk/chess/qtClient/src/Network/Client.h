@@ -85,14 +85,13 @@ public:
 
         // communication with Chess Server
         // Master
-        void startGame    (TABLEID tableID);
+        void startGame           (TABLEID tableID);
         void rejectGame          (TABLEID tableID);
         // Slave
-        void joinGameTable       (TABLEID tableID);
+        void joinGame            (TABLEID tableID);
         // Both
         void getField            (TABLEID tableID);
         void step                (TABLEID tableID, const Move& move);
-        void getPlayerID         (const QString& playerName);
         void surrender           (TABLEID tableID);
         void getTime             (TABLEID tableID);
 
@@ -121,7 +120,7 @@ signals:
         void registered();
         void joined(TABLEID id);
 
-        void opponentJoined(PLAYERID opponentID);
+        void opponentJoined(const QString& opponentName);
 
         void gameStarted();
         void gameRejected();

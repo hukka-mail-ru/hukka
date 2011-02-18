@@ -115,7 +115,7 @@ void JoinGameDialog::onOkClicked()
     MainWindow::instance()->setMode(MW_WAIT);
 
     connect(Client::instance(), SIGNAL(joined(TABLEID)), this, SLOT(onJoined(TABLEID)));
-    Client::instance()->joinGameTable( mGameTableIDs[tableWidget->currentRow()] );
+    Client::instance()->joinGame( mGameTableIDs[tableWidget->currentRow()] );
 }
 
 void JoinGameDialog::onJoined(TABLEID id)

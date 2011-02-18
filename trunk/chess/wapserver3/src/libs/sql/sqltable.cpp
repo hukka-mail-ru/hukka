@@ -153,6 +153,8 @@ bool SqlTable::Select(const char* _pcFlt, const char* _pcKey, TTable* _pTable )
 
     strQuery = "SELECT "+CMyStr( _pcFlt )+" FROM "+m_strTableName+" WHERE "+CMyStr( _pcKey );
 
+    std::cerr << strQuery << std::endl;
+
 	MYSQL_RES* pRes = m_sqlBase.Query( strQuery.c_str() );
 
 	if (pRes == 0)

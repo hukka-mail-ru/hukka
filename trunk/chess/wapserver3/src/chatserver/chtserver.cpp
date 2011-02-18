@@ -81,27 +81,34 @@ bool CHTServer::checkParticipation( uint32_t _nPlayerID, uint32_t _nLogicID, uin
         {
             if ( !sqlChatTable.Select( "InComChat", strWhere.c_str(), &tbl ) )
             {
+                std::cerr << "FALSE 1" << std::endl;
                 return false;
             }
 
             if ( tbl.empty() )
             {
+                std::cerr << "FALSE 2" << std::endl;
                 return false;
             }
+            std::cerr << "TRUE 1" << std::endl;
             return true;
         }
 
         if ( !sqlChatTable.Select( "TableID", strWhere.c_str(), &tbl ) )
         {
+            std::cerr << "FALSE 3" << std::endl;
             return false;
         }
         if ( tbl.empty() )
         {
+            std::cerr << "FALSE 4" << std::endl;
             return false;
         }
+        std::cerr << "TRUE 2" << std::endl;
         return true;
 
     }
+    std::cerr << "FALSE 5" << std::endl;
     return false;
 }
 
