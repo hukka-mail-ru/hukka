@@ -12,12 +12,6 @@
 Chat::Chat(QWidget* parent, ChatType type):
     QDialog(parent), mChatType(type)
 {
-    qDebug() << "Chat::Chat" ;
-  //  QPalette palette(QColor(Qt::white), QColor(Qt::black));
-    //  mHistory->setPalette(palette);
-    //   mScrollArea->setPalette(palette);
-
-
     // No title, no [X] button, no bottom
     setWindowFlags(Qt::Widget);
 
@@ -32,9 +26,6 @@ Chat::Chat(QWidget* parent, ChatType type):
     int size =       XML::instance().readValue(XML_ITEMS_FILENAME, QList<QString>() << chatNode << XML_NODE_FONT << XML_NODE_SIZE).toInt();
     QString color  = XML::instance().readValue(XML_ITEMS_FILENAME, QList<QString>() << chatNode << XML_NODE_FONT << XML_NODE_COLOR);
 
-  //  mHeader = mParentScene->addText(tr("Game chat"), QFont(family, size));
-  //  mHeader->setDefaultTextColor( QColor(color) );
-
     mHistory = new ChatHistory(this, mChatType);
     mHistory->setAlignment(Qt::AlignLeft | Qt::AlignBottom);
     mHistory->setWordWrap(true);
@@ -43,15 +34,6 @@ Chat::Chat(QWidget* parent, ChatType type):
     mScrollArea->setAlignment(Qt::AlignLeft | Qt::AlignBottom);
     mScrollArea->setWidget(mHistory);
 
-   // mParentScene->addWidget(mScrollArea);
-
-
-
-    // CHAT BORDER
-    /*
-    QString border_color  = XML::instance().readValue(XML_ITEMS_FILENAME, QList<QString>() << chatNode << XML_NODE_BORDER << XML_NODE_COLOR);
-    mBorder = mParentScene->addRect (0, 0, 0, 0, QPen(QColor(border_color)));
-*/
     if(mChatType == CT_TABLE_CHAT)
     {
         QObject::connect(Client::instance(), SIGNAL(tableChatMessage(const QString&)), this, SLOT(onChatMessage(const QString&)));
@@ -82,26 +64,11 @@ void Chat::updatePos(OrientationStatus orientation)
     int textOffset   = XML::instance().readValue(XML_ITEMS_FILENAME, path << chatNode << XML_NODE_TEXT_OFFSET).toInt(); path.clear();
     int borderWidth  = XML::instance().readValue(XML_ITEMS_FILENAME, path << chatNode << XML_NODE_BORDER << XML_NODE_WIDTH).toInt(); path.clear();
 
-   // mHeader->setPos(x , y);
-
-    // HISTORY
-  //  y = y + textOffset; // TODO move mHistory and header into HBox
-
-   // mScrollArea->move(x, y);
-
-  //  mHistory->move(x, y);
-
     move(x, y);
     setFixedSize(width, height);
 
     mHistory->setMinimumSize(width, height);
     mScrollArea->setFixedSize(width, height);
-
-
-    qDebug() << "Chat: " << x << y << width << height;
-
-   // mBorder->setRect(x - borderWidth, y - borderWidth,
-   //                  width + 2 * borderWidth, height + 2 * borderWidth);
 }
 
 
@@ -133,11 +100,4 @@ void Chat::onChatMessage(const QString& originalMessage)
 
 Chat::~Chat()
 {
- //   delete mScrollArea;
- //   mScrollArea = 0;
-
-
-  //  mParentScene->removeItem(mBorder);
-  //  mParentScene->removeItem(mHeader);
-
 }
