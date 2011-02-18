@@ -86,9 +86,9 @@
     </portrait>
     <landscape>
       <x value="5" />
-      <y value="220" />
-      <width value="200" />
-      <height value="170" />
+      <y value="260" />
+      <width value="300" />
+      <height value="200" />
     </landscape>
   </TableChat>
 

@@ -292,6 +292,8 @@ void MainWindow::showChatMessageDialog(ChatType chatType)
 
 void MainWindow::showMainMenu()
 {
+    if(mGraphicsView->scene() == mGameScene)
+        mGameScene->hide();
 
     closeCurrentDialog();
     mGraphicsView->setScene(mMainMenu);
@@ -307,6 +309,9 @@ void MainWindow::showGameScene(PlayerColor color)
 
     try
     {
+        if(mGraphicsView->scene() == mMainMenu)
+            mMainMenu->hide();
+
         mGameScene->startClocks();
         mGameScene->showChat();
 

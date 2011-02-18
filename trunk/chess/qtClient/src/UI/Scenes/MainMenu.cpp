@@ -140,23 +140,25 @@ void MainMenu::onFindGameClicked()
 
 void MainMenu::onChatClicked()
 {
-    if(!mChat) // create chat window
+    if(!mChat)
     {
-        /*MyDialog* test = new MyDialog(MainWindow::instance());
-        test->resize(300,300);
-        test->move(100,100);
-        test->show();*/
-
-
         MainWindow::instance()->setMode(MW_WAIT);
         mClickedButton = chatButton;
         connectToGameServer();
     }
-    else // delete chat window
+    else
     {
-        delete mChat;
-        mChat = NULL;
+        if(mChat->isVisible())
+            mChat->hide();
+        else
+            mChat->show();
     }
+}
+
+void MainMenu::hide()
+{
+   if(mChat && mChat->isVisible())
+       mChat->hide();
 }
 
 
@@ -211,7 +213,7 @@ void MainMenu::onAuthorized()
         mChat = new Chat(MainWindow::instance(), CT_COMMON_CHAT);
         mChat->updatePos(MainWindow::instance()->getOrientation());
         mChat->show();
-      //  delete mSplash;
+        this->addWidget(mChat);
 
         MainWindow::instance()->setMode(MW_NORMAL);
     }
