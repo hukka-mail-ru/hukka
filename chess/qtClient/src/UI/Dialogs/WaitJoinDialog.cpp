@@ -39,17 +39,16 @@ void WaitJoinDialog::onOpponentJoined(PLAYERID opponentID)
     int tableID = UI::instance()->getGameTable();
 
     // TODO Get player name by ID
-    if(MainWindow::instance()->showQuestion(QString::number(opponentID) + tr(" wants to play with you. Do you want to start game?")))
+    if(MainWindow::instance()->showQuestion(tr("Agree to start game with '") + QString::number(opponentID) + "'?"))
     {
         MainWindow::instance()->setMode(MW_WAIT);
         connect(Client::instance(), SIGNAL(gameStarted()), this, SLOT(onGameStarted()));
-        Client::instance()->agreeToStartGame(tableID);
+        Client::instance()->startGame(tableID);
     }
     else
     {
-        Client::instance()->rejectGame(tableID);
         connect(Client::instance(), SIGNAL(gameRejected()), this, SLOT(onGameRejected()));
-        // TODO refuse
+        Client::instance()->rejectGame(tableID);
     }
 }
 
@@ -64,4 +63,5 @@ void WaitJoinDialog::onGameStarted()
 void WaitJoinDialog::onGameRejected()
 {
     disconnect(Client::instance(), SIGNAL(gameRejected()), this, SLOT(onGameRejected()));
+    connect(Client::instance(), SIGNAL(opponentJoined(PLAYERID)), this, SLOT(onOpponentJoined(PLAYERID)));
 }
