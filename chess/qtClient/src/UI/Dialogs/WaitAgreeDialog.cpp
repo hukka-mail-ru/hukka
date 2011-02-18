@@ -22,6 +22,11 @@ WaitAgreeDialog::WaitAgreeDialog(QWidget *parent):  MyDialog(parent)
 
 void WaitAgreeDialog::onExitClicked()
 {
+    disconnect(Client::instance(), SIGNAL(gameStarted()), this, SLOT(onGameStarted()));
+    disconnect(Client::instance(), SIGNAL(gameRejected()), this, SLOT(onGameRejected()));
+
+    close();
+
     MainWindow::instance()->showMainMenu();
 }
 

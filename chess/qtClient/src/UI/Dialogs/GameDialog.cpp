@@ -29,8 +29,7 @@ void GameDialog::onSurrenderClicked()
     if((MainWindow::instance()->showQuestion(tr("Do you want to surrender?"))))
     {
         MainWindow::instance()->setMode(MW_WAIT);
-        TABLEID id = UI::instance()->getGameTable();
-        Client::instance()->surrender(id);
+        UI::instance()->surrender();
     }
 }
 

@@ -10,12 +10,14 @@
 #include <Client.h>
 #include <UI.h>
 #include <XML.h>
+#include <MainWindow.h>
 #include <QDebug>
 
+const int DEFAULT_TIME = 600; // :)
 
 Clock::Clock(QGraphicsScene* parentScene, const QString& header,
              const char* updateSignal, const QString& xmlNodeName):
-    mSeconds(0),
+    mSeconds(DEFAULT_TIME),
     mParentScene(parentScene),
     mText(NULL),
     mHeader(header),
@@ -66,7 +68,14 @@ void Clock::updatePos(OrientationStatus orientation)
 void Clock::onTimeout()
 {
     if(mSeconds > 0)
+    {
         mSeconds--;
+    }
+    else if(UI::instance()->getGameState() != GS_WAIT_FOR_OPPONENT)
+    {
+        mSeconds = DEFAULT_TIME;
+        UI::instance()->surrender();
+    }
 
     mText->setPlainText(mHeader + Game::seconds2hrs(mSeconds));
 

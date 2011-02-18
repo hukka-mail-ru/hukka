@@ -68,6 +68,12 @@ void UI::startGame()
     Client::instance()->joinTableChat(LOGIC_ID_CHESS, mGameTable);
 }
 
+void UI::surrender()
+{
+    TABLEID id = getGameTable();
+    Client::instance()->surrender(id);
+}
+
 void UI::onGameOver(const QString& message)
 {
     disconnect(Client::instance(), SIGNAL(invalidMove()), this, SLOT(onInvalidMove()));
