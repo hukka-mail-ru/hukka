@@ -388,7 +388,7 @@ void Client::deleteGameTable(LOGICID logicID, TABLEID tableID)
  __)(( () ))(  )  (   ( (/\ /__\  )    (  ) _)    )(  /__\  ) ,\ )(__  ) _)
 (___/ \__/(__)(_)\_)   \__/(_)(_)(_/\/\_)(___)   (__)(_)(_)(___/(____)(___)
 ====================================================================================================*/
-void Client::joinGameTable (TABLEID tableID)
+void Client::joinGame (TABLEID tableID)
 {
     QT_TRACEOUT;
 
@@ -519,25 +519,6 @@ void Client::step(TABLEID tableID, const Move& move)
     }
 }
 
-/*====================================================================================================
-  __  ___  ____    ___  __     __   _  _  ___  ___     __  ___
- / _)(  _)(_  _)  (  ,\(  )   (  ) ( \/ )(  _)(  ,)   (  )(   \
-( (/\ ) _)  )(     ) _/ )(__  /__\  \  /  ) _) )  \    )(  ) ) )
- \__/(___) (__)   (_)  (____)(_)(_)(__/  (___)(_)\_)  (__)(___/
-====================================================================================================*/
-void Client::getPlayerID(const QString& playerName)
-{
-    QT_TRACEOUT;
-
-    try {
-        assert(mClientAuthorized);
-
-    }
-    catch (Exception& e) {
-        e.add(tr("Can't get getPlayerID on server: ") + mSocket.peerName() + ". ");
-        emit error (e.what());
-    }
-}
 
 /*====================================================================================================
  ___  _  _  ___   ___   ___  _  _  ___  ___  ___
@@ -1224,9 +1205,13 @@ void Client::processMessageCHS(const MessageHeader& header, const QByteArray& bu
 
         Reply* reply = (Reply*)buffer.data();
 
+        // Opponent name goes after the struct 'Reply'
+        QString opponentName = "";
+        opponentName.append(QByteArray(buffer.data() + sizeof(Reply), buffer.size() - sizeof(Reply)));
+
         mGameStatus = GAM_OPPONENT_JOINED;
         qDebug() << mName << "GAM_OPPONENT_JOINED " << reply->opponentID;
-        emit opponentJoined(reply->opponentID);
+        emit opponentJoined(opponentName);
     }
 
     // GAME STARTED

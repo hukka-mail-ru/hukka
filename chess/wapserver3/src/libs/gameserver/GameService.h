@@ -6,6 +6,7 @@
 #include "../tools/playerselection.h"
 #include "../tools/structs.h"
 #include "../sql/sqlgametable.h"
+#include "../sql/sqltableusers.h"
 #include "../libs/header/defservice.h"
 #include "gamestructs.h"
 #include "../header/defserver.h"
@@ -222,7 +223,7 @@ private:
 		sCmd.m_nTableID = _nTableID;
 		sCmd.m_nData = _nPlayerID;
 
-	    uint32_t nPlayer0;
+	    uint32_t nPlayer0; // 0 = game Host
 
 	    if ( GetSqlGameTable()->getIDPlayer0( _nTableID, nPlayer0 ) )
 		{
@@ -230,6 +231,14 @@ private:
 			ClientMsg Msg;
 
 			vecCmd.assign( (char*)&sCmd, (char*)(&sCmd)+sizeof(sCmd ));
+
+			// Get opponent name by ID
+			SqlTableUsers wsUsers;
+			TVecChar opponentName;
+			wsUsers.GetUserName(_nPlayerID, &opponentName);
+
+			vecCmd.reserve( vecCmd.size() + opponentName.size());
+			vecCmd.insert( vecCmd.end(), opponentName.begin(), opponentName.end());
 
 			Msg.InitMsg(nPlayer0, vecCmd);
 
