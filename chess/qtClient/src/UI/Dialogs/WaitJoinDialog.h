@@ -6,6 +6,8 @@
 #include <QLabel>
 #include <QVBoxLayout>
 
+#include "Defines.h"
+
 class WaitJoinDialog: public MyDialog
 {
 Q_OBJECT
@@ -19,8 +21,9 @@ private:
 
 private slots:
     void onExitClicked();
-    void onOpponentJoined();
+    void onOpponentJoined(PLAYERID opponentID);
     void onGameStarted();
+    void onGameRejected();
     void onGameTableDeleted();
 };
 

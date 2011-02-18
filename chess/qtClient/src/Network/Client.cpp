@@ -438,8 +438,29 @@ void Client::agreeToStartGame (TABLEID tableID)
         qDebug() << e.what();
         emit error (e.what());
     }
+}
 
+void Client::rejectGame (TABLEID tableID)
+{
+    QT_TRACEOUT;
 
+    try {
+        assert(tableID);
+        assert(mClientAuthorized);
+
+        if(mGameStatus != GAM_OPPONENT_JOINED) {
+            THROW_EXCEPTION("No opponent joined");
+        }
+
+        // send command
+        QByteArray data = Q_BYTE_ARRAY(tableID);
+        sendCmd(CHS, CMD_OPREJECT, data);
+    }
+    catch (Exception& e) {
+        e.add(tr("Can't disagree to start game. Table ID ") + QString::number(tableID) + tr(" on server: ") + mSocket.peerName() + ". ");
+        qDebug() << e.what();
+        emit error (e.what());
+    }
 }
 
 /*====================================================================================================
@@ -1196,9 +1217,16 @@ void Client::processMessageCHS(const MessageHeader& header, const QByteArray& bu
     // OPPONENT CONNECTED
     if(header.cmd == ANS_OPPONENT)
     {
+        struct Reply {
+            TABLEID     tableID;
+            PLAYERID    opponentID;
+        };
+
+        Reply* reply = (Reply*)buffer.data();
+
         mGameStatus = GAM_OPPONENT_JOINED;
-        qDebug() << mName << "GAM_OPPONENT_JOINED";
-        emit opponentJoined();
+        qDebug() << mName << "GAM_OPPONENT_JOINED " << reply->opponentID;
+        emit opponentJoined(reply->opponentID);
     }
 
     // GAME STARTED
@@ -1263,6 +1291,23 @@ void Client::processMessageCHS(const MessageHeader& header, const QByteArray& bu
         switch(reply->status) {
             case P_DONE:       emit joined(reply->tableID); break;
             case P_FAILED:     emit error(tr("Can't join to the game table."));  break;
+            default:           emit error(tr("Internal server error ") + QString::number(reply->status)); break;
+        }
+    }
+    // DISAGREE TO START A GAME
+    else if(header.cmd == ANS_OPREJECT)
+    {
+        // get server reply
+        struct Reply {
+            TABLEID     tableID;
+            char        status;
+        };
+
+        Reply* reply = (Reply*)buffer.data();
+
+        switch(reply->status) {
+            case P_DONE:       emit gameRejected(); break;
+            case P_FAILED:     emit error(tr("Can't reject the game."));  break;
             default:           emit error(tr("Internal server error ") + QString::number(reply->status)); break;
         }
     }

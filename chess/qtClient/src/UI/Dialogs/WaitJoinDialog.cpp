@@ -15,7 +15,7 @@ WaitJoinDialog::WaitJoinDialog(QWidget *parent):   MyDialog(parent)
     layout->addWidget(exitButton);
     this->setLayout(layout);
 
-    connect(Client::instance(), SIGNAL(opponentJoined()), this, SLOT(onOpponentJoined()));
+    connect(Client::instance(), SIGNAL(opponentJoined(PLAYERID)), this, SLOT(onOpponentJoined(PLAYERID)));
 }
 
 void WaitJoinDialog::onExitClicked()
@@ -31,23 +31,26 @@ void  WaitJoinDialog::onGameTableDeleted()
 }
 
 
-void WaitJoinDialog::onOpponentJoined()
+void WaitJoinDialog::onOpponentJoined(PLAYERID opponentID)
 {
-    disconnect(Client::instance(), SIGNAL(opponentJoined()), this, SLOT(onOpponentJoined()));
+    disconnect(Client::instance(), SIGNAL(opponentJoined(PLAYERID)), this, SLOT(onOpponentJoined(PLAYERID)));
+    qDebug() << "WaitJoinDialog::onOpponentJoined";
 
-    //if(MainWindow::instance()->showQuestion(tr("Opponent joined. Do you want to start game?")))
-    //{
+    int tableID = UI::instance()->getGameTable();
+
+    // TODO Get player name by ID
+    if(MainWindow::instance()->showQuestion(QString::number(opponentID) + tr(" wants to play with you. Do you want to start game?")))
+    {
         MainWindow::instance()->setMode(MW_WAIT);
-        int tableID = UI::instance()->getGameTable();
-        qDebug() << "UI::instance()->getGameTable(): " << tableID;
-
         connect(Client::instance(), SIGNAL(gameStarted()), this, SLOT(onGameStarted()));
         Client::instance()->agreeToStartGame(tableID);
-    //}
-    //else
-    //{
+    }
+    else
+    {
+        Client::instance()->rejectGame(tableID);
+        connect(Client::instance(), SIGNAL(gameRejected()), this, SLOT(onGameRejected()));
         // TODO refuse
-   // }
+    }
 }
 
 void WaitJoinDialog::onGameStarted()
@@ -56,4 +59,9 @@ void WaitJoinDialog::onGameStarted()
 
     MainWindow::instance()->showGameScene(PC_WHITE);
     UI::instance()->startGame();
+}
+
+void WaitJoinDialog::onGameRejected()
+{
+    disconnect(Client::instance(), SIGNAL(gameRejected()), this, SLOT(onGameRejected()));
 }

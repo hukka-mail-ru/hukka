@@ -21,6 +21,7 @@ private:
 private slots:
     void onExitClicked();
     void onGameStarted();
+    void onGameRejected();
 
 };
 
