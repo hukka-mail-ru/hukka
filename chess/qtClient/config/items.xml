@@ -37,7 +37,8 @@
  	    <me>             <color value="white" /> </me>
 		<opponent>       <color value="#FFCC00" /> </opponent>
      </font>
-	<style value="Chat { background: black; } QTextEdit   { background: black; font-size: 18px; font: italic; color: white; }"/> 
+	<style value="Chat      { background: black; } 
+                  QTextEdit { background: black; font-size: 18px; font: italic; color: white; }"/> 
   </CommonChat>
 
 
@@ -48,29 +49,20 @@
  	    <me>             <color value="white" /> </me>
 		<opponent>       <color value="#FFCC00" /> </opponent>
      </font>
-	<style value="Chat { background: black; } QTextEdit   { background: black; font-size: 18px; font: italic; color: white; }"/> 
+	<style value="Chat       { background: black; } 
+                  QTextEdit  { background: black; font-size: 18px; font: italic; color: white; }"/> 
   </TableChat>
 
 
   <Buttons>
-    <width value="192" />
-    <height value="170" />
-    <textOffset value="120" />
+    <width value="192" />  <height value="170" />  <textOffset value="120" />
     <font>
-      <family value="Helvetica [Cronyx]" />
-      <size value="16" />
-      <color value="white" />
+      <family value="Helvetica [Cronyx]" /> <size value="16" />  <color value="white" />
     </font>
 
       <Exit>
-        <portrait>
-          <x value="380" />
-          <y value="-10" />
-        </portrait>
-        <landscape>
-          <x value="700" />
-          <y value="-30" />
-        </landscape>
+        <portrait>  <x value="380" />  <y value="-10" />  </portrait>
+        <landscape> <x value="700" />  <y value="-30" />  </landscape>
       </Exit>
 
       <NewGame>
@@ -95,14 +87,8 @@
 
 
       <GameMenu>
-        <portrait>
-          <x value="5" />
-          <y value="550" />
-        </portrait>
-        <landscape>
-          <x value="5" />
-          <y value="-25" />
-        </landscape>
+        <portrait>  <x value="5" />   <y value="550" />  </portrait>
+        <landscape> <x value="5" />   <y value="-25" />  </landscape>
       </GameMenu>
 
   </Buttons>
@@ -113,81 +99,40 @@
   </Cell>
 
   <Piece>
-    <width value="21" />
-    <height value="50" />
+    <width value="21" />  <height value="50" />
   </Piece>
 
   <Board>
     <width value="400" />
-    <border>
-      <color value="white" />
-    </border>
-    <portrait>
-      <x value="0" />
-      <y value="50" />
-    </portrait>
-    <landscape>
-      <x value="295" />
-      <y value="15" />
-    </landscape>
+    <border>  <color value="white" />  </border>
+    <portrait>  <x value="0" />   <y value="50" />  </portrait>
+    <landscape> <x value="295" /> <y value="15" />  </landscape>
   </Board>
 
 
   <Clocks>
     <MoveClock>
-        <font>
-          <family value="Helvetica [Cronyx]" />
-          <size value="16" />
-          <color>
-            <active value="white" />
-            <inactive value="grey" />
-          </color>
+        <font> <family value="Helvetica [Cronyx]" />  <size value="16" />  
+               <color> <active value="white" /> <inactive value="grey" />  </color>
         </font>
-        <portrait>
-          <x value="5" />
-          <y value="450" />
-        </portrait>
-        <landscape>
-          <x value="5" />
-          <y value="160" />
-        </landscape>
+        <portrait>  <x value="5" />  <y value="450" />  </portrait>
+        <landscape> <x value="5" />  <y value="160" />  </landscape>
     </MoveClock>
 
     <GameClock>
-        <font>
-          <family value="Helvetica [Cronyx]" />
-          <size value="10" />
-          <color>
-            <active value="white" />
-            <inactive value="grey" />
-          </color>
+        <font>  <family value="Helvetica [Cronyx]" />  <size value="10" />
+                <color>  <active value="white" />  <inactive value="grey" />   </color>
         </font>
-        <portrait>
-          <x value="5" />
-          <y value="480" />
-        </portrait>
-        <landscape>
-          <x value="5" />
-          <y value="190" />
-        </landscape>
+        <portrait>  <x value="5" />  <y value="480" />  </portrait>
+        <landscape> <x value="5" />  <y value="190" />  </landscape>
     </GameClock>
   </Clocks>
 
 
   <GameStateText>
-        <font>
-          <family value="Helvetica [Cronyx]" />
-          <size value="16" />
-          <color value = "white" />
-        </font>
-        <portrait>
-          <x value="5" />
-          <y value="5" />
-        </portrait>
-        <landscape>
-          <x value="295" />
-          <y value="-25" />
-        </landscape>
+        <font>  <family value="Helvetica [Cronyx]" />  <size value="16" />  <color value = "white" />  </font>
+        <portrait>  <x value="5" />   <y value="5" />   </portrait>
+        <landscape> <x value="295" /> <y value="-25" /> </landscape>
   </GameStateText>
 
 </xml>
