@@ -19,7 +19,11 @@ class ChatMessageDialog: public MyDialog
 public:
     ChatMessageDialog(ChatType chatType, QWidget *parent = 0);
 
+protected:
+    void keyPressEvent(QKeyEvent *);
+
 private:
+
 
     QLabel* label;
     QLineEdit* mEdit;
