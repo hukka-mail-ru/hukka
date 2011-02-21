@@ -4,6 +4,7 @@
 #include <QLineEdit>
 #include <QScrollArea>
 #include <QLabel>
+#include <QTextEdit>
 #include <QPushButton>
 #include <QDialog>
 #include <QGraphicsPixmapItem>
@@ -25,10 +26,10 @@ public:
 
 private:
 
-    class ChatHistory: public QLabel
+    class ChatHistory: public QTextEdit
     {
     public:
-        ChatHistory(QWidget* parent, ChatType type): QLabel(parent), mChatType(type)  { }
+        ChatHistory(QWidget* parent, ChatType type): QTextEdit(parent), mChatType(type)  { }
     protected:
         virtual void mouseReleaseEvent(QMouseEvent * event);
     private:
@@ -39,7 +40,7 @@ private:
     QGraphicsScene* mParentScene;
 
     ChatHistory* mHistory;
-    QScrollArea* mScrollArea;
+//    QScrollArea* mScrollArea;
     QGraphicsRectItem* mBorder;
 
     ChatType mChatType;

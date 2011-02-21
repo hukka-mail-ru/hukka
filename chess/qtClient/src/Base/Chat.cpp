@@ -16,8 +16,7 @@ Chat::Chat(QWidget* parent, ChatType type):
     setWindowFlags(Qt::Widget);
 
     setStyleSheet("Chat        { background: black; } "
-                  "QScrollArea { background: black; font-size: 18px; } "
-                  "QLabel      { background: black; font-size: 18px; color: white; }"
+                  "QTextEdit   { background: black; font-size: 18px; font: italic; color: white; }"
                   );
 
     // HEADER
@@ -28,11 +27,7 @@ Chat::Chat(QWidget* parent, ChatType type):
 
     mHistory = new ChatHistory(this, mChatType);
     mHistory->setAlignment(Qt::AlignLeft | Qt::AlignBottom);
-    mHistory->setWordWrap(true);
-
-    mScrollArea = new QScrollArea(this);
-    mScrollArea->setAlignment(Qt::AlignLeft | Qt::AlignBottom);
-    mScrollArea->setWidget(mHistory);
+    mHistory->setReadOnly(true);
 
     if(mChatType == CT_TABLE_CHAT)
     {
@@ -61,14 +56,14 @@ void Chat::updatePos(OrientationStatus orientation)
     int width  = XML::instance().readValue(XML_ITEMS_FILENAME, path << chatNode << orientNode << XML_NODE_WIDTH).toInt(); path.clear();
     int height = XML::instance().readValue(XML_ITEMS_FILENAME, path << chatNode << orientNode << XML_NODE_HEIGHT).toInt(); path.clear();
 
-    int textOffset   = XML::instance().readValue(XML_ITEMS_FILENAME, path << chatNode << XML_NODE_TEXT_OFFSET).toInt(); path.clear();
-    int borderWidth  = XML::instance().readValue(XML_ITEMS_FILENAME, path << chatNode << XML_NODE_BORDER << XML_NODE_WIDTH).toInt(); path.clear();
+   // int textOffset   = XML::instance().readValue(XML_ITEMS_FILENAME, path << chatNode << XML_NODE_TEXT_OFFSET).toInt(); path.clear();
+   // int borderWidth  = XML::instance().readValue(XML_ITEMS_FILENAME, path << chatNode << XML_NODE_BORDER << XML_NODE_WIDTH).toInt(); path.clear();
 
     move(x, y);
     setFixedSize(width, height);
 
     mHistory->setMinimumSize(width, height);
-    mScrollArea->setFixedSize(width, height);
+    qDebug() << "Chat::updatePos: end";
 }
 
 
@@ -89,12 +84,21 @@ void Chat::onChatMessage(const QString& originalMessage)
         message = message.mid(1, len);
     }
 
-    QString text = mHistory->text() + "\n" + message;
-    mHistory->setText(text);
-    mHistory->adjustSize();
+    QString htmlText = mHistory->toHtml();
 
-    QScrollBar* vsBar = mScrollArea->verticalScrollBar();
-    vsBar->setSliderPosition(vsBar->maximum());
+    QString username = Client::instance()->username() + ":";
+    if(message.left(username.length()) == username)
+    {
+         htmlText += "<font color=\"white\">" + message + "</font>";
+    }
+    else
+    {
+        htmlText += "<font color=\"grey\">" + message + "</font>";
+    }
+
+    mHistory->setHtml(htmlText);
+    mHistory->adjustSize();
+    mHistory->verticalScrollBar()->setSliderPosition(mHistory->verticalScrollBar()->maximum());
 }
 
 

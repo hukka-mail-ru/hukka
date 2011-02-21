@@ -111,6 +111,7 @@ public:
 
         GameStatus   getGameStatus()   { return mGameStatus; }
         void         setGameStatus(GameStatus status)   { mGameStatus = status; }
+        QString      username()        { return mUsername; }
 
 signals:
 
@@ -173,6 +174,7 @@ private:
         void processMessageCHAT(const MessageHeader& header, const QByteArray& buffer);
 
         QString mName;
+        QString mUsername;
 
         QTcpSocket mSocket;
 

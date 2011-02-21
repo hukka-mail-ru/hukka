@@ -129,6 +129,7 @@ void Client::login(const QString& username, const QString& passwd)
     try
     {
         // send command
+        mUsername = username;
         QByteArray data = (username + QChar(0) + passwd).toAscii();
         sendCmd(SRV, CMD_LOGIN, data);
     }
@@ -151,6 +152,7 @@ void Client::registerUser(const QString& username, const QString& passwd)
 
     try {
         // send command
+        mUsername = username;
         QByteArray data = (username + QChar(0) + passwd).toAscii();
         sendCmd(REG, CMD_REG, data);
 
