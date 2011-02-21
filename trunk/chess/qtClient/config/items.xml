@@ -2,45 +2,33 @@
 
   <MainWindow>
     <color value = "black" />
-    <portrait>
-      <width value="800" />
-      <height value="480" />
-    </portrait>
-    <landscape>
-      <width value="800" />
-      <height value="480" />
-    </landscape>
+    <portrait>  <width value="800" />  <height value="480" />  </portrait>
+    <landscape> <width value="800" />  <height value="480" />  </landscape>
   </MainWindow>
 
   <Scene>
-    <margin>
-       <width value="5" />
-    </margin>
-    <portrait>
-      <x value="0" />
-      <y value="0" />
-      <width value="400" />
-      <height value="750" />
-    </portrait>
-    <landscape>
-      <x value="0" />
-      <y value="0" />
-      <width value="750" />
-      <height value="400" />
-    </landscape>
+    <margin>  <width value="5" />  </margin>
+    <portrait>   <x value="0" />   <y value="0" />  <width value="400" />  <height value="750" />  </portrait>
+    <landscape>  <x value="0" />   <y value="0" />  <width value="750" />  <height value="400" />  </landscape>
   </Scene>
 
 
   <Splash>
-    <portrait>
-      <x value="-60" />
-      <y value="20" />
-    </portrait>
-    <landscape>
-      <x value="0" />
-      <y value="0" />
-    </landscape>
+    <portrait>  <x value="-60" />  <y value="20" /> </portrait>
+    <landscape>  <x value="0" />   <y value="0" /> </landscape>
   </Splash>
+
+  
+  <Dialogs>
+     <style value="MyDialog    { background: grey; } 
+                   QLineEdit   { font-size: 18px; } 
+                   QLabel      { font-size: 18px; color: white; }
+                   QCheckBox   { font-size: 18px; color: white; }
+                   QComboBox   { font-size: 18px; }
+                   QPushButton { font-size: 18px; }
+                   QTableWidget { font-size: 18px; }"/> 
+  </Dialogs>
+
 
   <CommonChat>
     <portrait>  <x value="5" /> <y value="0" />  <width value="500" /> <height value="220" />  </portrait>
@@ -49,7 +37,9 @@
  	    <me>             <color value="white" /> </me>
 		<opponent>       <color value="#FFCC00" /> </opponent>
      </font>
+	<style value="Chat { background: black; } QTextEdit   { background: black; font-size: 18px; font: italic; color: white; }"/> 
   </CommonChat>
+
 
   <TableChat>
     <portrait>  <x value="200" />  <y value="450" />  <width value="200" />  <height value="200" />  </portrait>
@@ -58,6 +48,7 @@
  	    <me>             <color value="white" /> </me>
 		<opponent>       <color value="#FFCC00" /> </opponent>
      </font>
+	<style value="Chat { background: black; } QTextEdit   { background: black; font-size: 18px; font: italic; color: white; }"/> 
   </TableChat>
 
 

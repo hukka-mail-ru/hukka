@@ -15,16 +15,14 @@ Chat::Chat(QWidget* parent, ChatType type):
     // No title, no [X] button, no bottom
     setWindowFlags(Qt::Widget);
 
-    // TODO move StyleSheet into items.xml
-    setStyleSheet("Chat        { background: black; } "
-                  "QTextEdit   { background: black; font-size: 18px; font: italic; color: white; }"
-                  );
-
     QString chatNode = (mChatType == CT_COMMON_CHAT) ? XML_NODE_COMMON_CHAT : XML_NODE_TABLE_CHAT;
+
+    QString style =  XML::instance().readValue(XML_ITEMS_FILENAME, QList<QString>() << chatNode << XML_NODE_STYLE);
+    setStyleSheet(style);
+
     mColorMe       = XML::instance().readValue(XML_ITEMS_FILENAME, QList<QString>() << chatNode << XML_NODE_FONT << XML_NODE_ME << XML_NODE_COLOR);
     mColorOpponent = XML::instance().readValue(XML_ITEMS_FILENAME, QList<QString>() << chatNode << XML_NODE_FONT << XML_NODE_OPPONENT << XML_NODE_COLOR);
 
-    // HEADER
 
     mHistory = new ChatHistory(this, mChatType);
     mHistory->setAlignment(Qt::AlignLeft | Qt::AlignBottom);

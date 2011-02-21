@@ -30,6 +30,7 @@
 #define XML_NODE_MAIN_WINDOW      "MainWindow"
 #define XML_NODE_SPLASH           "Splash"
 #define XML_NODE_SCENE            "Scene"
+#define XML_NODE_DIALOGS          "Dialogs"
 #define XML_NODE_BUTTONS          "Buttons"
 #define XML_NODE_EXIT             "Exit"
 #define XML_NODE_COMMON_CHAT      "CommonChat"
@@ -62,6 +63,7 @@
 #define XML_NODE_TEXT_OFFSET "textOffset"
 #define XML_NODE_MARGIN      "margin"
 
+#define XML_NODE_STYLE       "style"
 #define XML_NODE_FONT        "font"
 #define XML_NODE_FAMILY      "family"
 #define XML_NODE_SIZE        "size"
