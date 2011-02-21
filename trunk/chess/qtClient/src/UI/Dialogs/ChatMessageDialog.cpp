@@ -1,3 +1,6 @@
+#include <QDebug>
+#include <QKeyEvent>
+
 #include "ChatMessageDialog.h"
 #include <Defines.h>
 #include <Client.h>
@@ -23,11 +26,20 @@ ChatMessageDialog::ChatMessageDialog(ChatType chatType, QWidget *parent):
 
     this->setLayout(layout);
 
+    mEdit->setFocus();
+
     connect(okButton, SIGNAL(clicked()), this, SLOT(onOkClicked()));
 }
 
-
-
+void ChatMessageDialog::keyPressEvent(QKeyEvent* e)
+{
+    qDebug() << "keyPressEvent " << e->key() << Qt::Key_Return;
+    if(e->key() == Qt::Key_Return)
+    {
+        qDebug() << "Here";
+        onOkClicked();
+    }
+}
 
 void ChatMessageDialog::onOkClicked()
 {

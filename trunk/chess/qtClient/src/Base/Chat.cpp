@@ -15,6 +15,7 @@ Chat::Chat(QWidget* parent, ChatType type):
     // No title, no [X] button, no bottom
     setWindowFlags(Qt::Widget);
 
+    // TODO move StyleSheet into items.xml
     setStyleSheet("Chat        { background: black; } "
                   "QTextEdit   { background: black; font-size: 18px; font: italic; color: white; }"
                   );
@@ -86,6 +87,7 @@ void Chat::onChatMessage(const QString& originalMessage)
 
     QString htmlText = mHistory->toHtml();
 
+    // TODO move colors into items.xml
     QString username = Client::instance()->username() + ":";
     if(message.left(username.length()) == username)
     {
