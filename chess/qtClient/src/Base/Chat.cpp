@@ -20,11 +20,11 @@ Chat::Chat(QWidget* parent, ChatType type):
                   "QTextEdit   { background: black; font-size: 18px; font: italic; color: white; }"
                   );
 
-    // HEADER
     QString chatNode = (mChatType == CT_COMMON_CHAT) ? XML_NODE_COMMON_CHAT : XML_NODE_TABLE_CHAT;
-    QString family = XML::instance().readValue(XML_ITEMS_FILENAME, QList<QString>() << chatNode << XML_NODE_FONT << XML_NODE_FAMILY);
-    int size =       XML::instance().readValue(XML_ITEMS_FILENAME, QList<QString>() << chatNode << XML_NODE_FONT << XML_NODE_SIZE).toInt();
-    QString color  = XML::instance().readValue(XML_ITEMS_FILENAME, QList<QString>() << chatNode << XML_NODE_FONT << XML_NODE_COLOR);
+    mColorMe       = XML::instance().readValue(XML_ITEMS_FILENAME, QList<QString>() << chatNode << XML_NODE_FONT << XML_NODE_ME << XML_NODE_COLOR);
+    mColorOpponent = XML::instance().readValue(XML_ITEMS_FILENAME, QList<QString>() << chatNode << XML_NODE_FONT << XML_NODE_OPPONENT << XML_NODE_COLOR);
+
+    // HEADER
 
     mHistory = new ChatHistory(this, mChatType);
     mHistory->setAlignment(Qt::AlignLeft | Qt::AlignBottom);
@@ -51,11 +51,10 @@ void Chat::updatePos(OrientationStatus orientation)
 
     QString orientNode = XML_NODE_LANDSCAPE; //(orientation == OrientationVertical) ? XML_NODE_PORTRAIT : XML_NODE_LANDSCAPE;
 
-    QList<QString> path;
-    int x      = XML::instance().readValue(XML_ITEMS_FILENAME, path << chatNode << orientNode << XML_NODE_X).toInt(); path.clear();
-    int y      = XML::instance().readValue(XML_ITEMS_FILENAME, path << chatNode << orientNode << XML_NODE_Y).toInt(); path.clear();
-    int width  = XML::instance().readValue(XML_ITEMS_FILENAME, path << chatNode << orientNode << XML_NODE_WIDTH).toInt(); path.clear();
-    int height = XML::instance().readValue(XML_ITEMS_FILENAME, path << chatNode << orientNode << XML_NODE_HEIGHT).toInt(); path.clear();
+    int x      = XML::instance().readValue(XML_ITEMS_FILENAME, QList<QString>() << chatNode << orientNode << XML_NODE_X).toInt();
+    int y      = XML::instance().readValue(XML_ITEMS_FILENAME, QList<QString>() << chatNode << orientNode << XML_NODE_Y).toInt();
+    int width  = XML::instance().readValue(XML_ITEMS_FILENAME, QList<QString>() << chatNode << orientNode << XML_NODE_WIDTH).toInt();
+    int height = XML::instance().readValue(XML_ITEMS_FILENAME, QList<QString>() << chatNode << orientNode << XML_NODE_HEIGHT).toInt();
 
    // int textOffset   = XML::instance().readValue(XML_ITEMS_FILENAME, path << chatNode << XML_NODE_TEXT_OFFSET).toInt(); path.clear();
    // int borderWidth  = XML::instance().readValue(XML_ITEMS_FILENAME, path << chatNode << XML_NODE_BORDER << XML_NODE_WIDTH).toInt(); path.clear();
@@ -91,11 +90,11 @@ void Chat::onChatMessage(const QString& originalMessage)
     QString username = Client::instance()->username() + ":";
     if(message.left(username.length()) == username)
     {
-         htmlText += "<font color=\"white\">" + message + "</font>";
+         htmlText += "<font color=\"" + mColorMe + "\">" + message + "</font>";
     }
     else
     {
-        htmlText += "<font color=\"grey\">" + message + "</font>";
+        htmlText += "<font color=\""+ mColorOpponent + "\">" + message + "</font>";
     }
 
     mHistory->setHtml(htmlText);

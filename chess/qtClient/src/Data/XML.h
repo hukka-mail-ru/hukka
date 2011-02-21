@@ -69,6 +69,9 @@
 #define XML_NODE_ACTIVE      "active"
 #define XML_NODE_INACTIVE    "inactive"
 
+#define XML_NODE_ME          "me"
+#define XML_NODE_OPPONENT    "opponent"
+
 #define XML_VALUE_TAG        "value"
 
 class XML
