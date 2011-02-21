@@ -5,6 +5,7 @@
 #include "MyDialog.h"
 #include "Defines.h"
 #include "MainWindow.h"
+#include "XML.h"
 
 MyDialog::MyDialog(QWidget *parent, Qt::WindowFlags flags): QDialog(parent, flags)
 {
@@ -17,13 +18,8 @@ MyDialog::MyDialog(QWidget *parent, Qt::WindowFlags flags): QDialog(parent, flag
     setWindowFlags(Qt::Widget);
 
     // Background
-    setStyleSheet("MyDialog    { background: grey; } "
-                  "QLineEdit   { font-size: 18px; } "
-                  "QLabel      { font-size: 18px; color: white; }"
-                  "QCheckBox   { font-size: 18px; color: white; }"
-                  "QComboBox   { font-size: 18px; }"
-                  "QPushButton { font-size: 18px; }"
-                  "QTableWidget { font-size: 18px; }");
+    QString style =  XML::instance().readValue(XML_ITEMS_FILENAME, QList<QString>() << XML_NODE_DIALOGS << XML_NODE_STYLE);
+    setStyleSheet(style);
 }
 
 MyDialog::~MyDialog()
