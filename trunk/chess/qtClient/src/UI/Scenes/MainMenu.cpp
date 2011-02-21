@@ -213,7 +213,6 @@ void MainMenu::onAuthorized()
         mChat = new Chat(MainWindow::instance(), CT_COMMON_CHAT);
         mChat->updatePos(MainWindow::instance()->getOrientation());
         mChat->show();
-        this->addWidget(mChat);
 
         MainWindow::instance()->setMode(MW_NORMAL);
     }
