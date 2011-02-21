@@ -45,6 +45,10 @@ private:
 
     ChatType mChatType;
 
+    // colors
+    QString mColorMe;
+    QString mColorOpponent;
+
 private slots:
 
     void onChatMessage(const QString& message);

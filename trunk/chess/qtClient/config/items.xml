@@ -43,53 +43,21 @@
   </Splash>
 
   <CommonChat>
-    <font>
-      <family value="Helvetica [Cronyx]" />
-      <size value="10" />
-      <color value="white" />
-    </font>
-    <border>
-      <color value="white" />
-      <width value="1" />
-    </border>
-    <textOffset value="25" />
-    <portrait>
-      <x value="5" />
-      <y value="0" />
-      <width value="500" />
-      <height value="220" />
-    </portrait>
-    <landscape>
-      <x value="5" />
-      <y value="5" />
-      <width value="500" />
-      <height value="280" />
-    </landscape>
+    <portrait>  <x value="5" /> <y value="0" />  <width value="500" /> <height value="220" />  </portrait>
+    <landscape> <x value="5" /> <y value="5" />  <width value="500" /> <height value="280" />  </landscape>
+	<font>
+ 	    <me>             <color value="white" /> </me>
+		<opponent>       <color value="#FFCC00" /> </opponent>
+     </font>
   </CommonChat>
 
   <TableChat>
-    <font>
-      <family value="Helvetica [Cronyx]" />
-      <size value="10" />
-      <color value="white" />
-    </font>
-    <border>
-      <color value="white" />
-      <width value="1" />
-    </border>
-    <textOffset value="25" />
-    <portrait>
-      <x value="200" />
-      <y value="450" />
-      <width value="200" />
-      <height value="200" />
-    </portrait>
-    <landscape>
-      <x value="5" />
-      <y value="260" />
-      <width value="300" />
-      <height value="200" />
-    </landscape>
+    <portrait>  <x value="200" />  <y value="450" />  <width value="200" />  <height value="200" />  </portrait>
+    <landscape> <x value="5" />    <y value="260" />  <width value="300" />  <height value="200" />  </landscape>
+	<font>
+ 	    <me>             <color value="white" /> </me>
+		<opponent>       <color value="#FFCC00" /> </opponent>
+     </font>
   </TableChat>
 
 
@@ -115,47 +83,23 @@
       </Exit>
 
       <NewGame>
-        <portrait>
-          <x value="0" />
-          <y value="350" />
-        </portrait>
-        <landscape>
-          <x value="0" />
-          <y value="260" />
-        </landscape>
+        <portrait>  <x value="0" /> <y value="350" /> </portrait>
+        <landscape> <x value="0" /> <y value="260" /> </landscape>
       </NewGame>
 
       <FindGame>
-        <portrait>
-          <x value="192" />
-          <y value="350" />
-        </portrait>
-        <landscape>
-          <x value="192" />
-          <y value="260" />
-        </landscape>
+        <portrait>  <x value="192" />  <y value="350" />  </portrait>
+        <landscape> <x value="192" />  <y value="260" />  </landscape>
       </FindGame>
 
       <Chat>
-        <portrait>
-          <x value="0" />
-          <y value="550" />
-        </portrait>
-        <landscape>
-          <x value="384" />
-          <y value="260" />
-        </landscape>
+        <portrait>  <x value="0" />   <y value="550" /> </portrait>
+        <landscape> <x value="384" /> <y value="260" /> </landscape>
       </Chat>
 
       <Options>
-        <portrait>
-          <x value="192" />
-          <y value="550" />
-        </portrait>
-        <landscape>
-          <x value="576" />
-          <y value="260" />
-        </landscape>
+        <portrait> <x value="192" />  <y value="550" /> </portrait>
+        <landscape> <x value="576" />  <y value="260" /> </landscape>
       </Options>
 
 
