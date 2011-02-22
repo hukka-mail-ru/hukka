@@ -33,10 +33,8 @@ ChatMessageDialog::ChatMessageDialog(ChatType chatType, QWidget *parent):
 
 void ChatMessageDialog::keyPressEvent(QKeyEvent* e)
 {
-    qDebug() << "keyPressEvent " << e->key() << Qt::Key_Return;
     if(e->key() == Qt::Key_Return)
     {
-        qDebug() << "Here";
         onOkClicked();
     }
 }

@@ -68,6 +68,7 @@ void GameScene::initialize()
     mGameStateText = addText("", QFont(family, size));
     mGameStateText->setDefaultTextColor( QColor(color) );
 
+
     connect(Client::instance(), SIGNAL(gotField(Field, bool, bool)), this, SLOT(onGotField(Field, bool, bool)));
 
 }

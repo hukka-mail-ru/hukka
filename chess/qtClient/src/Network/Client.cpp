@@ -668,7 +668,7 @@ void Client::sendTableChatMessage(LOGICID logicID, TABLEID tableID, const QStrin
         assert(mGameStatus == GAM_STARTED);
 
         // send command
-        QByteArray data = Q_BYTE_ARRAY(logicID) + Q_BYTE_ARRAY(tableID) + message.toAscii();
+        QByteArray data = Q_BYTE_ARRAY(logicID) + Q_BYTE_ARRAY(tableID) + message.toUtf8();
         sendCmd(CHAT, CMD_TBL_CHAT_MSG, data);
 
     }
@@ -721,7 +721,7 @@ void Client::sendCommonChatMessage(LOGICID logicID, const QString& message)
         assert(mClientAuthorized);
 
         // send command
-        QByteArray data = Q_BYTE_ARRAY(logicID) + message.toAscii();
+        QByteArray data = Q_BYTE_ARRAY(logicID) + message.toUtf8();
         sendCmd(CHAT, CMD_CHAT_MSG, data);
 
     }
@@ -1380,11 +1380,11 @@ void Client::processMessageCHAT(const MessageHeader& header, const QByteArray& b
 {
     if(header.cmd == ANS_MSG)
     {
-        emit commonChatMessage(buffer.data());
+        emit commonChatMessage(QString::fromUtf8(buffer.data()));
     }
     else if(header.cmd == ANS_MSG_TBL)
     {
-        emit tableChatMessage(buffer.data());
+        emit tableChatMessage(QString::fromUtf8(buffer.data()));
     }
     else
     {
