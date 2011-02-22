@@ -8,6 +8,8 @@
 
 #define MYDEBUG
 
+using namespace std;
+
 CHTServer* CHTServer::m_pSelf = 0;
 int CHTServer::m_nRefCount = 0;
 
@@ -236,7 +238,7 @@ void CHTServer::newMsg( ClientMsg* _pMsg )
     _pMsg->GetData( ClientMsg::etpCommand, &vecCmd );
 
     std::cout << "--- INCOMING MSG --- FROM: " << ( uint32_t )_pMsg->GetTo() <<
-                  ";  COMMAND: " << ( uint32_t ) _pMsg->GetCommand() <<
+                  ";  COMMAND: " << ( uint32_t )(unsigned char) _pMsg->GetCommand() <<
                   ";  DATA: ";
     for ( int i = 0; i < vecCmd.size(); ++i )
     {
@@ -258,7 +260,7 @@ void CHTServer::newMsg( ClientMsg* _pMsg )
             if (vecCmd.size() > sizeof(uint32_t)*2)
             {
                 vecCmd.push_back(0);
-                messageToChat( _pMsg->GetTo(), (uint32_t) vecCmd.at(0), (TVecChar*)&vecCmd.at(sizeof(uint32_t)*2), (uint32_t) vecCmd.at(sizeof(uint32_t)) );
+                messageToChat( _pMsg->GetTo(), (uint32_t) vecCmd.at(0), (TVecChar*)&vecCmd.at(sizeof(uint32_t)*2), (uint32_t) (unsigned char) vecCmd.at(sizeof(uint32_t)) );
             }
             break;
         case CMD_GAME_CHAT_JOIN:
@@ -276,13 +278,13 @@ void CHTServer::newMsg( ClientMsg* _pMsg )
         case CMD_TBL_CHAT_JOIN:
             if (vecCmd.size() == sizeof(uint32_t) * 2 )
             {
-                joinToChat( _pMsg->GetTo(), (uint32_t) vecCmd.at(0), (uint32_t) vecCmd.at(sizeof(uint32_t)) );
+                joinToChat( _pMsg->GetTo(), (uint32_t) vecCmd.at(0), (uint32_t)(unsigned char)  vecCmd.at(sizeof(uint32_t)) );
             }
             break;
         case CMD_TBL_CHAT_LEAVE:
             if (vecCmd.size() == sizeof(uint32_t) *2 )
             {
-                leaveChat( _pMsg->GetTo(), (uint32_t) vecCmd.at(0), (uint32_t) vecCmd.at(sizeof(uint32_t)) );
+                leaveChat( _pMsg->GetTo(), (uint32_t) vecCmd.at(0), (uint32_t)(unsigned char)  vecCmd.at(sizeof(uint32_t)) );
             }
             break;
         default:
