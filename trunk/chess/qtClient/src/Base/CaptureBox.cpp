@@ -107,7 +107,7 @@ void CaptureBox::update(const Field& field, bool white)
         QGraphicsPixmapItem* pixmap = mParentScene->addPixmap(Pixmaps::get(piecePixmapKey));
 
         int x = white ? mOpponentX : mMeX;
-        int y = white ? mOpponentY : mMeX;
+        int y = white ? mOpponentY : mMeY;
 
         pixmap->moveBy(x + i*mWidth, y);
     }

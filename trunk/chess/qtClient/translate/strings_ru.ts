@@ -481,12 +481,12 @@ Please finish it first, then create a new game.</source>
         <translation type="unfinished">Меню игры</translation>
     </message>
     <message>
-        <location filename="../src/UI/Scenes/GameScene.cpp" line="156"/>
+        <location filename="../src/UI/Scenes/GameScene.cpp" line="154"/>
         <source>Your move</source>
         <translation type="unfinished">Ваш ход</translation>
     </message>
     <message>
-        <location filename="../src/UI/Scenes/GameScene.cpp" line="157"/>
+        <location filename="../src/UI/Scenes/GameScene.cpp" line="155"/>
         <source>Opponent&apos;s move</source>
         <translation type="unfinished">Ход противника</translation>
     </message>
