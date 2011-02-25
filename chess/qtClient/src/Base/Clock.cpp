@@ -51,7 +51,7 @@ void Clock::getServerTime()
 void Clock::onGotTime(quint32 seconds)
 {
     mSeconds = seconds;
-    qDebug() << "onGotTime " << seconds;
+ //   qDebug() << "onGotTime " << seconds;
 }
 
 void Clock::updatePos(OrientationStatus orientation)

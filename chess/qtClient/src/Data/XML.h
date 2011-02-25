@@ -37,6 +37,7 @@
 #define XML_NODE_TABLE_CHAT       "TableChat"
 #define XML_NODE_CELL             "Cell"
 #define XML_NODE_PIECE            "Piece"
+#define XML_NODE_CAPTURED         "Captured"
 #define XML_NODE_BOARD            "Board"
 #define XML_NODE_CLOCKS           "Clocks"
 #define XML_NODE_GAME_STATE_TEXT  "GameStateText"

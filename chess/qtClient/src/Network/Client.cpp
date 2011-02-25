@@ -887,13 +887,13 @@ void Client::sendCmd(char service, char command, const QByteArray& data)
     }
 
     Q_ASSERT(bytes == message.size());
-
+/*
 qDebug() << "++++++++++++++++\n" << mName << "COMMAND SENT" << serviceToString(service) << commandToString(service, command);
 QString str = "SENT BYTES  : ";
 for(int i=0; i<message.size(); i++)
     str += QString::number((int)(unsigned char)message[i]) + " ";
 qDebug() << str;
-
+*/
 }
 
 
@@ -924,7 +924,7 @@ void Client::onReadyRead()
     {
 
         MessageHeader* header = (MessageHeader*)buf.data();
-
+/*
 qDebug() << "----------\n" << mName << "MESSAGE RECEIVED"
          << serviceToString((quint32)header->service)
          << commandToString((quint32)header->service, (quint32)header->cmd);
@@ -932,7 +932,7 @@ QString str = "REC. BYTES  : ";
 for(int i=0; i<buf.size(); i++)
     str += QString::number((int)(unsigned char)buf[i]) + " ";
 qDebug() << str;
-
+*/
         if(header->sign != PROTOCOL_SIGNATURE) {
             qDebug("Server uses wrong protocol ");
             return;
@@ -1243,7 +1243,7 @@ void Client::processMessageCHS(const MessageHeader& header, const QByteArray& bu
 
         Field field;
         for(int i = 0; i<CELLS_IN_FIELD; ++i)
-            field.push_back((PixmapKey)reply->cells[i]);
+            field.push_back((piece_type)reply->cells[i]);
 
         emit gotField(field, reply->myMove, reply->playerNr == reply->whitePlayerNr);
     }
@@ -1350,7 +1350,7 @@ void Client::processMessageCHS(const MessageHeader& header, const QByteArray& bu
         Reply* reply = (Reply*)buffer.data();
 
         emit gotMoveTime(reply->time2step);
-        qDebug() << "tableID: " << reply->tableID << " time2step: " << reply->time2step;
+      //  qDebug() << "tableID: " << reply->tableID << " time2step: " << reply->time2step;
     }
     else if(header.cmd == ANS_CHECK_TIME_GAME)
     {

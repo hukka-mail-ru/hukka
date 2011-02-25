@@ -18,7 +18,7 @@ class Cell: public Button
 public:
     Cell(QGraphicsScene* scene, CELLID cellID, PixmapKey cellPixmapKey, QObject* parent = 0);
 
-    void setPiece(PixmapKey piecePixmapKey);
+    void setPiece(piece_type pieceType);
     void highlight();
     void removeHighlight();
 

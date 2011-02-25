@@ -18,8 +18,54 @@ Cell::Cell(QGraphicsScene* scene, CELLID cellID, PixmapKey cellPixmapKey, QObjec
 {
 }
 
-void Cell::setPiece(PixmapKey piecePixmapKey)
+void Cell::setPiece(piece_type pieceType)
 {
+    PixmapKey piecePixmapKey = PIX_NONE;
+
+    if(mCellPixmapKey == PIX_CELL_WHITE)
+    {
+        switch(pieceType)
+        {
+            case w_Rook:   piecePixmapKey = PIX_WHITE_ROOK_ON_WHITE; break;
+            case w_Knight: piecePixmapKey = PIX_WHITE_KNIGHT_ON_WHITE; break;
+            case w_Bishop: piecePixmapKey = PIX_WHITE_BISHOP_ON_WHITE; break;
+            case w_Queen:  piecePixmapKey = PIX_WHITE_QUEEN_ON_WHITE; break;
+            case w_King:   piecePixmapKey = PIX_WHITE_KING_ON_WHITE; break;
+            case w_Pawn:   piecePixmapKey = PIX_WHITE_PAWN_ON_WHITE; break;
+
+            case b_Rook:   piecePixmapKey = PIX_BLACK_ROOK_ON_WHITE; break;
+            case b_Knight: piecePixmapKey = PIX_BLACK_KNIGHT_ON_WHITE; break;
+            case b_Bishop: piecePixmapKey = PIX_BLACK_BISHOP_ON_WHITE; break;
+            case b_Queen:  piecePixmapKey = PIX_BLACK_QUEEN_ON_WHITE; break;
+            case b_King:   piecePixmapKey = PIX_BLACK_KING_ON_WHITE; break;
+            case b_Pawn:   piecePixmapKey = PIX_BLACK_PAWN_ON_WHITE; break;
+
+            default: break;
+        }
+    }
+    else if(mCellPixmapKey == PIX_CELL_BLACK)
+    {
+        switch(pieceType)
+        {
+            case w_Rook:   piecePixmapKey = PIX_WHITE_ROOK_ON_BLACK; break;
+            case w_Knight: piecePixmapKey = PIX_WHITE_KNIGHT_ON_BLACK; break;
+            case w_Bishop: piecePixmapKey = PIX_WHITE_BISHOP_ON_BLACK; break;
+            case w_Queen:  piecePixmapKey = PIX_WHITE_QUEEN_ON_BLACK; break;
+            case w_King:   piecePixmapKey = PIX_WHITE_KING_ON_BLACK; break;
+            case w_Pawn:   piecePixmapKey = PIX_WHITE_PAWN_ON_BLACK; break;
+
+            case b_Rook:   piecePixmapKey = PIX_BLACK_ROOK_ON_BLACK; break;
+            case b_Knight: piecePixmapKey = PIX_BLACK_KNIGHT_ON_BLACK; break;
+            case b_Bishop: piecePixmapKey = PIX_BLACK_BISHOP_ON_BLACK; break;
+            case b_Queen:  piecePixmapKey = PIX_BLACK_QUEEN_ON_BLACK; break;
+            case b_King:   piecePixmapKey = PIX_BLACK_KING_ON_BLACK; break;
+            case b_Pawn:   piecePixmapKey = PIX_BLACK_PAWN_ON_BLACK; break;
+
+            default: break;
+        }
+    }
+
+
     applyPixmap(piecePixmapKey);
     mPiecePixmapKey = piecePixmapKey;
 }

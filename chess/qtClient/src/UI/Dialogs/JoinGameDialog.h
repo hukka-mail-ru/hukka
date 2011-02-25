@@ -30,7 +30,7 @@ private:
 
     QList<TABLEID> mGameTableIDs;
 
-    quint32 mCounter;
+    int mCounter;
 
     void getParams(TABLEID tableID);
 

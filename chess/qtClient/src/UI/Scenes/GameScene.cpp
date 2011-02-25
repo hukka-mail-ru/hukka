@@ -19,7 +19,8 @@ GameScene::GameScene(QObject *parent):
        mBoard(NULL), mCells(NULL), mPieces(NULL), mHighlights(NULL),  mGameStateText(NULL),
        mChat(NULL),
        mMoveClock(this, tr("Move: "), SIGNAL(gotMoveTime(quint32)), XML_NODE_MOVE_CLOCK),
-       mGameClock(this, tr("Game: "), SIGNAL(gotGameTime(quint32)), XML_NODE_GAME_CLOCK)
+       mGameClock(this, tr("Game: "), SIGNAL(gotGameTime(quint32)), XML_NODE_GAME_CLOCK),
+       mCaptureBox(this)
 {
 
 }
@@ -188,6 +189,10 @@ void GameScene::updateGameField(const Field& field, bool white)
             cell = new Cell(this, cellID, PIX_CELL_BLACK);
         }
 
+
+        if(cell && !field.empty())
+            cell->setPiece(field[i * CELLS_IN_ROW + j]);
+
         QObject::connect(cell, SIGNAL(cellClicked(CELLID)), this, SLOT(onCellClicked(CELLID)));
 
         mCellArray.push_back(cell); // memorize the pointer
@@ -204,11 +209,9 @@ void GameScene::updateGameField(const Field& field, bool white)
         }
     }
 
+    // show Captured pieces
+    mCaptureBox.update(field, white);
 
-    for(unsigned i=0; i<field.size(); ++i)
-    {
-        mCellArray[i]->setPiece(field[i]);
-    }
 
 }
 
@@ -230,7 +233,7 @@ void GameScene::removeHighlight()
 void GameScene::onCellClicked(CELLID cellID)
 {
 
-    qDebug() << "onCellClicked: " << cellID;
+  //  qDebug() << "onCellClicked: " << cellID;
     UI::instance()->cellClicked(cellID);
 }
 
