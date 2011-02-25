@@ -51,7 +51,7 @@ void GameScene::initialize()
 
     // BOARD
     QString border_color =  XML::instance().readValue(XML_ITEMS_FILENAME, QList<QString>() << XML_NODE_BOARD << XML_NODE_BORDER << XML_NODE_COLOR);
-    mBoard = addRect (0, 0, 0, 0, QPen(QColor(border_color)));
+    //mBoard = addRect (0, 0, 0, 0, QPen(QColor(border_color)));
 
     // MENU BUTTON
     mMenuButton = new Button(this, Pixmaps::get(PIX_BUTTON_MENU), tr("Game menu"), XML_NODE_GAME_MENU);
@@ -100,6 +100,7 @@ void GameScene::updateItemsPositions(OrientationStatus orientation)
     int scene_width  = XML::instance().readValue(XML_ITEMS_FILENAME, QList<QString>() << XML_NODE_SCENE << orientNode << XML_NODE_WIDTH).toInt();
     int scene_height = XML::instance().readValue(XML_ITEMS_FILENAME, QList<QString>() << XML_NODE_SCENE << orientNode << XML_NODE_HEIGHT).toInt();
     setSceneRect( scene_x, scene_y, scene_width, scene_height );
+   // addRect( scene_x, scene_y, scene_width, scene_height, QPen(QColor(255, 255, 255)) );
 
     // border
     mMenuButton->updatePos(orientation);
@@ -110,7 +111,7 @@ void GameScene::updateItemsPositions(OrientationStatus orientation)
     int board_y = XML::instance().readValue(XML_ITEMS_FILENAME, QList<QString>() << XML_NODE_BOARD << orientNode << XML_NODE_Y).toInt();
     int board_width = XML::instance().readValue(XML_ITEMS_FILENAME, QList<QString>() << XML_NODE_BOARD << XML_NODE_WIDTH).toInt();
 
-    mBoard->setRect(board_x, board_y, board_width,  board_width);
+    mBoard = addRect (board_x, board_y, board_width,  board_width, QPen(QColor(0, 0, 0)));
     updateGameField(mField, mWhite);
 
     // clocks
