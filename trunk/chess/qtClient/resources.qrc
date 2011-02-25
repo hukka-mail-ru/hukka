@@ -2,6 +2,7 @@
  <qresource>
      <file>images/buttons.png</file>
      <file>images/exit.png</file>
+     <file>images/captured.png</file>
      <file>images/cells.png</file>
      <file>images/pieces.png</file>
      <file>images/splash.png</file>

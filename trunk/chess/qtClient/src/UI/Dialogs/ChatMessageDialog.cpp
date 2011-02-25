@@ -15,8 +15,6 @@ ChatMessageDialog::ChatMessageDialog(ChatType chatType, QWidget *parent):
     mEdit = new QLineEdit(this);
     okButton = new QPushButton(tr("OK"), this);
 
-  //  resize(MAIN_WINDOW_WIDTH/2, 0);
-
     layout = new QVBoxLayout(this);
 
     layout->addWidget(label);

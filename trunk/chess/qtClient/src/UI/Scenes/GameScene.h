@@ -10,6 +10,7 @@
 #include <Cell.h>
 #include <Chat.h>
 #include <Clock.h>
+#include <CaptureBox.h>
 #include <orientation.h>
 
 
@@ -68,6 +69,8 @@ private:
 
     Field mField;
     bool mWhite;
+
+    CaptureBox mCaptureBox;
 
 private slots:
 

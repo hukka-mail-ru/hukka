@@ -46,19 +46,52 @@ void Pixmaps::loadPixmaps()
     int pieceWidth  = XML::instance().readValue(XML_ITEMS_FILENAME, QList<QString>() << XML_NODE_PIECE << XML_NODE_WIDTH).toInt();
     int pieceHeight = XML::instance().readValue(XML_ITEMS_FILENAME, QList<QString>() << XML_NODE_PIECE << XML_NODE_HEIGHT).toInt();
 
-    mPixmaps.insert(PIX_WHITE_KING,   mPixmaps[PIX_PIECES].copy(pieceWidth * 0, 0, pieceWidth, pieceHeight ));
-    mPixmaps.insert(PIX_WHITE_QUEEN,  mPixmaps[PIX_PIECES].copy(pieceWidth * 1, 0, pieceWidth, pieceHeight ));
-    mPixmaps.insert(PIX_WHITE_BISHOP, mPixmaps[PIX_PIECES].copy(pieceWidth * 2, 0, pieceWidth, pieceHeight ));
-    mPixmaps.insert(PIX_WHITE_KNIGHT, mPixmaps[PIX_PIECES].copy(pieceWidth * 3, 0, pieceWidth, pieceHeight ));
-    mPixmaps.insert(PIX_WHITE_ROOK,   mPixmaps[PIX_PIECES].copy(pieceWidth * 4, 0, pieceWidth, pieceHeight ));
-    mPixmaps.insert(PIX_WHITE_PAWN,   mPixmaps[PIX_PIECES].copy(pieceWidth * 5, 0, pieceWidth, pieceHeight ));
+    mPixmaps.insert(PIX_WHITE_ROOK_ON_WHITE,   mPixmaps[PIX_PIECES].copy(pieceWidth * 0, 0, pieceWidth, pieceHeight ));
+    mPixmaps.insert(PIX_WHITE_KNIGHT_ON_WHITE, mPixmaps[PIX_PIECES].copy(pieceWidth * 1, 0, pieceWidth, pieceHeight ));
+    mPixmaps.insert(PIX_WHITE_BISHOP_ON_WHITE, mPixmaps[PIX_PIECES].copy(pieceWidth * 2, 0, pieceWidth, pieceHeight ));
+    mPixmaps.insert(PIX_WHITE_QUEEN_ON_WHITE,  mPixmaps[PIX_PIECES].copy(pieceWidth * 3, 0, pieceWidth, pieceHeight ));
+    mPixmaps.insert(PIX_WHITE_KING_ON_WHITE,   mPixmaps[PIX_PIECES].copy(pieceWidth * 4, 0, pieceWidth, pieceHeight ));
+    mPixmaps.insert(PIX_WHITE_PAWN_ON_WHITE,   mPixmaps[PIX_PIECES].copy(pieceWidth * 5, 0, pieceWidth, pieceHeight ));
 
-    mPixmaps.insert(PIX_BLACK_KING,   mPixmaps[PIX_PIECES].copy(pieceWidth * 0, pieceHeight, pieceWidth, pieceHeight ));
-    mPixmaps.insert(PIX_BLACK_QUEEN,  mPixmaps[PIX_PIECES].copy(pieceWidth * 1, pieceHeight, pieceWidth, pieceHeight ));
-    mPixmaps.insert(PIX_BLACK_BISHOP, mPixmaps[PIX_PIECES].copy(pieceWidth * 2, pieceHeight, pieceWidth, pieceHeight ));
-    mPixmaps.insert(PIX_BLACK_KNIGHT, mPixmaps[PIX_PIECES].copy(pieceWidth * 3, pieceHeight, pieceWidth, pieceHeight ));
-    mPixmaps.insert(PIX_BLACK_ROOK,   mPixmaps[PIX_PIECES].copy(pieceWidth * 4, pieceHeight, pieceWidth, pieceHeight ));
-    mPixmaps.insert(PIX_BLACK_PAWN,   mPixmaps[PIX_PIECES].copy(pieceWidth * 5, pieceHeight, pieceWidth, pieceHeight ));
+    mPixmaps.insert(PIX_WHITE_ROOK_ON_BLACK,   mPixmaps[PIX_PIECES].copy(pieceWidth * 0, pieceHeight, pieceWidth, pieceHeight ));
+    mPixmaps.insert(PIX_WHITE_KNIGHT_ON_BLACK, mPixmaps[PIX_PIECES].copy(pieceWidth * 1, pieceHeight, pieceWidth, pieceHeight ));
+    mPixmaps.insert(PIX_WHITE_BISHOP_ON_BLACK, mPixmaps[PIX_PIECES].copy(pieceWidth * 2, pieceHeight, pieceWidth, pieceHeight ));
+    mPixmaps.insert(PIX_WHITE_QUEEN_ON_BLACK,  mPixmaps[PIX_PIECES].copy(pieceWidth * 3, pieceHeight, pieceWidth, pieceHeight ));
+    mPixmaps.insert(PIX_WHITE_KING_ON_BLACK,   mPixmaps[PIX_PIECES].copy(pieceWidth * 4, pieceHeight, pieceWidth, pieceHeight ));
+    mPixmaps.insert(PIX_WHITE_PAWN_ON_BLACK,   mPixmaps[PIX_PIECES].copy(pieceWidth * 5, pieceHeight, pieceWidth, pieceHeight ));
+
+
+    mPixmaps.insert(PIX_BLACK_ROOK_ON_WHITE,   mPixmaps[PIX_PIECES].copy(pieceWidth * 0, pieceHeight*2, pieceWidth, pieceHeight ));
+    mPixmaps.insert(PIX_BLACK_KNIGHT_ON_WHITE, mPixmaps[PIX_PIECES].copy(pieceWidth * 1, pieceHeight*2, pieceWidth, pieceHeight ));
+    mPixmaps.insert(PIX_BLACK_BISHOP_ON_WHITE, mPixmaps[PIX_PIECES].copy(pieceWidth * 2, pieceHeight*2, pieceWidth, pieceHeight ));
+    mPixmaps.insert(PIX_BLACK_QUEEN_ON_WHITE,  mPixmaps[PIX_PIECES].copy(pieceWidth * 3, pieceHeight*2, pieceWidth, pieceHeight ));
+    mPixmaps.insert(PIX_BLACK_KING_ON_WHITE,   mPixmaps[PIX_PIECES].copy(pieceWidth * 4, pieceHeight*2, pieceWidth, pieceHeight ));
+    mPixmaps.insert(PIX_BLACK_PAWN_ON_WHITE,   mPixmaps[PIX_PIECES].copy(pieceWidth * 5, pieceHeight*2, pieceWidth, pieceHeight ));
+
+    mPixmaps.insert(PIX_BLACK_ROOK_ON_BLACK,   mPixmaps[PIX_PIECES].copy(pieceWidth * 0, pieceHeight*3, pieceWidth, pieceHeight ));
+    mPixmaps.insert(PIX_BLACK_KNIGHT_ON_BLACK, mPixmaps[PIX_PIECES].copy(pieceWidth * 1, pieceHeight*3, pieceWidth, pieceHeight ));
+    mPixmaps.insert(PIX_BLACK_BISHOP_ON_BLACK, mPixmaps[PIX_PIECES].copy(pieceWidth * 2, pieceHeight*3, pieceWidth, pieceHeight ));
+    mPixmaps.insert(PIX_BLACK_QUEEN_ON_BLACK,  mPixmaps[PIX_PIECES].copy(pieceWidth * 3, pieceHeight*3, pieceWidth, pieceHeight ));
+    mPixmaps.insert(PIX_BLACK_KING_ON_BLACK,   mPixmaps[PIX_PIECES].copy(pieceWidth * 4, pieceHeight*3, pieceWidth, pieceHeight ));
+    mPixmaps.insert(PIX_BLACK_PAWN_ON_BLACK,   mPixmaps[PIX_PIECES].copy(pieceWidth * 5, pieceHeight*3, pieceWidth, pieceHeight ));
+
+    ////////////////////////////////////////////////////////////////////////////////////
+    loadPixmap(PIX_CAPTURED, ":/images/captured.png");
+
+    int capturedWidth  = XML::instance().readValue(XML_ITEMS_FILENAME, QList<QString>() << XML_NODE_CAPTURED << XML_NODE_WIDTH).toInt();
+    int capturedHeight = XML::instance().readValue(XML_ITEMS_FILENAME, QList<QString>() << XML_NODE_CAPTURED << XML_NODE_HEIGHT).toInt();
+
+    mPixmaps.insert(PIX_CAPTURED_WHITE_QUEEN,  mPixmaps[PIX_CAPTURED].copy(capturedWidth * 0, 0, capturedWidth, capturedHeight ));
+    mPixmaps.insert(PIX_CAPTURED_WHITE_ROOK,   mPixmaps[PIX_CAPTURED].copy(capturedWidth * 1, 0, capturedWidth, capturedHeight ));
+    mPixmaps.insert(PIX_CAPTURED_WHITE_BISHOP, mPixmaps[PIX_CAPTURED].copy(capturedWidth * 2, 0, capturedWidth, capturedHeight ));
+    mPixmaps.insert(PIX_CAPTURED_WHITE_KNIGHT, mPixmaps[PIX_CAPTURED].copy(capturedWidth * 3, 0, capturedWidth, capturedHeight ));
+    mPixmaps.insert(PIX_CAPTURED_WHITE_PAWN,   mPixmaps[PIX_CAPTURED].copy(capturedWidth * 4, 0, capturedWidth, capturedHeight ));
+
+    mPixmaps.insert(PIX_CAPTURED_BLACK_QUEEN,  mPixmaps[PIX_CAPTURED].copy(capturedWidth * 0, capturedHeight, capturedWidth, capturedHeight ));
+    mPixmaps.insert(PIX_CAPTURED_BLACK_ROOK,   mPixmaps[PIX_CAPTURED].copy(capturedWidth * 1, capturedHeight, capturedWidth, capturedHeight ));
+    mPixmaps.insert(PIX_CAPTURED_BLACK_BISHOP, mPixmaps[PIX_CAPTURED].copy(capturedWidth * 2, capturedHeight, capturedWidth, capturedHeight ));
+    mPixmaps.insert(PIX_CAPTURED_BLACK_KNIGHT, mPixmaps[PIX_CAPTURED].copy(capturedWidth * 3, capturedHeight, capturedWidth, capturedHeight ));
+    mPixmaps.insert(PIX_CAPTURED_BLACK_PAWN,   mPixmaps[PIX_CAPTURED].copy(capturedWidth * 4, capturedHeight, capturedWidth, capturedHeight ));
 
 }
 

@@ -121,21 +121,21 @@ bool UI::isEnemyPiece(CELLID cell)
     {
         // qDebug() <<"isEnemyPiece" << cell << (mField.cells[cell] == PIX_BLACK_ROOK);
 
-        res = (mField[cell] == PIX_BLACK_PAWN) ||
-              (mField[cell] == PIX_BLACK_ROOK) ||
-              (mField[cell] == PIX_BLACK_KNIGHT) ||
-              (mField[cell] == PIX_BLACK_BISHOP) ||
-              (mField[cell] == PIX_BLACK_QUEEN) ||
-              (mField[cell] == PIX_BLACK_KING);
+        res = (mField[cell] == b_Pawn) ||
+              (mField[cell] == b_Rook) ||
+              (mField[cell] == b_Knight) ||
+              (mField[cell] == b_Bishop) ||
+              (mField[cell] == b_Queen) ||
+              (mField[cell] == b_King);
     }
     else if(mPlayerColor == PC_BLACK)
     {
-        res = (mField[cell] == PIX_WHITE_PAWN) ||
-              (mField[cell] == PIX_WHITE_ROOK) ||
-              (mField[cell] == PIX_WHITE_KNIGHT) ||
-              (mField[cell] == PIX_WHITE_BISHOP) ||
-              (mField[cell] == PIX_WHITE_QUEEN) ||
-              (mField[cell] == PIX_WHITE_KING);
+        res = (mField[cell] == w_Pawn) ||
+              (mField[cell] == w_Rook) ||
+              (mField[cell] == w_Knight) ||
+              (mField[cell] == w_Bishop) ||
+              (mField[cell] == w_Queen) ||
+              (mField[cell] == w_King);
     }
 
     return res;
@@ -159,7 +159,7 @@ void UI::cellClicked(CELLID cell)
 
     case GS_WAIT_FOR_PLAYER_TOUCH:
 
-        if(mField[cell] == PIX_NONE || isEnemyPiece(cell))
+        if(mField[cell] == Empty || isEnemyPiece(cell))
         {
             // qDebug() << "No action - Epmty field or Enemy piece";
             return;
@@ -177,7 +177,7 @@ void UI::cellClicked(CELLID cell)
 
     case GS_WAIT_FOR_PLAYER_MOVE:
 
-        if(mField[cell] == PIX_NONE || isEnemyPiece(cell))
+        if(mField[cell] == Empty || isEnemyPiece(cell))
         {
             mMove.dstCell = cell;
             // qDebug() << "OK! mDestinationCell = " << cell;

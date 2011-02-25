@@ -94,7 +94,7 @@ void Button::mouseReleaseEvent (QGraphicsSceneMouseEvent * event)
             mText->setOpacity(OPAQUE_NORMAL);
         }
 
-        qDebug() << "emit clicked";
+  //      qDebug() << "emit clicked";
         emit clicked();
     }
 

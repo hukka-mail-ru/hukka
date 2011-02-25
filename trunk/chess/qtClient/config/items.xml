@@ -99,8 +99,14 @@
   </Cell>
 
   <Piece>
-    <width value="21" />  <height value="50" />
+    <width value="50" />  <height value="50" />
   </Piece>
+
+  <Captured>
+    <width value="26" />  <height value="23" />
+	<me>  <x value="200" />   <y value="5" /> </me>
+	<opponent>  <x value="200" />   <y value="30" /> </opponent>
+  </Captured>
 
   <Board>
     <width value="400" />
