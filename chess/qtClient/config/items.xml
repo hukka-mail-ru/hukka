@@ -87,7 +87,7 @@
 
 
       <GameMenu>
-        <portrait>  <x value="5" />   <y value="550" />  </portrait>
+        <portrait>  <x value="5" />   <y valcue="550" />  </portrait>
         <landscape> <x value="5" />   <y value="5" />  </landscape>
       </GameMenu>
 
@@ -102,17 +102,20 @@
     <width value="50" />  <height value="50" />
   </Piece>
 
-  <Captured>
+  <CapturedPiece>
     <width value="26" />  <height value="23" /> 
-	<me>        <x value="5" />   <y value="180" /> </me>
-	<opponent>  <x value="5" />   <y value="210" /> </opponent>
-  </Captured>
+  </CapturedPiece>
+
+  <CaptureBox>
+	<me>       <color value="#D38842" /> <x value="380" />   <y value="5" />  <width value="400" />  <height value="23" /> </me>
+	<opponent> <color value="#7C3B1B" /> <x value="380" />   <y value="440"/> <width value="400" />  <height value="23" /></opponent>
+  </CaptureBox>
 
   <Board>
     <width value="400" />
     <border>  <color value="white" />  </border>
     <portrait>  <x value="0" />   <y value="50" />  </portrait>
-    <landscape> <x value="380" /> <y value="60" />  </landscape>
+    <landscape> <x value="380" /> <y value="35" />  </landscape>
   </Board>
 
 
@@ -122,7 +125,7 @@
                <color> <active value="white" /> <inactive value="grey" />  </color>
         </font>
         <portrait>  <x value="5" />  <y value="450" />  </portrait>
-        <landscape> <x value="380" />  <y value="20" />  </landscape>
+        <landscape> <x value="10" />  <y value="180" />  </landscape>
     </MoveClock>
 
     <GameClock>
@@ -130,7 +133,7 @@
                 <color>  <active value="white" />  <inactive value="grey" />   </color>
         </font>
         <portrait>  <x value="5" />  <y value="480" />  </portrait>
-        <landscape> <x value="570" />  <y value="20" />  </landscape>
+        <landscape> <x value="10" />  <y value="210" />  </landscape>
     </GameClock>
   </Clocks>
 

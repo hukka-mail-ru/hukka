@@ -78,8 +78,8 @@ void Pixmaps::loadPixmaps()
     ////////////////////////////////////////////////////////////////////////////////////
     loadPixmap(PIX_CAPTURED, ":/images/captured.png");
 
-    int capturedWidth  = XML::instance().readValue(XML_ITEMS_FILENAME, QList<QString>() << XML_NODE_CAPTURED << XML_NODE_WIDTH).toInt();
-    int capturedHeight = XML::instance().readValue(XML_ITEMS_FILENAME, QList<QString>() << XML_NODE_CAPTURED << XML_NODE_HEIGHT).toInt();
+    int capturedWidth  = XML::instance().readValue(XML_ITEMS_FILENAME, QList<QString>() << XML_NODE_CAPTURED_PIECE << XML_NODE_WIDTH).toInt();
+    int capturedHeight = XML::instance().readValue(XML_ITEMS_FILENAME, QList<QString>() << XML_NODE_CAPTURED_PIECE << XML_NODE_HEIGHT).toInt();
 
     mPixmaps.insert(PIX_CAPTURED_WHITE_QUEEN,  mPixmaps[PIX_CAPTURED].copy(capturedWidth * 0, 0, capturedWidth, capturedHeight ));
     mPixmaps.insert(PIX_CAPTURED_WHITE_ROOK,   mPixmaps[PIX_CAPTURED].copy(capturedWidth * 1, 0, capturedWidth, capturedHeight ));
