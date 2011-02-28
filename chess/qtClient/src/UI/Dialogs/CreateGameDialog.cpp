@@ -70,16 +70,7 @@ void CreateGameDialog::onGotMyGameTable(TABLEID id)
 
     if(id)
     {
-        MainWindow::instance()->showMessage(
-                tr("You have an unfinished game. \nPlease finish it first, then create a new game."));
-
-        Client::instance()->setGameStatus(GAM_STARTED);
-
-        UI::instance()->setGameTable(id);
-
-        MainWindow::instance()->showGameScene(PC_WHITE);
-
-        UI::instance()->startGame();
+        UI::instance()->continueGame(id);
     }
     else
     {

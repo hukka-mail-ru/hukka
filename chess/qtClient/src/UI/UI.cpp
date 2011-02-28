@@ -74,6 +74,20 @@ void UI::surrender()
     Client::instance()->surrender(id);
 }
 
+void UI::continueGame(TABLEID id)
+{
+    MainWindow::instance()->showMessage(
+            tr("You have an unfinished game. \nPlease finish it first, then create a new game."));
+
+    Client::instance()->setGameStatus(GAM_STARTED);
+
+    setGameTable(id);
+
+    MainWindow::instance()->showGameScene(PC_WHITE);
+
+    startGame();
+}
+
 void UI::onGameOver(const QString& message)
 {
     disconnect(Client::instance(), SIGNAL(invalidMove()), this, SLOT(onInvalidMove()));
