@@ -9,6 +9,7 @@
 
 #include <QList>
 #include <QDebug>
+#include <QPainter>
 #include <QGraphicsPixmapItem>
 #include <XML.h>
 
@@ -16,13 +17,21 @@
 CaptureBox::CaptureBox(QGraphicsScene* parentScene):
     mParentScene(parentScene)
 {
-    mMeX = XML::instance().readValue(XML_ITEMS_FILENAME, QList<QString>() << XML_NODE_CAPTURED << XML_NODE_ME << XML_NODE_X).toInt();
-    mMeY = XML::instance().readValue(XML_ITEMS_FILENAME, QList<QString>() << XML_NODE_CAPTURED << XML_NODE_ME << XML_NODE_Y).toInt();
+    mMeX      = XML::instance().readValue(XML_ITEMS_FILENAME, QList<QString>() << XML_NODE_CAPTURE_BOX << XML_NODE_ME << XML_NODE_X).toInt();
+    mMeY      = XML::instance().readValue(XML_ITEMS_FILENAME, QList<QString>() << XML_NODE_CAPTURE_BOX << XML_NODE_ME << XML_NODE_Y).toInt();
+    mMeWidth  = XML::instance().readValue(XML_ITEMS_FILENAME, QList<QString>() << XML_NODE_CAPTURE_BOX << XML_NODE_ME << XML_NODE_WIDTH).toInt();
+    mMeHeight = XML::instance().readValue(XML_ITEMS_FILENAME, QList<QString>() << XML_NODE_CAPTURE_BOX << XML_NODE_ME << XML_NODE_HEIGHT).toInt();
+    mBgForWhitesColor  = XML::instance().readValue(XML_ITEMS_FILENAME, QList<QString>() << XML_NODE_CAPTURE_BOX << XML_NODE_ME << XML_NODE_COLOR);
 
-    mOpponentX = XML::instance().readValue(XML_ITEMS_FILENAME, QList<QString>() << XML_NODE_CAPTURED << XML_NODE_OPPONENT << XML_NODE_X).toInt();
-    mOpponentY = XML::instance().readValue(XML_ITEMS_FILENAME, QList<QString>() << XML_NODE_CAPTURED << XML_NODE_OPPONENT << XML_NODE_Y).toInt();
+    mOpponentX      = XML::instance().readValue(XML_ITEMS_FILENAME, QList<QString>() << XML_NODE_CAPTURE_BOX << XML_NODE_OPPONENT << XML_NODE_X).toInt();
+    mOpponentY      = XML::instance().readValue(XML_ITEMS_FILENAME, QList<QString>() << XML_NODE_CAPTURE_BOX << XML_NODE_OPPONENT << XML_NODE_Y).toInt();
+    mOpponentWidth  = XML::instance().readValue(XML_ITEMS_FILENAME, QList<QString>() << XML_NODE_CAPTURE_BOX << XML_NODE_OPPONENT << XML_NODE_WIDTH).toInt();
+    mOpponentHeight = XML::instance().readValue(XML_ITEMS_FILENAME, QList<QString>() << XML_NODE_CAPTURE_BOX << XML_NODE_OPPONENT << XML_NODE_HEIGHT).toInt();
+    mBgForBlacksColor  = XML::instance().readValue(XML_ITEMS_FILENAME, QList<QString>() << XML_NODE_CAPTURE_BOX << XML_NODE_OPPONENT << XML_NODE_COLOR);
 
-    mWidth  = XML::instance().readValue(XML_ITEMS_FILENAME, QList<QString>() << XML_NODE_CAPTURED << XML_NODE_WIDTH).toInt();
+
+    mCapturedPieceWidth  = XML::instance().readValue(XML_ITEMS_FILENAME, QList<QString>() << XML_NODE_CAPTURED_PIECE << XML_NODE_WIDTH).toInt();
+
 
 }
 
@@ -65,6 +74,12 @@ void CaptureBox::update(const Field& field, bool white)
         }
     }
 
+    // draw boxes:
+    QString meColor  = white ? mBgForBlacksColor : mBgForWhitesColor;
+    QString oppColor = white ? mBgForWhitesColor : mBgForBlacksColor;
+
+    mParentScene->addRect (mMeX, mMeY, mMeWidth, mMeHeight, QPen(QColor(oppColor)), QBrush(QColor(meColor)));
+    mParentScene->addRect (mOpponentX, mOpponentY, mOpponentWidth, mOpponentHeight, QPen(QColor(meColor)), QBrush(QColor(oppColor)));
 
     // draw captured whites
     for(int i=0; i<white_pieces.size(); i++)
@@ -86,7 +101,7 @@ void CaptureBox::update(const Field& field, bool white)
         int x = white ? mMeX : mOpponentX;
         int y = white ? mMeY : mOpponentY;
 
-        pixmap->moveBy(x + i*mWidth, y);
+        pixmap->moveBy(x + i*mCapturedPieceWidth, y);
     }
 
     // draw captured blacks
@@ -109,7 +124,7 @@ void CaptureBox::update(const Field& field, bool white)
         int x = white ? mOpponentX : mMeX;
         int y = white ? mOpponentY : mMeY;
 
-        pixmap->moveBy(x + i*mWidth, y);
+        pixmap->moveBy(x + i*mCapturedPieceWidth, y);
     }
 
 }

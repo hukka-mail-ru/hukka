@@ -9,6 +9,7 @@
 #define CAPTUREBOX_H_
 
 #include <QGraphicsScene>
+#include <QString>
 
 #include <Pixmaps.h>
 
@@ -23,9 +24,18 @@ private:
 
     int mMeX;
     int mMeY;
+    int mMeWidth;
+    int mMeHeight;
+
     int mOpponentX;
     int mOpponentY;
-    int mWidth;
+    int mOpponentWidth;
+    int mOpponentHeight;
+
+    QString mBgForWhitesColor;
+    QString mBgForBlacksColor;
+
+    int mCapturedPieceWidth;
 };
 
 #endif /* CAPTUREBOX_H_ */
