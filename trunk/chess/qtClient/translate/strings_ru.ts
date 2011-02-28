@@ -395,10 +395,9 @@ The rating is not affected because of too few number of moves.</source>
         <translation>Выход</translation>
     </message>
     <message>
-        <location filename="../src/UI/Dialogs/CreateGameDialog.cpp" line="74"/>
         <source>You have an unfinished game. 
 Please finish it first, then create a new game.</source>
-        <translation>Предыдущая игра не была завершена. 
+        <translation type="obsolete">Предыдущая игра не была завершена. 
 Сначала завершите ее, а потом создайте новую игру.</translation>
     </message>
 </context>
@@ -425,7 +424,7 @@ Please finish it first, then create a new game.</source>
         <translation>Отмена</translation>
     </message>
     <message>
-        <location filename="../src/UI/Dialogs/FindGameDialog.cpp" line="77"/>
+        <location filename="../src/UI/Dialogs/FindGameDialog.cpp" line="96"/>
         <source>No game table found</source>
         <translation>Игры не найдены</translation>
     </message>
@@ -683,7 +682,14 @@ Please finish it first, then create a new game.</source>
 <context>
     <name>UI</name>
     <message>
-        <location filename="../src/UI/UI.cpp" line="98"/>
+        <location filename="../src/UI/UI.cpp" line="80"/>
+        <source>You have an unfinished game. 
+Please finish it first, then create a new game.</source>
+        <translation type="unfinished">Предыдущая игра не была завершена. 
+Сначала завершите ее, а потом создайте новую игру.</translation>
+    </message>
+    <message>
+        <location filename="../src/UI/UI.cpp" line="112"/>
         <source>Your opponent has offered a draw. Agree?</source>
         <translation type="unfinished">Ваш противник предлагает ничью. Согласны?</translation>
     </message>
