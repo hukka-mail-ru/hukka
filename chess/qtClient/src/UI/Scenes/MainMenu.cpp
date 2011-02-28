@@ -198,13 +198,13 @@ void MainMenu::onAuthorized()
     assert(mClickedButton);
     UI::instance()->setPlayerAuthorized(true);
 
-    if(mClickedButton == createGameButton)
+    if(mClickedButton == createGameButton ||
+       mClickedButton == findGameButton )
     {
-        MainWindow::instance()->showCreateGameDialog();
-    }
-    else if(mClickedButton == findGameButton)
-    {
-        MainWindow::instance()->showFindGameDialog();
+        MainWindow::instance()->setMode(MW_WAIT);
+        // for case if client recreates the game table after a crash
+        connect(Client::instance(), SIGNAL(gotMyGameTable(TABLEID)), this, SLOT(onGotMyGameTable(TABLEID)));
+        Client::instance()->getMyGameTable(LOGIC_ID_CHESS);
     }
     else if(mClickedButton == chatButton && !mChat)
     {
@@ -215,6 +215,27 @@ void MainMenu::onAuthorized()
         mChat->show();
 
         MainWindow::instance()->setMode(MW_NORMAL);
+    }
+}
+
+void MainMenu::onGotMyGameTable(TABLEID id)
+{
+    disconnect(Client::instance(), SIGNAL(gotMyGameTable(TABLEID)), this, SLOT(onGotMyGameTable(TABLEID)));
+
+    if(id)
+    {
+        UI::instance()->continueGame(id);
+    }
+    else
+    {
+        if(mClickedButton == createGameButton)
+        {
+            MainWindow::instance()->showCreateGameDialog();
+        }
+        else if(mClickedButton == findGameButton)
+        {
+            MainWindow::instance()->showFindGameDialog();
+        }
     }
 }
 

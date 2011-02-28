@@ -32,7 +32,6 @@ private:
 private slots:
 
     void onOkClicked();
-    void onGotMyGameTable(TABLEID id);
     void onCancelClicked();
     void onRandomGameClicked();
 

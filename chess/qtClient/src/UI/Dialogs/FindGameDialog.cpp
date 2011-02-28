@@ -38,33 +38,14 @@ void FindGameDialog::onOkClicked()
 {
     MainWindow::instance()->setMode(MW_WAIT);
 
-    // for case if client recreates the game table after a crash
-    connect(Client::instance(), SIGNAL(gotMyGameTable(TABLEID)), this, SLOT(onGotMyGameTable(TABLEID)));
-    Client::instance()->getMyGameTable(LOGIC_ID_CHESS);
-}
+    // find all the games where PARAMETER_ID_TIME2GAME > 0
+    Param gameTime = { PARAMETER_ID_GAMETIME, 0, OPERATOR_MORE, OPERATOR_LAST };
 
+    QList<Param> params;
+    params << gameTime;
 
-void FindGameDialog::onGotMyGameTable(TABLEID id)
-{
-    disconnect(Client::instance(), SIGNAL(gotMyGameTable(TABLEID)), this, SLOT(onGotMyGameTable(TABLEID)));
-
-    if(id)
-    {
-        UI::instance()->continueGame(id);
-    }
-    else
-    {
-        MainWindow::instance()->setMode(MW_WAIT);
-
-        // find all the games where PARAMETER_ID_TIME2GAME > 0
-        Param gameTime = { PARAMETER_ID_GAMETIME, 0, OPERATOR_MORE, OPERATOR_LAST };
-
-        QList<Param> params;
-        params << gameTime;
-
-        connect(Client::instance(), SIGNAL(gotGameTables(const QList<TABLEID>&)), this, SLOT(onGotGameTables(const QList<TABLEID>&)));
-        Client::instance()->findGameTables(LOGIC_ID_CHESS, DEFAULT_MAXCOUNT, params);
-    }
+    connect(Client::instance(), SIGNAL(gotGameTables(const QList<TABLEID>&)), this, SLOT(onGotGameTables(const QList<TABLEID>&)));
+    Client::instance()->findGameTables(LOGIC_ID_CHESS, DEFAULT_MAXCOUNT, params);
 }
 
 

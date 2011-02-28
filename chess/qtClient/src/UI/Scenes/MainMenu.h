@@ -58,6 +58,7 @@ private slots:
     void onChatClicked();
     void onOptionsClicked();
     void onExitClicked();
+    void onGotMyGameTable(TABLEID id);
 
 
 };

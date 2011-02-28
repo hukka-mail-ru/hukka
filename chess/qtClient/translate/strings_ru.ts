@@ -424,7 +424,7 @@ Please finish it first, then create a new game.</source>
         <translation>Отмена</translation>
     </message>
     <message>
-        <location filename="../src/UI/Dialogs/FindGameDialog.cpp" line="96"/>
+        <location filename="../src/UI/Dialogs/FindGameDialog.cpp" line="77"/>
         <source>No game table found</source>
         <translation>Игры не найдены</translation>
     </message>
