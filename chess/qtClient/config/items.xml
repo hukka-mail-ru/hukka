@@ -44,7 +44,7 @@
 
   <TableChat>
     <portrait>  <x value="200" />  <y value="450" />  <width value="200" />  <height value="200" />  </portrait>
-    <landscape> <x value="5" />    <y value="260" />  <width value="300" />  <height value="200" />  </landscape>
+    <landscape> <x value="5" />    <y value="250" />  <width value="380" />  <height value="215" />  </landscape>
 	<font>
  	    <me>             <color value="white" /> </me>
 		<opponent>       <color value="#FFCC00" /> </opponent>
@@ -61,8 +61,8 @@
     </font>
 
       <Exit>
-        <portrait>  <x value="380" />  <y value="-10" />  </portrait>
-        <landscape> <x value="720" />  <y value="0" />  </landscape>
+        <portrait>  <x value="0" />  <y value="0" />  </portrait>
+        <landscape> <x value="0" />  <y value="0" />  </landscape>
       </Exit>
 
       <NewGame>
@@ -88,7 +88,7 @@
 
       <GameMenu>
         <portrait>  <x value="5" />   <y valcue="550" />  </portrait>
-        <landscape> <x value="5" />   <y value="5" />  </landscape>
+        <landscape> <x value="5" />   <y value="75" />  </landscape>
       </GameMenu>
 
   </Buttons>
@@ -107,15 +107,15 @@
   </CapturedPiece>
 
   <CaptureBox>
-	<me>       <color value="#D38842" /> <x value="380" />   <y value="5" />  <width value="400" />  <height value="23" /> </me>
-	<opponent> <color value="#7C3B1B" /> <x value="380" />   <y value="440"/> <width value="400" />  <height value="23" /></opponent>
+	<me>       <color value="#D38842" /> <x value="390" />   <y value="5" />  <width value="400" />  <height value="23" /> </me>
+	<opponent> <color value="#7C3B1B" /> <x value="390" />   <y value="440"/> <width value="400" />  <height value="23" /></opponent>
   </CaptureBox>
 
   <Board>
     <width value="400" />
     <border>  <color value="white" />  </border>
     <portrait>  <x value="0" />   <y value="50" />  </portrait>
-    <landscape> <x value="380" /> <y value="35" />  </landscape>
+    <landscape> <x value="390" /> <y value="35" />  </landscape>
   </Board>
 
 
@@ -125,7 +125,7 @@
                <color> <active value="white" /> <inactive value="grey" />  </color>
         </font>
         <portrait>  <x value="5" />  <y value="450" />  </portrait>
-        <landscape> <x value="10" />  <y value="180" />  </landscape>
+        <landscape> <x value="205" />  <y value="82" />  </landscape>
     </MoveClock>
 
     <GameClock>
@@ -133,15 +133,17 @@
                 <color>  <active value="white" />  <inactive value="grey" />   </color>
         </font>
         <portrait>  <x value="5" />  <y value="480" />  </portrait>
-        <landscape> <x value="10" />  <y value="210" />  </landscape>
+        <landscape> <x value="205" />  <y value="112" />  </landscape>
     </GameClock>
   </Clocks>
 
 
   <GameStateText>
-        <font>  <family value="Helvetica [Cronyx]" />  <size value="16" />  <color value = "white" />  </font>
-        <portrait>  <x value="5" />   <y value="5" />   </portrait>
-        <landscape> <x value="195" /> <y value="60" /> </landscape>
+        <font>  <family value="Helvetica [Cronyx]" />  <size value="25" />  
+			    <color> <active value="white" /> <inactive value="#FFCC00" />  </color>  
+        </font>
+        <portrait>  <x value="5" />   <y value="5" /> <width value="0"/>  </portrait>
+        <landscape> <x value="5" /> <y value="13" /> <width value="385"/> </landscape>
   </GameStateText>
 
 </xml>

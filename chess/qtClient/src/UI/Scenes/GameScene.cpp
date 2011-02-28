@@ -64,10 +64,11 @@ void GameScene::initialize()
 
     QString family = XML::instance().readValue(XML_ITEMS_FILENAME, QList<QString>() << XML_NODE_GAME_STATE_TEXT << XML_NODE_FONT << XML_NODE_FAMILY);
     int size =       XML::instance().readValue(XML_ITEMS_FILENAME, QList<QString>() << XML_NODE_GAME_STATE_TEXT << XML_NODE_FONT << XML_NODE_SIZE).toInt();
-    QString color =  XML::instance().readValue(XML_ITEMS_FILENAME, QList<QString>() << XML_NODE_GAME_STATE_TEXT << XML_NODE_FONT << XML_NODE_COLOR);
+    mTextActiveColor   =  XML::instance().readValue(XML_ITEMS_FILENAME, QList<QString>() << XML_NODE_GAME_STATE_TEXT << XML_NODE_FONT << XML_NODE_COLOR << XML_NODE_ACTIVE);
+    mTextInactiveColor =  XML::instance().readValue(XML_ITEMS_FILENAME, QList<QString>() << XML_NODE_GAME_STATE_TEXT << XML_NODE_FONT << XML_NODE_COLOR << XML_NODE_INACTIVE);
 
     mGameStateText = addText("", QFont(family, size));
-    mGameStateText->setDefaultTextColor( QColor(color) );
+    mGameStateText->setDefaultTextColor( QColor(mTextActiveColor) );
 
 
     connect(Client::instance(), SIGNAL(gotField(Field, bool, bool)), this, SLOT(onGotField(Field, bool, bool)));
@@ -119,9 +120,10 @@ void GameScene::updateItemsPositions(OrientationStatus orientation)
     mGameClock.updatePos(orientation);
 
     // text
-    int text_x = XML::instance().readValue(XML_ITEMS_FILENAME, QList<QString>() << XML_NODE_GAME_STATE_TEXT << orientNode << XML_NODE_X).toInt();
-    int text_y = XML::instance().readValue(XML_ITEMS_FILENAME, QList<QString>() << XML_NODE_GAME_STATE_TEXT << orientNode << XML_NODE_Y).toInt();
-    mGameStateText->setPos(text_x , text_y);
+    mTextX = XML::instance().readValue(XML_ITEMS_FILENAME, QList<QString>() << XML_NODE_GAME_STATE_TEXT << orientNode << XML_NODE_X).toInt();
+    mTextY = XML::instance().readValue(XML_ITEMS_FILENAME, QList<QString>() << XML_NODE_GAME_STATE_TEXT << orientNode << XML_NODE_Y).toInt();
+    mTextFrameWidth = XML::instance().readValue(XML_ITEMS_FILENAME, QList<QString>() << XML_NODE_GAME_STATE_TEXT << orientNode << XML_NODE_WIDTH).toInt();
+
 
     // chat
     if(mChat)
@@ -145,18 +147,25 @@ void GameScene::updateClocks()
 void GameScene::setGameStateText(GameState gameState)
 {
     QString text;
+    QString color;
 
     switch(gameState)
     {
         case GS_WAIT_FOR_PLAYER_TOUCH:
         case GS_WAIT_FOR_PLAYER_MOVE:
         case GS_WAIT_FOR_SERVER:
-        case GS_INVALID_MOVE:       text = tr("Your move");       break;
-        case GS_WAIT_FOR_OPPONENT:  text = tr("Opponent's move"); break;
+        case GS_INVALID_MOVE:       text = tr("Your move");       color = mTextActiveColor;  break;
+        case GS_WAIT_FOR_OPPONENT:  text = tr("Opponent's move"); color = mTextInactiveColor; break;
         default: break;
     }
 
     mGameStateText->setPlainText(text);
+
+    // center alignment
+    mGameStateText->setPos(mTextX + (mTextFrameWidth - mGameStateText->boundingRect().width())/2 , mTextY);
+
+    mGameStateText->setDefaultTextColor(QColor(color));
+
 }
 
 void GameScene::updateGameField(const Field& field, bool white)

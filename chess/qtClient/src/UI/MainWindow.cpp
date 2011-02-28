@@ -292,7 +292,8 @@ void MainWindow::showChatMessageDialog(ChatType chatType)
 
 void MainWindow::showMainMenu()
 {
-    if(mGraphicsView->scene() == mGameScene)
+  //  if(mGraphicsView->scene() == mGameScene)
+    if(mGameScene)
         mGameScene->hide();
 
     closeCurrentDialog();

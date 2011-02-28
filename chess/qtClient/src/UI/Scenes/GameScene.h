@@ -52,7 +52,14 @@ private:
     QGraphicsItem* mPieces; // group of pieces
     QGraphicsItem* mHighlights; // group of Highlights
     QGraphicsItem* mNote;
+
     QGraphicsTextItem* mGameStateText;
+    int mTextX;
+    int mTextY;
+    int mTextFrameWidth;
+    QString mTextActiveColor;
+    QString mTextInactiveColor;
+
     QGraphicsTextItem* mTimeText;
 
     Button* mMenuButton;
