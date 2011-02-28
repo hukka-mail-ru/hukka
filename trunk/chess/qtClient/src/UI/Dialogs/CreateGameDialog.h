@@ -49,7 +49,6 @@ private slots:
     void onExitClicked();
 
     void onGameTableCreated(TABLEID id);
-    void onGotMyGameTable(TABLEID id);
 };
 
 #endif /* CREATEGAMEDIALOG_H_ */

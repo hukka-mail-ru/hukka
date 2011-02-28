@@ -56,51 +56,32 @@ CreateGameDialog::CreateGameDialog(QWidget *parent): MyDialog(parent)
 
 void CreateGameDialog::onOkClicked()
 {
-    MainWindow::instance()->setMode(MW_WAIT);
+    Param moveTime;
+    moveTime.id = PARAMETER_ID_MOVETIME;
+    moveTime.value = moveTimeEdit->text().toInt() * SECONDS_IN_MINUTE;
 
-    // for case if client recreates the game table after a crash
-    connect(Client::instance(), SIGNAL(gotMyGameTable(TABLEID)), this, SLOT(onGotMyGameTable(TABLEID)));
-    Client::instance()->getMyGameTable(LOGIC_ID_CHESS);
-}
+    Param gameTime;
+    gameTime.id = PARAMETER_ID_GAMETIME;
+    gameTime.value = gameTimeEdit->text().toInt() * SECONDS_IN_MINUTE;
 
+    Param maxRating;
+    maxRating.id = PARAMETER_ID_MAXRATING;
+    maxRating.value = maxRatingEdit->text().toInt();
 
-void CreateGameDialog::onGotMyGameTable(TABLEID id)
-{
-    disconnect(Client::instance(), SIGNAL(gotMyGameTable(TABLEID)), this, SLOT(onGotMyGameTable(TABLEID)));
+    Param minRating;
+    minRating.id = PARAMETER_ID_MINRATING;
+    minRating.value = minRatingEdit->text().toInt();
 
-    if(id)
-    {
-        UI::instance()->continueGame(id);
-    }
-    else
-    {
-        Param moveTime;
-        moveTime.id = PARAMETER_ID_MOVETIME;
-        moveTime.value = moveTimeEdit->text().toInt() * SECONDS_IN_MINUTE;
+    QList<Param> params;
+    params << moveTime << gameTime << maxRating << minRating;
 
-        Param gameTime;
-        gameTime.id = PARAMETER_ID_GAMETIME;
-        gameTime.value = gameTimeEdit->text().toInt() * SECONDS_IN_MINUTE;
+    qDebug() << "moveTime.value " << moveTime.value
+    << " gameTime.value " << gameTime.value
+    << " minRating.value " << minRating.value
+    << " maxRating.value " << maxRating.value;
 
-        Param maxRating;
-        maxRating.id = PARAMETER_ID_MAXRATING;
-        maxRating.value = maxRatingEdit->text().toInt();
-
-        Param minRating;
-        minRating.id = PARAMETER_ID_MINRATING;
-        minRating.value = minRatingEdit->text().toInt();
-
-        QList<Param> params;
-        params << moveTime << gameTime << maxRating << minRating;
-
-        qDebug() << "moveTime.value " << moveTime.value
-        << " gameTime.value " << gameTime.value
-        << " minRating.value " << minRating.value
-        << " maxRating.value " << maxRating.value;
-
-        connect(Client::instance(), SIGNAL(gameTableCreated(TABLEID)), this, SLOT(onGameTableCreated(TABLEID)));
-        Client::instance()->createGameTable(LOGIC_ID_CHESS, params);
-    }
+    connect(Client::instance(), SIGNAL(gameTableCreated(TABLEID)), this, SLOT(onGameTableCreated(TABLEID)));
+    Client::instance()->createGameTable(LOGIC_ID_CHESS, params);
 
 }
 
