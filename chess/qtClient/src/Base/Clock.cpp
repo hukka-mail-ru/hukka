@@ -34,6 +34,7 @@ Clock::Clock(QGraphicsScene* parentScene, const QString& header,
 
     mTimer = new QTimer(this);
     connect(mTimer, SIGNAL(timeout()), this, SLOT(onTimeout()));
+    connect(Client::instance(), SIGNAL(gameOver(const QString&)), this, SLOT(onGameOver(const QString&)));
 }
 
 void Clock::start()
@@ -73,10 +74,9 @@ void Clock::onTimeout()
     }
     else
     {
-        mTimer->stop();
+
         if(UI::instance()->getGameState() == GS_WAIT_FOR_OPPONENT)
         {
-            mSeconds = DEFAULT_TIME;
             Client::instance()->timeout(UI::instance()->getGameTable());
         }
     }
@@ -87,4 +87,8 @@ void Clock::onTimeout()
     mText->setDefaultTextColor( QColor(color) );
 }
 
-
+void Clock::onGameOver(const QString& message)
+{
+    disconnect(Client::instance(), SIGNAL(gameOver(const QString&)), this, SLOT(onGameOver(const QString&)));
+    mTimer->stop();
+}

@@ -50,6 +50,7 @@ private slots:
 
     void onTimeout();
     void onGotTime(quint32 seconds);
+    void onGameOver(const QString& message);
 
 };
 
