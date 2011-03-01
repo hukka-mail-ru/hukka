@@ -81,6 +81,8 @@ void UI::onGameOver(const QString& message)
     disconnect(Client::instance(), SIGNAL(gameOver(const QString&)), this, SLOT(onGameOver(const QString&)));
     disconnect(Client::instance(), SIGNAL(drawOffered()), this, SLOT(onDrawOffered()));
 
+
+
     MainWindow::instance()->closeCurrentDialog();
     MainWindow::instance()->showMessage(message);
     MainWindow::instance()->showMainMenu();
