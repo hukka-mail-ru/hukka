@@ -9,6 +9,7 @@
 #define CAPTUREBOX_H_
 
 #include <QGraphicsScene>
+#include <QGraphicsRectItem>
 #include <QString>
 
 #include <Pixmaps.h>
@@ -34,6 +35,9 @@ private:
 
     QString mBgForWhitesColor;
     QString mBgForBlacksColor;
+
+    QGraphicsRectItem* mMeBox;
+    QGraphicsRectItem* mOppBox;
 
     int mCapturedPieceWidth;
 };

@@ -10,8 +10,10 @@
 #include <QList>
 #include <QDebug>
 #include <QPainter>
+#include <QString>
 #include <QGraphicsPixmapItem>
 #include <XML.h>
+#include <Defines.h>
 
 
 CaptureBox::CaptureBox(QGraphicsScene* parentScene):
@@ -43,8 +45,27 @@ CaptureBox::~CaptureBox() {
 
 void CaptureBox::update(const Field& field, bool white)
 {
+    // remove old boxes
+    if(mMeBox)
+        delete mMeBox;
+
+    if(mOppBox)
+        delete mOppBox;
+
+
+    // draw boxes:
+    QString meColor  = white ? mBgForBlacksColor : mBgForWhitesColor;
+    QString oppColor = white ? mBgForWhitesColor : mBgForBlacksColor;
+
+    mMeBox = mParentScene->addRect (mMeX, mMeY, mMeWidth, mMeHeight, QPen(QColor(oppColor)), QBrush(QColor(meColor)));
+    mOppBox = mParentScene->addRect (mOpponentX, mOpponentY, mOpponentWidth, mOpponentHeight, QPen(QColor(meColor)), QBrush(QColor(oppColor)));
+    mMeBox->setZValue(Z_CELLS_LAYER);
+    mOppBox->setZValue(Z_CELLS_LAYER);
+
+
     if(field.empty())
         return;
+
 
     // get all the pieces
     QList<piece_type> white_pieces;
@@ -74,12 +95,7 @@ void CaptureBox::update(const Field& field, bool white)
         }
     }
 
-    // draw boxes:
-    QString meColor  = white ? mBgForBlacksColor : mBgForWhitesColor;
-    QString oppColor = white ? mBgForWhitesColor : mBgForBlacksColor;
 
-    mParentScene->addRect (mMeX, mMeY, mMeWidth, mMeHeight, QPen(QColor(oppColor)), QBrush(QColor(meColor)));
-    mParentScene->addRect (mOpponentX, mOpponentY, mOpponentWidth, mOpponentHeight, QPen(QColor(meColor)), QBrush(QColor(oppColor)));
 
     // draw captured whites
     for(int i=0; i<white_pieces.size(); i++)
@@ -98,10 +114,16 @@ void CaptureBox::update(const Field& field, bool white)
 
         QGraphicsPixmapItem* pixmap = mParentScene->addPixmap(Pixmaps::get(piecePixmapKey));
 
+
         int x = white ? mMeX : mOpponentX;
         int y = white ? mMeY : mOpponentY;
+        QGraphicsItem* parentBox = white ? mMeBox : mOppBox;
+
+      //  qDebug() << "Captured white: " << white_pieces[i] << "x: " << x << "y:" << y;
 
         pixmap->moveBy(x + i*mCapturedPieceWidth, y);
+        pixmap->setZValue(Z_PIECES_LAYER);
+        pixmap->setParentItem(parentBox);
     }
 
     // draw captured blacks
@@ -123,8 +145,13 @@ void CaptureBox::update(const Field& field, bool white)
 
         int x = white ? mOpponentX : mMeX;
         int y = white ? mOpponentY : mMeY;
+        QGraphicsItem* parentBox = white ? mOppBox : mMeBox;
+
+     //   qDebug() << "Captured black: " << black_pieces[i] << "x: " << x << "y:" << y;
 
         pixmap->moveBy(x + i*mCapturedPieceWidth, y);
+        pixmap->setZValue(Z_PIECES_LAYER);
+        pixmap->setParentItem(parentBox);
     }
 
 }
