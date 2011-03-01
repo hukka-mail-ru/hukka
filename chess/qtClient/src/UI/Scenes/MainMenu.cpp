@@ -32,7 +32,7 @@ MainMenu::MainMenu(QObject *parent):
 
 MainMenu::~MainMenu()
 {
-    qDebug() << "MainMenu::~MainMenu()";
+  // qDebug() << "MainMenu::~MainMenu()";
 }
 
 
@@ -73,7 +73,7 @@ void MainMenu::updateItemsPositions(OrientationStatus orientation)
     int scene_width  = XML::instance().readValue(XML_ITEMS_FILENAME, QList<QString>() << XML_NODE_SCENE << orientNode << XML_NODE_WIDTH).toInt();
     int scene_height = XML::instance().readValue(XML_ITEMS_FILENAME, QList<QString>() << XML_NODE_SCENE << orientNode << XML_NODE_HEIGHT).toInt();
 
-    qDebug() << scene_x << scene_y << scene_width << scene_height;
+   // qDebug() << scene_x << scene_y << scene_width << scene_height;
     setSceneRect( scene_x, scene_y, scene_width, scene_height );
 
     // buttons
@@ -89,7 +89,7 @@ void MainMenu::updateItemsPositions(OrientationStatus orientation)
 
     mSplash->setPos(x, y);
 
-    qDebug() << "MainMenu::updateItemsPositions " << orientation;
+  //  qDebug() << "MainMenu::updateItemsPositions " << orientation;
     // chat
     if(mChat)
     {
@@ -193,7 +193,7 @@ void MainMenu::onAuthorized()
     disconnect(Client::instance(), SIGNAL(registered()), this, SLOT(onAuthorized()));
     disconnect(Client::instance(), SIGNAL(authorized()), this, SLOT(onAuthorized()));
 
-    qDebug() << "MainMenu::onAuthorized";
+  //  qDebug() << "MainMenu::onAuthorized";
 
     assert(mClickedButton);
     UI::instance()->setPlayerAuthorized(true);
@@ -224,7 +224,16 @@ void MainMenu::onGotMyGameTable(TABLEID id)
 
     if(id)
     {
-        UI::instance()->continueGame(id);
+        MainWindow::instance()->showMessage(
+                tr("You have an unfinished game. Please finish it."));
+
+        Client::instance()->setGameStatus(GAM_STARTED);
+
+        UI::instance()->setGameTable(id);
+
+        MainWindow::instance()->showGameScene(PC_WHITE);
+
+        UI::instance()->startGame();
     }
     else
     {
@@ -251,7 +260,7 @@ void MainMenu::onOptionsClicked()
 
 void MainMenu::onDisonnectedFromHost()
 {
-    qDebug() << "MainWindow::onDisonnectedFromHost()";
+   // qDebug() << "MainWindow::onDisonnectedFromHost()";
     UI::instance()->shutdown();
 }
 

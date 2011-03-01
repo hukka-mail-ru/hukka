@@ -30,7 +30,6 @@ public:
     void startGame();
     void surrender();
  //   void stopGame();
-    void continueGame(TABLEID id);
 
     void setGameTable(TABLEID id) { mGameTable = id; }
     TABLEID getGameTable() const { return mGameTable; }

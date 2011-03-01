@@ -14,7 +14,7 @@ OrientThread::OrientThread(QObject *parent) :
 
 void OrientThread::run()
 {
-    qDebug() << "OrientThread::run";
+    //qDebug() << "OrientThread::run";
 
     QTimer timer;
     connect(&timer, SIGNAL(timeout()), this, SLOT(updateCoords()));

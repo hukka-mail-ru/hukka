@@ -39,7 +39,7 @@ void GameDialog::onDrawClicked()
     {
         TABLEID id = UI::instance()->getGameTable();
         Client::instance()->offerDraw(id);
-        qDebug() << "GameDialog::onDrawClicked";
+        //qDebug() << "GameDialog::onDrawClicked";
         MainWindow::instance()->showWaitDrawDialog();
     }
 }

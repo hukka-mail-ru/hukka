@@ -39,13 +39,13 @@ int main(int argc, char *argv[])
         delete UI::instance();
         delete MainWindow::instance();
 
-        qDebug() << "main finished";
+     //   qDebug() << "main finished";
 
         return res;
     }
     catch (Exception& e)
     {
-        qDebug() << e.what();
+     //   qDebug() << e.what();
         throw e;
     }
 }
