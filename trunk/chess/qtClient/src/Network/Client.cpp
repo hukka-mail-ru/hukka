@@ -89,7 +89,7 @@ void Client::connectToHost(const QNetworkProxy& proxy, const QString& hostName, 
 
         mSocket.connectToHost (hostName, port);
         //qDebug() << "Proxy: " << mSocket.proxy().hostName() << ":" << mSocket.proxy().port() << " type=" << mSocket.proxy().type();
-        qDebug() << "connecting to host: " << hostName << ":" << port;
+        //qDebug() << "connecting to host: " << hostName << ":" << port;
     }
 
 }
@@ -335,7 +335,7 @@ void Client::setGameTableParam (LOGICID logicID, TABLEID tableID, const Param& p
 ====================================================================================================*/
 void Client::findGameTables(LOGICID logicID, quint32 maxCount, const QList<Param>& params)
 {
-    qDebug() << "Client::findGameTables";
+    //qDebug() << "Client::findGameTables";
 
     QT_TRACEOUT;
     try {
@@ -374,7 +374,7 @@ void Client::deleteGameTable(LOGICID logicID, TABLEID tableID)
 
         // send command
         QByteArray data = Q_BYTE_ARRAY(logicID) + Q_BYTE_ARRAY(tableID);
-        qDebug() << "Client::deleteGameTable" << endl;
+        //qDebug() << "Client::deleteGameTable" << endl;
         sendCmd(TBM, CMD_DELETE, data);
     }
     catch (Exception& e) {
@@ -1212,7 +1212,7 @@ void Client::processMessageCHS(const MessageHeader& header, const QByteArray& bu
         opponentName.append(QByteArray(buffer.data() + sizeof(Reply), buffer.size() - sizeof(Reply)));
 
         mGameStatus = GAM_OPPONENT_JOINED;
-        qDebug() << mName << "GAM_OPPONENT_JOINED " << reply->opponentID;
+        //qDebug() << mName << "GAM_OPPONENT_JOINED " << reply->opponentID;
         emit opponentJoined(opponentName);
     }
 
@@ -1220,7 +1220,7 @@ void Client::processMessageCHS(const MessageHeader& header, const QByteArray& bu
     else if(header.cmd == ANS_START)
     {
         mGameStatus = GAM_STARTED;
-        qDebug() << mName << "GAM_STARTED";
+        //qDebug() << mName << "GAM_STARTED";
         emit gameStarted();
     }
 
@@ -1410,7 +1410,7 @@ void Client::onConnected()
     QT_TRACEOUT;
 
     delete mTimer;
-    qDebug() << "SIGNAL connected";
+    //qDebug() << "SIGNAL connected";
     emit connectedToHost();
 }
 
@@ -1418,7 +1418,7 @@ void Client::onDisconnected()
 {
     QT_TRACEOUT;
 
-    qDebug() << "SIGNAL disconnected";
+    //qDebug() << "SIGNAL disconnected";
     emit disconnectedFromHost();
 }
 
@@ -1430,7 +1430,7 @@ void Client::onDisconnected()
 ====================================================================================================*/
 void Client::onError()
 {
-    qDebug() << "Client::onError: " << mSocket.errorString();
+    //qDebug() << "Client::onError: " << mSocket.errorString();
     emit error(mSocket.errorString());
 }
 
@@ -1445,7 +1445,7 @@ void Client::onTimeout()
     delete mTimer;
     mSocket.abort();
 
-    qDebug() << "onTimeout";
+    //qDebug() << "onTimeout";
     emit error(tr("Server doesn't respond"));
 }
 

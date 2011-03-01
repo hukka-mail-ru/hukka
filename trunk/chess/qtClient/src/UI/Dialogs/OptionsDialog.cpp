@@ -71,7 +71,7 @@ OptionsDialog::OptionsDialog(QWidget *parent):
 
 void OptionsDialog::onLanguageComboBoxActivated(int lang)
 {
-    qDebug() << "onLanguageComboBoxActivated " << lang;
+   // qDebug() << "onLanguageComboBoxActivated " << lang;
     mNewLanguageIndex = QString::number(lang);
 }
 

@@ -8,13 +8,13 @@
 
 
 /*====================================================================================================
- ____  ___  ___  ____    ___   ___   __  __  ___  ____  ___  ___  
-(_  _)(  _)/ __)(_  _)  (  ,) (  _) / _)(  )/ __)(_  _)(  _)(  ,) 
-  )(   ) _)\__ \  )(     )  \  ) _)( (/\ )( \__ \  )(   ) _) )  \ 
- (__) (___)(___/ (__)   (_)\_)(___) \__/(__)(___/ (__) (___)(_)\_) 
+ ____  ___  ___  ____    ___   ___   __  __  ___  ____  ___  ___
+(_  _)(  _)/ __)(_  _)  (  ,) (  _) / _)(  )/ __)(_  _)(  _)(  ,)
+  )(   ) _)\__ \  )(     )  \  ) _)( (/\ )( \__ \  )(   ) _) )  \
+ (__) (___)(___/ (__)   (_)\_)(___) \__/(__)(___/ (__) (___)(_)\_)
 ==================================================================================================== */
 
-class TestClientRegisterUser: public CppUnit::TestFixture 
+class TestClientRegisterUser: public CppUnit::TestFixture
 {
    CPPUNIT_TEST_SUITE(TestClientRegisterUser);
 
@@ -28,10 +28,10 @@ class TestClientRegisterUser: public CppUnit::TestFixture
     Client client;
     QNetworkProxy proxy;
 
-         
-public:   
-             
-    void setUp() 
+
+public:
+
+    void setUp()
     {
         proxy=QNetworkProxy(RIGHT_PROXY_TYPE, RIGHT_PROXY_HOSTNAME, RIGHT_PROXY_PORT);
 
@@ -40,41 +40,41 @@ public:
         CPPUNIT_ASSERT_EQUAL(CLI_CONNECTED, client.status());
     }
 
-    void tearDown() 
+    void tearDown()
     {
         CPPUNIT_ASSERT_NO_THROW(client.disconnectFromHost());
         CPPUNIT_ASSERT_EQUAL(CLI_DISCONNECTED, client.status());
     }
 
-    void testRegisterOK() 
+    void testRegisterOK()
     {
         SHOW_FUNCTION_NAME;
-        
+
         QString unique = "test" + getGUID();
-        qDebug() << "Generated user name:" << unique;
+     //   qDebug() << "Generated user name:" << unique;
         CPPUNIT_ASSERT_NO_THROW(client.registerUser(unique, unique));
     }
 
-    void testRegisterWrongLogin() 
+    void testRegisterWrongLogin()
     {
         SHOW_FUNCTION_NAME;
 
         CPPUNIT_ASSERT_THROW(client.registerUser("--f&sd", RIGTH_USER_PASSWD), Exception); // wrong symbols
         CPPUNIT_ASSERT_THROW(client.registerUser("s", RIGTH_USER_PASSWD), Exception); // too short
-        CPPUNIT_ASSERT_THROW(client.registerUser("sfhvjkdfhvjkdfhvkhdfskvhkjdfshkhdfvkjsdhfvjkdfhkvhdkfshvkjsdfhvkd", RIGTH_USER_PASSWD), Exception); 
-        
+        CPPUNIT_ASSERT_THROW(client.registerUser("sfhvjkdfhvjkdfhvkhdfskvhkjdfshkhdfvkjsdhfvjkdfhkvhdkfshvkjsdfhvkd", RIGTH_USER_PASSWD), Exception);
+
     }
 
-    void testRegisterWrongPassword() 
+    void testRegisterWrongPassword()
     {
         SHOW_FUNCTION_NAME;
 
         CPPUNIT_ASSERT_THROW(client.registerUser(RIGTH_USER_NAME, "--f&sd"), Exception); // wrong symbols
         CPPUNIT_ASSERT_THROW(client.registerUser(RIGTH_USER_NAME, "s"), Exception); // too short
-        CPPUNIT_ASSERT_THROW(client.registerUser(RIGTH_USER_NAME, "sfhvjkdfhvjkdfhvkhdfskvhkjdfshkhdfvkjsdhfvjkdfhkvhdkfshvkjsdfhvkd"), Exception); 
+        CPPUNIT_ASSERT_THROW(client.registerUser(RIGTH_USER_NAME, "sfhvjkdfhvjkdfhvkhdfskvhkjdfshkhdfvkjsdhfvjkdfhkvhdkfshvkjsdfhvkd"), Exception);
     }
 
-    void testRegisterLoginExists() 
+    void testRegisterLoginExists()
     {
         SHOW_FUNCTION_NAME;
 
@@ -84,6 +84,6 @@ public:
 };
 
 
-CPPUNIT_TEST_SUITE_REGISTRATION(TestClientRegisterUser); 
-   
+CPPUNIT_TEST_SUITE_REGISTRATION(TestClientRegisterUser);
+
 #endif /*TestClientRegisterUser_H_*/

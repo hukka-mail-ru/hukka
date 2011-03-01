@@ -58,7 +58,7 @@ JoinGameDialog::JoinGameDialog(const QList<TABLEID>& tableIDs, QWidget *parent):
 
 void JoinGameDialog::getParams(TABLEID tableID)
 {
-    qDebug() << "JoinGameDialog::getPlayerName. tableID = " << tableID;
+   // qDebug() << "JoinGameDialog::getPlayerName. tableID = " << tableID;
     connect(Client::instance(),
             SIGNAL(gotGameTableParams(const QString&, qint32, qint32, qint32)),
             this,
@@ -70,7 +70,7 @@ void JoinGameDialog::getParams(TABLEID tableID)
 void JoinGameDialog::onGotGameTableParams(const QString& name, qint32 rating,
                                           qint32 time2step, qint32 time2game)
 {
-    qDebug() << "JoinGameDialog::onGotGameTableParams. name = " << name;
+   //qDebug() << "JoinGameDialog::onGotGameTableParams. name = " << name;
 
     disconnect(Client::instance(),
             SIGNAL(gotGameTableParams(const QString&, qint32, qint32, qint32)),
@@ -94,7 +94,7 @@ void JoinGameDialog::onGotGameTableParams(const QString& name, qint32 rating,
 
     mCounter++;
 
-    qDebug() << "mCounter = " << mCounter << " mGameTableIDs.size() = " << mGameTableIDs.size();
+   // qDebug() << "mCounter = " << mCounter << " mGameTableIDs.size() = " << mGameTableIDs.size();
 
     // recursively call again (until all the rows of the table are filled)
     if(mCounter < mGameTableIDs.size())
@@ -105,8 +105,8 @@ void JoinGameDialog::onGotGameTableParams(const QString& name, qint32 rating,
 
 void JoinGameDialog::onOkClicked()
 {
-    qDebug() << "table.currentRow ()" << tableWidget->currentRow();
-    qDebug() << " mGameTableIDs[tableWidget->currentRow()]" <<  mGameTableIDs[tableWidget->currentRow()];
+   // qDebug() << "table.currentRow ()" << tableWidget->currentRow();
+  //  qDebug() << " mGameTableIDs[tableWidget->currentRow()]" <<  mGameTableIDs[tableWidget->currentRow()];
 
     if(tableWidget->currentRow() < 0)
         return;

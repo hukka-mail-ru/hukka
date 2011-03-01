@@ -13,7 +13,8 @@ QString XML::readValue(QString filename, const QList<QString>& nodenames)
 
     if (!file.open(QIODevice::ReadOnly | QIODevice::Text))
     {
-        qDebug()  << "XML::readValue. Can't open file: " << XML_CONFIG_FILENAME;
+        //qDebug()  << "XML::readValue. Can't open file: " << XML_CONFIG_FILENAME;
+        THROW_EXCEPTION("XML::readValue. Can't open file: " + XML_CONFIG_FILENAME);
         return "";
     }
 
@@ -32,7 +33,7 @@ QString XML::readValue(QString filename, const QList<QString>& nodenames)
                 err += nodenames[j];
             }
             err +=  " is null";
-            qDebug()  << err;
+            //qDebug()  << err;
             THROW_EXCEPTION("Can't read XML value. Node is null");
         }
     }

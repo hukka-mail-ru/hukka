@@ -75,10 +75,10 @@ void CreateGameDialog::onOkClicked()
     QList<Param> params;
     params << moveTime << gameTime << maxRating << minRating;
 
-    qDebug() << "moveTime.value " << moveTime.value
-    << " gameTime.value " << gameTime.value
-    << " minRating.value " << minRating.value
-    << " maxRating.value " << maxRating.value;
+   // qDebug() << "moveTime.value " << moveTime.value
+   // << " gameTime.value " << gameTime.value
+   // << " minRating.value " << minRating.value
+   // << " maxRating.value " << maxRating.value;
 
     connect(Client::instance(), SIGNAL(gameTableCreated(TABLEID)), this, SLOT(onGameTableCreated(TABLEID)));
     Client::instance()->createGameTable(LOGIC_ID_CHESS, params);

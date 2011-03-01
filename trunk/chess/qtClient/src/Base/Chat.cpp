@@ -43,7 +43,7 @@ Chat::Chat(QWidget* parent, ChatType type):
 
 void Chat::updatePos(OrientationStatus orientation)
 {
-    qDebug() << "Chat::updatePos: " << orientation;
+    //qDebug() << "Chat::updatePos: " << orientation;
 
     QString chatNode = (mChatType == CT_COMMON_CHAT) ? XML_NODE_COMMON_CHAT : XML_NODE_TABLE_CHAT;
 
@@ -61,7 +61,7 @@ void Chat::updatePos(OrientationStatus orientation)
     setFixedSize(width, height);
 
     mHistory->setMinimumSize(width, height);
-    qDebug() << "Chat::updatePos: end";
+   // qDebug() << "Chat::updatePos: end";
 }
 
 

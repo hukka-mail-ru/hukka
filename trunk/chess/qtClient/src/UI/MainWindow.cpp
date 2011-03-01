@@ -38,7 +38,7 @@ MainWindow::MainWindow(QWidget *parent):
     mCurrentDialog(NULL),
     mMode(MW_NORMAL)
 {
-    qDebug() << "MainWindow::MainWindow";
+  //  qDebug() << "MainWindow::MainWindow";
 
     mGameScene = new GameScene(this);
     mMainMenu = new MainMenu(this);
@@ -74,14 +74,14 @@ MainWindow::MainWindow(QWidget *parent):
 
 MainWindow::~MainWindow()
 {
-    qDebug() << "MainWindow::~MainWindow()";
+   // qDebug() << "MainWindow::~MainWindow()";
 }
 
 
 void MainWindow::onOrientationChanged(OrientationStatus orientation)
 {
 
-    qDebug() << "onOrientationChanged: " << orientation;
+   // qDebug() << "onOrientationChanged: " << orientation;
 
     static bool initialized = false;
 
@@ -201,7 +201,7 @@ void MainWindow::showMessage(const QString& text)
 
 void MainWindow::showError(const QString& text)
 {
-    qDebug() << "MainWindow::showError";
+   // qDebug() << "MainWindow::showError";
     showMessageBox(MB_ERROR, text);
 }
 
@@ -267,7 +267,7 @@ void MainWindow::showOptionsDialog()
 
 void MainWindow::showWaitDrawDialog()
 {
-    qDebug() << "MainWindow::showWaitDrawDialog";
+  //  qDebug() << "MainWindow::showWaitDrawDialog";
     setCurrentDialog(new WaitDrawDialog(this));
     setMode(MW_NORMAL);
 }
@@ -306,7 +306,7 @@ void MainWindow::showMainMenu()
 
 void MainWindow::showGameScene(PlayerColor color)
 {
-    qDebug() << "MainWindow::showGameField";
+   // qDebug() << "MainWindow::showGameField";
 
     try
     {

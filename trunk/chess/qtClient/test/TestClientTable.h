@@ -7,7 +7,7 @@
 #include "Settings.h"
 
 
-class TestClientTable: public CppUnit::TestFixture 
+class TestClientTable: public CppUnit::TestFixture
 {
         CPPUNIT_TEST_SUITE(TestClientTable);
 
@@ -29,11 +29,11 @@ class TestClientTable: public CppUnit::TestFixture
         QNetworkProxy proxy;
         QList<Param> rightParams;
 
-         
-public:   
+
+public:
         ~TestClientTable() {}
-              
-        void setUp() 
+
+        void setUp()
         {
                 proxy=QNetworkProxy(RIGHT_PROXY_TYPE, RIGHT_PROXY_HOSTNAME, RIGHT_PROXY_PORT);
 
@@ -58,7 +58,7 @@ public:
                 rightParams << p1 << p2 << p3 << p4;
         }
 
-        void tearDown() 
+        void tearDown()
         {
                 CPPUNIT_ASSERT_NO_THROW(client.disconnectFromHost());
                 CPPUNIT_ASSERT_EQUAL(CLI_DISCONNECTED, client.getClientStatus());
@@ -90,7 +90,7 @@ public:
                 SHOW_FUNCTION_NAME;
                 TABLEID id = 0;
                 CPPUNIT_ASSERT_NO_THROW(id = client.getMyGameTable(LOGIC_ID_CHESS));
-                qDebug() << "My table: " << QString::number(id);
+           //     qDebug() << "My table: " << QString::number(id);
         }
 
         void testTableCreateWrongParams()
@@ -100,13 +100,13 @@ public:
                 TABLEID id = 0;
                 Param p1 = { PARAMETER_ID_TIME2STEP, PARAMETER_MAX_TIME2STEP + 1, 0, 0 };
                 QList<Param> wrongParams;
-                wrongParams << p1;        
+                wrongParams << p1;
                 CPPUNIT_ASSERT_THROW(id = client.createGameTable(LOGIC_ID_CHESS, wrongParams), Exception);
                 CPPUNIT_ASSERT(id == 0);
 
                 Param p2 = { PARAMETER_ID_TIME2STEP, PARAMETER_MAX_TIME2STEP + 1, 0, 0 };
                 wrongParams.clear();
-                wrongParams << p2;    
+                wrongParams << p2;
                 CPPUNIT_ASSERT_THROW(id = client.createGameTable(LOGIC_ID_CHESS, wrongParams), Exception);
                 CPPUNIT_ASSERT(id == 0);
 
@@ -145,7 +145,7 @@ public:
 
                 Param newparam;
                 newparam.id = PARAMETER_ID_TIME2STEP;
-                newparam.value = RIGHT_TIME2STEP / 2; 
+                newparam.value = RIGHT_TIME2STEP / 2;
                 CPPUNIT_ASSERT_NO_THROW(client.setGameTableParam(LOGIC_ID_CHESS, id, newparam));
 
                 Param param;
@@ -180,7 +180,7 @@ public:
                 CPPUNIT_ASSERT_NO_THROW(opponent.createGameTable(LOGIC_ID_CHESS, rightParams));
         }
 
-        void testTableGetRandom() 
+        void testTableGetRandom()
         {
                 SHOW_FUNCTION_NAME;
 
@@ -204,7 +204,7 @@ public:
                 // TODO some more tests: OPERATOR_OR
         }
 
-        void testTableFind1()    
+        void testTableFind1()
         {
                 SHOW_FUNCTION_NAME;
                 opponentCreatesTable();
@@ -218,13 +218,13 @@ public:
                 quint32 maxCount = 10;
                 QList<quint32> ids;
                 CPPUNIT_ASSERT_NO_THROW(client.findGameTables(LOGIC_ID_CHESS, maxCount, condition, ids));
-                CPPUNIT_ASSERT(ids.size() > 0);    
-                CPPUNIT_ASSERT(ids.size() <= maxCount);    
+                CPPUNIT_ASSERT(ids.size() > 0);
+                CPPUNIT_ASSERT(ids.size() <= maxCount);
 
         }
 
 
-        void testTableFindNothing()    
+        void testTableFindNothing()
         {
                 SHOW_FUNCTION_NAME;
 
@@ -242,12 +242,12 @@ public:
                 quint32 maxCount = 10;
                 QList<quint32> ids;
                 CPPUNIT_ASSERT_NO_THROW(client.findGameTables(LOGIC_ID_CHESS, maxCount, condition, ids));
-                CPPUNIT_ASSERT(ids.size() == 0);    
+                CPPUNIT_ASSERT(ids.size() == 0);
         }
 
 };
 
 
-CPPUNIT_TEST_SUITE_REGISTRATION(TestClientTable); 
-   
+CPPUNIT_TEST_SUITE_REGISTRATION(TestClientTable);
+
 #endif /*TestClientTable_H_*/

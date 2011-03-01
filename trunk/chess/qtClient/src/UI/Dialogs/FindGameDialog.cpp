@@ -79,7 +79,7 @@ void FindGameDialog::onGotGameTables(const QList<TABLEID>& ids)
     }
     else
     {
-        qDebug() << "onGotGameTables(const QList<TABLEID>& ids) " << ids.size();
+       // qDebug() << "onGotGameTables(const QList<TABLEID>& ids) " << ids.size();
         MainWindow::instance()->showJoinGameDialog(ids);
     }
 }

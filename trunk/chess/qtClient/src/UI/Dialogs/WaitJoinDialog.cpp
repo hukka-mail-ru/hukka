@@ -34,7 +34,7 @@ void  WaitJoinDialog::onGameTableDeleted()
 void WaitJoinDialog::onOpponentJoined(const QString& opponentName)
 {
     disconnect(Client::instance(), SIGNAL(opponentJoined(const QString&)), this, SLOT(onOpponentJoined(const QString&)));
-    qDebug() << "WaitJoinDialog::onOpponentJoined";
+//    qDebug() << "WaitJoinDialog::onOpponentJoined";
 
     int tableID = UI::instance()->getGameTable();
 

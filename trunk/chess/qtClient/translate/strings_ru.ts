@@ -550,6 +550,11 @@ Please finish it first, then create a new game.</source>
         <source>Options</source>
         <translation>Настройки</translation>
     </message>
+    <message>
+        <location filename="../src/UI/Scenes/MainMenu.cpp" line="228"/>
+        <source>You have an unfinished game. Please finish it.</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>MainWindow</name>
@@ -682,14 +687,13 @@ Please finish it first, then create a new game.</source>
 <context>
     <name>UI</name>
     <message>
-        <location filename="../src/UI/UI.cpp" line="80"/>
         <source>You have an unfinished game. 
 Please finish it first, then create a new game.</source>
-        <translation type="unfinished">Предыдущая игра не была завершена. 
+        <translation type="obsolete">Предыдущая игра не была завершена. 
 Сначала завершите ее, а потом создайте новую игру.</translation>
     </message>
     <message>
-        <location filename="../src/UI/UI.cpp" line="112"/>
+        <location filename="../src/UI/UI.cpp" line="99"/>
         <source>Your opponent has offered a draw. Agree?</source>
         <translation type="unfinished">Ваш противник предлагает ничью. Согласны?</translation>
     </message>

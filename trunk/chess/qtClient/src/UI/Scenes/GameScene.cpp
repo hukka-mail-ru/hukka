@@ -27,7 +27,7 @@ GameScene::GameScene(QObject *parent):
 
 GameScene::~GameScene()
 {
-    qDebug() << "GameScene::~GameScene()";
+    //qDebug() << "GameScene::~GameScene()";
 }
 
 
@@ -250,7 +250,7 @@ void GameScene::onCellClicked(CELLID cellID)
 void GameScene::onMenuButtonClicked()
 {
 
-    qDebug() << "onMenuButtonClicked";
+    //qDebug() << "onMenuButtonClicked";
     MainWindow::instance()->showGameDialog();
 }
 
