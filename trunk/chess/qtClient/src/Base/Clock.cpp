@@ -71,10 +71,14 @@ void Clock::onTimeout()
     {
         mSeconds--;
     }
-    else if(UI::instance()->getGameState() != GS_WAIT_FOR_OPPONENT)
+    else
     {
-        mSeconds = DEFAULT_TIME;
-        UI::instance()->surrender();
+        mTimer->stop();
+        if(UI::instance()->getGameState() == GS_WAIT_FOR_OPPONENT)
+        {
+            mSeconds = DEFAULT_TIME;
+            Client::instance()->timeout(UI::instance()->getGameTable());
+        }
     }
 
     mText->setPlainText(mHeader + Game::seconds2hrs(mSeconds));

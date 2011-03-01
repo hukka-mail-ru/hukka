@@ -72,6 +72,7 @@ Client::Client(const QString& name):
 ====================================================================================================*/
 void Client::connectToHost(const QNetworkProxy& proxy, const QString& hostName, quint16 port)
 {
+    qDebug() << "Client::connectToHost. mSocket.state() =" << mSocket.state();
 
     QT_TRACEOUT;
     if(mSocket.state() == QAbstractSocket::ConnectedState)
@@ -547,6 +548,25 @@ void Client::surrender(TABLEID tableID)
     }
 }
 
+void Client::timeout (TABLEID tableID)
+{
+    QT_TRACEOUT;
+
+    try {
+        assert(tableID);
+        assert(mClientAuthorized);
+        assert(mGameStatus == GAM_STARTED);
+
+        // send command
+        QByteArray data = Q_BYTE_ARRAY(tableID);
+        sendCmd(CHS, CMD_TIMEOUT, data);
+    }
+    catch (Exception& e) {
+        e.add(tr("Can't say TIMEOUT. Table ID ") + QString::number(tableID) + tr(" on server: ") + mSocket.peerName() + ". ");
+        emit error (e.what());
+    }
+}
+
 void Client::getTime(TABLEID tableID)
 {
     QT_TRACEOUT;
@@ -822,6 +842,7 @@ QString commandToString(quint32 service, char command)
             case CMD_OPREJECT  : return "CMD_OPREJECT";
             case CMD_DRAGREE   : return "CMD_DRAGREE";
             case CMD_CHECK_TIME   : return "CMD_CHECK_TIME";
+            case CMD_TIMEOUT   : return "CMD_TIMEOUT";
 
             case     ANS_JOIN    : return "ANS_JOIN";
             case    ANS_STEP     : return "ANS_STEP";
@@ -1309,6 +1330,7 @@ void Client::processMessageCHS(const MessageHeader& header, const QByteArray& bu
 
         switch(reply->status) {
             case P_WIN:        emit gameOver(tr("Victory!")); break;
+            case P_WIN_TIME:   emit gameOver(tr("Time's up. You have won!")); break;
             case P_LOOSE:      emit gameOver(tr("You have lost!"));  break;
             case P_LOOSE_TIME: emit gameOver(tr("Time's up. You have lost!"));  break;
             case P_DRAW:       emit gameOver(tr("A draw."));  break;

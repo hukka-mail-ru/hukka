@@ -94,6 +94,7 @@ public:
         void step                (TABLEID tableID, const Move& move);
         void surrender           (TABLEID tableID);
         void getTime             (TABLEID tableID);
+        void timeout             (TABLEID tableID);
 
         // draw
         void offerDraw           (TABLEID tableID);

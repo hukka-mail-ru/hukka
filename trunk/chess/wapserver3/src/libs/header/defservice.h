@@ -25,7 +25,7 @@
 #define		ANS_OSTEP	12
 #define		ANS_OPPONENT	13
 #define		CMD_OPAGREE 14
-#define		CMD_OPREJECT 15  
+#define		CMD_OPREJECT 15
 #define		ANS_OPREJECT 16
 #define     CMD_DRAGREE 17
 #define     CMD_CHECK_TIME  18
@@ -33,6 +33,7 @@
 #define     ANS_CHECK_TIME_STEP 20
 #define     ANS_CHECK_TIME_GAME 21
 #define     ANS_OPAGREE_FAILED 22
+#define     CMD_TIMEOUT  23
 
 #define		P_DONE		100
 #define		P_FAILED	101
