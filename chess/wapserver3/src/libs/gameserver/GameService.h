@@ -557,17 +557,11 @@ private:
 	    //TODO refactoring! cmdEnd, cmdStep cmd Draw
         if (nCurPlayer == 0/*White*/)
 	    {
-	    	if(nXPlayer == 0)
-	    		nCurPlayer == nPlayer0;
-	   		else
-	    		nCurPlayer == nPlayer1;
+            nCurPlayer = (nXPlayer == 0) ? nPlayer0 : nPlayer1;
 	    }
 	    else
 	    {
-	    	if(nXPlayer == 0)
-	    		nCurPlayer == nPlayer1;
-	   		else
-	    		nCurPlayer == nPlayer0;
+            nCurPlayer = (nXPlayer == 0) ? nPlayer1 : nPlayer0;
 	    }
 
 		if ( nStepNum < nMinStepCountForRating)
