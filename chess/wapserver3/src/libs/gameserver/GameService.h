@@ -122,9 +122,17 @@ private:
 			std::cout << "GameService::newMsg from = " << _pClientMsg->GetTo() << " cmd = CMD_LOOSE" <<  std::endl;
 			uint32_t *nTableID = (uint32_t*) &vecCmd[0];
 
-			cmdLoose( _pClientMsg->GetTo(), *nTableID );
+			cmdLoose( *nTableID );
 
 		}
+        else if( cmd == CMD_TIMEOUT )
+        {
+            std::cout << "GameService::newMsg from = " << _pClientMsg->GetTo() << " cmd = CMD_TIMEOUT" <<  std::endl;
+            uint32_t *nTableID = (uint32_t*) &vecCmd[0];
+
+            cmdTimeout( *nTableID );
+
+        }
 		else if( cmd == CMD_OPAGREE )
 		{
 			std::cout << "GameService::newMsg from = " << _pClientMsg->GetTo() << " cmd = CMD_OPAGREE" <<  std::endl;
@@ -530,10 +538,15 @@ private:
 		}
 	}
 
-	void cmdLoose( uint32_t _nPlayerID, uint32_t _nTableID )
+	void cmdLoose( uint32_t _nTableID )
 	{
         endGame( _nTableID, IGameLogic::Loose );
 	}
+
+    void cmdTimeout( uint32_t _nTableID )
+    {
+        endGame( _nTableID, IGameLogic::TimeOut );
+    }
 
 	void endGame( uint32_t _nTableID, IGameLogic::StepRes _Result, uint32_t nMinStepCountForRating = 5 )
 	{
