@@ -30,15 +30,15 @@ Clock::Clock(QGraphicsScene* parentScene, const QString& header,
 
     mText = mParentScene->addText("",QFont(family, size));
 
-    QObject::connect(Client::instance(), updateSignal, this, SLOT(onGotTime(quint32)));
+    connect(Client::instance(), updateSignal, this, SLOT(onGotTime(quint32)));
 
     mTimer = new QTimer(this);
     connect(mTimer, SIGNAL(timeout()), this, SLOT(onTimeout()));
-    connect(Client::instance(), SIGNAL(gameOver(const QString&)), this, SLOT(onGameOver(const QString&)));
 }
 
 void Clock::start()
 {
+    connect(Client::instance(), SIGNAL(gameOver(const QString&)), this, SLOT(onGameOver(const QString&)));
     mTimer->start(1000);
 }
 
