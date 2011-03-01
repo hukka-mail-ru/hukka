@@ -24,6 +24,7 @@
 #include "sqlbase.h"
 
 #include <iostream>
+using namespace std;
 //#include <syslog.h>
 
 CSqlBase::CSqlBase():
@@ -65,11 +66,32 @@ MYSQL_RES* CSqlBase::Query( const char* _pcQuery )
 {
 	mysql_query( &m_MySQL, _pcQuery );
 	MYSQL_RES* pRes = mysql_store_result( &m_MySQL );
+	unsigned int err = mysql_errno(&m_MySQL);
+
+	if(!pRes && err)
+	{
+	    cerr << "mysql_error: " << err << endl;
+	    cerr << "MySQL server has gone away. Trying to reconnect..." << endl;
+
+	    // try to ping. If it fails, reconnect.
+	    if(mysql_ping(&m_MySQL) != 0 )
+	    {
+	        if(!Connect())
+	        {
+	            cerr << "Can't reconnect to MySQL server." << endl;
+	            return 0;
+	        }
+	    }
+
+	    // Query again:
+	    mysql_query( &m_MySQL, _pcQuery );
+	    pRes = mysql_store_result( &m_MySQL );
+	}
 
 	return pRes;
 }
 
-MYSQL_RES* CSqlBase::QueryReal( const char* _pcQuery, unsigned long length) 
+MYSQL_RES* CSqlBase::QueryReal( const char* _pcQuery, unsigned long length)
 {
 	mysql_real_query( &m_MySQL, _pcQuery, length);
 	MYSQL_RES* pRes = mysql_store_result( &m_MySQL );
@@ -87,15 +109,15 @@ bool CSqlBase::Connect()
 	//syslog( LOG_INFO | LOG_LOCAL0, "CSqlBase::Connect()" );
 	//syslog( LOG_INFO | LOG_LOCAL0, m_cszLogin );
 	//syslog( LOG_INFO | LOG_LOCAL0, m_cszPassword );
-	
+
 	if( mysql_real_connect( &m_MySQL, 0, m_cszLogin, m_cszPassword, 0, 0, 0, 0 ) )
 		m_isConnected = mysql_select_db( &m_MySQL, m_cszDBName ) == 0 ;
-	
+
 /*	if ( m_isConnected )
 		syslog( LOG_INFO | LOG_LOCAL0, "CSqlBase::Connect() true" );
 	else
 		syslog( LOG_INFO | LOG_LOCAL0, "CSqlBase::Connect() false" );*/
-	
+
 	return m_isConnected;
 }
 
