@@ -887,13 +887,12 @@ void Client::sendCmd(char service, char command, const QByteArray& data)
     }
 
     Q_ASSERT(bytes == message.size());
-/*
-qDebug() << "++++++++++++++++\n" << mName << "COMMAND SENT" << serviceToString(service) << commandToString(service, command);
-QString str = "SENT BYTES  : ";
+
+QString str = "<<<--- OUTGOING: " + serviceToString(service) + " " + commandToString(service, command) + " ";
 for(int i=0; i<message.size(); i++)
     str += QString::number((int)(unsigned char)message[i]) + " ";
 qDebug() << str;
-*/
+
 }
 
 
@@ -924,15 +923,15 @@ void Client::onReadyRead()
     {
 
         MessageHeader* header = (MessageHeader*)buf.data();
-/*
-qDebug() << "----------\n" << mName << "MESSAGE RECEIVED"
-         << serviceToString((quint32)header->service)
-         << commandToString((quint32)header->service, (quint32)header->cmd);
-QString str = "REC. BYTES  : ";
+
+
+QString str = "--->>> INCOMING: " +
+         serviceToString((quint32)header->service) + " " +
+         commandToString((quint32)header->service, (quint32)header->cmd) + " ";
 for(int i=0; i<buf.size(); i++)
     str += QString::number((int)(unsigned char)buf[i]) + " ";
 qDebug() << str;
-*/
+
         if(header->sign != PROTOCOL_SIGNATURE) {
             qDebug("Server uses wrong protocol ");
             return;
@@ -985,7 +984,7 @@ qDebug() << str;
 ====================================================================================================*/
 void Client::processMessageSRV(const MessageHeader& header, const QByteArray& buffer)
 {
-    qDebug() << "Client::processMessageSRV: buffer[0]=" << (int)buffer[0] <<  "  cmd =" << (int)header.cmd;
+ //   qDebug() << "Client::processMessageSRV: buffer[0]=" << (int)buffer[0] <<  "  cmd =" << (int)header.cmd;
     // LOGIN
     if(header.cmd == LOGIN_STATUS)
     {
@@ -1095,20 +1094,20 @@ void Client::processMessageTBM(const MessageHeader& header, const QByteArray& bu
         for(quint32 i=0; i < reply->count; i++)
         {
             TABLEID* id = (TABLEID*)(buffer.data() + sizeof(Reply) + i*sizeof(TABLEID));
-            qDebug() << "FOUND ID" << *id;
+     //       qDebug() << "FOUND ID" << *id;
             ids << *id;
         }
 
         emit gotGameTables(ids);
 
-        qDebug() << "reply->count" << reply->count ;
-        qDebug() << "OK: findGameTables." ;
+   //     qDebug() << "reply->count" << reply->count ;
+   //     qDebug() << "OK: findGameTables." ;
     }
     // GET MY GAME TABLE
 
     else if(header.cmd == ANS_MYTBL)
     {
-        qDebug() << "cmd == ANS_MYTBL" ;
+   //     qDebug() << "cmd == ANS_MYTBL" ;
         struct Reply {
             TABLEID     tableID;
             char        isValid;
