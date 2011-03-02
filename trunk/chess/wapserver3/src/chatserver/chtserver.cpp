@@ -218,8 +218,8 @@ void CHTServer::joinToChat( uint32_t _nPlayerID, uint32_t _nLogicID, uint32_t _n
 
         }
 
-        ///TODO send last 10 messages
-
+        /// send last 10 messages
+        getHistory( _nLogicID, _nTableID );
     }
     else
     {
@@ -348,6 +348,25 @@ void CHTServer::leaveChat( uint32_t _nPlayerID, uint32_t _nLogicID, uint32_t _nT
 #endif
     }
 }
+
+void CHTServer::getHistory( uint32_t logicID, uint32_t tableID )
+{
+    SqlTable chatTable("");
+    getLogicChatTable(logicID, &chatTable); // tbChessChat
+
+    // select Msg from tbChessChat where CreateTime>0 order by CreateTime desc limit 10;
+    TTable queryRes;
+    chatTable.Select("Msg", "CreateTime>0 order by CreateTime desc limit 10", &queryRes);
+
+    // send messages in reverse order
+    for(int i=queryRes.size()-1; i>=0; i--)
+    {
+        sendMsgToChat( logicID, &queryRes[i][0], tableID );
+    }
+
+}
+
+
 
 void CHTServer::messageToChat( uint32_t _nPlayerID, uint32_t _nLogicID,
                                 const TVecChar* _vecData, uint32_t _nTableID )
