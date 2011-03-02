@@ -34,14 +34,21 @@ void UI::initialize(QApplication* app)
 
 void UI::shutdown()
 {
- //   qDebug() << "UI::shutdown()";
+    // Client must properly send all possible messages in its queue.
+    connect(Client::instance(), SIGNAL(disconnectedFromHost()), this, SLOT(onDisconnected()));
+    Client::instance()->disconnectFromHost();
+}
 
-   // delete MainWindow::instance();
- //   delete Client::instance();
+void UI::onDisconnected()
+{
+    disconnect(Client::instance(), SIGNAL(disconnectedFromHost()), this, SLOT(onDisconnected()));
+
+    delete MainWindow::instance();
+    delete Client::instance();
+    // delete UI::instance(); ??? Is it a leak?
 
     mApp->exit(0);
 }
-
 
 
 void UI::startGame()

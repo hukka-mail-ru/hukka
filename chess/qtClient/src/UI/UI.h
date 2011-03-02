@@ -64,6 +64,7 @@ private slots:
     void onGameOver(const QString&);
     void onDrawOffered();
     void onError(const QString& what);
+    void onDisconnected();
 };
 
 
