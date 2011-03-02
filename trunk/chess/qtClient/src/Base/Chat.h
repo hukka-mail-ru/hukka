@@ -22,7 +22,9 @@ public:
 
     void updatePos(OrientationStatus orientation);
 
-    void close();
+    // derived from QWidged
+    void show();
+    bool close();
 
 private:
 

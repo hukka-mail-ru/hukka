@@ -10,8 +10,7 @@ CREATE TABLE IF NOT EXISTS tbChessChatTbl
 (
       TableID INT UNSIGNED NOT NULL,
       Msg TEXT NOT NULL,
-      CreateTime TIMESTAMP,	
-      PRIMARY KEY(TableID)
+      CreateTime TIMESTAMP
 ) ROW_FORMAT=fixed;
 
 CREATE TABLE IF NOT EXISTS tbChessChatUserOnline

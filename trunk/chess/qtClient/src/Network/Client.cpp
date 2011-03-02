@@ -768,6 +768,7 @@ QString serviceToString(quint32 service)
         case REG: return "REG";
         case TBM: return "TBM";
         case CHS: return "CHS";
+        case CHAT: return "CHAT";
         default:  return QString::number((int)service);
     }
 }

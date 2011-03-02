@@ -149,7 +149,7 @@ void MainMenu::onChatClicked()
     else
     {
         if(mChat->isVisible())
-            mChat->hide();
+            mChat->close();
         else
             mChat->show();
     }
@@ -158,7 +158,7 @@ void MainMenu::onChatClicked()
 void MainMenu::hide()
 {
    if(mChat && mChat->isVisible())
-       mChat->hide();
+       mChat->close();
 }
 
 
@@ -208,8 +208,6 @@ void MainMenu::onAuthorized()
     }
     else if(mClickedButton == chatButton && !mChat)
     {
-        Client::instance()->joinCommonChat(LOGIC_ID_CHESS);
-
         mChat = new Chat(MainWindow::instance(), CT_COMMON_CHAT);
         mChat->updatePos(MainWindow::instance()->getOrientation());
         mChat->show();

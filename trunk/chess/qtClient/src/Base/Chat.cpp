@@ -3,6 +3,7 @@
 #include <QScrollBar>
 #include <QVBoxLayout>
 #include <QHBoxLayout>
+#include <QWidget>
 #include <Client.h>
 #include <UI.h>
 #include <MainWindow.h>
@@ -64,7 +65,17 @@ void Chat::updatePos(OrientationStatus orientation)
    // qDebug() << "Chat::updatePos: end";
 }
 
+void Chat::show()
+{
+    Client::instance()->joinCommonChat(LOGIC_ID_CHESS);
+    QWidget::show();
+}
 
+bool Chat::close()
+{
+    Client::instance()->leaveCommonChat(LOGIC_ID_CHESS);
+    return QWidget::close();
+}
 
 void Chat::ChatHistory::mouseReleaseEvent(QMouseEvent * event)
 {
