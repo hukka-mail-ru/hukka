@@ -32,7 +32,7 @@
 
   <CommonChat>
     <portrait>  <x value="5" /> <y value="0" />  <width value="500" /> <height value="220" />  </portrait>
-    <landscape> <x value="5" /> <y value="5" />  <width value="500" /> <height value="280" />  </landscape>
+    <landscape> <x value="50" /> <y value="5" />  <width value="500" /> <height value="280" />  </landscape>
 	<font>
  	    <me>             <color value="white" /> </me>
 		<opponent>       <color value="#FFCC00" /> </opponent>

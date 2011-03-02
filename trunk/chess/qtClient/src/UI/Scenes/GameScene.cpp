@@ -40,10 +40,10 @@ void GameScene::showChat()
     mChat->show();
 }
 
-void GameScene::hide()
+void GameScene::close()
 {
    if(mChat && mChat->isVisible())
-       mChat->hide();
+       mChat->close();
 }
 
 void GameScene::initialize()
@@ -77,6 +77,7 @@ void GameScene::initialize()
 
 void GameScene::onExitClicked()
 {
+    close();
     UI::instance()->shutdown();
 }
 
