@@ -38,7 +38,7 @@ void WaitJoinDialog::onOpponentJoined(const QString& opponentName)
 
     int tableID = UI::instance()->getGameTable();
 
-    // TODO Get player name by ID
+    // Get player name by ID
     if(MainWindow::instance()->showQuestion(opponentName + " wants to play chess with you. Agree?"))
     {
         MainWindow::instance()->setMode(MW_WAIT);

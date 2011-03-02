@@ -567,6 +567,13 @@ private:
 	    GetSqlGameTable()->getStepNum( _nTableID, nStepNum );
   	    GetSqlGameTable()->getXPlayer( _nTableID, nXPlayer );
 
+  	    cerr << "nPlayer0 " << nPlayer0 << endl;
+        cerr << "nPlayer1 " << nPlayer1 << endl;
+        cerr << "nCurPlayer " << nCurPlayer << endl;
+        cerr << "nStepNum " << nStepNum << endl;
+        cerr << "nXPlayer " << nXPlayer << endl;
+
+
 	    //TODO refactoring! cmdEnd, cmdStep cmd Draw
         if (nCurPlayer == 0/*White*/)
 	    {
@@ -576,6 +583,8 @@ private:
 	    {
             nCurPlayer = (nXPlayer == 0) ? nPlayer1 : nPlayer0;
 	    }
+
+        cerr << "OK. nCurPlayer " << nCurPlayer << endl;
 
 		if ( nStepNum < nMinStepCountForRating)
 		{
@@ -604,6 +613,8 @@ private:
 	    {
 	        if ( nCurPlayer == nPlayer0 )
 	        {
+	            cerr << "OK. nCurPlayer == nPlayer0 "  << endl;
+
 	            sCmd0.m_chData = ( char ) P_LOOSE;
 	            sCmd1.m_chData = ( char ) P_WIN;
 	            GetSqlGameTable()->setState( _nTableID, ST_WIN_0 );
@@ -611,6 +622,8 @@ private:
 	        }
 	        else
 	        {
+	            cerr << "OK. nCurPlayer != nPlayer0 " << nCurPlayer << endl;
+
 	            sCmd0.m_chData = (char) P_WIN;
 	            sCmd1.m_chData = (char) P_LOOSE;
 	            GetSqlGameTable()->setState( _nTableID, ST_WIN_X );

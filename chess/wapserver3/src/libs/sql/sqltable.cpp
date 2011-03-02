@@ -234,7 +234,7 @@ bool SqlTable::Insert(const TVecMyStr& _vecCols, const TVecMyStr& _vecValues )
 
 	strQuery = strQuery + ")";
 
-	//std::cerr << strQuery.c_str();
+	std::cerr << "SqlTable::Insert: " << strQuery.c_str();
 
 	MYSQL_RES* pRes = m_sqlBase.Query( strQuery.c_str() );
 
