@@ -110,7 +110,7 @@ void SqlTable::Delete(const char* _pcKey, const char* _pcVal)
     else
         strQuery = strQuery + " IS NULL";
 
-
+    std::cerr << strQuery.c_str() << std::endl;
     MYSQL_RES* pRes = m_sqlBase.Query( strQuery.c_str() );
 
     if (pRes == 0)

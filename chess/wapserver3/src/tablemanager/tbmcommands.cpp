@@ -11,6 +11,15 @@
 #define RANDOM_BUFFER 100
 #define TABLE_OPEN 1
 
+/*
+ * 1 - TABLE HAS BEEN CREATED
+ * 2 - WAIT FOR START THE GAME
+ * 3 - GAME HAS STARTED
+ *
+ * 7 - DELETED ?
+ */
+
+
 TbmCommands::TbmCommands()
 : m_nLastId(0)
 {
@@ -353,7 +362,7 @@ bool TbmCommands::Delete(uint32_t _nLogicID, uint32_t _nPlayerID, uint32_t _nTab
 
     if ( GetLogicTable(_nLogicID, &sqlLogicTable) )
     {
-        strWhere = "TableID = " + CMyStr(_nTableID);
+     /*   strWhere = "TableID = " + CMyStr(_nTableID);
         sqlLogicTable.Select("State", strWhere.c_str(), &tbl);
 
         if (atoi((tbl.begin()->at(0)).c_str()) > TABLE_OPEN)
@@ -362,11 +371,14 @@ bool TbmCommands::Delete(uint32_t _nLogicID, uint32_t _nPlayerID, uint32_t _nTab
         }
 
         CMyStr strField = "State";
-        CMyStr strValue = "7";
+        CMyStr strValue = "7";*/
         CMyStr strKey = "TableID";
         CMyStr strTableId = CMyStr(_nTableID);
 
-        sqlLogicTable.Update(strField.c_str(), strValue.c_str(), strKey.c_str(), strTableId.c_str());
+        // why update ???
+      //  sqlLogicTable.Update(strField.c_str(), strValue.c_str(), strKey.c_str(), strTableId.c_str());
+
+        sqlLogicTable.Delete(strKey.c_str(), strTableId.c_str());
     }
 
     return true;
@@ -481,7 +493,7 @@ bool  TbmCommands::GetMyTable(int _nLogicID, int _nPlayerID, TVecUINT* vecRes)
 		TTable tbl;
 
 		CMyStr strWhere =
-			" State < 4 AND (IDPlayer0 = " + CMyStr(_nPlayerID) +
+			/*" State < 4 AND */"(IDPlayer0 = " + CMyStr(_nPlayerID) +
 			" OR IDPlayer1 = " + CMyStr(_nPlayerID) + ")";
 
         /* find empry :
