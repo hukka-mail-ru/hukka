@@ -155,7 +155,7 @@ void MainMenu::onChatClicked()
     }
 }
 
-void MainMenu::hide()
+void MainMenu::close()
 {
    if(mChat && mChat->isVisible())
        mChat->close();
@@ -264,6 +264,7 @@ void MainMenu::onDisonnectedFromHost()
 
 void MainMenu::onExitClicked()
 {
+    close();
     UI::instance()->shutdown();
 }
 

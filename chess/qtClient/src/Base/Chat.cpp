@@ -68,13 +68,13 @@ void Chat::updatePos(OrientationStatus orientation)
 void Chat::show()
 {
     Client::instance()->joinCommonChat(LOGIC_ID_CHESS);
-    QWidget::show();
+    QDialog::show();
 }
 
 bool Chat::close()
 {
     Client::instance()->leaveCommonChat(LOGIC_ID_CHESS);
-    return QWidget::close();
+    return QDialog::close();
 }
 
 void Chat::ChatHistory::mouseReleaseEvent(QMouseEvent * event)

@@ -24,7 +24,7 @@ public:
 
     void updateItemsPositions(OrientationStatus orientation);
 
-    void hide();
+    void close();
 
 private:
 

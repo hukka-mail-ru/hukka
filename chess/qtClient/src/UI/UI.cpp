@@ -37,7 +37,7 @@ void UI::shutdown()
  //   qDebug() << "UI::shutdown()";
 
    // delete MainWindow::instance();
-    delete Client::instance();
+ //   delete Client::instance();
 
     mApp->exit(0);
 }

@@ -294,7 +294,7 @@ void MainWindow::showMainMenu()
 {
   //  if(mGraphicsView->scene() == mGameScene)
     if(mGameScene)
-        mGameScene->hide();
+        mGameScene->close();
 
     closeCurrentDialog();
     mGraphicsView->setScene(mMainMenu);
@@ -311,7 +311,7 @@ void MainWindow::showGameScene(PlayerColor color)
     try
     {
         if(mGraphicsView->scene() == mMainMenu)
-            mMainMenu->hide();
+            mMainMenu->close();
 
         mGameScene->startClocks();
         mGameScene->showChat();
