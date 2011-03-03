@@ -89,11 +89,14 @@ void UI::onGameOver(const QString& message)
     disconnect(Client::instance(), SIGNAL(drawOffered()), this, SLOT(onDrawOffered()));
 
 
-
     MainWindow::instance()->closeCurrentDialog();
     MainWindow::instance()->showMessage(message);
+
+    Client::instance()->deleteGameTable(LOGIC_ID_CHESS, mGameTable);
+
     MainWindow::instance()->showMainMenu();
 }
+
 
 
 void UI::onInvalidMove()

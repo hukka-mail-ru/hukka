@@ -234,7 +234,7 @@ bool SqlTable::Insert(const TVecMyStr& _vecCols, const TVecMyStr& _vecValues )
 
 	strQuery = strQuery + ")";
 
-	std::cerr << "SqlTable::Insert: " << strQuery.c_str();
+	std::cerr << "SqlTable::Insert: " << strQuery.c_str() << std::endl;
 
 	MYSQL_RES* pRes = m_sqlBase.Query( strQuery.c_str() );
 
@@ -252,6 +252,26 @@ void SqlTable::Update( const char* _cszCol, const char* _cszNewVal, const char* 
 	MYSQL_RES* pRes = m_sqlBase.Query( strQuery.c_str() );
 
 	m_sqlBase.FreeRes( pRes );
+}
+
+void SqlTable::Call( const CMyStr& name, const TVecMyStr& parameters )
+{
+    CMyStr parametersWithCommas;
+    for(int i=0; i<parameters.size(); i++)
+    {
+        parametersWithCommas += " \"" + *parameters[i] + "\"";
+
+        if(i < parameters.size()-1)
+            parametersWithCommas += ",";
+    }
+
+    CMyStr strQuery( "CALL " + name + "(" + parametersWithCommas + ")");
+
+    std::cerr << "SqlTable::Call: " << strQuery.c_str() << std::endl;
+
+    MYSQL_RES* pRes = m_sqlBase.Query( strQuery.c_str() );
+
+    m_sqlBase.FreeRes( pRes );
 }
 
 void SqlTable::ar2blob(const TVecByte& _cvecIn, CMyStr* _pRes)

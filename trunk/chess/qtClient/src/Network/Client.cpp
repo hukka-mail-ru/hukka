@@ -1097,8 +1097,8 @@ void Client::processMessageTBM(const MessageHeader& header, const QByteArray& bu
         Reply* reply = (Reply*)buffer.data();
 
         switch(reply->isValid) {
-            case ST_VALID:       emit gameTableDeleted(); break;
-            case ST_NOTVALID:    emit error(tr("Invalid parameter. Attempt to delete wrong Game Table?"));  break;
+            case ST_VALID:
+            case ST_NOTVALID:    emit gameTableDeleted(); break; //emit error(tr("Invalid parameter. Attempt to delete wrong Game Table?"));  break;
             default:             emit error(tr("Internal server error") + QString::number(reply->isValid)); break;
         }
     }
@@ -1335,7 +1335,7 @@ void Client::processMessageCHS(const MessageHeader& header, const QByteArray& bu
             case P_LOOSE:      emit gameOver(tr("You have lost!"));  break;
             case P_LOOSE_TIME: emit gameOver(tr("Time's up. You have lost!"));  break;
             case P_DRAW:       emit gameOver(tr("A draw."));  break;
-            case ST_NO_RES:    emit gameOver(tr("Game over. \nThe rating is not affected because of too few number of moves.")); break;
+            case ST_NO_RES:    emit gameOver(tr("Game over. \nThe rating hasn't been affected because of too few number of moves.")); break;
             default:           emit error(tr("Internal server error ") + QString::number(reply->status)); break;
         }
     }
@@ -1354,7 +1354,7 @@ void Client::processMessageCHS(const MessageHeader& header, const QByteArray& bu
             case P_OFFER:      emit drawOffered(); break;
             case P_WAIT:        break; // TODO send a message "Please wait"
             case P_ACCEPT:     emit gameOver(tr("A draw.")); break;
-            case P_REJECT:     emit drawRejected(tr("Your opponent rejected the draw")); break;
+            case P_REJECT:     emit drawRejected(tr("Your opponent has rejected the draw")); break;
             case P_NOTALLOWED: emit drawRejected(tr("Please wait for your next move to offer a draw")); break;
             default:           emit error(tr("Internal server error ") + QString::number(reply->status)); break;
         }

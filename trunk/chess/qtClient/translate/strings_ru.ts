@@ -158,6 +158,17 @@
         <translation>Невозможно получить игровое поле. ID стола </translation>
     </message>
     <message>
+        <location filename="../src/Network/Client.cpp" line="1338"/>
+        <source>Game over. 
+The rating hasn&apos;t been affected because of too few number of moves.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/Network/Client.cpp" line="1357"/>
+        <source>Your opponent has rejected the draw</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
         <source>Can&apos;t get getPlayerID on server: </source>
         <translation type="obsolete">Невозможно получить ID игрока на сервере: </translation>
     </message>
@@ -224,10 +235,9 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/Network/Client.cpp" line="1338"/>
         <source>Game over. 
 The rating is not affected because of too few number of moves.</source>
-        <translation>Игра окончена. 
+        <translation type="obsolete">Игра окончена. 
 Ваш рейтинг не изменился, т.к. в партии было сделано слишком мало ходов.</translation>
     </message>
     <message>
@@ -308,9 +318,8 @@ The rating is not affected because of too few number of moves.</source>
         <translation>Внутренняя ошибка сервера</translation>
     </message>
     <message>
-        <location filename="../src/Network/Client.cpp" line="1101"/>
         <source>Invalid parameter. Attempt to delete wrong Game Table?</source>
-        <translation>Неправильный параметр. Попытка удалить неправильный игровой стол?</translation>
+        <translation type="obsolete">Неправильный параметр. Попытка удалить неправильный игровой стол?</translation>
     </message>
     <message>
         <location filename="../src/Network/Client.cpp" line="1209"/>
@@ -343,9 +352,8 @@ The rating is not affected because of too few number of moves.</source>
         <translation>Ничья.</translation>
     </message>
     <message>
-        <location filename="../src/Network/Client.cpp" line="1357"/>
         <source>Your opponent rejected the draw</source>
-        <translation>Ваш противник не согласен на ничью</translation>
+        <translation type="obsolete">Ваш противник не согласен на ничью</translation>
     </message>
     <message>
         <location filename="../src/Network/Client.cpp" line="1358"/>
@@ -704,7 +712,7 @@ Please finish it first, then create a new game.</source>
 Сначала завершите ее, а потом создайте новую игру.</translation>
     </message>
     <message>
-        <location filename="../src/UI/UI.cpp" line="101"/>
+        <location filename="../src/UI/UI.cpp" line="111"/>
         <source>Your opponent has offered a draw. Agree?</source>
         <translation type="unfinished">Ваш противник предлагает ничью. Согласны?</translation>
     </message>
@@ -716,9 +724,13 @@ Please finish it first, then create a new game.</source>
         <translation type="obsolete">Ожидание</translation>
     </message>
     <message>
-        <location filename="../src/UI/Dialogs/WaitAgreeDialog.cpp" line="8"/>
         <source>Wait for start...</source>
-        <translation>Ждите начала игры...</translation>
+        <translation type="obsolete">Ждите начала игры...</translation>
+    </message>
+    <message>
+        <location filename="../src/UI/Dialogs/WaitAgreeDialog.cpp" line="8"/>
+        <source>Please wait for start of the game...</source>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../src/UI/Dialogs/WaitAgreeDialog.cpp" line="9"/>
@@ -738,7 +750,7 @@ Please finish it first, then create a new game.</source>
     </message>
     <message>
         <location filename="../src/UI/Dialogs/WaitDrawDialog.cpp" line="8"/>
-        <source>Wait for oppponent response...</source>
+        <source>Please wait for a response of your opponent...</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -771,9 +783,13 @@ Please finish it first, then create a new game.</source>
         <translation type="obsolete">Ожидание</translation>
     </message>
     <message>
-        <location filename="../src/UI/Dialogs/WaitJoinDialog.cpp" line="9"/>
         <source>Wait for oppponent...</source>
-        <translation>Ждите противника...</translation>
+        <translation type="obsolete">Ждите противника...</translation>
+    </message>
+    <message>
+        <location filename="../src/UI/Dialogs/WaitJoinDialog.cpp" line="9"/>
+        <source>Please wait until an opponent joins your game...</source>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../src/UI/Dialogs/WaitJoinDialog.cpp" line="10"/>
