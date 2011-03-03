@@ -133,7 +133,7 @@ signals:
         void drawOffered();
         void drawRejected(const QString& message);
 
-        void gotMyGameTable(TABLEID id);
+        void gotMyGameTable(TABLEID id, bool isOwner);
         void gotGameTables(const QList<TABLEID>& ids);
         void gotField(const Field& field, bool myMove, bool iAmWhite);
         void gotGameTableParams(const QString& playerName, qint32 rating, qint32 time2step, qint32 time2game);

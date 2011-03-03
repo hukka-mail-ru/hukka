@@ -114,7 +114,9 @@ void Client::disconnectFromHost()
 
     //qDebug() << "mSocket.disconnectFromHost()";
 
-    mSocket.disconnectFromHost();
+    ///mSocket.disconnectFromHost(); // <- for some unknown reasons the player stays on server (server then reports "Player is already online")
+    mSocket.flush();
+    emit disconnectedFromHost();
 }
 
 /*====================================================================================================
@@ -913,6 +915,7 @@ void Client::sendCmd(char service, char command, const QByteArray& data)
 
     Q_ASSERT(bytes == message.size());
 
+
 QString str = "<<<--- OUTGOING: " + serviceToString(service) + " " + commandToString(service, command) + " ";
 for(int i=0; i<message.size(); i++)
     str += QString::number((int)(unsigned char)message[i]) + " ";
@@ -956,6 +959,7 @@ QString str = "--->>> INCOMING: " +
 for(int i=0; i<buf.size(); i++)
     str += QString::number((int)(unsigned char)buf[i]) + " ";
 qDebug() << str;
+
 
         if(header->sign != PROTOCOL_SIGNATURE) {
             qDebug("Server uses wrong protocol ");
@@ -1140,9 +1144,10 @@ void Client::processMessageTBM(const MessageHeader& header, const QByteArray& bu
         Reply* reply = (Reply*)buffer.data();
 
         switch(reply->isValid) {
-            case ST_VALID:       emit gotMyGameTable(reply->tableID);  break;
-            case ST_NOTVALID:    emit gotMyGameTable(0);  break;
-            default:             emit error(tr("Internal server error") + QString::number(reply->isValid)); break;
+            case ST_VALID:            emit gotMyGameTable(reply->tableID, false);  break;
+            case ST_VALID_AND_OWNER:  emit gotMyGameTable(reply->tableID, true);  break;
+            case ST_NOTVALID:         emit gotMyGameTable(0, false);  break;
+            default:                  emit error(tr("Internal server error") + QString::number(reply->isValid)); break;
         }
     }
 

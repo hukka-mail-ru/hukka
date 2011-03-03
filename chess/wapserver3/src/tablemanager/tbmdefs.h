@@ -21,6 +21,7 @@
 #define ST_NOTVALID         31
 #define ST_NOTVALID_LOGICID	33
 #define ST_VALID            32
+#define ST_VALID_AND_OWNER  33
 
 
 #endif
