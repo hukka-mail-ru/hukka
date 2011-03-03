@@ -33,5 +33,6 @@ const int       CMD_GAME_CHAT_JOIN = 13;
 const int       CMD_TBL_CHAT_JOIN = 14;
 const int       CMD_GAME_CHAT_LEAVE = 15;
 const int       CMD_TBL_CHAT_LEAVE = 16;
+const int       CMD_TBL_CHAT_DELETE = 17;
 
 #endif

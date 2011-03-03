@@ -377,6 +377,8 @@ void Client::deleteGameTable(LOGICID logicID, TABLEID tableID)
         QByteArray data = Q_BYTE_ARRAY(logicID) + Q_BYTE_ARRAY(tableID);
         //qDebug() << "Client::deleteGameTable" << endl;
         sendCmd(TBM, CMD_DELETE, data);
+
+        sendCmd(CHAT, CMD_TBL_CHAT_DELETE, data);
     }
     catch (Exception& e) {
         e.add(tr("Can't delete Game Table with ID ") + QString::number(tableID) + tr(" on server: ") + mSocket.peerName() + ". ");
@@ -809,6 +811,7 @@ QString commandToString(quint32 service, char command)
             case CMD_TBL_CHAT_JOIN :       return "CMD_TBL_CHAT_JOIN ";
             case CMD_GAME_CHAT_LEAVE:      return "CMD_GAME_CHAT_LEAVE";
             case CMD_TBL_CHAT_LEAVE :      return "CMD_TBL_CHAT_LEAVE ";
+            case CMD_TBL_CHAT_DELETE:      return "CMD_TBL_CHAT_DELETE ";
             default:              return QString::number((int)command);
         }
         break;

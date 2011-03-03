@@ -42,6 +42,7 @@ private:
     void                setSocket( MySocket * _pSocket );
 
     void                getHistory( uint32_t _nPlayerID, uint32_t logicID, uint32_t tableID);
+    void                deleteHistory( uint32_t logicID, uint32_t tableID);
 
 	static CHTServer*		m_pSelf;
 	static int			m_nRefCount;
