@@ -203,7 +203,7 @@ void MainMenu::onAuthorized()
     {
         MainWindow::instance()->setMode(MW_WAIT);
         // for case if client recreates the game table after a crash
-        connect(Client::instance(), SIGNAL(gotMyGameTable(TABLEID)), this, SLOT(onGotMyGameTable(TABLEID)));
+        connect(Client::instance(), SIGNAL(gotMyGameTable(TABLEID, bool)), this, SLOT(onGotMyGameTable(TABLEID, bool)));
         Client::instance()->getMyGameTable(LOGIC_ID_CHESS);
     }
     else if(mClickedButton == chatButton && !mChat)
@@ -216,12 +216,16 @@ void MainMenu::onAuthorized()
     }
 }
 
-void MainMenu::onGotMyGameTable(TABLEID id)
+void MainMenu::onGotMyGameTable(TABLEID id, bool isOwner)
 {
-    disconnect(Client::instance(), SIGNAL(gotMyGameTable(TABLEID)), this, SLOT(onGotMyGameTable(TABLEID)));
+    disconnect(Client::instance(), SIGNAL(gotMyGameTable(TABLEID, bool)), this, SLOT(onGotMyGameTable(TABLEID, bool)));
+
+    qDebug() << "isOwner: " << isOwner;
 
     if(id)
     {
+        UI::instance()->setOwner(isOwner);
+
         MainWindow::instance()->showMessage(
                 tr("You have an unfinished game. Please finish it."));
 
@@ -237,10 +241,12 @@ void MainMenu::onGotMyGameTable(TABLEID id)
     {
         if(mClickedButton == createGameButton)
         {
+            UI::instance()->setOwner(true);
             MainWindow::instance()->showCreateGameDialog();
         }
         else if(mClickedButton == findGameButton)
         {
+            UI::instance()->setOwner(false);
             MainWindow::instance()->showFindGameDialog();
         }
     }

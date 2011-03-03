@@ -108,6 +108,9 @@ public:
 
 	bool GetMyTable(int _nLogicID, int _nPlayerID, TVecUINT* vecRes);
 
+
+	int GetOwner(int _nLogicID, int _nPlayerID);
+
 	/**
 	 * @brief Метод возвращает ID случаного стола среди открытых со статусом 2
 	 * @param _nLogicID: uint32_t ID игровой логики

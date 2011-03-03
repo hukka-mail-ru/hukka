@@ -45,7 +45,7 @@ class CTblMgrServer : public SocketManager, public AccessInfo
 
         /**
          * @brief Method for creating game table
-         * @param _nUserID: uint32_t 
+         * @param _nUserID: uint32_t
          * @param _vecData: additional info about new table
          * @return void
          */
@@ -58,7 +58,7 @@ class CTblMgrServer : public SocketManager, public AccessInfo
          * @return void
          */
         void    Find( uint32_t _nUserID, const TVecChar* _vecData );
-	
+
 	    /**
 	     * @brief Method for request parameters of table
 	     * @param _nUserID: uint32_t
@@ -66,10 +66,12 @@ class CTblMgrServer : public SocketManager, public AccessInfo
 	     * @return void
 	    */
 	    void GetParams( uint32_t _nUserID, const TVecChar *_vecData );
-        
+
         void SetParams( uint32_t _nUserID, const TVecChar *_vecData );
-        
+
         void DeleteTable( uint32_t _nUserID, uint32_t _nLogicID, uint32_t _nTableID );
+
+        void GetMyTable( uint32_t _nUserID, uint32_t _nLogicID, uint32_t _nTableID );
 
         void    Random( uint32_t _nUserID, const TVecChar* _vecData );
 

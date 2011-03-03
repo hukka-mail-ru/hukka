@@ -43,6 +43,9 @@ public:
     bool isPlayerAuthorized() { return mPlayerAuthotized; }
     void setPlayerAuthorized(bool auth) { mPlayerAuthotized = auth; }
 
+    bool isOwner() { return mIsOwner; }
+    void setOwner(bool isOwner) { mIsOwner = isOwner; }
+
 private:
 
     bool isEnemyPiece(CELLID cell);
@@ -55,6 +58,8 @@ private:
     GameState mGameState;
     Move mMove;
     bool mPlayerAuthotized;
+
+    bool mIsOwner; // PlayerID0 must be the owner of the game
 
     QApplication* mApp;
 

@@ -168,7 +168,8 @@ void CTblMgrServer::newMsg( ClientMsg* _pMsg )
 			else
 			{
 				sMsg.m_nTableID = vec.back();
-                sMsg.m_chData = ST_VALID;
+                sMsg.m_chData = m_TbmCommands.GetOwner(*pLogicID, _pMsg->GetTo()) == _pMsg->GetTo()  ?
+                                ST_VALID_AND_OWNER : ST_VALID;
 			}
 
 			sendMsg( _pMsg->GetTo(), &sMsg, sizeof (sMsg ) );

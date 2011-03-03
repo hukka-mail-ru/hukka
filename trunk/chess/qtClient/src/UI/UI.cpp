@@ -88,7 +88,10 @@ void UI::onGameOver(const QString& message)
     MainWindow::instance()->closeCurrentDialog();
     MainWindow::instance()->showMessage(message);
 
-    Client::instance()->deleteGameTable(LOGIC_ID_CHESS, mGameTable);
+    if(mIsOwner)
+    {
+        Client::instance()->deleteGameTable(LOGIC_ID_CHESS, mGameTable);
+    }
 
     MainWindow::instance()->showMainMenu();
 }

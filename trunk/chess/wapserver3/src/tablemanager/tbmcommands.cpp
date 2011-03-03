@@ -520,6 +520,33 @@ bool  TbmCommands::GetMyTable(int _nLogicID, int _nPlayerID, TVecUINT* vecRes)
 
 }
 
+int TbmCommands::GetOwner(int _nLogicID, int _nPlayerID)
+{
+    int owner = 0;
+    SqlTable sqlLogicTable("");
+
+    if ( GetLogicTable(_nLogicID, &sqlLogicTable) )
+    {
+        TTable tbl;
+
+        CMyStr strWhere = "(IDPlayer0 = " + CMyStr(_nPlayerID) +
+                       " OR IDPlayer1 = " + CMyStr(_nPlayerID) + ")";
+
+        /* find empry :
+        SELECT TableID FROM tb<Logic>LogicTable
+        WHERE State < 4 AND (IDPlayer0 = _nPlayerID OR IDPlayer1 = _nPlayerID)*/
+        sqlLogicTable.Select("IDPlayer0", strWhere.c_str(), &tbl);
+
+        if (!tbl.empty())
+        {
+
+            owner = atoi(tbl[0][0].c_str());
+        }
+    }
+
+    return owner;
+}
+
 uint32_t TbmCommands::LastInsertId()
 {
     return m_nLastId;
