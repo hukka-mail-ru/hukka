@@ -5,7 +5,7 @@
 
 WaitDrawDialog::WaitDrawDialog(QWidget *parent):  MyDialog(parent)
 {
-    label = new QLabel(tr("Wait for oppponent response..."), this);
+    label = new QLabel(tr("Please wait for a response of your opponent..."), this);
     exitButton = new QPushButton(tr("Exit"), this);
     connect(exitButton, SIGNAL(clicked()), this, SLOT(onExitClicked()));
 

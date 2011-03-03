@@ -28,7 +28,7 @@
 
 typedef std::vector<CMyStr> TRow;
 
-typedef std::vector<TRow> TTable; 
+typedef std::vector<TRow> TTable;
 
 
 class SqlTable
@@ -50,24 +50,27 @@ public:
 
 	/* SELECT <_pcFlt> FROM <m_strTableName> WHERE <_pcKey> ='< _pcVal>' */
 	bool Select(const char* _pcFlt, const char* _pcKey,const char* _pcVal, TTable* _pTable );
-    
+
     /* DELETE FROM <m_strTableName> WHERE <_pcKey> ='< _pcVal>' */
     void Delete(const char* _pcKey, const char* _pcVal);
 
 	/* INSERT INTO <m_strTableName> VALUE (<_cszVal>) */
-	void Insert( const char* _cszVal); 
+	void Insert( const char* _cszVal);
 
 	/* INSERT INTO <m_strTableName> (_vecCols[0] ... _vecCols[n])  VALUES (_vecValues[0] ... _vecValues[n]) */
-	bool Insert(const TVecMyStr& _vecCols, const TVecMyStr& _vecValues ); 
+	bool Insert(const TVecMyStr& _vecCols, const TVecMyStr& _vecValues );
 
 	/* INSERT INTO <m_strTableName> (strCols)  VALUES (strVal) */
 	void Insert( const CMyStr* strCol, const CMyStr* strVal );
 
 	/* UPDATE <m_strTableName> SET  <_cszCol>=<_cszNewVal> WHERE <_cszKey> =< _cszVal>;*/
-	void Update( const char* _cszCol, const char* _cszNewVal, const char* _cszKey, const char* _cszVal ); 
+	void Update( const char* _cszCol, const char* _cszNewVal, const char* _cszKey, const char* _cszVal );
 
 	/* SELECT <_pcFlt> FROM <m_strTableName> WHERE <_pcKey> */
 	bool Select(const char* _pcFlt, const char* _pcKey, TTable* _pTable );
+
+	/* CALL <name> (<paramenters>)    [call a stored procedure] */
+	void Call( const CMyStr& name, const TVecMyStr& parameters );
 
 	int LastInsertId() { return m_sqlBase.LastInsertId();  }
 

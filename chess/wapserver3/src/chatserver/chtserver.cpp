@@ -12,6 +12,8 @@
 
 using namespace std;
 
+const CMyStr MAX_CHAT_HISTORY = "10";
+
 CHTServer* CHTServer::m_pSelf = 0;
 int CHTServer::m_nRefCount = 0;
 
@@ -355,27 +357,25 @@ void CHTServer::getHistory( uint32_t playerID, uint32_t logicID, uint32_t tableI
 {
     SqlTable chatTable("");
     TTable queryRes;
+    CMyStr query;
 
     if(tableID)
     {
         getBoardChatTable( logicID, &chatTable );
 
         // select Msg from tbChessChat where TableID=tableID order by CreateTime desc limit 10;
-        std::stringstream ss;
-        ss << "TableID=" << tableID << " order by CreateTime desc limit 10";
-
-        std::string query;
-        ss >> query;
-
-        chatTable.Select("Msg", query.c_str(), &queryRes);
+        query = CMyStr("TableID=") + CMyStr(tableID) +
+                       CMyStr(" order by CreateTime desc limit ") + MAX_CHAT_HISTORY;
     }
     else
     {
         getLogicChatTable(logicID, &chatTable); // tbChessChat
 
         // select Msg from tbChessChat where CreateTime>0 order by CreateTime desc limit 10;
-        chatTable.Select("Msg", "CreateTime>0 order by CreateTime desc limit 10", &queryRes);
+        query = CMyStr("CreateTime>0 order by CreateTime desc limit ") + MAX_CHAT_HISTORY;
     }
+
+    chatTable.Select("Msg", query.c_str(), &queryRes);
 
     // send messages in reverse order
     for(int i=queryRes.size()-1; i>=0; i--)
@@ -410,20 +410,25 @@ void CHTServer::messageToAll( uint32_t _nPlayerID, uint32_t _nLogicID,
 
     CMyStr strMsg = CMyStr((char*)_vecData);
 
-    TVecMyStr vecCol, vecVal;
-    CMyStr strTableID, strTableIDVal;
-
     if ( _nTableID )
     {
         getBoardChatTable( _nLogicID, &sqlChatTable );
-        strTableID = "TableID";
-        strTableIDVal = CMyStr( _nTableID );
-        vecCol.push_back(&strTableID);
-        vecVal.push_back(&strTableIDVal);
+
+        TVecMyStr parameters;
+        CMyStr tableID = CMyStr( _nTableID );
+        parameters.push_back(&tableID);
+        parameters.push_back(&strMsg);
+        parameters.push_back(&MAX_CHAT_HISTORY);
+        sqlChatTable.Call("AddToHistoryTbl", parameters);
     }
     else
     {
         getLogicChatTable(_nLogicID, &sqlChatTable);
+
+        TVecMyStr parameters;
+        parameters.push_back(&strMsg);
+        parameters.push_back(&MAX_CHAT_HISTORY);
+        sqlChatTable.Call("AddToHistory", parameters);
     }
 
     TVecChar vecChar;
@@ -435,16 +440,6 @@ void CHTServer::messageToAll( uint32_t _nPlayerID, uint32_t _nLogicID,
         strMsg = "'" + strUserName + ": " + strMsg + "'";
     }
 
-    CMyStr strMsgCol = CMyStr("Msg");
-
-#ifdef MYDEBUG
-    std::cout << "CHTServer::messageToAll() Message: " << strMsg << std::endl;
-#endif
-
-    vecCol.push_back(&strMsgCol);
-    vecVal.push_back(&strMsg);
-
-    sqlChatTable.Insert(vecCol, vecVal);
 
     sendMsgToAll( _nLogicID, &strMsg, _nTableID );
 

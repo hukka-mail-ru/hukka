@@ -1,0 +1,61 @@
+####################################################################################################################### 
+#  Stores the given "message" in tbChessChat, and erases old entries exept the last ones (number is "maxEntries").
+#######################################################################################################################
+
+delimiter //
+
+
+DROP PROCEDURE IF EXISTS AddToHistory;
+
+
+
+CREATE PROCEDURE AddToHistory (IN message TEXT, IN maxEntries INT)
+BEGIN
+
+DECLARE entries INT;
+DECLARE time TIMESTAMP;
+
+INSERT INTO tbChessChat(Msg) VALUES (message);
+
+select COUNT(*) into entries  from tbChessChat;
+
+
+WHILE entries > maxEntries 
+DO
+	select CreateTime into time from tbChessChat order by CreateTime limit 1;
+
+	delete from tbChessChat where CreateTime = time;
+
+	select COUNT(*)  into entries  from tbChessChat;
+
+END WHILE;
+
+END;
+
+#######################################################################################################################
+#######################################################################################################################
+
+DROP PROCEDURE IF EXISTS AddToHistoryTbl;
+
+CREATE PROCEDURE AddToHistoryTbl (IN tab INT, IN message TEXT, IN maxEntries INT)
+BEGIN
+
+DECLARE entries INT;
+DECLARE time TIMESTAMP;
+
+INSERT INTO tbChessChatTbl(TableId, Msg) VALUES (tab, message);
+
+select COUNT(*) into entries  from tbChessChatTbl where TableId = tab;
+
+
+WHILE entries > maxEntries 
+DO
+	select CreateTime into time from tbChessChatTbl where TableId = tab order by CreateTime limit 1;
+
+	delete from tbChessChatTbl where (CreateTime = time and TableId = tab);
+
+	select COUNT(*)  into entries  from tbChessChatTbl where TableId = tab;
+
+END WHILE;
+
+END;
