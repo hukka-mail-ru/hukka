@@ -43,10 +43,6 @@ void UI::onDisconnected()
 {
     disconnect(Client::instance(), SIGNAL(disconnectedFromHost()), this, SLOT(onDisconnected()));
 
-    delete MainWindow::instance();
-    delete Client::instance();
-    // delete UI::instance(); ??? Is it a leak?
-
     mApp->exit(0);
 }
 
