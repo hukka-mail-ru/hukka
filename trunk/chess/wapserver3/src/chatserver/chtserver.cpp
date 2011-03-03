@@ -291,6 +291,12 @@ void CHTServer::newMsg( ClientMsg* _pMsg )
                 leaveChat( _pMsg->GetTo(), (uint32_t) vecCmd.at(0), (uint32_t)(unsigned char)  vecCmd.at(sizeof(uint32_t)) );
             }
             break;
+        case CMD_TBL_CHAT_DELETE:
+            if (vecCmd.size() == sizeof(uint32_t) *2 )
+            {
+                deleteHistory( (uint32_t) vecCmd.at(0), (uint32_t)(unsigned char)  vecCmd.at(sizeof(uint32_t)) );
+            }
+            break;
         default:
             break;
     }
@@ -385,6 +391,14 @@ void CHTServer::getHistory( uint32_t playerID, uint32_t logicID, uint32_t tableI
 
 }
 
+void CHTServer::deleteHistory( uint32_t logicID, uint32_t tableID)
+{
+    SqlTable chatTable("");
+    getBoardChatTable( logicID, &chatTable );
+
+  //  CMyStr query = CMyStr("TableID=") + CMyStr(tableID);
+    chatTable.Delete("TableID", CMyStr(tableID).c_str());
+}
 
 
 void CHTServer::messageToAll( uint32_t _nPlayerID, uint32_t _nLogicID,

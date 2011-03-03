@@ -1,5 +1,5 @@
 ####################################################################################################################### 
-#  Stores the given "message" in tbChessChat, and erases old entries exept the last ones (number is "maxEntries").
+#  Stores the given "message" in tbChessChat, and erases old entries (remaining not more then "maxEntries").
 #######################################################################################################################
 
 delimiter //
