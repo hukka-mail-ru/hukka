@@ -8,6 +8,7 @@
 #include "../socket/sendedmsg.h"
 #include "accessinfo.h"
 #include "socketmanager.h"
+#include "chatdefs.h"
 
 class CHTServer : public SocketManager, public AccessInfo
 {
@@ -23,20 +24,19 @@ private:
 
 	void				DoAllMsg( MySocket* );
 
-    bool                checkParticipation( uint32_t _nPlayerID, uint32_t _nLogicID, uint32_t _nTableID = 0 );
+    bool                checkParticipation( uint32_t _nPlayerID, uint32_t _nLogicID, uint32_t _nTableID = COMMON_CHAT_ID );
 
     bool                getGameOnlineUsersTable( uint32_t _nLogicID, SqlTable* _pRes );
-    bool                getLogicChatTable( uint32_t _nLogicID, SqlTable* _pRes );
-    bool                getBoardChatTable( uint32_t _nLogicID, SqlTable* _pRes );
+    bool                getChatTable( uint32_t _nLogicID, SqlTable* _pRes );
 
     void                newMsg( ClientMsg* _pMsg );
 
-    void                joinToChat( uint32_t _nPlayerID, uint32_t _nLogicID, uint32_t _nTableID = 0 );
-    void                leaveChat( uint32_t _nPlayerID, uint32_t _nLogicID, uint32_t _nTableID = 0 );
+    void                joinChat( uint32_t _nPlayerID, uint32_t _nLogicID, uint32_t _nTableID = COMMON_CHAT_ID );
+    void                leaveChat( uint32_t _nPlayerID, uint32_t _nLogicID );
     void                messageToAll( uint32_t _nPlayerID, uint32_t _nLogicID,
-                                       const TVecChar* _vecData, uint32_t _nTableID = 0 );
-    void                sendMsgToAll( uint32_t _nLogicID, CMyStr* _strMsg, uint32_t _nTableID = 0 );
-    void                sendMsgToOne( uint32_t _nPlayerID, uint32_t _nLogicID, CMyStr* _strMsg, uint32_t _nTableID = 0);
+                                       const TVecChar* _vecData, uint32_t _nTableID = COMMON_CHAT_ID );
+    void                sendMsgToAll( uint32_t _nLogicID, CMyStr* _strMsg, uint32_t _nTableID = COMMON_CHAT_ID );
+    void                sendMsgToOne( uint32_t _nPlayerID, uint32_t _nLogicID, CMyStr* _strMsg, uint32_t _nTableID = COMMON_CHAT_ID);
 
     void                sendMsg( uint32_t _nTo, CSendedMsg *_pMsg );
     void                setSocket( MySocket * _pSocket );

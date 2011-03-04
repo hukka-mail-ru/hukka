@@ -5,6 +5,7 @@
 #include <Defines.h>
 #include <Client.h>
 #include <UI.h>
+#include <chatserver/chatdefs.h>
 
 ChatMessageDialog::ChatMessageDialog(ChatType chatType, QWidget *parent):
     MyDialog(parent), mChatType(chatType)
@@ -41,16 +42,10 @@ void ChatMessageDialog::onOkClicked()
 {
     if(mEdit->text() != "")
     {
-        TABLEID tableId = UI::instance()->getGameTable();
+        TABLEID tableID = (mChatType == CT_COMMON_CHAT) ?
+                          COMMON_CHAT_ID : UI::instance()->getGameTable();
 
-        if(mChatType == CT_COMMON_CHAT)
-        {
-            Client::instance()->sendCommonChatMessage(LOGIC_ID_CHESS, mEdit->text());
-        }
-        else if(mChatType == CT_TABLE_CHAT)
-        {
-            Client::instance()->sendTableChatMessage(LOGIC_ID_CHESS, tableId, mEdit->text());
-        }
+        Client::instance()->sendChatMessage(LOGIC_ID_CHESS, tableID, mEdit->text());
     }
 
     close();

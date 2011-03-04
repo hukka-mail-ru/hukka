@@ -24,15 +24,13 @@
 #ifndef CHATDEFS_H
 #define CHATDEFS_H
 
-const int       ANS_MSG = 1;
-const int       ANS_MSG_TBL = 2;
+const int       COMMON_CHAT_ID = 0;
+
+const int       ANS_CHAT_MSG = 1;
 
 const int       CMD_CHAT_MSG = 11;
-const int       CMD_TBL_CHAT_MSG = 12;
-const int       CMD_GAME_CHAT_JOIN = 13;
-const int       CMD_TBL_CHAT_JOIN = 14;
-const int       CMD_GAME_CHAT_LEAVE = 15;
-const int       CMD_TBL_CHAT_LEAVE = 16;
-const int       CMD_TBL_CHAT_DELETE = 17;
+const int       CMD_CHAT_JOIN = 13;
+const int       CMD_CHAT_LEAVE = 15;
+const int       CMD_CHAT_DELETE_HISTORY = 17;
 
 #endif
