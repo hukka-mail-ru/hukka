@@ -51,6 +51,16 @@ public:
 	/* SELECT <_pcFlt> FROM <m_strTableName> WHERE <_pcKey> ='< _pcVal>' */
 	bool Select(const char* _pcFlt, const char* _pcKey,const char* _pcVal, TTable* _pTable );
 
+   /* SELECT <_pcFlt> FROM <m_strTableName> WHERE <_pcKey> */
+    bool Select(const char* _pcFlt, const char* _pcKey, TTable* _pTable );
+
+    /* A free query */
+    bool Query(const CMyStr& strQuery, TTable* _pTable );
+
+    // a helper
+    const CMyStr& getTableName() { return m_strTableName; }
+
+
     /* DELETE FROM <m_strTableName> WHERE <_pcKey> ='< _pcVal>' */
     void Delete(const char* _pcKey, const char* _pcVal);
 
@@ -66,8 +76,6 @@ public:
 	/* UPDATE <m_strTableName> SET  <_cszCol>=<_cszNewVal> WHERE <_cszKey> =< _cszVal>;*/
 	void Update( const char* _cszCol, const char* _cszNewVal, const char* _cszKey, const char* _cszVal );
 
-	/* SELECT <_pcFlt> FROM <m_strTableName> WHERE <_pcKey> */
-	bool Select(const char* _pcFlt, const char* _pcKey, TTable* _pTable );
 
 	/* CALL <name> (<paramenters>)    [call a stored procedure] */
 	void Call( const CMyStr& name, const TVecMyStr& parameters );

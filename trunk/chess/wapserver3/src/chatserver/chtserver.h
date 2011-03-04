@@ -35,9 +35,11 @@ private:
     void                leaveChat( uint32_t _nPlayerID, uint32_t _nLogicID, uint32_t _nTableID = COMMON_CHAT_ID );
     void                messageToAll( uint32_t _nPlayerID, uint32_t _nLogicID,
                                        const TVecChar* _vecData, uint32_t _nTableID = COMMON_CHAT_ID );
-    void                sendMsgToAll( uint32_t _nLogicID, CMyStr* _strMsg, uint32_t _nTableID = COMMON_CHAT_ID );
+    void                sendMsgToAll( int cmd, uint32_t _nLogicID, CMyStr* _strMsg, uint32_t _nTableID = COMMON_CHAT_ID );
     void                sendMsgToOne( uint32_t _nPlayerID, uint32_t _nLogicID, CMyStr* _strMsg, uint32_t _nTableID = COMMON_CHAT_ID);
-    void                sendServerNotificationToAll(uint32_t _nPlayerID, uint32_t _nLogicID, const CMyStr& message, uint32_t _nTableID = COMMON_CHAT_ID);
+
+    void                sendServerNotification(uint32_t _nPlayerID, uint32_t _nLogicID, const CMyStr& message, uint32_t _nTableID = COMMON_CHAT_ID);
+    void                sendUserNames(uint32_t _nLogicID, uint32_t _nTableID);
 
     void                sendMsg( uint32_t _nTo, CSendedMsg *_pMsg );
     void                setSocket( MySocket * _pSocket );

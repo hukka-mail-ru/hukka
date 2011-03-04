@@ -24,6 +24,7 @@ Chat::Chat(QWidget* parent, ChatType type):
 
     mColorMe       = XML::instance().readValue(XML_ITEMS_FILENAME, QList<QString>() << chatNode << XML_NODE_FONT << XML_NODE_ME << XML_NODE_COLOR);
     mColorOpponent = XML::instance().readValue(XML_ITEMS_FILENAME, QList<QString>() << chatNode << XML_NODE_FONT << XML_NODE_OPPONENT << XML_NODE_COLOR);
+    mColorServer   = XML::instance().readValue(XML_ITEMS_FILENAME, QList<QString>() << chatNode << XML_NODE_FONT << XML_NODE_SERVER << XML_NODE_COLOR);
 
 
     mHistory = new ChatHistory(this, mChatType);
@@ -31,6 +32,7 @@ Chat::Chat(QWidget* parent, ChatType type):
     mHistory->setReadOnly(true);
 
     QObject::connect(Client::instance(), SIGNAL(chatMessage(const QString&)), this, SLOT(onChatMessage(const QString&)));
+    QObject::connect(Client::instance(), SIGNAL(chatNote(const QString&)),    this, SLOT(onChatNote(const QString&)));
 }
 
 void Chat::updatePos(OrientationStatus orientation)
@@ -99,6 +101,15 @@ void Chat::onChatMessage(const QString& message)
     mHistory->verticalScrollBar()->setSliderPosition(mHistory->verticalScrollBar()->maximum());
 }
 
+void Chat::onChatNote(const QString& message)
+{
+    QString htmlText = mHistory->toHtml();
+    htmlText += "<font color=\""+ mColorServer + "\">" + message + "</font>";
+
+    mHistory->setHtml(htmlText);
+    mHistory->adjustSize();
+    mHistory->verticalScrollBar()->setSliderPosition(mHistory->verticalScrollBar()->maximum());
+}
 
 Chat::~Chat()
 {

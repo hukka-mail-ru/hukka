@@ -91,6 +91,7 @@ void UI::onGameOver(const QString& message)
     if(mIsOwner)
     {
         Client::instance()->deleteGameTable(LOGIC_ID_CHESS, mGameTable);
+        Client::instance()->deleteChatHistory(LOGIC_ID_CHESS, mGameTable);
     }
 
     MainWindow::instance()->showMainMenu();

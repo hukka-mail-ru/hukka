@@ -27,7 +27,7 @@
 #include "sqltable.h"
 #include "../tools/structs.h"
 
-class SqlTableUsers : private SqlTable
+class SqlTableUsers : public SqlTable
 {
 public:
 
