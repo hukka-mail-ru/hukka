@@ -80,19 +80,10 @@ void Chat::ChatHistory::mouseReleaseEvent(QMouseEvent * event)
 }
 
 
-void Chat::onChatMessage(const QString& originalMessage)
+void Chat::onChatMessage(const QString& message)
 {
-    QString message = originalMessage;
-    // 'text' -> text
-    if(message.startsWith('\'') && message.endsWith('\''))
-    {
-        int len = message.length() - 2; // 2  ' symbols
-        message = message.mid(1, len);
-    }
-
     QString htmlText = mHistory->toHtml();
 
-    // TODO move colors into items.xml
     QString username = Client::instance()->username() + ":";
     if(message.left(username.length()) == username)
     {
