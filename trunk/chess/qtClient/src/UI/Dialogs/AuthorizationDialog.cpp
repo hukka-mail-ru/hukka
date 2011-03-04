@@ -40,7 +40,7 @@ AuthorizationDialog::AuthorizationDialog(QWidget *parent): MyDialog(parent)
 
 //////
 
-    registerCheckBox = new QCheckBox(tr("Register new user"), this);
+    registerCheckBox = new QCheckBox(tr("Register the new user"), this);
     registerCheckBox->setCheckState(Qt::Unchecked);
 
     okButton = new QPushButton(tr("OK"), this);
