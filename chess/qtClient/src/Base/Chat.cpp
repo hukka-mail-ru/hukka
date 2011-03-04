@@ -8,6 +8,7 @@
 #include <UI.h>
 #include <MainWindow.h>
 #include <XML.h>
+#include <chatserver/chatdefs.h>
 
 
 Chat::Chat(QWidget* parent, ChatType type):
@@ -29,17 +30,7 @@ Chat::Chat(QWidget* parent, ChatType type):
     mHistory->setAlignment(Qt::AlignLeft | Qt::AlignBottom);
     mHistory->setReadOnly(true);
 
-    if(mChatType == CT_TABLE_CHAT)
-    {
-        QObject::connect(Client::instance(), SIGNAL(tableChatMessage(const QString&)), this, SLOT(onChatMessage(const QString&)));
-    }
-    else if(mChatType == CT_COMMON_CHAT)
-    {
-        QObject::connect(Client::instance(), SIGNAL(commonChatMessage(const QString&)), this, SLOT(onChatMessage(const QString&)));
-    }
-
-
-
+    QObject::connect(Client::instance(), SIGNAL(chatMessage(const QString&)), this, SLOT(onChatMessage(const QString&)));
 }
 
 void Chat::updatePos(OrientationStatus orientation)
@@ -67,13 +58,19 @@ void Chat::updatePos(OrientationStatus orientation)
 
 void Chat::show()
 {
-    Client::instance()->joinCommonChat(LOGIC_ID_CHESS);
+    TABLEID tableID = (mChatType == CT_COMMON_CHAT) ?
+                      COMMON_CHAT_ID : UI::instance()->getGameTable();
+
+    Client::instance()->joinChat(LOGIC_ID_CHESS, tableID);
     QDialog::show();
 }
 
 bool Chat::close()
 {
-    Client::instance()->leaveCommonChat(LOGIC_ID_CHESS);
+    TABLEID tableID = (mChatType == CT_COMMON_CHAT) ?
+                      COMMON_CHAT_ID : UI::instance()->getGameTable();
+
+    Client::instance()->leaveChat(LOGIC_ID_CHESS, tableID);
     return QDialog::close();
 }
 

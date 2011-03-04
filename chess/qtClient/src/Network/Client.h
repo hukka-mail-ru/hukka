@@ -101,13 +101,9 @@ public:
         void replyDraw           (TABLEID tableID, bool agree);
 
         // communication with Chat Server
-        void joinCommonChat       (LOGICID logicID);
-        void leaveCommonChat      (LOGICID logicID);
-        void sendCommonChatMessage(LOGICID logicID, const QString& message);
-
-        void joinTableChat       (LOGICID logicID, TABLEID tableID);
-        void leaveTableChat      (LOGICID logicID, TABLEID tableID);
-        void sendTableChatMessage(LOGICID logicID, TABLEID tableID, const QString& message);
+        void joinChat           (LOGICID logicID, TABLEID tableID);
+        void leaveChat          (LOGICID logicID, TABLEID tableID);
+        void sendChatMessage    (LOGICID logicID, TABLEID tableID, const QString& message);
 
 
         GameStatus   getGameStatus()   { return mGameStatus; }
@@ -143,8 +139,7 @@ signals:
 
         void invalidMove();
 
-        void commonChatMessage(const QString& message);
-        void tableChatMessage(const QString& message);
+        void chatMessage(const QString& message);
 
         void error(const QString& what);
 

@@ -380,7 +380,7 @@ void Client::deleteGameTable(LOGICID logicID, TABLEID tableID)
         //qDebug() << "Client::deleteGameTable" << endl;
         sendCmd(TBM, CMD_DELETE, data);
 
-        sendCmd(CHAT, CMD_TBL_CHAT_DELETE, data);
+        sendCmd(CHAT, CMD_CHAT_DELETE_HISTORY, data);
     }
     catch (Exception& e) {
         e.add(tr("Can't delete Game Table with ID ") + QString::number(tableID) + tr(" on server: ") + mSocket.peerName() + ". ");
@@ -644,17 +644,15 @@ void Client::replyDraw(TABLEID tableID, bool agree)
 
 
 
-void Client::joinTableChat (LOGICID logicID, TABLEID tableID)
+void Client::joinChat (LOGICID logicID, TABLEID tableID)
 {
     QT_TRACEOUT;
     try {
-        assert(tableID);
         assert(mClientAuthorized);
-        assert(mGameStatus == GAM_STARTED);
 
         // send command
         QByteArray data = Q_BYTE_ARRAY(logicID) + Q_BYTE_ARRAY(tableID);
-        sendCmd(CHAT, CMD_TBL_CHAT_JOIN, data);
+        sendCmd(CHAT, CMD_CHAT_JOIN, data);
 
     }
     catch (Exception& e) {
@@ -663,17 +661,15 @@ void Client::joinTableChat (LOGICID logicID, TABLEID tableID)
     }
 }
 
-void Client::leaveTableChat (LOGICID logicID, TABLEID tableID)
+void Client::leaveChat (LOGICID logicID, TABLEID tableID)
 {
     QT_TRACEOUT;
     try {
-        assert(tableID);
         assert(mClientAuthorized);
-        assert(mGameStatus == GAM_STARTED);
 
         // send command
         QByteArray data = Q_BYTE_ARRAY(logicID) + Q_BYTE_ARRAY(tableID);
-        sendCmd(CHAT, CMD_TBL_CHAT_LEAVE, data);
+        sendCmd(CHAT, CMD_CHAT_LEAVE, data);
 
     }
     catch (Exception& e) {
@@ -683,74 +679,19 @@ void Client::leaveTableChat (LOGICID logicID, TABLEID tableID)
 
 }
 
-void Client::sendTableChatMessage(LOGICID logicID, TABLEID tableID, const QString& message)
+void Client::sendChatMessage(LOGICID logicID, TABLEID tableID, const QString& message)
 {
     QT_TRACEOUT;
     try {
-        assert(tableID);
         assert(mClientAuthorized);
-        assert(mGameStatus == GAM_STARTED);
 
         // send command
         QByteArray data = Q_BYTE_ARRAY(logicID) + Q_BYTE_ARRAY(tableID) + message.toUtf8();
-        sendCmd(CHAT, CMD_TBL_CHAT_MSG, data);
-
-    }
-    catch (Exception& e) {
-        e.add(tr("Can't send table chat message. Table ID ") + QString::number(tableID) + tr(" on server: ") + mSocket.peerName() + ". ");
-        emit error (e.what());
-    }
-}
-
-
-void Client::joinCommonChat (LOGICID logicID)
-{
-    QT_TRACEOUT;
-    try {
-        assert(mClientAuthorized);
-
-        // send command
-        QByteArray data = Q_BYTE_ARRAY(logicID);
-        sendCmd(CHAT, CMD_GAME_CHAT_JOIN, data);
-
-    }
-    catch (Exception& e) {
-        e.add(tr("Can't join chat on server: ") + mSocket.peerName() + ". ");
-        emit error (e.what());
-    }
-}
-
-void Client::leaveCommonChat (LOGICID logicID)
-{
-    QT_TRACEOUT;
-    try {
-        assert(mClientAuthorized);
-
-        // send command
-        QByteArray data = Q_BYTE_ARRAY(logicID);
-        sendCmd(CHAT, CMD_GAME_CHAT_LEAVE, data);
-
-    }
-    catch (Exception& e) {
-        e.add(tr("Can't leave chat on server: ") + mSocket.peerName() + ". ");
-        emit error (e.what());
-    }
-
-}
-
-void Client::sendCommonChatMessage(LOGICID logicID, const QString& message)
-{
-    QT_TRACEOUT;
-    try {
-        assert(mClientAuthorized);
-
-        // send command
-        QByteArray data = Q_BYTE_ARRAY(logicID) + message.toUtf8();
         sendCmd(CHAT, CMD_CHAT_MSG, data);
 
     }
     catch (Exception& e) {
-        e.add(tr("Can't send common chat message on server: ") + mSocket.peerName() + ". ");
+        e.add(tr("Can't send table chat message. Table ID ") + QString::number(tableID) + tr(" on server: ") + mSocket.peerName() + ". ");
         emit error (e.what());
     }
 }
@@ -805,15 +746,11 @@ QString commandToString(quint32 service, char command)
     }
     case CHAT:
         switch(command) {
-            case ANS_MSG:                  return "ANS_MSG";
-            case ANS_MSG_TBL:              return "ANS_MSG_TBL";
+            case ANS_CHAT_MSG:             return "ANS_CHAT_MSG";
             case CMD_CHAT_MSG :            return "CMD_CHAT_MSG ";
-            case CMD_TBL_CHAT_MSG :        return "CMD_TBL_CHAT_MSG ";
-            case CMD_GAME_CHAT_JOIN :      return "CMD_GAME_CHAT_JOIN ";
-            case CMD_TBL_CHAT_JOIN :       return "CMD_TBL_CHAT_JOIN ";
-            case CMD_GAME_CHAT_LEAVE:      return "CMD_GAME_CHAT_LEAVE";
-            case CMD_TBL_CHAT_LEAVE :      return "CMD_TBL_CHAT_LEAVE ";
-            case CMD_TBL_CHAT_DELETE:      return "CMD_TBL_CHAT_DELETE ";
+            case CMD_CHAT_JOIN :           return "CMD_CHAT_JOIN ";
+            case CMD_CHAT_LEAVE :          return "CMD_CHAT_LEAVE ";
+            case CMD_CHAT_DELETE_HISTORY:  return "CMD_CHAT_DELETE_HISTORY ";
             default:              return QString::number((int)command);
         }
         break;
@@ -1408,13 +1345,9 @@ void Client::processMessageCHS(const MessageHeader& header, const QByteArray& bu
 
 void Client::processMessageCHAT(const MessageHeader& header, const QByteArray& buffer)
 {
-    if(header.cmd == ANS_MSG)
+    if(header.cmd == ANS_CHAT_MSG)
     {
-        emit commonChatMessage(QString::fromUtf8(buffer.data()));
-    }
-    else if(header.cmd == ANS_MSG_TBL)
-    {
-        emit tableChatMessage(QString::fromUtf8(buffer.data()));
+        emit chatMessage(QString::fromUtf8(buffer.data()));
     }
     else
     {

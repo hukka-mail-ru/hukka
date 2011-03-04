@@ -68,7 +68,7 @@ void UI::startGame()
 
     Client::instance()->getField(mGameTable);
 
-    Client::instance()->joinTableChat(LOGIC_ID_CHESS, mGameTable);
+ //   Client::instance()->joinTableChat(LOGIC_ID_CHESS, mGameTable);
 }
 
 void UI::surrender()
