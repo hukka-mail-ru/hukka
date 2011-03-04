@@ -131,37 +131,6 @@ bool CHTServer::getChatTable( uint32_t _nLogicID, SqlTable* _pRes )
     }
 }
 
-void CHTServer::joinChat( uint32_t _nPlayerID, uint32_t _nLogicID, uint32_t _nTableID )
-{
-
-    if ( !checkParticipation(_nPlayerID, _nLogicID, _nTableID ))
-    {
-        SqlTable sqlGameOnlineUsersTable("");
-        if ( !getGameOnlineUsersTable(_nLogicID, &sqlGameOnlineUsersTable) )
-        {
-            return;
-        }
-
-        TVecMyStr fields, values;
-
-        CMyStr strPlayerIDf = CMyStr("PlayerID");
-        CMyStr strTableIDf = CMyStr("TableID");
-        fields.push_back(&strPlayerIDf);
-        fields.push_back(&strTableIDf);
-
-        CMyStr strPlayerIDv = CMyStr(_nPlayerID);
-        CMyStr strTableIDv = CMyStr(_nTableID);
-        values.push_back(&strPlayerIDv);
-        values.push_back(&strTableIDv);
-
-        sqlGameOnlineUsersTable.Insert( fields, values );
-
-        /// send last 10 messages
-        getHistory( _nPlayerID, _nLogicID, _nTableID );
-    }
-
-}
-
 void CHTServer::newMsg( ClientMsg* _pMsg )
 {
     TVecChar vecCmd;
@@ -195,7 +164,7 @@ void CHTServer::newMsg( ClientMsg* _pMsg )
         case CMD_CHAT_LEAVE:
             if (vecCmd.size() == sizeof(uint32_t) *2 )
             {
-                leaveChat( _pMsg->GetTo(), (uint32_t) vecCmd.at(0) );
+                leaveChat( _pMsg->GetTo(), (uint32_t) vecCmd.at(0), (uint32_t)(unsigned char)  vecCmd.at(sizeof(uint32_t))  );
             }
             break;
         case CMD_CHAT_DELETE_HISTORY:
@@ -211,12 +180,58 @@ void CHTServer::newMsg( ClientMsg* _pMsg )
 
 }
 
-void CHTServer::leaveChat( uint32_t _nPlayerID, uint32_t _nLogicID )
+void CHTServer::sendServerNotificationToAll(uint32_t _nPlayerID, uint32_t _nLogicID, const CMyStr& message, uint32_t _nTableID)
+{
+    TVecChar vecChar;
+    SqlTableUsers wsUsers;
+    if ( wsUsers.GetUserName( _nPlayerID, &vecChar ) ) // add a user name into the message
+    {
+        CMyStr mes = CMyStr("--- ") + CMyStr(&vecChar) + message + (" ---");
+        sendMsgToAll(_nLogicID, &mes, _nTableID);
+    }
+}
+
+void CHTServer::joinChat( uint32_t _nPlayerID, uint32_t _nLogicID, uint32_t _nTableID )
+{
+
+    if ( !checkParticipation(_nPlayerID, _nLogicID, _nTableID ))
+    {
+        SqlTable sqlGameOnlineUsersTable("");
+        if ( !getGameOnlineUsersTable(_nLogicID, &sqlGameOnlineUsersTable) )
+        {
+            return;
+        }
+
+        TVecMyStr fields, values;
+
+        CMyStr strPlayerIDf = CMyStr("PlayerID");
+        CMyStr strTableIDf = CMyStr("TableID");
+        fields.push_back(&strPlayerIDf);
+        fields.push_back(&strTableIDf);
+
+        CMyStr strPlayerIDv = CMyStr(_nPlayerID);
+        CMyStr strTableIDv = CMyStr(_nTableID);
+        values.push_back(&strPlayerIDv);
+        values.push_back(&strTableIDv);
+
+        sqlGameOnlineUsersTable.Insert( fields, values );
+
+        /// send last 10 messages
+        getHistory( _nPlayerID, _nLogicID, _nTableID );
+
+        sendServerNotificationToAll(_nPlayerID, _nLogicID, " has joined the chat", _nTableID);
+    }
+
+}
+
+void CHTServer::leaveChat( uint32_t _nPlayerID, uint32_t _nLogicID, uint32_t _nTableID )
 {
     SqlTable sqlGameOnlineUsersTable("");
     if ( getGameOnlineUsersTable(_nLogicID, &sqlGameOnlineUsersTable) )
     {
         sqlGameOnlineUsersTable.Delete("PlayerID", CMyStr(_nPlayerID).c_str());
+
+        sendServerNotificationToAll(_nPlayerID, _nLogicID, " has left the chat", _nTableID);
     }
 }
 
