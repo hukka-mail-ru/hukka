@@ -274,7 +274,7 @@ void CHTServer::messageToAll( uint32_t _nPlayerID, uint32_t _nLogicID,
     if ( wsUsers.GetUserName( _nPlayerID, &vecChar ) )
     {
         CMyStr strUserName = CMyStr(&vecChar);
-        strMsg = "'" + strUserName + ": " + strMsg + "'";
+        strMsg = strUserName + ": " + strMsg;
     }
 
 
