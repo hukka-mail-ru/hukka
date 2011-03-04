@@ -167,6 +167,24 @@ bool SqlTable::Select(const char* _pcFlt, const char* _pcKey, TTable* _pTable )
 	return true;
 }
 
+/* SELECT <_pcFlt> FROM <m_strTableName> WHERE <_pcKey> */
+bool SqlTable::Query(const CMyStr& strQuery, TTable* _pTable )
+{
+    std::cerr << strQuery << std::endl;
+
+    MYSQL_RES* pRes = m_sqlBase.Query( strQuery.c_str() );
+
+    if (pRes == 0)
+        return false;
+
+    CopyToTable(_pTable, pRes);
+
+    m_sqlBase.FreeRes( pRes );
+
+    return true;
+}
+
+
 void SqlTable::CopyToTable(TTable* _pTable, MYSQL_RES* pRes)
 {
 	unsigned int nNumFields = mysql_num_fields(pRes);

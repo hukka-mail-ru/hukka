@@ -50,10 +50,12 @@ private:
     // colors
     QString mColorMe;
     QString mColorOpponent;
+    QString mColorServer;
 
 private slots:
 
     void onChatMessage(const QString& message);
+    void onChatNote(const QString& message);
 
 };
 

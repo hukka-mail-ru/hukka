@@ -36,6 +36,7 @@
 	<font>
  	    <me>             <color value="white" /> </me>
 		<opponent>       <color value="#FFCC00" /> </opponent>
+ 	    <server>         <color value="grey" /> </server>
      </font>
 	<style value="Chat      { background: black; } 
                   QTextEdit { background: black; font-size: 18px; font: italic; color: white; }"/> 
@@ -48,6 +49,7 @@
 	<font>
  	    <me>             <color value="white" /> </me>
 		<opponent>       <color value="#FFCC00" /> </opponent>
+ 	    <server>         <color value="grey" /> </server>
      </font>
 	<style value="Chat       { background: black; } 
                   QTextEdit  { background: black; font-size: 18px; font: italic; color: white; }"/> 

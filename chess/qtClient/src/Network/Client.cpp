@@ -379,7 +379,25 @@ void Client::deleteGameTable(LOGICID logicID, TABLEID tableID)
         QByteArray data = Q_BYTE_ARRAY(logicID) + Q_BYTE_ARRAY(tableID);
         //qDebug() << "Client::deleteGameTable" << endl;
         sendCmd(TBM, CMD_DELETE, data);
+    }
+    catch (Exception& e) {
+        e.add(tr("Can't delete Game Table with ID ") + QString::number(tableID) + tr(" on server: ") + mSocket.peerName() + ". ");
+        qDebug() << e.what();
+        emit error (e.what());
+    }
+}
 
+void Client::deleteChatHistory(LOGICID logicID, TABLEID tableID)
+{
+    QT_TRACEOUT;
+
+    try {
+        assert(tableID);
+        assert(mClientAuthorized);
+
+        // send command
+        QByteArray data = Q_BYTE_ARRAY(logicID) + Q_BYTE_ARRAY(tableID);
+        //qDebug() << "Client::deleteGameTable" << endl;
         sendCmd(CHAT, CMD_CHAT_DELETE_HISTORY, data);
     }
     catch (Exception& e) {
@@ -747,6 +765,7 @@ QString commandToString(quint32 service, char command)
     case CHAT:
         switch(command) {
             case ANS_CHAT_MSG:             return "ANS_CHAT_MSG";
+            case ANS_CHAT_NOTE:            return "ANS_CHAT_NOTE";
             case CMD_CHAT_MSG :            return "CMD_CHAT_MSG ";
             case CMD_CHAT_JOIN :           return "CMD_CHAT_JOIN ";
             case CMD_CHAT_LEAVE :          return "CMD_CHAT_LEAVE ";
@@ -1348,6 +1367,10 @@ void Client::processMessageCHAT(const MessageHeader& header, const QByteArray& b
     if(header.cmd == ANS_CHAT_MSG)
     {
         emit chatMessage(QString::fromUtf8(buffer.data()));
+    }
+    else if(header.cmd == ANS_CHAT_NOTE)
+    {
+        emit chatNote(QString::fromUtf8(buffer.data()));
     }
     else
     {

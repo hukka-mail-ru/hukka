@@ -27,10 +27,11 @@
 const int       COMMON_CHAT_ID = 0;
 
 const int       ANS_CHAT_MSG = 1;
-
+const int       ANS_CHAT_NOTE = 2;
 const int       CMD_CHAT_MSG = 11;
 const int       CMD_CHAT_JOIN = 13;
 const int       CMD_CHAT_LEAVE = 15;
 const int       CMD_CHAT_DELETE_HISTORY = 17;
+
 
 #endif

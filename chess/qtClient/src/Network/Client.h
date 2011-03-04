@@ -104,6 +104,7 @@ public:
         void joinChat           (LOGICID logicID, TABLEID tableID);
         void leaveChat          (LOGICID logicID, TABLEID tableID);
         void sendChatMessage    (LOGICID logicID, TABLEID tableID, const QString& message);
+        void deleteChatHistory  (LOGICID logicID, TABLEID tableID);
 
 
         GameStatus   getGameStatus()   { return mGameStatus; }
@@ -140,6 +141,7 @@ signals:
         void invalidMove();
 
         void chatMessage(const QString& message);
+        void chatNote(const QString& message);
 
         void error(const QString& what);
 
