@@ -956,7 +956,7 @@ void Client::processMessageSRV(const MessageHeader& header, const QByteArray& bu
     {
         switch(buffer[0]) {
             case NOERR:          mClientAuthorized = true; emit authorized(); break;
-            case ERRUSERONLINE:  emit error(tr("User is already online.")); break;
+            case ERRUSERONLINE:  emit error(tr("The user is already online.")); break;
             case ERRBADLOGIN:    emit error(tr("Incorrect user name.")); break;
             case ERRBADPASS:     emit error(tr("Incorrect password.")); break;
             default:             emit error(tr("Internal server error ") + QString::number(buffer[0]) + "."); break;

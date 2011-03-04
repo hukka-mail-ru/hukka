@@ -27,8 +27,12 @@
     </message>
     <message>
         <location filename="../src/UI/Dialogs/AuthorizationDialog.cpp" line="43"/>
+        <source>Register the new user</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
         <source>Register new user</source>
-        <translation>Создать нового пользователя</translation>
+        <translation type="obsolete">Создать нового пользователя</translation>
     </message>
     <message>
         <location filename="../src/UI/Dialogs/AuthorizationDialog.cpp" line="46"/>
@@ -158,6 +162,11 @@
         <translation>Невозможно получить игровое поле. ID стола </translation>
     </message>
     <message>
+        <location filename="../src/Network/Client.cpp" line="959"/>
+        <source>The user is already online.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
         <location filename="../src/Network/Client.cpp" line="1283"/>
         <source>Game over. 
 The rating hasn&apos;t been affected because of too few number of moves.</source>
@@ -252,9 +261,8 @@ The rating is not affected because of too few number of moves.</source>
         <translation>Ошибка логики</translation>
     </message>
     <message>
-        <location filename="../src/Network/Client.cpp" line="959"/>
         <source>User is already online.</source>
-        <translation>Пользователь с таким именем уже зашел на сервер.</translation>
+        <translation type="obsolete">Пользователь с таким именем уже зашел на сервер.</translation>
     </message>
     <message>
         <location filename="../src/Network/Client.cpp" line="960"/>
