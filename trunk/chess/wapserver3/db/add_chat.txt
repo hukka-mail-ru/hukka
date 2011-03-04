@@ -22,3 +22,38 @@ CREATE TABLE IF NOT EXISTS tbChessChatUserOnline
       TableID INT UNSIGNED DEFAULT '0',
       PRIMARY KEY(PlayerID)
 );
+
+
+####################################################################################################################### 
+#  Stores the given "message" in tbChessChat, and erases old entries (remaining not more then "maxEntries").
+#######################################################################################################################
+
+DROP PROCEDURE IF EXISTS AddToHistory;
+DROP PROCEDURE IF EXISTS AddToHistoryTbl;
+
+#######################################################################################################################
+#######################################################################################################################
+
+
+CREATE PROCEDURE AddToHistory (IN tab INT, IN message TEXT, IN maxEntries INT)
+BEGIN
+
+DECLARE entries INT;
+DECLARE time TIMESTAMP;
+
+INSERT INTO tbChessChat(TableId, Msg) VALUES (tab, message);
+
+select COUNT(*) into entries  from tbChessChat where TableId = tab;
+
+
+WHILE entries > maxEntries 
+DO
+	select CreateTime into time from tbChessChat where TableId = tab order by CreateTime limit 1;
+
+	delete from tbChessChat where (CreateTime = time and TableId = tab);
+
+	select COUNT(*)  into entries  from tbChessChat where TableId = tab;
+
+END WHILE;
+
+END;
