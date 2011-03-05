@@ -36,6 +36,7 @@ Chat::Chat(QWidget* parent, ChatType type):
     mUserlist->verticalHeader()->hide();
     mUserlist->horizontalHeader()->hide();
     mUserlist->horizontalScrollBar()->hide();
+    mUserlist->setEditTriggers(QTableWidget::NoEditTriggers); // read only!
 
 
   //  mUserlist->setAlignment(Qt::AlignLeft | Qt::AlignBottom);
