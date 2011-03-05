@@ -35,6 +35,7 @@ Chat::Chat(QWidget* parent, ChatType type):
     mUserlist = new Userlist(this, mChatType);
     mUserlist->verticalHeader()->hide();
     mUserlist->horizontalHeader()->hide();
+    mUserlist->horizontalScrollBar()->hide();
 
 
   //  mUserlist->setAlignment(Qt::AlignLeft | Qt::AlignBottom);
@@ -49,7 +50,7 @@ Chat::Chat(QWidget* parent, ChatType type):
 
 void Chat::updatePos(OrientationStatus orientation)
 {
-    //qDebug() << "Chat::updatePos: " << orientation;
+    qDebug() << "Chat::updatePos: " << orientation;
 
     QString chatNode = (mChatType == CT_COMMON_CHAT) ? XML_NODE_COMMON_CHAT : XML_NODE_TABLE_CHAT;
 
@@ -63,6 +64,8 @@ void Chat::updatePos(OrientationStatus orientation)
     move(x, y);
     setFixedSize(width, height);
 
+    qDebug() << "move: " << x << y << width << height;
+
     // HISTORY
     int xHistory      = XML::instance().readValue(XML_ITEMS_FILENAME, QList<QString>() << chatNode << XML_NODE_HISTORY << orientNode << XML_NODE_X).toInt();
     int yHistory      = XML::instance().readValue(XML_ITEMS_FILENAME, QList<QString>() << chatNode << XML_NODE_HISTORY << orientNode << XML_NODE_Y).toInt();
@@ -70,7 +73,7 @@ void Chat::updatePos(OrientationStatus orientation)
     int heightHistory = XML::instance().readValue(XML_ITEMS_FILENAME, QList<QString>() << chatNode << XML_NODE_HISTORY << orientNode << XML_NODE_HEIGHT).toInt();
 
     mHistory->move(xHistory, yHistory);
-    mHistory->setMinimumSize(widthHistory, heightHistory);
+    mHistory->setFixedSize(widthHistory, heightHistory);
 
     // USERLIST
     int xUserlist      = XML::instance().readValue(XML_ITEMS_FILENAME, QList<QString>() << chatNode << XML_NODE_USERLIST << orientNode << XML_NODE_X).toInt();
@@ -79,7 +82,8 @@ void Chat::updatePos(OrientationStatus orientation)
     int heightUserlist = XML::instance().readValue(XML_ITEMS_FILENAME, QList<QString>() << chatNode << XML_NODE_USERLIST << orientNode << XML_NODE_HEIGHT).toInt();
 
     mUserlist->move(xUserlist, yUserlist);
-    mUserlist->setMinimumSize(widthUserlist, heightUserlist);
+    mUserlist->setFixedSize(widthUserlist, heightUserlist);
+
 
 
 }
