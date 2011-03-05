@@ -2,19 +2,16 @@
 
   <MainWindow>
     <color value = "black" />
-    <portrait>  <width value="800" />  <height value="480" />  </portrait>
     <landscape> <width value="800" />  <height value="480" />  </landscape>
   </MainWindow>
 
   <Scene>
     <margin>  <width value="5" />  </margin>
-    <portrait>   <x value="0" />   <y value="0" />  <width value="400" />  <height value="750" />  </portrait>
     <landscape>  <x value="0" />   <y value="0" />  <width value="795" />  <height value="475" />  </landscape>
   </Scene>
 
 
   <Splash>
-    <portrait>  <x value="-60" />  <y value="20" /> </portrait>
     <landscape>  <x value="0" />   <y value="0" /> </landscape>
   </Splash>
 
@@ -31,39 +28,46 @@
 
 
   <CommonChat>
-    <portrait>  <x value="5" /> <y value="0" />  <width value="500" /> <height value="220" />  </portrait>
-    <landscape> <x value="50" /> <y value="5" />  <width value="450" /> <height value="260" />  </landscape>
+    <landscape> <x value="50" /> <y value="5" />  <width value="465" /> <height value="260" />  </landscape>
 	<font>
  	    <me>             <color value="white" /> </me>
 		<opponent>       <color value="#FFCC00" /> </opponent>
  	    <server>         <color value="grey" /> </server>
      </font>
 	<style value="Chat      { background: black; } 
-                  QTextEdit { background: black; font-size: 18px; font: italic; color: white; }"/>
+                  QTextEdit { background: black; font-size: 18px; font: italic; color: white; }
+                  QTableWidget { background: black; color: white; }"/>
 
 	<history>
-	    <portrait>  <x value="5" /> <y value="0" />  <width value="500" /> <height value="220" />  </portrait>
-	    <landscape> <x value="0" /> <y value="5" />  <width value="350" /> <height value="250" />  </landscape>
+	    <landscape> <x value="0" /> <y value="0" />  <width value="350" /> <height value="250" />  </landscape>
 	</history>
 
 	<userlist>
-	    <portrait>  <x value="5" /> <y value="0" />  <width value="500" /> <height value="220" />  </portrait>
-	    <landscape> <x value="355" /> <y value="5" />  <width value="70" /> <height value="250" />  </landscape>
+	    <landscape> <x value="355" /> <y value="0" />  <width value="110" /> <height value="250" />  </landscape>
 	</userlist>
 
   </CommonChat>
 
 
   <TableChat>
-    <portrait>  <x value="200" />  <y value="450" />  <width value="200" />  <height value="200" />  </portrait>
-    <landscape> <x value="5" />    <y value="250" />  <width value="380" />  <height value="215" />  </landscape>
+	<landscape> <x value="5" /> <y value="250" />  <width value="380" /> <height value="215" />  </landscape>
 	<font>
  	    <me>             <color value="white" /> </me>
 		<opponent>       <color value="#FFCC00" /> </opponent>
  	    <server>         <color value="grey" /> </server>
      </font>
 	<style value="Chat       { background: black; } 
-                  QTextEdit  { background: black; font-size: 18px; font: italic; color: white; }"/> 
+                  QTextEdit  { background: black; font-size: 18px; font: italic; color: white; }
+                  QTableWidget { background: black; color: white; }"/> 
+
+	<history>
+		<landscape> <x value="0" /> <y value="0" />  <width value="380" /> <height value="215" />  </landscape>
+	</history>
+
+	<userlist>
+		<landscape> <x value="0" /> <y value="0" />  <width value="0" /> <height value="0" />  </landscape>
+	</userlist>
+
   </TableChat>
 
 
@@ -74,33 +78,27 @@
     </font>
 
       <Exit>
-        <portrait>  <x value="0" />  <y value="0" />  </portrait>
         <landscape> <x value="0" />  <y value="0" />  </landscape>
       </Exit>
 
       <NewGame>
-        <portrait>  <x value="0" /> <y value="350" /> </portrait>
         <landscape> <x value="0" /> <y value="260" /> </landscape>
       </NewGame>
 
       <FindGame>
-        <portrait>  <x value="192" />  <y value="350" />  </portrait>
         <landscape> <x value="192" />  <y value="260" />  </landscape>
       </FindGame>
 
       <Chat>
-        <portrait>  <x value="0" />   <y value="550" /> </portrait>
         <landscape> <x value="384" /> <y value="260" /> </landscape>
       </Chat>
 
       <Options>
-        <portrait> <x value="192" />  <y value="550" /> </portrait>
         <landscape> <x value="576" />  <y value="260" /> </landscape>
       </Options>
 
 
       <GameMenu>
-        <portrait>  <x value="5" />   <y valcue="550" />  </portrait>
         <landscape> <x value="5" />   <y value="75" />  </landscape>
       </GameMenu>
 
@@ -127,7 +125,6 @@
   <Board>
     <width value="400" />
     <border>  <color value="white" />  </border>
-    <portrait>  <x value="0" />   <y value="50" />  </portrait>
     <landscape> <x value="390" /> <y value="35" />  </landscape>
   </Board>
 
@@ -137,7 +134,6 @@
         <font> <family value="Helvetica [Cronyx]" />  <size value="16" />  
                <color> <active value="white" /> <inactive value="grey" />  </color>
         </font>
-        <portrait>  <x value="5" />  <y value="450" />  </portrait>
         <landscape> <x value="205" />  <y value="82" />  </landscape>
     </MoveClock>
 
@@ -145,7 +141,6 @@
         <font>  <family value="Helvetica [Cronyx]" />  <size value="10" />
                 <color>  <active value="white" />  <inactive value="grey" />   </color>
         </font>
-        <portrait>  <x value="5" />  <y value="480" />  </portrait>
         <landscape> <x value="205" />  <y value="112" />  </landscape>
     </GameClock>
   </Clocks>
@@ -155,7 +150,6 @@
         <font>  <family value="Helvetica [Cronyx]" />  <size value="25" />  
 			    <color> <active value="white" /> <inactive value="#FFCC00" />  </color>  
         </font>
-        <portrait>  <x value="5" />   <y value="5" /> <width value="0"/>  </portrait>
         <landscape> <x value="5" /> <y value="13" /> <width value="385"/> </landscape>
   </GameStateText>
 
