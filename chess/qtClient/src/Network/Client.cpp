@@ -911,20 +911,20 @@ void Client::onReadyRead()
         MessageHeader* header = (MessageHeader*)buf.data();
 
 
-QString str = "--->>> INCOMING: " +
-         serviceToString((quint32)header->service) + " " +
-         commandToString((quint32)header->service, (quint32)header->cmd) + " ";
-for(int i=0; i<buf.size(); i++)
-    str += QString::number((int)(unsigned char)buf[i]) + " ";
-qDebug() << str;
-
-
         if(header->sign != PROTOCOL_SIGNATURE) {
             qDebug("Server uses wrong protocol ");
             return;
         }
 
         unsigned mesSize = sizeof(header->sign) + sizeof(header->size) + header->size;
+
+QString str = "--->>> INCOMING: " +
+         serviceToString((quint32)header->service) + " " +
+         commandToString((quint32)header->service, (quint32)header->cmd) + " ";
+for(int i=0; i<mesSize; i++)
+    str += QString::number((int)(unsigned char)buf[i]) + " ";
+qDebug() << str;
+
 
         QByteArray infPart((char*)&header->version, header->size - CRC_SIZE);
         if(buf[mesSize - CRC_SIZE] != getCRC(infPart)) {
