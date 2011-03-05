@@ -72,12 +72,12 @@ void CHTServer::DoAllMsg( MySocket* _pSocket )
 	}
 }
 
-bool CHTServer::checkParticipation( uint32_t _nPlayerID, uint32_t _nLogicID, uint32_t _nTableID )
+bool CHTServer::checkParticipation( uint32_t playerID, uint32_t logicID, uint32_t tableID )
 {
     SqlTable sqlGameOnlineUsersTable("");
-    if ( getGameOnlineUsersTable(_nLogicID, &sqlGameOnlineUsersTable) )
+    if ( getGameOnlineUsersTable(logicID, &sqlGameOnlineUsersTable) )
     {
-        CMyStr query = CMyStr("PlayerID = ") + CMyStr(_nPlayerID) + CMyStr(" AND TableID = ") + CMyStr(_nTableID);
+        CMyStr query = CMyStr("PlayerID = ") + CMyStr(playerID) + CMyStr(" AND TableID = ") + CMyStr(tableID);
 
         TTable tbl;
         if (!sqlGameOnlineUsersTable.Select("*", query.c_str(), &tbl))
@@ -98,11 +98,11 @@ bool CHTServer::checkParticipation( uint32_t _nPlayerID, uint32_t _nLogicID, uin
 
 
 
-bool CHTServer::getGameOnlineUsersTable( uint32_t _nLogicID, SqlTable* _pRes )
+bool CHTServer::getGameOnlineUsersTable( uint32_t logicID, SqlTable* _pRes )
 {
     CMyStr strLogicTable;
 
-    if ( m_sqlLogicList.GetLogicName(_nLogicID, &strLogicTable) )
+    if ( m_sqlLogicList.GetLogicName(logicID, &strLogicTable) )
     {
         strLogicTable = "tb" + strLogicTable + "ChatUserOnline";
         _pRes->Open(strLogicTable.c_str());
@@ -114,11 +114,11 @@ bool CHTServer::getGameOnlineUsersTable( uint32_t _nLogicID, SqlTable* _pRes )
 
 }
 
-bool CHTServer::getChatTable( uint32_t _nLogicID, SqlTable* _pRes )
+bool CHTServer::getChatTable( uint32_t logicID, SqlTable* _pRes )
 {
     CMyStr strLogicTable;
 
-    if ( m_sqlLogicList.GetLogicName(_nLogicID, &strLogicTable) )
+    if ( m_sqlLogicList.GetLogicName(logicID, &strLogicTable) )
     {
         strLogicTable = "tb" + strLogicTable + "Chat";
         _pRes->Open(strLogicTable.c_str());
@@ -180,21 +180,21 @@ void CHTServer::newMsg( ClientMsg* _pMsg )
 
 }
 
-void CHTServer::sendServerNotification(uint32_t _nPlayerID, uint32_t _nLogicID, const CMyStr& message, uint32_t _nTableID)
+void CHTServer::sendServerNote(int cmd, uint32_t playerID, uint32_t logicID, uint32_t tableID)
 {
     TVecChar vecChar;
     SqlTableUsers wsUsers;
-    if ( wsUsers.GetUserName( _nPlayerID, &vecChar ) ) // add a user name into the message
+    if ( wsUsers.GetUserName( playerID, &vecChar ) ) // add a user name into the message
     {
-        CMyStr mes = CMyStr("--- ") + CMyStr(&vecChar) + CMyStr(" ") + message + (" ---");
-        sendMsgToAll(ANS_CHAT_NOTE, _nLogicID, &mes, _nTableID);
+        CMyStr userName(&vecChar);
+        sendMsgToAll(cmd, logicID, &userName, tableID);
     }
 }
 
-void CHTServer::sendUserNames(uint32_t _nLogicID, uint32_t _nTableID)
+void CHTServer::sendUserNames(uint32_t playerID, uint32_t logicID, uint32_t tableID)
 {
     SqlTable sqlGameOnlineUsersTable("");
-    if (!getGameOnlineUsersTable(_nLogicID, &sqlGameOnlineUsersTable) )
+    if (!getGameOnlineUsersTable(logicID, &sqlGameOnlineUsersTable) )
     {
         return;
     }
@@ -211,24 +211,33 @@ void CHTServer::sendUserNames(uint32_t _nLogicID, uint32_t _nTableID)
     TTable tbl;
     sqlGameOnlineUsersTable.Query(query.c_str(), &tbl);
 
-    CMyStr userNames = "NAMES: ";
+
     for (int i=0; i<tbl.size(); i++ )
     {
-        userNames += tbl[i][0] + "\n";
+        CMyStr userName = tbl[i][0];
+
+        sendMsgToOne(ANS_CHAT_USER_ONLINE, playerID, logicID, &userName, tableID);
     }
 
-    sendMsgToAll(ANS_CHAT_NOTE, _nLogicID, &userNames, _nTableID);
+
 
 }
 
 
-void CHTServer::joinChat( uint32_t _nPlayerID, uint32_t _nLogicID, uint32_t _nTableID )
+void CHTServer::joinChat( uint32_t playerID, uint32_t logicID, uint32_t tableID )
 {
 
-    if ( !checkParticipation(_nPlayerID, _nLogicID, _nTableID ))
+    if ( !checkParticipation(playerID, logicID, tableID ))
     {
+        // send existing names to the new user
+        sendUserNames(playerID, logicID, tableID);
+
+        /// send last 10 messages to the new user
+        sendHistory( playerID, logicID, tableID );
+
+        // insert the new user
         SqlTable sqlGameOnlineUsersTable("");
-        if ( !getGameOnlineUsersTable(_nLogicID, &sqlGameOnlineUsersTable) )
+        if ( !getGameOnlineUsersTable(logicID, &sqlGameOnlineUsersTable) )
         {
             return;
         }
@@ -240,37 +249,34 @@ void CHTServer::joinChat( uint32_t _nPlayerID, uint32_t _nLogicID, uint32_t _nTa
         fields.push_back(&strPlayerIDf);
         fields.push_back(&strTableIDf);
 
-        CMyStr strPlayerIDv = CMyStr(_nPlayerID);
-        CMyStr strTableIDv = CMyStr(_nTableID);
+        CMyStr strPlayerIDv = CMyStr(playerID);
+        CMyStr strTableIDv = CMyStr(tableID);
         values.push_back(&strPlayerIDv);
         values.push_back(&strTableIDv);
 
-        sqlGameOnlineUsersTable.Delete("PlayerID", CMyStr(_nPlayerID).c_str());
+        sqlGameOnlineUsersTable.Delete("PlayerID", CMyStr(playerID).c_str());
         sqlGameOnlineUsersTable.Insert( fields, values );
 
-        /// send last 10 messages
-        getHistory( _nPlayerID, _nLogicID, _nTableID );
+        // send USER_JOINED to all
+        sendServerNote(ANS_CHAT_USER_JOINED, playerID, logicID, tableID);
 
-        sendServerNotification(_nPlayerID, _nLogicID, CMyStr("has joined the chat"), _nTableID);
-        sendUserNames(_nLogicID, _nTableID);
     }
 
 }
 
-void CHTServer::leaveChat( uint32_t _nPlayerID, uint32_t _nLogicID, uint32_t _nTableID )
+void CHTServer::leaveChat( uint32_t playerID, uint32_t logicID, uint32_t tableID )
 {
     SqlTable sqlGameOnlineUsersTable("");
-    if ( getGameOnlineUsersTable(_nLogicID, &sqlGameOnlineUsersTable) )
+    if ( getGameOnlineUsersTable(logicID, &sqlGameOnlineUsersTable) )
     {
-        sqlGameOnlineUsersTable.Delete("PlayerID", CMyStr(_nPlayerID).c_str());
+        sqlGameOnlineUsersTable.Delete("PlayerID", CMyStr(playerID).c_str());
 
-        sendServerNotification(_nPlayerID, _nLogicID, CMyStr("has left the chat"), _nTableID);
-        sendUserNames(_nLogicID, _nTableID);
+        sendServerNote(ANS_CHAT_USER_LEFT, playerID, logicID, tableID);
     }
 }
 
 
-void CHTServer::getHistory( uint32_t playerID, uint32_t logicID, uint32_t tableID )
+void CHTServer::sendHistory( uint32_t playerID, uint32_t logicID, uint32_t tableID )
 {
     SqlTable chatTable("");
     getChatTable( logicID, &chatTable );
@@ -285,7 +291,7 @@ void CHTServer::getHistory( uint32_t playerID, uint32_t logicID, uint32_t tableI
     // send messages in reverse order
     for(int i=queryRes.size()-1; i>=0; i--)
     {
-        sendMsgToOne( playerID, logicID, &queryRes[i][0], tableID );
+        sendMsgToOne( ANS_CHAT_MSG, playerID, logicID, &queryRes[i][0], tableID );
     }
 
 }
@@ -300,10 +306,10 @@ void CHTServer::deleteHistory( uint32_t logicID, uint32_t tableID)
 }
 
 
-void CHTServer::messageToAll( uint32_t _nPlayerID, uint32_t _nLogicID,
-                                const TVecChar* _vecData, uint32_t _nTableID )
+void CHTServer::messageToAll( uint32_t playerID, uint32_t logicID,
+                                const TVecChar* _vecData, uint32_t tableID )
 {
-    if (!checkParticipation(_nPlayerID, _nLogicID, _nTableID) )
+    if (!checkParticipation(playerID, logicID, tableID) )
     {
         return;
     }
@@ -320,7 +326,7 @@ void CHTServer::messageToAll( uint32_t _nPlayerID, uint32_t _nLogicID,
     // add a user name into the message
     TVecChar vecChar;
     SqlTableUsers wsUsers;
-    if ( wsUsers.GetUserName( _nPlayerID, &vecChar ) )
+    if ( wsUsers.GetUserName( playerID, &vecChar ) )
     {
         CMyStr strUserName = CMyStr(&vecChar);
         strMsg = strUserName + ": " + strMsg;
@@ -328,28 +334,28 @@ void CHTServer::messageToAll( uint32_t _nPlayerID, uint32_t _nLogicID,
 
 
     // save message into the history
-    getChatTable( _nLogicID, &sqlChatTable );
+    getChatTable( logicID, &sqlChatTable );
 
     TVecMyStr parameters;
-    CMyStr tableID = CMyStr( _nTableID );
-    parameters.push_back(&tableID);
+    CMyStr tableIDstr = CMyStr( tableID );
+    parameters.push_back(&tableIDstr);
     parameters.push_back(&strMsg);
     parameters.push_back(&MAX_CHAT_HISTORY);
     sqlChatTable.Call("AddToHistory", parameters);
 
 
     // and send it
-    sendMsgToAll(ANS_CHAT_MSG, _nLogicID, &strMsg, _nTableID );
+    sendMsgToAll(ANS_CHAT_MSG, logicID, &strMsg, tableID );
 
 }
 
-void CHTServer::sendMsgToAll( int cmd, uint32_t _nLogicID, CMyStr* _strMsg, uint32_t _nTableID )
+void CHTServer::sendMsgToAll( int cmd, uint32_t logicID, CMyStr* _strMsg, uint32_t tableID )
 {
 
     SqlTable sqlChatTable("");
     TTable tbl;
 
-    if ( getGameOnlineUsersTable( _nLogicID, &sqlChatTable ) )
+    if ( getGameOnlineUsersTable( logicID, &sqlChatTable ) )
     {
         std::cout << "CHTServer::sendMsgToAll() 1" << std::endl;
 
@@ -358,7 +364,7 @@ void CHTServer::sendMsgToAll( int cmd, uint32_t _nLogicID, CMyStr* _strMsg, uint
         sendedMsg.addData(_strMsg);
 
         // fetch chat members and send the message them all
-        CMyStr strWhere = "TableID = " + CMyStr(_nTableID);
+        CMyStr strWhere = "TableID = " + CMyStr(tableID);
         sqlChatTable.Select( "PlayerID", strWhere.c_str(), &tbl );
 
         for(TTable::const_iterator it = tbl.begin(); it != tbl.end(); ++it)
@@ -371,14 +377,14 @@ void CHTServer::sendMsgToAll( int cmd, uint32_t _nLogicID, CMyStr* _strMsg, uint
 
 }
 
-void CHTServer::sendMsgToOne( uint32_t _nPlayerID, uint32_t _nLogicID, CMyStr* _strMsg, uint32_t _nTableID  )
+void CHTServer::sendMsgToOne( int cmd, uint32_t playerID, uint32_t logicID, CMyStr* _strMsg, uint32_t tableID  )
 {
     CSendedMsg sendedMsg;
 
-    sendedMsg.addData((char)ANS_CHAT_MSG);
+    sendedMsg.addData((char)cmd);
     sendedMsg.addData(_strMsg);
 
-    sendMsg( _nPlayerID, &sendedMsg );
+    sendMsg( playerID, &sendedMsg );
 }
 
 void CHTServer::sendMsg( uint32_t _nTo, CSendedMsg *_pMsg )

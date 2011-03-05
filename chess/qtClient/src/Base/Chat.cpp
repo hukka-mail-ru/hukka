@@ -31,8 +31,10 @@ Chat::Chat(QWidget* parent, ChatType type):
     mHistory->setAlignment(Qt::AlignLeft | Qt::AlignBottom);
     mHistory->setReadOnly(true);
 
-    QObject::connect(Client::instance(), SIGNAL(chatMessage(const QString&)), this, SLOT(onChatMessage(const QString&)));
-    QObject::connect(Client::instance(), SIGNAL(chatNote(const QString&)),    this, SLOT(onChatNote(const QString&)));
+    QObject::connect(Client::instance(), SIGNAL(chatMessage(const QString&)),    this, SLOT(onChatMessage(const QString&)));
+    QObject::connect(Client::instance(), SIGNAL(chatUserOnline(const QString&)), this, SLOT(onChatUserOnline(const QString&)));
+    QObject::connect(Client::instance(), SIGNAL(chatUserJoined(const QString&)), this, SLOT(onChatUserJoined(const QString&)));
+    QObject::connect(Client::instance(), SIGNAL(chatUserLeft(const QString&)),   this, SLOT(onChatUserLeft(const QString&)));
 }
 
 void Chat::updatePos(OrientationStatus orientation)
@@ -101,15 +103,37 @@ void Chat::onChatMessage(const QString& message)
     mHistory->verticalScrollBar()->setSliderPosition(mHistory->verticalScrollBar()->maximum());
 }
 
-void Chat::onChatNote(const QString& message)
+void Chat::onChatUserOnline(const QString& message)
 {
     QString htmlText = mHistory->toHtml();
-    htmlText += "<font color=\""+ mColorServer + "\">" + message + "</font>";
+    htmlText += "<font color=\""+ mColorServer + "\">" + message + " is online" + "</font>";
 
     mHistory->setHtml(htmlText);
     mHistory->adjustSize();
     mHistory->verticalScrollBar()->setSliderPosition(mHistory->verticalScrollBar()->maximum());
 }
+
+void Chat::onChatUserJoined(const QString& message)
+{
+    QString htmlText = mHistory->toHtml();
+    htmlText += "<font color=\""+ mColorServer + "\">" + message + " has joined the chat" + "</font>";
+
+    mHistory->setHtml(htmlText);
+    mHistory->adjustSize();
+    mHistory->verticalScrollBar()->setSliderPosition(mHistory->verticalScrollBar()->maximum());
+}
+
+void Chat::onChatUserLeft  (const QString& message)
+{
+    QString htmlText = mHistory->toHtml();
+    htmlText += "<font color=\""+ mColorServer + "\">" + message + " has left the chat" +  "</font>";
+
+    mHistory->setHtml(htmlText);
+    mHistory->adjustSize();
+    mHistory->verticalScrollBar()->setSliderPosition(mHistory->verticalScrollBar()->maximum());
+}
+
+
 
 Chat::~Chat()
 {

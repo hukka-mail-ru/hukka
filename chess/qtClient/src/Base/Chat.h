@@ -54,8 +54,10 @@ private:
 
 private slots:
 
-    void onChatMessage(const QString& message);
-    void onChatNote(const QString& message);
+    void onChatMessage   (const QString& message);
+    void onChatUserOnline(const QString& message);
+    void onChatUserJoined(const QString& message);
+    void onChatUserLeft  (const QString& message);
 
 };
 
