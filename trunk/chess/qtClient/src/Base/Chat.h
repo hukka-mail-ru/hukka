@@ -9,6 +9,7 @@
 #include <QDialog>
 #include <QGraphicsPixmapItem>
 #include <QList>
+#include <QTableWidget>
 #include <QString>
 #include <Defines.h>
 #include <orientation.h>
@@ -30,24 +31,27 @@ public:
 
 private:
 
-    class ChatHistory: public QTextEdit
+    class History: public QTextEdit
     {
     public:
-        ChatHistory(QWidget* parent, ChatType type): QTextEdit(parent), mChatType(type)  { }
+        History(QWidget* parent, ChatType type): QTextEdit(parent), mChatType(type)  { }
     protected:
         virtual void mouseReleaseEvent(QMouseEvent * event);
     private:
         ChatType mChatType;
     };
 
-    class ChatUserlist: public QTextEdit
+    class Userlist: public QTableWidget
     {
     public:
-        ChatUserlist(QWidget* parent, ChatType type): QTextEdit(parent), mChatType(type)  { }
-        QList<QString> mNames;
+        Userlist(QWidget* parent, ChatType type): QTableWidget(0, 1, parent), mChatType(type)  { }
+        void addUser(const QString& userName);
+        void removeUser(const QString& userName);
     protected:
         virtual void mouseReleaseEvent(QMouseEvent * event);
     private:
+        void updateTable();
+        QList<QString> mNames;
         ChatType mChatType;
     };
 
@@ -55,8 +59,8 @@ private:
     QGraphicsTextItem* mHeader;
     QGraphicsScene* mParentScene;
 
-    ChatHistory* mHistory;
-    ChatUserlist* mUserlist;
+    History* mHistory;
+    Userlist* mUserlist;
 
 //    QScrollArea* mScrollArea;
     QGraphicsRectItem* mBorder;
