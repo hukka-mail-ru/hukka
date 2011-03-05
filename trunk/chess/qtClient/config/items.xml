@@ -32,14 +32,25 @@
 
   <CommonChat>
     <portrait>  <x value="5" /> <y value="0" />  <width value="500" /> <height value="220" />  </portrait>
-    <landscape> <x value="50" /> <y value="5" />  <width value="500" /> <height value="280" />  </landscape>
+    <landscape> <x value="50" /> <y value="5" />  <width value="450" /> <height value="260" />  </landscape>
 	<font>
  	    <me>             <color value="white" /> </me>
 		<opponent>       <color value="#FFCC00" /> </opponent>
  	    <server>         <color value="grey" /> </server>
      </font>
 	<style value="Chat      { background: black; } 
-                  QTextEdit { background: black; font-size: 18px; font: italic; color: white; }"/> 
+                  QTextEdit { background: black; font-size: 18px; font: italic; color: white; }"/>
+
+	<history>
+	    <portrait>  <x value="5" /> <y value="0" />  <width value="500" /> <height value="220" />  </portrait>
+	    <landscape> <x value="0" /> <y value="5" />  <width value="350" /> <height value="250" />  </landscape>
+	</history>
+
+	<userlist>
+	    <portrait>  <x value="5" /> <y value="0" />  <width value="500" /> <height value="220" />  </portrait>
+	    <landscape> <x value="355" /> <y value="5" />  <width value="70" /> <height value="250" />  </landscape>
+	</userlist>
+
   </CommonChat>
 
 

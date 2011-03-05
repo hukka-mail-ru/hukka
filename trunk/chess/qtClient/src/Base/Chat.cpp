@@ -31,6 +31,12 @@ Chat::Chat(QWidget* parent, ChatType type):
     mHistory->setAlignment(Qt::AlignLeft | Qt::AlignBottom);
     mHistory->setReadOnly(true);
 
+
+    mUserlist = new ChatUserlist(this, mChatType);
+    mUserlist->setAlignment(Qt::AlignLeft | Qt::AlignBottom);
+    mUserlist->setReadOnly(true);
+
+
     QObject::connect(Client::instance(), SIGNAL(chatMessage(const QString&)),    this, SLOT(onChatMessage(const QString&)));
     QObject::connect(Client::instance(), SIGNAL(chatUserOnline(const QString&)), this, SLOT(onChatUserOnline(const QString&)));
     QObject::connect(Client::instance(), SIGNAL(chatUserJoined(const QString&)), this, SLOT(onChatUserJoined(const QString&)));
@@ -50,14 +56,27 @@ void Chat::updatePos(OrientationStatus orientation)
     int width  = XML::instance().readValue(XML_ITEMS_FILENAME, QList<QString>() << chatNode << orientNode << XML_NODE_WIDTH).toInt();
     int height = XML::instance().readValue(XML_ITEMS_FILENAME, QList<QString>() << chatNode << orientNode << XML_NODE_HEIGHT).toInt();
 
-   // int textOffset   = XML::instance().readValue(XML_ITEMS_FILENAME, path << chatNode << XML_NODE_TEXT_OFFSET).toInt(); path.clear();
-   // int borderWidth  = XML::instance().readValue(XML_ITEMS_FILENAME, path << chatNode << XML_NODE_BORDER << XML_NODE_WIDTH).toInt(); path.clear();
-
     move(x, y);
     setFixedSize(width, height);
 
-    mHistory->setMinimumSize(width, height);
-   // qDebug() << "Chat::updatePos: end";
+    // HISTORY
+    int xHistory      = XML::instance().readValue(XML_ITEMS_FILENAME, QList<QString>() << chatNode << XML_NODE_HISTORY << orientNode << XML_NODE_X).toInt();
+    int yHistory      = XML::instance().readValue(XML_ITEMS_FILENAME, QList<QString>() << chatNode << XML_NODE_HISTORY << orientNode << XML_NODE_Y).toInt();
+    int widthHistory  = XML::instance().readValue(XML_ITEMS_FILENAME, QList<QString>() << chatNode << XML_NODE_HISTORY << orientNode << XML_NODE_WIDTH).toInt();
+    int heightHistory = XML::instance().readValue(XML_ITEMS_FILENAME, QList<QString>() << chatNode << XML_NODE_HISTORY << orientNode << XML_NODE_HEIGHT).toInt();
+
+    mHistory->move(xHistory, yHistory);
+    mHistory->setMinimumSize(widthHistory, heightHistory);
+
+    // USERLIST
+    int xUserlist      = XML::instance().readValue(XML_ITEMS_FILENAME, QList<QString>() << chatNode << XML_NODE_USERLIST << orientNode << XML_NODE_X).toInt();
+    int yUserlist      = XML::instance().readValue(XML_ITEMS_FILENAME, QList<QString>() << chatNode << XML_NODE_USERLIST << orientNode << XML_NODE_Y).toInt();
+    int widthUserlist  = XML::instance().readValue(XML_ITEMS_FILENAME, QList<QString>() << chatNode << XML_NODE_USERLIST << orientNode << XML_NODE_WIDTH).toInt();
+    int heightUserlist = XML::instance().readValue(XML_ITEMS_FILENAME, QList<QString>() << chatNode << XML_NODE_USERLIST << orientNode << XML_NODE_HEIGHT).toInt();
+
+    mUserlist->move(xUserlist, yUserlist);
+    mUserlist->setMinimumSize(widthUserlist, heightUserlist);
+
 }
 
 void Chat::show()
@@ -83,6 +102,11 @@ void Chat::ChatHistory::mouseReleaseEvent(QMouseEvent * event)
     MainWindow::instance()->showChatMessageDialog(mChatType);
 }
 
+void Chat::ChatUserlist::mouseReleaseEvent(QMouseEvent * event)
+{
+
+}
+
 
 void Chat::onChatMessage(const QString& message)
 {
@@ -103,34 +127,48 @@ void Chat::onChatMessage(const QString& message)
     mHistory->verticalScrollBar()->setSliderPosition(mHistory->verticalScrollBar()->maximum());
 }
 
-void Chat::onChatUserOnline(const QString& message)
+void Chat::onChatUserOnline(const QString& userName)
 {
-    QString htmlText = mHistory->toHtml();
-    htmlText += "<font color=\""+ mColorServer + "\">" + message + " is online" + "</font>";
-
-    mHistory->setHtml(htmlText);
-    mHistory->adjustSize();
-    mHistory->verticalScrollBar()->setSliderPosition(mHistory->verticalScrollBar()->maximum());
+    onChatUserJoined(userName);
 }
 
-void Chat::onChatUserJoined(const QString& message)
+void Chat::onChatUserJoined(const QString& userName)
 {
-    QString htmlText = mHistory->toHtml();
-    htmlText += "<font color=\""+ mColorServer + "\">" + message + " has joined the chat" + "</font>";
+    if(!mUserlist->mNames.contains(userName))
+    {
+        mUserlist->mNames.append(userName);
+    }
 
-    mHistory->setHtml(htmlText);
-    mHistory->adjustSize();
-    mHistory->verticalScrollBar()->setSliderPosition(mHistory->verticalScrollBar()->maximum());
+
+    QString htmlText = "<font color=\""+ mColorServer + "\">";
+    for(int i=0; i<mUserlist->mNames.size(); i++)
+    {
+        htmlText += mUserlist->mNames[i] + "\n";
+    }
+    htmlText += "</font>";
+
+    mUserlist->setHtml(htmlText);
+    mUserlist->adjustSize();
+    mUserlist->verticalScrollBar()->setSliderPosition(mUserlist->verticalScrollBar()->minimum());
 }
 
-void Chat::onChatUserLeft  (const QString& message)
+void Chat::onChatUserLeft  (const QString& userName)
 {
-    QString htmlText = mHistory->toHtml();
-    htmlText += "<font color=\""+ mColorServer + "\">" + message + " has left the chat" +  "</font>";
+    if(!mUserlist->mNames.contains(userName))
+    {
+        mUserlist->mNames.removeAll(userName);
+    }
 
-    mHistory->setHtml(htmlText);
-    mHistory->adjustSize();
-    mHistory->verticalScrollBar()->setSliderPosition(mHistory->verticalScrollBar()->maximum());
+    QString htmlText = "<font color=\""+ mColorServer + "\">";
+    for(int i=0; i<mUserlist->mNames.size(); i++)
+    {
+        htmlText += mUserlist->mNames[i] + "\n";
+    }
+    htmlText += "</font>";
+
+    mUserlist->setHtml(htmlText);
+    mUserlist->adjustSize();
+    mUserlist->verticalScrollBar()->setSliderPosition(mUserlist->verticalScrollBar()->minimum());
 }
 
 

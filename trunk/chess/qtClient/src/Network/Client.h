@@ -141,9 +141,9 @@ signals:
         void invalidMove();
 
         void chatMessage(const QString& message);
-        void chatUserOnline(const QString& message);
-        void chatUserJoined(const QString& message);
-        void chatUserLeft(const QString& message);
+        void chatUserOnline(const QString& userName);
+        void chatUserJoined(const QString& userName);
+        void chatUserLeft(const QString& userName);
 
         void error(const QString& what);
 
