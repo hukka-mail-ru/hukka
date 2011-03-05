@@ -30,15 +30,28 @@ public:
     bool close();
 
 private:
+    enum ChatSender
+    {
+        CS_ME,
+        CS_OPPONENT,
+        CS_SERVER
+    };
 
     class History: public QTextEdit
     {
     public:
-        History(QWidget* parent, ChatType type): QTextEdit(parent), mChatType(type)  { }
+        History(QWidget* parent, ChatType type);
+
+        void addMessage(const QString& message, ChatSender chatSender);
     protected:
         virtual void mouseReleaseEvent(QMouseEvent * event);
     private:
         ChatType mChatType;
+
+        // colors
+        QString mColorMe;
+        QString mColorOpponent;
+        QString mColorServer;
     };
 
     class Userlist: public QTableWidget
@@ -67,10 +80,6 @@ private:
 
     ChatType mChatType;
 
-    // colors
-    QString mColorMe;
-    QString mColorOpponent;
-    QString mColorServer;
 
 private slots:
 

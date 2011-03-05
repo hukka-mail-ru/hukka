@@ -12,6 +12,9 @@
 #include <XML.h>
 #include <chatserver/chatdefs.h>
 
+Chat::~Chat()
+{
+}
 
 Chat::Chat(QWidget* parent, ChatType type):
     QDialog(parent), mChatType(type)
@@ -23,10 +26,6 @@ Chat::Chat(QWidget* parent, ChatType type):
 
     QString style =  XML::instance().readValue(XML_ITEMS_FILENAME, QList<QString>() << chatNode << XML_NODE_STYLE);
     setStyleSheet(style);
-
-    mColorMe       = XML::instance().readValue(XML_ITEMS_FILENAME, QList<QString>() << chatNode << XML_NODE_FONT << XML_NODE_ME << XML_NODE_COLOR);
-    mColorOpponent = XML::instance().readValue(XML_ITEMS_FILENAME, QList<QString>() << chatNode << XML_NODE_FONT << XML_NODE_OPPONENT << XML_NODE_COLOR);
-    mColorServer   = XML::instance().readValue(XML_ITEMS_FILENAME, QList<QString>() << chatNode << XML_NODE_FONT << XML_NODE_SERVER << XML_NODE_COLOR);
 
 
     mHistory = new History(this, mChatType);
@@ -103,34 +102,19 @@ bool Chat::close()
     return QDialog::close();
 }
 
-void Chat::History::mouseReleaseEvent(QMouseEvent * event)
-{
-    MainWindow::instance()->showChatMessageDialog(mChatType);
-}
-
-void Chat::Userlist::mouseReleaseEvent(QMouseEvent * event)
-{
-
-}
 
 
 void Chat::onChatMessage(const QString& message)
 {
-    QString htmlText = mHistory->toHtml();
-
     QString username = Client::instance()->username() + ":";
     if(message.left(username.length()) == username)
     {
-         htmlText += "<font color=\"" + mColorMe + "\">" + message + "</font>";
+         mHistory->addMessage(message, CS_ME);
     }
     else
     {
-        htmlText += "<font color=\""+ mColorOpponent + "\">" + message + "</font>";
+         mHistory->addMessage(message, CS_OPPONENT);
     }
-
-    mHistory->setHtml(htmlText);
-    mHistory->adjustSize();
-    mHistory->verticalScrollBar()->setSliderPosition(mHistory->verticalScrollBar()->maximum());
 }
 
 void Chat::onChatUserOnline(const QString& userName)
@@ -140,28 +124,52 @@ void Chat::onChatUserOnline(const QString& userName)
 
 void Chat::onChatUserJoined(const QString& userName)
 {
-    QString htmlText = mHistory->toHtml() + "<font color=\"" + mColorServer + "\">" +
-                       userName + " has joined the chat" + "</font>";
-
-    mHistory->setHtml(htmlText);
-    mHistory->adjustSize();
-    mHistory->verticalScrollBar()->setSliderPosition(mHistory->verticalScrollBar()->maximum());
-
+    mHistory->addMessage(userName + " has joined the chat", CS_SERVER);
     mUserlist->addUser(userName);
 }
 
 void Chat::onChatUserLeft  (const QString& userName)
 {
-    QString htmlText = mHistory->toHtml() + "<font color=\"" + mColorServer + "\">" +
-                       userName + " has left the chat" + "</font>";
-
-    mHistory->setHtml(htmlText);
-    mHistory->adjustSize();
-    mHistory->verticalScrollBar()->setSliderPosition(mHistory->verticalScrollBar()->maximum());
-
-
+    mHistory->addMessage(userName + " has left the chat", CS_SERVER);
     mUserlist->removeUser(userName);
 }
+
+////////////  History //////////////////////////////////////
+
+Chat::History::History(QWidget* parent, ChatType type):
+    QTextEdit(parent), mChatType(type)
+{
+    QString chatNode = (mChatType == CT_COMMON_CHAT) ? XML_NODE_COMMON_CHAT : XML_NODE_TABLE_CHAT;
+
+    mColorMe       = XML::instance().readValue(XML_ITEMS_FILENAME, QList<QString>() << chatNode << XML_NODE_FONT << XML_NODE_ME << XML_NODE_COLOR);
+    mColorOpponent = XML::instance().readValue(XML_ITEMS_FILENAME, QList<QString>() << chatNode << XML_NODE_FONT << XML_NODE_OPPONENT << XML_NODE_COLOR);
+    mColorServer   = XML::instance().readValue(XML_ITEMS_FILENAME, QList<QString>() << chatNode << XML_NODE_FONT << XML_NODE_SERVER << XML_NODE_COLOR);
+}
+
+void Chat::History::mouseReleaseEvent(QMouseEvent * event)
+{
+    MainWindow::instance()->showChatMessageDialog(mChatType);
+}
+
+void Chat::History::addMessage(const QString& message, ChatSender chatSender)
+{
+    QString color;
+    switch(chatSender)
+    {
+        case CS_ME:        color = mColorMe; break;
+        case CS_OPPONENT:  color = mColorOpponent; break;
+        case CS_SERVER:    color = mColorServer; break;
+    }
+
+    QString htmlText = toHtml() + "<font color=\"" + color + "\">" + message + "</font>";
+
+    setHtml(htmlText);
+    adjustSize();
+    verticalScrollBar()->setSliderPosition(verticalScrollBar()->maximum());
+}
+
+
+////////////  Userlist //////////////////////////////////////
 
 
 void Chat::Userlist::addUser(const QString& userName)
@@ -175,12 +183,9 @@ void Chat::Userlist::addUser(const QString& userName)
 
 void Chat::Userlist::removeUser(const QString& userName)
 {
-    qDebug() << "Chat::Userlist::removeUser:" << userName;
-
     if(mNames.contains(userName))
     {
-        bool res = mNames.removeOne(userName);
-        qDebug() << "Chat::Userlist::removeUser  res=" << res  << "mNames.size()" << mNames.size();
+        mNames.removeOne(userName);
         updateTable();
     }
 }
@@ -202,8 +207,9 @@ void Chat::Userlist::updateTable()
     }
 }
 
-
-
-Chat::~Chat()
+void Chat::Userlist::mouseReleaseEvent(QMouseEvent * event)
 {
+
 }
+
+
