@@ -29,19 +29,7 @@ Chat::Chat(QWidget* parent, ChatType type):
 
 
     mHistory = new History(this, mChatType);
-    mHistory->setAlignment(Qt::AlignLeft | Qt::AlignBottom);
-    mHistory->setReadOnly(true);
-
     mUserlist = new Userlist(this, mChatType);
-    mUserlist->verticalHeader()->hide();
-    mUserlist->horizontalHeader()->hide();
-    mUserlist->horizontalScrollBar()->hide();
-    mUserlist->setEditTriggers(QTableWidget::NoEditTriggers); // read only!
-
-
-  //  mUserlist->setAlignment(Qt::AlignLeft | Qt::AlignBottom);
- //   mUserlist->setReadOnly(true);
-
 
     QObject::connect(Client::instance(), SIGNAL(chatMessage(const QString&)),    this, SLOT(onChatMessage(const QString&)));
     QObject::connect(Client::instance(), SIGNAL(chatUserOnline(const QString&)), this, SLOT(onChatUserOnline(const QString&)));
@@ -144,6 +132,9 @@ void Chat::onChatUserLeft  (const QString& userName)
 Chat::History::History(QWidget* parent, ChatType type):
     QTextEdit(parent), mChatType(type)
 {
+    setAlignment(Qt::AlignLeft | Qt::AlignBottom);
+    setReadOnly(true);
+
     QString chatNode = (mChatType == CT_COMMON_CHAT) ? XML_NODE_COMMON_CHAT : XML_NODE_TABLE_CHAT;
 
     mColorMe       = XML::instance().readValue(XML_ITEMS_FILENAME, QList<QString>() << chatNode << XML_NODE_FONT << XML_NODE_ME << XML_NODE_COLOR);
@@ -176,6 +167,14 @@ void Chat::History::addMessage(const QString& message, ChatSender chatSender)
 
 ////////////  Userlist //////////////////////////////////////
 
+Chat::Userlist::Userlist(QWidget* parent, ChatType type):
+    QTableWidget(0, 1, parent), mChatType(type)
+{
+    verticalHeader()->hide();
+    horizontalHeader()->hide();
+    horizontalScrollBar()->hide();
+    setEditTriggers(QTableWidget::NoEditTriggers); // read only!
+}
 
 void Chat::Userlist::addUser(const QString& userName)
 {
