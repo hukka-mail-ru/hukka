@@ -577,7 +577,7 @@ Please finish it first, then create a new game.</source>
         <translation>Настройки</translation>
     </message>
     <message>
-        <location filename="../src/UI/Scenes/MainMenu.cpp" line="230"/>
+        <location filename="../src/UI/Scenes/MainMenu.cpp" line="236"/>
         <source>You have an unfinished game. Please finish it.</source>
         <translation type="unfinished"></translation>
     </message>

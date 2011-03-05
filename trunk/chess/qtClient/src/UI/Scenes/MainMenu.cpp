@@ -148,10 +148,8 @@ void MainMenu::onChatClicked()
     }
     else
     {
-        if(mChat->isVisible())
-            mChat->close();
-        else
-            mChat->show();
+        bool toggle = mChat->isVisible() ? false : true;
+        mChat->setVisible(toggle);
     }
 }
 
