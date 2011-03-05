@@ -765,7 +765,9 @@ QString commandToString(quint32 service, char command)
     case CHAT:
         switch(command) {
             case ANS_CHAT_MSG:             return "ANS_CHAT_MSG";
-            case ANS_CHAT_NOTE:            return "ANS_CHAT_NOTE";
+            case ANS_CHAT_USER_ONLINE:     return "ANS_CHAT_USER_ONLINE";
+            case ANS_CHAT_USER_JOINED:     return "ANS_CHAT_USER_JOINED";
+            case ANS_CHAT_USER_LEFT:       return "ANS_CHAT_USER_LEFT";
             case CMD_CHAT_MSG :            return "CMD_CHAT_MSG ";
             case CMD_CHAT_JOIN :           return "CMD_CHAT_JOIN ";
             case CMD_CHAT_LEAVE :          return "CMD_CHAT_LEAVE ";
@@ -1368,9 +1370,17 @@ void Client::processMessageCHAT(const MessageHeader& header, const QByteArray& b
     {
         emit chatMessage(QString::fromUtf8(buffer.data()));
     }
-    else if(header.cmd == ANS_CHAT_NOTE)
+    else if(header.cmd == ANS_CHAT_USER_ONLINE)
     {
-        emit chatNote(QString::fromUtf8(buffer.data()));
+        emit chatUserOnline(QString::fromUtf8(buffer.data()));
+    }
+    else if(header.cmd == ANS_CHAT_USER_JOINED)
+    {
+        emit chatUserJoined(QString::fromUtf8(buffer.data()));
+    }
+    else if(header.cmd == ANS_CHAT_USER_LEFT)
+    {
+        emit chatUserLeft(QString::fromUtf8(buffer.data()));
     }
     else
     {

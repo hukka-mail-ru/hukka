@@ -164,18 +164,18 @@
         <translation>Невозможно получить игровое поле. ID стола </translation>
     </message>
     <message>
-        <location filename="../src/Network/Client.cpp" line="978"/>
+        <location filename="../src/Network/Client.cpp" line="980"/>
         <source>The user is already online.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/Network/Client.cpp" line="1302"/>
+        <location filename="../src/Network/Client.cpp" line="1304"/>
         <source>Game over. 
 The rating hasn&apos;t been affected because of too few number of moves.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/Network/Client.cpp" line="1321"/>
+        <location filename="../src/Network/Client.cpp" line="1323"/>
         <source>Your opponent has rejected the draw</source>
         <translation type="unfinished"></translation>
     </message>
@@ -228,17 +228,17 @@ The rating hasn&apos;t been affected because of too few number of moves.</source
         <translation type="obsolete">Невозможно послать сообщение общего чата на сервере: </translation>
     </message>
     <message>
-        <location filename="../src/Network/Client.cpp" line="1265"/>
+        <location filename="../src/Network/Client.cpp" line="1267"/>
         <source>Can&apos;t join to the game table.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/Network/Client.cpp" line="1282"/>
+        <location filename="../src/Network/Client.cpp" line="1284"/>
         <source>Can&apos;t reject the game.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/Network/Client.cpp" line="1298"/>
+        <location filename="../src/Network/Client.cpp" line="1300"/>
         <source>Time&apos;s up. You have won!</source>
         <translation type="unfinished"></translation>
     </message>
@@ -253,12 +253,12 @@ The rating is not affected because of too few number of moves.</source>
         <translation type="obsolete">Соединение разорвано.</translation>
     </message>
     <message>
-        <location filename="../src/Network/Client.cpp" line="869"/>
+        <location filename="../src/Network/Client.cpp" line="871"/>
         <source>Can&apos;t send command with ID: </source>
         <translation>Невозможно послать команду с ID: </translation>
     </message>
     <message>
-        <location filename="../src/Network/Client.cpp" line="955"/>
+        <location filename="../src/Network/Client.cpp" line="957"/>
         <source>Logic error</source>
         <translation>Ошибка логики</translation>
     </message>
@@ -267,60 +267,60 @@ The rating is not affected because of too few number of moves.</source>
         <translation type="obsolete">Пользователь с таким именем уже зашел на сервер.</translation>
     </message>
     <message>
-        <location filename="../src/Network/Client.cpp" line="979"/>
+        <location filename="../src/Network/Client.cpp" line="981"/>
         <source>Incorrect user name.</source>
         <translation>Неправильное имя пользователя.</translation>
     </message>
     <message>
-        <location filename="../src/Network/Client.cpp" line="980"/>
+        <location filename="../src/Network/Client.cpp" line="982"/>
         <source>Incorrect password.</source>
         <translation>Неправильный пароль.</translation>
     </message>
     <message>
-        <location filename="../src/Network/Client.cpp" line="981"/>
-        <location filename="../src/Network/Client.cpp" line="1011"/>
-        <location filename="../src/Network/Client.cpp" line="1266"/>
-        <location filename="../src/Network/Client.cpp" line="1283"/>
-        <location filename="../src/Network/Client.cpp" line="1303"/>
-        <location filename="../src/Network/Client.cpp" line="1323"/>
+        <location filename="../src/Network/Client.cpp" line="983"/>
+        <location filename="../src/Network/Client.cpp" line="1013"/>
+        <location filename="../src/Network/Client.cpp" line="1268"/>
+        <location filename="../src/Network/Client.cpp" line="1285"/>
+        <location filename="../src/Network/Client.cpp" line="1305"/>
+        <location filename="../src/Network/Client.cpp" line="1325"/>
         <source>Internal server error </source>
         <translation>Внутренняя ошибка сервера </translation>
     </message>
     <message>
-        <location filename="../src/Network/Client.cpp" line="991"/>
+        <location filename="../src/Network/Client.cpp" line="993"/>
         <source>SRV Error: </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/Network/Client.cpp" line="1008"/>
+        <location filename="../src/Network/Client.cpp" line="1010"/>
         <source>Incorrect user name</source>
         <translation>Неправильное имя пользователя</translation>
     </message>
     <message>
-        <location filename="../src/Network/Client.cpp" line="1009"/>
+        <location filename="../src/Network/Client.cpp" line="1011"/>
         <source>Incorrect password</source>
         <translation>Неправильный пароль</translation>
     </message>
     <message>
-        <location filename="../src/Network/Client.cpp" line="1010"/>
+        <location filename="../src/Network/Client.cpp" line="1012"/>
         <source>User already exists.</source>
         <translation>Такой пользователь уже существует.</translation>
     </message>
     <message>
-        <location filename="../src/Network/Client.cpp" line="1021"/>
+        <location filename="../src/Network/Client.cpp" line="1023"/>
         <source>REG Error: </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/Network/Client.cpp" line="1046"/>
+        <location filename="../src/Network/Client.cpp" line="1048"/>
         <source>Invalid parameter or table already exists</source>
         <translation>Неправильный параметр (или такой стол уже существует)</translation>
     </message>
     <message>
-        <location filename="../src/Network/Client.cpp" line="1047"/>
-        <location filename="../src/Network/Client.cpp" line="1065"/>
-        <location filename="../src/Network/Client.cpp" line="1106"/>
-        <location filename="../src/Network/Client.cpp" line="1248"/>
+        <location filename="../src/Network/Client.cpp" line="1049"/>
+        <location filename="../src/Network/Client.cpp" line="1067"/>
+        <location filename="../src/Network/Client.cpp" line="1108"/>
+        <location filename="../src/Network/Client.cpp" line="1250"/>
         <source>Internal server error</source>
         <translation>Внутренняя ошибка сервера</translation>
     </message>
@@ -329,7 +329,7 @@ The rating is not affected because of too few number of moves.</source>
         <translation type="obsolete">Неправильный параметр. Попытка удалить неправильный игровой стол?</translation>
     </message>
     <message>
-        <location filename="../src/Network/Client.cpp" line="1173"/>
+        <location filename="../src/Network/Client.cpp" line="1175"/>
         <source>TBM Error: </source>
         <translation type="unfinished"></translation>
     </message>
@@ -338,23 +338,23 @@ The rating is not affected because of too few number of moves.</source>
         <translation type="obsolete">Невозможно присоединиться к игровому столу</translation>
     </message>
     <message>
-        <location filename="../src/Network/Client.cpp" line="1297"/>
+        <location filename="../src/Network/Client.cpp" line="1299"/>
         <source>Victory!</source>
         <translation>Победа!</translation>
     </message>
     <message>
-        <location filename="../src/Network/Client.cpp" line="1299"/>
+        <location filename="../src/Network/Client.cpp" line="1301"/>
         <source>You have lost!</source>
         <translation>Вы проиграли!</translation>
     </message>
     <message>
-        <location filename="../src/Network/Client.cpp" line="1300"/>
+        <location filename="../src/Network/Client.cpp" line="1302"/>
         <source>Time&apos;s up. You have lost!</source>
         <translation>Время вышло. Вы проиграли!</translation>
     </message>
     <message>
-        <location filename="../src/Network/Client.cpp" line="1301"/>
-        <location filename="../src/Network/Client.cpp" line="1320"/>
+        <location filename="../src/Network/Client.cpp" line="1303"/>
+        <location filename="../src/Network/Client.cpp" line="1322"/>
         <source>A draw.</source>
         <translation>Ничья.</translation>
     </message>
@@ -363,22 +363,22 @@ The rating is not affected because of too few number of moves.</source>
         <translation type="obsolete">Ваш противник не согласен на ничью</translation>
     </message>
     <message>
-        <location filename="../src/Network/Client.cpp" line="1322"/>
+        <location filename="../src/Network/Client.cpp" line="1324"/>
         <source>Please wait for your next move to offer a draw</source>
         <translation>Подождите своего хода, а затем предложите ничью</translation>
     </message>
     <message>
-        <location filename="../src/Network/Client.cpp" line="1360"/>
+        <location filename="../src/Network/Client.cpp" line="1362"/>
         <source>CHS Error: </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/Network/Client.cpp" line="1382"/>
+        <location filename="../src/Network/Client.cpp" line="1392"/>
         <source>CHAT Error: </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/Network/Client.cpp" line="1435"/>
+        <location filename="../src/Network/Client.cpp" line="1445"/>
         <source>Server doesn&apos;t respond</source>
         <translation>Сервер не отвечает</translation>
     </message>
