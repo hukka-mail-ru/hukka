@@ -79,6 +79,9 @@
 
 #define XML_VALUE_TAG        "value"
 
+#define XML_NODE_HISTORY     "history"
+#define XML_NODE_USERLIST    "userlist"
+
 class XML
 {
     XML() {}
