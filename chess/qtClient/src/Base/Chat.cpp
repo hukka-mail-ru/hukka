@@ -3,6 +3,8 @@
 #include <QScrollBar>
 #include <QVBoxLayout>
 #include <QHBoxLayout>
+#include <QTableWidgetItem>
+#include <QHeaderView>
 #include <QWidget>
 #include <Client.h>
 #include <UI.h>
@@ -27,14 +29,17 @@ Chat::Chat(QWidget* parent, ChatType type):
     mColorServer   = XML::instance().readValue(XML_ITEMS_FILENAME, QList<QString>() << chatNode << XML_NODE_FONT << XML_NODE_SERVER << XML_NODE_COLOR);
 
 
-    mHistory = new ChatHistory(this, mChatType);
+    mHistory = new History(this, mChatType);
     mHistory->setAlignment(Qt::AlignLeft | Qt::AlignBottom);
     mHistory->setReadOnly(true);
 
+    mUserlist = new Userlist(this, mChatType);
+    mUserlist->verticalHeader()->hide();
+    mUserlist->horizontalHeader()->hide();
 
-    mUserlist = new ChatUserlist(this, mChatType);
-    mUserlist->setAlignment(Qt::AlignLeft | Qt::AlignBottom);
-    mUserlist->setReadOnly(true);
+
+  //  mUserlist->setAlignment(Qt::AlignLeft | Qt::AlignBottom);
+ //   mUserlist->setReadOnly(true);
 
 
     QObject::connect(Client::instance(), SIGNAL(chatMessage(const QString&)),    this, SLOT(onChatMessage(const QString&)));
@@ -77,6 +82,7 @@ void Chat::updatePos(OrientationStatus orientation)
     mUserlist->move(xUserlist, yUserlist);
     mUserlist->setMinimumSize(widthUserlist, heightUserlist);
 
+
 }
 
 void Chat::show()
@@ -97,12 +103,12 @@ bool Chat::close()
     return QDialog::close();
 }
 
-void Chat::ChatHistory::mouseReleaseEvent(QMouseEvent * event)
+void Chat::History::mouseReleaseEvent(QMouseEvent * event)
 {
     MainWindow::instance()->showChatMessageDialog(mChatType);
 }
 
-void Chat::ChatUserlist::mouseReleaseEvent(QMouseEvent * event)
+void Chat::Userlist::mouseReleaseEvent(QMouseEvent * event)
 {
 
 }
@@ -129,46 +135,71 @@ void Chat::onChatMessage(const QString& message)
 
 void Chat::onChatUserOnline(const QString& userName)
 {
-    onChatUserJoined(userName);
+    mUserlist->addUser(userName);
 }
 
 void Chat::onChatUserJoined(const QString& userName)
 {
-    if(!mUserlist->mNames.contains(userName))
-    {
-        mUserlist->mNames.append(userName);
-    }
+    QString htmlText = mHistory->toHtml() + "<font color=\"" + mColorServer + "\">" +
+                       userName + " has joined the chat" + "</font>";
 
+    mHistory->setHtml(htmlText);
+    mHistory->adjustSize();
+    mHistory->verticalScrollBar()->setSliderPosition(mHistory->verticalScrollBar()->maximum());
 
-    QString htmlText = "<font color=\""+ mColorServer + "\">";
-    for(int i=0; i<mUserlist->mNames.size(); i++)
-    {
-        htmlText += mUserlist->mNames[i] + "\n";
-    }
-    htmlText += "</font>";
-
-    mUserlist->setHtml(htmlText);
-    mUserlist->adjustSize();
-    mUserlist->verticalScrollBar()->setSliderPosition(mUserlist->verticalScrollBar()->minimum());
+    mUserlist->addUser(userName);
 }
 
 void Chat::onChatUserLeft  (const QString& userName)
 {
-    if(!mUserlist->mNames.contains(userName))
-    {
-        mUserlist->mNames.removeAll(userName);
-    }
+    QString htmlText = mHistory->toHtml() + "<font color=\"" + mColorServer + "\">" +
+                       userName + " has left the chat" + "</font>";
 
-    QString htmlText = "<font color=\""+ mColorServer + "\">";
-    for(int i=0; i<mUserlist->mNames.size(); i++)
-    {
-        htmlText += mUserlist->mNames[i] + "\n";
-    }
-    htmlText += "</font>";
+    mHistory->setHtml(htmlText);
+    mHistory->adjustSize();
+    mHistory->verticalScrollBar()->setSliderPosition(mHistory->verticalScrollBar()->maximum());
 
-    mUserlist->setHtml(htmlText);
-    mUserlist->adjustSize();
-    mUserlist->verticalScrollBar()->setSliderPosition(mUserlist->verticalScrollBar()->minimum());
+
+    mUserlist->removeUser(userName);
+}
+
+
+void Chat::Userlist::addUser(const QString& userName)
+{
+    if(!mNames.contains(userName))
+    {
+        mNames.append(userName);
+        updateTable();
+    }
+}
+
+void Chat::Userlist::removeUser(const QString& userName)
+{
+    qDebug() << "Chat::Userlist::removeUser:" << userName;
+
+    if(mNames.contains(userName))
+    {
+        bool res = mNames.removeOne(userName);
+        qDebug() << "Chat::Userlist::removeUser  res=" << res  << "mNames.size()" << mNames.size();
+        updateTable();
+    }
+}
+
+void Chat::Userlist::updateTable()
+{
+    this->clear();
+    this->setRowCount(0);
+
+    //for(int i=0; i<this->rows)
+
+    for(int i=0; i<mNames.size(); i++)
+    {
+        insertRow(i);
+        setRowHeight(i, 20); // TODO move 20 into XML
+
+        QTableWidgetItem* item = new QTableWidgetItem(mNames[i]);
+        setItem(i, 0, item);
+    }
 }
 
 
