@@ -41,7 +41,6 @@ private:
     {
     public:
         History(QWidget* parent, ChatType type);
-
         void addMessage(const QString& message, ChatSender chatSender);
     protected:
         virtual void mouseReleaseEvent(QMouseEvent * event);
@@ -57,7 +56,7 @@ private:
     class Userlist: public QTableWidget
     {
     public:
-        Userlist(QWidget* parent, ChatType type): QTableWidget(0, 1, parent), mChatType(type)  { }
+        Userlist(QWidget* parent, ChatType type);
         void addUser(const QString& userName);
         void removeUser(const QString& userName);
     protected:
