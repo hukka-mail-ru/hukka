@@ -15,7 +15,7 @@ WaitJoinDialog::WaitJoinDialog(QWidget *parent):   MyDialog(parent)
     layout->addWidget(exitButton);
     this->setLayout(layout);
 
-    connect(Client::instance(), SIGNAL(opponentJoined(const QString&)), this, SLOT(onOpponentJoined(const QString&)));
+    connect(Client::instance(), SIGNAL(opponentJoined(const QString&, int)), this, SLOT(onOpponentJoined(const QString&, int)));
 }
 
 void WaitJoinDialog::onExitClicked()
@@ -31,15 +31,15 @@ void  WaitJoinDialog::onGameTableDeleted()
 }
 
 
-void WaitJoinDialog::onOpponentJoined(const QString& opponentName)
+void WaitJoinDialog::onOpponentJoined(const QString& opponentName, int opponentRating)
 {
-    disconnect(Client::instance(), SIGNAL(opponentJoined(const QString&)), this, SLOT(onOpponentJoined(const QString&)));
+    disconnect(Client::instance(), SIGNAL(opponentJoined(const QString&, int)), this, SLOT(onOpponentJoined(const QString&, int)));
 //    qDebug() << "WaitJoinDialog::onOpponentJoined";
 
     int tableID = UI::instance()->getGameTable();
 
     // Get player name by ID
-    if(MainWindow::instance()->showQuestion(opponentName + " wants to play chess with you. Agree?"))
+    if(MainWindow::instance()->showQuestion(opponentName + " (rating " + QString::number(opponentRating) + ") wants to play chess with you. Agree?"))
     {
         MainWindow::instance()->setMode(MW_WAIT);
         connect(Client::instance(), SIGNAL(gameStarted()), this, SLOT(onGameStarted()));

@@ -24,29 +24,29 @@
 #ifndef _DEFERROR_H
 #define _DEFERROR_H
 
-#define		NOERR		0
+const int		NOERR		= 0;
 
 //Parser Msg
-#define		ERRNOSIGN	1
-#define		ERRVER		2
-#define		ERRTOBIG	3
-#define		ERRCRC		4
-#define		ERRNOEND	5
+const int		ERRNOSIGN	= 1;
+const int		ERRVER		= 2;
+const int		ERRTOBIG	= 3;
+const int		ERRCRC		= 4;
+const int		ERRNOEND	= 5;
 
 //SRV command 1
-#define		ERRBADLOGIN	1
-#define		ERRBADPASS	2
-#define		ERRUSERONLINE	3	
+const int		ERRBADLOGIN	= 1;
+const int		ERRBADPASS	= 2;
+const int		ERRUSERONLINE	= 3;
 
 //REG command 1
-#define		ERRLOGINEXIST	3
+const int		ERRLOGINEXIST	= 3;
 
 //SQLerror
 
-#define 	ERRUNDEF	127
-#define		ERRNOACCESSTO	128
-#define		ERRCOMMAND	129
-#define		ERRMSG		130
-#define		ERRNOADDR	131
+const int 	    ERRUNDEF	= 127;
+const int		ERRNOACCESSTO	= 128;
+const int		ERRCOMMAND	= 129;
+const int		ERRMSG		= 130;
+const int		ERRNOADDR	= 131;
 
 #endif

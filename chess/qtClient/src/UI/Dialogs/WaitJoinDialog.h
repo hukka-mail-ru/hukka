@@ -21,7 +21,7 @@ private:
 
 private slots:
     void onExitClicked();
-    void onOpponentJoined(const QString& opponentName);
+    void onOpponentJoined(const QString& opponentName, int opponentRating);
     void onGameStarted();
     void onGameRejected();
     void onGameTableDeleted();

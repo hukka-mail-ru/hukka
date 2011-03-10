@@ -19,5 +19,14 @@ struct SNGameMsg : public GameMsgBase
 {
 	uint32_t m_nData;
 };
+
+struct AnsOpponentMessage
+{
+    uint8_t  cmd;
+    uint32_t tableID;
+    uint32_t playerID;
+    uint32_t rating;
+};
+
 #pragma pack()
 #endif /*GAMESTRUCTS_H_*/

@@ -269,6 +269,8 @@ void SqlTable::Update( const char* _cszCol, const char* _cszNewVal, const char* 
 
 	MYSQL_RES* pRes = m_sqlBase.Query( strQuery.c_str() );
 
+	std::cerr << "SqlTable::Update: " << strQuery.c_str() << std::endl;
+
 	m_sqlBase.FreeRes( pRes );
 }
 

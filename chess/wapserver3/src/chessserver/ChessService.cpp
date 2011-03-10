@@ -6,7 +6,7 @@
 #include "ChessLogic.h"
 
 ChessService::ChessService() :
-	ChessServiseBase("chs","*3F56B91ACCF798E83CC98141594C30420D26FE6B", "tbGhessRating", &m_SqlChessTable)
+	ChessServiseBase("chs","*3F56B91ACCF798E83CC98141594C30420D26FE6B", "tbChessRating", &m_SqlChessTable)
 {
 }
 

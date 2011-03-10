@@ -374,7 +374,7 @@ void CHTServer::sendMsgToAll( int cmd, uint32_t logicID, CMyStr* _strMsg, uint32
         sendedMsg.addData((char)cmd);
         sendedMsg.addData(_strMsg);
 
-        // fetch chat members and send the message them all
+        // fetch all the chat members and send the message them all
         CMyStr strWhere = "TableID = " + CMyStr(tableID);
         sqlChatTable.Select( "PlayerID", strWhere.c_str(), &tbl );
 
