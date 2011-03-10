@@ -39,9 +39,9 @@ uint32_t CSqlRatingTable::getRating( uint32_t _nPlayerID )
 
 void CSqlRatingTable::setRating( uint32_t _nPlayerID, uint32_t _nRating )
 {
-#ifdef MYDEBUG
-    std::cout << "CSqlRatingTable::setRating()" << std::endl;
-#endif
+//#ifdef MYDEBUG
+    std::cout << "CSqlRatingTable::setRating(). _nPlayerID " <<  _nPlayerID  << " _nRating " << _nRating << std::endl;
+//#endif
 
     TVecMyStr strvecCol;
     TVecMyStr strvecVal;

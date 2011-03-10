@@ -1,5 +1,6 @@
 #include "../libs/header/defparams.h"
 #include "../libs/sql/sqltable.h"
+#include "../header/defservice.h"
 #include "tbmcommands.h"
 #include <stdlib.h>
 #include <stdio.h>
@@ -393,7 +394,7 @@ bool TbmCommands::FindEmpty(int _nLogicID, int _nPlayerID, TVecUINT* vecRes )
 	{
         	TTable tbl;
 
-		CMyStr strWhere = "IDPlayer1 IS NULL AND State = 1 AND IDPlayer0 <> " + CMyStr(_nPlayerID);
+		CMyStr strWhere = "IDPlayer1 IS NULL AND State = " + CMyStr(ST_OPEN) + " AND IDPlayer0 <> " + CMyStr(_nPlayerID);
 
         /* find empry :
 		SELECT TableID FROM tb<Logic>LogicTable
@@ -461,7 +462,7 @@ bool TbmCommands::GetAllTables( uint32_t _nLogicID, TVecUINT* _pvecRes )
 	{
 		TTable tbl;
 
-		CMyStr strWhere = " State < 2";
+		CMyStr strWhere = " State < " + CMyStr(ST_FULL);
 
 		sqlLogicTable.Select("TableID", strWhere.c_str(), &tbl);
 
@@ -492,13 +493,11 @@ bool  TbmCommands::GetMyTable(int _nLogicID, int _nPlayerID, TVecUINT* vecRes)
 	{
 		TTable tbl;
 
-		CMyStr strWhere =
-			/*" State < 4 AND */"(IDPlayer0 = " + CMyStr(_nPlayerID) +
-			" OR IDPlayer1 = " + CMyStr(_nPlayerID) + ")";
+		CMyStr strWhere = "(IDPlayer0 = " + CMyStr(_nPlayerID) +
+			           " OR IDPlayer1 = " + CMyStr(_nPlayerID) + ")";
 
-        /* find empry :
-		SELECT TableID FROM tb<Logic>LogicTable
-		WHERE State < 4 AND (IDPlayer0 = _nPlayerID OR IDPlayer1 = _nPlayerID)*/
+        /* find  :
+		SELECT TableID FROM tb<Logic>LogicTable	WHERE (IDPlayer0 = _nPlayerID OR IDPlayer1 = _nPlayerID)*/
 		sqlLogicTable.Select("TableID", strWhere.c_str(), &tbl);
 
 		if (vecRes)
@@ -532,9 +531,8 @@ int TbmCommands::GetOwner(int _nLogicID, int _nPlayerID)
         CMyStr strWhere = "(IDPlayer0 = " + CMyStr(_nPlayerID) +
                        " OR IDPlayer1 = " + CMyStr(_nPlayerID) + ")";
 
-        /* find empry :
-        SELECT TableID FROM tb<Logic>LogicTable
-        WHERE State < 4 AND (IDPlayer0 = _nPlayerID OR IDPlayer1 = _nPlayerID)*/
+        /* find :
+        SELECT TableID FROM tb<Logic>LogicTable WHERE  (IDPlayer0 = _nPlayerID OR IDPlayer1 = _nPlayerID)*/
         sqlLogicTable.Select("IDPlayer0", strWhere.c_str(), &tbl);
 
         if (!tbl.empty())

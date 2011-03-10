@@ -1190,6 +1190,7 @@ void Client::processMessageCHS(const MessageHeader& header, const QByteArray& bu
         struct Reply {
             TABLEID     tableID;
             PLAYERID    opponentID;
+            quint32     rating;
         };
 
         Reply* reply = (Reply*)buffer.data();
@@ -1200,7 +1201,7 @@ void Client::processMessageCHS(const MessageHeader& header, const QByteArray& bu
 
         mGameStatus = GAM_OPPONENT_JOINED;
         //qDebug() << mName << "GAM_OPPONENT_JOINED " << reply->opponentID;
-        emit opponentJoined(opponentName);
+        emit opponentJoined(opponentName, reply->rating);
     }
 
     // GAME STARTED

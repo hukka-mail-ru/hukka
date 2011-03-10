@@ -226,10 +226,14 @@ private:
 	void sendOpponentToOwner(uint32_t _nPlayerID, uint32_t _nTableID)
 	{
 
-		SNGameMsg sCmd;
-		sCmd.m_chCmd = ANS_OPPONENT;
-		sCmd.m_nTableID = _nTableID;
-		sCmd.m_nData = _nPlayerID;
+	    AnsOpponentMessage message;
+	    message.cmd = ANS_OPPONENT;
+	    message.tableID = _nTableID;
+	    message.playerID = _nPlayerID;
+	    message.rating = m_RatingTable.getRating( _nPlayerID );
+
+	    std::cerr << "sendOpponentToOwner: " << message.tableID << " " << message.playerID <<
+	               " " << message.rating << " size: " << sizeof(message) << std::endl;
 
 	    uint32_t nPlayer0; // 0 = game Host
 
@@ -238,7 +242,7 @@ private:
 			TVecChar vecCmd;
 			ClientMsg Msg;
 
-			vecCmd.assign( (char*)&sCmd, (char*)(&sCmd)+sizeof(sCmd ));
+			vecCmd.assign( (char*)&message, (char*)(&message)+sizeof(message));
 
 			// Get opponent name by ID
 			SqlTableUsers wsUsers;
@@ -671,8 +675,14 @@ private:
 	    uint32_t nLooserRating = m_RatingTable.getRating( _nLooserID );
 	    uint32_t nTmp = nWinnerRating;
 
+	    std::cout << "GameService::setRating(). nWinnerRating " <<  nWinnerRating << std::endl;
+
 	    nWinnerRating += (uint32_t)(nLooserRating * 0.1);
 	    nLooserRating -= (uint32_t)(nLooserRating * 0.1);
+
+	    std::cout << "GameService::setRating(). nLooserRating * 0.1 " <<  (uint32_t)(nLooserRating * 0.1) << std::endl;
+	    std::cout << "GameService::setRating(). nWinnerRating " <<  nWinnerRating << std::endl;
+	    std::cout << "GameService::setRating(). nLooserRating " <<  nLooserRating << std::endl;
 
 	    m_RatingTable.setRating( _nWinnerID, nWinnerRating );
 	    m_RatingTable.setRating( _nLooserID, nLooserRating );

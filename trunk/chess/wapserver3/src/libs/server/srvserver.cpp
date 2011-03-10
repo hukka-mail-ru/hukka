@@ -122,9 +122,9 @@ void SRVServer::DoAllMsg( ClientSocket* _pSocket )
 	{
 		bool isOutMsg;
 
-//#ifdef LOW_LEVEL_DEBUG
+#ifdef LOW_LEVEL_DEBUG
 		cout << "SOCKET " << _pSocket->GetSocket() << " SRVServer::DoAllMsg. PROCESS MESSAGES" << endl;
-//#endif
+#endif
 
 		if( _pSocket->GetID() == 0 )
 			isOutMsg = UnRegister( &inMsg, &outMsg, static_cast<RegInfo*>( _pSocket ), static_cast<ISender*>( _pSocket ) );
