@@ -33,6 +33,8 @@ const int     ANS_CHECK_TIME_STEP = 20;
 const int     ANS_CHECK_TIME_GAME = 21;
 const int     ANS_OPAGREE_FAILED = 22;
 const int     CMD_TIMEOUT  = 23;
+const int       CMD_RATING  = 24;
+const int       ANS_RATING  = 25;
 
 const int		P_DONE		= 100;
 const int		P_FAILED	= 101;
