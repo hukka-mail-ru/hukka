@@ -51,6 +51,8 @@ public:
 	virtual void		RemoveSocket( MySocket* ) = 0;
 	virtual void		AddInMsg( MySocket* ) = 0;
 	virtual void		AddOutMsg( MySocket* ) = 0;
+
+	virtual void       onSocketClosed( MySocket* ) = 0;
 };
 
 typedef std::vector<char> TVByte;

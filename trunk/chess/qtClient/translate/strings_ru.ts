@@ -164,6 +164,11 @@
         <translation>Невозможно получить игровое поле. ID стола </translation>
     </message>
     <message>
+        <location filename="../src/Network/Client.cpp" line="694"/>
+        <source>Can&apos;t leave chat </source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
         <location filename="../src/Network/Client.cpp" line="980"/>
         <source>The user is already online.</source>
         <translation type="unfinished"></translation>
@@ -206,9 +211,8 @@ The rating hasn&apos;t been affected because of too few number of moves.</source
         <translation>Невозможно присоединиться к чату. ID стола </translation>
     </message>
     <message>
-        <location filename="../src/Network/Client.cpp" line="694"/>
         <source>Can&apos;t leave chat. Table ID </source>
-        <translation>Невозможно отсоединиться от чата. ID стола </translation>
+        <translation type="obsolete">Невозможно отсоединиться от чата. ID стола </translation>
     </message>
     <message>
         <location filename="../src/Network/Client.cpp" line="712"/>

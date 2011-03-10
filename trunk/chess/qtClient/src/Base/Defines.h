@@ -9,6 +9,8 @@
 #define DEFINES_H_
 
 #include <QObject>
+#include <header/defserver.h>
+
 #define LANGUAGE_ENGLISH                "0"
 #define LANGUAGE_RUSSIAN                "1"
 
@@ -28,13 +30,6 @@
 // Connect
 #define DEFAULT_PROXY                   QNetworkProxy(QNetworkProxy::HttpProxy)
 
-// services (from wsUsers table)
-#define SRV                             1
-#define REG                             2
-#define CHAT                            3
-#define TBM                             4 // Table Manager
-#define CHS                             6 // Chess Server
-
 
 // server commands
 #define CMD_LOGIN                       1
@@ -44,9 +39,6 @@
 #define LOGIN_STATUS                    1
 #define REG_STATUS                      1
 
-// game logic ids (see tbLogicList table)
-#define LOGIC_ID_GAMMON                 1
-#define LOGIC_ID_CHESS                  2
 
 // game table parameter ids (see tbParameterList table)
 #define PARAMETER_ID_PLAYER_NAME        0

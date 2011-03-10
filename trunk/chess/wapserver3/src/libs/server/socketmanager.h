@@ -16,6 +16,7 @@ public:
 	void				RemoveSocket( MySocket* );
 	void				AddInMsg( MySocket* );
 	void				AddOutMsg( MySocket* );
+	void                onSocketClosed( MySocket* ) {}
 protected:
 
 	Selector*		m_pSelector;

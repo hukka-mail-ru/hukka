@@ -162,9 +162,9 @@ void CHTServer::newMsg( ClientMsg* _pMsg )
             }
             break;
         case CMD_CHAT_LEAVE:
-            if (vecCmd.size() == sizeof(uint32_t) *2 )
+            if (vecCmd.size() == sizeof(uint32_t) )
             {
-                leaveChat( _pMsg->GetTo(), (uint32_t) vecCmd.at(0), (uint32_t)(unsigned char)  vecCmd.at(sizeof(uint32_t))  );
+                leaveChat( _pMsg->GetTo(), (uint32_t) vecCmd.at(0) );
             }
             break;
         case CMD_CHAT_DELETE_HISTORY:
@@ -264,11 +264,22 @@ void CHTServer::joinChat( uint32_t playerID, uint32_t logicID, uint32_t tableID 
 
 }
 
-void CHTServer::leaveChat( uint32_t playerID, uint32_t logicID, uint32_t tableID )
+void CHTServer::leaveChat( uint32_t playerID, uint32_t logicID)
 {
+    uint32_t tableID = 0;
     SqlTable sqlGameOnlineUsersTable("");
     if ( getGameOnlineUsersTable(logicID, &sqlGameOnlineUsersTable) )
     {
+        TTable tbl;
+        CMyStr query = CMyStr("PlayerID = ") + CMyStr(playerID);
+        sqlGameOnlineUsersTable.Select("TableID", query.c_str(), &tbl);
+
+        if(!tbl.empty())
+        {
+            tableID = atoi(tbl[0][0].c_str());
+        }
+
+
         sqlGameOnlineUsersTable.Delete("PlayerID", CMyStr(playerID).c_str());
 
         sendServerNote(ANS_CHAT_USER_LEFT, playerID, logicID, tableID);
