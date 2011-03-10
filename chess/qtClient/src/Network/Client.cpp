@@ -679,19 +679,19 @@ void Client::joinChat (LOGICID logicID, TABLEID tableID)
     }
 }
 
-void Client::leaveChat (LOGICID logicID, TABLEID tableID)
+void Client::leaveChat (LOGICID logicID)
 {
     QT_TRACEOUT;
     try {
         assert(mClientAuthorized);
 
         // send command
-        QByteArray data = Q_BYTE_ARRAY(logicID) + Q_BYTE_ARRAY(tableID);
+        QByteArray data = Q_BYTE_ARRAY(logicID);
         sendCmd(CHAT, CMD_CHAT_LEAVE, data);
 
     }
     catch (Exception& e) {
-        e.add(tr("Can't leave chat. Table ID ") + QString::number(tableID) + tr(" on server: ") + mSocket.peerName() + ". ");
+        e.add(tr("Can't leave chat ")  + tr(" on server: ") + mSocket.peerName() + ". ");
         emit error (e.what());
     }
 

@@ -102,7 +102,7 @@ public:
 
         // communication with Chat Server
         void joinChat           (LOGICID logicID, TABLEID tableID);
-        void leaveChat          (LOGICID logicID, TABLEID tableID);
+        void leaveChat          (LOGICID logicID);
         void sendChatMessage    (LOGICID logicID, TABLEID tableID, const QString& message);
         void deleteChatHistory  (LOGICID logicID, TABLEID tableID);
 

@@ -41,7 +41,9 @@ ISender* OnLineManager::IsOnLine( int32_t _nID )
 {
 	pthread_mutex_lock( &m_mutMap );
 	TMapRegSocket::iterator It = m_mapRegSocket.find( _nID );
-	ISender* pSender = It != m_mapRegSocket.end() ? It->second : 0;
+
+	ISender* pSender = (It != m_mapRegSocket.end()) ? It->second : 0;
+
 	pthread_mutex_unlock( &m_mutMap );
 
 	return pSender;

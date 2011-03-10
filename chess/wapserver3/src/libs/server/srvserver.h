@@ -19,6 +19,9 @@ public:
 	void					AddSocket( int, const sockaddr_in* );
 
 	void					RemoveSocket( MySocket* );
+
+	void                    onSocketClosed( MySocket* );
+
 private:
 
 	SRVServer();

@@ -88,10 +88,7 @@ void Chat::show()
 
 bool Chat::close()
 {
-    TABLEID tableID = (mChatType == CT_COMMON_CHAT) ?
-                      COMMON_CHAT_ID : UI::instance()->getGameTable();
-
-    Client::instance()->leaveChat(LOGIC_ID_CHESS, tableID);
+    Client::instance()->leaveChat(LOGIC_ID_CHESS);
     return QDialog::close();
 }
 

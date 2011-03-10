@@ -2,6 +2,7 @@
 #include "srvserver.h"
 #include "../header/defserver.h"
 #include "../header/deferror.h"
+#include <../../chatserver/chatdefs.h>
 
 #include <iostream>
 
@@ -55,15 +56,45 @@ void SRVServer::RemoveSocket( MySocket* _pSocket )
 {
 	ClientSocket* pClientSocket = reinterpret_cast<ClientSocket*>( _pSocket );
 
-	if( pClientSocket )
-		if( int32_t nID = pClientSocket->GetID() )
-			m_pOnLineManager->OffLine( nID );
+
+	int32_t userID = 0;
+
+	if( pClientSocket &&  ( userID = pClientSocket->GetID()) )
+    {
+          m_pOnLineManager->OffLine( userID );
+    }
 
 #ifdef LOW_LEVEL_DEBUG
     cout << "SOCKET " << _pSocket->GetSocket() << " SRVServer::RemoveSocket. DELETE SOCKET" << endl;
 #endif
 
 	SocketManager::RemoveSocket( _pSocket );
+}
+
+void SRVServer::onSocketClosed(MySocket* _pSocket)
+{
+    ClientSocket* pClientSocket = reinterpret_cast<ClientSocket*>( _pSocket );
+
+    int32_t userID = pClientSocket->GetID();
+
+    // Send "LEAVE_CHAT" to the Chat Server
+    if(userID >= WS_USERS_AUTO_INCREMENT_OFFSET)
+    {
+
+        uint32_t logicID = LOGIC_ID_CHESS;
+        TVecChar data;
+        data.assign( (char*)&logicID, (char*)&logicID + sizeof(logicID) );
+
+        ClientMsg msg;
+        msg.InitMsg( CHAT, CMD_CHAT_LEAVE, data );
+
+        RegInfo regInfo;
+        regInfo.SetID(userID); // simulate a message from the user
+
+        ClientMsg dummy;
+        Register(&msg, &dummy, &regInfo);
+
+    }
 }
 
 SRVServer::SRVServer()
@@ -91,9 +122,9 @@ void SRVServer::DoAllMsg( ClientSocket* _pSocket )
 	{
 		bool isOutMsg;
 
-#ifdef LOW_LEVEL_DEBUG
+//#ifdef LOW_LEVEL_DEBUG
 		cout << "SOCKET " << _pSocket->GetSocket() << " SRVServer::DoAllMsg. PROCESS MESSAGES" << endl;
-#endif
+//#endif
 
 		if( _pSocket->GetID() == 0 )
 			isOutMsg = UnRegister( &inMsg, &outMsg, static_cast<RegInfo*>( _pSocket ), static_cast<ISender*>( _pSocket ) );
@@ -146,7 +177,6 @@ bool SRVServer::Register( const ClientMsg* _pinMsg, ClientMsg* _poutMsg, RegInfo
 	bool isRes = false;
 	ISender* pSender = 0;
 	uint32_t nTo = _pinMsg->GetTo();
-
 
 #ifdef LOW_LEVEL_DEBUG
 	std::cout << "SRVServer::Register()" << std::endl;
