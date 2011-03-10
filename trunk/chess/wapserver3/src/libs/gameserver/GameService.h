@@ -170,6 +170,12 @@ private:
 
 			cmdCheckTime( _pClientMsg->GetTo(), *nTableID );
 		}
+        else if ( cmd == CMD_RATING )
+        {
+            std::cout << "GameService::newMsg from = " << _pClientMsg->GetTo() << " cmd = CMD_RATING" <<  std::endl;
+
+            cmdRating( _pClientMsg->GetTo() );
+        }
 		else
 		{
 			std::cout << "GameService::newMsg from = " << _pClientMsg->GetTo() << " cmd = ??? " << (int)_pClientMsg->GetCommand() << std::endl;
@@ -188,6 +194,7 @@ private:
 	}
 
 	void OnClose( MySocket* ) {};
+
 
 	void cmdJoin(uint32_t _nPlayerID, uint32_t _nTableID)
 	{
@@ -967,6 +974,15 @@ private:
 		    sCmd.m_nTableID = _nTableID;
 	        sendMsg( _nPlayerID, &sCmd, sizeof( sCmd ) );
 		}
+	}
+
+	void cmdRating(uint32_t _nPlayerID)
+	{
+	    SNGameMsg sCmd;
+	    sCmd.m_chCmd = ANS_RATING;
+	    sCmd.m_nData = m_RatingTable.getRating( _nPlayerID );
+
+	    sendMsg( _nPlayerID, &sCmd, sizeof( sCmd ) );
 	}
 
 private:

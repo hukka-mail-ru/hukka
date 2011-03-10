@@ -608,6 +608,23 @@ void Client::getTime(TABLEID tableID)
     }
 }
 
+void Client::getMyRating()
+{
+    QT_TRACEOUT;
+
+    try {
+        assert(mClientAuthorized);
+
+        // send command
+        QByteArray data;
+        sendCmd(CHS, CMD_RATING, data);
+    }
+    catch (Exception& e) {
+        e.add(tr("Can't get may rating ") + tr(" on server: ") + mSocket.peerName() + ". ");
+        emit error (e.what());
+    }
+}
+
 /*====================================================================================================
   __  ___  ___  ___  ___     ___  ___    __  _    _
  /  \(  _)(  _)(  _)(  ,)   (   \(  ,)  (  )( \/\/ )
@@ -1351,6 +1368,18 @@ void Client::processMessageCHS(const MessageHeader& header, const QByteArray& bu
         Reply* reply = (Reply*)buffer.data();
 
         emit gotGameTime(reply->time2game);
+       // qDebug() << "time2game: " << reply->time2game;
+    }
+    else if(header.cmd == ANS_RATING)
+    {
+        struct Reply {
+            TABLEID     tableID;
+            qint32      rating;
+        };
+
+        Reply* reply = (Reply*)buffer.data();
+
+        emit gotMyRating(reply->rating);
        // qDebug() << "time2game: " << reply->time2game;
     }
     else

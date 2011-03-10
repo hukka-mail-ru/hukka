@@ -59,6 +59,7 @@ private slots:
     void onOptionsClicked();
     void onExitClicked();
     void onGotMyGameTable(TABLEID id, bool isOwner);
+    void onGotMyRating(quint32 myRating);
 
 
 };

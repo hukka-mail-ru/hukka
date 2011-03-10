@@ -95,6 +95,7 @@ public:
         void surrender           (TABLEID tableID);
         void getTime             (TABLEID tableID);
         void timeout             (TABLEID tableID);
+        void getMyRating         ();
 
         // draw
         void offerDraw           (TABLEID tableID);
@@ -137,6 +138,8 @@ signals:
 
         void gotMoveTime(quint32);
         void gotGameTime(quint32);
+
+        void gotMyRating(quint32);
 
         void invalidMove();
 

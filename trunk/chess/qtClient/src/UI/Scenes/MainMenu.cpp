@@ -212,6 +212,16 @@ void MainMenu::onAuthorized()
 
         MainWindow::instance()->setMode(MW_NORMAL);
     }
+
+    connect(Client::instance(), SIGNAL(gotMyRating(quint32)), this, SLOT(onGotMyRating(quint32)));
+    Client::instance()->getMyRating();
+}
+
+void MainMenu::onGotMyRating(quint32 myRating)
+{
+    disconnect(Client::instance(), SIGNAL(gotMyRating(quint32)), this, SLOT(onGotMyRating(quint32)));
+
+    qDebug() << "MainMenu::onGotMyRating: " << myRating;
 }
 
 void MainMenu::onGotMyGameTable(TABLEID id, bool isOwner)
@@ -249,6 +259,7 @@ void MainMenu::onGotMyGameTable(TABLEID id, bool isOwner)
         }
     }
 }
+
 
 
 void MainMenu::onOptionsClicked()
