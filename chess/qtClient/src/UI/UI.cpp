@@ -88,11 +88,13 @@ void UI::onGameOver(const QString& message)
     MainWindow::instance()->closeCurrentDialog();
     MainWindow::instance()->showMessage(message);
 
-    if(mIsOwner)
-    {
+  //  if(mIsOwner) // NOT ONLY THE OWNER MAY DELETE THE TABLE.
+  //  Otherwise, if the owner suddenly quits a game, his opponent can't create his own hew game
+  //  (the server will see the existing table and return "GAME_OVER" again and again).
+  //  {
         Client::instance()->deleteGameTable(LOGIC_ID_CHESS, mGameTable);
         Client::instance()->deleteChatHistory(LOGIC_ID_CHESS, mGameTable);
-    }
+  //  }
 
     MainWindow::instance()->showMainMenu();
 }
