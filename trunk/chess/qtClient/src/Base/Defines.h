@@ -14,16 +14,16 @@
 #define LANGUAGE_ENGLISH                "0"
 #define LANGUAGE_RUSSIAN                "1"
 
-#define MINUTES_IN_HOUR                 60
-#define SECONDS_IN_MINUTE               60
-#define SECONDS_IN_HOUR                 3600
+const int MINUTES_IN_HOUR                = 60;
+const int SECONDS_IN_MINUTE              = 60;
+const int SECONDS_IN_HOUR                = 3600;
 
-#define WAIT_CONNECT_TIMEOUT            3 // seconds
-#define WAIT_RESPONSE_TIMEOUT           10000 // milliseconds
-#define MESSAGE_POOL_QUERY_DELAY        1000  // milliseconds
+const int WAIT_CONNECT_TIMEOUT           = 3; // seconds
+const int WAIT_RESPONSE_TIMEOUT          = 10000; // milliseconds
+const int MESSAGE_POOL_QUERY_DELAY       = 1000;  // milliseconds
 
 #define PROTOCOL_SIGNATURE              'Z'
-#define PROTOCOL_VERSION                2
+const int PROTOCOL_VERSION               = 2;
 
 #define CRC_SIZE                        sizeof(char)
 
@@ -32,39 +32,39 @@
 
 
 // server commands
-#define CMD_LOGIN                       1
-#define CMD_REG                         1
+const int CMD_LOGIN                      = 1;
+const int CMD_REG                        = 1;
 
 // server replies
-#define LOGIN_STATUS                    1
-#define REG_STATUS                      1
+const int LOGIN_STATUS                   = 1;
+const int REG_STATUS                     = 1;
 
 
 // game table parameter ids (see tbParameterList table)
-#define PARAMETER_ID_PLAYER_NAME        0
-#define PARAMETER_ID_OPPONENT_NAME      1
-#define PARAMETER_ID_PASSWD             2
-#define PARAMETER_ID_MOVETIME           3
-#define PARAMETER_ID_GAMETIME           4
-#define PARAMETER_ID_MINRATING          5
-#define PARAMETER_ID_MAXRATING          6
+const int  PARAMETER_ID_PLAYER_NAME      =  0;
+const int  PARAMETER_ID_OPPONENT_NAME    =  1;
+const int  PARAMETER_ID_PASSWD           =  2;
+const int  PARAMETER_ID_MOVETIME         =  3;
+const int  PARAMETER_ID_GAMETIME         =  4;
+const int  PARAMETER_ID_MINRATING        =  5;
+const int  PARAMETER_ID_MAXRATING        =  6;
 
 // game table parameter constrains (see tbParamList table)
-#define DEFAULT_MOVETIME                7 // minutes
-#define DEFAULT_GAMETIME                120 // minutes
-#define DEFAULT_MINRATING               0
-#define DEFAULT_MAXRATING               0 // TODO if set 500 the server reports an error!
-#define DEFAULT_MAXCOUNT                0xFFFFFFFF
+const int  DEFAULT_MOVETIME               = 7; // minutes
+const int  DEFAULT_GAMETIME               = 120; // minutes
+const int  DEFAULT_MINRATING              = 0;
+const int  DEFAULT_MAXRATING              = 0; // TODO if set 500 the server reports an error!
+const int  DEFAULT_MAXCOUNT               = 0xFFFFFFFF;
 
 // comparision operators in CMD_FIND-like commands
-#define OPERATOR_MORE                   0
-#define OPERATOR_EQUAL                  1
-#define OPERATOR_LESS                   2
+const int  OPERATOR_MORE                  = 0;
+const int  OPERATOR_EQUAL                 = 1;
+const int  OPERATOR_LESS                  = 2;
 
 // logical operators in CMD_FIND-like commands
-#define OPERATOR_OR                     1
-#define OPERATOR_AND                    2
-#define OPERATOR_LAST                   0
+const int  OPERATOR_OR                    = 1;
+const int  OPERATOR_AND                   = 2;
+const int  OPERATOR_LAST                  = 0;
 
 #define Q_BYTE_ARRAY(var)        QByteArray((char*)&var, sizeof(var))
 
@@ -72,29 +72,29 @@
 typedef quint32 PARAMID;
 typedef quint32 GameTableStatus;
 
-#define ID_NOT_DEFINED                  0xFFFFFFFF
+const int  ID_NOT_DEFINED                 = 0xFFFFFFFF;
 
 /////////////////////////////////////////////////////////////////////////////////////////
 
 
-#define  OPAQUE_NORMAL                  1.0
-#define  OPAQUE_HALF                    0.3
+const double   OPAQUE_NORMAL                 = 1.0;
+const double   OPAQUE_HALF                   = 0.3;
 
 
-#define CELLS_IN_FIELD                  64 // items
-#define CELLS_IN_ROW                    8  // items
+const int  CELLS_IN_FIELD                 = 64; // items
+const int  CELLS_IN_ROW                   = 8 ; // items
 
 
 // Z-layers of the Scene. 0 is the lowest layer
-#define Z_MESSAGE_LAYER                 100
-#define Z_DIALOG_LAYER                  20
-#define Z_TEXT_LAYER                    6
-#define Z_BUTTONS_LAYER                 5
-#define Z_SPLASH_LAYER                  4
-#define Z_NOTES_LAYER                   3
-#define Z_PIECES_LAYER                  2
-#define Z_HIGHLIGHT_LAYER               1
-#define Z_CELLS_LAYER                   0
+const int  Z_MESSAGE_LAYER                = 100;
+const int  Z_DIALOG_LAYER                 = 20;
+const int  Z_TEXT_LAYER                   = 6;
+const int  Z_BUTTONS_LAYER                = 5;
+const int  Z_SPLASH_LAYER                 = 4;
+const int  Z_NOTES_LAYER                  = 3;
+const int  Z_PIECES_LAYER                 = 2;
+const int  Z_HIGHLIGHT_LAYER              = 1;
+const int  Z_CELLS_LAYER                  = 0;
 
 
 

@@ -14,7 +14,18 @@
   <Splash>
     <landscape>  <x value="0" />   <y value="0" /> </landscape>
   </Splash>
+ 
 
+  <MainMenu>
+    <player>
+        <font> <family value="Helvetica [Cronyx]" />  <size value="20" /> <color value="white" /> </font>
+        <landscape> <x value="540" />  <y value="150" />  </landscape>
+    </player>
+    <rating>
+        <font> <family value="Helvetica [Cronyx]" />  <size value="12" />  <color value="white" /></font>
+        <landscape> <x value="540" />  <y value="190" />  </landscape>
+    </rating>
+  </MainMenu>
   
   <Dialogs>
      <style value="MyDialog    { background: grey; } 

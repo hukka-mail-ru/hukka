@@ -6,6 +6,7 @@
 
 #include <Defines.h>
 #include <Pixmaps.h>
+#include <Player.h>
 
 // This class is responsible for LOGIC of the game and INSTANTIATIONS of main objects
 class UI: public QObject
@@ -40,11 +41,14 @@ public:
     GameState getGameState() { return mGameState; }
 
 
-    bool isPlayerAuthorized() { return mPlayerAuthotized; }
-    void setPlayerAuthorized(bool auth) { mPlayerAuthotized = auth; }
+    bool isPlayerAuthorized() { return mPlayer.isAuthorized; }
+    void setPlayerAuthorized(bool auth) { mPlayer.isAuthorized = auth; }
 
-    bool isOwner() { return mIsOwner; }
-    void setOwner(bool isOwner) { mIsOwner = isOwner; }
+    const QString& getPlayerName() { return mPlayer.name; }
+    void setPlayerName(const QString& name) { mPlayer.name = name; }
+
+ //   bool isOwner() { return mIsOwner; }
+ //   void setOwner(bool isOwner) { mIsOwner = isOwner; }
 
 private:
 
@@ -54,14 +58,13 @@ private:
 
     TABLEID mGameTable;
 
-    PlayerColor mPlayerColor;
     GameState mGameState;
     Move mMove;
-    bool mPlayerAuthotized;
-
-    bool mIsOwner; // PlayerID0 must be the owner of the game
+  //  bool mIsOwner; // PlayerID0 must be the owner of the game
 
     QApplication* mApp;
+
+    Player mPlayer;
 
 private slots:
 

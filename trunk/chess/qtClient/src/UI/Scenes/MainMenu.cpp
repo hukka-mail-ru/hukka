@@ -89,6 +89,32 @@ void MainMenu::updateItemsPositions(OrientationStatus orientation)
 
     mSplash->setPos(x, y);
 
+    // text (player name)
+    QString player_family = XML::instance().readValue(XML_ITEMS_FILENAME, QList<QString>() << XML_NODE_MAIN_MENU << XML_NODE_PLAYER << XML_NODE_FONT << XML_NODE_FAMILY);
+    int player_size  =      XML::instance().readValue(XML_ITEMS_FILENAME, QList<QString>() << XML_NODE_MAIN_MENU << XML_NODE_PLAYER << XML_NODE_FONT << XML_NODE_SIZE).toInt();
+    QString player_color =  XML::instance().readValue(XML_ITEMS_FILENAME, QList<QString>() << XML_NODE_MAIN_MENU << XML_NODE_PLAYER << XML_NODE_FONT << XML_NODE_COLOR);
+    int player_x =          XML::instance().readValue(XML_ITEMS_FILENAME, QList<QString>() << XML_NODE_MAIN_MENU << XML_NODE_PLAYER << orientNode << XML_NODE_X).toInt();
+    int player_y =          XML::instance().readValue(XML_ITEMS_FILENAME, QList<QString>() << XML_NODE_MAIN_MENU << XML_NODE_PLAYER << orientNode << XML_NODE_Y).toInt();
+
+    mPlayerName = addText("",QFont(player_family, player_size));
+    mPlayerName->setPos(player_x, player_y);
+    mPlayerName->setDefaultTextColor( QColor(player_color) );
+    mPlayerName->setZValue(Z_TEXT_LAYER);
+
+    // text (rating)
+    QString rating_family = XML::instance().readValue(XML_ITEMS_FILENAME, QList<QString>() << XML_NODE_MAIN_MENU << XML_NODE_RATING << XML_NODE_FONT << XML_NODE_FAMILY);
+    int rating_size =       XML::instance().readValue(XML_ITEMS_FILENAME, QList<QString>() << XML_NODE_MAIN_MENU << XML_NODE_RATING << XML_NODE_FONT << XML_NODE_SIZE).toInt();
+    QString rating_color =  XML::instance().readValue(XML_ITEMS_FILENAME, QList<QString>() << XML_NODE_MAIN_MENU << XML_NODE_RATING << XML_NODE_FONT << XML_NODE_COLOR);
+    int rating_x =          XML::instance().readValue(XML_ITEMS_FILENAME, QList<QString>() << XML_NODE_MAIN_MENU << XML_NODE_RATING << orientNode << XML_NODE_X).toInt();
+    int rating_y =          XML::instance().readValue(XML_ITEMS_FILENAME, QList<QString>() << XML_NODE_MAIN_MENU << XML_NODE_RATING << orientNode << XML_NODE_Y).toInt();
+
+    mPlayerRating = addText("",QFont(rating_family, rating_size));
+    mPlayerRating->setPos(rating_x, rating_y);
+    mPlayerRating->setDefaultTextColor( QColor(rating_color) );
+    mPlayerRating->setZValue(Z_TEXT_LAYER);
+
+
+
   //  qDebug() << "MainMenu::updateItemsPositions " << orientation;
     // chat
     if(mChat)
@@ -221,7 +247,13 @@ void MainMenu::onGotMyRating(quint32 myRating)
 {
     disconnect(Client::instance(), SIGNAL(gotMyRating(quint32)), this, SLOT(onGotMyRating(quint32)));
 
-    qDebug() << "MainMenu::onGotMyRating: " << myRating;
+    mPlayerName->setPlainText(UI::instance()->getPlayerName());
+
+    QString ratingText =  (myRating == RATING_NOT_AVAILABLE) ?
+                          "Your rating is not available.\nPlease visit www.site.com\nto learn how to enable it." :
+                          "Your rating: " + QString::number(myRating);
+
+    mPlayerRating->setPlainText(ratingText);
 }
 
 void MainMenu::onGotMyGameTable(TABLEID id, bool isOwner)
@@ -232,7 +264,7 @@ void MainMenu::onGotMyGameTable(TABLEID id, bool isOwner)
 
     if(id)
     {
-        UI::instance()->setOwner(isOwner);
+ //       UI::instance()->setOwner(isOwner);
 
         MainWindow::instance()->showMessage(
                 tr("You have an unfinished game. Please finish it."));
@@ -249,12 +281,12 @@ void MainMenu::onGotMyGameTable(TABLEID id, bool isOwner)
     {
         if(mClickedButton == createGameButton)
         {
-            UI::instance()->setOwner(true);
+//            UI::instance()->setOwner(true);
             MainWindow::instance()->showCreateGameDialog();
         }
         else if(mClickedButton == findGameButton)
         {
-            UI::instance()->setOwner(false);
+//            UI::instance()->setOwner(false);
             MainWindow::instance()->showFindGameDialog();
         }
     }

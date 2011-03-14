@@ -43,6 +43,9 @@ private:
 
     Chat* mChat;
 
+    QGraphicsTextItem* mPlayerName;
+    QGraphicsTextItem* mPlayerRating;
+
     bool mHostGame;
 
 private slots:

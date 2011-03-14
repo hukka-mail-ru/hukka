@@ -3,8 +3,9 @@
 #include "mystr.h"
 #include "sstream"
 #include <stdlib.h>
+#include <defserver.h>
 
-#define MYDEBUG
+//#define MYDEBUG
 
 CSqlRatingTable::CSqlRatingTable( const char* _strTableName, uint32_t _nInitialRating )
 : SqlTable( _strTableName,
@@ -17,24 +18,16 @@ PRIMARY KEY ( PlayerID )" )
 
 uint32_t CSqlRatingTable::getRating( uint32_t _nPlayerID )
 {
-#ifdef MYDEBUG
-    std::cout << "CSqlRatingTable::getRating()" << std::endl;
-#endif
 	TVecChar vecData;
-
 	if( !SelectToStr( "Rating", "PlayerID", CMyStr( _nPlayerID ).c_str(), &vecData ) )
 	{
-#ifdef MYDEBUG
-        std::cout << "CSqlRatingTable::getRating() !SelectToStr " << std::endl;
-#endif
         setRating( _nPlayerID, m_nInitialRating );
-		SelectToStr( "Rating", "PlayerID", CMyStr( _nPlayerID ).c_str(), &vecData );
 	}
-#ifdef MYDEBUG
-    std::cout << "CSqlRatingTable::getRating() vecData size: " << vecData.size() << std::endl;
-#endif
 
-    return vec2i( &vecData );
+	uint32_t  res = SelectToStr( "Rating", "Available > 0 AND PlayerID", CMyStr( _nPlayerID ).c_str(), &vecData ) ?
+		      vec2i( &vecData ) : RATING_NOT_AVAILABLE;
+
+    return res;
 }
 
 void CSqlRatingTable::setRating( uint32_t _nPlayerID, uint32_t _nRating )

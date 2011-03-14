@@ -71,6 +71,8 @@ bool SqlTable::SelectToStr(const char* _pcFlt, const char* _pcKey,const char* _p
 
 	CMyStr strQuery( "SELECT "+CMyStr( _pcFlt )+" FROM "+m_strTableName+" WHERE "+CMyStr( _pcKey )+"='"+CMyStr( _pcVal )+"'" );
 
+	std::cerr << strQuery.c_str() << std::endl;
+
 	MYSQL_RES* pRes = m_sqlBase.Query( strQuery.c_str() );
 
 	//syslog( LOG_INFO | LOG_LOCAL0, strQuery.c_str() );
