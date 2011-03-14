@@ -83,7 +83,8 @@ void JoinGameDialog::onGotGameTableParams(const QString& name, qint32 rating,
     QTableWidgetItem* nameItem = new QTableWidgetItem(name);
     tableWidget->setItem(mCounter, COLUMN_FOR_NAME, nameItem);
 
-    QTableWidgetItem* ratingItem = new QTableWidgetItem(QString::number(rating));
+    QString ratingText = (rating == RATING_NOT_AVAILABLE) ? "N/A" : QString::number(rating);
+    QTableWidgetItem* ratingItem = new QTableWidgetItem(ratingText);
     tableWidget->setItem(mCounter, COLUMN_FOR_RATING, ratingItem);
 
     QTableWidgetItem* time2stepItem = new QTableWidgetItem(Game::seconds2hrs(time2step));
