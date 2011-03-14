@@ -28,5 +28,10 @@ struct AnsOpponentMessage
     uint32_t rating;
 };
 
+struct AnsEndMessage: public SGameMsg
+{
+    uint32_t rating;
+};
+
 #pragma pack()
 #endif /*GAMESTRUCTS_H_*/

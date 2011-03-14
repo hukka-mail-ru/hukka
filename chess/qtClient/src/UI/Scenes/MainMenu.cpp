@@ -245,7 +245,7 @@ void MainMenu::onAuthorized()
 
 void MainMenu::onGotMyRating(quint32 myRating)
 {
-    disconnect(Client::instance(), SIGNAL(gotMyRating(quint32)), this, SLOT(onGotMyRating(quint32)));
+  //  disconnect(Client::instance(), SIGNAL(gotMyRating(quint32)), this, SLOT(onGotMyRating(quint32)));
 
     mPlayerName->setPlainText(UI::instance()->getPlayerName());
 

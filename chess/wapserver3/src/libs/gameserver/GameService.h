@@ -567,7 +567,7 @@ private:
         uint32_t nStepNum   = 0;
         uint32_t nXPlayer   = 0;
 
-	    SGameMsg sCmd0, sCmd1;
+        AnsEndMessage sCmd0, sCmd1;
 	    sCmd0.m_chCmd = sCmd1.m_chCmd = ANS_END;
 	    sCmd0.m_nTableID = sCmd1.m_nTableID = _nTableID;
 	    sCmd0.m_chData = sCmd1.m_chData = (char) ST_NO_RES;
@@ -669,6 +669,9 @@ private:
 	    {
 			std::cout << "GameService::endGame  ERROR: unknown _Result = " << _Result << std::endl;
 	    }
+
+	    sCmd0.rating = m_RatingTable.getRating(nPlayer0);
+	    sCmd1.rating = m_RatingTable.getRating(nPlayer1);
 
 	    sendMsg( nPlayer0, &sCmd0, sizeof( sCmd0 ) );
 	    sendMsg( nPlayer1, &sCmd1, sizeof( sCmd1 ) );

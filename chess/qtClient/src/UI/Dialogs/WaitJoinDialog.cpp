@@ -39,7 +39,8 @@ void WaitJoinDialog::onOpponentJoined(const QString& opponentName, int opponentR
     int tableID = UI::instance()->getGameTable();
 
     // Get player name by ID
-    if(MainWindow::instance()->showQuestion(opponentName + " (rating " + QString::number(opponentRating) + ") wants to play chess with you. Agree?"))
+    QString ratingText = (opponentRating == RATING_NOT_AVAILABLE) ? tr("is not available") : QString::number(opponentRating);
+    if(MainWindow::instance()->showQuestion(opponentName + tr(" (rating ") + ratingText + tr(") wants to play chess with you. Agree?")))
     {
         MainWindow::instance()->setMode(MW_WAIT);
         connect(Client::instance(), SIGNAL(gameStarted()), this, SLOT(onGameStarted()));

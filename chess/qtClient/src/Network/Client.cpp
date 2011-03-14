@@ -1309,17 +1309,22 @@ void Client::processMessageCHS(const MessageHeader& header, const QByteArray& bu
         struct Reply {
             TABLEID     tableID;
             char        status;
+            quint32     rating;
         };
 
         Reply* reply = (Reply*)buffer.data();
 
+        QString ratingText = (reply->rating == RATING_NOT_AVAILABLE) ?
+                             tr("Your rating is not available. Please visit www.site.com to learn how to enable it.") :
+                             tr("Your rating is now ") + QString::number(reply->rating);
+
         switch(reply->status) {
-            case P_WIN:        emit gameOver(tr("Victory!")); break;
-            case P_WIN_TIME:   emit gameOver(tr("Time's up. You have won!")); break;
-            case P_LOOSE:      emit gameOver(tr("You have lost!"));  break;
-            case P_LOOSE_TIME: emit gameOver(tr("Time's up. You have lost!"));  break;
-            case P_DRAW:       emit gameOver(tr("A draw."));  break;
-            case ST_NO_RES:    emit gameOver(tr("Game over. \nThe rating hasn't been affected because of too few number of moves.")); break;
+            case P_WIN:        emit gotMyRating(reply->rating); emit gameOver(tr("You have won! ") + ratingText); break;
+            case P_WIN_TIME:   emit gotMyRating(reply->rating); emit gameOver(tr("Time's up. You have won! ") + ratingText); break;
+            case P_LOOSE:      emit gotMyRating(reply->rating); emit gameOver(tr("You have lost! ") + ratingText);  break;
+            case P_LOOSE_TIME: emit gotMyRating(reply->rating); emit gameOver(tr("Time's up. You have lost! ") + ratingText);  break;
+            case P_DRAW:       emit gotMyRating(reply->rating); emit gameOver(tr("A draw. ") + ratingText);  break;
+            case ST_NO_RES:    emit gotMyRating(reply->rating); emit gameOver(tr("Game over. \nYour rating hasn't been affected because of too few number of moves.")); break;
             default:           emit error(tr("Internal server error ") + QString::number(reply->status)); break;
         }
     }
