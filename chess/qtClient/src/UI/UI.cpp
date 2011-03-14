@@ -8,9 +8,9 @@
 
 
 UI::UI():
-    mGameTable(0),
-    mPlayerAuthotized(false)
+    mGameTable(0)
 {
+    mPlayer.isAuthorized = false;
 }
 
 UI::~UI()
@@ -51,7 +51,7 @@ void UI::startGame()
 {
     MainWindow::instance()->closeCurrentDialog();
 
-    if(mPlayerColor == PC_WHITE)
+    if(mPlayer.color == PC_WHITE)
     {
         mGameState = GS_WAIT_FOR_PLAYER_TOUCH;
     }
@@ -132,7 +132,7 @@ void UI::onError(const QString& what)
 bool UI::isEnemyPiece(CELLID cell)
 {
     bool res = false;
-    if(mPlayerColor == PC_WHITE)
+    if(mPlayer.color == PC_WHITE)
     {
         // qDebug() <<"isEnemyPiece" << cell << (mField.cells[cell] == PIX_BLACK_ROOK);
 
@@ -143,7 +143,7 @@ bool UI::isEnemyPiece(CELLID cell)
               (mField[cell] == b_Queen) ||
               (mField[cell] == b_King);
     }
-    else if(mPlayerColor == PC_BLACK)
+    else if(mPlayer.color == PC_BLACK)
     {
         res = (mField[cell] == w_Pawn) ||
               (mField[cell] == w_Rook) ||
@@ -235,7 +235,7 @@ GameState UI::updateField(const Field& field, bool myMove, bool iAmWhite)
     mField = field;
 
     // pass the move
-    mPlayerColor = iAmWhite ? PC_WHITE : PC_BLACK;
+    mPlayer.color = iAmWhite ? PC_WHITE : PC_BLACK;
 
     mGameState = myMove ? GS_WAIT_FOR_PLAYER_TOUCH : GS_WAIT_FOR_OPPONENT;
 

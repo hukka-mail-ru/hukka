@@ -28,6 +28,7 @@
 // ITEMS.XML  //////////////////////////////////////////
 // 1st level
 #define XML_NODE_MAIN_WINDOW      "MainWindow"
+#define XML_NODE_MAIN_MENU        "MainMenu"
 #define XML_NODE_SPLASH           "Splash"
 #define XML_NODE_SCENE            "Scene"
 #define XML_NODE_DIALOGS          "Dialogs"
@@ -55,6 +56,7 @@
 #define XML_NODE_MOVE_CLOCK       "MoveClock"
 #define XML_NODE_GAME_CLOCK       "GameClock"
 
+
 // 2nd level
 #define XML_NODE_PORTRAIT    "portrait"
 #define XML_NODE_LANDSCAPE   "landscape"
@@ -74,10 +76,13 @@
 #define XML_NODE_ACTIVE      "active"
 #define XML_NODE_INACTIVE    "inactive"
 
+#define XML_NODE_PLAYER      "player"
 #define XML_NODE_ME          "me"
 #define XML_NODE_OPPONENT    "opponent"
+#define XML_NODE_RATING      "rating"
 
 #define XML_VALUE_TAG        "value"
+
 
 #define XML_NODE_HISTORY     "history"
 #define XML_NODE_USERLIST    "userlist"

@@ -38,16 +38,13 @@ const int CHS  =                        6; // Chess Server
 // game logic ids (see tbLogicList table)
 const int LOGIC_ID_GAMMON =              1;
 const int LOGIC_ID_CHESS  =              2;
-/*
 
-#define	SOC		0
-#define	SRV		1
-#define	REG		2
-#define TBM		3
-#define LXO		4
-*/
 
 // See the wsUsers table. This value is the initial counter value, so "common" users have IDs beginning with this value.
 const int WS_USERS_AUTO_INCREMENT_OFFSET =  100;
+
+// Player rating
+const int           DEFAULT_RATING = 1000;
+const unsigned      RATING_NOT_AVAILABLE = 0xFFFF0000;
 
 #endif

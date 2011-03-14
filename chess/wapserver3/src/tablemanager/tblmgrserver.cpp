@@ -8,6 +8,7 @@
 #include <iostream>
 #include <stdint.h>
 #include <syslog.h>
+#include <defserver.h>
 
 #define MYDEBUG
 
@@ -414,7 +415,7 @@ void CTblMgrServer::GetParams( uint32_t _nUserID, const TVecChar* _vecData )
 
     strLogicTable = "tb" + strLogicTable + "Rating";
 
-    CSqlRatingTable sqlRatingTable( strLogicTable.c_str(), 0 );
+    CSqlRatingTable sqlRatingTable( strLogicTable.c_str(), DEFAULT_RATING );
 
     sendedMsg.addData((char)ANS_GET_PARAMS);
 
