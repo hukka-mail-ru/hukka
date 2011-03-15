@@ -680,25 +680,23 @@ private:
 
 	void setRating( uint32_t _nWinnerID, uint32_t _nLooserID )
 	{
-	    uint32_t nWinnerRating = m_RatingTable.getRatingEvenUnavailable( _nWinnerID );
-	    uint32_t nLooserRating = m_RatingTable.getRating( _nLooserID );
+	    uint32_t nRealWinnerRating = m_RatingTable.getRatingEvenUnavailable( _nWinnerID );
+	    uint32_t nRealLooserRating = m_RatingTable.getRatingEvenUnavailable( _nLooserID );
 
 	    // it's not a good idea to win an "unavailable rating opponent"
+	    uint32_t nLooserRating = m_RatingTable.getRating( _nLooserID );
 	    nLooserRating = (nLooserRating == RATING_NOT_AVAILABLE) ? DEFAULT_RATING : nLooserRating;
 
-	    uint32_t nTmp = nWinnerRating;
 
-	    std::cout << "GameService::setRating(). nWinnerRating " <<  nWinnerRating << std::endl;
+	    nRealWinnerRating += (uint32_t)(nLooserRating * 0.1);
+	    nRealLooserRating -= (uint32_t)(nRealLooserRating * 0.1);
 
-	    nWinnerRating += (uint32_t)(nLooserRating * 0.1);
-	    nLooserRating -= (uint32_t)(nLooserRating * 0.1);
+	    std::cout << "GameService::setRating(). nRealLooserRating * 0.1 " <<  (uint32_t)(nRealLooserRating * 0.1) << std::endl;
+	    std::cout << "GameService::setRating(). nRealWinnerRating " <<  nRealWinnerRating << std::endl;
+	    std::cout << "GameService::setRating(). nRealLooserRating " <<  nRealLooserRating << std::endl;
 
-	    std::cout << "GameService::setRating(). nLooserRating * 0.1 " <<  (uint32_t)(nLooserRating * 0.1) << std::endl;
-	    std::cout << "GameService::setRating(). nWinnerRating " <<  nWinnerRating << std::endl;
-	    std::cout << "GameService::setRating(). nLooserRating " <<  nLooserRating << std::endl;
-
-	    m_RatingTable.setRating( _nWinnerID, nWinnerRating );
-	    m_RatingTable.setRating( _nLooserID, nLooserRating );
+	    m_RatingTable.setRating( _nWinnerID, nRealWinnerRating );
+	    m_RatingTable.setRating( _nLooserID, nRealLooserRating );
 	}
 
 	void setRatingDraw( uint32_t _nPlayer0, uint32_t _nPlayer1 )
