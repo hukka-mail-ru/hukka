@@ -680,9 +680,12 @@ private:
 
 	void setRating( uint32_t _nWinnerID, uint32_t _nLooserID )
 	{
-		//TODO
-	    uint32_t nWinnerRating = m_RatingTable.getRating( _nWinnerID );
+	    uint32_t nWinnerRating = m_RatingTable.getRatingEvenUnavailable( _nWinnerID );
 	    uint32_t nLooserRating = m_RatingTable.getRating( _nLooserID );
+
+	    // it's not a good idea to win an "unavailable rating opponent"
+	    nLooserRating = (nLooserRating == RATING_NOT_AVAILABLE) ? DEFAULT_RATING : nLooserRating;
+
 	    uint32_t nTmp = nWinnerRating;
 
 	    std::cout << "GameService::setRating(). nWinnerRating " <<  nWinnerRating << std::endl;
@@ -700,8 +703,8 @@ private:
 
 	void setRatingDraw( uint32_t _nPlayer0, uint32_t _nPlayer1 )
 	{
-	    uint32_t nRating0 = m_RatingTable.getRating( _nPlayer0 );
-	    uint32_t nRating1 = m_RatingTable.getRating( _nPlayer1 );
+	    uint32_t nRating0 = m_RatingTable.getRatingEvenUnavailable( _nPlayer0 );
+	    uint32_t nRating1 = m_RatingTable.getRatingEvenUnavailable( _nPlayer1 );
 
 	    nRating0 += (uint32_t)(((double)(nRating1) - (double)(nRating0)) * 0.1);
 	    nRating1 += (uint32_t)(((double)(nRating0) - (double)(nRating1)) * 0.1);
