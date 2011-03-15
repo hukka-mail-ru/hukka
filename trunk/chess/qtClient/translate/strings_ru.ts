@@ -180,48 +180,44 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/Network/Client.cpp" line="1318"/>
-        <source>Your rating is not available. Please visit www.site.com to learn how to enable it.</source>
+        <location filename="../src/Network/Client.cpp" line="1319"/>
+        <source>Your rating has been increased to</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/Network/Client.cpp" line="1319"/>
-        <source>Your rating is now </source>
+        <location filename="../src/Network/Client.cpp" line="1320"/>
+        <source>Your rating has been decreased to</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/Network/Client.cpp" line="1321"/>
+        <source>Your rating has been slightly increased.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../src/Network/Client.cpp" line="1322"/>
-        <source>You have won! </source>
+        <source>Your rating hasn&apos;t been affected because of too few number of moves.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../src/Network/Client.cpp" line="1323"/>
-        <source>Time&apos;s up. You have won! </source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../src/Network/Client.cpp" line="1324"/>
-        <source>You have lost! </source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../src/Network/Client.cpp" line="1325"/>
-        <source>Time&apos;s up. You have lost! </source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../src/Network/Client.cpp" line="1326"/>
-        <source>A draw. </source>
+        <source>Your rating is not available.
+Please visit www.site.com
+to learn how to enable it.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../src/Network/Client.cpp" line="1327"/>
-        <source>Game over. 
-Your rating hasn&apos;t been affected because of too few number of moves.</source>
+        <source>You have won!</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/Network/Client.cpp" line="1346"/>
+        <location filename="../src/Network/Client.cpp" line="1332"/>
+        <source>Time&apos;s up. You have won!</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/Network/Client.cpp" line="1380"/>
         <source>Your opponent has rejected the draw</source>
         <translation type="unfinished"></translation>
     </message>
@@ -321,8 +317,8 @@ The rating is not affected because of too few number of moves.</source>
         <location filename="../src/Network/Client.cpp" line="1030"/>
         <location filename="../src/Network/Client.cpp" line="1286"/>
         <location filename="../src/Network/Client.cpp" line="1303"/>
-        <location filename="../src/Network/Client.cpp" line="1328"/>
-        <location filename="../src/Network/Client.cpp" line="1348"/>
+        <location filename="../src/Network/Client.cpp" line="1357"/>
+        <location filename="../src/Network/Client.cpp" line="1382"/>
         <source>Internal server error </source>
         <translation>Внутренняя ошибка сервера </translation>
     </message>
@@ -382,15 +378,19 @@ The rating is not affected because of too few number of moves.</source>
         <translation type="obsolete">Победа!</translation>
     </message>
     <message>
+        <location filename="../src/Network/Client.cpp" line="1337"/>
         <source>You have lost!</source>
-        <translation type="obsolete">Вы проиграли!</translation>
+        <translation type="unfinished">Вы проиграли!</translation>
     </message>
     <message>
+        <location filename="../src/Network/Client.cpp" line="1342"/>
         <source>Time&apos;s up. You have lost!</source>
-        <translation type="obsolete">Время вышло. Вы проиграли!</translation>
+        <translation type="unfinished">Время вышло. Вы проиграли!</translation>
     </message>
     <message>
-        <location filename="../src/Network/Client.cpp" line="1345"/>
+        <location filename="../src/Network/Client.cpp" line="1347"/>
+        <location filename="../src/Network/Client.cpp" line="1352"/>
+        <location filename="../src/Network/Client.cpp" line="1379"/>
         <source>A draw.</source>
         <translation>Ничья.</translation>
     </message>
@@ -399,22 +399,22 @@ The rating is not affected because of too few number of moves.</source>
         <translation type="obsolete">Ваш противник не согласен на ничью</translation>
     </message>
     <message>
-        <location filename="../src/Network/Client.cpp" line="1347"/>
+        <location filename="../src/Network/Client.cpp" line="1381"/>
         <source>Please wait for your next move to offer a draw</source>
         <translation>Подождите своего хода, а затем предложите ничью</translation>
     </message>
     <message>
-        <location filename="../src/Network/Client.cpp" line="1397"/>
+        <location filename="../src/Network/Client.cpp" line="1431"/>
         <source>CHS Error: </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/Network/Client.cpp" line="1427"/>
+        <location filename="../src/Network/Client.cpp" line="1461"/>
         <source>CHAT Error: </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/Network/Client.cpp" line="1480"/>
+        <location filename="../src/Network/Client.cpp" line="1514"/>
         <source>Server doesn&apos;t respond</source>
         <translation>Сервер не отвечает</translation>
     </message>
