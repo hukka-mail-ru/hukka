@@ -9,6 +9,7 @@
 #define DEFINES_H_
 
 #include <QObject>
+#include <QTime>
 #include <header/defserver.h>
 
 #define LANGUAGE_ENGLISH                "0"
@@ -150,6 +151,14 @@ public:
                 .arg(mins, 2, 10, fill)
                 .arg(secs, 2, 10, fill);
     }
+
+    static QString timestamp()
+    {
+        return QString::number(QTime::currentTime().minute()).rightJustified(2, '0') + ":" +
+               QString::number(QTime::currentTime().second()).rightJustified(2, '0') + "." +
+               QString::number(QTime::currentTime().msec()).rightJustified(3, '0');
+    }
+
 };
 
 #endif /* DEFINES_H_ */
