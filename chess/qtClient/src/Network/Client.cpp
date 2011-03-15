@@ -1314,19 +1314,53 @@ void Client::processMessageCHS(const MessageHeader& header, const QByteArray& bu
 
         Reply* reply = (Reply*)buffer.data();
 
-        QString ratingText = (reply->rating == RATING_NOT_AVAILABLE) ?
-                             tr("Your rating is not available. Please visit www.site.com to learn how to enable it.") :
-                             tr("Your rating is now ") + QString::number(reply->rating);
+        QString text = "";
+        QString ratingText = QString::number(reply->rating);
+        QString ratingIncreased = tr("Your rating has been increased to");
+        QString ratingDecreased = tr("Your rating has been decreased to");
+        QString ratingSlightlyIncreased = tr("Your rating has been slightly increased.");
+        QString ratingNotAffected = tr("Your rating hasn't been affected because of too few number of moves.");
+        QString ratingUnavailable = tr("Your rating is not available.\nPlease visit www.site.com to learn how to enable it.");
 
-        switch(reply->status) {
-            case P_WIN:        emit gotMyRating(reply->rating); emit gameOver(tr("You have won! ") + ratingText); break;
-            case P_WIN_TIME:   emit gotMyRating(reply->rating); emit gameOver(tr("Time's up. You have won! ") + ratingText); break;
-            case P_LOOSE:      emit gotMyRating(reply->rating); emit gameOver(tr("You have lost! ") + ratingText);  break;
-            case P_LOOSE_TIME: emit gotMyRating(reply->rating); emit gameOver(tr("Time's up. You have lost! ") + ratingText);  break;
-            case P_DRAW:       emit gotMyRating(reply->rating); emit gameOver(tr("A draw. ") + ratingText);  break;
-            case ST_NO_RES:    emit gotMyRating(reply->rating); emit gameOver(tr("Game over. \nYour rating hasn't been affected because of too few number of moves.")); break;
-            default:           emit error(tr("Internal server error ") + QString::number(reply->status)); break;
+        switch(reply->status)
+        {
+            case P_WIN:        text = tr("You have won!") + "\n";
+                               text += (reply->rating == RATING_NOT_AVAILABLE) ? ratingUnavailable :
+                                       ratingIncreased + " " + ratingText;
+                               break;
+
+            case P_WIN_TIME:   text = tr("Time's up. You have won!") + "\n";
+                               text += (reply->rating == RATING_NOT_AVAILABLE) ? ratingUnavailable :
+                                       ratingIncreased + " " + ratingText;
+                               break;
+
+            case P_LOOSE:      text = tr("You have lost!") + "\n";
+                               text += (reply->rating == RATING_NOT_AVAILABLE) ? ratingUnavailable :
+                                       ratingDecreased + " " + ratingText;
+                               break;
+
+            case P_LOOSE_TIME: text = tr("Time's up. You have lost!") + "\n";
+                               text += (reply->rating == RATING_NOT_AVAILABLE) ? ratingUnavailable :
+                                       ratingDecreased + " " + ratingText;
+                               break;
+
+            case P_DRAW:       text = tr("A draw.") + "\n";
+                               text += (reply->rating == RATING_NOT_AVAILABLE) ? ratingUnavailable :
+                                       ratingSlightlyIncreased;
+                               break;
+
+            case ST_NO_RES:    text = tr("A draw.") + "\n";
+                               text += (reply->rating == RATING_NOT_AVAILABLE) ? ratingUnavailable :
+                                       ratingNotAffected;
+                               break;
+
+            default:           emit error(tr("Internal server error ") + QString::number(reply->status));
+                               return;
+                               break;
         }
+
+        emit gotMyRating(reply->rating);
+        emit gameOver(text);
     }
 
     // DRAW
