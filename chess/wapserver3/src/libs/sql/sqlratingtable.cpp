@@ -16,6 +16,7 @@ PRIMARY KEY ( PlayerID )" )
 	m_nInitialRating = _nInitialRating;
 }
 
+// can return RATING_NOT_AVAILABLE
 uint32_t CSqlRatingTable::getRating( uint32_t _nPlayerID )
 {
 	TVecChar vecData;
@@ -28,6 +29,20 @@ uint32_t CSqlRatingTable::getRating( uint32_t _nPlayerID )
 		      vec2i( &vecData ) : RATING_NOT_AVAILABLE;
 
     return res;
+}
+
+// can't return RATING_NOT_AVAILABLE
+uint32_t CSqlRatingTable::getRatingEvenUnavailable( uint32_t _nPlayerID )
+{
+    TVecChar vecData;
+    if( !SelectToStr( "Rating", "PlayerID", CMyStr( _nPlayerID ).c_str(), &vecData ) )
+    {
+        setRating( _nPlayerID, m_nInitialRating );
+    }
+
+    SelectToStr( "Rating", "PlayerID", CMyStr( _nPlayerID ).c_str(), &vecData );
+
+    return vec2i( &vecData );
 }
 
 void CSqlRatingTable::setRating( uint32_t _nPlayerID, uint32_t _nRating )

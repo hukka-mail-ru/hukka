@@ -202,8 +202,7 @@
     <message>
         <location filename="../src/Network/Client.cpp" line="1323"/>
         <source>Your rating is not available.
-Please visit www.site.com
-to learn how to enable it.</source>
+Please visit www.site.com to learn how to enable it.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -214,6 +213,11 @@ to learn how to enable it.</source>
     <message>
         <location filename="../src/Network/Client.cpp" line="1332"/>
         <source>Time&apos;s up. You have won!</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/Network/Client.cpp" line="1352"/>
+        <source>Game over.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -389,7 +393,6 @@ The rating is not affected because of too few number of moves.</source>
     </message>
     <message>
         <location filename="../src/Network/Client.cpp" line="1347"/>
-        <location filename="../src/Network/Client.cpp" line="1352"/>
         <location filename="../src/Network/Client.cpp" line="1379"/>
         <source>A draw.</source>
         <translation>Ничья.</translation>

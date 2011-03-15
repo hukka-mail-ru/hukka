@@ -1349,7 +1349,7 @@ void Client::processMessageCHS(const MessageHeader& header, const QByteArray& bu
                                        ratingSlightlyIncreased;
                                break;
 
-            case ST_NO_RES:    text = tr("A draw.") + "\n";
+            case ST_NO_RES:    text = tr("Game over.") + "\n";
                                text += (reply->rating == RATING_NOT_AVAILABLE) ? ratingUnavailable :
                                        ratingNotAffected;
                                break;
