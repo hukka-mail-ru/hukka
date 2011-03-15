@@ -172,6 +172,10 @@ void MainMenu::onChatClicked()
         mClickedButton = chatButton;
         connectToGameServer();
     }
+    else if(mChat->getState() == CHAT_CLOSED)
+    {
+        mChat->show();
+    }
     else
     {
         // toggle chat visibility
@@ -181,7 +185,7 @@ void MainMenu::onChatClicked()
 
 void MainMenu::close()
 {
-   if(mChat && mChat->isVisible())
+   if(mChat)
        mChat->close();
 }
 

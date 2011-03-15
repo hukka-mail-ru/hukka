@@ -14,6 +14,11 @@
 #include <Defines.h>
 #include <orientation.h>
 
+enum ChatState
+{
+    CHAT_OPEN,
+    CHAT_CLOSED
+};
 
 class Chat: public QDialog
 {
@@ -24,6 +29,7 @@ public:
     ~Chat();
 
     void updatePos(OrientationStatus orientation);
+    ChatState getState() { return mState; }
 
     // derived from QWidged
     void show();
@@ -59,6 +65,7 @@ private:
         Userlist(QWidget* parent, ChatType type);
         void addUser(const QString& userName);
         void removeUser(const QString& userName);
+        void removeAll();
     protected:
         virtual void mouseReleaseEvent(QMouseEvent * event);
     private:
@@ -78,7 +85,7 @@ private:
     QGraphicsRectItem* mBorder;
 
     ChatType mChatType;
-
+    ChatState mState;
 
 private slots:
 

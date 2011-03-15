@@ -42,7 +42,7 @@ void GameScene::showChat()
 
 void GameScene::close()
 {
-   if(mChat && mChat->isVisible())
+   if(mChat)
        mChat->close();
 }
 
