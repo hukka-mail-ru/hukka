@@ -35,8 +35,6 @@ Chat::Chat(QWidget* parent, ChatType type):
 
 void Chat::updatePos(OrientationStatus orientation)
 {
-    qDebug() << "Chat::updatePos: " << orientation;
-
     QString chatNode = (mChatType == CT_COMMON_CHAT) ? XML_NODE_COMMON_CHAT : XML_NODE_TABLE_CHAT;
 
     QString orientNode = XML_NODE_LANDSCAPE; //(orientation == OrientationVertical) ? XML_NODE_PORTRAIT : XML_NODE_LANDSCAPE;
@@ -48,8 +46,6 @@ void Chat::updatePos(OrientationStatus orientation)
 
     move(x, y);
     setFixedSize(width, height);
-
-    qDebug() << "move: " << x << y << width << height;
 
     // HISTORY
     int xHistory      = XML::instance().readValue(XML_ITEMS_FILENAME, QList<QString>() << chatNode << XML_NODE_HISTORY << orientNode << XML_NODE_X).toInt();
@@ -92,7 +88,6 @@ void Chat::show()
 
 bool Chat::close()
 {
-    qDebug() << "Chat::close()";
     mState = CHAT_CLOSED;
 
     mHistory->clear();
@@ -218,11 +213,8 @@ void Chat::Userlist::updateTable()
     this->clear();
     this->setRowCount(0);
 
-    //for(int i=0; i<this->rows)
-    qDebug() << (int)this << " Chat::Userlist::updateTable mNames.size() " << mNames.size();
     for(int i=0; i<mNames.size(); i++)
     {
-        qDebug() << "Chat::Userlist::updateTable insertRow " << mNames[i];
         insertRow(i);
         setRowHeight(i, 20); // TODO move 20 into XML
 

@@ -852,6 +852,8 @@ QString commandToString(quint32 service, char command)
 \__ \ ) _) )  (  ) ) )  ( (_  )    (  ) ) )
 (___/(___)(_)\_)(___/    \__)(_/\/\_)(___/
 ====================================================================================================*/
+
+
 // Arrange a packet and write it to Socket
 void Client::sendCmd(char service, char command, const QByteArray& data)
 {
@@ -890,8 +892,7 @@ void Client::sendCmd(char service, char command, const QByteArray& data)
 
     Q_ASSERT(bytes == message.size());
 
-QString timestamp = QString::number(QTime::currentTime().second()) + "." + QString::number(QTime::currentTime().msec());
-QString str = timestamp + " OUTGOING: " + serviceToString(service) + " " + commandToString(service, command) + " ";
+QString str = Game::timestamp() + " OUTG: " + serviceToString(service) + " " + commandToString(service, command) + " ";
 for(int i=0; i<message.size(); i++)
     str += QString::number((int)(unsigned char)message[i]) + " ";
 qDebug() << str;
@@ -907,6 +908,7 @@ qDebug() << str;
 ( () ))  (    )  \  ) _) /__\  ) ) )\  /    )  \  ) _) /__\  ) ) )
  \__/(_)\_)  (_)\_)(___)(_)(_)(___/(__/    (_)\_)(___)(_)(_)(___/
 ====================================================================================================*/
+
 
 void Client::onReadyRead()
 {
@@ -935,8 +937,7 @@ void Client::onReadyRead()
 
         unsigned mesSize = sizeof(header->sign) + sizeof(header->size) + header->size;
 
-QString timestamp = QString::number(QTime::currentTime().second()) + "." + QString::number(QTime::currentTime().msec());
-QString str = timestamp + " INCOMING: " +
+QString str = Game::timestamp() + "  INC: " +
          serviceToString((quint32)header->service) + " " +
          commandToString((quint32)header->service, (quint32)header->cmd) + " ";
 for(int i=0; i<mesSize; i++)
