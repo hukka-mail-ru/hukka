@@ -17,7 +17,7 @@ Chat::~Chat()
 }
 
 Chat::Chat(QWidget* parent, ChatType type):
-    QDialog(parent), mChatType(type)
+    QDialog(parent), mChatType(type), mState(CHAT_CLOSED)
 {
     // No title, no [X] button, no bottom
     setWindowFlags(Qt::Widget);
@@ -31,10 +31,6 @@ Chat::Chat(QWidget* parent, ChatType type):
     mHistory = new History(this, mChatType);
     mUserlist = new Userlist(this, mChatType);
 
-    QObject::connect(Client::instance(), SIGNAL(chatMessage(const QString&)),    this, SLOT(onChatMessage(const QString&)));
-    QObject::connect(Client::instance(), SIGNAL(chatUserOnline(const QString&)), this, SLOT(onChatUserOnline(const QString&)));
-    QObject::connect(Client::instance(), SIGNAL(chatUserJoined(const QString&)), this, SLOT(onChatUserJoined(const QString&)));
-    QObject::connect(Client::instance(), SIGNAL(chatUserLeft(const QString&)),   this, SLOT(onChatUserLeft(const QString&)));
 }
 
 void Chat::updatePos(OrientationStatus orientation)
@@ -84,11 +80,31 @@ void Chat::show()
 
     Client::instance()->joinChat(LOGIC_ID_CHESS, tableID);
     QDialog::show();
+
+    mState = CHAT_OPEN;
+
+    QObject::connect(Client::instance(), SIGNAL(chatMessage(const QString&)),    this, SLOT(onChatMessage(const QString&)));
+    QObject::connect(Client::instance(), SIGNAL(chatUserOnline(const QString&)), this, SLOT(onChatUserOnline(const QString&)));
+    QObject::connect(Client::instance(), SIGNAL(chatUserJoined(const QString&)), this, SLOT(onChatUserJoined(const QString&)));
+    QObject::connect(Client::instance(), SIGNAL(chatUserLeft(const QString&)),   this, SLOT(onChatUserLeft(const QString&)));
+
 }
 
 bool Chat::close()
 {
+    qDebug() << "Chat::close()";
+    mState = CHAT_CLOSED;
+
+    mHistory->clear();
+    mUserlist->removeAll();
+
     Client::instance()->leaveChat(LOGIC_ID_CHESS);
+
+    QObject::disconnect(Client::instance(), SIGNAL(chatMessage(const QString&)),    this, SLOT(onChatMessage(const QString&)));
+    QObject::disconnect(Client::instance(), SIGNAL(chatUserOnline(const QString&)), this, SLOT(onChatUserOnline(const QString&)));
+    QObject::disconnect(Client::instance(), SIGNAL(chatUserJoined(const QString&)), this, SLOT(onChatUserJoined(const QString&)));
+    QObject::disconnect(Client::instance(), SIGNAL(chatUserLeft(const QString&)),   this, SLOT(onChatUserLeft(const QString&)));
+
     return QDialog::close();
 }
 
@@ -191,15 +207,22 @@ void Chat::Userlist::removeUser(const QString& userName)
     }
 }
 
+void Chat::Userlist::removeAll()
+{
+    mNames.clear();
+    updateTable();
+}
+
 void Chat::Userlist::updateTable()
 {
     this->clear();
     this->setRowCount(0);
 
     //for(int i=0; i<this->rows)
-
+    qDebug() << (int)this << " Chat::Userlist::updateTable mNames.size() " << mNames.size();
     for(int i=0; i<mNames.size(); i++)
     {
+        qDebug() << "Chat::Userlist::updateTable insertRow " << mNames[i];
         insertRow(i);
         setRowHeight(i, 20); // TODO move 20 into XML
 

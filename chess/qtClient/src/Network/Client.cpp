@@ -890,8 +890,8 @@ void Client::sendCmd(char service, char command, const QByteArray& data)
 
     Q_ASSERT(bytes == message.size());
 
-
-QString str = "<<<--- OUTGOING: " + serviceToString(service) + " " + commandToString(service, command) + " ";
+QString timestamp = QString::number(QTime::currentTime().second()) + "." + QString::number(QTime::currentTime().msec());
+QString str = timestamp + " OUTGOING: " + serviceToString(service) + " " + commandToString(service, command) + " ";
 for(int i=0; i<message.size(); i++)
     str += QString::number((int)(unsigned char)message[i]) + " ";
 qDebug() << str;
@@ -935,7 +935,8 @@ void Client::onReadyRead()
 
         unsigned mesSize = sizeof(header->sign) + sizeof(header->size) + header->size;
 
-QString str = "--->>> INCOMING: " +
+QString timestamp = QString::number(QTime::currentTime().second()) + "." + QString::number(QTime::currentTime().msec());
+QString str = timestamp + " INCOMING: " +
          serviceToString((quint32)header->service) + " " +
          commandToString((quint32)header->service, (quint32)header->cmd) + " ";
 for(int i=0; i<mesSize; i++)

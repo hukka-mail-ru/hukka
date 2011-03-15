@@ -206,8 +206,10 @@ void CHTServer::sendUserNames(uint32_t playerID, uint32_t logicID, uint32_t tabl
 
     // Get names of online users
     // select wsUsers.User from wsUsers inner join tbChessChatUserOnline on wsUsers.GUID=tbChessChatUserOnline.PlayerID
+    // where tbChessChatUserOnline.TableID = 0
     CMyStr query = "select " + usersTbl +".User from " + usersTbl + " inner join " + onlineUsersTbl +
-                   " on " + usersTbl + ".GUID=" + onlineUsersTbl + ".PlayerID";
+                   " on " + usersTbl + ".GUID=" + onlineUsersTbl + ".PlayerID " +
+                   " where " + onlineUsersTbl + ".TableID=" + CMyStr(tableID);
     TTable tbl;
     sqlGameOnlineUsersTable.Query(query.c_str(), &tbl);
 
@@ -216,7 +218,7 @@ void CHTServer::sendUserNames(uint32_t playerID, uint32_t logicID, uint32_t tabl
     {
         CMyStr userName = tbl[i][0];
 
-        sendMsgToOne(ANS_CHAT_USER_ONLINE, playerID, logicID, &userName, tableID);
+        sendMsgToOne(ANS_CHAT_USER_ONLINE, playerID, logicID, &userName);
     }
 
 
@@ -302,7 +304,7 @@ void CHTServer::sendHistory( uint32_t playerID, uint32_t logicID, uint32_t table
     // send messages in reverse order
     for(int i=queryRes.size()-1; i>=0; i--)
     {
-        sendMsgToOne( ANS_CHAT_MSG, playerID, logicID, &queryRes[i][0], tableID );
+        sendMsgToOne( ANS_CHAT_MSG, playerID, logicID, &queryRes[i][0] );
     }
 
 }
@@ -388,7 +390,7 @@ void CHTServer::sendMsgToAll( int cmd, uint32_t logicID, CMyStr* _strMsg, uint32
 
 }
 
-void CHTServer::sendMsgToOne( int cmd, uint32_t playerID, uint32_t logicID, CMyStr* _strMsg, uint32_t tableID  )
+void CHTServer::sendMsgToOne( int cmd, uint32_t playerID, uint32_t logicID, CMyStr* _strMsg)
 {
     CSendedMsg sendedMsg;
 
