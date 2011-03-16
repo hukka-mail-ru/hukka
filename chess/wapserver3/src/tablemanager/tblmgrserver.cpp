@@ -1,5 +1,6 @@
 #include "tblmgrserver.h"
 #include "../libs/header/defserver.h"
+#include "../libs/header/defservice.h"
 #include "../libs/header/deferror.h"
 #include "../libs/sql/sqltableusers.h"
 #include "../libs/sql/sqlratingtable.h"

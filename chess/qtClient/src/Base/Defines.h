@@ -32,13 +32,6 @@ const int PROTOCOL_VERSION               = 2;
 #define DEFAULT_PROXY                   QNetworkProxy(QNetworkProxy::HttpProxy)
 
 
-// server commands
-const int CMD_LOGIN                      = 1;
-const int CMD_REG                        = 1;
-
-// server replies
-const int LOGIN_STATUS                   = 1;
-const int REG_STATUS                     = 1;
 
 
 // game table parameter ids (see tbParameterList table)
@@ -159,6 +152,29 @@ public:
                QString::number(QTime::currentTime().msec()).rightJustified(3, '0');
     }
 
+    static char getCRC(const QByteArray& data)
+    {
+        char crc = 0;
+        for(int i = 0; i < data.size(); i++) {
+            crc ^= data[i];
+        }
+
+        return crc;
+    }
+
+    static QString serviceToString(quint32 service)
+    {
+      //  QT_TRACEOUT;
+
+        switch(service) {
+            case SRV: return "SRV";
+            case REG: return "REG";
+            case TBM: return "TBM";
+            case CHS: return "CHS";
+            case CHAT: return "CHAT";
+            default:  return QString::number((int)service);
+        }
+    }
 };
 
 #endif /* DEFINES_H_ */

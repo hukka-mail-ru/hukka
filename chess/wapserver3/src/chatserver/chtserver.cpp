@@ -1,5 +1,6 @@
 #include "chtserver.h"
 #include "../header/defserver.h"
+#include "../header/defservice.h"
 #include "../sql/sqltableusers.h"
 #include "../socket/sendedmsg.h"
 
