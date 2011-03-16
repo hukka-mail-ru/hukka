@@ -26,15 +26,16 @@
 
 const int       COMMON_CHAT_ID = 0;
 
-const int       ANS_CHAT_MSG = 1;
-const int       ANS_CHAT_USER_ONLINE = 3;
-const int       ANS_CHAT_USER_JOINED = 4;
-const int       ANS_CHAT_USER_LEFT = 5;
+// CHAT SERVER MESSAGES 20 -
+const int       CMD_CHAT_MSG            = 20;
+const int       CMD_CHAT_JOIN           = 21;
+const int       CMD_CHAT_LEAVE          = 22;
+const int       CMD_CHAT_DELETE_HISTORY = 23;
+const int       ANS_CHAT_MSG            = 24;
+const int       ANS_CHAT_USER_ONLINE    = 25;
+const int       ANS_CHAT_USER_JOINED    = 26;
+const int       ANS_CHAT_USER_LEFT      = 27;
 
-const int       CMD_CHAT_MSG = 11;
-const int       CMD_CHAT_JOIN = 13;
-const int       CMD_CHAT_LEAVE = 15;
-const int       CMD_CHAT_DELETE_HISTORY = 17;
 
 
 #endif

@@ -533,8 +533,8 @@ void Client::step(TABLEID tableID, const Move& move)
 
         // send command
         QByteArray data = Q_BYTE_ARRAY(tableID) +
-                          Game::letter(move.srcCell) + Game::number(move.srcCell) +
-                          Game::letter(move.dstCell) + Game::number(move.dstCell);
+                          Global::letter(move.srcCell) + Global::number(move.srcCell) +
+                          Global::letter(move.dstCell) + Global::number(move.dstCell);
 
         sendCmd(CHS, CMD_STEP, data);
     }
@@ -892,7 +892,7 @@ void Client::sendCmd(char service, char command, const QByteArray& data)
 
     Q_ASSERT(bytes == message.size());
 
-QString str = Game::timestamp() + " OUTG: " + serviceToString(service) + " " + commandToString(service, command) + " ";
+QString str = Global::timestamp() + " OUTG: " + serviceToString(service) + " " + commandToString(service, command) + " ";
 for(int i=0; i<message.size(); i++)
     str += QString::number((int)(unsigned char)message[i]) + " ";
 qDebug() << str;
@@ -937,7 +937,7 @@ void Client::onReadyRead()
 
         unsigned mesSize = sizeof(header->sign) + sizeof(header->size) + header->size;
 
-QString str = Game::timestamp() + "  INC: " +
+QString str = Global::timestamp() + "  INC: " +
          serviceToString((quint32)header->service) + " " +
          commandToString((quint32)header->service, (quint32)header->cmd) + " ";
 for(int i=0; i<mesSize; i++)

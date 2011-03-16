@@ -132,7 +132,7 @@ enum ChatType
 };
 
 
-class Game
+class Global
 {
 public:
     static char letter(CELLID cell) { return 'a' + cell % CELLS_IN_ROW; }
