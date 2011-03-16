@@ -2,7 +2,7 @@
 #include "srvserver.h"
 #include "../header/defserver.h"
 #include "../header/deferror.h"
-#include <../../chatserver/chatdefs.h>
+#include "../header/defservice.h"
 
 #include <iostream>
 

@@ -21,22 +21,6 @@
 
 #define QT_TRACEOUT ; // qDebug() << "     TRACE " << mName <<  "::" << __FUNCTION__ ;
 
-/*====================================================================================================
-  __  ___  ____     __  ___   __
- / _)(  _)(_  _)   / _)(  ,) / _)
-( (/\ ) _)  )(    ( (_  )  \( (_
- \__/(___) (__)    \__)(_)\_)\__)
-====================================================================================================*/
-char getCRC(const QByteArray& data)
-{
-    char crc = 0;
-    for(int i = 0; i < data.size(); i++) {
-        crc ^= data[i];
-    }
-
-    return crc;
-}
-
 
 
 /*====================================================================================================
@@ -733,118 +717,6 @@ void Client::sendChatMessage(LOGICID logicID, TABLEID tableID, const QString& me
 
 
 
-/*====================================================================================================
- ___  ___  ___  _  _  __  __  ___    ____  __     ___  ____  ___   __  _  _  __
-/ __)(  _)(  ,)( )( )(  )/ _)(  _)  (_  _)/  \   / __)(_  _)(  ,) (  )( \( )/ _)
-\__ \ ) _) )  \ \\//  )(( (_  ) _)    )( ( () )  \__ \  )(   )  \  )(  )  (( (/\
-(___/(___)(_)\_)(__) (__)\__)(___)   (__) \__/   (___/ (__) (_)\_)(__)(_)\_)\__/
-====================================================================================================*/
-QString serviceToString(quint32 service)
-{
-  //  QT_TRACEOUT;
-
-    switch(service) {
-        case SRV: return "SRV";
-        case REG: return "REG";
-        case TBM: return "TBM";
-        case CHS: return "CHS";
-        case CHAT: return "CHAT";
-        default:  return QString::number((int)service);
-    }
-}
-
-
-/*====================================================================================================
-  __  __  __  __  __  __   __   _  _  ___     ____  __     ___  ____  ___   __  _  _  __
- / _)/  \(  \/  )(  \/  ) (  ) ( \( )(   \   (_  _)/  \   / __)(_  _)(  ,) (  )( \( )/ _)
-( (_( () ))    (  )    (  /__\  )  (  ) ) )    )( ( () )  \__ \  )(   )  \  )(  )  (( (/\
- \__)\__/(_/\/\_)(_/\/\_)(_)(_)(_)\_)(___/    (__) \__/   (___/ (__) (_)\_)(__)(_)\_)\__/
-====================================================================================================*/
-
-QString commandToString(quint32 service, char command)
-{
-  //  QT_TRACEOUT;
-
-    switch(service) {
-    case SRV: {
-        switch(command) {
-            case CMD_LOGIN: return "CMD_LOGIN";
-            default:        return QString::number((int)command);
-        }
-    }
-    case REG: {
-        switch(command) {
-            case CMD_REG:   return "CMD_REG";
-            default:        return QString::number((int)command);
-        }
-        break;
-    }
-    case CHAT:
-        switch(command) {
-            case ANS_CHAT_MSG:             return "ANS_CHAT_MSG";
-            case ANS_CHAT_USER_ONLINE:     return "ANS_CHAT_USER_ONLINE";
-            case ANS_CHAT_USER_JOINED:     return "ANS_CHAT_USER_JOINED";
-            case ANS_CHAT_USER_LEFT:       return "ANS_CHAT_USER_LEFT";
-            case CMD_CHAT_MSG :            return "CMD_CHAT_MSG ";
-            case CMD_CHAT_JOIN :           return "CMD_CHAT_JOIN ";
-            case CMD_CHAT_LEAVE :          return "CMD_CHAT_LEAVE ";
-            case CMD_CHAT_DELETE_HISTORY:  return "CMD_CHAT_DELETE_HISTORY ";
-            default:              return QString::number((int)command);
-        }
-        break;
-
-    case TBM:
-        switch(command) {
-            case CMD_CREATE:      return "CMD_CREATE";
-            case CMD_RANDOM_OP :  return "CMD_RANDOM_OP";
-            case CMD_GETMYTBL :   return "CMD_GETMYTBL";
-            case CMD_FIND :       return "CMD_FIND";
-            case CMD_GET_PARAMS : return "CMD_GET_PARAMS";
-            case CMD_SET_PARAMS : return "CMD_SET_PARAMS";
-            case CMD_DELETE :     return "CMD_DELETE";
-            case ANS_CREATE :     return "ANS_CREATE";
-            case ANS_TABLE  :     return "ANS_TABLE";
-            case ANS_MYTBL   :     return "ANS_MYTBL";
-            case ANS_RANDOM_OP  :     return "ANS_RANDOM_OP";
-            case ANS_GET_PARAMS  :     return "ANS_GET_PARAMS";
-            case ANS_SET_PARAMS  :     return "ANS_SET_PARAMS";
-            case ANS_DELETE      :     return "ANS_DELETE";
-            default:              return QString::number((int)command);
-        }
-        break;
-    case CHS:
-        switch(command) {
-            case CMD_JOIN:  return "CMD_JOIN";
-            case CMD_STEP:  return "CMD_STEP";
-            case CMD_DRAW:  return "CMD_DRAW";
-            case CMD_GET_FIELD    : return "CMD_GET_FIELD";
-            case CMD_LOOSE     : return "CMD_LOOSE";
-            case CMD_OPAGREE   : return "CMD_OPAGREE";
-            case CMD_OPREJECT  : return "CMD_OPREJECT";
-            case CMD_DRAGREE   : return "CMD_DRAGREE";
-            case CMD_CHECK_TIME   : return "CMD_CHECK_TIME";
-            case CMD_TIMEOUT   : return "CMD_TIMEOUT";
-
-            case     ANS_JOIN    : return "ANS_JOIN";
-            case    ANS_STEP     : return "ANS_STEP";
-            case     ANS_DRAW     : return "ANS_DRAW";
-            case     ANS_END      : return "ANS_END";
-            case     ANS_START    : return "ANS_START";
-            case    ANS_FIELD    : return "ANS_FIELD";
-            case     ANS_OSTEP    : return "ANS_OSTEP";
-            case    ANS_OPPONENT     : return "ANS_OPPONENT";
-            case     ANS_OPREJECT  : return "ANS_OPREJECT";
-            case    ANS_CHECK_TIME_NOT_SET  : return "ANS_CHECK_TIME_NOT_SET";
-            case    ANS_CHECK_TIME_STEP  : return "ANS_CHECK_TIME_STEP";
-            case     ANS_CHECK_TIME_GAME  : return "ANS_CHECK_TIME_GAME";
-            case    ANS_OPAGREE_FAILED  : return "ANS_OPAGREE_FAILED";
-            default:        return QString::number((int)command);
-        }
-        break;
-
-    default:  return QString::number((int)command);
-    }
-}
 
 /*====================================================================================================
  ___  ___  _  _  ___      __  __  __  ___
@@ -883,7 +755,7 @@ void Client::sendCmd(char service, char command, const QByteArray& data)
 
     QByteArray message = Q_BYTE_ARRAY(header);
     message += data;
-    message += getCRC(infPart);
+    message += Global::getCRC(infPart);
 
     qint64 bytes = mSocket.write(message);
     if(bytes == -1) {
@@ -892,7 +764,9 @@ void Client::sendCmd(char service, char command, const QByteArray& data)
 
     Q_ASSERT(bytes == message.size());
 
-QString str = Global::timestamp() + " OUTG: " + serviceToString(service) + " " + commandToString(service, command) + " ";
+QString str = Global::timestamp() + " OUTG: " +
+              Global::serviceToString(service) + " " +
+              GlobalServer::commandToString(command).c_str() + "; ";
 for(int i=0; i<message.size(); i++)
     str += QString::number((int)(unsigned char)message[i]) + " ";
 qDebug() << str;
@@ -938,15 +812,15 @@ void Client::onReadyRead()
         unsigned mesSize = sizeof(header->sign) + sizeof(header->size) + header->size;
 
 QString str = Global::timestamp() + "  INC: " +
-         serviceToString((quint32)header->service) + " " +
-         commandToString((quint32)header->service, (quint32)header->cmd) + " ";
+              Global::serviceToString((quint32)header->service) + " " +
+              GlobalServer::commandToString((quint32)header->cmd).c_str() + "; ";
 for(int i=0; i<mesSize; i++)
     str += QString::number((int)(unsigned char)buf[i]) + " ";
 qDebug() << str;
 
 
         QByteArray infPart((char*)&header->version, header->size - CRC_SIZE);
-        if(buf[mesSize - CRC_SIZE] != getCRC(infPart)) {
+        if(buf[mesSize - CRC_SIZE] != Global::getCRC(infPart)) {
             qDebug() << "Server response has bad CRC";
             return;
         }

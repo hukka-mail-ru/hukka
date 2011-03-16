@@ -22,10 +22,6 @@ enum GameStatus
 };
 
 
-char getCRC(const QByteArray& data);
-QString commandToString(quint32 service, char command);
-QString serviceToString(quint32 service);
-
 
 #pragma pack(1)
 
@@ -37,8 +33,6 @@ struct Param
         quint32         compareOperator;
         quint32         logicalOperator;
 };
-
-
 
 
 

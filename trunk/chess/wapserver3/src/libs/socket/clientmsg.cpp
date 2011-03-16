@@ -1,5 +1,6 @@
 #include "clientmsg.h"
 #include "../header/deferror.h"
+#include "../header/defservice.h"
 #include <string.h>
 #include <iostream>
 
@@ -71,9 +72,8 @@ void ClientMsg::InitMsg( uint32_t _nTo, TVecChar _vecData )
     gettimeofday(&tv, &tz);
     tm=localtime(&tv.tv_sec);
 
-    cout << "--- OUTGOING MSG --- ("<< tm->tm_sec << "." << tv.tv_usec << ") TO: " << _nTo <<
-                   ";  COMMAND: " << ( uint32_t ) _vecData[0] <<
-                   ";  DATA: ";
+    cout << "--- OUTGOING --- ("<< tm->tm_sec << "." << tv.tv_usec << ") "
+                   << GlobalServer::commandToString( _vecData[0]) << "; ";
     for(int i=0; i<_vecData.size(); ++i)
         cout << (uint32_t)_vecData[i] << " ";
     cout << endl;
