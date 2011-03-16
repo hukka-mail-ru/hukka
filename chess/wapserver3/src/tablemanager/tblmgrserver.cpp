@@ -87,8 +87,8 @@ void CTblMgrServer::newMsg( ClientMsg* _pMsg )
 
 #ifdef MYDEBUG
 	std::cout << "--- INCOMING MSG --- FROM: " << ( uint32_t )_pMsg->GetTo() <<
-	             ";  COMMAND: " << ( uint32_t ) _pMsg->GetCommand() <<
-	             ";  DATA: ";
+	             ";  " << GlobalServer::commandToString( _pMsg->GetCommand()) <<
+	             ";  ";
     for ( int i = 0; i < vecCmd.size(); ++i )
     {
         std::cout << (int) vecCmd[i] << " ";

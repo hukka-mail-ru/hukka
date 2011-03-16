@@ -63,8 +63,9 @@ private:
 	void newMsg( ClientMsg *_pClientMsg )
 	{
 	    std::cout << "--- INCOMING MSG --- FROM: " << ( uint32_t )_pClientMsg->GetTo() <<
-	                  ";  COMMAND: " << ( uint32_t ) _pClientMsg->GetCommand() <<
-	                  ";  DATA: ";
+	                  ";  " << GlobalServer::commandToString( _pClientMsg->GetCommand()) <<
+	                  ";  ";
+
 		TVecChar vecCmd;
 		_pClientMsg->GetData( ClientMsg::etpCommand, &vecCmd );
 		for(TVecChar::const_iterator it = vecCmd.begin(); it != vecCmd.end(); ++it)

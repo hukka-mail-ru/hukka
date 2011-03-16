@@ -138,8 +138,9 @@ void CHTServer::newMsg( ClientMsg* _pMsg )
     _pMsg->GetData( ClientMsg::etpCommand, &vecCmd );
 
     std::cout << "--- INCOMING MSG --- FROM: " << ( uint32_t )_pMsg->GetTo() <<
-                  ";  COMMAND: " << ( uint32_t )(unsigned char) _pMsg->GetCommand() <<
-                  ";  DATA: ";
+                 ";  " << GlobalServer::commandToString( _pMsg->GetCommand()) <<
+                 ";  ";
+
     for ( int i = 0; i < vecCmd.size(); ++i )
     {
         std::cout << (int) vecCmd[i] << " ";
