@@ -87,10 +87,10 @@ void JoinGameDialog::onGotGameTableParams(const QString& name, qint32 rating,
     QTableWidgetItem* ratingItem = new QTableWidgetItem(ratingText);
     tableWidget->setItem(mCounter, COLUMN_FOR_RATING, ratingItem);
 
-    QTableWidgetItem* time2stepItem = new QTableWidgetItem(Game::seconds2hrs(time2step));
+    QTableWidgetItem* time2stepItem = new QTableWidgetItem(Global::seconds2hrs(time2step));
     tableWidget->setItem(mCounter, COLUMN_FOR_TIME2STEP, time2stepItem);
 
-    QTableWidgetItem* time2gameItem = new QTableWidgetItem(Game::seconds2hrs(time2game));
+    QTableWidgetItem* time2gameItem = new QTableWidgetItem(Global::seconds2hrs(time2game));
     tableWidget->setItem(mCounter, COLUMN_FOR_TIME2GAME, time2gameItem);
 
     mCounter++;

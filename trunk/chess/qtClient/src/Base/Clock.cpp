@@ -81,7 +81,7 @@ void Clock::onTimeout()
         }
     }
 
-    mText->setPlainText(mHeader + Game::seconds2hrs(mSeconds));
+    mText->setPlainText(mHeader + Global::seconds2hrs(mSeconds));
 
     QString color = (UI::instance()->getGameState() == GS_WAIT_FOR_OPPONENT) ? mInactiveColor : mActiveColor;
     mText->setDefaultTextColor( QColor(color) );
