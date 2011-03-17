@@ -251,7 +251,7 @@ void MainMenu::onGotMyRating(quint32 myRating)
 {
   //  disconnect(Client::instance(), SIGNAL(gotMyRating(quint32)), this, SLOT(onGotMyRating(quint32)));
 
-    mPlayerName->setPlainText(UI::instance()->getPlayerName());
+    mPlayerName->setPlainText(UI::instance()->getPlayer(PT_ME).name);
 
     QString ratingText =  (myRating == RATING_NOT_AVAILABLE) ?
                           "Your rating is not available.\nPlease visit www.site.com\nto learn how to enable it." :

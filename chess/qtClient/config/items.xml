@@ -133,6 +133,21 @@
 	<opponent> <color value="#7C3B1B" /> <x value="390" />   <y value="440"/> <width value="400" />  <height value="23" /></opponent>
   </CaptureBox>
 
+  <MoveBox>
+
+	<me>       <color> <active value="white" /> <inactive value="grey" />  </color> 
+               <border> <x value="200" />   <y value="5" />  <width value="182" />  <height value="115" /> </border> 
+    </me>
+
+	<opponent> <color> <active value="#FFCC00" /> <inactive value="grey" />  </color>
+               <border> <x value="200" />   <y value="125"/> <width value="182" />  <height value="115" /> </border> 
+    </opponent>
+
+    <player>  <font> <family value="Helvetica [Cronyx]" />  <size value="12" /> </font>  <x value="5" />   <y value="5" /> </player>
+    <rating>  <font> <family value="Helvetica [Cronyx]" />  <size value="12" /> </font>  <x value="5" />   <y value="25" /> </rating>
+
+  </MoveBox>
+
   <Board>
     <width value="400" />
     <border>  <color value="white" />  </border>
@@ -158,7 +173,7 @@
 
 
   <GameStateText>
-        <font>  <family value="Helvetica [Cronyx]" />  <size value="25" />  
+        <font>  <family value="Helvetica [Cronyx]" />  <size value="10" />  
 			    <color> <active value="white" /> <inactive value="#FFCC00" />  </color>  
         </font>
         <landscape> <x value="5" /> <y value="13" /> <width value="385"/> </landscape>

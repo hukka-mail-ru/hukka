@@ -38,6 +38,9 @@ void WaitJoinDialog::onOpponentJoined(const QString& opponentName, int opponentR
 
     int tableID = UI::instance()->getGameTable();
 
+    UI::instance()->setPlayerName(PT_OPPONENT, opponentName);
+    UI::instance()->setPlayerRating(PT_OPPONENT, opponentRating);
+
     // Get player name by ID
     QString ratingText = (opponentRating == RATING_NOT_AVAILABLE) ? tr("is not available") : QString::number(opponentRating);
     if(MainWindow::instance()->showQuestion(opponentName + tr(" (rating ") + ratingText + tr(") wants to play chess with you. Agree?")))

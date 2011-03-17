@@ -45,7 +45,7 @@ int main(int argc, char *argv[])
     }
     catch (Exception& e)
     {
-     //   qDebug() << e.what();
+        qDebug() << e.what();
         throw e;
     }
 }

@@ -10,7 +10,7 @@
 UI::UI():
     mGameTable(0)
 {
-    mPlayer.isAuthorized = false;
+    mMe.isAuthorized = false;
 }
 
 UI::~UI()
@@ -51,7 +51,7 @@ void UI::startGame()
 {
     MainWindow::instance()->closeCurrentDialog();
 
-    if(mPlayer.color == PC_WHITE)
+    if(mMe.color == PC_WHITE)
     {
         mGameState = GS_WAIT_FOR_PLAYER_TOUCH;
     }
@@ -132,7 +132,7 @@ void UI::onError(const QString& what)
 bool UI::isEnemyPiece(CELLID cell)
 {
     bool res = false;
-    if(mPlayer.color == PC_WHITE)
+    if(mMe.color == PC_WHITE)
     {
         // qDebug() <<"isEnemyPiece" << cell << (mField.cells[cell] == PIX_BLACK_ROOK);
 
@@ -143,7 +143,7 @@ bool UI::isEnemyPiece(CELLID cell)
               (mField[cell] == b_Queen) ||
               (mField[cell] == b_King);
     }
-    else if(mPlayer.color == PC_BLACK)
+    else if(mMe.color == PC_BLACK)
     {
         res = (mField[cell] == w_Pawn) ||
               (mField[cell] == w_Rook) ||
@@ -235,7 +235,8 @@ GameState UI::updateField(const Field& field, bool myMove, bool iAmWhite)
     mField = field;
 
     // pass the move
-    mPlayer.color = iAmWhite ? PC_WHITE : PC_BLACK;
+    mMe.color = iAmWhite ? PC_WHITE : PC_BLACK;
+    mOpponent.color = iAmWhite ? PC_BLACK : PC_WHITE;
 
     mGameState = myMove ? GS_WAIT_FOR_PLAYER_TOUCH : GS_WAIT_FOR_OPPONENT;
 
@@ -244,6 +245,34 @@ GameState UI::updateField(const Field& field, bool myMove, bool iAmWhite)
 }
 
 
+void UI::setPlayerName(PlayerType type, const QString& name)
+{
+    switch(type)
+    {
+        case PT_ME:       mMe.name = name; break;
+        case PT_OPPONENT: mOpponent.name = name; break;
+        default: break;
+    }
+}
+
+void UI::setPlayerRating(PlayerType type, unsigned rating)
+{
+    switch(type)
+    {
+        case PT_ME:       mMe.rating = rating; break;
+        case PT_OPPONENT: mOpponent.rating = rating; break;
+        default: break;
+    }
+}
+void UI::setPlayerColor(PlayerType type, PlayerColor color)
+{
+    switch(type)
+    {
+        case PT_ME:       mMe.color = color; break;
+        case PT_OPPONENT: mOpponent.color = color; break;
+        default: break;
+    }
+}
 
 
 

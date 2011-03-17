@@ -41,6 +41,7 @@
 #define XML_NODE_PAWN             "Pawn"
 #define XML_NODE_CAPTURED_PIECE   "CapturedPiece"
 #define XML_NODE_CAPTURE_BOX      "CaptureBox"
+#define XML_NODE_MOVE_BOX         "MoveBox"
 #define XML_NODE_BOARD            "Board"
 #define XML_NODE_CLOCKS           "Clocks"
 #define XML_NODE_GAME_STATE_TEXT  "GameStateText"

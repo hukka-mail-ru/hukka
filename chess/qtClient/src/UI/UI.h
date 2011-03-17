@@ -41,11 +41,14 @@ public:
     GameState getGameState() { return mGameState; }
 
 
-    bool isPlayerAuthorized() { return mPlayer.isAuthorized; }
-    void setPlayerAuthorized(bool auth) { mPlayer.isAuthorized = auth; }
+    bool isPlayerAuthorized() { return mMe.isAuthorized; }
+    void setPlayerAuthorized(bool auth) { mMe.isAuthorized = auth; }
 
-    const QString& getPlayerName() { return mPlayer.name; }
-    void setPlayerName(const QString& name) { mPlayer.name = name; }
+    const Player& getPlayer(PlayerType type) { return (type == PT_ME) ? mMe : mOpponent; }
+
+    void setPlayerName(PlayerType type, const QString& name);
+    void setPlayerRating(PlayerType type, unsigned rating);
+    void setPlayerColor(PlayerType type, PlayerColor color);
 
  //   bool isOwner() { return mIsOwner; }
  //   void setOwner(bool isOwner) { mIsOwner = isOwner; }
@@ -64,7 +67,8 @@ private:
 
     QApplication* mApp;
 
-    Player mPlayer;
+    Player mMe;
+    Player mOpponent;
 
 private slots:
 

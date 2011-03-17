@@ -14,7 +14,7 @@
 struct Player
 {
     QString     name;
-    int         rating;
+    unsigned    rating;
     PlayerColor color;
     bool        isAuthorized;
 };

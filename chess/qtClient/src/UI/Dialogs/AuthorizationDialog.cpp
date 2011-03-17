@@ -83,7 +83,7 @@ void AuthorizationDialog::onOkClicked()
     XML::instance().writeValue(XML_CONFIG_FILENAME, path << XML_NODE_USER << XML_NODE_LOGIN, loginEdit->text()); path.clear();
     XML::instance().writeValue(XML_CONFIG_FILENAME, path << XML_NODE_USER << XML_NODE_PASSWORD, pwdEdit->text()); path.clear();
 
-    UI::instance()->setPlayerName(loginEdit->text());
+    UI::instance()->setPlayerName(PT_ME, loginEdit->text());
 
     if(registerCheckBox->checkState() == Qt::Unchecked)
     {
