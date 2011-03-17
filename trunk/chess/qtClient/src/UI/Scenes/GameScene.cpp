@@ -20,7 +20,9 @@ GameScene::GameScene(QObject *parent):
        mChat(NULL),
        mMoveClock(this, tr("Move: "), SIGNAL(gotMoveTime(quint32)), XML_NODE_MOVE_CLOCK),
        mGameClock(this, tr("Game: "), SIGNAL(gotGameTime(quint32)), XML_NODE_GAME_CLOCK),
-       mCaptureBox(this)
+       mCaptureBox(this),
+       mMeMoveBox(this, PT_ME),
+       mOppMoveBox(this, PT_OPPONENT)
 {
 
 }

@@ -118,6 +118,13 @@ enum PlayerColor
     PC_BLACK
 };
 
+enum PlayerType
+{
+    PT_ME,
+    PT_OPPONENT
+};
+
+
 enum ChatType
 {
     CT_COMMON_CHAT,

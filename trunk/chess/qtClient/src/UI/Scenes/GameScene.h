@@ -12,6 +12,7 @@
 #include <Clock.h>
 #include <CaptureBox.h>
 #include <orientation.h>
+#include <MoveBox.h>
 
 
 class GameScene: public QGraphicsScene
@@ -60,8 +61,6 @@ private:
     QString mTextActiveColor;
     QString mTextInactiveColor;
 
-    QGraphicsTextItem* mTimeText;
-
     Button* mMenuButton;
     Button* mExitButton;
 
@@ -73,6 +72,9 @@ private:
 
     Clock mMoveClock;
     Clock mGameClock;
+
+    MoveBox mMeMoveBox;
+    MoveBox mOppMoveBox;
 
     Field mField;
     bool mWhite;

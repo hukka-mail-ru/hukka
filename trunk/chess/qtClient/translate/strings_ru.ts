@@ -540,17 +540,17 @@ Please finish it first, then create a new game.</source>
         <translation type="unfinished">Игра: </translation>
     </message>
     <message>
-        <location filename="../src/UI/Scenes/GameScene.cpp" line="57"/>
+        <location filename="../src/UI/Scenes/GameScene.cpp" line="59"/>
         <source>Game menu</source>
         <translation type="unfinished">Меню игры</translation>
     </message>
     <message>
-        <location filename="../src/UI/Scenes/GameScene.cpp" line="158"/>
+        <location filename="../src/UI/Scenes/GameScene.cpp" line="160"/>
         <source>Your move</source>
         <translation type="unfinished">Ваш ход</translation>
     </message>
     <message>
-        <location filename="../src/UI/Scenes/GameScene.cpp" line="159"/>
+        <location filename="../src/UI/Scenes/GameScene.cpp" line="161"/>
         <source>Opponent&apos;s move</source>
         <translation type="unfinished">Ход противника</translation>
     </message>
@@ -647,6 +647,29 @@ Please finish it first, then create a new game.</source>
     <message>
         <source>Question</source>
         <translation type="obsolete">Вопрос</translation>
+    </message>
+</context>
+<context>
+    <name>MoveBox</name>
+    <message>
+        <location filename="../src/Base/MoveBox.cpp" line="55"/>
+        <source>White</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/Base/MoveBox.cpp" line="55"/>
+        <source>Black</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/Base/MoveBox.cpp" line="58"/>
+        <source>N/A</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/Base/MoveBox.cpp" line="59"/>
+        <source>Rating</source>
+        <translation type="unfinished">Рейтинг</translation>
     </message>
 </context>
 <context>
@@ -843,17 +866,17 @@ Please finish it first, then create a new game.</source>
         <translation>Выход</translation>
     </message>
     <message>
-        <location filename="../src/UI/Dialogs/WaitJoinDialog.cpp" line="42"/>
+        <location filename="../src/UI/Dialogs/WaitJoinDialog.cpp" line="45"/>
         <source>is not available</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/UI/Dialogs/WaitJoinDialog.cpp" line="43"/>
+        <location filename="../src/UI/Dialogs/WaitJoinDialog.cpp" line="46"/>
         <source> (rating </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/UI/Dialogs/WaitJoinDialog.cpp" line="43"/>
+        <location filename="../src/UI/Dialogs/WaitJoinDialog.cpp" line="46"/>
         <source>) wants to play chess with you. Agree?</source>
         <translation type="unfinished"></translation>
     </message>
