@@ -18,8 +18,6 @@ GameScene::GameScene(QObject *parent):
        mParent(parent),
        mBoard(NULL), mCells(NULL), mPieces(NULL), mHighlights(NULL),
        mChat(NULL),
-       mMoveClock(this, tr("Move: "), SIGNAL(gotMoveTime(quint32)), XML_NODE_MOVE_CLOCK),
-       mGameClock(this, tr("Game: "), SIGNAL(gotGameTime(quint32)), XML_NODE_GAME_CLOCK),
        mMeMoveBox(this, PT_ME),
        mOppMoveBox(this, PT_OPPONENT),
        mCaptureBox(this)
@@ -80,8 +78,6 @@ void GameScene::onGotField(const Field& field, bool myMove, bool iAmWhite)
     MainWindow::instance()->setMode(MW_NORMAL);
 
     updateMoveBoxes(UI::instance()->updateField(field, myMove, iAmWhite));
-
-    updateClocks();
 }
 
 void GameScene::updateItemsPositions(OrientationStatus orientation)
@@ -109,28 +105,12 @@ void GameScene::updateItemsPositions(OrientationStatus orientation)
     mBoard = addRect (board_x, board_y, board_width,  board_width, QPen(QColor(0, 0, 0)));
     updateGameField(mField, mWhite);
 
-    // clocks
-    mMoveClock.updatePos(orientation);
-    mGameClock.updatePos(orientation);
-
 
     // chat
     if(mChat)
         mChat->updatePos(orientation);
 }
 
-
-void GameScene::startClocks()
-{
-
-    mMoveClock.start();
-    mGameClock.start();
-}
-
-void GameScene::updateClocks()
-{
-    mMoveClock.getServerTime();
-}
 
 
 void GameScene::updateMoveBoxes(GameState gameState)

@@ -43,7 +43,6 @@
 #define XML_NODE_CAPTURE_BOX      "CaptureBox"
 #define XML_NODE_MOVE_BOX         "MoveBox"
 #define XML_NODE_BOARD            "Board"
-#define XML_NODE_CLOCKS           "Clocks"
 
 // Buttons
 #define XML_NODE_NEW_GAME         "NewGame"

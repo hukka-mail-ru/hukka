@@ -530,17 +530,15 @@ Please finish it first, then create a new game.</source>
 <context>
     <name>GameScene</name>
     <message>
-        <location filename="../src/UI/Scenes/GameScene.cpp" line="21"/>
         <source>Move: </source>
-        <translation type="unfinished">Ход: </translation>
+        <translation type="obsolete">Ход: </translation>
     </message>
     <message>
-        <location filename="../src/UI/Scenes/GameScene.cpp" line="22"/>
         <source>Game: </source>
-        <translation type="unfinished">Игра: </translation>
+        <translation type="obsolete">Игра: </translation>
     </message>
     <message>
-        <location filename="../src/UI/Scenes/GameScene.cpp" line="59"/>
+        <location filename="../src/UI/Scenes/GameScene.cpp" line="57"/>
         <source>Game menu</source>
         <translation type="unfinished">Меню игры</translation>
     </message>
@@ -556,42 +554,42 @@ Please finish it first, then create a new game.</source>
 <context>
     <name>JoinGameDialog</name>
     <message>
-        <location filename="../src/UI/Dialogs/JoinGameDialog.cpp" line="20"/>
+        <location filename="../src/UI/Dialogs/JoinGameDialog.cpp" line="21"/>
         <source>Join Game</source>
         <translation>Присоединиться к игре</translation>
     </message>
     <message>
-        <location filename="../src/UI/Dialogs/JoinGameDialog.cpp" line="22"/>
+        <location filename="../src/UI/Dialogs/JoinGameDialog.cpp" line="23"/>
         <source>OK</source>
         <translation>ОК</translation>
     </message>
     <message>
-        <location filename="../src/UI/Dialogs/JoinGameDialog.cpp" line="23"/>
+        <location filename="../src/UI/Dialogs/JoinGameDialog.cpp" line="24"/>
         <source>Cancel</source>
         <translation>Отмена</translation>
     </message>
     <message>
-        <location filename="../src/UI/Dialogs/JoinGameDialog.cpp" line="29"/>
+        <location filename="../src/UI/Dialogs/JoinGameDialog.cpp" line="30"/>
         <source>Name</source>
         <translation>Имя</translation>
     </message>
     <message>
-        <location filename="../src/UI/Dialogs/JoinGameDialog.cpp" line="29"/>
+        <location filename="../src/UI/Dialogs/JoinGameDialog.cpp" line="30"/>
         <source>Rating</source>
         <translation>Рейтинг</translation>
     </message>
     <message>
-        <location filename="../src/UI/Dialogs/JoinGameDialog.cpp" line="29"/>
+        <location filename="../src/UI/Dialogs/JoinGameDialog.cpp" line="30"/>
         <source>Move time</source>
         <translation>Время хода</translation>
     </message>
     <message>
-        <location filename="../src/UI/Dialogs/JoinGameDialog.cpp" line="29"/>
+        <location filename="../src/UI/Dialogs/JoinGameDialog.cpp" line="30"/>
         <source>Game time</source>
         <translation>Время игры</translation>
     </message>
     <message>
-        <location filename="../src/UI/Dialogs/JoinGameDialog.cpp" line="97"/>
+        <location filename="../src/UI/Dialogs/JoinGameDialog.cpp" line="92"/>
         <source>N/A</source>
         <translation type="unfinished"></translation>
     </message>
@@ -728,22 +726,32 @@ Please finish it first, then create a new game.</source>
 <context>
     <name>QObject</name>
     <message>
-        <location filename="../src/Base/MoveBox.cpp" line="55"/>
+        <location filename="../src/Base/MoveBox.cpp" line="12"/>
+        <source>Move: </source>
+        <translation type="unfinished">Ход: </translation>
+    </message>
+    <message>
+        <location filename="../src/Base/MoveBox.cpp" line="13"/>
+        <source>Game: </source>
+        <translation type="unfinished">Игра: </translation>
+    </message>
+    <message>
+        <location filename="../src/Base/MoveBox.cpp" line="63"/>
         <source>White</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/Base/MoveBox.cpp" line="55"/>
+        <location filename="../src/Base/MoveBox.cpp" line="63"/>
         <source>Black</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/Base/MoveBox.cpp" line="58"/>
+        <location filename="../src/Base/MoveBox.cpp" line="66"/>
         <source>N/A</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/Base/MoveBox.cpp" line="59"/>
+        <location filename="../src/Base/MoveBox.cpp" line="67"/>
         <source>Rating</source>
         <translation type="unfinished">Рейтинг</translation>
     </message>

@@ -9,7 +9,6 @@
 #include <Button.h>
 #include <Cell.h>
 #include <Chat.h>
-#include <Clock.h>
 #include <CaptureBox.h>
 #include <orientation.h>
 #include <MoveBox.h>
@@ -27,7 +26,6 @@ public:
 
     void initialize();
 
-    void startClocks();
     void showChat();
 
     void highlightCell(CELLID cell);
@@ -40,7 +38,6 @@ public:
 
 private:
 
-    void updateClocks();
     void updateGameField(const Field& field, bool white);
     void updateMoveBoxes(GameState gameState);
 
@@ -62,9 +59,6 @@ private:
     void loadImages();
 
     Chat* mChat;
-
-    Clock mMoveClock;
-    Clock mGameClock;
 
     MoveBox mMeMoveBox;
     MoveBox mOppMoveBox;
