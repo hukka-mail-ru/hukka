@@ -49,7 +49,7 @@ public:
     void showAuthorizationDialog();
     void showCreateGameDialog();
     void showFindGameDialog();
-    void showJoinGameDialog(const QList<TABLEID>& tableIDs);
+    void showJoinGameDialog(const QList<GameTable>& tables);
     void showGameDialog();
     void showOptionsDialog();
     void showChatMessageDialog(ChatType chatType);

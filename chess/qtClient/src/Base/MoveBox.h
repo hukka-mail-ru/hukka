@@ -16,11 +16,9 @@
 #include <QObject>
 
 #include <Defines.h>
-#include <Player.h>
 
-class MoveBox: public QObject
+class MoveBox
 {
-Q_OBJECT
 public:
     MoveBox(QGraphicsScene* parentScene, PlayerType playerType);
     virtual ~MoveBox();

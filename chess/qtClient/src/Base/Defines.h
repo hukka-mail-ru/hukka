@@ -106,12 +106,6 @@ enum GameState
     GS_INVALID_MOVE
 };
 
-struct Move
-{
-    CELLID srcCell;
-    CELLID dstCell;
-};
-
 enum PlayerColor
 {
     PC_WHITE,
@@ -129,6 +123,30 @@ enum ChatType
 {
     CT_COMMON_CHAT,
     CT_TABLE_CHAT,
+};
+
+struct Move
+{
+    CELLID srcCell;
+    CELLID dstCell;
+};
+
+struct Player
+{
+    Player(): name(QObject::tr("offline")), rating(RATING_NOT_AVAILABLE), isAuthorized(false) {}
+
+    QString     name;
+    unsigned    rating;
+    PlayerColor color;
+    bool        isAuthorized;
+};
+
+struct GameTable
+{
+    TABLEID id;
+    Player host;
+    qint32 time2step;
+    qint32 time2game;
 };
 
 

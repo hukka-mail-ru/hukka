@@ -93,24 +93,24 @@
       </Exit>
 
       <NewGame>
-        <landscape> <x value="0" /> <y value="260" /> </landscape>
+        <landscape> <x value="0" /> <y value="290" /> </landscape>
       </NewGame>
 
       <FindGame>
-        <landscape> <x value="192" />  <y value="260" />  </landscape>
+        <landscape> <x value="192" />  <y value="290" />  </landscape>
       </FindGame>
 
       <Chat>
-        <landscape> <x value="384" /> <y value="260" /> </landscape>
+        <landscape> <x value="384" /> <y value="290" /> </landscape>
       </Chat>
 
       <Options>
-        <landscape> <x value="576" />  <y value="260" /> </landscape>
+        <landscape> <x value="576" />  <y value="290" /> </landscape>
       </Options>
 
 
       <GameMenu>
-        <landscape> <x value="5" />   <y value="75" />  </landscape>
+        <landscape> <x value="0" />   <y value="70" />  </landscape>
       </GameMenu>
 
   </Buttons>
@@ -136,11 +136,11 @@
   <MoveBox>
 
 	<me>       <color> <active value="white" /> <inactive value="grey" />  </color> 
-               <border> <x value="200" />   <y value="5" />  <width value="182" />  <height value="115" /> </border> 
+               <border> <x value="200" />   <y value="125" />  <width value="182" />  <height value="115" /> </border> 
     </me>
 
 	<opponent> <color> <active value="#FFCC00" /> <inactive value="grey" />  </color>
-               <border> <x value="200" />   <y value="125"/> <width value="182" />  <height value="115" /> </border> 
+               <border> <x value="200" />   <y value="5"/> <width value="182" />  <height value="115" /> </border> 
     </opponent>
 
     <player>  <font> <family value="Helvetica [Cronyx]" />  <size value="12" /> </font>  <x value="5" />   <y value="5" /> </player>
@@ -160,14 +160,15 @@
         <font> <family value="Helvetica [Cronyx]" />  <size value="16" />  
                <color> <active value="white" /> <inactive value="grey" />  </color>
         </font>
-        <landscape> <x value="205" />  <y value="82" />  </landscape>
+        <landscape> <x value="205" />  <y value="65" />  </landscape>
     </MoveClock>
 
     <GameClock>
         <font>  <family value="Helvetica [Cronyx]" />  <size value="10" />
-                <color>  <active value="white" />  <inactive value="grey" />   </color>
+                <color>  <active value="#FFCC00" />  <inactive value="grey" />   </color>
         </font>
-        <landscape> <x value="205" />  <y value="112" />  </landscape>
+
+        <landscape> <x value="205" />  <y value="93" />  </landscape>
     </GameClock>
   </Clocks>
 

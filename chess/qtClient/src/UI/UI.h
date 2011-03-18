@@ -6,7 +6,6 @@
 
 #include <Defines.h>
 #include <Pixmaps.h>
-#include <Player.h>
 
 // This class is responsible for LOGIC of the game and INSTANTIATIONS of main objects
 class UI: public QObject

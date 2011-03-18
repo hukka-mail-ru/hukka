@@ -28,7 +28,7 @@ OBJECTS_DIR = obj
 MOC_DIR = obj
 LIBS = -lQtNetwork -lQtXml
 
-HEADERS += $$BASE/CaptureBox.h $$BASE/Chat.h $$BASE/Clock.h $$BASE/Button.h $$BASE/MoveBox.h $$BASE/MyDialog.h $$BASE/MyMessageBox.h $$BASE/Exception.h $$BASE/Defines.h   $$BASE/Cell.h $$BASE/Player.h $$BASE/orientation.h $$BASE/orientthread.h
+HEADERS += $$BASE/CaptureBox.h $$BASE/Chat.h $$BASE/Clock.h $$BASE/Button.h $$BASE/MoveBox.h $$BASE/MyDialog.h $$BASE/MyMessageBox.h $$BASE/Exception.h $$BASE/Defines.h   $$BASE/Cell.h $$BASE/orientation.h $$BASE/orientthread.h
 HEADERS += $$DATA/XML.h $$DATA/Pixmaps.h  
 HEADERS += $$SCENES/GameScene.h $$SCENES/MainMenu.h 
 HEADERS += $$DIALOGS/AuthorizationDialog.h $$DIALOGS/CreateGameDialog.h $$DIALOGS/WaitJoinDialog.h $$DIALOGS/JoinGameDialog.h $$DIALOGS/FindGameDialog.h $$DIALOGS/WaitAgreeDialog.h $$DIALOGS/GameDialog.h $$DIALOGS/WaitDrawDialog.h  $$DIALOGS/ChatMessageDialog.h  $$DIALOGS/OptionsDialog.h

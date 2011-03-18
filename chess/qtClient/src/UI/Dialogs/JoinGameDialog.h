@@ -15,7 +15,7 @@ class JoinGameDialog: public MyDialog
 {
 Q_OBJECT
 public:
-    JoinGameDialog(const QList<TABLEID>& tableIDs, QWidget *parent = 0);
+    JoinGameDialog(const QList<GameTable>& tables, QWidget *parent = 0);
 
 private:
 
@@ -28,11 +28,12 @@ private:
     QHBoxLayout* lowerLayout;
     QVBoxLayout* layout;
 
-    QList<TABLEID> mGameTableIDs;
+    QList<GameTable> mGameTables;
 
     int mCounter;
 
-    void getParams(TABLEID tableID);
+    void getParams(GameTable* table);
+    GameTable* mTableToGetParams;
 
 private slots:
 
@@ -40,7 +41,7 @@ private slots:
     void onCancelClicked();
     void onJoined(TABLEID);
 
-    void onGotGameTableParams(const QString& name, qint32 rating, qint32 time2step, qint32 time2game);
+    void onGotGameTableParams(const GameTable& table);
 
 };
 

@@ -42,7 +42,7 @@ private:
 
     void updateClocks();
     void updateGameField(const Field& field, bool white);
-    void setGameStateText(GameState gameState);
+    void updateMoveBoxes(GameState gameState);
 
     QObject *mParent;
 

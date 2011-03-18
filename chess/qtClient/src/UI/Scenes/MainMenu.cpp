@@ -96,10 +96,10 @@ void MainMenu::updateItemsPositions(OrientationStatus orientation)
     int player_x =          XML::instance().readValue(XML_ITEMS_FILENAME, QList<QString>() << XML_NODE_MAIN_MENU << XML_NODE_PLAYER << orientNode << XML_NODE_X).toInt();
     int player_y =          XML::instance().readValue(XML_ITEMS_FILENAME, QList<QString>() << XML_NODE_MAIN_MENU << XML_NODE_PLAYER << orientNode << XML_NODE_Y).toInt();
 
-    mPlayerName = addText("",QFont(player_family, player_size));
-    mPlayerName->setPos(player_x, player_y);
-    mPlayerName->setDefaultTextColor( QColor(player_color) );
-    mPlayerName->setZValue(Z_TEXT_LAYER);
+    mPlayerNameText = addText("",QFont(player_family, player_size));
+    mPlayerNameText->setPos(player_x, player_y);
+    mPlayerNameText->setDefaultTextColor( QColor(player_color) );
+    mPlayerNameText->setZValue(Z_TEXT_LAYER);
 
     // text (rating)
     QString rating_family = XML::instance().readValue(XML_ITEMS_FILENAME, QList<QString>() << XML_NODE_MAIN_MENU << XML_NODE_RATING << XML_NODE_FONT << XML_NODE_FAMILY);
@@ -108,10 +108,10 @@ void MainMenu::updateItemsPositions(OrientationStatus orientation)
     int rating_x =          XML::instance().readValue(XML_ITEMS_FILENAME, QList<QString>() << XML_NODE_MAIN_MENU << XML_NODE_RATING << orientNode << XML_NODE_X).toInt();
     int rating_y =          XML::instance().readValue(XML_ITEMS_FILENAME, QList<QString>() << XML_NODE_MAIN_MENU << XML_NODE_RATING << orientNode << XML_NODE_Y).toInt();
 
-    mPlayerRating = addText("",QFont(rating_family, rating_size));
-    mPlayerRating->setPos(rating_x, rating_y);
-    mPlayerRating->setDefaultTextColor( QColor(rating_color) );
-    mPlayerRating->setZValue(Z_TEXT_LAYER);
+    mPlayerRatingText = addText("",QFont(rating_family, rating_size));
+    mPlayerRatingText->setPos(rating_x, rating_y);
+    mPlayerRatingText->setDefaultTextColor( QColor(rating_color) );
+    mPlayerRatingText->setZValue(Z_TEXT_LAYER);
 
 
 
@@ -249,15 +249,15 @@ void MainMenu::onAuthorized()
 
 void MainMenu::onGotMyRating(quint32 myRating)
 {
-  //  disconnect(Client::instance(), SIGNAL(gotMyRating(quint32)), this, SLOT(onGotMyRating(quint32)));
+    UI::instance()->setPlayerRating(PT_ME, myRating);
 
-    mPlayerName->setPlainText(UI::instance()->getPlayer(PT_ME).name);
+    mPlayerNameText->setPlainText(UI::instance()->getPlayer(PT_ME).name);
 
     QString ratingText =  (myRating == RATING_NOT_AVAILABLE) ?
                           "Your rating is not available.\nPlease visit www.site.com\nto learn how to enable it." :
                           "Your rating: " + QString::number(myRating);
 
-    mPlayerRating->setPlainText(ratingText);
+    mPlayerRatingText->setPlainText(ratingText);
 }
 
 void MainMenu::onGotMyGameTable(TABLEID id, bool isOwner)

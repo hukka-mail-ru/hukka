@@ -44,7 +44,7 @@ void FindGameDialog::onOkClicked()
     QList<Param> params;
     params << gameTime;
 
-    connect(Client::instance(), SIGNAL(gotGameTables(const QList<TABLEID>&)), this, SLOT(onGotGameTables(const QList<TABLEID>&)));
+    connect(Client::instance(), SIGNAL(gotGameTables(const QList<GameTable>&)), this, SLOT(onGotGameTables(const QList<GameTable>&)));
     Client::instance()->findGameTables(LOGIC_ID_CHESS, DEFAULT_MAXCOUNT, params);
 }
 
@@ -63,24 +63,24 @@ void FindGameDialog::onRandomGameClicked()
 
     QList<Param> empty;
 
-    connect(Client::instance(), SIGNAL(gotGameTables(const QList<TABLEID>&)), this, SLOT(onGotGameTables(const QList<TABLEID>&)));
+    connect(Client::instance(), SIGNAL(gotGameTables(const QList<GameTable>&)), this, SLOT(onGotGameTables(const QList<GameTable>&)));
     Client::instance()->getRandomGameTable(LOGIC_ID_CHESS, empty);
 }
 
 
-void FindGameDialog::onGotGameTables(const QList<TABLEID>& ids)
+void FindGameDialog::onGotGameTables(const QList<GameTable>& tables)
 {
-    disconnect(Client::instance(), SIGNAL(gotGameTables(const QList<TABLEID>&)), this, SLOT(onGotGameTables(const QList<TABLEID>&)));
+    disconnect(Client::instance(), SIGNAL(gotGameTables(const QList<GameTable>&)), this, SLOT(onGotGameTables(const QList<GameTable>&)));
 
-    if(ids.empty() || (ids.size() == 1 && ids[0] == 0))
+    if(tables.empty() || (tables.size() == 1 && tables[0].id == 0))
     {
         MainWindow::instance()->showError(tr("No game table found"));
         MainWindow::instance()->showFindGameDialog();
     }
     else
     {
-       // qDebug() << "onGotGameTables(const QList<TABLEID>& ids) " << ids.size();
-        MainWindow::instance()->showJoinGameDialog(ids);
+       // qDebug() << "onGotGameTables(const QList<GameTable>& ids) " << ids.size();
+        MainWindow::instance()->showJoinGameDialog(tables);
     }
 }
 
