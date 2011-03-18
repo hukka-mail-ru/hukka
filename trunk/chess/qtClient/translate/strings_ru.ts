@@ -591,7 +591,7 @@ Please finish it first, then create a new game.</source>
         <translation>Время игры</translation>
     </message>
     <message>
-        <location filename="../src/UI/Dialogs/JoinGameDialog.cpp" line="93"/>
+        <location filename="../src/UI/Dialogs/JoinGameDialog.cpp" line="97"/>
         <source>N/A</source>
         <translation type="unfinished"></translation>
     </message>

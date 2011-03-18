@@ -79,10 +79,7 @@ void JoinGameDialog::onGotGameTableParams(const GameTable& table)
             SLOT(onGotGameTableParams(const GameTable&)));
 
     //save the result
-    mTableToGetParams->host.name = table.host.name;
-    mTableToGetParams->host.rating = table.host.rating;
-    mTableToGetParams->time2game = table.time2game;
-    mTableToGetParams->time2step = table.time2step;
+    mTableToGetParams->operator = (table);
 
     // fill one row of the table
     tableWidget->insertRow(mCounter);
