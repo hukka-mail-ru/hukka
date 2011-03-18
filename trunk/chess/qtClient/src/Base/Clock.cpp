@@ -52,6 +52,7 @@ void Clock::moveBy(int x, int y)
 
 void Clock::start()
 {
+
     qDebug() << "Clock::start";
 
     connect(Client::instance(), SIGNAL(gameOver(const QString&)), this, SLOT(onGameOver(const QString&)));

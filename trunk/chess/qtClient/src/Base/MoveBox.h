@@ -24,6 +24,8 @@ public:
     MoveBox(QGraphicsScene* parentScene, PlayerType playerType);
     virtual ~MoveBox();
 
+    void startClocks();
+
     // change color and "your move" -> "opponent's move"
     void setActive();
     void setInactive();

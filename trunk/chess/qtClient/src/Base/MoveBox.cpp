@@ -46,9 +46,6 @@ MoveBox::MoveBox(QGraphicsScene* parentScene, PlayerType playerType):
     mRatingText->setParentItem(mBorder);
     mRatingText->setPos(borderX + ratingX, borderY + ratingY);
 
-    mMoveClock.start();
-    mGameClock.start();
-
     mMoveClock.moveBy(borderX, borderY);
     mGameClock.moveBy(borderX, borderY);
 }
@@ -57,6 +54,11 @@ MoveBox::~MoveBox() {
     // TODO Auto-generated destructor stub
 }
 
+void MoveBox::startClocks()
+{
+    mMoveClock.start();
+    mGameClock.start();
+}
 
 void MoveBox::setPlayer(const Player& player)
 {

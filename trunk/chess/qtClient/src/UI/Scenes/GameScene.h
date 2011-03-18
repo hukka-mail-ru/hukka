@@ -27,6 +27,7 @@ public:
     void initialize();
 
     void showChat();
+    void startClocks();
 
     void highlightCell(CELLID cell);
 
