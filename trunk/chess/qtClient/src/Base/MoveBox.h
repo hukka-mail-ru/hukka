@@ -14,6 +14,7 @@
 #include <QString>
 #include <QColor>
 #include <QObject>
+#include <Clock.h>
 
 #include <Defines.h>
 
@@ -42,6 +43,9 @@ private:
 
     QColor mActiveColor;
     QColor mInactiveColor;
+
+    Clock mMoveClock;
+    Clock mGameClock;
 
 };
 

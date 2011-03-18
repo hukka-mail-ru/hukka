@@ -15,7 +15,7 @@
 #include <QGraphicsTextItem>
 #include <orientation.h>
 
-class Clock: public QLabel
+class Clock: public QObject
 {
     Q_OBJECT
 
@@ -27,7 +27,12 @@ public:
 
     void getServerTime();
 
-    void updatePos(OrientationStatus orientation);
+    void moveBy(int x, int y);
+
+    void show();
+    void hide();
+    void setColor(const QColor& color);
+
 
 private:
 
@@ -42,9 +47,6 @@ private:
     qint32 mTextFontSize;
 
     QString mXMLNodeName;
-
-    QString mActiveColor;
-    QString mInactiveColor;
 
 private slots:
 

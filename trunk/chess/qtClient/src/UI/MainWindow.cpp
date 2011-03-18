@@ -313,7 +313,6 @@ void MainWindow::showGameScene(PlayerColor color)
         if(mGraphicsView->scene() == mMainMenu)
             mMainMenu->close();
 
-        mGameScene->startClocks();
         mGameScene->showChat();
 
         mGraphicsView->setScene(mGameScene);

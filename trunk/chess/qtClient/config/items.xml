@@ -143,8 +143,10 @@
                <border> <x value="200" />   <y value="5"/> <width value="182" />  <height value="115" /> </border> 
     </opponent>
 
-    <player>  <font> <family value="Helvetica [Cronyx]" />  <size value="12" /> </font>  <x value="5" />   <y value="5" /> </player>
-    <rating>  <font> <family value="Helvetica [Cronyx]" />  <size value="12" /> </font>  <x value="5" />   <y value="25" /> </rating>
+    <player>     <font> <family value="Helvetica [Cronyx]" />  <size value="12" /> </font>  <x value="5" />  <y value="5"  /> </player>
+    <rating>     <font> <family value="Helvetica [Cronyx]" />  <size value="12" /> </font>  <x value="5" />  <y value="25" /> </rating>
+    <MoveClock>  <font> <family value="Helvetica [Cronyx]" />  <size value="16" /> </font>  <x value="5" />  <y value="65" /> </MoveClock>
+    <GameClock>  <font> <family value="Helvetica [Cronyx]" />  <size value="10" /> </font>  <x value="5" />  <y value="93" /> </GameClock>
 
   </MoveBox>
 
@@ -155,22 +157,6 @@
   </Board>
 
 
-  <Clocks>
-    <MoveClock>
-        <font> <family value="Helvetica [Cronyx]" />  <size value="16" />  
-               <color> <active value="white" /> <inactive value="grey" />  </color>
-        </font>
-        <landscape> <x value="205" />  <y value="65" />  </landscape>
-    </MoveClock>
-
-    <GameClock>
-        <font>  <family value="Helvetica [Cronyx]" />  <size value="10" />
-                <color>  <active value="#FFCC00" />  <inactive value="grey" />   </color>
-        </font>
-
-        <landscape> <x value="205" />  <y value="93" />  </landscape>
-    </GameClock>
-  </Clocks>
 
 
 

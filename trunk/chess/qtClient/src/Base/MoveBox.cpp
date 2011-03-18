@@ -8,7 +8,9 @@
 #include "MoveBox.h"
 #include <XML.h>
 
-MoveBox::MoveBox(QGraphicsScene* parentScene, PlayerType playerType)
+MoveBox::MoveBox(QGraphicsScene* parentScene, PlayerType playerType):
+    mMoveClock(parentScene, QObject::tr("Move: "), SIGNAL(gotMoveTime(quint32)), XML_NODE_MOVE_CLOCK),
+    mGameClock(parentScene, QObject::tr("Game: "), SIGNAL(gotGameTime(quint32)), XML_NODE_GAME_CLOCK)
 {
     QString playerNode = (playerType == PT_ME) ? XML_NODE_ME : XML_NODE_OPPONENT;
 
@@ -43,6 +45,12 @@ MoveBox::MoveBox(QGraphicsScene* parentScene, PlayerType playerType)
     mRatingText->setDefaultTextColor(mActiveColor);
     mRatingText->setParentItem(mBorder);
     mRatingText->setPos(borderX + ratingX, borderY + ratingY);
+
+    mMoveClock.start();
+    mGameClock.start();
+
+    mMoveClock.moveBy(borderX, borderY);
+    mGameClock.moveBy(borderX, borderY);
 }
 
 MoveBox::~MoveBox() {
@@ -61,6 +69,14 @@ void MoveBox::setPlayer(const Player& player)
 
 void MoveBox::setActive()
 {
+    mMoveClock.getServerTime();
+
+    mMoveClock.show();
+    mMoveClock.setColor(mActiveColor);
+
+    mGameClock.show();
+    mGameClock.setColor(mActiveColor);
+
     mBorder->setPen(mActiveColor);
     mPlayerNameText->setDefaultTextColor(mActiveColor);
     mRatingText->setDefaultTextColor(mActiveColor);
@@ -68,6 +84,9 @@ void MoveBox::setActive()
 
 void MoveBox::setInactive()
 {
+    mMoveClock.hide();
+    mGameClock.hide();
+
     mBorder->setPen(mInactiveColor);
     mPlayerNameText->setDefaultTextColor(mInactiveColor);
     mRatingText->setDefaultTextColor(mInactiveColor);

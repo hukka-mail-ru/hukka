@@ -23,23 +23,54 @@ Clock::Clock(QGraphicsScene* parentScene, const QString& header,
     mHeader(header),
     mXMLNodeName(xmlNodeName)
 {
-    QString family = XML::instance().readValue(XML_ITEMS_FILENAME, QList<QString>() << XML_NODE_CLOCKS << mXMLNodeName << XML_NODE_FONT << XML_NODE_FAMILY);
-    int size =       XML::instance().readValue(XML_ITEMS_FILENAME, QList<QString>() << XML_NODE_CLOCKS << mXMLNodeName << XML_NODE_FONT << XML_NODE_SIZE).toInt();
-    mActiveColor =   XML::instance().readValue(XML_ITEMS_FILENAME, QList<QString>() << XML_NODE_CLOCKS << mXMLNodeName << XML_NODE_FONT << XML_NODE_COLOR << XML_NODE_ACTIVE);
-    mInactiveColor = XML::instance().readValue(XML_ITEMS_FILENAME, QList<QString>() << XML_NODE_CLOCKS << mXMLNodeName << XML_NODE_FONT << XML_NODE_COLOR << XML_NODE_INACTIVE);
+
+
+    QString family = XML::instance().readValue(XML_ITEMS_FILENAME, QList<QString>() << XML_NODE_MOVE_BOX << mXMLNodeName << XML_NODE_FONT << XML_NODE_FAMILY);
+    int size =       XML::instance().readValue(XML_ITEMS_FILENAME, QList<QString>() << XML_NODE_MOVE_BOX << mXMLNodeName << XML_NODE_FONT << XML_NODE_SIZE).toInt();
+    int x          = XML::instance().readValue(XML_ITEMS_FILENAME, QList<QString>() << XML_NODE_MOVE_BOX << mXMLNodeName << XML_NODE_X).toInt();
+    int y          = XML::instance().readValue(XML_ITEMS_FILENAME, QList<QString>() << XML_NODE_MOVE_BOX << mXMLNodeName << XML_NODE_Y).toInt();
 
     mText = mParentScene->addText("",QFont(family, size));
+    mText->setPos(x, y);
+    mText->setZValue(Z_TEXT_LAYER);
+    mText->setDefaultTextColor(QColor("white"));
+
+    qDebug() << "Clock::Clock " << x << y;
 
     connect(Client::instance(), updateSignal, this, SLOT(onGotTime(quint32)));
 
     mTimer = new QTimer(this);
     connect(mTimer, SIGNAL(timeout()), this, SLOT(onTimeout()));
+
+
+}
+
+void Clock::moveBy(int x, int y)
+{
+    mText->moveBy(x, y);
 }
 
 void Clock::start()
 {
+    qDebug() << "Clock::start";
+
     connect(Client::instance(), SIGNAL(gameOver(const QString&)), this, SLOT(onGameOver(const QString&)));
     mTimer->start(1000);
+}
+
+void Clock::show()
+{
+    mText->show();
+}
+
+void Clock::hide()
+{
+    mText->hide();
+}
+
+void Clock::setColor(const QColor& color)
+{
+    mText->setDefaultTextColor(color);
 }
 
 
@@ -55,19 +86,10 @@ void Clock::onGotTime(quint32 seconds)
  //   qDebug() << "onGotTime " << seconds;
 }
 
-void Clock::updatePos(OrientationStatus orientation)
-{
-    QString orientNode = (orientation == OrientationHorizontal) ? XML_NODE_LANDSCAPE : XML_NODE_PORTRAIT;
-
-    int x = XML::instance().readValue(XML_ITEMS_FILENAME, QList<QString>() << XML_NODE_CLOCKS << mXMLNodeName << orientNode << XML_NODE_X).toInt();
-    int y = XML::instance().readValue(XML_ITEMS_FILENAME, QList<QString>() << XML_NODE_CLOCKS << mXMLNodeName << orientNode << XML_NODE_Y).toInt();
-
-    mText->setPos(x, y);
-}
-
 
 void Clock::onTimeout()
 {
+
     if(mSeconds > 0)
     {
         mSeconds--;
@@ -82,9 +104,6 @@ void Clock::onTimeout()
     }
 
     mText->setPlainText(mHeader + Global::seconds2hrs(mSeconds));
-
-    QString color = (UI::instance()->getGameState() == GS_WAIT_FOR_OPPONENT) ? mInactiveColor : mActiveColor;
-    mText->setDefaultTextColor( QColor(color) );
 }
 
 void Clock::onGameOver(const QString& message)

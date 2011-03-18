@@ -17,7 +17,9 @@
 
 
 CaptureBox::CaptureBox(QGraphicsScene* parentScene):
-    mParentScene(parentScene)
+    mParentScene(parentScene),
+    mMeBox(NULL),
+    mOppBox(NULL)
 {
     mMeX      = XML::instance().readValue(XML_ITEMS_FILENAME, QList<QString>() << XML_NODE_CAPTURE_BOX << XML_NODE_ME << XML_NODE_X).toInt();
     mMeY      = XML::instance().readValue(XML_ITEMS_FILENAME, QList<QString>() << XML_NODE_CAPTURE_BOX << XML_NODE_ME << XML_NODE_Y).toInt();
@@ -47,10 +49,16 @@ void CaptureBox::update(const Field& field, bool white)
 {
     // remove old boxes
     if(mMeBox)
+    {
         delete mMeBox;
+        mMeBox = NULL;
+    }
 
     if(mOppBox)
+    {
         delete mOppBox;
+        mOppBox = NULL;
+    }
 
 
     // draw boxes:
