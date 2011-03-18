@@ -40,6 +40,12 @@ void GameScene::showChat()
     mChat->show();
 }
 
+void GameScene::startClocks()
+{
+    mMeMoveBox.startClocks();
+    mOppMoveBox.startClocks();
+}
+
 void GameScene::close()
 {
    if(mChat)

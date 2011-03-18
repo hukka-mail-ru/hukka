@@ -24,7 +24,6 @@ public:
           const char* updateSignal, const QString& xmlNodeName);
 
     void start();
-
     void getServerTime();
 
     void moveBy(int x, int y);
@@ -53,6 +52,7 @@ private slots:
     void onTimeout();
     void onGotTime(quint32 seconds);
     void onGameOver(const QString& message);
+
 
 };
 

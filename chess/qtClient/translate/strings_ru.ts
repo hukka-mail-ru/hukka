@@ -538,7 +538,7 @@ Please finish it first, then create a new game.</source>
         <translation type="obsolete">Игра: </translation>
     </message>
     <message>
-        <location filename="../src/UI/Scenes/GameScene.cpp" line="57"/>
+        <location filename="../src/UI/Scenes/GameScene.cpp" line="63"/>
         <source>Game menu</source>
         <translation type="unfinished">Меню игры</translation>
     </message>
@@ -736,22 +736,22 @@ Please finish it first, then create a new game.</source>
         <translation type="unfinished">Игра: </translation>
     </message>
     <message>
-        <location filename="../src/Base/MoveBox.cpp" line="63"/>
+        <location filename="../src/Base/MoveBox.cpp" line="65"/>
         <source>White</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/Base/MoveBox.cpp" line="63"/>
+        <location filename="../src/Base/MoveBox.cpp" line="65"/>
         <source>Black</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/Base/MoveBox.cpp" line="66"/>
+        <location filename="../src/Base/MoveBox.cpp" line="68"/>
         <source>N/A</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/Base/MoveBox.cpp" line="67"/>
+        <location filename="../src/Base/MoveBox.cpp" line="69"/>
         <source>Rating</source>
         <translation type="unfinished">Рейтинг</translation>
     </message>
