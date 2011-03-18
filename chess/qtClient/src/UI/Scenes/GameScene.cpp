@@ -16,7 +16,7 @@
 GameScene::GameScene(QObject *parent):
        QGraphicsScene(parent),
        mParent(parent),
-       mBoard(NULL), mCells(NULL), mPieces(NULL), mHighlights(NULL),  mGameStateText(NULL),
+       mBoard(NULL), mCells(NULL), mPieces(NULL), mHighlights(NULL),
        mChat(NULL),
        mMoveClock(this, tr("Move: "), SIGNAL(gotMoveTime(quint32)), XML_NODE_MOVE_CLOCK),
        mGameClock(this, tr("Game: "), SIGNAL(gotGameTime(quint32)), XML_NODE_GAME_CLOCK),
@@ -62,15 +62,6 @@ void GameScene::initialize()
 
     mExitButton = new Button(this, Pixmaps::get(PIX_BUTTON_EXIT), "", XML_NODE_EXIT);
     QObject::connect(mExitButton, SIGNAL(clicked()), this, SLOT(onExitClicked()));
-
-
-    QString family = XML::instance().readValue(XML_ITEMS_FILENAME, QList<QString>() << XML_NODE_GAME_STATE_TEXT << XML_NODE_FONT << XML_NODE_FAMILY);
-    int size =       XML::instance().readValue(XML_ITEMS_FILENAME, QList<QString>() << XML_NODE_GAME_STATE_TEXT << XML_NODE_FONT << XML_NODE_SIZE).toInt();
-    mTextActiveColor   =  XML::instance().readValue(XML_ITEMS_FILENAME, QList<QString>() << XML_NODE_GAME_STATE_TEXT << XML_NODE_FONT << XML_NODE_COLOR << XML_NODE_ACTIVE);
-    mTextInactiveColor =  XML::instance().readValue(XML_ITEMS_FILENAME, QList<QString>() << XML_NODE_GAME_STATE_TEXT << XML_NODE_FONT << XML_NODE_COLOR << XML_NODE_INACTIVE);
-
-    mGameStateText = addText("", QFont(family, size));
-    mGameStateText->setDefaultTextColor( QColor(mTextActiveColor) );
 
 
     connect(Client::instance(), SIGNAL(gotField(Field, bool, bool)), this, SLOT(onGotField(Field, bool, bool)));
@@ -121,11 +112,6 @@ void GameScene::updateItemsPositions(OrientationStatus orientation)
     // clocks
     mMoveClock.updatePos(orientation);
     mGameClock.updatePos(orientation);
-
-    // text
-    mTextX = XML::instance().readValue(XML_ITEMS_FILENAME, QList<QString>() << XML_NODE_GAME_STATE_TEXT << orientNode << XML_NODE_X).toInt();
-    mTextY = XML::instance().readValue(XML_ITEMS_FILENAME, QList<QString>() << XML_NODE_GAME_STATE_TEXT << orientNode << XML_NODE_Y).toInt();
-    mTextFrameWidth = XML::instance().readValue(XML_ITEMS_FILENAME, QList<QString>() << XML_NODE_GAME_STATE_TEXT << orientNode << XML_NODE_WIDTH).toInt();
 
 
     // chat

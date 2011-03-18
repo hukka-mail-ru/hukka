@@ -1,4 +1,5 @@
 #include <QTableWidgetItem>
+#include <assert.h>
 #include "JoinGameDialog.h"
 #include "MainWindow.h"
 #include "Client.h"
@@ -79,6 +80,7 @@ void JoinGameDialog::onGotGameTableParams(const GameTable& table)
             SLOT(onGotGameTableParams(const GameTable&)));
 
     //save the result
+    assert(mTableToGetParams);
     mTableToGetParams->operator = (table);
 
     // fill one row of the table

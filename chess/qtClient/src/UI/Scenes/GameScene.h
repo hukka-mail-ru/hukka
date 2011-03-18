@@ -54,13 +54,6 @@ private:
     QGraphicsItem* mHighlights; // group of Highlights
     QGraphicsItem* mNote;
 
-    QGraphicsTextItem* mGameStateText;
-    int mTextX;
-    int mTextY;
-    int mTextFrameWidth;
-    QString mTextActiveColor;
-    QString mTextInactiveColor;
-
     Button* mMenuButton;
     Button* mExitButton;
 
