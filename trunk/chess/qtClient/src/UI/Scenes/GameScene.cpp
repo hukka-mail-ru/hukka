@@ -20,9 +20,9 @@ GameScene::GameScene(QObject *parent):
        mChat(NULL),
        mMoveClock(this, tr("Move: "), SIGNAL(gotMoveTime(quint32)), XML_NODE_MOVE_CLOCK),
        mGameClock(this, tr("Game: "), SIGNAL(gotGameTime(quint32)), XML_NODE_GAME_CLOCK),
-       mCaptureBox(this),
        mMeMoveBox(this, PT_ME),
-       mOppMoveBox(this, PT_OPPONENT)
+       mOppMoveBox(this, PT_OPPONENT),
+       mCaptureBox(this)
 {
 
 }
@@ -88,7 +88,7 @@ void GameScene::onGotField(const Field& field, bool myMove, bool iAmWhite)
     updateGameField(field, iAmWhite);
     MainWindow::instance()->setMode(MW_NORMAL);
 
-    setGameStateText(UI::instance()->updateField(field, myMove, iAmWhite));
+    updateMoveBoxes(UI::instance()->updateField(field, myMove, iAmWhite));
 
     updateClocks();
 }
@@ -147,27 +147,27 @@ void GameScene::updateClocks()
 }
 
 
-void GameScene::setGameStateText(GameState gameState)
+void GameScene::updateMoveBoxes(GameState gameState)
 {
-    QString text;
-    QString color;
+    mMeMoveBox.setPlayer(UI::instance()->getPlayer(PT_ME));
+    mOppMoveBox.setPlayer(UI::instance()->getPlayer(PT_OPPONENT));
 
     switch(gameState)
     {
         case GS_WAIT_FOR_PLAYER_TOUCH:
         case GS_WAIT_FOR_PLAYER_MOVE:
         case GS_WAIT_FOR_SERVER:
-        case GS_INVALID_MOVE:       text = tr("Your move");       color = mTextActiveColor;  break;
-        case GS_WAIT_FOR_OPPONENT:  text = tr("Opponent's move"); color = mTextInactiveColor; break;
-        default: break;
+        case GS_INVALID_MOVE:
+            mMeMoveBox.setActive();
+            mOppMoveBox.setInactive();
+            break;
+        case GS_WAIT_FOR_OPPONENT:
+            mMeMoveBox.setInactive();
+            mOppMoveBox.setActive();
+            break;
+        default:
+            break;
     }
-
-    mGameStateText->setPlainText(text);
-
-    // center alignment
-    mGameStateText->setPos(mTextX + (mTextFrameWidth - mGameStateText->boundingRect().width())/2 , mTextY);
-
-    mGameStateText->setDefaultTextColor(QColor(color));
 
 }
 

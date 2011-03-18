@@ -970,15 +970,17 @@ void Client::processMessageTBM(const MessageHeader& header, const QByteArray& bu
 
         Reply* reply = (Reply*)buffer.data();
 
-        QList<TABLEID> ids;
+        QList<GameTable> tables;
         for(quint32 i=0; i < reply->count; i++)
         {
+            GameTable table;
             TABLEID* id = (TABLEID*)(buffer.data() + sizeof(Reply) + i*sizeof(TABLEID));
-     //       qDebug() << "FOUND ID" << *id;
-            ids << *id;
+            table.id = *id;
+
+            tables << table;
         }
 
-        emit gotGameTables(ids);
+        emit gotGameTables(tables);
 
    //     qDebug() << "reply->count" << reply->count ;
    //     qDebug() << "OK: findGameTables." ;
@@ -1014,9 +1016,13 @@ void Client::processMessageTBM(const MessageHeader& header, const QByteArray& bu
 
         Reply* reply = (Reply*)buffer.data();
 
-        QList<TABLEID> ids;
-        ids << reply->tableID;
-        emit gotGameTables(ids);
+        QList<GameTable> tables;
+
+        GameTable table;
+        table.id = reply->tableID;
+        tables << table;
+
+        emit gotGameTables(tables);
 
     }
 
@@ -1053,7 +1059,14 @@ void Client::processMessageTBM(const MessageHeader& header, const QByteArray& bu
 
         int* rating = (int*)(buffer.data() + sizeof(Reply) + name.size() + sizeof('\0'));
 
-        emit gotGameTableParams(name, *rating, reply->moveTime, reply->gameTime);
+        GameTable table;
+        table.id = reply->tableID;
+        table.host.name = name;
+        table.host.rating = *rating;
+        table.time2step = reply->moveTime;
+        table.time2game = reply->gameTime;
+
+        emit gotGameTableParams(table);
 
 
 

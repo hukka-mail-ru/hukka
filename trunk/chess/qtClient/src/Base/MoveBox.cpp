@@ -32,7 +32,7 @@ MoveBox::MoveBox(QGraphicsScene* parentScene, PlayerType playerType)
     mPlayerNameText = parentScene->addText("", QFont(playerNameFamily, playerNameSize));
     mPlayerNameText->setDefaultTextColor(mActiveColor);
     mPlayerNameText->setParentItem(mBorder);
-    mPlayerNameText->setPos(playerNameX, playerNameY);
+    mPlayerNameText->setPos(borderX + playerNameX, borderY + playerNameY);
 
     // Player Rating
     int ratingX           = XML::instance().readValue(XML_ITEMS_FILENAME, QList<QString>() << XML_NODE_MOVE_BOX << XML_NODE_RATING << XML_NODE_X).toInt();
@@ -42,7 +42,7 @@ MoveBox::MoveBox(QGraphicsScene* parentScene, PlayerType playerType)
     mRatingText = parentScene->addText("", QFont(ratingFamily, ratingSize));
     mRatingText->setDefaultTextColor(mActiveColor);
     mRatingText->setParentItem(mBorder);
-    mRatingText->setPos(ratingX, ratingY);
+    mRatingText->setPos(borderX + ratingX, borderY + ratingY);
 }
 
 MoveBox::~MoveBox() {
@@ -52,11 +52,11 @@ MoveBox::~MoveBox() {
 
 void MoveBox::setPlayer(const Player& player)
 {
-    QString playerColorText = (player.color == PC_WHITE) ? tr("White") : tr("Black");
+    QString playerColorText = (player.color == PC_WHITE) ? QObject::tr("White") : QObject::tr("Black");
     mPlayerNameText->setPlainText(playerColorText + ": " + player.name);
 
-    QString ratingText = (player.rating == RATING_NOT_AVAILABLE) ? tr("N/A") : QString::number(player.rating);
-    mPlayerNameText->setPlainText(tr("Rating") + ": " + ratingText);
+    QString ratingText = (player.rating == RATING_NOT_AVAILABLE) ? QObject::tr("N/A") : QString::number(player.rating);
+    mRatingText->setPlainText(QObject::tr("Rating") + ": " + ratingText);
 }
 
 void MoveBox::setActive()

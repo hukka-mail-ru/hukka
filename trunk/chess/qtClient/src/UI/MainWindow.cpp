@@ -247,9 +247,9 @@ void MainWindow::showFindGameDialog()
 }
 
 
-void MainWindow::showJoinGameDialog(const QList<TABLEID>& tableIDs)
+void MainWindow::showJoinGameDialog(const QList<GameTable>& tables)
 {
-    setCurrentDialog(new JoinGameDialog(tableIDs, this));
+    setCurrentDialog(new JoinGameDialog(tables, this));
     setMode(MW_NORMAL);
 }
 

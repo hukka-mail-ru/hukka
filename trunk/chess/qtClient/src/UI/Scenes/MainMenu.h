@@ -43,8 +43,8 @@ private:
 
     Chat* mChat;
 
-    QGraphicsTextItem* mPlayerName;
-    QGraphicsTextItem* mPlayerRating;
+    QGraphicsTextItem* mPlayerNameText;
+    QGraphicsTextItem* mPlayerRatingText;
 
     bool mHostGame;
 

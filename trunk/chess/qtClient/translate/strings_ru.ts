@@ -180,48 +180,48 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/Network/Client.cpp" line="1195"/>
+        <location filename="../src/Network/Client.cpp" line="1208"/>
         <source>Your rating has been increased to</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/Network/Client.cpp" line="1196"/>
+        <location filename="../src/Network/Client.cpp" line="1209"/>
         <source>Your rating has been decreased to</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/Network/Client.cpp" line="1197"/>
+        <location filename="../src/Network/Client.cpp" line="1210"/>
         <source>Your rating has been slightly increased.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/Network/Client.cpp" line="1198"/>
+        <location filename="../src/Network/Client.cpp" line="1211"/>
         <source>Your rating hasn&apos;t been affected because of too few number of moves.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/Network/Client.cpp" line="1199"/>
+        <location filename="../src/Network/Client.cpp" line="1212"/>
         <source>Your rating is not available.
 Please visit www.site.com to learn how to enable it.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/Network/Client.cpp" line="1203"/>
+        <location filename="../src/Network/Client.cpp" line="1216"/>
         <source>You have won!</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/Network/Client.cpp" line="1208"/>
+        <location filename="../src/Network/Client.cpp" line="1221"/>
         <source>Time&apos;s up. You have won!</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/Network/Client.cpp" line="1228"/>
+        <location filename="../src/Network/Client.cpp" line="1241"/>
         <source>Game over.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/Network/Client.cpp" line="1256"/>
+        <location filename="../src/Network/Client.cpp" line="1269"/>
         <source>Your opponent has rejected the draw</source>
         <translation type="unfinished"></translation>
     </message>
@@ -273,12 +273,12 @@ Please visit www.site.com to learn how to enable it.</source>
         <translation type="obsolete">Невозможно послать сообщение общего чата на сервере: </translation>
     </message>
     <message>
-        <location filename="../src/Network/Client.cpp" line="1161"/>
+        <location filename="../src/Network/Client.cpp" line="1174"/>
         <source>Can&apos;t join to the game table.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/Network/Client.cpp" line="1178"/>
+        <location filename="../src/Network/Client.cpp" line="1191"/>
         <source>Can&apos;t reject the game.</source>
         <translation type="unfinished"></translation>
     </message>
@@ -319,10 +319,10 @@ The rating is not affected because of too few number of moves.</source>
     <message>
         <location filename="../src/Network/Client.cpp" line="876"/>
         <location filename="../src/Network/Client.cpp" line="906"/>
-        <location filename="../src/Network/Client.cpp" line="1162"/>
-        <location filename="../src/Network/Client.cpp" line="1179"/>
-        <location filename="../src/Network/Client.cpp" line="1233"/>
-        <location filename="../src/Network/Client.cpp" line="1258"/>
+        <location filename="../src/Network/Client.cpp" line="1175"/>
+        <location filename="../src/Network/Client.cpp" line="1192"/>
+        <location filename="../src/Network/Client.cpp" line="1246"/>
+        <location filename="../src/Network/Client.cpp" line="1271"/>
         <source>Internal server error </source>
         <translation>Внутренняя ошибка сервера </translation>
     </message>
@@ -359,8 +359,8 @@ The rating is not affected because of too few number of moves.</source>
     <message>
         <location filename="../src/Network/Client.cpp" line="942"/>
         <location filename="../src/Network/Client.cpp" line="960"/>
-        <location filename="../src/Network/Client.cpp" line="1001"/>
-        <location filename="../src/Network/Client.cpp" line="1144"/>
+        <location filename="../src/Network/Client.cpp" line="1003"/>
+        <location filename="../src/Network/Client.cpp" line="1157"/>
         <source>Internal server error</source>
         <translation>Внутренняя ошибка сервера</translation>
     </message>
@@ -369,7 +369,7 @@ The rating is not affected because of too few number of moves.</source>
         <translation type="obsolete">Неправильный параметр. Попытка удалить неправильный игровой стол?</translation>
     </message>
     <message>
-        <location filename="../src/Network/Client.cpp" line="1068"/>
+        <location filename="../src/Network/Client.cpp" line="1081"/>
         <source>TBM Error: </source>
         <translation type="unfinished"></translation>
     </message>
@@ -382,18 +382,18 @@ The rating is not affected because of too few number of moves.</source>
         <translation type="obsolete">Победа!</translation>
     </message>
     <message>
-        <location filename="../src/Network/Client.cpp" line="1213"/>
+        <location filename="../src/Network/Client.cpp" line="1226"/>
         <source>You have lost!</source>
         <translation type="unfinished">Вы проиграли!</translation>
     </message>
     <message>
-        <location filename="../src/Network/Client.cpp" line="1218"/>
+        <location filename="../src/Network/Client.cpp" line="1231"/>
         <source>Time&apos;s up. You have lost!</source>
         <translation type="unfinished">Время вышло. Вы проиграли!</translation>
     </message>
     <message>
-        <location filename="../src/Network/Client.cpp" line="1223"/>
-        <location filename="../src/Network/Client.cpp" line="1255"/>
+        <location filename="../src/Network/Client.cpp" line="1236"/>
+        <location filename="../src/Network/Client.cpp" line="1268"/>
         <source>A draw.</source>
         <translation>Ничья.</translation>
     </message>
@@ -402,22 +402,22 @@ The rating is not affected because of too few number of moves.</source>
         <translation type="obsolete">Ваш противник не согласен на ничью</translation>
     </message>
     <message>
-        <location filename="../src/Network/Client.cpp" line="1257"/>
+        <location filename="../src/Network/Client.cpp" line="1270"/>
         <source>Please wait for your next move to offer a draw</source>
         <translation>Подождите своего хода, а затем предложите ничью</translation>
     </message>
     <message>
-        <location filename="../src/Network/Client.cpp" line="1307"/>
+        <location filename="../src/Network/Client.cpp" line="1320"/>
         <source>CHS Error: </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/Network/Client.cpp" line="1337"/>
+        <location filename="../src/Network/Client.cpp" line="1350"/>
         <source>CHAT Error: </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/Network/Client.cpp" line="1390"/>
+        <location filename="../src/Network/Client.cpp" line="1403"/>
         <source>Server doesn&apos;t respond</source>
         <translation>Сервер не отвечает</translation>
     </message>
@@ -545,14 +545,12 @@ Please finish it first, then create a new game.</source>
         <translation type="unfinished">Меню игры</translation>
     </message>
     <message>
-        <location filename="../src/UI/Scenes/GameScene.cpp" line="160"/>
         <source>Your move</source>
-        <translation type="unfinished">Ваш ход</translation>
+        <translation type="obsolete">Ваш ход</translation>
     </message>
     <message>
-        <location filename="../src/UI/Scenes/GameScene.cpp" line="161"/>
         <source>Opponent&apos;s move</source>
-        <translation type="unfinished">Ход противника</translation>
+        <translation type="obsolete">Ход противника</translation>
     </message>
 </context>
 <context>
@@ -591,6 +589,11 @@ Please finish it first, then create a new game.</source>
         <location filename="../src/UI/Dialogs/JoinGameDialog.cpp" line="29"/>
         <source>Game time</source>
         <translation>Время игры</translation>
+    </message>
+    <message>
+        <location filename="../src/UI/Dialogs/JoinGameDialog.cpp" line="93"/>
+        <source>N/A</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -652,24 +655,8 @@ Please finish it first, then create a new game.</source>
 <context>
     <name>MoveBox</name>
     <message>
-        <location filename="../src/Base/MoveBox.cpp" line="55"/>
-        <source>White</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../src/Base/MoveBox.cpp" line="55"/>
-        <source>Black</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../src/Base/MoveBox.cpp" line="58"/>
-        <source>N/A</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../src/Base/MoveBox.cpp" line="59"/>
         <source>Rating</source>
-        <translation type="unfinished">Рейтинг</translation>
+        <translation type="obsolete">Рейтинг</translation>
     </message>
 </context>
 <context>
@@ -736,6 +723,34 @@ Please finish it first, then create a new game.</source>
         <location filename="../src/UI/Dialogs/OptionsDialog.cpp" line="88"/>
         <source>Please restart the game to apply the language settings</source>
         <translation>Пожалуйста перезапустите игру, чтобы настройки языка вступили в силу</translation>
+    </message>
+</context>
+<context>
+    <name>QObject</name>
+    <message>
+        <location filename="../src/Base/MoveBox.cpp" line="55"/>
+        <source>White</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/Base/MoveBox.cpp" line="55"/>
+        <source>Black</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/Base/MoveBox.cpp" line="58"/>
+        <source>N/A</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/Base/MoveBox.cpp" line="59"/>
+        <source>Rating</source>
+        <translation type="unfinished">Рейтинг</translation>
+    </message>
+    <message>
+        <location filename="../src/Base/Defines.h" line="136"/>
+        <source>offline</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
