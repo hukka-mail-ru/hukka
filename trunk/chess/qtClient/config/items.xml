@@ -173,11 +173,5 @@
   </Clocks>
 
 
-  <GameStateText>
-        <font>  <family value="Helvetica [Cronyx]" />  <size value="10" />  
-			    <color> <active value="white" /> <inactive value="#FFCC00" />  </color>  
-        </font>
-        <landscape> <x value="5" /> <y value="13" /> <width value="385"/> </landscape>
-  </GameStateText>
 
 </xml>

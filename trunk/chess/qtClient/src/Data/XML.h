@@ -44,7 +44,6 @@
 #define XML_NODE_MOVE_BOX         "MoveBox"
 #define XML_NODE_BOARD            "Board"
 #define XML_NODE_CLOCKS           "Clocks"
-#define XML_NODE_GAME_STATE_TEXT  "GameStateText"
 
 // Buttons
 #define XML_NODE_NEW_GAME         "NewGame"
