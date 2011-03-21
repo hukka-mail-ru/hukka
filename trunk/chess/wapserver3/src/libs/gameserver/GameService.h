@@ -177,6 +177,13 @@ private:
 
             cmdRating( _pClientMsg->GetTo() );
         }
+        else if ( cmd == CMD_GET_OPPONENT )
+        {
+            std::cout << "GameService::newMsg from = " << _pClientMsg->GetTo() << " cmd = CMD_GET_OPPONENT" <<  std::endl;
+            uint32_t *nTableID = (uint32_t*) &vecCmd[0];
+
+            cmdGetOpponent( _pClientMsg->GetTo(), *nTableID );
+        }
 		else
 		{
 			std::cout << "GameService::newMsg from = " << _pClientMsg->GetTo() << " cmd = ??? " << (int)_pClientMsg->GetCommand() << std::endl;
@@ -235,7 +242,7 @@ private:
 	{
 
 	    AnsOpponentMessage message;
-	    message.cmd = ANS_OPPONENT;
+	    message.cmd = ANS_OPPONENT_JOINED;
 	    message.tableID = _nTableID;
 	    message.playerID = _nPlayerID;
 	    message.rating = m_RatingTable.getRating( _nPlayerID );
@@ -265,6 +272,44 @@ private:
 			m_pSocket->AddMsg(Msg);
 		}
 	}
+
+    void cmdGetOpponent(uint32_t _nPlayerID, uint32_t _nTableID)
+    {
+        std::cerr << "getOpponent: " << std::endl;
+
+        uint32_t nPlayer0 = 0;
+        uint32_t nPlayer1 = 0;
+
+        GetSqlGameTable()->getIDPlayer0( _nTableID, nPlayer0 );
+        GetSqlGameTable()->getIDPlayer1( _nTableID, nPlayer1 );
+
+        uint32_t opponentID = (_nPlayerID == nPlayer0) ? nPlayer1 : nPlayer0;
+
+        AnsOpponentMessage message;
+        message.cmd = ANS_GET_OPPONENT;
+        message.tableID = _nTableID;
+        message.playerID = opponentID;
+        message.rating = m_RatingTable.getRating( opponentID );
+
+
+        TVecChar vecCmd;
+        ClientMsg Msg;
+
+        vecCmd.assign( (char*)&message, (char*)(&message)+sizeof(message));
+
+        // Get opponent name by ID
+        SqlTableUsers wsUsers;
+        TVecChar opponentName;
+        wsUsers.GetUserName(opponentID, &opponentName);
+
+        vecCmd.reserve( vecCmd.size() + opponentName.size());
+        vecCmd.insert( vecCmd.end(), opponentName.begin(), opponentName.end());
+
+        Msg.InitMsg(_nPlayerID, vecCmd);
+
+        m_pSocket->AddMsg(Msg);
+
+    }
 
 	void cmdOpAgree( uint32_t _nPlayerID, uint32_t _nTableID )
 	{

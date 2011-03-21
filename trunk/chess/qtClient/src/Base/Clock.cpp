@@ -35,7 +35,7 @@ Clock::Clock(QGraphicsScene* parentScene, const QString& header,
     mText->setZValue(Z_TEXT_LAYER);
     mText->setDefaultTextColor(QColor("white"));
 
-    qDebug() << "Clock::Clock " << x << y;
+//    qDebug() << "Clock::Clock " << x << y;
 
     connect(Client::instance(), updateSignal, this, SLOT(onGotTime(quint32)));
 
@@ -53,7 +53,7 @@ void Clock::moveBy(int x, int y)
 void Clock::start()
 {
 
-    qDebug() << "Clock::start";
+ //   qDebug() << "Clock::start";
 
     connect(Client::instance(), SIGNAL(gameOver(const QString&)), this, SLOT(onGameOver(const QString&)));
     mTimer->start(1000);
