@@ -260,26 +260,18 @@ void MainMenu::onGotMyRating(quint32 myRating)
     mPlayerRatingText->setPlainText(ratingText);
 }
 
-void MainMenu::onGotMyGameTable(TABLEID id, bool isOwner)
+void MainMenu::onGotMyGameTable(TABLEID tableID, bool isOwner)
 {
     disconnect(Client::instance(), SIGNAL(gotMyGameTable(TABLEID, bool)), this, SLOT(onGotMyGameTable(TABLEID, bool)));
 
     qDebug() << "isOwner: " << isOwner;
 
-    if(id)
+    if(tableID)
     {
- //       UI::instance()->setOwner(isOwner);
+        UI::instance()->setGameTable(tableID);
 
-        MainWindow::instance()->showMessage(
-                tr("You have an unfinished game. Please finish it."));
-
-        Client::instance()->setGameStatus(GAM_STARTED);
-
-        UI::instance()->setGameTable(id);
-
-        MainWindow::instance()->showGameScene(PC_WHITE);
-
-        UI::instance()->startGame();
+        connect(Client::instance(), SIGNAL(gotOpponent(const QString&, int)), this, SLOT(onGotOpponent(const QString&, int)));
+        Client::instance()->getOpponent(tableID);
     }
     else
     {
@@ -294,6 +286,26 @@ void MainMenu::onGotMyGameTable(TABLEID id, bool isOwner)
             MainWindow::instance()->showFindGameDialog();
         }
     }
+
+
+}
+
+void MainMenu::onGotOpponent(const QString& opponentName, int opponentRating)
+{
+    disconnect(Client::instance(), SIGNAL(gotOpponent(const QString&, int)), this, SLOT(onGotOpponent(const QString&, int)));
+   UI::instance()->setPlayerName(PT_OPPONENT, opponentName);
+   UI::instance()->setPlayerRating(PT_OPPONENT, opponentRating);
+
+   MainWindow::instance()->showMessage(
+           tr("You have an unfinished game. Please finish it."));
+
+   Client::instance()->setGameStatus(GAM_STARTED);
+
+
+   MainWindow::instance()->showGameScene(PC_WHITE);
+
+   UI::instance()->startGame();
+
 }
 
 

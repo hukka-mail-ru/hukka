@@ -416,7 +416,24 @@ void Client::joinGame (TABLEID tableID)
 
 }
 
+void Client::getOpponent (TABLEID tableID)
+{
+    QT_TRACEOUT;
 
+    try {
+        assert(tableID);
+        assert(mClientAuthorized);
+
+        // send command
+        QByteArray data = Q_BYTE_ARRAY(tableID);
+        sendCmd(CHS, CMD_GET_OPPONENT, data);
+    }
+    catch (Exception& e) {
+        e.add(tr("Can't get opponent. Table with ID ") + QString::number(tableID) + tr(" on server: ") + mSocket.peerName() + ". ");
+        emit error (e.what());
+    }
+
+}
 
 
 /*====================================================================================================
@@ -1091,7 +1108,25 @@ void Client::processMessageTBM(const MessageHeader& header, const QByteArray& bu
 void Client::processMessageCHS(const MessageHeader& header, const QByteArray& buffer)
 {
     // OPPONENT CONNECTED
-    if(header.cmd == ANS_OPPONENT)
+    if(header.cmd == ANS_OPPONENT_JOINED)
+    {
+        struct Reply {
+            TABLEID     tableID;
+            PLAYERID    opponentID;
+            quint32     rating;
+        };
+
+        Reply* reply = (Reply*)buffer.data();
+
+        // Opponent name goes after the struct 'Reply'
+        QString opponentName = "";
+        opponentName.append(QByteArray(buffer.data() + sizeof(Reply), buffer.size() - sizeof(Reply)));
+
+        mGameStatus = GAM_OPPONENT_JOINED;
+        qDebug() << mName << "emit opponentJoined " << reply->opponentID;
+        emit opponentJoined(opponentName, reply->rating);
+    }
+    else if(header.cmd == ANS_GET_OPPONENT)
     {
         struct Reply {
             TABLEID     tableID;
@@ -1107,7 +1142,7 @@ void Client::processMessageCHS(const MessageHeader& header, const QByteArray& bu
 
         mGameStatus = GAM_OPPONENT_JOINED;
         //qDebug() << mName << "GAM_OPPONENT_JOINED " << reply->opponentID;
-        emit opponentJoined(opponentName, reply->rating);
+        emit gotOpponent(opponentName, reply->rating);
     }
 
     // GAME STARTED
@@ -1315,6 +1350,19 @@ void Client::processMessageCHS(const MessageHeader& header, const QByteArray& bu
         struct Reply {
             char        err;
         };
+
+        QString str = Global::timestamp() + "  ERR: " + "\n";
+
+        str += "header.cmd: " + QString::number((int)(unsigned char)header.cmd) + "\n";
+        str += "header.service: " + QString::number(header.service) + "\n";
+        str += "header.sign: " + QString::number((int)(unsigned char)header.sign) + "\n";
+        str += "header.size: " + QString::number(header.size) + "\n";
+        str += "header.version: " + QString::number((int)(unsigned char)header.version) + "\n";
+
+        for(int i=0; i<buffer.size(); i++)
+            str += QString::number((int)(unsigned char)buffer[i]) + " ";
+        str += "\n ANS_OPPONENT_JOINED : " + QString::number(ANS_OPPONENT_JOINED) + "\n";
+        qDebug() << str;
 
         Reply* reply = (Reply*)buffer.data();
         emit error(tr("CHS Error: ") + QString::number((int)reply->err));

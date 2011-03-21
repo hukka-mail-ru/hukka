@@ -90,6 +90,7 @@ public:
         void getTime             (TABLEID tableID);
         void timeout             (TABLEID tableID);
         void getMyRating         ();
+        void getOpponent         (TABLEID tableID);
 
         // draw
         void offerDraw           (TABLEID tableID);
@@ -115,6 +116,7 @@ signals:
         void joined(TABLEID id);
 
         void opponentJoined(const QString& opponentName, int opponentRating);
+        void gotOpponent(const QString& opponentName, int opponentRating);
 
         void gameStarted();
         void gameRejected();

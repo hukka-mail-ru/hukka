@@ -64,7 +64,7 @@ const int		CMD_GET_FIELD	= 89;
 const int		CMD_LOOSE	= 90;
 const int    	ANS_FIELD	= 91;
 const int		ANS_OSTEP	= 92;
-const int		ANS_OPPONENT	= 93;
+const int		ANS_OPPONENT_JOINED	= 93;
 const int		CMD_OPAGREE = 94;
 const int		CMD_OPREJECT = 95;
 const int		ANS_OPREJECT = 96;
@@ -77,6 +77,8 @@ const int       ANS_OPAGREE_FAILED     = 102;
 const int       CMD_TIMEOUT            = 103;
 const int       CMD_RATING             = 104;
 const int       ANS_RATING             = 105;
+const int       CMD_GET_OPPONENT       = 106;
+const int       ANS_GET_OPPONENT       = 107;
 
 const int		P_DONE		= 20;
 const int		P_FAILED	= 21;
@@ -156,7 +158,7 @@ public:
                 case ANS_START    : res = "ANS_START"; break;
                 case ANS_FIELD    : res = "ANS_FIELD"; break;
                 case ANS_OSTEP    : res = "ANS_OSTEP"; break;
-                case ANS_OPPONENT     : res = "ANS_OPPONENT"; break;
+                case ANS_OPPONENT_JOINED     : res = "ANS_OPPONENT_JOINED"; break;
                 case ANS_OPREJECT  : res = "ANS_OPREJECT"; break;
                 case ANS_CHECK_TIME_NOT_SET  : res = "ANS_CHECK_TIME_NOT_SET"; break;
                 case ANS_CHECK_TIME_STEP  : res = "ANS_CHECK_TIME_STEP"; break;
@@ -164,6 +166,9 @@ public:
                 case ANS_OPAGREE_FAILED  : res = "ANS_OPAGREE_FAILED"; break;
                 case CMD_RATING  : res = "CMD_RATING"; break;
                 case ANS_RATING  : res = "ANS_RATING"; break;
+                case CMD_GET_OPPONENT  : res = "CMD_GET_OPPONENT"; break;
+                case ANS_GET_OPPONENT  : res = "ANS_GET_OPPONENT"; break;
+
                 default:        res = "UNKNOWN";break;
         }
 
