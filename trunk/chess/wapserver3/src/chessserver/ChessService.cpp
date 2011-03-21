@@ -17,40 +17,12 @@ ChessService::~ChessService()
 void ChessService::sendAnsStart(uint32_t _nTableID, uint32_t nPlayer1, uint32_t nPlayer2)
 {
 //TODO INIT FIELD!
-    ChessBigMsg Msg;
-    Msg.m_chCmd = ANS_START;
-    Msg.m_nTableID = _nTableID;
+    GameMsgBase msg;
+    msg.m_chCmd = ANS_START;
+    msg.m_nTableID = _nTableID;
 
-    ChessLogic* logic = new ChessLogic(); // if move to after Msg.m_nTableID = _nTableID; - error ?
-
-    std::copy(logic->GetPosForClient()->begin(),
-    	       	  logic->GetPosForClient()->end(), (uint8_t*)&Msg.m_arField);
-
-//    for ( int i = 0;  i <  sizeof(Msg.m_arField)/sizeof(Msg.m_arField[0]); ++i )
-//        std::cout << (int) Msg.m_arField[i] << " ";
-//    std::cout << "]" << std::endl;
-
-    uint32_t nXPlayer = 0;
-    m_SqlChessTable.getXPlayer(_nTableID, nXPlayer);
-
-	Msg.m_nPlayerNbr = 0;
-    Msg.m_arField[CH_COLOR] = nXPlayer;
-    Msg.m_arField[CH_CUR_MOVE] = (nXPlayer == 0) ? 1 : 0;
-    sendMsg( nPlayer1, &Msg, sizeof( Msg ) );
-
-    /*
-    std::cout << " ChessService::sendAnsStart: Msg.m_chCmd = " << (int) Msg.m_chCmd;
-    std::cout << " Msg.m_nTableID = " << (int) Msg.m_nTableID << " ";
-    std::cout << " Msg.m_nPlayerNbr = " << (int) Msg.m_nPlayerNbr << " " << std::endl;
-    std::cout << " Msg.m_arField = [ " ;
-      */
-
-	Msg.m_nPlayerNbr = 1;
-    Msg.m_arField[CH_COLOR] = nXPlayer;
-    Msg.m_arField[CH_CUR_MOVE] = (nXPlayer == 1) ? 1 : 0;
-    sendMsg( nPlayer2, &Msg, sizeof( Msg ) );
-
-    delete logic;
+    sendMsg( nPlayer1, &msg, sizeof( msg ) );
+    sendMsg( nPlayer2, &msg, sizeof( msg ) );
 }
 
 void ChessService::cmdGetField( uint32_t _nPlayerID, uint32_t _nTableID )
