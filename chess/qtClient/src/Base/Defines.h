@@ -201,6 +201,55 @@ public:
             default:  return QString::number((int)service);
         }
     }
+
+
+    static QString getGameResultText(int status, int rating)
+    {
+        QString text = "";
+        QString ratingText = QString::number(rating);
+        QString ratingIncreased = QObject::tr("Your rating has been increased to");
+        QString ratingDecreased = QObject::tr("Your rating has been decreased to");
+        QString ratingSlightlyIncreased = QObject::tr("Your rating has been slightly increased.");
+        QString ratingNotAffected = QObject::tr("Your rating hasn't been affected because of too few number of moves.");
+        QString ratingUnavailable = QObject::tr("Your rating is not available.\nPlease visit www.site.com to learn how to enable it.");
+
+        switch(status)
+        {
+            case P_WIN:        text = QObject::tr("You have won!") + "\n";
+                               text += (rating == RATING_NOT_AVAILABLE) ? ratingUnavailable :
+                                       ratingIncreased + " " + ratingText;
+                               break;
+
+            case P_WIN_TIME:   text = QObject::tr("Time's up. You have won!") + "\n";
+                               text += (rating == RATING_NOT_AVAILABLE) ? ratingUnavailable :
+                                       ratingIncreased + " " + ratingText;
+                               break;
+
+            case P_LOOSE:      text = QObject::tr("You have lost!") + "\n";
+                               text += (rating == RATING_NOT_AVAILABLE) ? ratingUnavailable :
+                                       ratingDecreased + " " + ratingText;
+                               break;
+
+            case P_LOOSE_TIME: text = QObject::tr("Time's up. You have lost!") + "\n";
+                               text += (rating == RATING_NOT_AVAILABLE) ? ratingUnavailable :
+                                       ratingDecreased + " " + ratingText;
+                               break;
+
+            case P_DRAW:       text = QObject::tr("A draw.") + "\n";
+                               text += (rating == RATING_NOT_AVAILABLE) ? ratingUnavailable :
+                                       ratingSlightlyIncreased;
+                               break;
+
+            case P_NO_RES:     text = "\n";
+                               text += (rating == RATING_NOT_AVAILABLE) ? ratingUnavailable :
+                                       ratingNotAffected;
+                               break;
+
+            default:   break;
+        }
+
+        return text;
+    }
 };
 
 #endif /* DEFINES_H_ */
