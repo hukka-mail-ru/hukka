@@ -345,17 +345,6 @@ bool TbmCommands::Find(uint32_t _nLogicID, uint32_t _nPlayerID, uint32_t _nCount
 
 bool TbmCommands::Delete(uint32_t _nLogicID, uint32_t _nPlayerID, uint32_t _nTableID)
 {
-    TVecUINT vecTableIDs;
-
-    if (!GetMyTable(_nLogicID, _nPlayerID, &vecTableIDs))
-    {
-        return false;
-    }
-
-    if (std::find(vecTableIDs.begin(), vecTableIDs.end(), _nTableID) == vecTableIDs.end())
-    {
-        return false;
-    }
 
     SqlTable sqlLogicTable("");
     CMyStr strWhere;
@@ -363,25 +352,12 @@ bool TbmCommands::Delete(uint32_t _nLogicID, uint32_t _nPlayerID, uint32_t _nTab
 
     if ( GetLogicTable(_nLogicID, &sqlLogicTable) )
     {
-     /*   strWhere = "TableID = " + CMyStr(_nTableID);
-        sqlLogicTable.Select("State", strWhere.c_str(), &tbl);
-
-        if (atoi((tbl.begin()->at(0)).c_str()) > TABLE_OPEN)
-        {
-            return false;
-        }
-
-        CMyStr strField = "State";
-        CMyStr strValue = "7";*/
         CMyStr strKey = "TableID";
         CMyStr strTableId = CMyStr(_nTableID);
 
-        // why update ???
-      //  sqlLogicTable.Update(strField.c_str(), strValue.c_str(), strKey.c_str(), strTableId.c_str());
-
         sqlLogicTable.Delete(strKey.c_str(), strTableId.c_str());
-    }
 
+    }
     return true;
 }
 
@@ -396,9 +372,6 @@ bool TbmCommands::FindEmpty(int _nLogicID, int _nPlayerID, TVecUINT* vecRes )
 
 		CMyStr strWhere = "IDPlayer1 IS NULL AND State = " + CMyStr(ST_OPEN) + " AND IDPlayer0 <> " + CMyStr(_nPlayerID);
 
-        /* find empry :
-		SELECT TableID FROM tb<Logic>LogicTable
-		WHERE IDPlayer1 IS NULL AND State = 1 IDPlayer 0 <> _nPlayerID*/
 		sqlLogicTable.Select("TableID", strWhere.c_str(), &tbl);
 
         	vecRes->resize(tbl.size());

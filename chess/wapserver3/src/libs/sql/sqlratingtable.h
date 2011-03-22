@@ -15,8 +15,10 @@ public:
 
 	uint32_t	getRating( uint32_t _nPlayerID );	             // can return RATING_NOT_AVAILABLE
     uint32_t    getRatingEvenUnavailable( uint32_t _nPlayerID ); // can't return RATING_NOT_AVAILABLE
+    uint32_t    getLastGameResult( uint32_t _nPlayerID );
 
     void		setRating( uint32_t _nPlayerID, uint32_t _nRating );
+    void        setLastGameResult( uint32_t playerID, int result );
 
 private:
 

@@ -16,7 +16,6 @@ ChessService::~ChessService()
 
 void ChessService::sendAnsStart(uint32_t _nTableID, uint32_t nPlayer1, uint32_t nPlayer2)
 {
-//TODO INIT FIELD!
     GameMsgBase msg;
     msg.m_chCmd = ANS_START;
     msg.m_nTableID = _nTableID;
