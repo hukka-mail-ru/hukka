@@ -6,6 +6,8 @@
 
 WaitJoinDialog::WaitJoinDialog(QWidget *parent):   MyDialog(parent)
 {
+    qDebug() << "WaitJoinDialog::WaitJoinDialog";
+
     label = new QLabel(tr("Please wait until an opponent joins your game..."), this);
     exitButton = new QPushButton(tr("Exit"), this);
     connect(exitButton, SIGNAL(clicked()), this, SLOT(onExitClicked()));
@@ -33,8 +35,8 @@ void  WaitJoinDialog::onGameTableDeleted()
 
 void WaitJoinDialog::onOpponentJoined(const QString& opponentName, int opponentRating)
 {
-    disconnect(Client::instance(), SIGNAL(opponentJoined(const QString&, int)), this, SLOT(onOpponentJoined(const QString&, int)));
-//    qDebug() << "WaitJoinDialog::onOpponentJoined";
+    bool res = disconnect(Client::instance(), SIGNAL(opponentJoined(const QString&, int)), this, SLOT(onOpponentJoined(const QString&, int)));
+    qDebug() << "WaitJoinDialog::onOpponentJoined " << res;
 
     int tableID = UI::instance()->getGameTable();
 
@@ -47,7 +49,7 @@ void WaitJoinDialog::onOpponentJoined(const QString& opponentName, int opponentR
     {
         MainWindow::instance()->setMode(MW_WAIT);
         connect(Client::instance(), SIGNAL(gameStarted()), this, SLOT(onGameStarted()));
-        Client::instance()->startGame(tableID);
+        Client::instance()->approveGame(tableID);
     }
     else
     {

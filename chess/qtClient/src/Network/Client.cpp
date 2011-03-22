@@ -446,7 +446,7 @@ void Client::getOpponent (TABLEID tableID)
  (___/ (__)(_)(_)(_)\_)(__)    \__/(_)(_)(_/\/\_)(___)
 ====================================================================================================*/
 
-void Client::startGame (TABLEID tableID)
+void Client::approveGame (TABLEID tableID)
 {
     QT_TRACEOUT;
 
