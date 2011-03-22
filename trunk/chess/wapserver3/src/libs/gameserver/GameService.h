@@ -662,7 +662,9 @@ private:
 		{
             sCmd0.m_chData = (char) P_NO_RES;
 			sCmd1.m_chData = (char) P_NO_RES;
-   //         GetSqlGameTable()->setState( _nTableID, ST_NO_RES );
+
+		    m_RatingTable.setLastGameResult(nPlayer0, P_NO_RES);
+		    m_RatingTable.setLastGameResult(nPlayer1, P_NO_RES);
         }
 	    else if ( _Result == IGameLogic::Win )
 	    {
@@ -670,14 +672,12 @@ private:
 	        {
 	            sCmd0.m_chData = (char) P_WIN;
 	            sCmd1.m_chData = (char) P_LOOSE;
-	//            GetSqlGameTable()->setState( _nTableID, ST_WIN_X );
 	            setRating( nPlayer0, nPlayer1 );
 	        }
 	        else
 	        {
 	            sCmd0.m_chData = ( char ) P_LOOSE;
 	            sCmd1.m_chData = ( char ) P_WIN;
-	//            GetSqlGameTable()->setState( _nTableID, ST_WIN_0 );
 	            setRating( nPlayer1, nPlayer0 );
 	        }
 
@@ -690,7 +690,6 @@ private:
 
 	            sCmd0.m_chData = ( char ) P_LOOSE;
 	            sCmd1.m_chData = ( char ) P_WIN;
-	//            GetSqlGameTable()->setState( _nTableID, ST_WIN_0 );
 	            setRating( nPlayer1, nPlayer0 );
 	        }
 	        else
@@ -699,7 +698,6 @@ private:
 
 	            sCmd0.m_chData = (char) P_WIN;
 	            sCmd1.m_chData = (char) P_LOOSE;
-	//            GetSqlGameTable()->setState( _nTableID, ST_WIN_X );
 	            setRating( nPlayer0, nPlayer1 );
 	        }
 
@@ -1086,7 +1084,7 @@ private:
 
 	void cmdDeleteLastGameResult(uint32_t _nPlayerID)
 	{
-	    m_RatingTable.setLastGameResult(_nPlayerID, P_NO_RES);
+	    m_RatingTable.setLastGameResult(_nPlayerID, P_NONE);
 	}
 
 private:

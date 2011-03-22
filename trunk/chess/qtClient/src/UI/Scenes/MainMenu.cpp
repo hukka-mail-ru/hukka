@@ -288,17 +288,14 @@ void MainMenu::onGotLastGameResult(int result)
 {
     disconnect(Client::instance(), SIGNAL(gotLastGameResult(int)), this, SLOT(onGotLastGameResult(int)));
 
-    QString finished = tr("The last game has been finished. ");
-    switch(result)
-    {
-        case P_WIN:    MainWindow::instance()->showMessage(finished + tr("You have won!")); break;
-        case P_LOOSE:  MainWindow::instance()->showMessage(finished + tr("You have lost.")); break;
-        case P_DRAW:   MainWindow::instance()->showMessage(finished + tr("A draw.")); break;
-        default: break;
-    }
+    QString finished = tr("The last game has been finished. ") +
+                       Global::getGameResultText(result, UI::instance()->getPlayer(PT_ME).rating);
 
-    if(result && result != P_NO_RES)
+
+    if(result && result != P_NONE)
     {
+        MainWindow::instance()->showMessage(finished);
+
         Client::instance()->deleteLastGameResult();
     }
 

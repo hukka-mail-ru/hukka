@@ -83,6 +83,7 @@ const int       CMD_LAST_GAME_RESULT   = 108;
 const int       ANS_LAST_GAME_RESULT   = 109;
 const int       CMD_DELETE_LAST_GAME_RESULT = 110;
 
+const int       P_NONE      = 0;
 const int		P_DONE		= 20;
 const int		P_FAILED	= 21;
 const int		P_VALID		= 22;

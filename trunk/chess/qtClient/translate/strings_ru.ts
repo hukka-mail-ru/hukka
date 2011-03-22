@@ -186,48 +186,12 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/Network/Client.cpp" line="1282"/>
-        <source>Your rating has been increased to</source>
+        <location filename="../src/Network/Client.cpp" line="1280"/>
+        <source>Game over. </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/Network/Client.cpp" line="1283"/>
-        <source>Your rating has been decreased to</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../src/Network/Client.cpp" line="1284"/>
-        <source>Your rating has been slightly increased.</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../src/Network/Client.cpp" line="1285"/>
-        <source>Your rating hasn&apos;t been affected because of too few number of moves.</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../src/Network/Client.cpp" line="1286"/>
-        <source>Your rating is not available.
-Please visit www.site.com to learn how to enable it.</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../src/Network/Client.cpp" line="1290"/>
-        <source>You have won!</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../src/Network/Client.cpp" line="1295"/>
-        <source>Time&apos;s up. You have won!</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../src/Network/Client.cpp" line="1315"/>
-        <source>Game over.</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../src/Network/Client.cpp" line="1343"/>
+        <location filename="../src/Network/Client.cpp" line="1301"/>
         <source>Your opponent has rejected the draw</source>
         <translation type="unfinished"></translation>
     </message>
@@ -337,8 +301,7 @@ The rating is not affected because of too few number of moves.</source>
         <location filename="../src/Network/Client.cpp" line="962"/>
         <location filename="../src/Network/Client.cpp" line="1249"/>
         <location filename="../src/Network/Client.cpp" line="1266"/>
-        <location filename="../src/Network/Client.cpp" line="1320"/>
-        <location filename="../src/Network/Client.cpp" line="1345"/>
+        <location filename="../src/Network/Client.cpp" line="1303"/>
         <source>Internal server error </source>
         <translation>Внутренняя ошибка сервера </translation>
     </message>
@@ -398,18 +361,15 @@ The rating is not affected because of too few number of moves.</source>
         <translation type="obsolete">Победа!</translation>
     </message>
     <message>
-        <location filename="../src/Network/Client.cpp" line="1300"/>
         <source>You have lost!</source>
-        <translation type="unfinished">Вы проиграли!</translation>
+        <translation type="obsolete">Вы проиграли!</translation>
     </message>
     <message>
-        <location filename="../src/Network/Client.cpp" line="1305"/>
         <source>Time&apos;s up. You have lost!</source>
-        <translation type="unfinished">Время вышло. Вы проиграли!</translation>
+        <translation type="obsolete">Время вышло. Вы проиграли!</translation>
     </message>
     <message>
-        <location filename="../src/Network/Client.cpp" line="1310"/>
-        <location filename="../src/Network/Client.cpp" line="1342"/>
+        <location filename="../src/Network/Client.cpp" line="1300"/>
         <source>A draw.</source>
         <translation>Ничья.</translation>
     </message>
@@ -418,22 +378,22 @@ The rating is not affected because of too few number of moves.</source>
         <translation type="obsolete">Ваш противник не согласен на ничью</translation>
     </message>
     <message>
-        <location filename="../src/Network/Client.cpp" line="1344"/>
+        <location filename="../src/Network/Client.cpp" line="1302"/>
         <source>Please wait for your next move to offer a draw</source>
         <translation>Подождите своего хода, а затем предложите ничью</translation>
     </message>
     <message>
-        <location filename="../src/Network/Client.cpp" line="1419"/>
+        <location filename="../src/Network/Client.cpp" line="1377"/>
         <source>CHS Error: </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/Network/Client.cpp" line="1449"/>
+        <location filename="../src/Network/Client.cpp" line="1407"/>
         <source>CHAT Error: </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/Network/Client.cpp" line="1502"/>
+        <location filename="../src/Network/Client.cpp" line="1460"/>
         <source>Server doesn&apos;t respond</source>
         <translation>Сервер не отвечает</translation>
     </message>
@@ -638,22 +598,11 @@ Please finish it first, then create a new game.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/UI/Scenes/MainMenu.cpp" line="294"/>
-        <source>You have won!</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../src/UI/Scenes/MainMenu.cpp" line="295"/>
-        <source>You have lost.</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../src/UI/Scenes/MainMenu.cpp" line="296"/>
         <source>A draw.</source>
-        <translation type="unfinished">Ничья.</translation>
+        <translation type="obsolete">Ничья.</translation>
     </message>
     <message>
-        <location filename="../src/UI/Scenes/MainMenu.cpp" line="325"/>
+        <location filename="../src/UI/Scenes/MainMenu.cpp" line="322"/>
         <source>You have an unfinished game. Please finish it.</source>
         <translation type="unfinished"></translation>
     </message>
@@ -795,6 +744,57 @@ Please finish it first, then create a new game.</source>
         <location filename="../src/Base/Defines.h" line="137"/>
         <source>offline</source>
         <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/Base/Defines.h" line="210"/>
+        <source>Your rating has been increased to</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/Base/Defines.h" line="211"/>
+        <source>Your rating has been decreased to</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/Base/Defines.h" line="212"/>
+        <source>Your rating has been slightly increased.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/Base/Defines.h" line="213"/>
+        <source>Your rating hasn&apos;t been affected because of too few number of moves.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/Base/Defines.h" line="214"/>
+        <source>Your rating is not available.
+Please visit www.site.com to learn how to enable it.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/Base/Defines.h" line="218"/>
+        <source>You have won!</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/Base/Defines.h" line="223"/>
+        <source>Time&apos;s up. You have won!</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/Base/Defines.h" line="228"/>
+        <source>You have lost!</source>
+        <translation type="unfinished">Вы проиграли!</translation>
+    </message>
+    <message>
+        <location filename="../src/Base/Defines.h" line="233"/>
+        <source>Time&apos;s up. You have lost!</source>
+        <translation type="unfinished">Время вышло. Вы проиграли!</translation>
+    </message>
+    <message>
+        <location filename="../src/Base/Defines.h" line="238"/>
+        <source>A draw.</source>
+        <translation type="unfinished">Ничья.</translation>
     </message>
 </context>
 <context>
