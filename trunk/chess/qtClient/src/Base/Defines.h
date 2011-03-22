@@ -11,6 +11,7 @@
 #include <QObject>
 #include <QTime>
 #include <header/defserver.h>
+#include <header/defservice.h>
 
 #define LANGUAGE_ENGLISH                "0"
 #define LANGUAGE_RUSSIAN                "1"

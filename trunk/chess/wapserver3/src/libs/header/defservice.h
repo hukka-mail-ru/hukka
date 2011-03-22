@@ -8,10 +8,10 @@ const int		ST_CREATION	= 0;
 const int		ST_OPEN		= 1;
 const int		ST_FULL		= 2;
 const int		ST_GAME		= 3;
-const int		ST_WIN_X	= 4;
-const int		ST_DRAW		= 5;
-const int		ST_WIN_0	= 6;
-const int		ST_NO_RES	= 7;
+//const int		ST_WIN_X	= 4;
+//const int		ST_DRAW		= 5;
+//const int		ST_WIN_0	= 6;
+//const int		ST_NO_RES	= 7;
 
 
 // server commands
@@ -61,7 +61,7 @@ const int		ANS_DRAW	= 86;
 const int		ANS_END		= 87;
 const int		ANS_START	= 88;
 const int		CMD_GET_FIELD	= 89;
-const int		CMD_LOOSE	= 90;
+const int		CMD_SURRENDER	= 90;
 const int    	ANS_FIELD	= 91;
 const int		ANS_OSTEP	= 92;
 const int		ANS_OPPONENT_JOINED	= 93;
@@ -79,6 +79,9 @@ const int       CMD_RATING             = 104;
 const int       ANS_RATING             = 105;
 const int       CMD_GET_OPPONENT       = 106;
 const int       ANS_GET_OPPONENT       = 107;
+const int       CMD_LAST_GAME_RESULT   = 108;
+const int       ANS_LAST_GAME_RESULT   = 109;
+const int       CMD_DELETE_LAST_GAME_RESULT = 110;
 
 const int		P_DONE		= 20;
 const int		P_FAILED	= 21;
@@ -100,6 +103,7 @@ const int       P_REJECT    = 36;
 const int       P_WAIT      = 37;
 const int		P_WIN_TIME  = 38;
 const int		P_NOT_FULL  = 39;
+const int       P_NO_RES    = 40;
 
 
 class GlobalServer
@@ -145,7 +149,7 @@ public:
                 case CMD_STEP:  res = "CMD_STEP"; break;
                 case CMD_DRAW:  res = "CMD_DRAW"; break;
                 case CMD_GET_FIELD    : res = "CMD_GET_FIELD"; break;
-                case CMD_LOOSE     : res = "CMD_LOOSE"; break;
+                case CMD_SURRENDER     : res = "CMD_SURRENDER"; break;
                 case CMD_OPAGREE   : res = "CMD_OPAGREE"; break;
                 case CMD_OPREJECT  : res = "CMD_OPREJECT"; break;
                 case CMD_DRAGREE   : res = "CMD_DRAGREE"; break;
@@ -168,12 +172,15 @@ public:
                 case ANS_RATING  : res = "ANS_RATING"; break;
                 case CMD_GET_OPPONENT  : res = "CMD_GET_OPPONENT"; break;
                 case ANS_GET_OPPONENT  : res = "ANS_GET_OPPONENT"; break;
+                case CMD_LAST_GAME_RESULT  : res = "CMD_LAST_GAME_RESULT"; break;
+                case ANS_LAST_GAME_RESULT  : res = "ANS_LAST_GAME_RESULT"; break;
+                case CMD_DELETE_LAST_GAME_RESULT  : res = "CMD_DELETE_LAST_GAME_RESULT"; break;
 
                 default:        res = "UNKNOWN";break;
         }
 
         std::stringstream out;
-        out << (int)command;
+        out << (int)(unsigned char)command;
 
         res += " (" + out.str() + ")";
 

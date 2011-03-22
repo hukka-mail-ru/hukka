@@ -351,6 +351,7 @@ void Client::findGameTables(LOGICID logicID, quint32 maxCount, const QList<Param
  ) ) )) _) )(__  ) _)  )(   ) _)  ( (/\ /__\  )    (  ) _)    )(  /__\  ) ,\ )(__  ) _)
 (___/(___)(____)(___) (__) (___)   \__/(_)(_)(_/\/\_)(___)   (__)(_)(_)(___/(____)(___)
 ====================================================================================================*/
+
 void Client::deleteGameTable(LOGICID logicID, TABLEID tableID)
 {
     QT_TRACEOUT;
@@ -371,6 +372,8 @@ void Client::deleteGameTable(LOGICID logicID, TABLEID tableID)
     }
 }
 
+
+/*
 void Client::deleteChatHistory(LOGICID logicID, TABLEID tableID)
 {
     QT_TRACEOUT;
@@ -390,7 +393,7 @@ void Client::deleteChatHistory(LOGICID logicID, TABLEID tableID)
         emit error (e.what());
     }
 }
-
+*/
 /*====================================================================================================
    __  __  __  _  _     __   __   __  __  ___    ____  __   ___  __    ___
   (  )/  \(  )( \( )   / _) (  ) (  \/  )(  _)  (_  _)(  ) (  ,)(  )  (  _)
@@ -563,7 +566,7 @@ void Client::surrender(TABLEID tableID)
 
         // send command
         QByteArray data = Q_BYTE_ARRAY(tableID);
-        sendCmd(CHS, CMD_LOOSE, data);
+        sendCmd(CHS, CMD_SURRENDER, data);
     }
     catch (Exception& e) {
         e.add(tr("Can't surrender. Table ID ") + QString::number(tableID) + tr(" on server: ") + mSocket.peerName() + ". ");
@@ -621,10 +624,46 @@ void Client::getMyRating()
         sendCmd(CHS, CMD_RATING, data);
     }
     catch (Exception& e) {
-        e.add(tr("Can't get may rating ") + tr(" on server: ") + mSocket.peerName() + ". ");
+        e.add(tr("Can't get my rating ") + tr(" on server: ") + mSocket.peerName() + ". ");
         emit error (e.what());
     }
 }
+
+void Client::getLastGameResult()
+{
+    QT_TRACEOUT;
+
+    try {
+        assert(mClientAuthorized);
+
+        // send command
+        QByteArray data;
+        sendCmd(CHS, CMD_LAST_GAME_RESULT, data);
+    }
+    catch (Exception& e) {
+        e.add(tr("Can't get last game result ") + tr(" on server: ") + mSocket.peerName() + ". ");
+        emit error (e.what());
+    }
+}
+
+void Client::deleteLastGameResult()
+{
+    QT_TRACEOUT;
+
+    try {
+        assert(mClientAuthorized);
+
+        // send command
+        QByteArray data;
+        sendCmd(CHS, CMD_DELETE_LAST_GAME_RESULT, data);
+    }
+    catch (Exception& e) {
+        e.add(tr("Can't delete last game result ") + tr(" on server: ") + mSocket.peerName() + ". ");
+        emit error (e.what());
+    }
+}
+
+
 
 /*====================================================================================================
   __  ___  ___  ___  ___     ___  ___    __  _    _
@@ -1273,7 +1312,7 @@ void Client::processMessageCHS(const MessageHeader& header, const QByteArray& bu
                                        ratingSlightlyIncreased;
                                break;
 
-            case ST_NO_RES:    text = tr("Game over.") + "\n";
+            case P_NO_RES:     text = tr("Game over.") + "\n";
                                text += (reply->rating == RATING_NOT_AVAILABLE) ? ratingUnavailable :
                                        ratingNotAffected;
                                break;
@@ -1343,6 +1382,18 @@ void Client::processMessageCHS(const MessageHeader& header, const QByteArray& bu
         Reply* reply = (Reply*)buffer.data();
 
         emit gotMyRating(reply->rating);
+       // qDebug() << "time2game: " << reply->time2game;
+    }
+    else if(header.cmd == ANS_LAST_GAME_RESULT)
+    {
+        struct Reply {
+            TABLEID     tableID;
+            qint32      result;
+        };
+
+        Reply* reply = (Reply*)buffer.data();
+
+        emit gotLastGameResult(reply->result);
        // qDebug() << "time2game: " << reply->time2game;
     }
     else

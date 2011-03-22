@@ -109,8 +109,8 @@ void CTblMgrServer::newMsg( ClientMsg* _pMsg )
 
 	}
 
-	if ( _pMsg->GetTo() < 100 )
-		return;
+	//if ( _pMsg->GetTo() < 100 )
+	//	return;
 	//std::cerr <<
 
 
@@ -139,8 +139,11 @@ void CTblMgrServer::newMsg( ClientMsg* _pMsg )
 		}
         case CMD_DELETE:
         {
+            std::cerr << "case CMD_DELETE " << std::endl;
+
             if (vecCmd.size() != 2*sizeof(uint32_t))
             {
+                std::cerr << "case CMD_DELETE vecCmd.size() " <<vecCmd.size() << std::endl;
                 return;
             }
 
@@ -536,9 +539,9 @@ void CTblMgrServer::SetParams( uint32_t _nUserID, const TVecChar *_vecData )
 void CTblMgrServer::DeleteTable( uint32_t _nUserID, uint32_t _nLogicID, uint32_t _nTableID )
 {
 
-#ifdef MYDEBUG
+
     std::cout << "CTblMgrServer::DeleteTable() _nTableID = " << _nTableID << std::endl;
-#endif
+
 
     CSendedMsg sendedMsg;
 

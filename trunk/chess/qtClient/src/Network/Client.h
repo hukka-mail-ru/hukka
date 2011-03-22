@@ -91,6 +91,8 @@ public:
         void timeout             (TABLEID tableID);
         void getMyRating         ();
         void getOpponent         (TABLEID tableID);
+        void getLastGameResult   ();
+        void deleteLastGameResult();
 
         // draw
         void offerDraw           (TABLEID tableID);
@@ -100,7 +102,7 @@ public:
         void joinChat           (LOGICID logicID, TABLEID tableID);
         void leaveChat          (LOGICID logicID);
         void sendChatMessage    (LOGICID logicID, TABLEID tableID, const QString& message);
-        void deleteChatHistory  (LOGICID logicID, TABLEID tableID);
+   //     void deleteChatHistory  (LOGICID logicID, TABLEID tableID);
 
 
         GameStatus   getGameStatus()   { return mGameStatus; }
@@ -136,6 +138,7 @@ signals:
         void gotGameTime(quint32);
 
         void gotMyRating(quint32);
+        void gotLastGameResult(int);
 
         void invalidMove();
 

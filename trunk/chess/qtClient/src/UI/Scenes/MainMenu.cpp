@@ -275,20 +275,45 @@ void MainMenu::onGotMyGameTable(TABLEID tableID, bool isOwner)
     }
     else
     {
-        if(mClickedButton == createGameButton)
-        {
-//            UI::instance()->setOwner(true);
-            MainWindow::instance()->showCreateGameDialog();
-        }
-        else if(mClickedButton == findGameButton)
-        {
-//            UI::instance()->setOwner(false);
-            MainWindow::instance()->showFindGameDialog();
-        }
+        connect(Client::instance(), SIGNAL(gotLastGameResult(int)), this, SLOT(onGotLastGameResult(int)));
+        Client::instance()->getLastGameResult();
+
     }
 
 
 }
+
+
+void MainMenu::onGotLastGameResult(int result)
+{
+    disconnect(Client::instance(), SIGNAL(gotLastGameResult(int)), this, SLOT(onGotLastGameResult(int)));
+
+    QString finished = tr("The last game has been finished. ");
+    switch(result)
+    {
+        case P_WIN:    MainWindow::instance()->showMessage(finished + tr("You have won!")); break;
+        case P_LOOSE:  MainWindow::instance()->showMessage(finished + tr("You have lost.")); break;
+        case P_DRAW:   MainWindow::instance()->showMessage(finished + tr("A draw.")); break;
+        default: break;
+    }
+
+    if(result && result != P_NO_RES)
+    {
+        Client::instance()->deleteLastGameResult();
+    }
+
+    if(mClickedButton == createGameButton)
+    {
+//            UI::instance()->setOwner(true);
+        MainWindow::instance()->showCreateGameDialog();
+    }
+    else if(mClickedButton == findGameButton)
+    {
+//            UI::instance()->setOwner(false);
+        MainWindow::instance()->showFindGameDialog();
+    }
+}
+
 
 void MainMenu::onGotOpponent(const QString& opponentName, int opponentRating)
 {

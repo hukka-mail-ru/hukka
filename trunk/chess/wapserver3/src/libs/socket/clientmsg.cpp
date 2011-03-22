@@ -42,12 +42,12 @@ void ClientMsg::InitError( uint32_t _nFrom, char _nCommand, char _nErr )
 
     if(_nErr == NOERR)
     {
-        cout << "--- OUTGOING REPLY 'OK' ---  FROM: " << _nFrom <<"; COMMAND: " << ( uint32_t ) _nCommand << endl;
+        cout << "--- OUTGOING REPLY 'OK' ---  FROM: " << _nFrom <<"; COMMAND: " << ( uint32_t )(unsigned char) _nCommand << endl;
     }
     else
     {
-        cout << "--- OUTGOING ERORR ---  FROM: " << _nFrom <<"; COMMAND: " << ( uint32_t ) _nCommand <<
-                       ";  ERR: " << (uint32_t)_nErr << endl;
+        cout << "--- OUTGOING ERORR ---  FROM: " << _nFrom <<"; COMMAND: " << ( uint32_t )(unsigned char) _nCommand <<
+                       ";  ERR: " << (uint32_t)(unsigned char)_nErr << endl;
     }
 
 	m_vecDataMsg.resize( sizeof( MsgError ) );
@@ -75,7 +75,7 @@ void ClientMsg::InitMsg( uint32_t _nTo, TVecChar _vecData )
     cout << "--- OUTGOING --- ("<< tm->tm_sec << "." << tv.tv_usec << ") "
                    << GlobalServer::commandToString( _vecData[0]) << "; ";
     for(int i=0; i<_vecData.size(); ++i)
-        cout << (uint32_t)_vecData[i] << " ";
+        cout << (uint32_t)(unsigned char)_vecData[i] << " ";
     cout << endl;
 
 	m_vecDataMsg.resize( sizeof( ExHeadMsg )+_vecData.size()+1 );

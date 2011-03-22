@@ -69,7 +69,7 @@ private:
 		TVecChar vecCmd;
 		_pClientMsg->GetData( ClientMsg::etpCommand, &vecCmd );
 		for(TVecChar::const_iterator it = vecCmd.begin(); it != vecCmd.end(); ++it)
-			std::cout << (uint32_t)(*it) << " ";
+			std::cout << (uint32_t)(unsigned char)(*it) << " ";
 		std::cout << std::endl;
 
 		if ( _pClientMsg->GetTo() == SRV )
@@ -95,7 +95,7 @@ private:
 
 		if( cmd == CMD_JOIN )
 		{
-			std::cout << "GameService::newMsg from = " << _pClientMsg->GetTo() << " cmd = CMD_JOIN" <<  std::endl;
+//			std::cout << "GameService::newMsg from = " << _pClientMsg->GetTo() << " cmd = CMD_JOIN" <<  std::endl;
 			uint32_t *nTableID = (uint32_t*) &vecCmd[0];
 
 			cmdJoin( _pClientMsg->GetTo(), *nTableID );
@@ -103,12 +103,12 @@ private:
 		}
 		else if( cmd == CMD_STEP )
 		{
-			std::cout << "GameService::newMsg from =" << _pClientMsg->GetTo() << " cmd = CMD_STEP" <<  std::endl;
+	//		std::cout << "GameService::newMsg from =" << _pClientMsg->GetTo() << " cmd = CMD_STEP" <<  std::endl;
 			cmdStep( _pClientMsg->GetTo(), &vecCmd );
 		}
 		else if( cmd == CMD_GET_FIELD )
 		{
-			std::cout << "GameService::newMsg from = " << _pClientMsg->GetTo() << " cmd = CMD_GET_FIELD" <<  std::endl;
+//			std::cout << "GameService::newMsg from = " << _pClientMsg->GetTo() << " cmd = CMD_GET_FIELD" <<  std::endl;
 			uint32_t *nTableID = (uint32_t*) &vecCmd[0];
 
 			uint32_t _nPlayer = _pClientMsg->GetTo();
@@ -118,9 +118,9 @@ private:
 			sendDrawState( _nPlayer, *nTableID );
 
 		}
-		else if( cmd == CMD_LOOSE )
+		else if( cmd == CMD_SURRENDER )
 		{
-			std::cout << "GameService::newMsg from = " << _pClientMsg->GetTo() << " cmd = CMD_LOOSE" <<  std::endl;
+	//		std::cout << "GameService::newMsg from = " << _pClientMsg->GetTo() << " cmd = CMD_SURRENDER" <<  std::endl;
 			uint32_t *nTableID = (uint32_t*) &vecCmd[0];
 
 			cmdLoose( *nTableID );
@@ -128,7 +128,7 @@ private:
 		}
         else if( cmd == CMD_TIMEOUT )
         {
-            std::cout << "GameService::newMsg from = " << _pClientMsg->GetTo() << " cmd = CMD_TIMEOUT" <<  std::endl;
+ //           std::cout << "GameService::newMsg from = " << _pClientMsg->GetTo() << " cmd = CMD_TIMEOUT" <<  std::endl;
             uint32_t *nTableID = (uint32_t*) &vecCmd[0];
 
             cmdTimeout( *nTableID );
@@ -136,7 +136,7 @@ private:
         }
 		else if( cmd == CMD_OPAGREE )
 		{
-			std::cout << "GameService::newMsg from = " << _pClientMsg->GetTo() << " cmd = CMD_OPAGREE" <<  std::endl;
+//			std::cout << "GameService::newMsg from = " << _pClientMsg->GetTo() << " cmd = CMD_OPAGREE" <<  std::endl;
 			uint32_t *nTableID = (uint32_t*) &vecCmd[0];
 
 			cmdOpAgree( _pClientMsg->GetTo(), *nTableID );
@@ -144,7 +144,7 @@ private:
 		}
 		else if( cmd == CMD_OPREJECT )
 		{
-			std::cout << "GameService::newMsg from = " << _pClientMsg->GetTo() << " cmd = CMD_OPREJECT" <<  std::endl;
+//			std::cout << "GameService::newMsg from = " << _pClientMsg->GetTo() << " cmd = CMD_OPREJECT" <<  std::endl;
 			uint32_t *nTableID = (uint32_t*) &vecCmd[0];
 
 			cmdOpReject( _pClientMsg->GetTo(), *nTableID );
@@ -152,37 +152,50 @@ private:
 		}
 		else if( cmd == CMD_DRAW )
 		{
-			std::cout << "GameService::newMsg from = " << _pClientMsg->GetTo() << " cmd = CMD_DRAW" <<  std::endl;
+//			std::cout << "GameService::newMsg from = " << _pClientMsg->GetTo() << " cmd = CMD_DRAW" <<  std::endl;
 			uint32_t *nTableID = (uint32_t*) &vecCmd[0];
 
 			cmdDraw( _pClientMsg->GetTo(), *nTableID );
 		}
 		else if( cmd == CMD_DRAGREE )
 		{
-			std::cout << "GameService::newMsg from = " << _pClientMsg->GetTo() << " cmd = CMD_DRAGREE" <<  std::endl;
+//			std::cout << "GameService::newMsg from = " << _pClientMsg->GetTo() << " cmd = CMD_DRAGREE" <<  std::endl;
 			uint32_t *nTableID = (uint32_t*) &vecCmd[0];
 
 			cmdDrAgree( _pClientMsg->GetTo(), *nTableID, vecCmd[sizeof(*nTableID)] );
 		}
 		else if ( cmd == CMD_CHECK_TIME )
 		{
-			std::cout << "GameService::newMsg from = " << _pClientMsg->GetTo() << " cmd = CMD_CHECK_TIME" <<  std::endl;
+///			std::cout << "GameService::newMsg from = " << _pClientMsg->GetTo() << " cmd = CMD_CHECK_TIME" <<  std::endl;
 			uint32_t *nTableID = (uint32_t*) &vecCmd[0];
 
 			cmdCheckTime( _pClientMsg->GetTo(), *nTableID );
 		}
         else if ( cmd == CMD_RATING )
         {
-            std::cout << "GameService::newMsg from = " << _pClientMsg->GetTo() << " cmd = CMD_RATING" <<  std::endl;
+  //          std::cout << "GameService::newMsg from = " << _pClientMsg->GetTo() << " cmd = CMD_RATING" <<  std::endl;
 
             cmdRating( _pClientMsg->GetTo() );
         }
         else if ( cmd == CMD_GET_OPPONENT )
         {
-            std::cout << "GameService::newMsg from = " << _pClientMsg->GetTo() << " cmd = CMD_GET_OPPONENT" <<  std::endl;
+ //           std::cout << "GameService::newMsg from = " << _pClientMsg->GetTo() << " cmd = CMD_GET_OPPONENT" <<  std::endl;
             uint32_t *nTableID = (uint32_t*) &vecCmd[0];
 
             cmdGetOpponent( _pClientMsg->GetTo(), *nTableID );
+        }
+        else if ( cmd == CMD_LAST_GAME_RESULT )
+        {
+  //          std::cout << "GameService::newMsg from = " << _pClientMsg->GetTo() << " cmd = CMD_LAST_GAME_RESULT" <<  std::endl;
+
+            cmdLastGameResult( _pClientMsg->GetTo() );
+        }
+
+        else if ( cmd == CMD_DELETE_LAST_GAME_RESULT )
+        {
+//            std::cout << "GameService::newMsg from = " << _pClientMsg->GetTo() << " cmd = CMD_DELETE_LAST_GAME_RESULT" <<  std::endl;
+
+            cmdDeleteLastGameResult( _pClientMsg->GetTo() );
         }
 		else
 		{
@@ -605,7 +618,7 @@ private:
         endGame( _nTableID, IGameLogic::TimeOut );
     }
 
-	void endGame( uint32_t _nTableID, IGameLogic::StepRes _Result, uint32_t nMinStepCountForRating = 5 )
+	void endGame( uint32_t _nTableID, IGameLogic::StepRes _Result, uint32_t nMinStepCountForRating = MIN_STEPS_FOR_RATING )
 	{
 	    uint32_t nCurPlayer = 0;
 	    uint32_t nPlayer0   = 0;
@@ -616,7 +629,7 @@ private:
         AnsEndMessage sCmd0, sCmd1;
 	    sCmd0.m_chCmd = sCmd1.m_chCmd = ANS_END;
 	    sCmd0.m_nTableID = sCmd1.m_nTableID = _nTableID;
-	    sCmd0.m_chData = sCmd1.m_chData = (char) ST_NO_RES;
+	    sCmd0.m_chData = sCmd1.m_chData = (char) P_NO_RES;
 
 	    GetSqlGameTable()->getIDPlayer0( _nTableID, nPlayer0 );
 	    GetSqlGameTable()->getIDPlayer1( _nTableID, nPlayer1 );
@@ -629,6 +642,8 @@ private:
         cerr << "nCurPlayer " << nCurPlayer << endl;
         cerr << "nStepNum " << nStepNum << endl;
         cerr << "nXPlayer " << nXPlayer << endl;
+
+
 
 
 	    //TODO refactoring! cmdEnd, cmdStep cmd Draw
@@ -645,8 +660,9 @@ private:
 
 		if ( nStepNum < nMinStepCountForRating)
 		{
-			sCmd1.m_chData = sCmd0.m_chData = (char) ST_NO_RES;
-            GetSqlGameTable()->setState( _nTableID, ST_NO_RES );
+            sCmd0.m_chData = (char) P_NO_RES;
+			sCmd1.m_chData = (char) P_NO_RES;
+   //         GetSqlGameTable()->setState( _nTableID, ST_NO_RES );
         }
 	    else if ( _Result == IGameLogic::Win )
 	    {
@@ -654,14 +670,14 @@ private:
 	        {
 	            sCmd0.m_chData = (char) P_WIN;
 	            sCmd1.m_chData = (char) P_LOOSE;
-	            GetSqlGameTable()->setState( _nTableID, ST_WIN_X );
+	//            GetSqlGameTable()->setState( _nTableID, ST_WIN_X );
 	            setRating( nPlayer0, nPlayer1 );
 	        }
 	        else
 	        {
 	            sCmd0.m_chData = ( char ) P_LOOSE;
 	            sCmd1.m_chData = ( char ) P_WIN;
-	            GetSqlGameTable()->setState( _nTableID, ST_WIN_0 );
+	//            GetSqlGameTable()->setState( _nTableID, ST_WIN_0 );
 	            setRating( nPlayer1, nPlayer0 );
 	        }
 
@@ -674,7 +690,7 @@ private:
 
 	            sCmd0.m_chData = ( char ) P_LOOSE;
 	            sCmd1.m_chData = ( char ) P_WIN;
-	            GetSqlGameTable()->setState( _nTableID, ST_WIN_0 );
+	//            GetSqlGameTable()->setState( _nTableID, ST_WIN_0 );
 	            setRating( nPlayer1, nPlayer0 );
 	        }
 	        else
@@ -683,7 +699,7 @@ private:
 
 	            sCmd0.m_chData = (char) P_WIN;
 	            sCmd1.m_chData = (char) P_LOOSE;
-	            GetSqlGameTable()->setState( _nTableID, ST_WIN_X );
+	//            GetSqlGameTable()->setState( _nTableID, ST_WIN_X );
 	            setRating( nPlayer0, nPlayer1 );
 	        }
 
@@ -691,7 +707,7 @@ private:
 	    else if ( _Result == IGameLogic::Draw )
 	    {
             sCmd0.m_chData = sCmd1.m_chData = ( char ) P_DRAW;
-            GetSqlGameTable()->setState( _nTableID, ST_DRAW );
+    //        GetSqlGameTable()->setState( _nTableID, ST_DRAW );
             setRatingDraw( nPlayer1, nPlayer0 );
 	    }
 	    else if ( _Result == IGameLogic::TimeOut )
@@ -700,14 +716,14 @@ private:
 	        {
 	            sCmd0.m_chData = ( char ) P_LOOSE_TIME;
 	            sCmd1.m_chData = ( char ) P_WIN_TIME;
-	            GetSqlGameTable()->setState( _nTableID, ST_WIN_0 );
+	 //           GetSqlGameTable()->setState( _nTableID, ST_WIN_0 );
 	            setRating( nPlayer1, nPlayer0 );
 	        }
 	        else
 	        {
 	            sCmd0.m_chData = (char) P_WIN_TIME;
 	            sCmd1.m_chData = (char) P_LOOSE_TIME;
-	            GetSqlGameTable()->setState( _nTableID, ST_WIN_X );
+	    //        GetSqlGameTable()->setState( _nTableID, ST_WIN_X );
 	            setRating( nPlayer0, nPlayer1 );
 	        }
 	    }
@@ -716,11 +732,28 @@ private:
 			std::cout << "GameService::endGame  ERROR: unknown _Result = " << _Result << std::endl;
 	    }
 
+
+
+		// to the Players: ANS_END
 	    sCmd0.rating = m_RatingTable.getRating(nPlayer0);
 	    sCmd1.rating = m_RatingTable.getRating(nPlayer1);
 
 	    sendMsg( nPlayer0, &sCmd0, sizeof( sCmd0 ) );
 	    sendMsg( nPlayer1, &sCmd1, sizeof( sCmd1 ) );
+
+        // to the Table Manager: CMD_DELETE (this table)
+	    SNGameMsg msgTbl;
+	    msgTbl.m_chCmd = CMD_DELETE;
+        msgTbl.m_nTableID = LOGIC_ID_CHESS; // TODO use another struct, not SNGameMsg
+	    msgTbl.m_nData = _nTableID;         // TODO use another struct, not SNGameMsg
+	    sendMsg( TBM, &msgTbl, sizeof( msgTbl ) );
+
+	    // to the Chat: CMD_CHAT_DELETE_HISTORY
+	    SNGameMsg msgChat;
+	    msgChat.m_chCmd = CMD_CHAT_DELETE_HISTORY;
+        msgChat.m_nTableID = LOGIC_ID_CHESS; // TODO use another struct, not SNGameMsg
+	    msgChat.m_nData = _nTableID;         // TODO use another struct, not SNGameMsg
+	    sendMsg( CHAT, &msgChat, sizeof( msgChat ) );
 
 	}
 
@@ -743,6 +776,9 @@ private:
 
 	    m_RatingTable.setRating( _nWinnerID, nRealWinnerRating );
 	    m_RatingTable.setRating( _nLooserID, nRealLooserRating );
+
+	    m_RatingTable.setLastGameResult(_nWinnerID, P_WIN);
+	    m_RatingTable.setLastGameResult(_nLooserID, P_LOOSE);
 	}
 
 	void setRatingDraw( uint32_t _nPlayer0, uint32_t _nPlayer1 )
@@ -755,6 +791,9 @@ private:
 
 	    m_RatingTable.setRating( _nPlayer0, nRating0 );
 	    m_RatingTable.setRating( _nPlayer1, nRating1 );
+
+	    m_RatingTable.setLastGameResult(_nPlayer0, P_DRAW);
+	    m_RatingTable.setLastGameResult(_nPlayer1, P_DRAW);
 	}
 
 	void cmdDraw(uint32_t _nPlayerID, uint32_t _nTableID)
@@ -855,7 +894,7 @@ private:
 				{
 			    	GetSqlGameTable()->setCurPlayer( _nTableID, nCurPlayer == 0 ? 1 : 0 );
 		        	GetSqlGameTable()->setDrawState( _nTableID, 0 );
-		        	GetSqlGameTable()->setState( _nTableID, ST_DRAW );
+//		        	GetSqlGameTable()->setState( _nTableID, ST_DRAW );
 		    		sendAscDraw(_nTableID, nPlayer0, P_ACCEPT);
 		    		sendAscDraw(_nTableID, nPlayer1, P_ACCEPT);
 		    		endGame(_nTableID, IGameLogic::Draw, 0);
@@ -1033,6 +1072,21 @@ private:
 	    sCmd.m_nData = m_RatingTable.getRating( _nPlayerID );
 
 	    sendMsg( _nPlayerID, &sCmd, sizeof( sCmd ) );
+	}
+
+	void cmdLastGameResult(uint32_t _nPlayerID )
+    {
+        SNGameMsg sCmd;
+        sCmd.m_chCmd = ANS_LAST_GAME_RESULT;
+        sCmd.m_nData = m_RatingTable.getLastGameResult( _nPlayerID );
+
+        sendMsg( _nPlayerID, &sCmd, sizeof( sCmd ) );
+    }
+
+
+	void cmdDeleteLastGameResult(uint32_t _nPlayerID)
+	{
+	    m_RatingTable.setLastGameResult(_nPlayerID, P_NO_RES);
 	}
 
 private:
