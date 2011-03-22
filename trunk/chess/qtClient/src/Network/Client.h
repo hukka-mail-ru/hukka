@@ -79,7 +79,7 @@ public:
 
         // communication with Chess Server
         // Master
-        void startGame           (TABLEID tableID);
+        void approveGame         (TABLEID tableID);
         void rejectGame          (TABLEID tableID);
         // Slave
         void joinGame            (TABLEID tableID);

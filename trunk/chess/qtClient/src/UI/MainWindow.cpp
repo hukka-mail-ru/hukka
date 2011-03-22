@@ -306,7 +306,7 @@ void MainWindow::showMainMenu()
 
 void MainWindow::showGameScene(PlayerColor color)
 {
-   // qDebug() << "MainWindow::showGameField";
+   // qDebug() << "MainWindow::showGameScene";
 
     try
     {

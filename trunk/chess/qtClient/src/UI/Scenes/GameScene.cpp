@@ -42,6 +42,8 @@ void GameScene::showChat()
 
 void GameScene::startClocks()
 {
+  //  qDebug() << "GameScene::startClocks";
+
     mMeMoveBox.startClocks();
     mOppMoveBox.startClocks();
 }

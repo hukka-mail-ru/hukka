@@ -36,12 +36,10 @@ Clock::Clock(QGraphicsScene* parentScene, const QString& header,
     mText->setDefaultTextColor(QColor("white"));
 
 //    qDebug() << "Clock::Clock " << x << y;
-
-    connect(Client::instance(), updateSignal, this, SLOT(onGotTime(quint32)));
-
     mTimer = new QTimer(this);
 
-
+    connect(Client::instance(), updateSignal, this, SLOT(onGotTime(quint32)));
+    connect(mTimer, SIGNAL(timeout()), this, SLOT(onTick()));
 
 }
 
@@ -52,9 +50,7 @@ void Clock::moveBy(int x, int y)
 
 void Clock::start()
 {
-
- //   qDebug() << "Clock::start";
-    connect(mTimer, SIGNAL(timeout()), this, SLOT(onTimeout()));
+//    qDebug() << "Clock::start";
     connect(Client::instance(), SIGNAL(gameOver(const QString&)), this, SLOT(onGameOver(const QString&)));
     mTimer->start(1000);
 }
@@ -88,9 +84,8 @@ void Clock::onGotTime(quint32 seconds)
 }
 
 
-void Clock::onTimeout()
+void Clock::onTick()
 {
-    disconnect(mTimer, SIGNAL(timeout()), this, SLOT(onTimeout()));
 
     if(mSeconds > 0)
     {
@@ -98,11 +93,7 @@ void Clock::onTimeout()
     }
     else
     {
-
-     //   if(UI::instance()->getGameState() == GS_WAIT_FOR_OPPONENT)
-    //    {
-            Client::instance()->timeout(UI::instance()->getGameTable());
-     //   }
+        Client::instance()->timeout(UI::instance()->getGameTable());
     }
 
     mText->setPlainText(mHeader + Global::seconds2hrs(mSeconds));

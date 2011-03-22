@@ -554,7 +554,7 @@ Please finish it first, then create a new game.</source>
         <translation type="obsolete">Игра: </translation>
     </message>
     <message>
-        <location filename="../src/UI/Scenes/GameScene.cpp" line="63"/>
+        <location filename="../src/UI/Scenes/GameScene.cpp" line="65"/>
         <source>Game menu</source>
         <translation type="unfinished">Меню игры</translation>
     </message>
@@ -915,27 +915,27 @@ Please finish it first, then create a new game.</source>
         <translation type="obsolete">Ждите противника...</translation>
     </message>
     <message>
-        <location filename="../src/UI/Dialogs/WaitJoinDialog.cpp" line="9"/>
+        <location filename="../src/UI/Dialogs/WaitJoinDialog.cpp" line="11"/>
         <source>Please wait until an opponent joins your game...</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/UI/Dialogs/WaitJoinDialog.cpp" line="10"/>
+        <location filename="../src/UI/Dialogs/WaitJoinDialog.cpp" line="12"/>
         <source>Exit</source>
         <translation>Выход</translation>
     </message>
     <message>
-        <location filename="../src/UI/Dialogs/WaitJoinDialog.cpp" line="45"/>
+        <location filename="../src/UI/Dialogs/WaitJoinDialog.cpp" line="47"/>
         <source>is not available</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/UI/Dialogs/WaitJoinDialog.cpp" line="46"/>
+        <location filename="../src/UI/Dialogs/WaitJoinDialog.cpp" line="48"/>
         <source> (rating </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/UI/Dialogs/WaitJoinDialog.cpp" line="46"/>
+        <location filename="../src/UI/Dialogs/WaitJoinDialog.cpp" line="48"/>
         <source>) wants to play chess with you. Agree?</source>
         <translation type="unfinished"></translation>
     </message>
