@@ -91,7 +91,8 @@ const int  Z_PIECES_LAYER                 = 2;
 const int  Z_HIGHLIGHT_LAYER              = 1;
 const int  Z_CELLS_LAYER                  = 0;
 
-
+// Chat
+#define ADDRESSEE_ALL tr("all")
 
 typedef quint32             CELLID;
 typedef quint32             TABLEID;

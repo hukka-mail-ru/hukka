@@ -9,6 +9,8 @@
 #include <QPushButton>
 #include <QCheckBox>
 #include <QGridLayout>
+#include <QString>
+
 #include <MyDialog.h>
 #include <Defines.h>
 
@@ -17,7 +19,7 @@ class ChatMessageDialog: public MyDialog
 {
     Q_OBJECT
 public:
-    ChatMessageDialog(ChatType chatType, QWidget *parent = 0);
+    ChatMessageDialog(const QString& addressee, ChatType chatType, QWidget *parent = 0);
 
 protected:
     void keyPressEvent(QKeyEvent *);
@@ -33,6 +35,8 @@ private:
     QVBoxLayout* layout;
 
     ChatType mChatType;
+
+    QString mAddressee;
 
 private slots:
 

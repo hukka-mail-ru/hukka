@@ -7,12 +7,12 @@
 #include <UI.h>
 #include <chatserver/chatdefs.h>
 
-ChatMessageDialog::ChatMessageDialog(ChatType chatType, QWidget *parent):
-    MyDialog(parent), mChatType(chatType)
+ChatMessageDialog::ChatMessageDialog(const QString& addressee, ChatType chatType, QWidget *parent):
+    MyDialog(parent), mChatType(chatType), mAddressee(addressee)
 {
     setWindowTitle(tr("Send Message"));
 
-    label = new QLabel(tr("Your chat message:"), this);
+    label = new QLabel(tr("A chat message to ") + mAddressee + ":", this);
     mEdit = new QLineEdit(this);
     okButton = new QPushButton(tr("OK"), this);
 
@@ -45,7 +45,8 @@ void ChatMessageDialog::onOkClicked()
         TABLEID tableID = (mChatType == CT_COMMON_CHAT) ?
                           COMMON_CHAT_ID : UI::instance()->getGameTable();
 
-        Client::instance()->sendChatMessage(LOGIC_ID_CHESS, tableID, mEdit->text());
+        QString msg = (mAddressee == ADDRESSEE_ALL) ? mEdit->text() : mAddressee + "," + mEdit->text();
+        Client::instance()->sendChatMessage(LOGIC_ID_CHESS, tableID, msg);
     }
 
     close();

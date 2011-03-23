@@ -67,8 +67,6 @@ void UI::startGame()
     assert(mGameTable);
 
     Client::instance()->getField(mGameTable);
-
- //   Client::instance()->joinTableChat(LOGIC_ID_CHESS, mGameTable);
 }
 
 void UI::surrender()
@@ -88,13 +86,6 @@ void UI::onGameOver(const QString& message)
     MainWindow::instance()->closeCurrentDialog();
     MainWindow::instance()->showMessage(message);
 
-  //  if(mIsOwner) // NOT ONLY THE OWNER MAY DELETE THE TABLE.
-  //  Otherwise, if the owner suddenly quits a game, his opponent can't create his own new game
-  //  (the server will see the existing table and return "GAME_OVER" again and again).
-  //  {
-    //    Client::instance()->deleteGameTable(LOGIC_ID_CHESS, mGameTable);
-    //    Client::instance()->deleteChatHistory(LOGIC_ID_CHESS, mGameTable);
-  //  }
 
     Client::instance()->deleteLastGameResult();
 
@@ -201,13 +192,8 @@ void UI::cellClicked(CELLID cell)
 
             MainWindow::instance()->highlightGameSceneCell(cell);
 
-            // TODO Replace by UI::showNote, use QDialog
-       //     mScene->showNote("Checking the move");
-            assert(mGameTable);
-
             Client::instance()->step(mGameTable, mMove);
 
-            // TODO send a move to server
             mGameState = GS_WAIT_FOR_SERVER;
         }
         else

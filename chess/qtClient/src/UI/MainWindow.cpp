@@ -284,9 +284,9 @@ void MainWindow::showWaitAgreeDialog()
     setMode(MW_NORMAL);
 }
 
-void MainWindow::showChatMessageDialog(ChatType chatType)
+void MainWindow::showChatMessageDialog(const QString& addressee, ChatType chatType)
 {
-    setCurrentDialog(new ChatMessageDialog(chatType, this));
+    setCurrentDialog(new ChatMessageDialog(addressee, chatType, this));
     setMode(MW_NORMAL);
 }
 

@@ -152,7 +152,7 @@ Chat::History::History(QWidget* parent, ChatType type):
 
 void Chat::History::mouseReleaseEvent(QMouseEvent * event)
 {
-    MainWindow::instance()->showChatMessageDialog(mChatType);
+    MainWindow::instance()->showChatMessageDialog(ADDRESSEE_ALL, mChatType);
 }
 
 void Chat::History::addMessage(const QString& message, ChatSender chatSender)
@@ -225,7 +225,7 @@ void Chat::Userlist::updateTable()
 
 void Chat::Userlist::mouseReleaseEvent(QMouseEvent * event)
 {
-
+    MainWindow::instance()->showChatMessageDialog(currentItem()->text(), mChatType);
 }
 
 
