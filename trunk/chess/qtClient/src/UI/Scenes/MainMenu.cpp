@@ -288,7 +288,7 @@ void MainMenu::onGotLastGameResult(int result)
 {
     disconnect(Client::instance(), SIGNAL(gotLastGameResult(int)), this, SLOT(onGotLastGameResult(int)));
 
-    QString finished = tr("The last game has been finished. ") +
+    QString finished = tr("The last game has been finished.") + "\n\n" +
                        Global::getGameResultText(result, UI::instance()->getPlayer(PT_ME).rating);
 
 

@@ -1277,7 +1277,7 @@ void Client::processMessageCHS(const MessageHeader& header, const QByteArray& bu
 
         Reply* reply = (Reply*)buffer.data();
 
-        QString text = tr("Game over. ") + Global::getGameResultText(reply->status, reply->rating);
+        QString text = tr("Game over.") + "\n\n" + Global::getGameResultText(reply->status, reply->rating);
 
 
         emit gotMyRating(reply->rating);
