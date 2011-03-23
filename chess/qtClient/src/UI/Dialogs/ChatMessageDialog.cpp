@@ -45,7 +45,7 @@ void ChatMessageDialog::onOkClicked()
         TABLEID tableID = (mChatType == CT_COMMON_CHAT) ?
                           COMMON_CHAT_ID : UI::instance()->getGameTable();
 
-        QString msg = (mAddressee == ADDRESSEE_ALL) ? mEdit->text() : mAddressee + "," + mEdit->text();
+        QString msg = (mAddressee == ADDRESSEE_ALL) ? mEdit->text() : mAddressee + ", " + mEdit->text();
         Client::instance()->sendChatMessage(LOGIC_ID_CHESS, tableID, msg);
     }
 
