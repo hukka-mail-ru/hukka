@@ -33,6 +33,8 @@ private:
     int mOpponentWidth;
     int mOpponentHeight;
 
+    int mBorderWidth;
+
     QString mBgForWhitesColor;
     QString mBgForBlacksColor;
 

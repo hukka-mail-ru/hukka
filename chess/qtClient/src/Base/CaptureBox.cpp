@@ -33,8 +33,9 @@ CaptureBox::CaptureBox(QGraphicsScene* parentScene):
     mOpponentHeight = XML::instance().readValue(XML_ITEMS_FILENAME, QList<QString>() << XML_NODE_CAPTURE_BOX << XML_NODE_OPPONENT << XML_NODE_HEIGHT).toInt();
     mBgForBlacksColor  = XML::instance().readValue(XML_ITEMS_FILENAME, QList<QString>() << XML_NODE_CAPTURE_BOX << XML_NODE_OPPONENT << XML_NODE_COLOR);
 
+    mBorderWidth = XML::instance().readValue(XML_ITEMS_FILENAME, QList<QString>() << XML_NODE_CAPTURE_BOX << XML_NODE_BORDER << XML_NODE_WIDTH).toInt();;
 
-    mCapturedPieceWidth  = XML::instance().readValue(XML_ITEMS_FILENAME, QList<QString>() << XML_NODE_CAPTURED_PIECE << XML_NODE_WIDTH).toInt();
+    mCapturedPieceWidth  = XML::instance().readValue(XML_ITEMS_FILENAME, QList<QString>() << XML_NODE_CAPTURE_BOX << XML_NODE_PIECE << XML_NODE_WIDTH).toInt();
 
 
 }
@@ -70,10 +71,15 @@ void CaptureBox::update(const Field& field, bool white)
     mMeBox->setZValue(Z_CELLS_LAYER);
     mOppBox->setZValue(Z_CELLS_LAYER);
 
+    // a verification
+    int allPieces = Empty;
+    for(unsigned i=0; i<field.size(); i++)
+    {
+        allPieces += (int)field[i];
+    }
 
-    if(field.empty())
+    if(field.empty() || allPieces == Empty)
         return;
-
 
     // get all the pieces
     QList<piece_type> white_pieces;
@@ -82,7 +88,7 @@ void CaptureBox::update(const Field& field, bool white)
     white_pieces << w_Queen << w_Rook << w_Rook << w_Knight << w_Knight << w_Bishop << w_Bishop;
     black_pieces << b_Queen << b_Rook << b_Rook << b_Knight << b_Knight << b_Bishop << b_Bishop;
 
-    for(int i=0; i<8; i++)
+    for(int i=0; i<CELLS_IN_ROW; i++)
     {
         white_pieces << w_Pawn;
         black_pieces << b_Pawn;
@@ -129,7 +135,7 @@ void CaptureBox::update(const Field& field, bool white)
 
       //  qDebug() << "Captured white: " << white_pieces[i] << "x: " << x << "y:" << y;
 
-        pixmap->moveBy(x + i*mCapturedPieceWidth, y);
+        pixmap->moveBy(x + i*mCapturedPieceWidth + mBorderWidth, y + mBorderWidth);
         pixmap->setZValue(Z_PIECES_LAYER);
         pixmap->setParentItem(parentBox);
     }
@@ -157,7 +163,7 @@ void CaptureBox::update(const Field& field, bool white)
 
      //   qDebug() << "Captured black: " << black_pieces[i] << "x: " << x << "y:" << y;
 
-        pixmap->moveBy(x + i*mCapturedPieceWidth, y);
+        pixmap->moveBy(x + i*mCapturedPieceWidth + mBorderWidth, y + mBorderWidth);
         pixmap->setZValue(Z_PIECES_LAYER);
         pixmap->setParentItem(parentBox);
     }

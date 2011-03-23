@@ -39,7 +39,6 @@
 #define XML_NODE_CELL             "Cell"
 #define XML_NODE_PIECE            "Piece"
 #define XML_NODE_PAWN             "Pawn"
-#define XML_NODE_CAPTURED_PIECE   "CapturedPiece"
 #define XML_NODE_CAPTURE_BOX      "CaptureBox"
 #define XML_NODE_MOVE_BOX         "MoveBox"
 #define XML_NODE_BOARD            "Board"

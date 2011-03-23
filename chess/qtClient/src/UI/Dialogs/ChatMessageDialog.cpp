@@ -12,7 +12,11 @@ ChatMessageDialog::ChatMessageDialog(const QString& addressee, ChatType chatType
 {
     setWindowTitle(tr("Send Message"));
 
-    label = new QLabel(tr("A chat message to ") + mAddressee + ":", this);
+    QString header = (mChatType == CT_COMMON_CHAT) ?
+                     tr("A chat message to ") + mAddressee + ":" :
+                     tr("A chat message:");
+
+    label = new QLabel(header, this);
     mEdit = new QLineEdit(this);
     okButton = new QPushButton(tr("OK"), this);
 
@@ -45,7 +49,16 @@ void ChatMessageDialog::onOkClicked()
         TABLEID tableID = (mChatType == CT_COMMON_CHAT) ?
                           COMMON_CHAT_ID : UI::instance()->getGameTable();
 
-        QString msg = (mAddressee == ADDRESSEE_ALL) ? mEdit->text() : mAddressee + ", " + mEdit->text();
+        QString msg;
+        if (mChatType == CT_COMMON_CHAT)
+        {
+            msg = (mAddressee == ADDRESSEE_ALL) ? mEdit->text() : mAddressee + ", " + mEdit->text();
+        }
+        else
+        {
+            msg = mEdit->text();
+        }
+
         Client::instance()->sendChatMessage(LOGIC_ID_CHESS, tableID, msg);
     }
 
