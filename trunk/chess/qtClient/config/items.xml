@@ -124,13 +124,11 @@
     <width value="50" />  <height value="50" />
   </Piece>
 
-  <CapturedPiece>
-    <width value="26" />  <height value="23" /> 
-  </CapturedPiece>
-
   <CaptureBox>
 	<me>       <color value="#D38842" /> <x value="390" />   <y value="5" />  <width value="400" />  <height value="23" /> </me>
 	<opponent> <color value="#7C3B1B" /> <x value="390" />   <y value="440"/> <width value="400" />  <height value="23" /></opponent>
+    <border> <width value="1" /> </border>
+    <Piece>  <width value="26" />  <height value="22" />  </Piece>
   </CaptureBox>
 
   <MoveBox>

@@ -65,12 +65,17 @@
         <translation type="unfinished">Послать сообщение</translation>
     </message>
     <message>
-        <location filename="../src/UI/Dialogs/ChatMessageDialog.cpp" line="15"/>
+        <location filename="../src/UI/Dialogs/ChatMessageDialog.cpp" line="16"/>
         <source>A chat message to </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../src/UI/Dialogs/ChatMessageDialog.cpp" line="17"/>
+        <source>A chat message:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/UI/Dialogs/ChatMessageDialog.cpp" line="21"/>
         <source>OK</source>
         <translation type="unfinished">ОК</translation>
     </message>
