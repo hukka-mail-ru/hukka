@@ -182,6 +182,7 @@ Chat::Userlist::Userlist(QWidget* parent, ChatType type):
     horizontalHeader()->hide();
     horizontalScrollBar()->hide();
     setEditTriggers(QTableWidget::NoEditTriggers); // read only!
+    setSelectionMode(QAbstractItemView::NoSelection); // no highlight on click
 }
 
 void Chat::Userlist::addUser(const QString& userName)
@@ -225,7 +226,10 @@ void Chat::Userlist::updateTable()
 
 void Chat::Userlist::mouseReleaseEvent(QMouseEvent * event)
 {
-    MainWindow::instance()->showChatMessageDialog(currentItem()->text(), mChatType);
+    if(currentItem()->text() != UI::instance()->getPlayer(PT_ME).name) // prevent sending message to myseff
+    {
+        MainWindow::instance()->showChatMessageDialog(currentItem()->text(), mChatType);
+    }
 }
 
 
