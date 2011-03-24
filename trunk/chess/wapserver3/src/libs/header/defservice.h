@@ -53,7 +53,7 @@ const int ANS_DELETE         = 64;
 
 // CHESS SERVER MESSAGES 80 -
 const int		CMD_JOIN	= 81;
-const int		CMD_STEP	= 82;
+const int		CMD_MOVE	= 82;
 const int		CMD_DRAW	= 83;
 const int		ANS_JOIN	= 84;
 const int		ANS_STEP	= 85;
@@ -147,7 +147,7 @@ public:
 
                 // CHS
                 case CMD_JOIN:  res = "CMD_JOIN"; break;
-                case CMD_STEP:  res = "CMD_STEP"; break;
+                case CMD_MOVE:  res = "CMD_MOVE"; break;
                 case CMD_DRAW:  res = "CMD_DRAW"; break;
                 case CMD_GET_FIELD    : res = "CMD_GET_FIELD"; break;
                 case CMD_SURRENDER     : res = "CMD_SURRENDER"; break;

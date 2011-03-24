@@ -33,6 +33,7 @@
 #define XML_NODE_SCENE            "Scene"
 #define XML_NODE_DIALOGS          "Dialogs"
 #define XML_NODE_BUTTONS          "Buttons"
+#define XML_NODE_PROMOTION        "Promotion"
 #define XML_NODE_EXIT             "Exit"
 #define XML_NODE_COMMON_CHAT      "CommonChat"
 #define XML_NODE_TABLE_CHAT       "TableChat"

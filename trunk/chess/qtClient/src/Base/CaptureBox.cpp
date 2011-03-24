@@ -94,7 +94,7 @@ void CaptureBox::update(const Field& field, bool white)
         black_pieces << b_Pawn;
     }
 
-    // remove all but the captured
+    // remove all but the captured ones
     for(int i=0; i<field.size(); i++)
     {
         piece_type piece = field[i];

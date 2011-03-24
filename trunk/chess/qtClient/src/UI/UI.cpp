@@ -149,6 +149,29 @@ bool UI::isEnemyPiece(CELLID cell)
     return res;
 }
 
+piece_type getPromotion(piece_type piece, CELLID dstCell)
+{
+    piece_type res = Empty;
+
+    if(piece != w_Pawn && piece != b_Pawn)
+        return res;
+
+    if(piece == w_Pawn && dstCell >= (CELLS_IN_FIELD - CELLS_IN_ROW)) // the last line for whites
+    {
+ //       qDebug() << "getPromotion 1";
+        res = MainWindow::instance()->showPromotionDialog(PC_WHITE);
+    }
+    else if(piece == b_Pawn && dstCell < CELLS_IN_ROW) // the last line for blacks
+    {
+ //       qDebug() << "getPromotion 2";
+        res = MainWindow::instance()->showPromotionDialog(PC_BLACK);
+    }
+
+  //  qDebug() << "getPromotion 3";
+
+    return res;
+}
+
 
 void UI::cellClicked(CELLID cell)
 {
@@ -192,7 +215,12 @@ void UI::cellClicked(CELLID cell)
 
             MainWindow::instance()->highlightGameSceneCell(cell);
 
-            Client::instance()->step(mGameTable, mMove);
+            qDebug() << "mField[mMove.srcCell]" << mField[mMove.srcCell];
+            qDebug() << "mMove.dstCell" << mMove.dstCell;
+
+            piece_type promotion = getPromotion(mField[mMove.srcCell], mMove.dstCell);
+
+            Client::instance()->move(mGameTable, mMove, promotion);
 
             mGameState = GS_WAIT_FOR_SERVER;
         }

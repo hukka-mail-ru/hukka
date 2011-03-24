@@ -97,13 +97,22 @@ bool CHEOPSEngine::move( const String& _strMove )
     SMove sMove;
 
     if ( ! m_Board.in_progress )
+    {
+        cerr << "ERR   CHEOPSEngine::move !m_Board.in_progress" << endl;
         return false;
+    }
 
     if (! parseMove( _strMove, &sMove ) )
+    {
+        cerr << "ERR   CHEOPSEngine::move !parseMove" << endl;
         return false;
+    }
 
     if ( ! m_Board.can_move( sMove ) )
+    {
+        cerr << "ERR   CHEOPSEngine::move !can_move" << endl;
         return false;
+    }
 
     m_Status = m_Board.do_move( sMove );
 
@@ -114,13 +123,23 @@ bool CHEOPSEngine::move( const String& _strMove )
 
 bool CHEOPSEngine::parseMove( const String& _strMove, SMove* _pMove )
 {
+    cerr << "CHEOPSEngine::parseMove _strMove = " << _strMove.c_str() << endl;
+
     // Is this a valid move string?
     int len=_strMove.length();
     if (len>5 || len<4 || _strMove[0]<'a' || _strMove[0]>'h' || _strMove[2]<'a' ||
             _strMove[2]>'h' || _strMove[1]<'1' || _strMove[1]>'8' || _strMove[3]<'1' || _strMove[3]>'8')
+    {
+    //    cerr << "CHEOPSEngine::parseMove failed" << endl;
         return false;
+    }
     if (len==5 && !strchr("qrnb", _strMove[4]))
+    {
+    //    cerr << "ERR   CHEOPSEngine::parseMove len = " << len <<
+    //                "strchr(qrnb, _strMove[4])" << strchr("qrnb", _strMove[4]) << endl;
+
         return false;
+    }
 
     // Determine promotion type
 

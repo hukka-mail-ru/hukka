@@ -115,6 +115,9 @@
 
   </Buttons>
 
+  <Promotion>
+      <width value="50" />  <height value="50" />
+  </Promotion>
 
   <Cell>
     <width value="50" />
