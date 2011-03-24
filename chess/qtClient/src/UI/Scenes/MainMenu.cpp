@@ -39,7 +39,7 @@ MainMenu::~MainMenu()
 Button* MainMenu::newButton(const QPixmap& pixmap, const char* slot,
                             const QString& text, const QString& xmlNodeName)
 {
-    Button* button = new Button(this, pixmap, text, xmlNodeName);
+    Button* button = new Button(this, pixmap, text, XML_NODE_BUTTONS, xmlNodeName);
     QObject::connect(button, SIGNAL(clicked()), this, slot);
     return button;
 }
@@ -148,6 +148,9 @@ void MainMenu::disableItems()
 
 void MainMenu::onCreateGameClicked()
 {
+//    MainWindow::instance()->showPromotionDialog(PC_WHITE);
+//    MainWindow::instance()->showPromotionDialog(PC_BLACK);
+
     MainWindow::instance()->setMode(MW_WAIT);
 
     mClickedButton = createGameButton;

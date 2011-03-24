@@ -10,7 +10,8 @@ class Button: public QObject, public QGraphicsPixmapItem
 {
 Q_OBJECT
 public:
-    Button(QGraphicsScene* scene, const QPixmap& pixmap, const QString& text, const QString& xmlNodeName);
+    Button(QGraphicsScene* scene, const QPixmap& pixmap, const QString& text,
+           const QString& xmlNodeGroupName, const QString& xmlNodeName);
 
     void updatePos(OrientationStatus orientation);
 
@@ -39,6 +40,7 @@ private:
     QGraphicsScene* mScene;
 
     QString mXMLNodeName;
+    QString mXMLNodeGroupName;
     QGraphicsTextItem* mText;
 
 };

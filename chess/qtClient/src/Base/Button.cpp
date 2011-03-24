@@ -16,10 +16,12 @@ int Button::mWidth = 0;
 int Button::mHeight = 0;
 int Button::mTextOffset = 0;
 
-Button::Button(QGraphicsScene* scene, const QPixmap& pixmap, const QString& text, const QString& xmlNodeName):
+Button::Button(QGraphicsScene* scene, const QPixmap& pixmap, const QString& text,
+               const QString& xmlNodeGroupName, const QString& xmlNodeName):
        QGraphicsPixmapItem(pixmap),
        mScene(scene),
        mXMLNodeName(xmlNodeName),
+       mXMLNodeGroupName(xmlNodeGroupName),
        mText(NULL)
 {
     mScene->addItem(this);
@@ -27,9 +29,9 @@ Button::Button(QGraphicsScene* scene, const QPixmap& pixmap, const QString& text
 
     if(text != "")
     {
-        QString family = XML::instance().readValue(XML_ITEMS_FILENAME, QList<QString>() << XML_NODE_BUTTONS << XML_NODE_FONT << XML_NODE_FAMILY);
-        int size =       XML::instance().readValue(XML_ITEMS_FILENAME, QList<QString>() << XML_NODE_BUTTONS  << XML_NODE_FONT << XML_NODE_SIZE).toInt();
-        QString color  = XML::instance().readValue(XML_ITEMS_FILENAME, QList<QString>() << XML_NODE_BUTTONS  << XML_NODE_FONT << XML_NODE_COLOR);
+        QString family = XML::instance().readValue(XML_ITEMS_FILENAME, QList<QString>() << mXMLNodeGroupName << XML_NODE_FONT << XML_NODE_FAMILY);
+        int size =       XML::instance().readValue(XML_ITEMS_FILENAME, QList<QString>() << mXMLNodeGroupName  << XML_NODE_FONT << XML_NODE_SIZE).toInt();
+        QString color  = XML::instance().readValue(XML_ITEMS_FILENAME, QList<QString>() << mXMLNodeGroupName  << XML_NODE_FONT << XML_NODE_COLOR);
 
         mText = mScene->addText(text, QFont(family, size));
         mText->setDefaultTextColor( QColor(color) );
@@ -42,8 +44,8 @@ void Button::updatePos(OrientationStatus orientation)
 {
     QString orientNode = (orientation == OrientationHorizontal) ? XML_NODE_LANDSCAPE : XML_NODE_PORTRAIT;
 
-    int x = XML::instance().readValue(XML_ITEMS_FILENAME, QList<QString>() << XML_NODE_BUTTONS << mXMLNodeName << orientNode << XML_NODE_X).toInt();
-    int y = XML::instance().readValue(XML_ITEMS_FILENAME, QList<QString>() << XML_NODE_BUTTONS << mXMLNodeName << orientNode << XML_NODE_Y).toInt();
+    int x = XML::instance().readValue(XML_ITEMS_FILENAME, QList<QString>() << mXMLNodeGroupName << mXMLNodeName << orientNode << XML_NODE_X).toInt();
+    int y = XML::instance().readValue(XML_ITEMS_FILENAME, QList<QString>() << mXMLNodeGroupName << mXMLNodeName << orientNode << XML_NODE_Y).toInt();
 
     /*
     qDebug() << "x y"  << x << y ;

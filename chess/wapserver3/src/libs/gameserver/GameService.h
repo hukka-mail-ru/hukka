@@ -101,10 +101,10 @@ private:
 			cmdJoin( _pClientMsg->GetTo(), *nTableID );
 
 		}
-		else if( cmd == CMD_STEP )
+		else if( cmd == CMD_MOVE )
 		{
 	//		std::cout << "GameService::newMsg from =" << _pClientMsg->GetTo() << " cmd = CMD_STEP" <<  std::endl;
-			cmdStep( _pClientMsg->GetTo(), &vecCmd );
+			cmdMove( _pClientMsg->GetTo(), &vecCmd );
 		}
 		else if( cmd == CMD_GET_FIELD )
 		{
@@ -434,7 +434,7 @@ private:
 	}
 
 
-	void cmdStep( uint32_t _nPlayerID, TVecChar* _vecStep )
+	void cmdMove( uint32_t _nPlayerID, TVecChar* _vecStep )
 	{
         //@TODO clarify situation with pointer! Mantis 25
 	    TGameLogic *logic = new TGameLogic; // if move to befor if( isGoodPlayerID ) - error: isGoodPlayerID set to 0
@@ -602,7 +602,7 @@ private:
 				return endGame( _nTableID, IGameLogic::TimeOut );
 			}
 
-			std::cout << "GameService::setNewTime new GameTime nTableID = " << _nTableID << ", nTime = " << nTime << ", nGameTime = " << nGameTime << ", nCurPlayer = " << nCurPlayer << std::endl;
+	//		std::cout << "GameService::setNewTime new GameTime nTableID = " << _nTableID << ", nTime = " << nTime << ", nGameTime = " << nGameTime << ", nCurPlayer = " << nCurPlayer << std::endl;
 
 			GetSqlGameTable()->setPlayerGameTime( _nTableID, nCurPlayer, nGameTime - nTime );
 		}
@@ -644,9 +644,6 @@ private:
         cerr << "nXPlayer " << nXPlayer << endl;
 
 
-
-
-	    //TODO refactoring! cmdEnd, cmdStep cmd Draw
         if (nCurPlayer == 0/*White*/)
 	    {
             nCurPlayer = (nXPlayer == 0) ? nPlayer0 : nPlayer1;

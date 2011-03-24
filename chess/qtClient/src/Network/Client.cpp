@@ -526,7 +526,7 @@ void Client::getField (TABLEID tableID)
 (___/ (__) (___)(_)
 ====================================================================================================*/
 
-void Client::step(TABLEID tableID, const Move& move)
+void Client::move(TABLEID tableID, const Move& move, piece_type promotion)
 {
     QT_TRACEOUT;
     assert(tableID);
@@ -536,11 +536,25 @@ void Client::step(TABLEID tableID, const Move& move)
         assert(mGameStatus == GAM_STARTED);
 
         // send command
-        QByteArray data = Q_BYTE_ARRAY(tableID) +
-                          Global::letter(move.srcCell) + Global::number(move.srcCell) +
-                          Global::letter(move.dstCell) + Global::number(move.dstCell);
+        QByteArray data = Q_BYTE_ARRAY(tableID);
+        data += Global::letter(move.srcCell);
+        data += Global::number(move.srcCell);
+        data += Global::letter(move.dstCell);
+        data += Global::number(move.dstCell);
 
-        sendCmd(CHS, CMD_STEP, data);
+        switch(promotion)
+        {
+            case Queen:   data += 'q'; break;
+            case Rook:    data += 'r'; break;
+            case Knight:  data += 'n'; break;
+            case Bishop:  data += 'b'; break;
+
+            default: break;
+        }
+
+//        qDebug() << "Client::move data.size() " << data.size();
+
+        sendCmd(CHS, CMD_MOVE, data);
     }
     catch (Exception& e) {
         e.add(tr("Can't get field. Table ID ") + QString::number(tableID) + tr(" on server: ") + mSocket.peerName() + ". ");

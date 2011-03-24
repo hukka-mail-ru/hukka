@@ -62,11 +62,11 @@ void GameScene::initialize()
     //mBoard = addRect (0, 0, 0, 0, QPen(QColor(border_color)));
 
     // MENU BUTTON
-    mMenuButton = new Button(this, Pixmaps::get(PIX_BUTTON_MENU), tr("Game menu"), XML_NODE_GAME_MENU);
+    mMenuButton = new Button(this, Pixmaps::get(PIX_BUTTON_MENU), tr("Game menu"), XML_NODE_BUTTONS, XML_NODE_GAME_MENU);
    // mMenuButton->updatePos(MainWindow::instance()->getOrientation());
     QObject::connect(mMenuButton, SIGNAL(clicked()), this, SLOT(onMenuButtonClicked()));
 
-    mExitButton = new Button(this, Pixmaps::get(PIX_BUTTON_EXIT), "", XML_NODE_EXIT);
+    mExitButton = new Button(this, Pixmaps::get(PIX_BUTTON_EXIT), "", XML_NODE_BUTTONS, XML_NODE_EXIT);
     QObject::connect(mExitButton, SIGNAL(clicked()), this, SLOT(onExitClicked()));
 
 

@@ -392,8 +392,12 @@ bool ChessBoard::can_move(int from, int to, piece_type promotion) const {
 
     for (move_list::iterator i=moves.begin(); i!=moves.end(); ++i)
         if ((*i).to==to && (*i).promotion==promotion)
+        {
+            cerr << "ChessBoard::can_move true" << endl;
             return true;
+        }
 
+    cerr << "ChessBoard::can_move false" << endl;
     return false;
 }
 
@@ -499,7 +503,10 @@ move_list ChessBoard::mobility_pawn(int from) const {
             (is_white(m_CurPos.square[m.from]) && is_black(m_CurPos.square[m.to]) ||
              is_black(m_CurPos.square[m.from]) && is_white(m_CurPos.square[m.to]) ||
              m_CurPos.en_passant==m.to) && !causes_check(m)) {
-            if (is_edge(m.to)) {
+            if (is_edge(m.to))
+            {
+                cerr << "ChessBoard::mobility_pawn 1" << endl;
+
                 m.promotion=Bishop; ml.push_front(m);
                 m.promotion=Rook;   ml.push_front(m);
                 m.promotion=Knight; ml.push_front(m);
@@ -507,7 +514,10 @@ move_list ChessBoard::mobility_pawn(int from) const {
                 m.promotion=Empty;
             }
             else
+            {
+                cerr << "ChessBoard::mobility_pawn 2" << endl;
                 ml.push_front(m);
+            }
         }
     }
 
@@ -516,21 +526,32 @@ move_list ChessBoard::mobility_pawn(int from) const {
     if (which_rank(from)==1 && is_white(m_CurPos.square[from]) &&
             m_CurPos.square[m.to]==Empty && m_CurPos.square[m.from+ahead*Rank]==Empty &&
         !causes_check(m))
+    {
+        cerr << "ChessBoard::mobility_pawn 3" << endl;
         ml.push_front(m);
+    }
     else if (which_rank(from)==6 && is_black(m_CurPos.square[from]) &&
             m_CurPos.square[m.to]==Empty && m_CurPos.square[m.from+ahead*Rank]==Empty &&
         !causes_check(m))
+    {
+        cerr << "ChessBoard::mobility_pawn 4" << endl;
         ml.push_front(m);
+    }
 
     // Check one square ahead
     m.to=m.from+ahead*Rank;
     if (!is_edge(m.to) && m_CurPos.square[m.to]==Empty && !causes_check(m))
+    {
         ml.push_front(m);
-    else if (is_edge(m.to) && m_CurPos.square[m.to]==Empty && !causes_check(m)) {
+        cerr << "ChessBoard::mobility_pawn 5" << endl;
+    }
+    else if (is_edge(m.to) && m_CurPos.square[m.to]==Empty && !causes_check(m))
+    {
         m.promotion=Bishop; ml.push_front(m);
         m.promotion=Rook;   ml.push_front(m);
         m.promotion=Knight; ml.push_front(m);
         m.promotion=Queen;  ml.push_front(m);
+        cerr << "ChessBoard::mobility_pawn 6" << endl;
     }
 
     return ml;

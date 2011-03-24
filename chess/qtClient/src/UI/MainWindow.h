@@ -53,6 +53,7 @@ public:
     void showGameDialog();
     void showOptionsDialog();
     void showChatMessageDialog(const QString& addressee, ChatType chatType);
+    piece_type showPromotionDialog(PlayerColor color);
 
     void closeCurrentDialog();
 

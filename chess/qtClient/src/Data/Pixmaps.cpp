@@ -39,6 +39,22 @@ void Pixmaps::loadPixmaps()
     mPixmaps.insert(PIX_BUTTON_MENU,          mPixmaps[PIX_BUTTONS].copy(width * 4, 0, width, height ));
 
     loadPixmap(PIX_BUTTON_EXIT,":/images/exit.png");
+    ////////////////////////////////////////////////////////////////////////////////////
+
+
+    loadPixmap(PIX_PROMOTION,":/images/promotion.png");
+
+    int promotionWidth  = XML::instance().readValue(XML_ITEMS_FILENAME, QList<QString>() << XML_NODE_PROMOTION << XML_NODE_WIDTH).toInt();
+    int promotionHeight = XML::instance().readValue(XML_ITEMS_FILENAME, QList<QString>() << XML_NODE_PROMOTION << XML_NODE_HEIGHT).toInt();
+    mPixmaps.insert(PIX_PROMOTION_WHITE_QUEEN,    mPixmaps[PIX_PROMOTION].copy(promotionWidth * 0, 0, promotionWidth, promotionHeight ));
+    mPixmaps.insert(PIX_PROMOTION_WHITE_ROOK,     mPixmaps[PIX_PROMOTION].copy(promotionWidth * 1, 0, promotionWidth, promotionHeight ));
+    mPixmaps.insert(PIX_PROMOTION_WHITE_BISHOP,   mPixmaps[PIX_PROMOTION].copy(promotionWidth * 2, 0, promotionWidth, promotionHeight ));
+    mPixmaps.insert(PIX_PROMOTION_WHITE_KNIGHT,   mPixmaps[PIX_PROMOTION].copy(promotionWidth * 3, 0, promotionWidth, promotionHeight ));
+
+    mPixmaps.insert(PIX_PROMOTION_BLACK_QUEEN,    mPixmaps[PIX_PROMOTION].copy(promotionWidth * 0, promotionHeight, promotionWidth, promotionHeight ));
+    mPixmaps.insert(PIX_PROMOTION_BLACK_ROOK,     mPixmaps[PIX_PROMOTION].copy(promotionWidth * 1, promotionHeight, promotionWidth, promotionHeight ));
+    mPixmaps.insert(PIX_PROMOTION_BLACK_BISHOP,   mPixmaps[PIX_PROMOTION].copy(promotionWidth * 2, promotionHeight, promotionWidth, promotionHeight ));
+    mPixmaps.insert(PIX_PROMOTION_BLACK_KNIGHT,   mPixmaps[PIX_PROMOTION].copy(promotionWidth * 3, promotionHeight, promotionWidth, promotionHeight ));
 
     ////////////////////////////////////////////////////////////////////////////////////
     loadPixmap(PIX_PIECES, ":/images/pieces.png");

@@ -30,6 +30,7 @@
 #include "Dialogs/WaitDrawDialog.h"
 #include "Dialogs/ChatMessageDialog.h"
 #include "Dialogs/OptionsDialog.h"
+#include "Dialogs/PromotionDialog.h"
 #include "Pixmaps.h"
 
 
@@ -288,6 +289,13 @@ void MainWindow::showChatMessageDialog(const QString& addressee, ChatType chatTy
 {
     setCurrentDialog(new ChatMessageDialog(addressee, chatType, this));
     setMode(MW_NORMAL);
+}
+
+piece_type MainWindow::showPromotionDialog(PlayerColor color)
+{
+    PromotionDialog* dialog = new PromotionDialog(color, this);
+
+    return (piece_type)dialog->exec();
 }
 
 void MainWindow::showMainMenu()

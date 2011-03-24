@@ -12,7 +12,7 @@
 int Cell::mWidth = 0;
 
 Cell::Cell(QGraphicsScene* scene, CELLID cellID, PixmapKey cellPixmapKey, QObject* parent):
-    Button(scene, Pixmaps::get(cellPixmapKey), "", ""),
+    Button(scene, Pixmaps::get(cellPixmapKey), "", "", ""),
     mId(cellID),
     mCellPixmapKey(cellPixmapKey)
 {

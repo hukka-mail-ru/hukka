@@ -85,7 +85,7 @@ public:
         void joinGame            (TABLEID tableID);
         // Both
         void getField            (TABLEID tableID);
-        void step                (TABLEID tableID, const Move& move);
+        void move                (TABLEID tableID, const Move& move, piece_type promotion = Empty);
         void surrender           (TABLEID tableID);
         void getTime             (TABLEID tableID);
         void timeout             (TABLEID tableID);
