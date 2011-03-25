@@ -45,7 +45,9 @@ void ChessService::cmdGetField( uint32_t _nPlayerID, uint32_t _nTableID )
 
     uint32_t moveTime = 0;
     uint32_t gameTime = 0;
-    if ( checkTime( _nPlayerID, _nTableID, false, moveTime, gameTime ) == NoTimeError )
+    ECheckTime res = checkTime( _nPlayerID, _nTableID, false, moveTime, gameTime );
+
+    if ( res == NoTimeError )
     {
         sCmd.m_moveTime = moveTime;
         sCmd.m_gameTime = gameTime;
@@ -54,6 +56,7 @@ void ChessService::cmdGetField( uint32_t _nPlayerID, uint32_t _nTableID )
     {
         sCmd.m_moveTime = INVALID_TIME;
         sCmd.m_gameTime = INVALID_TIME;
+        return;
     }
 
 
