@@ -3,7 +3,8 @@
 
 #include <QHash>
 #include <QPixmap>
-#include <ChessTypes.h>
+
+#include <Defines.h>
 
 enum PixmapKey
 {
@@ -90,7 +91,7 @@ enum PixmapKey
 
 
 typedef QHash<PixmapKey, QPixmap>     PixmapHash;
-typedef vector<piece_type>            Field;
+
 
 class Pixmaps
 {

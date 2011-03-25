@@ -35,6 +35,9 @@ public:
     void show();
     bool close();
 
+    void enable();
+    void disable();
+
 private:
     enum ChatSender
     {

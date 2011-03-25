@@ -10,6 +10,8 @@
 
 #include <QObject>
 #include <QTime>
+
+#include <ChessTypes.h>
 #include <header/defserver.h>
 #include <header/defservice.h>
 
@@ -98,6 +100,8 @@ typedef quint32             CELLID;
 typedef quint32             TABLEID;
 typedef quint32             LOGICID;
 typedef quint32             PLAYERID;
+
+typedef vector<piece_type>  Field;
 
 enum GameState
 {
@@ -203,6 +207,16 @@ public:
         }
     }
 
+    static bool isFieldEmpty(const Field& field)
+    {
+        int allPieces = Empty;
+        for(unsigned i=0; i<field.size(); i++)
+        {
+            allPieces += (int)field[i];
+        }
+
+        return (field.empty() || allPieces == Empty);
+    }
 
     static QString getGameResultText(int status, int rating)
     {

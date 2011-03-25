@@ -82,7 +82,7 @@ void CreateGameDialog::onOkClicked()
 
     connect(Client::instance(), SIGNAL(gameTableCreated(TABLEID)), this, SLOT(onGameTableCreated(TABLEID)));
     Client::instance()->createGameTable(LOGIC_ID_CHESS, params);
-
+    MainWindow::instance()->setMode(MW_WAIT);
 }
 
 
@@ -97,5 +97,4 @@ void CreateGameDialog::onGameTableCreated(TABLEID id)
 
     UI::instance()->setGameTable(id);
     MainWindow::instance()->showWaitJoinDialog();
-
 }

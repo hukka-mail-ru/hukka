@@ -74,6 +74,32 @@ void GameScene::initialize()
 
 }
 
+void GameScene::enableItems()
+{
+    QList<QGraphicsItem*> list = items();
+
+    for(int i=0; i<list.size(); i++)
+    {
+        list[i]->setOpacity(OPAQUE_NORMAL);
+    }
+
+    if(mChat)
+      mChat->enable();
+}
+
+void GameScene::disableItems()
+{
+    QList<QGraphicsItem*> list = items();
+
+    for(int i=0; i<list.size(); i++)
+    {
+        list[i]->setOpacity(OPAQUE_HALF);
+    }
+
+    if(mChat)
+      mChat->disable();
+}
+
 void GameScene::onExitClicked()
 {
     close();
@@ -83,9 +109,12 @@ void GameScene::onExitClicked()
 void GameScene::onGotField(const Field& field, bool myMove, bool iAmWhite)
 {
     updateGameField(field, iAmWhite);
-    MainWindow::instance()->setMode(MW_NORMAL);
-
     updateMoveBoxes(UI::instance()->updateField(field, myMove, iAmWhite));
+
+    if(!Global::isFieldEmpty(field))
+    {
+        MainWindow::instance()->setMode(MW_NORMAL);
+    }
 }
 
 void GameScene::updateItemsPositions(OrientationStatus orientation)
