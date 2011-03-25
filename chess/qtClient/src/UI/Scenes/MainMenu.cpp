@@ -326,8 +326,9 @@ void MainMenu::onGotOpponent(const QString& opponentName, int opponentRating)
 
    Client::instance()->setGameStatus(GAM_STARTED);
 
-
-   MainWindow::instance()->showGameScene(PC_WHITE);
+   MainWindow::instance()->setMode(MW_WAIT);
+   UI::instance()->setPlayerColor(PT_ME, PC_WHITE);
+  // MainWindow::instance()->showGameScene(PC_WHITE);
 
    UI::instance()->startGame();
 

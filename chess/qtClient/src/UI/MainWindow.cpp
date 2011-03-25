@@ -107,6 +107,8 @@ void MainWindow::onOrientationChanged(OrientationStatus orientation)
         mGameScene->initialize();
 
         showMainMenu();
+
+        show();
     }
 
     QString orientNode = (orientation == OrientationHorizontal) ? XML_NODE_LANDSCAPE : XML_NODE_PORTRAIT;
@@ -309,32 +311,24 @@ void MainWindow::showMainMenu()
     closeCurrentDialog();
     mGraphicsView->setScene(mMainMenu);
 
-    show();
-
     setMode(MW_NORMAL); // TODO this should be in each show... function
 }
 
 void MainWindow::showGameScene(PlayerColor color)
 {
    // qDebug() << "MainWindow::showGameScene";
-    setMode(MW_WAIT);
+    if(mGraphicsView->scene() == mGameScene)
+        return;
 
-    try
-    {
-        if(mGraphicsView->scene() == mMainMenu)
-            mMainMenu->close();
+    if(mGraphicsView->scene() == mMainMenu)
+        mMainMenu->close();
 
-        mGameScene->showChat();
-        mGameScene->startClocks();
+    mGameScene->showChat();
+    mGameScene->startClocks();
 
-        mGraphicsView->setScene(mGameScene);
+    mGraphicsView->setScene(mGameScene);
 
-        show();
-    }
-    catch (Exception& e)
-    {
-        showMessage(e.what());
-    }
+    setMode(MW_NORMAL);
 
 }
 
