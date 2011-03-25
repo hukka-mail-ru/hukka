@@ -42,6 +42,21 @@ void ChessService::cmdGetField( uint32_t _nPlayerID, uint32_t _nTableID )
     sCmd.m_chCmd = ANS_FIELD;
     sCmd.m_nTableID = 0;
 
+
+    uint32_t moveTime = 0;
+    uint32_t gameTime = 0;
+    if ( checkTime( _nPlayerID, _nTableID, false, moveTime, gameTime ) == NoTimeError )
+    {
+        sCmd.m_moveTime = moveTime;
+        sCmd.m_gameTime = gameTime;
+    }
+    else
+    {
+        sCmd.m_moveTime = INVALID_TIME;
+        sCmd.m_gameTime = INVALID_TIME;
+    }
+
+
     uint8_t nState = 0;
 
     if ( m_SqlChessTable.getState( _nTableID, nState ) )
