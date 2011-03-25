@@ -108,6 +108,8 @@ void GameScene::onExitClicked()
 
 void GameScene::onGotField(const Field& field, bool myMove, bool iAmWhite)
 {
+    MainWindow::instance()->showGameScene(UI::instance()->getPlayer(PT_ME).color);
+
     updateGameField(field, iAmWhite);
     updateMoveBoxes(UI::instance()->updateField(field, myMove, iAmWhite));
 
