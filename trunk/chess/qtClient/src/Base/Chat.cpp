@@ -241,6 +241,7 @@ void Chat::Userlist::updateTable()
 void Chat::Userlist::mouseReleaseEvent(QMouseEvent * event)
 {
     if(MainWindow::instance()->getMode() == MW_NORMAL &&
+       currentItem() &&
        currentItem()->text() != UI::instance()->getPlayer(PT_ME).name) // prevent sending message to myseff
     {
         MainWindow::instance()->showChatMessageDialog(currentItem()->text(), mChatType);
