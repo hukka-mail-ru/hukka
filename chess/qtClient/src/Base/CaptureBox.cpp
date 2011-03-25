@@ -13,7 +13,7 @@
 #include <QString>
 #include <QGraphicsPixmapItem>
 #include <XML.h>
-#include <Defines.h>
+
 
 
 CaptureBox::CaptureBox(QGraphicsScene* parentScene):
@@ -72,14 +72,12 @@ void CaptureBox::update(const Field& field, bool white)
     mOppBox->setZValue(Z_CELLS_LAYER);
 
     // a verification
-    int allPieces = Empty;
-    for(unsigned i=0; i<field.size(); i++)
+    if(Global::isFieldEmpty(field))
     {
-        allPieces += (int)field[i];
+        return;
     }
 
-    if(field.empty() || allPieces == Empty)
-        return;
+
 
     // get all the pieces
     QList<piece_type> white_pieces;

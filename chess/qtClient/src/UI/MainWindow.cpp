@@ -153,11 +153,13 @@ void MainWindow::setMode(MainWindowMode mode)
         setCursor(QCursor(Qt::WaitCursor));
 
         mMainMenu->disableItems();
+        mGameScene->disableItems();
     }
     else if(mode == MW_NORMAL)
     {
         setCursor(QCursor(Qt::ArrowCursor));
         mMainMenu->enableItems();
+        mGameScene->enableItems();
     }
 
     mMode = mode;
@@ -315,6 +317,7 @@ void MainWindow::showMainMenu()
 void MainWindow::showGameScene(PlayerColor color)
 {
    // qDebug() << "MainWindow::showGameScene";
+    setMode(MW_WAIT);
 
     try
     {

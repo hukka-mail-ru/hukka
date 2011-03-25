@@ -8,7 +8,7 @@
         <translation type="obsolete">ОК</translation>
     </message>
     <message>
-        <location filename="../src/Base/Defines.h" line="95"/>
+        <location filename="../src/Base/Defines.h" line="97"/>
         <source>all</source>
         <translation type="unfinished"></translation>
     </message>
@@ -759,58 +759,58 @@ Please finish it first, then create a new game.</source>
         <translation type="unfinished">Рейтинг</translation>
     </message>
     <message>
-        <location filename="../src/Base/Defines.h" line="138"/>
+        <location filename="../src/Base/Defines.h" line="142"/>
         <source>offline</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/Base/Defines.h" line="211"/>
+        <location filename="../src/Base/Defines.h" line="225"/>
         <source>Your rating has been increased to</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/Base/Defines.h" line="212"/>
+        <location filename="../src/Base/Defines.h" line="226"/>
         <source>Your rating has been decreased to</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/Base/Defines.h" line="213"/>
+        <location filename="../src/Base/Defines.h" line="227"/>
         <source>Your rating has been slightly increased.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/Base/Defines.h" line="214"/>
+        <location filename="../src/Base/Defines.h" line="228"/>
         <source>Your rating hasn&apos;t been affected because of too few number of moves.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/Base/Defines.h" line="215"/>
+        <location filename="../src/Base/Defines.h" line="229"/>
         <source>Your rating is not available.
 Please visit www.site.com to learn how to enable it.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/Base/Defines.h" line="219"/>
+        <location filename="../src/Base/Defines.h" line="233"/>
         <source>You have won!</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/Base/Defines.h" line="224"/>
+        <location filename="../src/Base/Defines.h" line="238"/>
         <source>Time&apos;s up. You have won!</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/Base/Defines.h" line="229"/>
+        <location filename="../src/Base/Defines.h" line="243"/>
         <source>You have lost!</source>
         <translation type="unfinished">Вы проиграли!</translation>
     </message>
     <message>
-        <location filename="../src/Base/Defines.h" line="234"/>
+        <location filename="../src/Base/Defines.h" line="248"/>
         <source>Time&apos;s up. You have lost!</source>
         <translation type="unfinished">Время вышло. Вы проиграли!</translation>
     </message>
     <message>
-        <location filename="../src/Base/Defines.h" line="239"/>
+        <location filename="../src/Base/Defines.h" line="253"/>
         <source>A draw.</source>
         <translation type="unfinished">Ничья.</translation>
     </message>

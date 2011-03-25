@@ -26,6 +26,9 @@ public:
 
     void initialize();
 
+    void enableItems();
+    void disableItems();
+
     void showChat();
     void startClocks();
 

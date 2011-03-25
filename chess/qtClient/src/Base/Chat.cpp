@@ -69,6 +69,17 @@ void Chat::updatePos(OrientationStatus orientation)
 
 }
 
+
+void Chat::enable()
+{
+    setCursor(QCursor(Qt::ArrowCursor));
+}
+
+void Chat::disable()
+{
+    setCursor(QCursor(Qt::WaitCursor));
+}
+
 void Chat::show()
 {
     TABLEID tableID = (mChatType == CT_COMMON_CHAT) ?
@@ -152,7 +163,10 @@ Chat::History::History(QWidget* parent, ChatType type):
 
 void Chat::History::mouseReleaseEvent(QMouseEvent * event)
 {
-    MainWindow::instance()->showChatMessageDialog(ADDRESSEE_ALL, mChatType);
+    if(MainWindow::instance()->getMode() == MW_NORMAL)
+    {
+        MainWindow::instance()->showChatMessageDialog(ADDRESSEE_ALL, mChatType);
+    }
 }
 
 void Chat::History::addMessage(const QString& message, ChatSender chatSender)
@@ -226,7 +240,8 @@ void Chat::Userlist::updateTable()
 
 void Chat::Userlist::mouseReleaseEvent(QMouseEvent * event)
 {
-    if(currentItem()->text() != UI::instance()->getPlayer(PT_ME).name) // prevent sending message to myseff
+    if(MainWindow::instance()->getMode() == MW_NORMAL &&
+       currentItem()->text() != UI::instance()->getPlayer(PT_ME).name) // prevent sending message to myseff
     {
         MainWindow::instance()->showChatMessageDialog(currentItem()->text(), mChatType);
     }
