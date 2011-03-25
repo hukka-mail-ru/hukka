@@ -1212,6 +1212,8 @@ void Client::processMessageCHS(const MessageHeader& header, const QByteArray& bu
         struct Reply {
             TABLEID     tableID;
             char        playerNr; // table owner (?)
+            uint32_t    moveTime;
+            uint32_t    gameTime;
             char        cells[CELLS_IN_FIELD];
             char        whitePlayerNr;
             char        myMove;
@@ -1228,6 +1230,8 @@ void Client::processMessageCHS(const MessageHeader& header, const QByteArray& bu
             field.push_back((piece_type)reply->cells[i]);
 
         emit gotField(field, reply->myMove, reply->playerNr == reply->whitePlayerNr);
+        emit gotMoveTime(reply->moveTime);
+        emit gotGameTime(reply->gameTime);
     }
     // STEP
     else if(header.cmd == ANS_STEP)

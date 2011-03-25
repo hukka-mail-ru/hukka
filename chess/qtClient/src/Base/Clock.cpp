@@ -80,6 +80,12 @@ void Clock::getServerTime()
 void Clock::onGotTime(quint32 seconds)
 {
     mSeconds = seconds;
+
+    if(seconds == INVALID_TIME)
+    {
+        mSeconds == 0;
+        mTimer->stop();
+    }
  //   qDebug() << "onGotTime " << seconds;
 }
 

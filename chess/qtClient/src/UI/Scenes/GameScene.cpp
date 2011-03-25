@@ -76,12 +76,12 @@ void GameScene::initialize()
 
 void GameScene::enableItems()
 {
-    QList<QGraphicsItem*> list = items();
+  //  QList<QGraphicsItem*> list = items();
 
-    for(int i=0; i<list.size(); i++)
-    {
-        list[i]->setOpacity(OPAQUE_NORMAL);
-    }
+  //  for(int i=0; i<list.size(); i++)
+  //  {
+  //      list[i]->setOpacity(OPAQUE_NORMAL);
+  //  }
 
     if(mChat)
       mChat->enable();
@@ -89,12 +89,12 @@ void GameScene::enableItems()
 
 void GameScene::disableItems()
 {
-    QList<QGraphicsItem*> list = items();
+ //   QList<QGraphicsItem*> list = items();
 
-    for(int i=0; i<list.size(); i++)
-    {
-        list[i]->setOpacity(OPAQUE_HALF);
-    }
+ //   for(int i=0; i<list.size(); i++)
+ //   {
+  //      list[i]->setOpacity(OPAQUE_HALF);
+  //  }
 
     if(mChat)
       mChat->disable();

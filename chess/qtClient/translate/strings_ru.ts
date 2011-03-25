@@ -196,12 +196,12 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/Network/Client.cpp" line="1294"/>
+        <location filename="../src/Network/Client.cpp" line="1298"/>
         <source>Game over.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/Network/Client.cpp" line="1315"/>
+        <location filename="../src/Network/Client.cpp" line="1319"/>
         <source>Your opponent has rejected the draw</source>
         <translation type="unfinished"></translation>
     </message>
@@ -263,12 +263,12 @@
         <translation type="obsolete">Невозможно послать сообщение общего чата на сервере: </translation>
     </message>
     <message>
-        <location filename="../src/Network/Client.cpp" line="1262"/>
+        <location filename="../src/Network/Client.cpp" line="1266"/>
         <source>Can&apos;t join to the game table.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/Network/Client.cpp" line="1279"/>
+        <location filename="../src/Network/Client.cpp" line="1283"/>
         <source>Can&apos;t reject the game.</source>
         <translation type="unfinished"></translation>
     </message>
@@ -309,9 +309,9 @@ The rating is not affected because of too few number of moves.</source>
     <message>
         <location filename="../src/Network/Client.cpp" line="946"/>
         <location filename="../src/Network/Client.cpp" line="976"/>
-        <location filename="../src/Network/Client.cpp" line="1263"/>
-        <location filename="../src/Network/Client.cpp" line="1280"/>
-        <location filename="../src/Network/Client.cpp" line="1317"/>
+        <location filename="../src/Network/Client.cpp" line="1267"/>
+        <location filename="../src/Network/Client.cpp" line="1284"/>
+        <location filename="../src/Network/Client.cpp" line="1321"/>
         <source>Internal server error </source>
         <translation>Внутренняя ошибка сервера </translation>
     </message>
@@ -349,7 +349,7 @@ The rating is not affected because of too few number of moves.</source>
         <location filename="../src/Network/Client.cpp" line="1012"/>
         <location filename="../src/Network/Client.cpp" line="1030"/>
         <location filename="../src/Network/Client.cpp" line="1073"/>
-        <location filename="../src/Network/Client.cpp" line="1245"/>
+        <location filename="../src/Network/Client.cpp" line="1249"/>
         <source>Internal server error</source>
         <translation>Внутренняя ошибка сервера</translation>
     </message>
@@ -379,7 +379,7 @@ The rating is not affected because of too few number of moves.</source>
         <translation type="obsolete">Время вышло. Вы проиграли!</translation>
     </message>
     <message>
-        <location filename="../src/Network/Client.cpp" line="1314"/>
+        <location filename="../src/Network/Client.cpp" line="1318"/>
         <source>A draw.</source>
         <translation>Ничья.</translation>
     </message>
@@ -388,22 +388,22 @@ The rating is not affected because of too few number of moves.</source>
         <translation type="obsolete">Ваш противник не согласен на ничью</translation>
     </message>
     <message>
-        <location filename="../src/Network/Client.cpp" line="1316"/>
+        <location filename="../src/Network/Client.cpp" line="1320"/>
         <source>Please wait for your next move to offer a draw</source>
         <translation>Подождите своего хода, а затем предложите ничью</translation>
     </message>
     <message>
-        <location filename="../src/Network/Client.cpp" line="1391"/>
+        <location filename="../src/Network/Client.cpp" line="1395"/>
         <source>CHS Error: </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/Network/Client.cpp" line="1421"/>
+        <location filename="../src/Network/Client.cpp" line="1425"/>
         <source>CHAT Error: </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/Network/Client.cpp" line="1474"/>
+        <location filename="../src/Network/Client.cpp" line="1478"/>
         <source>Server doesn&apos;t respond</source>
         <translation>Сервер не отвечает</translation>
     </message>

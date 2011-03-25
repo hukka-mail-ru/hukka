@@ -54,9 +54,11 @@ protected:
 	    m_pSocket->AddMsg( Msg );
 	}
 
-private:
+protected:
 
 	enum ECheckTime { TimeNotSet, NoTimeError, TimeOutError };
+
+private:
 
 	enum EDrawState { no, offer, reject };
 
@@ -490,7 +492,9 @@ private:
 	    if( isGoodPlayerID )
 	    {
 
-			checkTimeRes = checkTime( _nPlayerID, nTableID, false );
+	        uint32_t dummy1;
+	        uint32_t dummy2;
+			checkTimeRes = checkTime( _nPlayerID, nTableID, false, dummy1, dummy2 );
 
 		    if (checkTimeRes == TimeOutError )
 		    {
@@ -982,7 +986,9 @@ private:
         sendMsg( _nPlayerID, &sCmd, sizeof( sCmd ) );
 	}
 
-	ECheckTime checkTime( uint32_t _nPlayerID, uint32_t _nTableID, bool isSendTime )
+protected:
+	ECheckTime checkTime( uint32_t _nPlayerID, uint32_t _nTableID, bool isSendTime,
+	                      uint32_t& resTime2step, uint32_t& resTime2game)
 	{
 		uint32_t nTime2Step = 0;
 		uint32_t nTime2Game = 0;
@@ -997,6 +1003,8 @@ private:
         time_t nCurTime = time( NULL );
 		uint32_t nTime = nCurTime - nStepTime;
 
+        resTime2step = nTime2Step - nTime;
+
 		if( isTime2StepSet )
 		{
 			if( nTime > nTime2Step)
@@ -1007,10 +1015,11 @@ private:
 			}
 			else if (isSendTime)
 			{
+
 				SNGameMsg sCmd;
 			    sCmd.m_chCmd = ANS_CHECK_TIME_STEP;
 			    sCmd.m_nTableID = _nTableID;
-			    sCmd.m_nData = nTime2Step - nTime;
+			    sCmd.m_nData = resTime2step;
 
 			    std::cout << "GameService::checkTime ANS_CHECK_TIME_STEP nTableID = " << _nTableID
 			              << ", nTime = " << nTime << ", sCmd.m_nData = " << sCmd.m_nData << std::endl;
@@ -1029,6 +1038,9 @@ private:
 		{
 			uint32_t nGameTime = 0;
 			GetSqlGameTable()->getPlayerGameTime( _nTableID, nCurPlayer, nGameTime );
+
+            resTime2game = nGameTime - nTime;
+
 			if( nTime > nGameTime )
 			{
 				endGame( _nTableID, IGameLogic::TimeOut );
@@ -1040,7 +1052,7 @@ private:
 				SNGameMsg sCmd;
 			    sCmd.m_chCmd = ANS_CHECK_TIME_GAME;
 			    sCmd.m_nTableID = _nTableID;
-			    sCmd.m_nData = nGameTime - nTime;
+			    sCmd.m_nData = resTime2game;
 		        sendMsg( _nPlayerID, &sCmd, sizeof( sCmd ) );
 			}
 		}
@@ -1049,9 +1061,12 @@ private:
 
 	}
 
+private:
 	void cmdCheckTime( uint32_t _nPlayerID, uint32_t _nTableID )
 	{
-		if ( checkTime( _nPlayerID, _nTableID, true ) == TimeNotSet )
+        uint32_t dummy1;
+        uint32_t dummy2;
+		if ( checkTime( _nPlayerID, _nTableID, true, dummy1, dummy2 ) == TimeNotSet )
 		{
 			GameMsgBase sCmd;
 		    sCmd.m_chCmd = ANS_CHECK_TIME_NOT_SET;
@@ -1059,6 +1074,7 @@ private:
 	        sendMsg( _nPlayerID, &sCmd, sizeof( sCmd ) );
 		}
 	}
+
 
 	void cmdRating(uint32_t _nPlayerID)
 	{

@@ -71,7 +71,7 @@ void MoveBox::setPlayer(const Player& player)
 
 void MoveBox::setActive()
 {
-    mMoveClock.getServerTime();
+  //  mMoveClock.getServerTime();
 
     mMoveClock.show();
     mMoveClock.setColor(mActiveColor);

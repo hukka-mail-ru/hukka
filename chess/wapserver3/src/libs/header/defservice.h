@@ -4,6 +4,8 @@
 #include <sstream>
 #include <string>
 
+const int       INVALID_TIME = 0xFFFFFFFF;
+
 const int		ST_CREATION	= 0;
 const int		ST_OPEN		= 1;
 const int		ST_FULL		= 2;
