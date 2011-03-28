@@ -53,12 +53,14 @@ void Animation::onTick()
         else
         {
             mDstCell->setPiece(mDstNativePiece);
+            mDstCell->highlight();
         }
     }
     else
     {
         mSrcCell->hidePiece();
         mDstCell->setPiece(mSrcCell->getPiece());
+        mDstCell->highlight();
     }
 
     odd_tick = !odd_tick;

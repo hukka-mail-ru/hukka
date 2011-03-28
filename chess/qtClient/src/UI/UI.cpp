@@ -214,6 +214,7 @@ void UI::cellClicked(CELLID cell)
             // qDebug() << "OK! mDestinationCell = " << cell;
 
             MainWindow::instance()->removeGameSceneHighlight();
+         //   MainWindow::instance()->highlightGameSceneCell(mMove.dstCell);
             MainWindow::instance()->enableGameSceneAnimation(mMove);
 
          //   qDebug() << "mField[mMove.srcCell]" << mField[mMove.srcCell];
