@@ -17,13 +17,15 @@ Cell::Cell(QGraphicsScene* scene, CELLID cellID, PixmapKey cellPixmapKey, QObjec
     mCellPixmapKey(cellPixmapKey),
     mPiecePixmapKey(PIX_NONE),
     mIsPiece(false),
-    mIsHighlight(false)
+    mIsHighlight(false),
+    mPieceType(Empty)
 {
 }
 
 void Cell::setPiece(piece_type pieceType)
 {
     PixmapKey piecePixmapKey = PIX_NONE;
+    mPieceType = pieceType;
 
     if(mCellPixmapKey == PIX_CELL_WHITE)
     {
@@ -75,10 +77,10 @@ void Cell::setPiece(piece_type pieceType)
 }
 
 
-void Cell::showPiece(PixmapKey pieceKey)
+void Cell::showPiece()
 {
     applyPixmap(mCellPixmapKey);
-    applyPixmap(pieceKey);
+    applyPixmap(mPiecePixmapKey);
     if(mIsHighlight)
     {
         applyPixmap(PIX_CELL_HIGHLIGHT);

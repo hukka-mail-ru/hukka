@@ -208,12 +208,12 @@ void UI::cellClicked(CELLID cell)
 
     case GS_WAIT_FOR_PLAYER_MOVE:
 
-        if(mField[cell] == Empty || isEnemyPiece(cell))
+        if(mField[cell] == Empty || isEnemyPiece(cell)) // I've moved my piece
         {
             mMove.dstCell = cell;
             // qDebug() << "OK! mDestinationCell = " << cell;
 
-            MainWindow::instance()->highlightGameSceneCell(mMove.dstCell);
+            MainWindow::instance()->removeGameSceneHighlight();
             MainWindow::instance()->enableGameSceneAnimation(mMove);
 
          //   qDebug() << "mField[mMove.srcCell]" << mField[mMove.srcCell];
@@ -225,12 +225,13 @@ void UI::cellClicked(CELLID cell)
 
             mGameState = GS_WAIT_FOR_SERVER;
         }
-        else
+        else // I've changed my mind and selected another piece.
         {
-            MainWindow::instance()->removeGameSceneHighlight();
-            MainWindow::instance()->highlightGameSceneCell(cell);
-
             mMove.srcCell = cell;
+
+            MainWindow::instance()->removeGameSceneHighlight();
+            MainWindow::instance()->highlightGameSceneCell(mMove.srcCell);
+
             mGameState = GS_WAIT_FOR_PLAYER_MOVE;
             // qDebug() << "OK! mSourceCell = " << cell;
         }
