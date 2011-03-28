@@ -100,6 +100,7 @@ void Clock::onTick()
     else
     {
         Client::instance()->timeout(UI::instance()->getGameTable());
+        mTimer->stop(); // without it, client will be sending timeout instantly
     }
 
     mText->setPlainText(mHeader + Global::seconds2hrs(mSeconds));
