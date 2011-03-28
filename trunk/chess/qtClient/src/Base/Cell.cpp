@@ -5,9 +5,11 @@
  *      Author: ssy
  */
 
-#include "Cell.h"
+
 #include <QPainter>
 #include <QDebug>
+#include <UI.h>
+#include "Cell.h"
 
 int Cell::mWidth = 0;
 
@@ -20,6 +22,8 @@ Cell::Cell(QGraphicsScene* scene, CELLID cellID, PixmapKey cellPixmapKey, QObjec
     mIsHighlight(false),
     mPieceType(Empty)
 {
+    mHighlight = (UI::instance()->getPlayer(PT_ME).color == PC_WHITE) ?
+                      PIX_CELL_BLACK_HIGHLIGHT : PIX_CELL_WHITE_HIGHLIGHT;
 }
 
 void Cell::setPiece(piece_type pieceType)
@@ -83,7 +87,7 @@ void Cell::showPiece()
     applyPixmap(mPiecePixmapKey);
     if(mIsHighlight)
     {
-        applyPixmap(PIX_CELL_HIGHLIGHT);
+        applyPixmap(mHighlight);
     }
 
     mIsPiece = true;
@@ -94,7 +98,7 @@ void Cell::hidePiece()
     applyPixmap(mCellPixmapKey);
     if(mIsHighlight)
     {
-        applyPixmap(PIX_CELL_HIGHLIGHT);
+        applyPixmap(mHighlight);
     }
 
     mIsPiece = false;
@@ -102,7 +106,7 @@ void Cell::hidePiece()
 
 void Cell::highlight()
 {
-    applyPixmap(PIX_CELL_HIGHLIGHT);
+    applyPixmap(mHighlight);
     mIsHighlight = true;
 }
 

@@ -112,6 +112,11 @@ void GameScene::onGotField(const Field& field, bool myMove, bool iAmWhite)
 
     MainWindow::instance()->showGameScene(UI::instance()->getPlayer(PT_ME).color);
 
+    if(mField == field)
+    {
+        MainWindow::instance()->showMessage(tr("Invalid move."));
+    }
+
     updateGameField(field, iAmWhite);
     updateMoveBoxes(UI::instance()->updateField(field, myMove, iAmWhite));
 
