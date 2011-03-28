@@ -529,6 +529,11 @@ Please finish it first, then create a new game.</source>
         <translation type="unfinished">Меню игры</translation>
     </message>
     <message>
+        <location filename="../src/UI/Scenes/GameScene.cpp" line="117"/>
+        <source>Invalid move.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
         <source>Your move</source>
         <translation type="obsolete">Ваш ход</translation>
     </message>
@@ -943,17 +948,17 @@ Please finish it first, then create a new game.</source>
         <translation>Выход</translation>
     </message>
     <message>
-        <location filename="../src/UI/Dialogs/WaitJoinDialog.cpp" line="47"/>
+        <location filename="../src/UI/Dialogs/WaitJoinDialog.cpp" line="60"/>
         <source>is not available</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/UI/Dialogs/WaitJoinDialog.cpp" line="48"/>
+        <location filename="../src/UI/Dialogs/WaitJoinDialog.cpp" line="61"/>
         <source> (rating </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/UI/Dialogs/WaitJoinDialog.cpp" line="48"/>
+        <location filename="../src/UI/Dialogs/WaitJoinDialog.cpp" line="61"/>
         <source>) wants to play chess with you. Agree?</source>
         <translation type="unfinished"></translation>
     </message>

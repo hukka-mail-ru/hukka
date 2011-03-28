@@ -35,8 +35,21 @@ void  WaitJoinDialog::onGameTableDeleted()
 
 void WaitJoinDialog::onOpponentJoined(const QString& opponentName, int opponentRating)
 {
-    bool res = disconnect(Client::instance(), SIGNAL(opponentJoined(const QString&, int)), this, SLOT(onOpponentJoined(const QString&, int)));
-    qDebug() << "WaitJoinDialog::onOpponentJoined " << res;
+    static bool joined = false;
+
+    // Thiss should fix a bug with a double calling of onOpponentJoined
+    if(joined)
+    {
+        qDebug() << "WaitJoinDialog::onOpponentJoined. Double joining refused.";
+        return;
+    }
+    else
+    {
+        joined = true;
+    }
+
+    disconnect(Client::instance(), SIGNAL(opponentJoined(const QString&, int)), this, SLOT(onOpponentJoined(const QString&, int)));
+ //   qDebug() << "WaitJoinDialog::onOpponentJoined " << res;
 
     int tableID = UI::instance()->getGameTable();
 

@@ -55,6 +55,8 @@ private:
     bool mIsHighlight;
 
     piece_type mPieceType;
+
+    PixmapKey mHighlight;
 };
 
 #endif /* CELL_H_ */

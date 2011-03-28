@@ -24,7 +24,8 @@ void Pixmaps::loadPixmaps()
     int cellWidth = Cell::width();
     mPixmaps.insert(PIX_CELL_WHITE,    mPixmaps[PIX_CELLS].copy(cellWidth * 0, 0, cellWidth, cellWidth ));
     mPixmaps.insert(PIX_CELL_BLACK,    mPixmaps[PIX_CELLS].copy(cellWidth * 1, 0, cellWidth, cellWidth ));
-    mPixmaps.insert(PIX_CELL_HIGHLIGHT,mPixmaps[PIX_CELLS].copy(cellWidth * 2, 0, cellWidth, cellWidth ));
+    mPixmaps.insert(PIX_CELL_WHITE_HIGHLIGHT,mPixmaps[PIX_CELLS].copy(cellWidth * 2, 0, cellWidth, cellWidth ));
+    mPixmaps.insert(PIX_CELL_BLACK_HIGHLIGHT,mPixmaps[PIX_CELLS].copy(cellWidth * 3, 0, cellWidth, cellWidth ));
 
 
     ////////////////////////////////////////////////////////////////////////////////////
