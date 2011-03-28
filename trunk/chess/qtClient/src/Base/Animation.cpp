@@ -29,6 +29,8 @@ void Animation::startBlinking(Cell* srcCell, Cell* dstCell)
     mSrcCell = srcCell;
     mDstCell = dstCell;
 
+    mDstNativePiece = mDstCell->getPiece();
+
     onTick();
 }
 
@@ -43,13 +45,20 @@ void Animation::onTick()
 
     if(odd_tick)
     {
-        mSrcCell->showPiece(mSrcCell->getPieceKey());
-        mDstCell->showPiece(mDstCell->getPieceKey());
+        mSrcCell->showPiece();
+        if(mDstNativePiece == Empty)
+        {
+            mDstCell->hidePiece();
+        }
+        else
+        {
+            mDstCell->setPiece(mDstNativePiece);
+        }
     }
     else
     {
         mSrcCell->hidePiece();
-        mDstCell->showPiece(mSrcCell->getPieceKey());
+        mDstCell->setPiece(mSrcCell->getPiece());
     }
 
     odd_tick = !odd_tick;

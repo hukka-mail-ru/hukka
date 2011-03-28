@@ -31,6 +31,7 @@ private:
     Cell* mSrcCell;
     Cell* mDstCell;
 
+    piece_type mDstNativePiece;
 
 private slots:
 
