@@ -348,4 +348,14 @@ void MainWindow::removeGameSceneHighlight()
     mGameScene->removeHighlight();
 }
 
+void MainWindow::enableGameSceneAnimation(const Move& move)
+{
+    mGameScene->enableAnimation(move);
+}
+
+void MainWindow::disableGameSceneAnimation()
+{
+    mGameScene->disableAnimation();
+}
+
 
