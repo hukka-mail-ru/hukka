@@ -108,6 +108,8 @@ void GameScene::onExitClicked()
 
 void GameScene::onGotField(const Field& field, bool myMove, bool iAmWhite)
 {
+    disableAnimation();
+
     MainWindow::instance()->showGameScene(UI::instance()->getPlayer(PT_ME).color);
 
     updateGameField(field, iAmWhite);
@@ -262,4 +264,16 @@ void GameScene::onMenuButtonClicked()
     MainWindow::instance()->showGameDialog();
 }
 
+void GameScene::enableAnimation(const Move& move)
+{
+    Cell* srcCell = mCellArray[move.srcCell];
+    Cell* dstCell = mCellArray[move.dstCell];
+
+    mAnimation.startBlinking(srcCell, dstCell);
+}
+
+void GameScene::disableAnimation()
+{
+    mAnimation.stopBlinking();
+}
 

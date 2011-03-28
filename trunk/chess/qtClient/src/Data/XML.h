@@ -43,6 +43,7 @@
 #define XML_NODE_CAPTURE_BOX      "CaptureBox"
 #define XML_NODE_MOVE_BOX         "MoveBox"
 #define XML_NODE_BOARD            "Board"
+#define XML_NODE_ANIMATION        "Animation"
 
 // Buttons
 #define XML_NODE_NEW_GAME         "NewGame"
@@ -79,6 +80,8 @@
 #define XML_NODE_ME          "me"
 #define XML_NODE_OPPONENT    "opponent"
 #define XML_NODE_RATING      "rating"
+
+#define XML_NODE_TIMER       "timer"
 
 #define XML_VALUE_TAG        "value"
 

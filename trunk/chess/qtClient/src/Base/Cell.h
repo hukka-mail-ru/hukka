@@ -19,6 +19,12 @@ public:
     Cell(QGraphicsScene* scene, CELLID cellID, PixmapKey cellPixmapKey, QObject* parent = 0);
 
     void setPiece(piece_type pieceType);
+    PixmapKey getPieceKey() { return mPiecePixmapKey; }
+
+    // for animation
+    void showPiece(PixmapKey pieceKey);
+    void hidePiece();
+
     void highlight();
     void removeHighlight();
 
@@ -42,6 +48,10 @@ private:
     CELLID mId;
     PixmapKey mCellPixmapKey;
     PixmapKey mPiecePixmapKey;
+
+    bool mIsPiece;
+    bool mIsHighlight;
+
 };
 
 #endif /* CELL_H_ */

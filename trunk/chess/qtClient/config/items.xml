@@ -123,6 +123,10 @@
     <width value="50" />
   </Cell>
 
+  <Animation>
+	<timer value="500" />
+  </Animation>
+
   <Piece>
     <width value="50" />  <height value="50" />
   </Piece>

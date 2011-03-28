@@ -12,6 +12,8 @@
 #include <CaptureBox.h>
 #include <orientation.h>
 #include <MoveBox.h>
+#include <Animation.h>
+
 
 
 class GameScene: public QGraphicsScene
@@ -33,8 +35,9 @@ public:
     void startClocks();
 
     void highlightCell(CELLID cell);
-
     void removeHighlight();
+    void enableAnimation(const Move& move);
+    void disableAnimation();
 
     void updateItemsPositions(OrientationStatus orientation);
 
@@ -71,6 +74,8 @@ private:
     bool mWhite;
 
     CaptureBox mCaptureBox;
+
+    Animation mAnimation;
 
 private slots:
 

@@ -71,6 +71,8 @@ public:
 
     void highlightGameSceneCell(CELLID cell);
     void removeGameSceneHighlight();
+    void enableGameSceneAnimation(const Move& move);
+    void disableGameSceneAnimation();
 
     // should be called only if dialogs are hidden
     void showError(const QString& text);

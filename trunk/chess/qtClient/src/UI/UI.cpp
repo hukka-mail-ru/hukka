@@ -197,9 +197,9 @@ void UI::cellClicked(CELLID cell)
         }
         else
         {
-            MainWindow::instance()->highlightGameSceneCell(cell);
-
             mMove.srcCell = cell;
+
+            MainWindow::instance()->highlightGameSceneCell(mMove.srcCell);
             mGameState = GS_WAIT_FOR_PLAYER_MOVE;
             // qDebug() << "OK! mSourceCell = " << cell;
         }
@@ -213,10 +213,11 @@ void UI::cellClicked(CELLID cell)
             mMove.dstCell = cell;
             // qDebug() << "OK! mDestinationCell = " << cell;
 
-            MainWindow::instance()->highlightGameSceneCell(cell);
+            MainWindow::instance()->highlightGameSceneCell(mMove.dstCell);
+            MainWindow::instance()->enableGameSceneAnimation(mMove);
 
-            qDebug() << "mField[mMove.srcCell]" << mField[mMove.srcCell];
-            qDebug() << "mMove.dstCell" << mMove.dstCell;
+         //   qDebug() << "mField[mMove.srcCell]" << mField[mMove.srcCell];
+         //   qDebug() << "mMove.dstCell" << mMove.dstCell;
 
             piece_type promotion = getPromotion(mField[mMove.srcCell], mMove.dstCell);
 

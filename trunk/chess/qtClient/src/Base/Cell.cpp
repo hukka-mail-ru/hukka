@@ -14,7 +14,10 @@ int Cell::mWidth = 0;
 Cell::Cell(QGraphicsScene* scene, CELLID cellID, PixmapKey cellPixmapKey, QObject* parent):
     Button(scene, Pixmaps::get(cellPixmapKey), "", "", ""),
     mId(cellID),
-    mCellPixmapKey(cellPixmapKey)
+    mCellPixmapKey(cellPixmapKey),
+    mPiecePixmapKey(PIX_NONE),
+    mIsPiece(false),
+    mIsHighlight(false)
 {
 }
 
@@ -68,17 +71,48 @@ void Cell::setPiece(piece_type pieceType)
 
     applyPixmap(piecePixmapKey);
     mPiecePixmapKey = piecePixmapKey;
+    mIsPiece = true;
+}
+
+
+void Cell::showPiece(PixmapKey pieceKey)
+{
+    applyPixmap(mCellPixmapKey);
+    applyPixmap(pieceKey);
+    if(mIsHighlight)
+    {
+        applyPixmap(PIX_CELL_HIGHLIGHT);
+    }
+
+    mIsPiece = true;
+}
+
+void Cell::hidePiece()
+{
+    applyPixmap(mCellPixmapKey);
+    if(mIsHighlight)
+    {
+        applyPixmap(PIX_CELL_HIGHLIGHT);
+    }
+
+    mIsPiece = false;
 }
 
 void Cell::highlight()
 {
     applyPixmap(PIX_CELL_HIGHLIGHT);
+    mIsHighlight = true;
 }
 
 void Cell::removeHighlight()
 {
     applyPixmap(mCellPixmapKey);
-    applyPixmap(mPiecePixmapKey);
+    if(mIsPiece)
+    {
+        applyPixmap(mPiecePixmapKey);
+    }
+
+    mIsHighlight = false;
 }
 
 
