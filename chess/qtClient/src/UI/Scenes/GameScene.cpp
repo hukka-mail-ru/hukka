@@ -63,6 +63,7 @@ void GameScene::initialize()
 
     // MENU BUTTON
     mMenuButton = new Button(this, Pixmaps::get(PIX_BUTTON_MENU), tr("Game menu"), XML_NODE_BUTTONS, XML_NODE_GAME_MENU);
+
    // mMenuButton->updatePos(MainWindow::instance()->getOrientation());
     QObject::connect(mMenuButton, SIGNAL(clicked()), this, SLOT(onMenuButtonClicked()));
 
@@ -205,14 +206,9 @@ void GameScene::updateGameField(const Field& field, bool white)
         Cell* cell = 0;
         CELLID cellID = i * CELLS_IN_ROW + j;
 
-        if((i * CELLS_IN_ROW + i + j) % 2) // odd-even cells
-        {
-            cell = new Cell(this, cellID, PIX_CELL_WHITE);
-        }
-        else
-        {
-            cell = new Cell(this, cellID, PIX_CELL_BLACK);
-        }
+        // odd-even cells
+        PixmapKey cellKey = ((i * CELLS_IN_ROW + i + j) % 2) ? PIX_CELL_WHITE : PIX_CELL_BLACK;
+        cell = new Cell(this, cellID, cellKey);
 
 
         if(cell && !field.empty())
@@ -224,14 +220,11 @@ void GameScene::updateGameField(const Field& field, bool white)
         cell->setZValue(Z_CELLS_LAYER);
         cell->setParentItem(mCells);
 
-        if(white)
-        {
-            cell->setPos(mBoardX + j * Cell::width(), mBoardY  + (CELLS_IN_ROW - 1 - i) * Cell::width());
-        }
-        else
-        {
-            cell->setPos(mBoardX + j * Cell::width(), mBoardY + i * Cell::width());
-        }
+        int x = mBoardX + j * cell->width();
+        int y = (white) ? mBoardY  + (CELLS_IN_ROW - 1 - i) * cell->width() :
+                          mBoardY + i * cell->width();
+
+        cell->setPos(x, y);
     }
 
     // show Captured pieces

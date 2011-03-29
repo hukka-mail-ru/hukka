@@ -12,9 +12,6 @@
 #include <QFont>
 #include <QDebug>
 
-int Button::mWidth = 0;
-int Button::mHeight = 0;
-int Button::mTextOffset = 0;
 
 Button::Button(QGraphicsScene* scene, const QPixmap& pixmap, const QString& text,
                const QString& xmlNodeGroupName, const QString& xmlNodeName):
@@ -28,6 +25,7 @@ Button::Button(QGraphicsScene* scene, const QPixmap& pixmap, const QString& text
     mScene->addItem(this);
     setZValue(Z_BUTTONS_LAYER);
 
+
     if(text != "")
     {
         QString family = XML::instance().readValue(XML_ITEMS_FILENAME, QList<QString>() << mXMLNodeGroupName << XML_NODE_FONT << XML_NODE_FAMILY);
@@ -37,6 +35,8 @@ Button::Button(QGraphicsScene* scene, const QPixmap& pixmap, const QString& text
         mText = mScene->addText(text, QFont(family, size));
         mText->setDefaultTextColor( QColor(color) );
         mText->setZValue(Z_TEXT_LAYER);
+
+        mTextOffset = XML::instance().readValue(XML_ITEMS_FILENAME, QList<QString>() << XML_NODE_BUTTONS << XML_NODE_TEXT_OFFSET).toInt();
     }
 
 }
@@ -93,7 +93,6 @@ void Button::mouseReleaseEvent (QGraphicsSceneMouseEvent * event)
             mText->setOpacity(OPAQUE_NORMAL);
         }
 
-  //      qDebug() << "emit clicked";
         emit clicked();
     }
 

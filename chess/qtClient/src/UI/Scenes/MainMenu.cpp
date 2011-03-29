@@ -52,6 +52,7 @@ void MainMenu::initialize()
     mSplash->setZValue(Z_CELLS_LAYER);
 
 
+
     createGameButton = newButton(Pixmaps::get(PIX_BUTTON_CREATE_GAME), SLOT(onCreateGameClicked()), tr("New Game"), XML_NODE_NEW_GAME);
     findGameButton   = newButton(Pixmaps::get(PIX_BUTTON_FIND_GAME),   SLOT(onFindGameClicked()), tr("Find game"), XML_NODE_FIND_GAME);
     chatButton       = newButton(Pixmaps::get(PIX_BUTTON_CHAT),        SLOT(onChatClicked()), tr("Chat"), XML_NODE_CHAT);

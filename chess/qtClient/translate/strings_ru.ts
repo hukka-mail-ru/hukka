@@ -529,7 +529,7 @@ Please finish it first, then create a new game.</source>
         <translation type="unfinished">Меню игры</translation>
     </message>
     <message>
-        <location filename="../src/UI/Scenes/GameScene.cpp" line="117"/>
+        <location filename="../src/UI/Scenes/GameScene.cpp" line="118"/>
         <source>Invalid move.</source>
         <translation type="unfinished"></translation>
     </message>
@@ -588,27 +588,27 @@ Please finish it first, then create a new game.</source>
 <context>
     <name>MainMenu</name>
     <message>
-        <location filename="../src/UI/Scenes/MainMenu.cpp" line="55"/>
+        <location filename="../src/UI/Scenes/MainMenu.cpp" line="56"/>
         <source>New Game</source>
         <translation>Новая игра</translation>
     </message>
     <message>
-        <location filename="../src/UI/Scenes/MainMenu.cpp" line="56"/>
+        <location filename="../src/UI/Scenes/MainMenu.cpp" line="57"/>
         <source>Find game</source>
         <translation>Найти игру</translation>
     </message>
     <message>
-        <location filename="../src/UI/Scenes/MainMenu.cpp" line="57"/>
+        <location filename="../src/UI/Scenes/MainMenu.cpp" line="58"/>
         <source>Chat</source>
         <translation>Чат</translation>
     </message>
     <message>
-        <location filename="../src/UI/Scenes/MainMenu.cpp" line="58"/>
+        <location filename="../src/UI/Scenes/MainMenu.cpp" line="59"/>
         <source>Options</source>
         <translation>Настройки</translation>
     </message>
     <message>
-        <location filename="../src/UI/Scenes/MainMenu.cpp" line="294"/>
+        <location filename="../src/UI/Scenes/MainMenu.cpp" line="295"/>
         <source>The last game has been finished.</source>
         <translation type="unfinished"></translation>
     </message>
@@ -617,7 +617,7 @@ Please finish it first, then create a new game.</source>
         <translation type="obsolete">Ничья.</translation>
     </message>
     <message>
-        <location filename="../src/UI/Scenes/MainMenu.cpp" line="325"/>
+        <location filename="../src/UI/Scenes/MainMenu.cpp" line="326"/>
         <source>You have an unfinished game. Please finish it.</source>
         <translation type="unfinished"></translation>
     </message>
