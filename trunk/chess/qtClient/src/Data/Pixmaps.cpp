@@ -21,7 +21,7 @@ void Pixmaps::loadPixmaps()
     ////////////////////////////////////////////////////////////////////////////////////
     loadPixmap(PIX_CELLS,  ":/images/cells.png");
 
-    int cellWidth = Cell::width();
+    int cellWidth = XML::instance().readValue(XML_ITEMS_FILENAME, QList<QString>() << XML_NODE_CELL << XML_NODE_WIDTH).toInt();
     mPixmaps.insert(PIX_CELL_WHITE,    mPixmaps[PIX_CELLS].copy(cellWidth * 0, 0, cellWidth, cellWidth ));
     mPixmaps.insert(PIX_CELL_BLACK,    mPixmaps[PIX_CELLS].copy(cellWidth * 1, 0, cellWidth, cellWidth ));
     mPixmaps.insert(PIX_CELL_WHITE_HIGHLIGHT,mPixmaps[PIX_CELLS].copy(cellWidth * 2, 0, cellWidth, cellWidth ));
@@ -31,8 +31,10 @@ void Pixmaps::loadPixmaps()
     ////////////////////////////////////////////////////////////////////////////////////
     loadPixmap(PIX_BUTTONS,":/images/buttons.png");
 
-    int width = Button::width();
-    int height = Button::height();
+    // load items' properities
+    int width = XML::instance().readValue(XML_ITEMS_FILENAME, QList<QString>() << XML_NODE_BUTTONS << XML_NODE_WIDTH).toInt();
+    int height = XML::instance().readValue(XML_ITEMS_FILENAME, QList<QString>() << XML_NODE_BUTTONS << XML_NODE_HEIGHT).toInt();
+
     mPixmaps.insert(PIX_BUTTON_CREATE_GAME,   mPixmaps[PIX_BUTTONS].copy(width * 0, 0, width, height ));
     mPixmaps.insert(PIX_BUTTON_FIND_GAME,     mPixmaps[PIX_BUTTONS].copy(width * 1, 0, width, height ));
     mPixmaps.insert(PIX_BUTTON_CHAT,          mPixmaps[PIX_BUTTONS].copy(width * 2, 0, width, height ));

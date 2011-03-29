@@ -43,6 +43,8 @@ public:
 
     void close();
 
+    void repaintCells() { for(int i =0; i<mCellArray.size(); i++) mCellArray[i]->showPiece(); }
+
 private:
 
     void updateGameField(const Field& field, bool white);

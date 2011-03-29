@@ -30,8 +30,7 @@ public:
     void highlight();
     void removeHighlight();
 
-    static int width() { return mWidth; }
-    static void setWidth(int width) { mWidth = width; }
+    int width() { return Pixmaps::get(mCellPixmapKey).width(); }
 
 signals:
     void cellClicked(CELLID id);
@@ -44,8 +43,6 @@ protected:
 private:
 
     void applyPixmap(PixmapKey piecePixmapKey);
-
-    static int mWidth;
 
     CELLID mId;
     PixmapKey mCellPixmapKey;

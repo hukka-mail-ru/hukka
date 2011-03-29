@@ -88,6 +88,8 @@ public:
     void setWidth(int width) { mWidth = width; }
     void setHeight(int height) { mHeight = height; }
 
+    void repaintCells() { mGameScene->repaintCells(); }
+
 private:
 
 

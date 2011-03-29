@@ -15,13 +15,6 @@ public:
 
     void updatePos(OrientationStatus orientation);
 
-    static int width() { return mWidth; }
-    static int height() { return mHeight; }
-
-    static void setWidth(int width) { mWidth = width; }
-    static void setHeight(int height) { mHeight = height; }
-    static void setTextOffset(int offset) { mTextOffset = offset; }
-
 signals:
     void clicked();
 
@@ -33,9 +26,7 @@ protected:
 
 private:
 
-    static int mWidth;
-    static int mHeight;
-    static int mTextOffset;
+    int mTextOffset;
 
     QGraphicsScene* mScene;
 
