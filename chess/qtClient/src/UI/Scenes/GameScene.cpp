@@ -226,11 +226,11 @@ void GameScene::updateGameField(const Field& field, bool white)
 
         if(white)
         {
-            cell->moveBy(mBoardX + j * Cell::width(), mBoardY  + (CELLS_IN_ROW - 1 - i) * Cell::width());
+            cell->setPos(mBoardX + j * Cell::width(), mBoardY  + (CELLS_IN_ROW - 1 - i) * Cell::width());
         }
         else
         {
-            cell->moveBy(mBoardX + j * Cell::width(), mBoardY + i * Cell::width());
+            cell->setPos(mBoardX + j * Cell::width(), mBoardY + i * Cell::width());
         }
     }
 

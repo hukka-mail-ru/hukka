@@ -82,7 +82,7 @@ void FindGameDialog::onGotGameTables(const QList<GameTable>& tables)
     }
     else
     {
-       // qDebug() << "onGotGameTables(const QList<GameTable>& ids) " << ids.size();
+       // not to show the empty JoinGameDialog, fetch parameters of the first found table.
         connect(Client::instance(),
                 SIGNAL(gotGameTableParams(const GameTable&)),
                 this,

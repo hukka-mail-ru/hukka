@@ -8,7 +8,7 @@
         <translation type="obsolete">ОК</translation>
     </message>
     <message>
-        <location filename="../src/Base/Defines.h" line="97"/>
+        <location filename="../src/Base/Defines.h" line="100"/>
         <source>all</source>
         <translation type="unfinished"></translation>
     </message>
@@ -545,42 +545,42 @@ Please finish it first, then create a new game.</source>
 <context>
     <name>JoinGameDialog</name>
     <message>
-        <location filename="../src/UI/Dialogs/JoinGameDialog.cpp" line="21"/>
+        <location filename="../src/UI/Dialogs/JoinGameDialog.cpp" line="20"/>
         <source>Join Game</source>
         <translation>Присоединиться к игре</translation>
     </message>
     <message>
-        <location filename="../src/UI/Dialogs/JoinGameDialog.cpp" line="23"/>
+        <location filename="../src/UI/Dialogs/JoinGameDialog.cpp" line="22"/>
         <source>OK</source>
         <translation>ОК</translation>
     </message>
     <message>
-        <location filename="../src/UI/Dialogs/JoinGameDialog.cpp" line="24"/>
+        <location filename="../src/UI/Dialogs/JoinGameDialog.cpp" line="23"/>
         <source>Cancel</source>
         <translation>Отмена</translation>
     </message>
     <message>
-        <location filename="../src/UI/Dialogs/JoinGameDialog.cpp" line="30"/>
+        <location filename="../src/UI/Dialogs/JoinGameDialog.cpp" line="29"/>
         <source>Name</source>
         <translation>Имя</translation>
     </message>
     <message>
-        <location filename="../src/UI/Dialogs/JoinGameDialog.cpp" line="30"/>
+        <location filename="../src/UI/Dialogs/JoinGameDialog.cpp" line="29"/>
         <source>Rating</source>
         <translation>Рейтинг</translation>
     </message>
     <message>
-        <location filename="../src/UI/Dialogs/JoinGameDialog.cpp" line="30"/>
+        <location filename="../src/UI/Dialogs/JoinGameDialog.cpp" line="29"/>
         <source>Move time</source>
         <translation>Время хода</translation>
     </message>
     <message>
-        <location filename="../src/UI/Dialogs/JoinGameDialog.cpp" line="30"/>
+        <location filename="../src/UI/Dialogs/JoinGameDialog.cpp" line="29"/>
         <source>Game time</source>
         <translation>Время игры</translation>
     </message>
     <message>
-        <location filename="../src/UI/Dialogs/JoinGameDialog.cpp" line="92"/>
+        <location filename="../src/UI/Dialogs/JoinGameDialog.cpp" line="89"/>
         <source>N/A</source>
         <translation type="unfinished"></translation>
     </message>
@@ -764,58 +764,58 @@ Please finish it first, then create a new game.</source>
         <translation type="unfinished">Рейтинг</translation>
     </message>
     <message>
-        <location filename="../src/Base/Defines.h" line="142"/>
+        <location filename="../src/Base/Defines.h" line="145"/>
         <source>offline</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/Base/Defines.h" line="225"/>
+        <location filename="../src/Base/Defines.h" line="228"/>
         <source>Your rating has been increased to</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/Base/Defines.h" line="226"/>
+        <location filename="../src/Base/Defines.h" line="229"/>
         <source>Your rating has been decreased to</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/Base/Defines.h" line="227"/>
+        <location filename="../src/Base/Defines.h" line="230"/>
         <source>Your rating has been slightly increased.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/Base/Defines.h" line="228"/>
+        <location filename="../src/Base/Defines.h" line="231"/>
         <source>Your rating hasn&apos;t been affected because of too few number of moves.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/Base/Defines.h" line="229"/>
+        <location filename="../src/Base/Defines.h" line="232"/>
         <source>Your rating is not available.
 Please visit www.site.com to learn how to enable it.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/Base/Defines.h" line="233"/>
+        <location filename="../src/Base/Defines.h" line="236"/>
         <source>You have won!</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/Base/Defines.h" line="238"/>
+        <location filename="../src/Base/Defines.h" line="241"/>
         <source>Time&apos;s up. You have won!</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/Base/Defines.h" line="243"/>
+        <location filename="../src/Base/Defines.h" line="246"/>
         <source>You have lost!</source>
         <translation type="unfinished">Вы проиграли!</translation>
     </message>
     <message>
-        <location filename="../src/Base/Defines.h" line="248"/>
+        <location filename="../src/Base/Defines.h" line="251"/>
         <source>Time&apos;s up. You have lost!</source>
         <translation type="unfinished">Время вышло. Вы проиграли!</translation>
     </message>
     <message>
-        <location filename="../src/Base/Defines.h" line="253"/>
+        <location filename="../src/Base/Defines.h" line="256"/>
         <source>A draw.</source>
         <translation type="unfinished">Ничья.</translation>
     </message>
