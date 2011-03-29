@@ -43,7 +43,8 @@ public:
 
     void close();
 
-    void repaintCells() { for(int i =0; i<mCellArray.size(); i++) mCellArray[i]->showPiece(); }
+    // prevents artifacts
+    void repaintCells();
 
 private:
 

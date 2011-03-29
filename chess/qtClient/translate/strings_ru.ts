@@ -524,12 +524,12 @@ Please finish it first, then create a new game.</source>
         <translation type="obsolete">Игра: </translation>
     </message>
     <message>
-        <location filename="../src/UI/Scenes/GameScene.cpp" line="65"/>
+        <location filename="../src/UI/Scenes/GameScene.cpp" line="66"/>
         <source>Game menu</source>
         <translation type="unfinished">Меню игры</translation>
     </message>
     <message>
-        <location filename="../src/UI/Scenes/GameScene.cpp" line="118"/>
+        <location filename="../src/UI/Scenes/GameScene.cpp" line="119"/>
         <source>Invalid move.</source>
         <translation type="unfinished"></translation>
     </message>
