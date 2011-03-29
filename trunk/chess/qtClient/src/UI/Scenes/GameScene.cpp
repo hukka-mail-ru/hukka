@@ -20,7 +20,8 @@ GameScene::GameScene(QObject *parent):
        mChat(NULL),
        mMeMoveBox(this, PT_ME),
        mOppMoveBox(this, PT_OPPONENT),
-       mCaptureBox(this)
+       mCaptureBox(this),
+       mAnimation(this)
 {
 
 }
@@ -273,5 +274,11 @@ void GameScene::enableAnimation(const Move& move)
 void GameScene::disableAnimation()
 {
     mAnimation.stopBlinking();
+}
+
+void GameScene::repaintCells()
+{
+    for(int i =0; i<mCellArray.size(); i++)
+        mCellArray[i]->update();
 }
 

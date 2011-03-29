@@ -7,9 +7,11 @@
 
 #include <XML.h>
 
+#include <MainWindow.h>
 #include "Animation.h"
 
-Animation::Animation()
+Animation::Animation(GameScene* scene):
+    mParentScene(scene)
 {
     mTimer = new QTimer(this);
     connect(mTimer, SIGNAL(timeout()), this, SLOT(onTick()));
@@ -62,6 +64,9 @@ void Animation::onTick()
         mDstCell->setPiece(mSrcCell->getPiece());
         mDstCell->highlight();
     }
+
+    // prevents artifacts
+    mParentScene->repaintCells();
 
     odd_tick = !odd_tick;
 }

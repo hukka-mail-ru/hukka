@@ -95,6 +95,4 @@ void Button::mouseReleaseEvent (QGraphicsSceneMouseEvent * event)
 
         emit clicked();
     }
-
-   // QGraphicsPixmapItem::mouseReleaseEvent(event);
 }
