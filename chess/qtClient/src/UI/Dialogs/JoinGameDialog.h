@@ -30,10 +30,9 @@ private:
 
     QList<GameTable> mGameTables;
 
-    int mCounter;
+    int mCurrentTable;
 
-    void getParams(GameTable* table);
-    GameTable* mTableToGetParams;
+    void getParams(const GameTable& table);
 
 private slots:
 

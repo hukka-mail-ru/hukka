@@ -131,10 +131,10 @@ void Cell::applyPixmap(PixmapKey key)
     QPixmap srcPixmap = Pixmaps::get(key);
     QPixmap dstPixmap = this->pixmap();
 
-    double middle = (dstPixmap.width() - srcPixmap.width())/2;
+   // int middle = (dstPixmap.width() - srcPixmap.width())/2;
 
-    QRectF dst(middle, 0.0, srcPixmap.width(), srcPixmap.height());
-    QRectF src(0.0, 0.0, srcPixmap.width(), srcPixmap.height());
+    QRect dst(0, 0, srcPixmap.width(), srcPixmap.height());
+    QRect src(0, 0, dstPixmap.width(), dstPixmap.height());
 
    // qDebug() << "addPiecePixmap " << dstPixmap.width() << " " << dstPixmap.height() << " " <<
    // srcPixmap.width()<< " " << srcPixmap.height();

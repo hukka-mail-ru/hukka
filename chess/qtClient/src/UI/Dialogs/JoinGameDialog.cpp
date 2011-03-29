@@ -15,8 +15,7 @@ const int NUMBER_OF_COLUMNS = 4;
 
 JoinGameDialog::JoinGameDialog(const QList<GameTable>& tables, QWidget *parent):
     MyDialog(parent),
-    mGameTables(tables),
-    mCounter(0)
+    mGameTables(tables)
 {
     setWindowTitle(tr("Join Game"));
 
@@ -52,22 +51,21 @@ JoinGameDialog::JoinGameDialog(const QList<GameTable>& tables, QWidget *parent):
     tableWidget->setColumnWidth(COLUMN_FOR_TIME2STEP, MainWindow::instance()->width()/NUMBER_OF_COLUMNS - 2 * margin);
     tableWidget->setColumnWidth(COLUMN_FOR_TIME2GAME, MainWindow::instance()->width()/NUMBER_OF_COLUMNS - 2 * margin);
 
+    mCurrentTable = 0;
     if(!mGameTables.empty())
-        getParams(&mGameTables[0]);
+        onGotGameTableParams(mGameTables[mCurrentTable]);
 }
 
 
-void JoinGameDialog::getParams(GameTable* table)
+void JoinGameDialog::getParams(const GameTable& table)
 {
-    mTableToGetParams = table;
-
-   // qDebug() << "JoinGameDialog::getPlayerName. tableID = " << tableID;
+    qDebug() << "JoinGameDialog::getPlayerName. mCurrentTable = " << mCurrentTable;
     connect(Client::instance(),
             SIGNAL(gotGameTableParams(const GameTable&)),
             this,
             SLOT(onGotGameTableParams(const GameTable&)));
 
-    Client::instance()->getGameTableParams(LOGIC_ID_CHESS, table->id);
+    Client::instance()->getGameTableParams(LOGIC_ID_CHESS, table.id);
 }
 
 void JoinGameDialog::onGotGameTableParams(const GameTable& table)
@@ -80,32 +78,31 @@ void JoinGameDialog::onGotGameTableParams(const GameTable& table)
             SLOT(onGotGameTableParams(const GameTable&)));
 
     //save the result
-    assert(mTableToGetParams);
-    mTableToGetParams->operator = (table);
+    mGameTables[mCurrentTable] = table;
 
     // fill one row of the table
-    tableWidget->insertRow(mCounter);
+    tableWidget->insertRow(mCurrentTable);
 
     QTableWidgetItem* nameItem = new QTableWidgetItem(table.host.name);
-    tableWidget->setItem(mCounter, COLUMN_FOR_NAME, nameItem);
+    tableWidget->setItem(mCurrentTable, COLUMN_FOR_NAME, nameItem);
 
     QString ratingText = (table.host.rating == RATING_NOT_AVAILABLE) ? tr("N/A") : QString::number(table.host.rating);
     QTableWidgetItem* ratingItem = new QTableWidgetItem(ratingText);
-    tableWidget->setItem(mCounter, COLUMN_FOR_RATING, ratingItem);
+    tableWidget->setItem(mCurrentTable, COLUMN_FOR_RATING, ratingItem);
 
     QTableWidgetItem* time2stepItem = new QTableWidgetItem(Global::seconds2hrs(table.time2step));
-    tableWidget->setItem(mCounter, COLUMN_FOR_TIME2STEP, time2stepItem);
+    tableWidget->setItem(mCurrentTable, COLUMN_FOR_TIME2STEP, time2stepItem);
 
     QTableWidgetItem* time2gameItem = new QTableWidgetItem(Global::seconds2hrs(table.time2game));
-    tableWidget->setItem(mCounter, COLUMN_FOR_TIME2GAME, time2gameItem);
+    tableWidget->setItem(mCurrentTable, COLUMN_FOR_TIME2GAME, time2gameItem);
 
-    mCounter++;
+    mCurrentTable++;
 
-   // qDebug() << "mCounter = " << mCounter << " mGameTables.size() = " << mGameTables.size();
+    qDebug() << "mCurrentTable = " << mCurrentTable << " mGameTables.size() = " << mGameTables.size();
 
     // recursively call again (until all the rows of the table are filled)
-    if(mCounter < mGameTables.size())
-        getParams(&mGameTables[mCounter]);
+    if(mCurrentTable < mGameTables.size())
+        getParams(mGameTables[mCurrentTable]);
 }
 
 

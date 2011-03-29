@@ -61,8 +61,6 @@ public:
     void showMainMenu();
     void showGameScene(PlayerColor color);
 
-    QRectF sceneRect();
-
     // TODO create 1 method instead 4
     void showWaitJoinDialog();
     void showWaitAgreeDialog();

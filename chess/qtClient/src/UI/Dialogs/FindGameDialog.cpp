@@ -72,6 +72,9 @@ void FindGameDialog::onGotGameTables(const QList<GameTable>& tables)
 {
     disconnect(Client::instance(), SIGNAL(gotGameTables(const QList<GameTable>&)), this, SLOT(onGotGameTables(const QList<GameTable>&)));
 
+    for(int i=0; i<tables.size(); i++)
+        mTables << tables[i];
+
     if(tables.empty() || (tables.size() == 1 && tables[0].id == 0))
     {
         MainWindow::instance()->showError(tr("No game table found"));
@@ -80,11 +83,27 @@ void FindGameDialog::onGotGameTables(const QList<GameTable>& tables)
     else
     {
        // qDebug() << "onGotGameTables(const QList<GameTable>& ids) " << ids.size();
-        MainWindow::instance()->showJoinGameDialog(tables);
+        connect(Client::instance(),
+                SIGNAL(gotGameTableParams(const GameTable&)),
+                this,
+                SLOT(onGotGameTableParams(const GameTable&)));
+        Client::instance()->getGameTableParams(LOGIC_ID_CHESS, tables[0].id);
+
     }
 }
 
 
+void FindGameDialog::onGotGameTableParams(const GameTable& table)
+{
+    disconnect(Client::instance(),
+            SIGNAL(gotGameTableParams(const GameTable&)),
+            this,
+            SLOT(onGotGameTableParams(const GameTable&)));
+
+    mTables[0] = table;
+
+    MainWindow::instance()->showJoinGameDialog(mTables);
+}
 
 
 

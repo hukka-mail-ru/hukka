@@ -51,6 +51,9 @@ private:
     QObject *mParent;
 
     QGraphicsRectItem* mBoard;
+    int mBoardX;
+    int mBoardY;
+
     QGraphicsItem* mCells;  // group of cells
     vector <Cell*> mCellArray;
 
