@@ -144,11 +144,11 @@ void GameScene::updateItemsPositions(OrientationStatus orientation)
     mExitButton->updatePos(orientation);
 
     // board and field
-    int board_x = XML::instance().readValue(XML_ITEMS_FILENAME, QList<QString>() << XML_NODE_BOARD << orientNode << XML_NODE_X).toInt();
-    int board_y = XML::instance().readValue(XML_ITEMS_FILENAME, QList<QString>() << XML_NODE_BOARD << orientNode << XML_NODE_Y).toInt();
+    mBoardX = XML::instance().readValue(XML_ITEMS_FILENAME, QList<QString>() << XML_NODE_BOARD << orientNode << XML_NODE_X).toInt();
+    mBoardY = XML::instance().readValue(XML_ITEMS_FILENAME, QList<QString>() << XML_NODE_BOARD << orientNode << XML_NODE_Y).toInt();
     int board_width = XML::instance().readValue(XML_ITEMS_FILENAME, QList<QString>() << XML_NODE_BOARD << XML_NODE_WIDTH).toInt();
 
-    mBoard = addRect (board_x, board_y, board_width,  board_width, QPen(QColor(0, 0, 0)));
+    mBoard = addRect (mBoardX, mBoardY, board_width,  board_width, QPen(QColor(0, 0, 0)));
     updateGameField(mField, mWhite);
 
 
@@ -226,11 +226,11 @@ void GameScene::updateGameField(const Field& field, bool white)
 
         if(white)
         {
-            cell->moveBy(mBoard->rect().x() + j * Cell::width(), mBoard->rect().y()  + (CELLS_IN_ROW - 1 - i) * Cell::width());
+            cell->moveBy(mBoardX + j * Cell::width(), mBoardY  + (CELLS_IN_ROW - 1 - i) * Cell::width());
         }
         else
         {
-            cell->moveBy(mBoard->rect().x() + j * Cell::width(), mBoard->rect().y() + i * Cell::width());
+            cell->moveBy(mBoardX + j * Cell::width(), mBoardY + i * Cell::width());
         }
     }
 

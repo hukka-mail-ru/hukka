@@ -29,6 +29,8 @@ private:
     QHBoxLayout* lowerLayout;
     QVBoxLayout* layout;
 
+    QList<GameTable> mTables;
+
 private slots:
 
     void onOkClicked();
@@ -36,7 +38,7 @@ private slots:
     void onRandomGameClicked();
 
     void onGotGameTables(const QList<GameTable>& tables);
-
+    void onGotGameTableParams(const GameTable& table);
 };
 
 #endif /* FINDGAMEDIALOG_H_ */

@@ -332,10 +332,6 @@ void MainWindow::showGameScene(PlayerColor color)
 
 }
 
-QRectF MainWindow::sceneRect()
-{
-    return mGameScene->sceneRect();
-}
 
 
 void MainWindow::highlightGameSceneCell(CELLID cell)
