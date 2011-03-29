@@ -18,6 +18,7 @@ int Button::mTextOffset = 0;
 
 Button::Button(QGraphicsScene* scene, const QPixmap& pixmap, const QString& text,
                const QString& xmlNodeGroupName, const QString& xmlNodeName):
+       QObject(scene),
        QGraphicsPixmapItem(pixmap),
        mScene(scene),
        mXMLNodeName(xmlNodeName),
@@ -54,11 +55,7 @@ void Button::updatePos(OrientationStatus orientation)
     qDebug() << mXMLNodeName << this->pos().x() << this->pos().y() << isVisible() ;
 */
 
-    // let item has x=10, y=10.
-    // if we moveBy(20,20), it will have y=30, y=30
-    this->moveBy(x - pos().x(), y - pos().y());
-
-//    qDebug() << "after";
+    this->setPos(x, y);
 
     if(mText)
     {

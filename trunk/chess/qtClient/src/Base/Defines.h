@@ -84,13 +84,16 @@ const int  CELLS_IN_ROW                   = 8 ; // items
 
 // Z-layers of the Scene. 0 is the lowest layer
 const int  Z_MESSAGE_LAYER                = 100;
-const int  Z_DIALOG_LAYER                 = 20;
-const int  Z_TEXT_LAYER                   = 6;
-const int  Z_BUTTONS_LAYER                = 5;
-const int  Z_SPLASH_LAYER                 = 4;
-const int  Z_NOTES_LAYER                  = 3;
-const int  Z_PIECES_LAYER                 = 2;
-const int  Z_HIGHLIGHT_LAYER              = 1;
+const int  Z_DIALOG_LAYER                 = 90;
+const int  Z_TEXT_LAYER                   = 80;
+const int  Z_BUTTONS_LAYER                = 70;
+
+const int  Z_UNDER_BUTTONS_LAYER                = 65;
+
+const int  Z_SPLASH_LAYER                 = 60;
+const int  Z_NOTES_LAYER                  = 50;
+const int  Z_PIECES_LAYER                 = 40;
+const int  Z_HIGHLIGHT_LAYER              = 30;
 const int  Z_CELLS_LAYER                  = 0;
 
 // Chat
