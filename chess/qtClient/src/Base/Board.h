@@ -10,6 +10,8 @@
 
 #include <QObject>
 #include <QGraphicsScene>
+#include <QList>
+
 #include <Defines.h>
 #include <Animation.h>
 #include <CaptureBox.h>
@@ -46,7 +48,7 @@ private:
     int mBoardRectY;
 
     QGraphicsItem* mCells;  // group of cells
-    vector <Cell*> mCellArray;
+    QList <Cell*> mCellArray;
 
     QGraphicsItem* mPieces; // group of pieces
     QGraphicsItem* mHighlights; // group of Highlights

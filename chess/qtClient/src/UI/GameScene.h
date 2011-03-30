@@ -40,7 +40,6 @@ public:
 
 private:
 
-    void updateGameField(const Field& field, bool white);
     void updateMoveBoxes(GameState gameState);
 
     QObject *mParent;
