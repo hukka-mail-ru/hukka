@@ -16,22 +16,22 @@
 <context>
     <name>AuthorizationDialog</name>
     <message>
-        <location filename="../src/UI/Dialogs/AuthorizationDialog.cpp" line="13"/>
+        <location filename="../src/Dialogs/AuthorizationDialog.cpp" line="13"/>
         <source>Authorization</source>
         <translation>Авторизация</translation>
     </message>
     <message>
-        <location filename="../src/UI/Dialogs/AuthorizationDialog.cpp" line="18"/>
+        <location filename="../src/Dialogs/AuthorizationDialog.cpp" line="18"/>
         <source>Login</source>
         <translation>Логин</translation>
     </message>
     <message>
-        <location filename="../src/UI/Dialogs/AuthorizationDialog.cpp" line="19"/>
+        <location filename="../src/Dialogs/AuthorizationDialog.cpp" line="19"/>
         <source>Password</source>
         <translation>Пароль</translation>
     </message>
     <message>
-        <location filename="../src/UI/Dialogs/AuthorizationDialog.cpp" line="43"/>
+        <location filename="../src/Dialogs/AuthorizationDialog.cpp" line="43"/>
         <source>Register the new user</source>
         <translation type="unfinished"></translation>
     </message>
@@ -40,12 +40,12 @@
         <translation type="obsolete">Создать нового пользователя</translation>
     </message>
     <message>
-        <location filename="../src/UI/Dialogs/AuthorizationDialog.cpp" line="46"/>
+        <location filename="../src/Dialogs/AuthorizationDialog.cpp" line="46"/>
         <source>OK</source>
         <translation>ОК</translation>
     </message>
     <message>
-        <location filename="../src/UI/Dialogs/AuthorizationDialog.cpp" line="47"/>
+        <location filename="../src/Dialogs/AuthorizationDialog.cpp" line="47"/>
         <source>Exit</source>
         <translation>Выход</translation>
     </message>
@@ -68,22 +68,22 @@
 <context>
     <name>ChatMessageDialog</name>
     <message>
-        <location filename="../src/UI/Dialogs/ChatMessageDialog.cpp" line="13"/>
+        <location filename="../src/Dialogs/ChatMessageDialog.cpp" line="13"/>
         <source>Send Message</source>
         <translation type="unfinished">Послать сообщение</translation>
     </message>
     <message>
-        <location filename="../src/UI/Dialogs/ChatMessageDialog.cpp" line="16"/>
+        <location filename="../src/Dialogs/ChatMessageDialog.cpp" line="16"/>
         <source>A chat message to </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/UI/Dialogs/ChatMessageDialog.cpp" line="17"/>
+        <location filename="../src/Dialogs/ChatMessageDialog.cpp" line="17"/>
         <source>A chat message:</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/UI/Dialogs/ChatMessageDialog.cpp" line="21"/>
+        <location filename="../src/Dialogs/ChatMessageDialog.cpp" line="21"/>
         <source>OK</source>
         <translation type="unfinished">ОК</translation>
     </message>
@@ -419,37 +419,37 @@ The rating is not affected because of too few number of moves.</source>
 <context>
     <name>CreateGameDialog</name>
     <message>
-        <location filename="../src/UI/Dialogs/CreateGameDialog.cpp" line="9"/>
+        <location filename="../src/Dialogs/CreateGameDialog.cpp" line="9"/>
         <source>Create Game</source>
         <translation>Создать игру</translation>
     </message>
     <message>
-        <location filename="../src/UI/Dialogs/CreateGameDialog.cpp" line="11"/>
+        <location filename="../src/Dialogs/CreateGameDialog.cpp" line="11"/>
         <source>Move time (min)</source>
         <translation>Время хода (в минутах)</translation>
     </message>
     <message>
-        <location filename="../src/UI/Dialogs/CreateGameDialog.cpp" line="12"/>
+        <location filename="../src/Dialogs/CreateGameDialog.cpp" line="12"/>
         <source>Game time (min)</source>
         <translation>Время игры (в минутах)</translation>
     </message>
     <message>
-        <location filename="../src/UI/Dialogs/CreateGameDialog.cpp" line="13"/>
+        <location filename="../src/Dialogs/CreateGameDialog.cpp" line="13"/>
         <source>Min opponent rating</source>
         <translation>Минимальный рейтинг противника</translation>
     </message>
     <message>
-        <location filename="../src/UI/Dialogs/CreateGameDialog.cpp" line="14"/>
+        <location filename="../src/Dialogs/CreateGameDialog.cpp" line="14"/>
         <source>Max opponent rating</source>
         <translation>Максимальный рейтинг противника</translation>
     </message>
     <message>
-        <location filename="../src/UI/Dialogs/CreateGameDialog.cpp" line="21"/>
+        <location filename="../src/Dialogs/CreateGameDialog.cpp" line="21"/>
         <source>OK</source>
         <translation>ОК</translation>
     </message>
     <message>
-        <location filename="../src/UI/Dialogs/CreateGameDialog.cpp" line="22"/>
+        <location filename="../src/Dialogs/CreateGameDialog.cpp" line="22"/>
         <source>Exit</source>
         <translation>Выход</translation>
     </message>
@@ -463,27 +463,27 @@ Please finish it first, then create a new game.</source>
 <context>
     <name>FindGameDialog</name>
     <message>
-        <location filename="../src/UI/Dialogs/FindGameDialog.cpp" line="8"/>
+        <location filename="../src/Dialogs/FindGameDialog.cpp" line="8"/>
         <source>Find Game</source>
         <translation>Найти игру</translation>
     </message>
     <message>
-        <location filename="../src/UI/Dialogs/FindGameDialog.cpp" line="10"/>
+        <location filename="../src/Dialogs/FindGameDialog.cpp" line="10"/>
         <source>All Games</source>
         <translation>Все игры</translation>
     </message>
     <message>
-        <location filename="../src/UI/Dialogs/FindGameDialog.cpp" line="11"/>
+        <location filename="../src/Dialogs/FindGameDialog.cpp" line="11"/>
         <source>Random Game</source>
         <translation>Случайная игра</translation>
     </message>
     <message>
-        <location filename="../src/UI/Dialogs/FindGameDialog.cpp" line="12"/>
+        <location filename="../src/Dialogs/FindGameDialog.cpp" line="12"/>
         <source>Cancel</source>
         <translation>Отмена</translation>
     </message>
     <message>
-        <location filename="../src/UI/Dialogs/FindGameDialog.cpp" line="80"/>
+        <location filename="../src/Dialogs/FindGameDialog.cpp" line="80"/>
         <source>No game table found</source>
         <translation>Игры не найдены</translation>
     </message>
@@ -491,32 +491,32 @@ Please finish it first, then create a new game.</source>
 <context>
     <name>GameDialog</name>
     <message>
-        <location filename="../src/UI/Dialogs/GameDialog.cpp" line="8"/>
+        <location filename="../src/Dialogs/GameDialog.cpp" line="8"/>
         <source>Game</source>
         <translation>Игра</translation>
     </message>
     <message>
-        <location filename="../src/UI/Dialogs/GameDialog.cpp" line="10"/>
+        <location filename="../src/Dialogs/GameDialog.cpp" line="10"/>
         <source>Surrender</source>
         <translation>Сдаться</translation>
     </message>
     <message>
-        <location filename="../src/UI/Dialogs/GameDialog.cpp" line="11"/>
+        <location filename="../src/Dialogs/GameDialog.cpp" line="11"/>
         <source>Draw</source>
         <translation>Ничья</translation>
     </message>
     <message>
-        <location filename="../src/UI/Dialogs/GameDialog.cpp" line="12"/>
+        <location filename="../src/Dialogs/GameDialog.cpp" line="12"/>
         <source>Return to game</source>
         <translation>Назад к игре</translation>
     </message>
     <message>
-        <location filename="../src/UI/Dialogs/GameDialog.cpp" line="29"/>
+        <location filename="../src/Dialogs/GameDialog.cpp" line="29"/>
         <source>Do you want to surrender?</source>
         <translation>Хотите сдаться?</translation>
     </message>
     <message>
-        <location filename="../src/UI/Dialogs/GameDialog.cpp" line="38"/>
+        <location filename="../src/Dialogs/GameDialog.cpp" line="38"/>
         <source>Do you want to offer a draw?</source>
         <translation>Хотите предложить ничью?</translation>
     </message>
@@ -532,7 +532,7 @@ Please finish it first, then create a new game.</source>
         <translation type="obsolete">Игра: </translation>
     </message>
     <message>
-        <location filename="../src/UI/Scenes/GameScene.cpp" line="60"/>
+        <location filename="../src/UI/GameScene.cpp" line="60"/>
         <source>Game menu</source>
         <translation type="unfinished">Меню игры</translation>
     </message>
@@ -548,42 +548,42 @@ Please finish it first, then create a new game.</source>
 <context>
     <name>JoinGameDialog</name>
     <message>
-        <location filename="../src/UI/Dialogs/JoinGameDialog.cpp" line="20"/>
+        <location filename="../src/Dialogs/JoinGameDialog.cpp" line="20"/>
         <source>Join Game</source>
         <translation>Присоединиться к игре</translation>
     </message>
     <message>
-        <location filename="../src/UI/Dialogs/JoinGameDialog.cpp" line="22"/>
+        <location filename="../src/Dialogs/JoinGameDialog.cpp" line="22"/>
         <source>OK</source>
         <translation>ОК</translation>
     </message>
     <message>
-        <location filename="../src/UI/Dialogs/JoinGameDialog.cpp" line="23"/>
+        <location filename="../src/Dialogs/JoinGameDialog.cpp" line="23"/>
         <source>Cancel</source>
         <translation>Отмена</translation>
     </message>
     <message>
-        <location filename="../src/UI/Dialogs/JoinGameDialog.cpp" line="29"/>
+        <location filename="../src/Dialogs/JoinGameDialog.cpp" line="29"/>
         <source>Name</source>
         <translation>Имя</translation>
     </message>
     <message>
-        <location filename="../src/UI/Dialogs/JoinGameDialog.cpp" line="29"/>
+        <location filename="../src/Dialogs/JoinGameDialog.cpp" line="29"/>
         <source>Rating</source>
         <translation>Рейтинг</translation>
     </message>
     <message>
-        <location filename="../src/UI/Dialogs/JoinGameDialog.cpp" line="29"/>
+        <location filename="../src/Dialogs/JoinGameDialog.cpp" line="29"/>
         <source>Move time</source>
         <translation>Время хода</translation>
     </message>
     <message>
-        <location filename="../src/UI/Dialogs/JoinGameDialog.cpp" line="29"/>
+        <location filename="../src/Dialogs/JoinGameDialog.cpp" line="29"/>
         <source>Game time</source>
         <translation>Время игры</translation>
     </message>
     <message>
-        <location filename="../src/UI/Dialogs/JoinGameDialog.cpp" line="89"/>
+        <location filename="../src/Dialogs/JoinGameDialog.cpp" line="89"/>
         <source>N/A</source>
         <translation type="unfinished"></translation>
     </message>
@@ -591,27 +591,27 @@ Please finish it first, then create a new game.</source>
 <context>
     <name>MainMenu</name>
     <message>
-        <location filename="../src/UI/Scenes/MainMenu.cpp" line="56"/>
+        <location filename="../src/UI/MainMenu.cpp" line="56"/>
         <source>New Game</source>
         <translation>Новая игра</translation>
     </message>
     <message>
-        <location filename="../src/UI/Scenes/MainMenu.cpp" line="57"/>
+        <location filename="../src/UI/MainMenu.cpp" line="57"/>
         <source>Find game</source>
         <translation>Найти игру</translation>
     </message>
     <message>
-        <location filename="../src/UI/Scenes/MainMenu.cpp" line="58"/>
+        <location filename="../src/UI/MainMenu.cpp" line="58"/>
         <source>Chat</source>
         <translation>Чат</translation>
     </message>
     <message>
-        <location filename="../src/UI/Scenes/MainMenu.cpp" line="59"/>
+        <location filename="../src/UI/MainMenu.cpp" line="59"/>
         <source>Options</source>
         <translation>Настройки</translation>
     </message>
     <message>
-        <location filename="../src/UI/Scenes/MainMenu.cpp" line="295"/>
+        <location filename="../src/UI/MainMenu.cpp" line="295"/>
         <source>The last game has been finished.</source>
         <translation type="unfinished"></translation>
     </message>
@@ -620,7 +620,7 @@ Please finish it first, then create a new game.</source>
         <translation type="obsolete">Ничья.</translation>
     </message>
     <message>
-        <location filename="../src/UI/Scenes/MainMenu.cpp" line="326"/>
+        <location filename="../src/UI/MainMenu.cpp" line="326"/>
         <source>You have an unfinished game. Please finish it.</source>
         <translation type="unfinished"></translation>
     </message>
@@ -681,47 +681,47 @@ Please finish it first, then create a new game.</source>
 <context>
     <name>OptionsDialog</name>
     <message>
-        <location filename="../src/UI/Dialogs/OptionsDialog.cpp" line="20"/>
+        <location filename="../src/Dialogs/OptionsDialog.cpp" line="20"/>
         <source>Options</source>
         <translation>Настройки</translation>
     </message>
     <message>
-        <location filename="../src/UI/Dialogs/OptionsDialog.cpp" line="26"/>
+        <location filename="../src/Dialogs/OptionsDialog.cpp" line="26"/>
         <source>Server</source>
         <translation>Сервер</translation>
     </message>
     <message>
-        <location filename="../src/UI/Dialogs/OptionsDialog.cpp" line="27"/>
+        <location filename="../src/Dialogs/OptionsDialog.cpp" line="27"/>
         <source>Port</source>
         <translation>Порт</translation>
     </message>
     <message>
-        <location filename="../src/UI/Dialogs/OptionsDialog.cpp" line="28"/>
+        <location filename="../src/Dialogs/OptionsDialog.cpp" line="28"/>
         <source>Language</source>
         <translation>Язык</translation>
     </message>
     <message>
-        <location filename="../src/UI/Dialogs/OptionsDialog.cpp" line="34"/>
+        <location filename="../src/Dialogs/OptionsDialog.cpp" line="34"/>
         <source>English</source>
         <translation>Английский</translation>
     </message>
     <message>
-        <location filename="../src/UI/Dialogs/OptionsDialog.cpp" line="35"/>
+        <location filename="../src/Dialogs/OptionsDialog.cpp" line="35"/>
         <source>Russian</source>
         <translation>Русский</translation>
     </message>
     <message>
-        <location filename="../src/UI/Dialogs/OptionsDialog.cpp" line="53"/>
+        <location filename="../src/Dialogs/OptionsDialog.cpp" line="53"/>
         <source>OK</source>
         <translation>ОК</translation>
     </message>
     <message>
-        <location filename="../src/UI/Dialogs/OptionsDialog.cpp" line="54"/>
+        <location filename="../src/Dialogs/OptionsDialog.cpp" line="54"/>
         <source>Exit</source>
         <translation>Выход</translation>
     </message>
     <message>
-        <location filename="../src/UI/Dialogs/OptionsDialog.cpp" line="88"/>
+        <location filename="../src/Dialogs/OptionsDialog.cpp" line="88"/>
         <source>Please restart the game to apply the language settings</source>
         <translation>Пожалуйста перезапустите игру, чтобы настройки языка вступили в силу</translation>
     </message>
@@ -729,7 +729,7 @@ Please finish it first, then create a new game.</source>
 <context>
     <name>PromotionDialog</name>
     <message>
-        <location filename="../src/UI/Dialogs/PromotionDialog.cpp" line="45"/>
+        <location filename="../src/Dialogs/PromotionDialog.cpp" line="45"/>
         <source>Please choose the promotion:</source>
         <translation type="unfinished"></translation>
     </message>
@@ -882,12 +882,12 @@ Please finish it first, then create a new game.</source>
         <translation type="obsolete">Ждите начала игры...</translation>
     </message>
     <message>
-        <location filename="../src/UI/Dialogs/WaitAgreeDialog.cpp" line="8"/>
+        <location filename="../src/Dialogs/WaitAgreeDialog.cpp" line="8"/>
         <source>Please wait for start of the game...</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/UI/Dialogs/WaitAgreeDialog.cpp" line="9"/>
+        <location filename="../src/Dialogs/WaitAgreeDialog.cpp" line="9"/>
         <source>Exit</source>
         <translation>Выход</translation>
     </message>
@@ -903,12 +903,12 @@ Please finish it first, then create a new game.</source>
         <translation type="obsolete">Ждите ответа противника...</translation>
     </message>
     <message>
-        <location filename="../src/UI/Dialogs/WaitDrawDialog.cpp" line="8"/>
+        <location filename="../src/Dialogs/WaitDrawDialog.cpp" line="8"/>
         <source>Please wait for a response of your opponent...</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/UI/Dialogs/WaitDrawDialog.cpp" line="9"/>
+        <location filename="../src/Dialogs/WaitDrawDialog.cpp" line="9"/>
         <source>Exit</source>
         <translation>Выход</translation>
     </message>
@@ -917,7 +917,7 @@ Please finish it first, then create a new game.</source>
         <translation type="obsolete">Сдаться</translation>
     </message>
     <message>
-        <location filename="../src/UI/Dialogs/WaitDrawDialog.cpp" line="23"/>
+        <location filename="../src/Dialogs/WaitDrawDialog.cpp" line="23"/>
         <source>Exiting now means you surrender. Are you sure?</source>
         <translation>Выход означает, что вы сдаетесь. Согласны?</translation>
     </message>
@@ -941,27 +941,27 @@ Please finish it first, then create a new game.</source>
         <translation type="obsolete">Ждите противника...</translation>
     </message>
     <message>
-        <location filename="../src/UI/Dialogs/WaitJoinDialog.cpp" line="11"/>
+        <location filename="../src/Dialogs/WaitJoinDialog.cpp" line="11"/>
         <source>Please wait until an opponent joins your game...</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/UI/Dialogs/WaitJoinDialog.cpp" line="12"/>
+        <location filename="../src/Dialogs/WaitJoinDialog.cpp" line="12"/>
         <source>Exit</source>
         <translation>Выход</translation>
     </message>
     <message>
-        <location filename="../src/UI/Dialogs/WaitJoinDialog.cpp" line="60"/>
+        <location filename="../src/Dialogs/WaitJoinDialog.cpp" line="60"/>
         <source>is not available</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/UI/Dialogs/WaitJoinDialog.cpp" line="61"/>
+        <location filename="../src/Dialogs/WaitJoinDialog.cpp" line="61"/>
         <source> (rating </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/UI/Dialogs/WaitJoinDialog.cpp" line="61"/>
+        <location filename="../src/Dialogs/WaitJoinDialog.cpp" line="61"/>
         <source>) wants to play chess with you. Agree?</source>
         <translation type="unfinished"></translation>
     </message>
