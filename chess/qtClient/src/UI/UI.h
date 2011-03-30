@@ -37,7 +37,7 @@ public:
     // game events
     GameState updateGameState(bool myMove, bool amIWhite);
     GameState getGameState() { return mGameState; }
-    GameState setGameState(GameState state) { mGameState = state; }
+    void setGameState(GameState state) { mGameState = state; }
 
 
     bool isPlayerAuthorized() { return mMe.isAuthorized; }

@@ -9,8 +9,8 @@
 #include <QWidget>
 #include <QDialog>
 
-#include <Scenes/GameScene.h>
-#include <Scenes/MainMenu.h>
+#include <GameScene.h>
+#include <MainMenu.h>
 #include <Defines.h>
 #include <orientation.h>
 
