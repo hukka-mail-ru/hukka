@@ -42,23 +42,13 @@ private:
 
     void updateMoveBoxes(GameState gameState);
 
-    QObject *mParent;
-
-
-    QGraphicsItem* mNote;
-
     Button* mMenuButton;
     Button* mExitButton;
-
-
-    void loadImages();
 
     Chat* mChat;
 
     MoveBox mMeMoveBox;
     MoveBox mOppMoveBox;
-
-    bool mWhite;
 
     Board mBoard;
 

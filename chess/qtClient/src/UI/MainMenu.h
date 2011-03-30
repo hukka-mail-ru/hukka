@@ -28,8 +28,10 @@ public:
 
 private:
 
-    void loadImages();
     void connectToGameServer();
+
+    Button* newButton(const QPixmap& pixmap, const char* slot,
+                      const QString& text, const QString& xmlNodeName);
 
     Button* createGameButton;
     Button* findGameButton;
@@ -46,11 +48,7 @@ private:
     QGraphicsTextItem* mPlayerNameText;
     QGraphicsTextItem* mPlayerRatingText;
 
-    bool mHostGame;
-
 private slots:
-    Button* newButton(const QPixmap& pixmap, const char* slot,
-                      const QString& text, const QString& xmlNodeName);
 
     void onConnectedToHost();
     void onDisonnectedFromHost();
