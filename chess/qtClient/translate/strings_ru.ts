@@ -51,6 +51,14 @@
     </message>
 </context>
 <context>
+    <name>Board</name>
+    <message>
+        <location filename="../src/Base/Board.cpp" line="174"/>
+        <source>Invalid move.</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
     <name>Chat</name>
     <message>
         <source>Game chat</source>
@@ -524,14 +532,9 @@ Please finish it first, then create a new game.</source>
         <translation type="obsolete">Игра: </translation>
     </message>
     <message>
-        <location filename="../src/UI/Scenes/GameScene.cpp" line="66"/>
+        <location filename="../src/UI/Scenes/GameScene.cpp" line="60"/>
         <source>Game menu</source>
         <translation type="unfinished">Меню игры</translation>
-    </message>
-    <message>
-        <location filename="../src/UI/Scenes/GameScene.cpp" line="119"/>
-        <source>Invalid move.</source>
-        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>Your move</source>

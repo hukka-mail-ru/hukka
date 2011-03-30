@@ -35,9 +35,9 @@ public:
     TABLEID getGameTable() const { return mGameTable; }
 
     // game events
-    void cellClicked(CELLID cell);
-    GameState updateField(const Field& field, bool myMove, bool amIWhite);
+    GameState updateGameState(bool myMove, bool amIWhite);
     GameState getGameState() { return mGameState; }
+    GameState setGameState(GameState state) { mGameState = state; }
 
 
     bool isPlayerAuthorized() { return mMe.isAuthorized; }
@@ -54,14 +54,9 @@ public:
 
 private:
 
-    bool isEnemyPiece(CELLID cell);
-
-    Field mField;
-
     TABLEID mGameTable;
 
     GameState mGameState;
-    Move mMove;
   //  bool mIsOwner; // PlayerID0 must be the owner of the game
 
     QApplication* mApp;

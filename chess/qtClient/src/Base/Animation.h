@@ -12,13 +12,13 @@
 #include <QTimer>
 #include <Cell.h>
 
-class GameScene;
+class Board;
 
 class Animation: public QObject
 {
     Q_OBJECT
 public:
-    Animation(GameScene* scene);
+    Animation(Board* parentBoard);
 
     void startBlinking(Cell* srcCell, Cell* dstCell);
     void stopBlinking();
@@ -27,7 +27,7 @@ public:
 
 private:
 
-    GameScene* mParentScene;
+    Board* mParentBoard;
     QTimer* mTimer;
     int mTickDelay;
 

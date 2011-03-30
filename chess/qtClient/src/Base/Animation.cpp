@@ -10,8 +10,8 @@
 #include <MainWindow.h>
 #include "Animation.h"
 
-Animation::Animation(GameScene* scene):
-    mParentScene(scene)
+Animation::Animation(Board* parentBoard):
+    mParentBoard(parentBoard)
 {
     mTimer = new QTimer(this);
     connect(mTimer, SIGNAL(timeout()), this, SLOT(onTick()));
@@ -66,7 +66,7 @@ void Animation::onTick()
     }
 
     // prevents artifacts
-    mParentScene->repaintCells();
+    mParentBoard->repaintCells();
 
     odd_tick = !odd_tick;
 }

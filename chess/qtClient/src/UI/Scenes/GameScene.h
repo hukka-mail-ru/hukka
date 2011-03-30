@@ -9,10 +9,9 @@
 #include <Button.h>
 #include <Cell.h>
 #include <Chat.h>
-#include <CaptureBox.h>
 #include <orientation.h>
 #include <MoveBox.h>
-#include <Animation.h>
+#include <Board.h>
 
 
 
@@ -34,17 +33,10 @@ public:
     void showChat();
     void startClocks();
 
-    void highlightCell(CELLID cell);
-    void removeHighlight();
-    void enableAnimation(const Move& move);
-    void disableAnimation();
-
     void updateItemsPositions(OrientationStatus orientation);
 
     void close();
 
-    // prevents artifacts
-    void repaintCells();
 
 private:
 
@@ -53,21 +45,12 @@ private:
 
     QObject *mParent;
 
-    QGraphicsRectItem* mBoard;
-    int mBoardX;
-    int mBoardY;
 
-    QGraphicsItem* mCells;  // group of cells
-    vector <Cell*> mCellArray;
-
-    QGraphicsItem* mPieces; // group of pieces
-    QGraphicsItem* mHighlights; // group of Highlights
     QGraphicsItem* mNote;
 
     Button* mMenuButton;
     Button* mExitButton;
 
-    CELLID mHighlightedCell;
 
     void loadImages();
 
@@ -76,18 +59,14 @@ private:
     MoveBox mMeMoveBox;
     MoveBox mOppMoveBox;
 
-    Field mField;
     bool mWhite;
 
-    CaptureBox mCaptureBox;
-
-    Animation mAnimation;
+    Board mBoard;
 
 private slots:
 
     void onGotField(const Field& field, bool myMove, bool iAmWhite);
     void onMenuButtonClicked();
-    void onCellClicked(CELLID cellID);
     void onExitClicked();
 
 };
