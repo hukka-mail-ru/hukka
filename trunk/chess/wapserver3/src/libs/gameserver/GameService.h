@@ -166,6 +166,7 @@ private:
 
 			cmdDrAgree( _pClientMsg->GetTo(), *nTableID, vecCmd[sizeof(*nTableID)] );
 		}
+		/*
 		else if ( cmd == CMD_CHECK_TIME )
 		{
 ///			std::cout << "GameService::newMsg from = " << _pClientMsg->GetTo() << " cmd = CMD_CHECK_TIME" <<  std::endl;
@@ -173,6 +174,7 @@ private:
 
 			cmdCheckTime( _pClientMsg->GetTo(), *nTableID );
 		}
+		*/
         else if ( cmd == CMD_RATING )
         {
   //          std::cout << "GameService::newMsg from = " << _pClientMsg->GetTo() << " cmd = CMD_RATING" <<  std::endl;

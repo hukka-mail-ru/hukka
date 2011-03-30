@@ -607,6 +607,7 @@ void Client::timeout (TABLEID tableID)
     }
 }
 
+/*
 void Client::getTime(TABLEID tableID)
 {
     QT_TRACEOUT;
@@ -625,6 +626,7 @@ void Client::getTime(TABLEID tableID)
         emit error (e.what());
     }
 }
+*/
 
 void Client::getMyRating()
 {

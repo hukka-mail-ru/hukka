@@ -87,7 +87,7 @@ public:
         void getField            (TABLEID tableID);
         void move                (TABLEID tableID, const Move& move, piece_type promotion = Empty);
         void surrender           (TABLEID tableID);
-        void getTime             (TABLEID tableID);
+      //  void getTime             (TABLEID tableID);
         void timeout             (TABLEID tableID);
         void getMyRating         ();
         void getOpponent         (TABLEID tableID);

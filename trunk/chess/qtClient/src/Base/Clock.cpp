@@ -70,12 +70,12 @@ void Clock::setColor(const QColor& color)
     mText->setDefaultTextColor(color);
 }
 
-
+/*
 void Clock::getServerTime()
 {
     Client::instance()->getTime(UI::instance()->getGameTable());
 }
-
+*/
 
 void Clock::onGotTime(quint32 seconds)
 {

@@ -15,7 +15,6 @@
 
 GameScene::GameScene(QObject *parent):
        QGraphicsScene(parent),
-       mParent(parent),
        mChat(NULL),
        mMeMoveBox(this, PT_ME),
        mOppMoveBox(this, PT_OPPONENT),

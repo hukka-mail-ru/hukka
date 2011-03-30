@@ -24,7 +24,7 @@ public:
           const char* updateSignal, const QString& xmlNodeName);
 
     void start();
-    void getServerTime();
+   // void getServerTime();
 
     void moveBy(int x, int y);
 
