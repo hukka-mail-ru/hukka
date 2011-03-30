@@ -16,12 +16,10 @@
 GameScene::GameScene(QObject *parent):
        QGraphicsScene(parent),
        mParent(parent),
-       mBoard(NULL), mCells(NULL), mPieces(NULL), mHighlights(NULL),
        mChat(NULL),
        mMeMoveBox(this, PT_ME),
        mOppMoveBox(this, PT_OPPONENT),
-       mCaptureBox(this),
-       mAnimation(this)
+       mBoard(this)
 {
 
 }
@@ -57,10 +55,6 @@ void GameScene::close()
 
 void GameScene::initialize()
 {
-
-    // BOARD
-    QString border_color =  XML::instance().readValue(XML_ITEMS_FILENAME, QList<QString>() << XML_NODE_BOARD << XML_NODE_BORDER << XML_NODE_COLOR);
-    //mBoard = addRect (0, 0, 0, 0, QPen(QColor(border_color)));
 
     // MENU BUTTON
     mMenuButton = new Button(this, Pixmaps::get(PIX_BUTTON_MENU), tr("Game menu"), XML_NODE_BUTTONS, XML_NODE_GAME_MENU);
@@ -110,17 +104,12 @@ void GameScene::onExitClicked()
 
 void GameScene::onGotField(const Field& field, bool myMove, bool iAmWhite)
 {
-    disableAnimation();
-
     MainWindow::instance()->showGameScene(UI::instance()->getPlayer(PT_ME).color);
 
-    if(mField == field)
-    {
-        MainWindow::instance()->showMessage(tr("Invalid move."));
-    }
+    mBoard.updateGameField(field, iAmWhite);
 
-    updateGameField(field, iAmWhite);
-    updateMoveBoxes(UI::instance()->updateField(field, myMove, iAmWhite));
+    GameState state = UI::instance()->updateGameState(myMove, iAmWhite);
+    updateMoveBoxes(state);
 
     if(!Global::isFieldEmpty(field))
     {
@@ -144,14 +133,6 @@ void GameScene::updateItemsPositions(OrientationStatus orientation)
     // border
     mMenuButton->updatePos(orientation);
     mExitButton->updatePos(orientation);
-
-    // board and field
-    mBoardX = XML::instance().readValue(XML_ITEMS_FILENAME, QList<QString>() << XML_NODE_BOARD << orientNode << XML_NODE_X).toInt();
-    mBoardY = XML::instance().readValue(XML_ITEMS_FILENAME, QList<QString>() << XML_NODE_BOARD << orientNode << XML_NODE_Y).toInt();
-    int board_width = XML::instance().readValue(XML_ITEMS_FILENAME, QList<QString>() << XML_NODE_BOARD << XML_NODE_WIDTH).toInt();
-
-    mBoard = addRect (mBoardX, mBoardY, board_width,  board_width, QPen(QColor(0, 0, 0)));
-    updateGameField(mField, mWhite);
 
 
     // chat
@@ -185,76 +166,9 @@ void GameScene::updateMoveBoxes(GameState gameState)
 
 }
 
-void GameScene::updateGameField(const Field& field, bool white)
-{
-    mField = field;
-    mWhite = white;
-
-
-    if(mCells)
-    {
-        removeItem(mCells);
-        mCellArray.clear();
-    }
-
-    mCells = new QGraphicsPixmapItem(mBoard);
-    mCells->setZValue(Z_CELLS_LAYER);
-
-    for(int i=0; i<CELLS_IN_ROW; ++i) // Rows
-    for(int j=0; j<CELLS_IN_ROW; ++j) // columns
-    {
-
-        Cell* cell = 0;
-        CELLID cellID = i * CELLS_IN_ROW + j;
-
-        // odd-even cells
-        PixmapKey cellKey = ((i * CELLS_IN_ROW + i + j) % 2) ? PIX_CELL_WHITE : PIX_CELL_BLACK;
-        cell = new Cell(this, cellID, cellKey);
-
-
-        if(cell && !field.empty())
-            cell->setPiece(field[i * CELLS_IN_ROW + j]);
-
-        QObject::connect(cell, SIGNAL(cellClicked(CELLID)), this, SLOT(onCellClicked(CELLID)));
-
-        mCellArray.push_back(cell); // memorize the pointer
-        cell->setZValue(Z_CELLS_LAYER);
-        cell->setParentItem(mCells);
-
-        int x = mBoardX + j * cell->width();
-        int y = (white) ? mBoardY  + (CELLS_IN_ROW - 1 - i) * cell->width() :
-                          mBoardY + i * cell->width();
-
-        cell->setPos(x, y);
-    }
-
-    // show Captured pieces
-    mCaptureBox.update(field, white);
-
-
-}
-
-
-void GameScene::highlightCell(CELLID cell)
-{
-    mCellArray[cell]->highlight();
-    mHighlightedCell = cell;
-}
-
-void GameScene::removeHighlight()
-{
-    mCellArray[mHighlightedCell]->removeHighlight();
-}
 
 
 
-
-void GameScene::onCellClicked(CELLID cellID)
-{
-
-  //  qDebug() << "onCellClicked: " << cellID;
-    UI::instance()->cellClicked(cellID);
-}
 
 void GameScene::onMenuButtonClicked()
 {
@@ -263,22 +177,5 @@ void GameScene::onMenuButtonClicked()
     MainWindow::instance()->showGameDialog();
 }
 
-void GameScene::enableAnimation(const Move& move)
-{
-    Cell* srcCell = mCellArray[move.srcCell];
-    Cell* dstCell = mCellArray[move.dstCell];
 
-    mAnimation.startBlinking(srcCell, dstCell);
-}
-
-void GameScene::disableAnimation()
-{
-    mAnimation.stopBlinking();
-}
-
-void GameScene::repaintCells()
-{
-    for(int i =0; i<mCellArray.size(); i++)
-        mCellArray[i]->update();
-}
 

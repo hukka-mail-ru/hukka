@@ -158,7 +158,7 @@
   <Board>
     <width value="400" />
     <border>  <color value="white" />  </border>
-    <landscape> <x value="390" /> <y value="35" />  </landscape>
+    <x value="390" /> <y value="35" /> 
   </Board>
 
 
