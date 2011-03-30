@@ -103,6 +103,13 @@ void GameScene::onExitClicked()
 
 void GameScene::onGotField(const Field& field, bool myMove, bool iAmWhite)
 {
+    // a verification. It should be the first in this method,
+    // because user mustn't see an empty field anyway.
+    if(Global::isFieldEmpty(field))
+    {
+        return;
+    }
+
     MainWindow::instance()->showGameScene(UI::instance()->getPlayer(PT_ME).color);
 
     mBoard.updateGameField(field, iAmWhite);
@@ -110,10 +117,7 @@ void GameScene::onGotField(const Field& field, bool myMove, bool iAmWhite)
     GameState state = UI::instance()->updateGameState(myMove, iAmWhite);
     updateMoveBoxes(state);
 
-    if(!Global::isFieldEmpty(field))
-    {
-        MainWindow::instance()->setMode(MW_NORMAL);
-    }
+    MainWindow::instance()->setMode(MW_NORMAL);
 }
 
 void GameScene::updateItemsPositions(OrientationStatus orientation)

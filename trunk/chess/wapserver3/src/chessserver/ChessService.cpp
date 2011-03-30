@@ -56,7 +56,10 @@ void ChessService::cmdGetField( uint32_t _nPlayerID, uint32_t _nTableID )
     {
         sCmd.m_moveTime = INVALID_TIME;
         sCmd.m_gameTime = INVALID_TIME;
-        return;
+
+        // Return here is not needed, because cmdGetField can be called after GAMEOVER,
+        // to show the last move.
+        //  return;
     }
 
 

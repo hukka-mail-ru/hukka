@@ -17,6 +17,7 @@ private:
     QPushButton* surrenderButton;
     QPushButton* drawButton;
     QPushButton* returnButton;
+    QPushButton* returnToMenuButton;
 
     QVBoxLayout* layout;
 
@@ -25,6 +26,7 @@ private slots:
     void onSurrenderClicked();
     void onDrawClicked();
     void onReturnClicked();
+    void onReturnToMenuClicked();
 };
 
 #endif /* GAMEDIALOG_H_ */

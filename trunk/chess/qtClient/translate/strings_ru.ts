@@ -494,27 +494,32 @@ Please finish it first, then create a new game.</source>
         <translation>Игра</translation>
     </message>
     <message>
-        <location filename="../src/Dialogs/GameDialog.cpp" line="10"/>
+        <location filename="../src/Dialogs/GameDialog.cpp" line="15"/>
+        <source>Return to main menu</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/Dialogs/GameDialog.cpp" line="21"/>
         <source>Surrender</source>
         <translation>Сдаться</translation>
     </message>
     <message>
-        <location filename="../src/Dialogs/GameDialog.cpp" line="11"/>
+        <location filename="../src/Dialogs/GameDialog.cpp" line="25"/>
         <source>Draw</source>
         <translation>Ничья</translation>
     </message>
     <message>
-        <location filename="../src/Dialogs/GameDialog.cpp" line="12"/>
+        <location filename="../src/Dialogs/GameDialog.cpp" line="30"/>
         <source>Return to game</source>
         <translation>Назад к игре</translation>
     </message>
     <message>
-        <location filename="../src/Dialogs/GameDialog.cpp" line="29"/>
+        <location filename="../src/Dialogs/GameDialog.cpp" line="47"/>
         <source>Do you want to surrender?</source>
         <translation>Хотите сдаться?</translation>
     </message>
     <message>
-        <location filename="../src/Dialogs/GameDialog.cpp" line="38"/>
+        <location filename="../src/Dialogs/GameDialog.cpp" line="58"/>
         <source>Do you want to offer a draw?</source>
         <translation>Хотите предложить ничью?</translation>
     </message>
@@ -765,58 +770,58 @@ Please finish it first, then create a new game.</source>
         <translation type="unfinished">Рейтинг</translation>
     </message>
     <message>
-        <location filename="../src/Base/Defines.h" line="145"/>
+        <location filename="../src/Base/Defines.h" line="146"/>
         <source>offline</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/Base/Defines.h" line="228"/>
+        <location filename="../src/Base/Defines.h" line="229"/>
         <source>Your rating has been increased to</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/Base/Defines.h" line="229"/>
+        <location filename="../src/Base/Defines.h" line="230"/>
         <source>Your rating has been decreased to</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/Base/Defines.h" line="230"/>
+        <location filename="../src/Base/Defines.h" line="231"/>
         <source>Your rating has been slightly increased.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/Base/Defines.h" line="231"/>
+        <location filename="../src/Base/Defines.h" line="232"/>
         <source>Your rating hasn&apos;t been affected because of too few number of moves.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/Base/Defines.h" line="232"/>
+        <location filename="../src/Base/Defines.h" line="233"/>
         <source>Your rating is not available.
 Please visit www.site.com to learn how to enable it.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/Base/Defines.h" line="236"/>
+        <location filename="../src/Base/Defines.h" line="237"/>
         <source>You have won!</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/Base/Defines.h" line="241"/>
+        <location filename="../src/Base/Defines.h" line="242"/>
         <source>Time&apos;s up. You have won!</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/Base/Defines.h" line="246"/>
+        <location filename="../src/Base/Defines.h" line="247"/>
         <source>You have lost!</source>
         <translation type="unfinished">Вы проиграли!</translation>
     </message>
     <message>
-        <location filename="../src/Base/Defines.h" line="251"/>
+        <location filename="../src/Base/Defines.h" line="252"/>
         <source>Time&apos;s up. You have lost!</source>
         <translation type="unfinished">Время вышло. Вы проиграли!</translation>
     </message>
     <message>
-        <location filename="../src/Base/Defines.h" line="256"/>
+        <location filename="../src/Base/Defines.h" line="257"/>
         <source>A draw.</source>
         <translation type="unfinished">Ничья.</translation>
     </message>
@@ -864,7 +869,7 @@ Please finish it first, then create a new game.</source>
 Сначала завершите ее, а потом создайте новую игру.</translation>
     </message>
     <message>
-        <location filename="../src/UI/UI.cpp" line="106"/>
+        <location filename="../src/UI/UI.cpp" line="103"/>
         <source>Your opponent has offered a draw. Agree?</source>
         <translation type="unfinished">Ваш противник предлагает ничью. Согласны?</translation>
     </message>

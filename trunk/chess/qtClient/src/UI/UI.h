@@ -28,8 +28,7 @@ public:
     void shutdown(); // should be called as the reaction of a disconnection from a host
 
     void startGame();
-    void surrender();
- //   void stopGame();
+
 
     void setGameTable(TABLEID id) { mGameTable = id; }
     TABLEID getGameTable() const { return mGameTable; }

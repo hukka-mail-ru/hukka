@@ -536,7 +536,7 @@ private:
 	    	Result = IGameLogic::NotValid;
 	    }
 
-	    if ( Result == IGameLogic::Valid )
+	    if ( Result != IGameLogic::NotValid)
 	    {
 		    time_t nStepTime = time( NULL );
 
@@ -566,7 +566,7 @@ private:
 
 
 	    }
-	    else if ( Result == IGameLogic::NotValid )
+	    else
 	    {
    		    std::cout << "GameService::cmdStep NotValid nTableID = " << nTableID << ", _nPlayerID = " << _nPlayerID  << std::endl;
 
@@ -579,7 +579,11 @@ private:
             delete logic;
 			return;
 	    }
-	    else
+
+	    if(  Result == IGameLogic::Win ||
+             Result == IGameLogic::Loose ||
+             Result == IGameLogic::Draw ||
+             Result == IGameLogic::TimeOut )
 	    {
 	        endGame( nTableID, Result, 0 );
 	        // add SZ
