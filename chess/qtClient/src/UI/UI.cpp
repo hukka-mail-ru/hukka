@@ -69,15 +69,12 @@ void UI::startGame()
     Client::instance()->getField(mGameTable);
 }
 
-void UI::surrender()
-{
-    TABLEID id = getGameTable();
-    Client::instance()->surrender(id);
-}
 
 
 void UI::onGameOver(const QString& message)
 {
+    mGameState = GS_GAME_OVER;
+
     disconnect(Client::instance(), SIGNAL(invalidMove()), this, SLOT(onInvalidMove()));
     disconnect(Client::instance(), SIGNAL(gameOver(const QString&)), this, SLOT(onGameOver(const QString&)));
     disconnect(Client::instance(), SIGNAL(drawOffered()), this, SLOT(onDrawOffered()));
@@ -86,10 +83,10 @@ void UI::onGameOver(const QString& message)
     MainWindow::instance()->closeCurrentDialog();
     MainWindow::instance()->showMessage(message);
 
-
+    Client::instance()->getField(mGameTable); // player must see the victory move
     Client::instance()->deleteLastGameResult();
 
-    MainWindow::instance()->showMainMenu();
+ //   MainWindow::instance()->showMainMenu();
 }
 
 

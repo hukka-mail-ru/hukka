@@ -6,30 +6,50 @@
 GameDialog::GameDialog(QWidget *parent): MyDialog(parent)
 {
     setWindowTitle(tr("Game"));
-
-    surrenderButton = new QPushButton(tr("Surrender"), this);
-    drawButton = new QPushButton(tr("Draw"), this);
-    returnButton = new QPushButton(tr("Return to game"), this);
-
-    connect(surrenderButton, SIGNAL(clicked()), this, SLOT(onSurrenderClicked()));
-    connect(drawButton, SIGNAL(clicked()), this, SLOT(onDrawClicked()));
-    connect(returnButton, SIGNAL(clicked()), this, SLOT(onReturnClicked()));
-
     layout = new QVBoxLayout(this);
-    layout->addWidget(surrenderButton);
-    layout->addWidget(drawButton);
-    layout->addWidget(returnButton);
-    layout->addStretch();
 
+
+
+    if(UI::instance()->getGameState() == GS_GAME_OVER)
+    {
+        returnToMenuButton = new QPushButton(tr("Return to main menu"), this);
+        connect(returnToMenuButton, SIGNAL(clicked()), this, SLOT(onReturnToMenuClicked()));
+        layout->addWidget(returnToMenuButton);
+    }
+    else
+    {
+        surrenderButton = new QPushButton(tr("Surrender"), this);
+        connect(surrenderButton, SIGNAL(clicked()), this, SLOT(onSurrenderClicked()));
+        layout->addWidget(surrenderButton);
+
+        drawButton = new QPushButton(tr("Draw"), this);
+        connect(drawButton, SIGNAL(clicked()), this, SLOT(onDrawClicked()));
+        layout->addWidget(drawButton);
+    }
+
+    returnButton = new QPushButton(tr("Return to game"), this);
+    connect(returnButton, SIGNAL(clicked()), this, SLOT(onReturnClicked()));
+    layout->addWidget(returnButton);
+
+    layout->addStretch();
     setLayout(layout);
 }
+
+
+void GameDialog::onReturnToMenuClicked()
+{
+    MainWindow::instance()->showMainMenu();
+}
+
 
 void GameDialog::onSurrenderClicked()
 {
     if((MainWindow::instance()->showQuestion(tr("Do you want to surrender?"))))
     {
         MainWindow::instance()->setMode(MW_WAIT);
-        UI::instance()->surrender();
+
+        TABLEID id = UI::instance()->getGameTable();
+        Client::instance()->surrender(id);
     }
 }
 
