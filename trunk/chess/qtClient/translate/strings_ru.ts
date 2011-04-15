@@ -954,12 +954,12 @@ Please finish it first, then create a new game.</source>
         <translation type="obsolete">Ждите противника...</translation>
     </message>
     <message>
-        <location filename="../src/Dialogs/WaitJoinDialog.cpp" line="11"/>
+        <location filename="../src/Dialogs/WaitJoinDialog.cpp" line="13"/>
         <source>Please wait until an opponent joins your game...</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/Dialogs/WaitJoinDialog.cpp" line="12"/>
+        <location filename="../src/Dialogs/WaitJoinDialog.cpp" line="14"/>
         <source>Exit</source>
         <translation>Выход</translation>
     </message>

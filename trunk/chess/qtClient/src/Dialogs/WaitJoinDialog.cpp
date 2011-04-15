@@ -4,7 +4,9 @@
 #include "UI.h"
 
 
-WaitJoinDialog::WaitJoinDialog(QWidget *parent):   MyDialog(parent)
+WaitJoinDialog::WaitJoinDialog(QWidget *parent):
+    MyDialog(parent),
+    mJoined(false)
 {
     qDebug() << "WaitJoinDialog::WaitJoinDialog";
 
@@ -35,17 +37,15 @@ void  WaitJoinDialog::onGameTableDeleted()
 
 void WaitJoinDialog::onOpponentJoined(const QString& opponentName, int opponentRating)
 {
-    static bool joined = false;
-
     // Thiss should fix a bug with a double calling of onOpponentJoined
-    if(joined)
+    if(mJoined)
     {
         qDebug() << "WaitJoinDialog::onOpponentJoined. Double joining refused.";
         return;
     }
     else
     {
-        joined = true;
+        mJoined = true;
     }
 
     disconnect(Client::instance(), SIGNAL(opponentJoined(const QString&, int)), this, SLOT(onOpponentJoined(const QString&, int)));
@@ -73,6 +73,7 @@ void WaitJoinDialog::onOpponentJoined(const QString& opponentName, int opponentR
 
 void WaitJoinDialog::onGameStarted()
 {
+    mJoined = false;
     disconnect(Client::instance(), SIGNAL(gameStarted()), this, SLOT(onGameStarted()));
 
     MainWindow::instance()->setMode(MW_WAIT);
@@ -82,6 +83,7 @@ void WaitJoinDialog::onGameStarted()
 
 void WaitJoinDialog::onGameRejected()
 {
+    mJoined = false;
     disconnect(Client::instance(), SIGNAL(gameRejected()), this, SLOT(onGameRejected()));
     connect(Client::instance(), SIGNAL(opponentJoined(const QString&)), this, SLOT(onOpponentJoined(const QString&)));
 }
