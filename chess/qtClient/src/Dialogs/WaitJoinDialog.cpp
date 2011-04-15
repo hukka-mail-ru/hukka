@@ -75,7 +75,6 @@ void WaitJoinDialog::onGameStarted()
 {
     disconnect(Client::instance(), SIGNAL(gameStarted()), this, SLOT(onGameStarted()));
 
-   // MainWindow::instance()->showGameScene(PC_WHITE);
     MainWindow::instance()->setMode(MW_WAIT);
     UI::instance()->setPlayerColor(PT_ME, PC_WHITE);
     UI::instance()->startGame();

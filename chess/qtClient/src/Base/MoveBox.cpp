@@ -54,11 +54,7 @@ MoveBox::~MoveBox() {
     // TODO Auto-generated destructor stub
 }
 
-void MoveBox::startClocks()
-{
-    mMoveClock.start();
-    mGameClock.start();
-}
+
 
 void MoveBox::setPlayer(const Player& player)
 {
@@ -72,11 +68,13 @@ void MoveBox::setPlayer(const Player& player)
 void MoveBox::setActive()
 {
   //  mMoveClock.getServerTime();
+    mMoveClock.start();
+    mGameClock.start();
 
     mMoveClock.show();
-    mMoveClock.setColor(mActiveColor);
-
     mGameClock.show();
+
+    mMoveClock.setColor(mActiveColor);
     mGameClock.setColor(mActiveColor);
 
     mBorder->setPen(mActiveColor);
@@ -86,6 +84,9 @@ void MoveBox::setActive()
 
 void MoveBox::setInactive()
 {
+    mMoveClock.stop();
+    mGameClock.stop();
+
     mMoveClock.hide();
     mGameClock.hide();
 

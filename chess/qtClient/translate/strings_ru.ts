@@ -203,12 +203,12 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/Network/Client.cpp" line="1300"/>
+        <location filename="../src/Network/Client.cpp" line="1301"/>
         <source>Game over.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/Network/Client.cpp" line="1321"/>
+        <location filename="../src/Network/Client.cpp" line="1322"/>
         <source>Your opponent has rejected the draw</source>
         <translation type="unfinished"></translation>
     </message>
@@ -269,12 +269,12 @@
         <translation type="obsolete">Невозможно послать сообщение общего чата на сервере: </translation>
     </message>
     <message>
-        <location filename="../src/Network/Client.cpp" line="1268"/>
+        <location filename="../src/Network/Client.cpp" line="1269"/>
         <source>Can&apos;t join to the game table.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/Network/Client.cpp" line="1285"/>
+        <location filename="../src/Network/Client.cpp" line="1286"/>
         <source>Can&apos;t reject the game.</source>
         <translation type="unfinished"></translation>
     </message>
@@ -315,9 +315,9 @@ The rating is not affected because of too few number of moves.</source>
     <message>
         <location filename="../src/Network/Client.cpp" line="948"/>
         <location filename="../src/Network/Client.cpp" line="978"/>
-        <location filename="../src/Network/Client.cpp" line="1269"/>
-        <location filename="../src/Network/Client.cpp" line="1286"/>
-        <location filename="../src/Network/Client.cpp" line="1323"/>
+        <location filename="../src/Network/Client.cpp" line="1270"/>
+        <location filename="../src/Network/Client.cpp" line="1287"/>
+        <location filename="../src/Network/Client.cpp" line="1324"/>
         <source>Internal server error </source>
         <translation>Внутренняя ошибка сервера </translation>
     </message>
@@ -355,7 +355,7 @@ The rating is not affected because of too few number of moves.</source>
         <location filename="../src/Network/Client.cpp" line="1014"/>
         <location filename="../src/Network/Client.cpp" line="1032"/>
         <location filename="../src/Network/Client.cpp" line="1075"/>
-        <location filename="../src/Network/Client.cpp" line="1251"/>
+        <location filename="../src/Network/Client.cpp" line="1252"/>
         <source>Internal server error</source>
         <translation>Внутренняя ошибка сервера</translation>
     </message>
@@ -385,7 +385,7 @@ The rating is not affected because of too few number of moves.</source>
         <translation type="obsolete">Время вышло. Вы проиграли!</translation>
     </message>
     <message>
-        <location filename="../src/Network/Client.cpp" line="1320"/>
+        <location filename="../src/Network/Client.cpp" line="1321"/>
         <source>A draw.</source>
         <translation>Ничья.</translation>
     </message>
@@ -394,22 +394,22 @@ The rating is not affected because of too few number of moves.</source>
         <translation type="obsolete">Ваш противник не согласен на ничью</translation>
     </message>
     <message>
-        <location filename="../src/Network/Client.cpp" line="1322"/>
+        <location filename="../src/Network/Client.cpp" line="1323"/>
         <source>Please wait for your next move to offer a draw</source>
         <translation>Подождите своего хода, а затем предложите ничью</translation>
     </message>
     <message>
-        <location filename="../src/Network/Client.cpp" line="1397"/>
+        <location filename="../src/Network/Client.cpp" line="1398"/>
         <source>CHS Error: </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/Network/Client.cpp" line="1427"/>
+        <location filename="../src/Network/Client.cpp" line="1428"/>
         <source>CHAT Error: </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/Network/Client.cpp" line="1480"/>
+        <location filename="../src/Network/Client.cpp" line="1481"/>
         <source>Server doesn&apos;t respond</source>
         <translation>Сервер не отвечает</translation>
     </message>
@@ -494,32 +494,42 @@ Please finish it first, then create a new game.</source>
         <translation>Игра</translation>
     </message>
     <message>
-        <location filename="../src/Dialogs/GameDialog.cpp" line="15"/>
+        <location filename="../src/Dialogs/GameDialog.cpp" line="13"/>
+        <source>Game over!</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/Dialogs/GameDialog.cpp" line="16"/>
         <source>Return to main menu</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/Dialogs/GameDialog.cpp" line="21"/>
+        <location filename="../src/Dialogs/GameDialog.cpp" line="22"/>
+        <source>Game menu:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/Dialogs/GameDialog.cpp" line="25"/>
         <source>Surrender</source>
         <translation>Сдаться</translation>
     </message>
     <message>
-        <location filename="../src/Dialogs/GameDialog.cpp" line="25"/>
+        <location filename="../src/Dialogs/GameDialog.cpp" line="29"/>
         <source>Draw</source>
         <translation>Ничья</translation>
     </message>
     <message>
-        <location filename="../src/Dialogs/GameDialog.cpp" line="30"/>
+        <location filename="../src/Dialogs/GameDialog.cpp" line="34"/>
         <source>Return to game</source>
         <translation>Назад к игре</translation>
     </message>
     <message>
-        <location filename="../src/Dialogs/GameDialog.cpp" line="47"/>
+        <location filename="../src/Dialogs/GameDialog.cpp" line="51"/>
         <source>Do you want to surrender?</source>
         <translation>Хотите сдаться?</translation>
     </message>
     <message>
-        <location filename="../src/Dialogs/GameDialog.cpp" line="58"/>
+        <location filename="../src/Dialogs/GameDialog.cpp" line="62"/>
         <source>Do you want to offer a draw?</source>
         <translation>Хотите предложить ничью?</translation>
     </message>
@@ -535,7 +545,7 @@ Please finish it first, then create a new game.</source>
         <translation type="obsolete">Игра: </translation>
     </message>
     <message>
-        <location filename="../src/UI/GameScene.cpp" line="59"/>
+        <location filename="../src/UI/GameScene.cpp" line="52"/>
         <source>Game menu</source>
         <translation type="unfinished">Меню игры</translation>
     </message>
@@ -750,22 +760,22 @@ Please finish it first, then create a new game.</source>
         <translation type="unfinished">Игра: </translation>
     </message>
     <message>
-        <location filename="../src/Base/MoveBox.cpp" line="65"/>
+        <location filename="../src/Base/MoveBox.cpp" line="61"/>
         <source>White</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/Base/MoveBox.cpp" line="65"/>
+        <location filename="../src/Base/MoveBox.cpp" line="61"/>
         <source>Black</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/Base/MoveBox.cpp" line="68"/>
+        <location filename="../src/Base/MoveBox.cpp" line="64"/>
         <source>N/A</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/Base/MoveBox.cpp" line="69"/>
+        <location filename="../src/Base/MoveBox.cpp" line="65"/>
         <source>Rating</source>
         <translation type="unfinished">Рейтинг</translation>
     </message>
@@ -869,7 +879,7 @@ Please finish it first, then create a new game.</source>
 Сначала завершите ее, а потом создайте новую игру.</translation>
     </message>
     <message>
-        <location filename="../src/UI/UI.cpp" line="103"/>
+        <location filename="../src/UI/UI.cpp" line="105"/>
         <source>Your opponent has offered a draw. Agree?</source>
         <translation type="unfinished">Ваш противник предлагает ничью. Согласны?</translation>
     </message>

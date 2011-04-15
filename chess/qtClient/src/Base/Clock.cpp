@@ -21,7 +21,8 @@ Clock::Clock(QGraphicsScene* parentScene, const QString& header,
     mParentScene(parentScene),
     mText(NULL),
     mHeader(header),
-    mXMLNodeName(xmlNodeName)
+    mXMLNodeName(xmlNodeName),
+    mUpdateSignal(updateSignal)
 {
 
 
@@ -38,9 +39,6 @@ Clock::Clock(QGraphicsScene* parentScene, const QString& header,
 //    qDebug() << "Clock::Clock " << x << y;
     mTimer = new QTimer(this);
 
-    connect(Client::instance(), updateSignal, this, SLOT(onGotTime(quint32)));
-    connect(mTimer, SIGNAL(timeout()), this, SLOT(onTick()));
-
 }
 
 void Clock::moveBy(int x, int y)
@@ -50,13 +48,21 @@ void Clock::moveBy(int x, int y)
 
 void Clock::start()
 {
-//    qDebug() << "Clock::start";
-    connect(Client::instance(), SIGNAL(gameOver(const QString&)), this, SLOT(onGameOver(const QString&)));
+    connect(Client::instance(), mUpdateSignal, this, SLOT(onGotTime(quint32)));
+    connect(mTimer, SIGNAL(timeout()), this, SLOT(onTick()));
     mTimer->start(1000);
+}
+
+void Clock::stop()
+{
+    connect(Client::instance(), mUpdateSignal, this, SLOT(onGotTime(quint32)));
+    disconnect(mTimer, SIGNAL(timeout()), this, SLOT(onTick()));
+    mTimer->stop();
 }
 
 void Clock::show()
 {
+    mText->setPlainText("");
     mText->show();
 }
 
@@ -70,12 +76,7 @@ void Clock::setColor(const QColor& color)
     mText->setDefaultTextColor(color);
 }
 
-/*
-void Clock::getServerTime()
-{
-    Client::instance()->getTime(UI::instance()->getGameTable());
-}
-*/
+
 
 void Clock::onGotTime(quint32 seconds)
 {
@@ -84,7 +85,7 @@ void Clock::onGotTime(quint32 seconds)
     if(seconds == INVALID_TIME)
     {
         mSeconds == 0;
-        mTimer->stop();
+        stop();
     }
  //   qDebug() << "onGotTime " << seconds;
 }
@@ -92,22 +93,17 @@ void Clock::onGotTime(quint32 seconds)
 
 void Clock::onTick()
 {
-
+qDebug() << "onTick " << mHeader << mSeconds;
     if(mSeconds > 0)
     {
         mSeconds--;
     }
     else
     {
+        stop(); // without it, client will be sending timeout instantly
         Client::instance()->timeout(UI::instance()->getGameTable());
-        mTimer->stop(); // without it, client will be sending timeout instantly
     }
 
     mText->setPlainText(mHeader + Global::seconds2hrs(mSeconds));
 }
 
-void Clock::onGameOver(const QString& message)
-{
-    disconnect(Client::instance(), SIGNAL(gameOver(const QString&)), this, SLOT(onGameOver(const QString&)));
-    mTimer->stop();
-}

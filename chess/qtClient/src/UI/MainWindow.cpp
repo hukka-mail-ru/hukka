@@ -302,7 +302,7 @@ void MainWindow::showMainMenu()
     setMode(MW_NORMAL); // TODO this should be in each show... function
 }
 
-void MainWindow::showGameScene(PlayerColor color)
+void MainWindow::showGameScene()
 {
    // qDebug() << "MainWindow::showGameScene";
     if(mGraphicsView->scene() == mGameScene)
@@ -312,12 +312,18 @@ void MainWindow::showGameScene(PlayerColor color)
         mMainMenu->close();
 
     mGameScene->showChat();
-    mGameScene->startClocks();
 
     mGraphicsView->setScene(mGameScene);
 
     setMode(MW_NORMAL);
 
+}
+void MainWindow::updateGameScene()
+{
+    if(mGraphicsView->scene() != mGameScene)
+        return;
+
+    mGameScene->update();
 }
 
 

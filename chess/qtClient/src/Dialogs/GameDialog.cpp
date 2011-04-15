@@ -8,16 +8,20 @@ GameDialog::GameDialog(QWidget *parent): MyDialog(parent)
     setWindowTitle(tr("Game"));
     layout = new QVBoxLayout(this);
 
-
-
     if(UI::instance()->getGameState() == GS_GAME_OVER)
     {
+        label = new QLabel(tr("Game over!"));
+        layout->addWidget(label);
+
         returnToMenuButton = new QPushButton(tr("Return to main menu"), this);
         connect(returnToMenuButton, SIGNAL(clicked()), this, SLOT(onReturnToMenuClicked()));
         layout->addWidget(returnToMenuButton);
     }
     else
     {
+        label = new QLabel(tr("Game menu:"));
+        layout->addWidget(label);
+
         surrenderButton = new QPushButton(tr("Surrender"), this);
         connect(surrenderButton, SIGNAL(clicked()), this, SLOT(onSurrenderClicked()));
         layout->addWidget(surrenderButton);

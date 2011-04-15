@@ -26,12 +26,12 @@ public:
     ~GameScene();
 
     void initialize();
+    void update();
 
     void enableItems();
     void disableItems();
 
     void showChat();
-    void startClocks();
 
     void updateItemsPositions(OrientationStatus orientation);
 
