@@ -37,7 +37,6 @@ void WaitAgreeDialog::onGameStarted()
     disconnect(Client::instance(), SIGNAL(gameStarted()), this, SLOT(onGameStarted()));
     disconnect(Client::instance(), SIGNAL(gameRejected()), this, SLOT(onGameRejected()));
 
-    //MainWindow::instance()->showGameScene(PC_BLACK);
     MainWindow::instance()->setMode(MW_WAIT);
     UI::instance()->setPlayerColor(PT_ME, PC_BLACK);
     UI::instance()->startGame();

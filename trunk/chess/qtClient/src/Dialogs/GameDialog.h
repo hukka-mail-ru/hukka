@@ -3,6 +3,7 @@
 
 #include <QPushButton>
 #include <QVBoxLayout>
+#include <QLabel>
 #include "MyDialog.h"
 
 
@@ -13,6 +14,8 @@ public:
     GameDialog(QWidget *parent = 0);
 
 private:
+
+    QLabel* label;
 
     QPushButton* surrenderButton;
     QPushButton* drawButton;

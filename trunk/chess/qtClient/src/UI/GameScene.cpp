@@ -38,13 +38,6 @@ void GameScene::showChat()
     mChat->show();
 }
 
-void GameScene::startClocks()
-{
-  //  qDebug() << "GameScene::startClocks";
-
-    mMeMoveBox.startClocks();
-    mOppMoveBox.startClocks();
-}
 
 void GameScene::close()
 {
@@ -103,6 +96,7 @@ void GameScene::onExitClicked()
 
 void GameScene::onGotField(const Field& field, bool myMove, bool iAmWhite)
 {
+    qDebug() << "GameScene::onGotField" << endl;
     // a verification. It should be the first in this method,
     // because user mustn't see an empty field anyway.
     if(Global::isFieldEmpty(field))
@@ -110,7 +104,7 @@ void GameScene::onGotField(const Field& field, bool myMove, bool iAmWhite)
         return;
     }
 
-    MainWindow::instance()->showGameScene(UI::instance()->getPlayer(PT_ME).color);
+    MainWindow::instance()->showGameScene();
 
     mBoard.updateGameField(field, iAmWhite);
 
@@ -118,6 +112,12 @@ void GameScene::onGotField(const Field& field, bool myMove, bool iAmWhite)
     updateMoveBoxes(state);
 
     MainWindow::instance()->setMode(MW_NORMAL);
+}
+
+void GameScene::update()
+{
+    GameState state = UI::instance()->getGameState();
+    updateMoveBoxes(state);
 }
 
 void GameScene::updateItemsPositions(OrientationStatus orientation)
@@ -150,6 +150,8 @@ void GameScene::updateMoveBoxes(GameState gameState)
     mMeMoveBox.setPlayer(UI::instance()->getPlayer(PT_ME));
     mOppMoveBox.setPlayer(UI::instance()->getPlayer(PT_OPPONENT));
 
+    qDebug() << "GameScene::updateMoveBoxes " << gameState << endl;
+
     switch(gameState)
     {
         case GS_WAIT_FOR_PLAYER_TOUCH:
@@ -162,6 +164,10 @@ void GameScene::updateMoveBoxes(GameState gameState)
         case GS_WAIT_FOR_OPPONENT:
             mMeMoveBox.setInactive();
             mOppMoveBox.setActive();
+            break;
+        case GS_GAME_OVER:
+            mMeMoveBox.setInactive();
+            mOppMoveBox.setInactive();
             break;
         default:
             break;

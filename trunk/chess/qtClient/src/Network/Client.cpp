@@ -1231,6 +1231,7 @@ void Client::processMessageCHS(const MessageHeader& header, const QByteArray& bu
         for(int i = 0; i<CELLS_IN_FIELD; ++i)
             field.push_back((piece_type)reply->cells[i]);
 
+
         emit gotField(field, reply->myMove, reply->playerNr == reply->whitePlayerNr);
         emit gotMoveTime(reply->moveTime);
         emit gotGameTime(reply->gameTime);

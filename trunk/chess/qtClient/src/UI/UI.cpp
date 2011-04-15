@@ -73,20 +73,22 @@ void UI::startGame()
 
 void UI::onGameOver(const QString& message)
 {
+    qDebug() << "UI::onGameOver" << endl;
+
     mGameState = GS_GAME_OVER;
 
     disconnect(Client::instance(), SIGNAL(invalidMove()), this, SLOT(onInvalidMove()));
     disconnect(Client::instance(), SIGNAL(gameOver(const QString&)), this, SLOT(onGameOver(const QString&)));
     disconnect(Client::instance(), SIGNAL(drawOffered()), this, SLOT(onDrawOffered()));
 
-
-    MainWindow::instance()->closeCurrentDialog();
-    MainWindow::instance()->showMessage(message);
-
+    // getField must be earlier than showMessage because the clocks must not tick while
+    // user looks at the message box.
     Client::instance()->getField(mGameTable); // player must see the victory move
     Client::instance()->deleteLastGameResult();
 
- //   MainWindow::instance()->showMainMenu();
+    MainWindow::instance()->updateGameScene();
+    MainWindow::instance()->closeCurrentDialog();
+    MainWindow::instance()->showMessage(message);
 }
 
 

@@ -59,7 +59,8 @@ public:
 
     // scenes
     void showMainMenu();
-    void showGameScene(PlayerColor color);
+    void showGameScene();
+    void updateGameScene();
 
     // TODO create 1 method instead 4
     void showWaitJoinDialog();

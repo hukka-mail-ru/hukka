@@ -24,6 +24,7 @@ public:
           const char* updateSignal, const QString& xmlNodeName);
 
     void start();
+    void stop();
    // void getServerTime();
 
     void moveBy(int x, int y);
@@ -47,11 +48,12 @@ private:
 
     QString mXMLNodeName;
 
+    const char* mUpdateSignal;
+
 private slots:
 
     void onTick();
     void onGotTime(quint32 seconds);
-    void onGameOver(const QString& message);
 
 
 };
