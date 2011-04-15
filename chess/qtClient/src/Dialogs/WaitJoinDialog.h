@@ -19,6 +19,8 @@ private:
     QLabel* label;
     QVBoxLayout* layout;
 
+    bool mJoined;
+
 private slots:
     void onExitClicked();
     void onOpponentJoined(const QString& opponentName, int opponentRating);
