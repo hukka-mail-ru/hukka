@@ -36,10 +36,19 @@ DROP PROCEDURE IF EXISTS AddToHistoryTbl;
 
 
 CREATE PROCEDURE AddToHistory (IN tab INT, IN message TEXT, IN maxEntries INT)
-BEGIN
+sproc:BEGIN
 
 DECLARE entries INT;
+DECLARE table_exist INT;
 DECLARE time TIMESTAMP;
+
+
+# Don't add the message to History, if the table has been deleted
+select COUNT(*) into table_exist from tbChessTableList where TableId = tab;
+IF table_exist = 0 THEN 
+LEAVE sproc;
+END IF;
+
 
 INSERT INTO tbChessChat(TableId, Msg) VALUES (tab, message);
 
