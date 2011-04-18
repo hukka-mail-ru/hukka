@@ -580,7 +580,7 @@ private:
 			return;
 	    }
 
-	    if(  Result == IGameLogic::Win ||
+	    if(  Result == IGameLogic::CheckMate ||
              Result == IGameLogic::Draw ||
              Result == IGameLogic::TimeOut )
 	    {
@@ -678,7 +678,7 @@ private:
 		    m_RatingTable.setLastGameResult(nPlayer0, P_NO_RES);
 		    m_RatingTable.setLastGameResult(nPlayer1, P_NO_RES);
         }
-	    else if ( _Result == IGameLogic::Win )
+	    else if ( _Result == IGameLogic::CheckMate )
 	    {
          //   cerr << "else if ( _Result == IGameLogic::Win ) " << nCurPlayer << endl;
 

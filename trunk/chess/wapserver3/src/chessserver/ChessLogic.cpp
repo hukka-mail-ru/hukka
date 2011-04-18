@@ -41,7 +41,7 @@ IGameLogic::StepRes ChessLogic::StepAnl( TVByte *_vecBytes)
 
     if ( m_Engine.getResult() == Checkmate )
     {
-    	return Win;
+    	return CheckMate;
     }
     else if ( m_Engine.getResult() == Stalemate ||
               m_Engine.getResult() == FiftyMoves ||
