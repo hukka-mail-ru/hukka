@@ -125,7 +125,7 @@ private:
 	//		std::cout << "GameService::newMsg from = " << _pClientMsg->GetTo() << " cmd = CMD_SURRENDER" <<  std::endl;
 			uint32_t *nTableID = (uint32_t*) &vecCmd[0];
 
-			cmdLoose( *nTableID );
+			cmdSurrender( _pClientMsg->GetTo(), *nTableID );
 
 		}
         else if( cmd == CMD_TIMEOUT )
@@ -581,11 +581,10 @@ private:
 	    }
 
 	    if(  Result == IGameLogic::Win ||
-             Result == IGameLogic::Loose ||
              Result == IGameLogic::Draw ||
              Result == IGameLogic::TimeOut )
 	    {
-	        endGame( nTableID, Result, 0 );
+	        endGame( nTableID, Result, 0, 0 );
 	        // add SZ
             delete logic;
 	        return; // ???
@@ -618,9 +617,10 @@ private:
 		}
 	}
 
-	void cmdLoose( uint32_t _nTableID )
+	void cmdSurrender( uint32_t _nSurrenderedID, uint32_t _nTableID )
 	{
-        endGame( _nTableID, IGameLogic::Loose );
+        endGame( _nTableID, IGameLogic::Surrender, _nSurrenderedID);
+
 	}
 
     void cmdTimeout( uint32_t _nTableID )
@@ -628,7 +628,10 @@ private:
         endGame( _nTableID, IGameLogic::TimeOut );
     }
 
-	void endGame( uint32_t _nTableID, IGameLogic::StepRes _Result, uint32_t nMinStepCountForRating = MIN_STEPS_FOR_RATING )
+	void endGame( uint32_t _nTableID,
+	              IGameLogic::StepRes _Result,
+	              uint32_t _nSurrenderedID = 0,
+	              uint32_t nMinStepCountForRating = MIN_STEPS_FOR_RATING )
 	{
 	    uint32_t nCurPlayer = 0;
 	    uint32_t nPlayer0   = 0;
@@ -679,7 +682,7 @@ private:
 	    {
          //   cerr << "else if ( _Result == IGameLogic::Win ) " << nCurPlayer << endl;
 
-	        if ( nCurPlayer != nPlayer0 )
+	        if ( nCurPlayer != nPlayer0 ) // This is because the server sets CurPlayer before cmdEnd
 	        {
 	         //   cerr << " if ( nCurPlayer != nPlayer0 ) " << nCurPlayer << endl;
 
@@ -697,25 +700,20 @@ private:
 	        }
 
 	    }
-	    else if ( _Result == IGameLogic::Loose )
+	    else if (_Result == IGameLogic::Surrender)
 	    {
-	        if ( nCurPlayer != nPlayer0 )
+	        if ( _nSurrenderedID == nPlayer0 )
 	        {
-	        //    cerr << "OK. nCurPlayer == nPlayer0 "  << endl;
-
-	            sCmd0.m_chData = ( char ) P_LOOSE;
-	            sCmd1.m_chData = ( char ) P_WIN;
-	            setRating( nPlayer1, nPlayer0 );
+	           sCmd0.m_chData = ( char ) P_LOOSE;
+	           sCmd1.m_chData = ( char ) P_WIN;
+	           setRating( nPlayer1, nPlayer0 );
 	        }
 	        else
 	        {
-	       //    cerr << "OK. nCurPlayer != nPlayer0 " << nCurPlayer << endl;
-
-	            sCmd0.m_chData = (char) P_WIN;
-	            sCmd1.m_chData = (char) P_LOOSE;
-	            setRating( nPlayer0, nPlayer1 );
+	           sCmd0.m_chData = (char) P_WIN;
+	           sCmd1.m_chData = (char) P_LOOSE;
+	           setRating( nPlayer0, nPlayer1 );
 	        }
-
 	    }
 	    else if ( _Result == IGameLogic::Draw )
 	    {
@@ -910,7 +908,7 @@ private:
 //		        	GetSqlGameTable()->setState( _nTableID, ST_DRAW );
 		    		sendAscDraw(_nTableID, nPlayer0, P_ACCEPT);
 		    		sendAscDraw(_nTableID, nPlayer1, P_ACCEPT);
-		    		endGame(_nTableID, IGameLogic::Draw, 0);
+		    		endGame(_nTableID, IGameLogic::Draw, 0, 0);
 		    	}
 		    	else if (value == 'N')
 		    	{
