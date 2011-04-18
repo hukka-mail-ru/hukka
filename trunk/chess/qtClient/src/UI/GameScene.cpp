@@ -162,7 +162,7 @@ void GameScene::updateMoveBoxes(GameState gameState)
     mMeMoveBox.setPlayer(UI::instance()->getPlayer(PT_ME));
     mOppMoveBox.setPlayer(UI::instance()->getPlayer(PT_OPPONENT));
 
-    qDebug() << "GameScene::updateMoveBoxes " << gameState << endl;
+//    qDebug() << "GameScene::updateMoveBoxes " << gameState << endl;
 
     switch(gameState)
     {
