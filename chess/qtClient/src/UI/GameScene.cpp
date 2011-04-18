@@ -59,8 +59,20 @@ void GameScene::initialize()
 
 
     connect(Client::instance(), SIGNAL(gotField(Field, bool, bool)), this, SLOT(onGotField(Field, bool, bool)));
+    connect(Client::instance(), SIGNAL(invalidMove()), this, SLOT(onInvalidMove()));
 
 }
+
+
+void GameScene::onInvalidMove()
+{
+    MainWindow::instance()->showMessage(tr("Invalid move."));
+    UI::instance()->setGameState(GS_WAIT_FOR_PLAYER_TOUCH);
+
+    mBoard.removeHighlight();
+    mBoard.updateGameField();
+}
+
 
 void GameScene::enableItems()
 {
@@ -96,7 +108,7 @@ void GameScene::onExitClicked()
 
 void GameScene::onGotField(const Field& field, bool myMove, bool iAmWhite)
 {
-    qDebug() << "GameScene::onGotField" << endl;
+//    qDebug() << "GameScene::onGotField" << endl;
     // a verification. It should be the first in this method,
     // because user mustn't see an empty field anyway.
     if(Global::isFieldEmpty(field))

@@ -60,7 +60,6 @@ void UI::startGame()
         mGameState = GS_WAIT_FOR_SERVER;
     }
 
-    connect(Client::instance(), SIGNAL(invalidMove()), this, SLOT(onInvalidMove()));
     connect(Client::instance(), SIGNAL(gameOver(const QString&)), this, SLOT(onGameOver(const QString&)));
     connect(Client::instance(), SIGNAL(drawOffered()), this, SLOT(onDrawOffered()));
 
@@ -77,7 +76,6 @@ void UI::onGameOver(const QString& message)
 
     mGameState = GS_GAME_OVER;
 
-    disconnect(Client::instance(), SIGNAL(invalidMove()), this, SLOT(onInvalidMove()));
     disconnect(Client::instance(), SIGNAL(gameOver(const QString&)), this, SLOT(onGameOver(const QString&)));
     disconnect(Client::instance(), SIGNAL(drawOffered()), this, SLOT(onDrawOffered()));
 
@@ -92,11 +90,6 @@ void UI::onGameOver(const QString& message)
 }
 
 
-
-void UI::onInvalidMove()
-{
-    mGameState = GS_INVALID_MOVE;
-}
 
 void UI::onDrawOffered()
 {

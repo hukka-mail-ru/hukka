@@ -164,15 +164,20 @@ void Board::onCellClicked(CELLID cell)
 
 }
 
+void Board::updateGameField()
+{
+    bool current_color = UI::instance()->getPlayer(PT_ME).color == PC_WHITE;
+    updateGameField(mField, current_color);
+}
 
 void Board::updateGameField(const Field& field, bool white)
 {
     disableAnimation();
 
-    if(mField == field)
-    {
-        MainWindow::instance()->showMessage(tr("Invalid move."));
-    }
+  //  if(mField == field)
+ //   {
+ //       MainWindow::instance()->showMessage(tr("Invalid move."));
+ //   }
 
     mField = field;
 

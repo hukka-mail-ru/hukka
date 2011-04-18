@@ -1237,7 +1237,7 @@ void Client::processMessageCHS(const MessageHeader& header, const QByteArray& bu
         emit gotGameTime(reply->gameTime);
     }
     // STEP
-    else if(header.cmd == ANS_STEP)
+    else if(header.cmd == ANS_MOVE)
     {
         struct Reply {
             TABLEID     tableID;

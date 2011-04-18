@@ -571,7 +571,7 @@ private:
    		    std::cout << "GameService::cmdStep NotValid nTableID = " << nTableID << ", _nPlayerID = " << _nPlayerID  << std::endl;
 
    		   	SGameMsg sCmd;
-			sCmd.m_chCmd = ANS_STEP;
+			sCmd.m_chCmd = ANS_MOVE;
 			sCmd.m_nTableID = nTableID;
 			sCmd.m_chData = ( char ) P_NOT_VALID;
  		    sendMsg( _nPlayerID, &sCmd, sizeof( sCmd ) );
