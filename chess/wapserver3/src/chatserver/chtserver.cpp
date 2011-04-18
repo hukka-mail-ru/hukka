@@ -154,25 +154,28 @@ void CHTServer::newMsg( ClientMsg* _pMsg )
             if (vecCmd.size() > sizeof(uint32_t)*2)
             {
                 vecCmd.push_back(0);
-                messageToAll( _pMsg->GetTo(), (uint32_t) vecCmd.at(0), (TVecChar*)&vecCmd.at(sizeof(uint32_t)*2), (uint32_t) (unsigned char) vecCmd.at(sizeof(uint32_t)) );
+
+                messageToAll( _pMsg->GetTo(), (uint32_t) vecCmd.at(0),
+                             (TVecChar*)&vecCmd.at(sizeof(uint32_t)*2),
+                             *(uint32_t*)&vecCmd.at(sizeof(uint32_t)) );
             }
             break;
         case CMD_CHAT_JOIN:
             if (vecCmd.size() == sizeof(uint32_t) * 2 )
             {
-                joinChat( _pMsg->GetTo(), (uint32_t) vecCmd.at(0), (uint32_t)(unsigned char)  vecCmd.at(sizeof(uint32_t)) );
+                joinChat( _pMsg->GetTo(), (uint32_t) vecCmd.at(0), *(uint32_t*)&vecCmd.at(sizeof(uint32_t)) );
             }
             break;
         case CMD_CHAT_LEAVE:
             if (vecCmd.size() == sizeof(uint32_t) )
             {
-                leaveChat( _pMsg->GetTo(), (uint32_t) vecCmd.at(0) );
+                leaveChat( _pMsg->GetTo(), *(uint32_t*)&vecCmd.at(0) );
             }
             break;
         case CMD_CHAT_DELETE_HISTORY:
             if (vecCmd.size() == sizeof(uint32_t) *2 )
             {
-                deleteHistory( (uint32_t) vecCmd.at(0), (uint32_t)(unsigned char)  vecCmd.at(sizeof(uint32_t)) );
+                deleteHistory( (uint32_t) vecCmd.at(0), *(uint32_t*)&vecCmd.at(sizeof(uint32_t)) );
             }
             break;
         default:
