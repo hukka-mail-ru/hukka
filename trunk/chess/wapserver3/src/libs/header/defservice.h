@@ -58,7 +58,7 @@ const int		CMD_JOIN	= 81;
 const int		CMD_MOVE	= 82;
 const int		CMD_DRAW	= 83;
 const int		ANS_JOIN	= 84;
-const int		ANS_STEP	= 85;
+const int		ANS_MOVE	= 85;
 const int		ANS_DRAW	= 86;
 const int		ANS_END		= 87;
 const int		ANS_START	= 88;
@@ -159,7 +159,7 @@ public:
                 case CMD_CHECK_TIME   : res = "CMD_CHECK_TIME"; break;
                 case CMD_TIMEOUT   : res = "CMD_TIMEOUT"; break;
                 case ANS_JOIN    : res = "ANS_JOIN"; break;
-                case ANS_STEP     : res = "ANS_STEP"; break;
+                case ANS_MOVE     : res = "ANS_MOVE"; break;
                 case ANS_DRAW     : res = "ANS_DRAW"; break;
                 case ANS_END      : res = "ANS_END"; break;
                 case ANS_START    : res = "ANS_START"; break;

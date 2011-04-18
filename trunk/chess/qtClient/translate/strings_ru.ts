@@ -51,14 +51,6 @@
     </message>
 </context>
 <context>
-    <name>Board</name>
-    <message>
-        <location filename="../src/Base/Board.cpp" line="174"/>
-        <source>Invalid move.</source>
-        <translation type="unfinished"></translation>
-    </message>
-</context>
-<context>
     <name>Chat</name>
     <message>
         <source>Game chat</source>
@@ -550,6 +542,11 @@ Please finish it first, then create a new game.</source>
         <translation type="unfinished">Меню игры</translation>
     </message>
     <message>
+        <location filename="../src/UI/GameScene.cpp" line="69"/>
+        <source>Invalid move.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
         <source>Your move</source>
         <translation type="obsolete">Ваш ход</translation>
     </message>
@@ -879,7 +876,7 @@ Please finish it first, then create a new game.</source>
 Сначала завершите ее, а потом создайте новую игру.</translation>
     </message>
     <message>
-        <location filename="../src/UI/UI.cpp" line="105"/>
+        <location filename="../src/UI/UI.cpp" line="98"/>
         <source>Your opponent has offered a draw. Agree?</source>
         <translation type="unfinished">Ваш противник предлагает ничью. Согласны?</translation>
     </message>

@@ -65,7 +65,7 @@ private:
 
 private slots:
 
-    void onInvalidMove();
+
     void onGameOver(const QString&);
     void onDrawOffered();
     void onError(const QString& what);

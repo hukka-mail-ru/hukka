@@ -24,10 +24,14 @@ public:
     Board(QGraphicsScene* parentScene);
     virtual ~Board();
 
+    void updateGameField();
     void updateGameField(const Field& field, bool white);
 
     // prevents artifacts
     void repaintCells();
+
+    void disableAnimation();
+    void removeHighlight();
 
 private:
 
@@ -35,9 +39,7 @@ private:
 
 
     void highlightCell(CELLID cell);
-    void removeHighlight();
     void enableAnimation(const Move& move);
-    void disableAnimation();
 
     QGraphicsScene* mParentScene;
 

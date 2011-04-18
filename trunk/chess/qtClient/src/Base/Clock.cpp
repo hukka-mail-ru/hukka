@@ -93,7 +93,7 @@ void Clock::onGotTime(quint32 seconds)
 
 void Clock::onTick()
 {
-qDebug() << "onTick " << mHeader << mSeconds;
+//qDebug() << "onTick " << mHeader << mSeconds;
     if(mSeconds > 0)
     {
         mSeconds--;
