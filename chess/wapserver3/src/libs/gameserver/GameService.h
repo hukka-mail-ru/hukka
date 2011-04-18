@@ -667,6 +667,8 @@ private:
 
 		if ( nStepNum < nMinStepCountForRating)
 		{
+		//    cerr << "if ( nStepNum < nMinStepCountForRating) " << nCurPlayer << endl;
+
             sCmd0.m_chData = (char) P_NO_RES;
 			sCmd1.m_chData = (char) P_NO_RES;
 
@@ -675,14 +677,20 @@ private:
         }
 	    else if ( _Result == IGameLogic::Win )
 	    {
-	        if ( nCurPlayer == nPlayer0 )
+         //   cerr << "else if ( _Result == IGameLogic::Win ) " << nCurPlayer << endl;
+
+	        if ( nCurPlayer != nPlayer0 )
 	        {
+	         //   cerr << " if ( nCurPlayer != nPlayer0 ) " << nCurPlayer << endl;
+
 	            sCmd0.m_chData = (char) P_WIN;
 	            sCmd1.m_chData = (char) P_LOOSE;
 	            setRating( nPlayer0, nPlayer1 );
 	        }
 	        else
 	        {
+	       //     cerr << " else " << nCurPlayer << endl;
+
 	            sCmd0.m_chData = ( char ) P_LOOSE;
 	            sCmd1.m_chData = ( char ) P_WIN;
 	            setRating( nPlayer1, nPlayer0 );
@@ -691,9 +699,9 @@ private:
 	    }
 	    else if ( _Result == IGameLogic::Loose )
 	    {
-	        if ( nCurPlayer == nPlayer0 )
+	        if ( nCurPlayer != nPlayer0 )
 	        {
-	            cerr << "OK. nCurPlayer == nPlayer0 "  << endl;
+	        //    cerr << "OK. nCurPlayer == nPlayer0 "  << endl;
 
 	            sCmd0.m_chData = ( char ) P_LOOSE;
 	            sCmd1.m_chData = ( char ) P_WIN;
@@ -701,7 +709,7 @@ private:
 	        }
 	        else
 	        {
-	            cerr << "OK. nCurPlayer != nPlayer0 " << nCurPlayer << endl;
+	       //    cerr << "OK. nCurPlayer != nPlayer0 " << nCurPlayer << endl;
 
 	            sCmd0.m_chData = (char) P_WIN;
 	            sCmd1.m_chData = (char) P_LOOSE;
