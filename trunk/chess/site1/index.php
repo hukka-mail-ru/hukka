@@ -4,6 +4,10 @@
  </head>
  <body>
 
+<h2>Hello!</h2>
+
+Rating table:<br>
+<br>
 
 <?php
 
@@ -12,10 +16,10 @@
 
 	mysql_select_db('WapServer3DB', $lnk) or die ('Can\'t use WapServer3DB : ' . mysql_error());
 
-	$result = mysql_query("SELECT wsUsers.User, tbChessRating.Rating FROM wsUsers INNER JOIN tbChessRating ON wsUsers.GUID = tbChessRating.PlayerID")
+	$result = mysql_query("SELECT wsUsers.User, tbChessRating.Rating FROM wsUsers INNER JOIN tbChessRating ON wsUsers.GUID = tbChessRating.PlayerID ORDER by wsUsers.User")
 		or die("Invalid query: " . mysql_error());
 
-	echo '<table>';
+	echo '<table border=2>';
     echo '<td> NAME </td> <td> RATING </td>';  
 	while ($row = mysql_fetch_array($result, MYSQL_NUM)) 
     {
@@ -29,7 +33,8 @@
 //	echo "$num_rows Rows\n";
 
 ?> 
-
+<br>
+If you don't see yourself in the table, please pay us some money and enjoy:)<br>
 
 </body>
 </html>
