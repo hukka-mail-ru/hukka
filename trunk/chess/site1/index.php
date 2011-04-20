@@ -2,11 +2,14 @@
  <head>
   <title>PHP Test</title>
  </head>
+
+  <meta http-equiv="content-type" content="text/html; charset=UTF-8">
+
  <body>
 
-<h2>Hello!</h2>
+<h2>Добро пожаловать!</h2>
 
-Rating table:<br>
+Десятка лучших игроков:<br>
 <br>
 
 <?php
@@ -16,7 +19,11 @@ Rating table:<br>
 
 	mysql_select_db('WapServer3DB', $lnk) or die ('Can\'t use WapServer3DB : ' . mysql_error());
 
-	$result = mysql_query("SELECT wsUsers.User, tbChessRating.Rating FROM wsUsers INNER JOIN tbChessRating ON wsUsers.GUID = tbChessRating.PlayerID ORDER by wsUsers.User")
+	$result = mysql_query("SELECT wsUsers.User, tbChessRating.Rating FROM wsUsers 
+                           INNER JOIN tbChessRating ON wsUsers.GUID = tbChessRating.PlayerID 
+						   WHERE tbChessRating.Available = 1
+                           ORDER by tbChessRating.Rating DESC
+						   LIMIT 10")
 		or die("Invalid query: " . mysql_error());
 
 	echo '<table border=2>';
@@ -34,7 +41,7 @@ Rating table:<br>
 
 ?> 
 <br>
-If you don't see yourself in the table, please pay us some money and enjoy:)<br>
+Как включить мой рейтинг<br>
 
 </body>
 </html>
