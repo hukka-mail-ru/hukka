@@ -1,6 +1,6 @@
 <html>
  <head>
-  <title>PHP Test</title>
+  <title>Главная страница</title>
  </head>
 
   <meta http-equiv="content-type" content="text/html; charset=UTF-8">
@@ -9,6 +9,9 @@
 
 <h2>Добро пожаловать!</h2>
 
+<a href=auth.php>Вход</a><br>
+<a href=reg.php>Регистрация</a><br>
+<br>
 Десятка лучших игроков:<br>
 <br>
 
@@ -26,13 +29,17 @@
 						   LIMIT 10")
 		or die("Invalid query: " . mysql_error());
 
+	// TOP 10 TABLE 
 	echo '<table border=2>';
-    echo '<td> NAME </td> <td> RATING </td>';  
+    echo '<td> Место </td>  <td> Игрок </td> <td> Рейтинг </td>';  
+
+	$i = 1;
 	while ($row = mysql_fetch_array($result, MYSQL_NUM)) 
     {
 	    echo '<tr>';
-		printf ("<td> %s </td> <td> %s </td>", $row[0], $row[1]);  
+		printf ("<td> %s </td> <td> %s </td> <td> %s </td>", $i, $row[0], $row[1]);  
 	    echo '</tr>';
+		$i++;
 	}
     echo '</table>';
 
@@ -40,8 +47,9 @@
 //	echo "$num_rows Rows\n";
 
 ?> 
+
 <br>
-Как включить мой рейтинг<br>
+<a href=howto_enable_rating.php>Как включить мой рейтинг</a><br>
 
 </body>
 </html>
