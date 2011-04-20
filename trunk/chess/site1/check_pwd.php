@@ -55,7 +55,8 @@ if (isset($_POST['login']))
 		    }
 			else
 			{
-				echo 'OK!';
+				header('Location: welcome_user.php');
+				exit;
 			}
 		}	
  }
