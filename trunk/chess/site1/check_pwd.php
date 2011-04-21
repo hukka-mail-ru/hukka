@@ -8,6 +8,7 @@
  <body>
 
 <?php
+include 'defines.php';
 
 
 if (isset($_POST['login']))
@@ -32,12 +33,10 @@ if (isset($_POST['login']))
  }
  else
  {
-		$lnk = mysql_connect('localhost', 'WapServer3', 'win74')
-		   or die ('Not connected : ' . mysql_error());
+		$lnk = mysql_connect($DbServerAddr, $DbServerName, $DbServerPwd) or die ($DbErrorConnect . mysql_error());
+		mysql_select_db($DbName, $lnk) or die ($DbErrorSelect . mysql_error());
 
-     	mysql_select_db('WapServer3DB', $lnk) or die ('Can\'t use WapServer3DB : ' . mysql_error()); 
-
-    	$result_login = mysql_query("SELECT * FROM wsUsers WHERE User = '" . $login . "'");
+    	$result_login = mysql_query("SELECT GUID FROM wsUsers WHERE User = '" . $login . "'");
 		$num_rows = mysql_num_rows($result_login);
 
 
@@ -47,7 +46,7 @@ if (isset($_POST['login']))
         }
 		else
 		{		
-			$result_pwd = mysql_query("SELECT * FROM wsUsers WHERE User = '" . $login . "' AND Password = '" . $pwd . "'");
+			$result_pwd = mysql_query("SELECT GUID, User FROM wsUsers WHERE User = '" . $login . "' AND Password = '" . $pwd . "'");
    		    $num_rows = mysql_num_rows($result_pwd);
 			if($num_rows == 0)
 		    {
@@ -55,6 +54,11 @@ if (isset($_POST['login']))
 		    }
 			else
 			{
+ 				session_start();
+
+				$row = mysql_fetch_array($result_pwd, MYSQL_NUM);
+				$_SESSION['UserID'] = $row[0];
+				$_SESSION['UserName'] = $row[1];
 				header('Location: welcome_user.php');
 				exit;
 			}
