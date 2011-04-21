@@ -27,8 +27,8 @@
 	{
 		printf("<h2>Добро пожаловать!</h2>\n");
 		printf("<a href=auth.php>Вход</a><br>\n");
-		printf("<a href=reg.php>Регистрация</a><br>\n");
 	}
+
 
 	// USER RATING
 	if($_SESSION['authorized'] == true)
@@ -39,13 +39,20 @@
 		$row = mysql_fetch_array($result, MYSQL_ASSOC);
 		if($row['Available'] == 0)
 		{
-			echo 'Ваш рейтинг пока еще не доступен. <a href=rating.php>Как его включить?</a><br>';
+			echo 'Ваш рейтинг пока еще не доступен. <a href=enable_rating.php>Как его включить?</a><br>';
 		}
 		else
 		{
 			echo 'Ваш рейтинг: ' . $row['Rating'];
 		}
 	}
+
+	echo "<br><br>";
+
+	//MENU
+	printf("<a href=reg.php>Регистрация нового игрока</a><br>\n");
+	printf("<a href=find.php>Поиск игроков</a><br>\n");
+	printf("<a href=about.php>О нас</a><br>\n");
 
 	// TOP 10 TABLE 
 	echo '<br>';
@@ -70,9 +77,7 @@
 		else
 			 $bgcolor = "white";
 
-		printf ("<tr bgcolor=%s>", $bgcolor);
-		printf ("<td> %s </td> <td> %s </td> <td> %s </td>\n",  $i, $row[0], $row[1]);  
-	    echo '</tr>';
+		printf ("<tr bgcolor=%s> <td> %s </td> <td> %s </td> <td> %s </td> </tr>\n", $bgcolor,  $i, $row[0], $row[1]);  
 		$i++;
 	}
     echo '</table>';
@@ -81,9 +86,6 @@
 //	echo "$num_rows Rows\n";
 
 ?> 
-
-<br>
-<a href=howto_enable_rating.php>Как включить мой рейтинг</a><br>
 
 </body>
 </html>
