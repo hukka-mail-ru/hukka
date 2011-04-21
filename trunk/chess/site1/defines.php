@@ -8,7 +8,6 @@
 	$DbErrorConnect = 'Can\'t connect to DB (' . $DbName. '): ';
 	$DbErrorSelect = 'Can\'t select DB (' . $DbName. '): ';
 
-	// = 0;
-	$CurrentUserName = '';
+
 
 ?> 
