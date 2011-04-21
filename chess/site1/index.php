@@ -17,10 +17,10 @@
 
 <?php
 
-	$lnk = mysql_connect('localhost', 'WapServer3', 'win74')
-		   or die ('Not connected : ' . mysql_error());
+	include 'defines.php';
 
-	mysql_select_db('WapServer3DB', $lnk) or die ('Can\'t use WapServer3DB : ' . mysql_error());
+	$lnk = mysql_connect($DbServerAddr, $DbServerName, $DbServerPwd) or die ($DbErrorConnect . mysql_error());
+	mysql_select_db($DbName, $lnk) or die ($DbErrorSelect . mysql_error());
 
 	$result = mysql_query("SELECT wsUsers.User, tbChessRating.Rating FROM wsUsers 
                            INNER JOIN tbChessRating ON wsUsers.GUID = tbChessRating.PlayerID 
