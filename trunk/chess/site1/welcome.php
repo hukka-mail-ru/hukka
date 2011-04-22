@@ -1,19 +1,10 @@
-
-
-<html>
- <head>
-  <title>Главная страница</title>
-  <link rel="stylesheet" type="text/css" href="style/style.css" />
- </head>
-
-  <meta http-equiv="content-type" content="text/html; charset=UTF-8">
- <body>
-
-
-
 <?php
-	session_start();
 	include 'defines.php';
+
+	OpenPage("Главная страница");
+	session_start();
+	
+
 	$lnk = mysql_connect($DbServerAddr, $DbServerName, $DbServerPwd) or die ($DbErrorConnect . mysql_error());
 	mysql_select_db($DbName, $lnk) or die ($DbErrorSelect . mysql_error());
 
@@ -21,12 +12,12 @@
 	// WELCOME
 	if($_SESSION['authorized'] == true)
 	{
-		printf("<h2>Добро пожаловать, %s!</h2>\n", $_SESSION['UserName']);		
+		printf("<div class='header'> Добро пожаловать, %s!</div>\n", $_SESSION['UserName']);		
 	}
 	else
 	{
-		printf("<h2>Добро пожаловать!</h2>\n");
-		printf("<a href=auth.php>Вход</a><br>\n");
+		printf("<div class='header'>Добро пожаловать!</div>\n");
+		printf("<div class='wrapper'> <a href=auth.php>Вход</a><br> </div>\n");
 	}
 
 
@@ -39,30 +30,29 @@
 		$row = mysql_fetch_array($result, MYSQL_ASSOC);
 		if($row['Available'] == 0)
 		{
-			echo 'Ваш рейтинг пока еще не доступен. <a href=enable_rating.php>Как его включить?</a><br>';
+			printf("<div class='wrapper'> Ваш рейтинг пока еще не доступен. <a href=enable_rating.php>Как его включить?</a><br> </div>\n");
 		}
 		else
 		{
-			echo 'Ваш рейтинг: ' . $row['Rating'];
+			printf("<div class='wrapper'> Ваш рейтинг: %s</a><br> </div>\n", $row['Rating']);
 		}
 	}
 
-	echo "<br><br>";
+//
 
 	//MENU
-    printf("<div class='menu'>\n");
-	printf("<a href=reg.php>Регистрация нового игрока</a><br>\n");
-	printf("<a href=find.php>Поиск игроков</a><br>\n");
-	printf("<a href=about.php>О нас</a><br>\n");
-    printf("</div\n");
+	printf("<ul class='tabs'>\n");
+    printf("<li class='tab_selected'> <a href=reg.php>Главная</a> </li>\n");
+    printf("<li class='tab'> <a href=reg.php>Регистрация нового игрока</a> </li>\n");
+	printf("<li class='tab'> <a href=find.php>Поиск игроков</a></li>\n");
+	printf("<li class='tab'> <a href=about.php>О нас</a></li>\n");
+	printf("</ul>\n");
+
+	printf("<div class='hr'></div>\n");
+
 
 	// TOP 10 TABLE 
-	printf("<div class='menu'>\n");
-	echo '<br>';
-	echo '<br>';
-	echo 'Десятка лучших игроков:<br>';
-	echo '<br>';
-	printf("\n");
+	printf("<div class='wrapper'>Десятка лучших игроков:</div>\n");
 	$result = mysql_query("SELECT wsUsers.User, tbChessRating.Rating FROM wsUsers 
                            INNER JOIN tbChessRating ON wsUsers.GUID = tbChessRating.PlayerID 
 						   WHERE tbChessRating.Available = 1
@@ -83,15 +73,12 @@
 		printf ("<tr> <td class=%s> %s </td> <td  class=%s> %s </td> <td  class=%s> %s </td> </tr>\n", $class,  $i, $class, $row[0], $class, $row[1]);  
 		$i++;
 	}
-    echo '</table>';
-    printf("</div\n");
+    printf("</table>\n");
 
 
 //	$num_rows = mysql_num_rows($result);
 //	echo "$num_rows Rows\n";
-
+	
+	ClosePage();
 ?> 
-
-</body>
-</html>
 
