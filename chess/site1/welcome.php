@@ -3,10 +3,10 @@
 <html>
  <head>
   <title>Главная страница</title>
+  <link rel="stylesheet" type="text/css" href="style/style.css" />
  </head>
 
   <meta http-equiv="content-type" content="text/html; charset=UTF-8">
-
  <body>
 
 
@@ -50,11 +50,14 @@
 	echo "<br><br>";
 
 	//MENU
+    printf("<div class='menu'>\n");
 	printf("<a href=reg.php>Регистрация нового игрока</a><br>\n");
 	printf("<a href=find.php>Поиск игроков</a><br>\n");
 	printf("<a href=about.php>О нас</a><br>\n");
+    printf("</div\n");
 
 	// TOP 10 TABLE 
+	printf("<div class='rating_table'>\n");
 	echo '<br>';
 	echo '<br>';
 	echo 'Десятка лучших игроков:<br>';
@@ -66,21 +69,23 @@
                            ORDER by tbChessRating.Rating DESC
 						   LIMIT 10") or die("Invalid query: " . mysql_error());
 
-	echo '<table border=2>';
+	echo '<table border=2 >';
     echo '<td> Место </td>  <td> Игрок </td> <td> Рейтинг </td>';  
 
 	$i = 1;
 	while ($row = mysql_fetch_array($result, MYSQL_NUM)) 
     {
 		if($_SESSION['authorized'] == true && $row[0] == $_SESSION['UserName'])
-			 $bgcolor = "red";
+			 $class = "table_red";
 		else
-			 $bgcolor = "white";
+			 $class = "table_black";
 
-		printf ("<tr bgcolor=%s> <td> %s </td> <td> %s </td> <td> %s </td> </tr>\n", $bgcolor,  $i, $row[0], $row[1]);  
+		printf ("<tr class=%s> <td> %s </td> <td> %s </td> <td> %s </td> </tr>\n", $class,  $i, $row[0], $row[1]);  
 		$i++;
 	}
     echo '</table>';
+    printf("</div\n");
+
 
 //	$num_rows = mysql_num_rows($result);
 //	echo "$num_rows Rows\n";
