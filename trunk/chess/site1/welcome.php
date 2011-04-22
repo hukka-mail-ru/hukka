@@ -57,7 +57,7 @@
     printf("</div\n");
 
 	// TOP 10 TABLE 
-	printf("<div class='rating_table'>\n");
+	printf("<div class='menu'>\n");
 	echo '<br>';
 	echo '<br>';
 	echo 'Десятка лучших игроков:<br>';
@@ -69,8 +69,8 @@
                            ORDER by tbChessRating.Rating DESC
 						   LIMIT 10") or die("Invalid query: " . mysql_error());
 
-	echo '<table border=2 >';
-    echo '<td> Место </td>  <td> Игрок </td> <td> Рейтинг </td>';  
+	printf("<table class='rating_table'>\n");
+    printf("<td> Место </td>  <td> Игрок </td> <td> Рейтинг </td>\n");  
 
 	$i = 1;
 	while ($row = mysql_fetch_array($result, MYSQL_NUM)) 
@@ -80,7 +80,7 @@
 		else
 			 $class = "table_black";
 
-		printf ("<tr class=%s> <td> %s </td> <td> %s </td> <td> %s </td> </tr>\n", $class,  $i, $row[0], $row[1]);  
+		printf ("<tr> <td class=%s> %s </td> <td  class=%s> %s </td> <td  class=%s> %s </td> </tr>\n", $class,  $i, $class, $row[0], $class, $row[1]);  
 		$i++;
 	}
     echo '</table>';
