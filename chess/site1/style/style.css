@@ -23,9 +23,6 @@
 	font-family: Verdana, Arial, Helvetica, sans-serif; 
 	margin: 0px;
 	padding: 0px;
-
-    border: 1px;
-	border-style: dotted;
 }
 
 .hr
@@ -35,9 +32,6 @@
 	background: #ccc;
 	margin: 0px;
 	padding: 0px;
-
-    border: 1px;
-	border-style: dotted;
 }
 
 .tab
@@ -59,8 +53,8 @@
 	font-size: 12; 
 	font-family: Verdana, Arial, Helvetica, sans-serif; 
 	list-style-type: none;
-	white-space: nowrap;
-
+	padding: 5px;
+	margin: 0px;
 }
 
 .rating_table 
