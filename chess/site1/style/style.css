@@ -6,13 +6,67 @@
 	padding-right: 20px; 
 	font-size: 12; 
 	font-family: Verdana, Arial, Helvetica, sans-serif; 
-	color: #333366;
+	color: white;
+}
+
+.header
+{
+	width: 500px; 
+	font-size: 16; 
+	font-family: Verdana, Arial, Helvetica, sans-serif; 
+}
+
+.wrapper
+{
+	width: 500px; 
+	font-size: 12; 
+	font-family: Verdana, Arial, Helvetica, sans-serif; 
+	margin: 0px;
+	padding: 0px;
+
+    border: 1px;
+	border-style: dotted;
+}
+
+.hr
+{
+	width: 500px;
+	height: 1px; 
+	background: #ccc;
+	margin: 0px;
+	padding: 0px;
+
+    border: 1px;
+	border-style: dotted;
+}
+
+.tab
+{
+	display:inline;
+	padding: 5px;
+}
+
+.tab_selected
+{
+	display:inline;
+	background: #ccc;
+	padding: 5px;
+	margin: 0px;
+}
+
+.tabs
+{
+	font-size: 12; 
+	font-family: Verdana, Arial, Helvetica, sans-serif; 
+	list-style-type: none;
+	white-space: nowrap;
+
 }
 
 .rating_table 
 { 
 	width: 200px; 
-	background: #ddd;
+	background: white;
 	padding: 5px;
 	padding-right: 20px; 
 	font-size: 12; 
@@ -29,21 +83,21 @@
 
 .table_red
 { 
-	background: #ddd;
+	background: white;
 	font-size: 11; 
 	font-family: Verdana, Arial, Helvetica, sans-serif; 
 	color: red;
 	border-width: 1px;
-	border-style: solid;
+	border-style: inset;
 }
 
 .table_black
 { 
-	background: #ddd;
+	background: white;
 	font-size: 11; 
 	font-family: Verdana, Arial, Helvetica, sans-serif; 
 	color: black;
 	border-width: 1px;
-	border-style: solid;
+	border-style: inset;
 
 }
