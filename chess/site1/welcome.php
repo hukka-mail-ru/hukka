@@ -1,7 +1,9 @@
 <?php
 	include 'defines.php';
 
-	OpenPage("Главная страница");
+	OpenPage("Main");
+	MainMenu("Main");
+
 	session_start();
 	
 
@@ -18,25 +20,10 @@
 	{
 		printf("<div class='header'>Добро пожаловать!</div>\n");
 
-		$_SESSION['returnToPage'] = "welcome.php";
+		$_SESSION["returnToPage"] = "Main";
 		printf("<div class='wrapper'> <a href=auth.php>Вход</a><br> </div>\n");
         printf("<div class='wrapper'> <a href=reg.php>Регистрация</a> </div>\n");
 	}
-
-
-//
-
-	//MENU
-	printf("<ul class='tabs'>\n");
-    printf("<li class='tab_selected'> <a href=reg.php>Главная</a> </li>\n");
-	printf("<li class='tab'> <a href=download.php>Скачать игру</a></li>\n");
-	printf("<li class='tab'> <a href=find.php>Поиск игроков</a></li>\n");
-	printf("<li class='tab'> <a href=rules.php>Правила игры</a></li>\n");
-	printf("<li class='tab'> <a href=rating.php>Рейтинг</a></li>\n");
-	printf("<li class='tab'> <a href=about.php>О нас</a></li>\n");
-	printf("</ul>\n");
-
-	printf("<div class='hr'></div>\n");
 
 
 	// TOP 10 TABLE 

@@ -1,23 +1,25 @@
-<html>
- <head>
-  <title>Авторизация</title>
- </head>
-
-  <meta http-equiv="content-type" content="text/html; charset=UTF-8">
-
- <body>
-
-<h2>Авторизация</h2>
-
-<form name="entrance" action="auth.php" method=post>
-Имя : <input type=text name=login>
-Пароль : <input type=text name=pwd>
-<input type=submit name=send value=Вход>
-</form>
 
 <?php
 	session_start();
 	include 'defines.php';
+
+	for ($i = 0; $i <= count($Pages); $i++) 
+	{
+		if($Pages[$i]["ID"] == $_SESSION["returnToPage"])
+		{
+			$returnToPageLink = $Pages[$i]["Link"];
+		}
+	}
+
+	OpenPage("Authorization");
+	MainMenu($_SESSION["returnToPage"]);
+
+
+	echo '<form name="entrance" action="auth.php" method=post>';
+	echo 'Имя : <input type=text name=login>';
+	echo 'Пароль : <input type=text name=pwd>';
+	echo '<input type=submit name=send value=Вход>';
+	echo '</form>';
 
 
 	if (isset($_POST['login']))
@@ -63,7 +65,7 @@
 			$_SESSION['authorized'] = true;
 			$_SESSION['UserID'] = $row[0];
 			$_SESSION['UserName'] = $row[1];
-			header('Location: ' . $_SESSION['returnToPage'] );
+			header('Location: ' . $returnToPageLink );
 			exit;
 		}
 	}	
