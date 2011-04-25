@@ -63,10 +63,7 @@
 		}
 	}	
 
- 
+ 	ClosePage();
 ?>
 
 
-
-</body>
-</html>
