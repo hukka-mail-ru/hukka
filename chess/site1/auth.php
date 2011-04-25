@@ -3,7 +3,7 @@
 	session_start();
 	include 'defines.php';
 
-	OpenPage("Authorization");
+	OpenPage("Auth");
 	MainMenu($_SESSION["returnToPage"]);
 
 
@@ -52,12 +52,13 @@
 			echo "Неправильный пароль!";
 		}
 		else
-		{ 				
+		{ 			
+
 			$row = mysql_fetch_array($result_pwd, MYSQL_NUM);
 			$_SESSION['authorized'] = true;
 			$_SESSION['UserID'] = $row[0];
 			$_SESSION['UserName'] = $row[1];
-			header('Location: ' . GetPageLink($_SESSION["returnToPage"]) );
+			header('Location: ' . $Pages[$_SESSION["returnToPage"]]["Link"] );
 			exit;
 		}
 	}	
