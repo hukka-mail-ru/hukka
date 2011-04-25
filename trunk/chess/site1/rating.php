@@ -37,6 +37,7 @@
 	}
 	else
 	{
+		$_SESSION['returnToPage'] = "rating.php";
 		printf("<div class='wrapper'> Для просмотра Вашего рейтинга необходимо <a href=auth.php>войти в систему</a>.  </div>\n");
 	}
 
