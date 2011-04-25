@@ -10,62 +10,41 @@
 
 
 	$Pages = array (
-	  array ("ID" => "Main",     "Name" => "Главная страница", "Menu" => true,  "Link" => "welcome.php" ),
-	  array ("ID" => "Download", "Name" => "Скачать игру",	   "Menu" => true, "Link" => "download.php"),
-	  array ("ID" => "Find",     "Name" => "Поиск игроков",	   "Menu" => true, "Link" => "find.php"),
-	  array ("ID" => "Rules",    "Name" => "Правила игры",	   "Menu" => true, "Link" => "rules.php"),
-	  array ("ID" => "Rating",   "Name" => "Рейтинг",	       "Menu" => true, "Link" => "rating.php"),
-	  array ("ID" => "About",    "Name" => "О нас",	           "Menu" => true, "Link" => "about.php"),
-	  array ("ID" => "Authorization", "Name" => "Авторизация", "Menu" => false, "Link" => "authorization.php")
+	  "Main"     => array ("Name" => "Главная страница",   "Menu" => true,  "Link" => "welcome.php" ),
+	  "Download" => array ("Name" => "Скачать игру",	   "Menu" => true,  "Link" => "download.php"),
+	  "Find"     => array ("Name" => "Поиск игроков",	   "Menu" => true,  "Link" => "find.php"),
+	  "Rules"    => array ("Name" => "Правила игры",	   "Menu" => true,  "Link" => "rules.php"),
+	  "Rating"   => array ("Name" => "Рейтинг",	           "Menu" => true,  "Link" => "rating.php"),
+	  "About"    => array ("Name" => "О нас",	           "Menu" => true,  "Link" => "about.php"),
+	  "Auth"     => array ("Name" => "Авторизация",        "Menu" => false, "Link" => "authorization.php")
 	  ); 
 
-	function GetPageLink($pageID)
-	{	
-		global $Pages;
-
-		for ($i = 0; $i <= count($Pages); $i++) 
-		{
-			if($Pages[$i]["ID"] == $_SESSION["returnToPage"])
-			{
-				return $Pages[$i]["Link"];
-			}
-		}
-	}
 
 	function OpenPage($pageID)
 	{
 		global $Pages;
 
-		for ($i = 0; $i < count($Pages); $i++) 
-		{
-			if($Pages[$i]["ID"] == $pageID)
-			{
-    			$name = $Pages[$i]["Name"];
-			}
-		}
-
 		printf("<html>\n");
 		printf("<head>\n");
-		printf("<title>%s</title>\n", $name);
+		printf("<title>%s</title>\n", $Pages[$pageID]["Name"]);
 		printf("<link rel='stylesheet' type='text/css' href='style/style.css' />\n");
 		printf("</head>\n");
 		printf("<meta http-equiv='content-type' content='text/html; charset=UTF-8'>\n");
 		printf("<body class='wrapper'>\n");
 	} 
 
-	function MainMenu($selected)
+	function MainMenu($selectedPageID)
 	{
 
 		global $Pages;
 
 		printf("<ul class='tabs'>\n");
-
-		for ($i = 0; $i < count($Pages); $i++) 
+		foreach ($Pages as &$page)
 		{
-			if($Pages[$i]["Menu"])
+			if($page["Menu"])
 			{
-				$class = ($Pages[$i]["ID"] == $selected) ? 'tab_selected' : 'tab';
-	    		printf("<li class=%s> <a href=%s>%s</a> </li>\n", $class, $Pages[$i]["Link"], $Pages[$i]["Name"]);
+				$class = ($page == $Pages[$selectedPageID]) ? 'tab_selected' : 'tab';
+	    		printf("<li class=%s> <a href=%s>%s</a> </li>\n", $class, $page["Link"], $page["Name"]);
 			}
 		}
 		printf("</ul>\n");
