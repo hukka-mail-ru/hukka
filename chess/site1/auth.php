@@ -3,14 +3,6 @@
 	session_start();
 	include 'defines.php';
 
-	for ($i = 0; $i <= count($Pages); $i++) 
-	{
-		if($Pages[$i]["ID"] == $_SESSION["returnToPage"])
-		{
-			$returnToPageLink = $Pages[$i]["Link"];
-		}
-	}
-
 	OpenPage("Authorization");
 	MainMenu($_SESSION["returnToPage"]);
 
@@ -65,7 +57,7 @@
 			$_SESSION['authorized'] = true;
 			$_SESSION['UserID'] = $row[0];
 			$_SESSION['UserName'] = $row[1];
-			header('Location: ' . $returnToPageLink );
+			header('Location: ' . GetPageLink($_SESSION["returnToPage"]) );
 			exit;
 		}
 	}	
