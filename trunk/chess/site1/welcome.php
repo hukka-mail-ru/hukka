@@ -18,33 +18,19 @@
 	{
 		printf("<div class='header'>Добро пожаловать!</div>\n");
 		printf("<div class='wrapper'> <a href=auth.php>Вход</a><br> </div>\n");
+        printf("<div class='wrapper'> <a href=reg.php>Регистрация</a> </div>\n");
 	}
 
-
-	// USER RATING
-	if($_SESSION['authorized'] == true)
-	{
-		$result = mysql_query("SELECT Rating, Available FROM tbChessRating 
-							   WHERE PlayerID = " . $_SESSION['UserID']) or die("Invalid query: " . mysql_error());
-		
-		$row = mysql_fetch_array($result, MYSQL_ASSOC);
-		if($row['Available'] == 0)
-		{
-			printf("<div class='wrapper'> Ваш рейтинг пока еще не доступен. <a href=enable_rating.php>Как его включить?</a><br> </div>\n");
-		}
-		else
-		{
-			printf("<div class='wrapper'> Ваш рейтинг: %s</a><br> </div>\n", $row['Rating']);
-		}
-	}
 
 //
 
 	//MENU
 	printf("<ul class='tabs'>\n");
     printf("<li class='tab_selected'> <a href=reg.php>Главная</a> </li>\n");
-    printf("<li class='tab'> <a href=reg.php>Регистрация нового игрока</a> </li>\n");
+	printf("<li class='tab'> <a href=download.php>Скачать игру</a></li>\n");
 	printf("<li class='tab'> <a href=find.php>Поиск игроков</a></li>\n");
+	printf("<li class='tab'> <a href=rules.php>Правила игры</a></li>\n");
+	printf("<li class='tab'> <a href=rating.php>Рейтинг</a></li>\n");
 	printf("<li class='tab'> <a href=about.php>О нас</a></li>\n");
 	printf("</ul>\n");
 
