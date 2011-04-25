@@ -17,6 +17,8 @@
 	else
 	{
 		printf("<div class='header'>Добро пожаловать!</div>\n");
+
+		$_SESSION['returnToPage'] = "welcome.php";
 		printf("<div class='wrapper'> <a href=auth.php>Вход</a><br> </div>\n");
         printf("<div class='wrapper'> <a href=reg.php>Регистрация</a> </div>\n");
 	}

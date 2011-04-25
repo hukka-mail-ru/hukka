@@ -63,7 +63,7 @@
 			$_SESSION['authorized'] = true;
 			$_SESSION['UserID'] = $row[0];
 			$_SESSION['UserName'] = $row[1];
-			header('Location: welcome.php');
+			header('Location: ' . $_SESSION['returnToPage'] );
 			exit;
 		}
 	}	
