@@ -19,6 +19,18 @@
 	  array ("ID" => "Authorization", "Name" => "Авторизация", "Menu" => false, "Link" => "authorization.php")
 	  ); 
 
+	function GetPageLink($pageID)
+	{	
+		global $Pages;
+
+		for ($i = 0; $i <= count($Pages); $i++) 
+		{
+			if($Pages[$i]["ID"] == $_SESSION["returnToPage"])
+			{
+				return $Pages[$i]["Link"];
+			}
+		}
+	}
 
 	function OpenPage($pageID)
 	{
