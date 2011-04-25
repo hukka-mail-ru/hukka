@@ -1,24 +1,19 @@
-<html>
- <head>
-  <title>Поиск</title>
- </head>
-
-  <meta http-equiv="content-type" content="text/html; charset=UTF-8">
-
- <body>
-
-<h2>Поиск</h2>
-
-
-<form name="find" action="find.php" method=post>
-Рейтинг от : <input type=number name=rating_min>
-до : <input type=number name=rating_max>
-<input type=submit name=send value=Искать>
-</form>
-
 
 <?php
 	include 'defines.php';
+
+	OpenPage("Find");
+	MainMenu("Find");
+
+	printf ("<h2>Поиск</h2>");
+
+
+	printf ("<form name='find' action='find.php' method=post>");
+	printf ("Рейтинг от : <input type=number name=rating_min>");
+	printf ("до : <input type=number name=rating_max>");
+	printf ("<input type=submit name=send value=Искать>");
+	printf ("</form>");
+
 
 	if (isset($_POST['rating_min']))
 	{
@@ -57,8 +52,6 @@
 	}
     echo '</table>';
 
-
+	ClosePage();
 ?>
 
-</body>
-</html>

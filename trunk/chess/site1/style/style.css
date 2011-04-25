@@ -1,13 +1,13 @@
 .header
 {
-	width: 500px; 
+	width: 700px; 
 	font-size: 16; 
 	font-family: Verdana, Arial, Helvetica, sans-serif; 
 }
 
 .wrapper
 {
-	width: 500px; 
+	width: 700px; 
 	font-size: 12; 
 	font-family: Verdana, Arial, Helvetica, sans-serif; 
 	margin: 0px;
@@ -16,7 +16,7 @@
 
 .hr
 {
-	width: 500px;
+	width:700px;
 	height: 1px; 
 	background: #ccc;
 	margin: 0px;

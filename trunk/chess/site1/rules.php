@@ -1,7 +1,8 @@
 <?php
 	include 'defines.php';
 
-	OpenPage("Правила игры");
+	OpenPage("Rules");
+	MainMenu("Rules");
 
 	printf("<div class='header'>Правила игры</div>\n");
 

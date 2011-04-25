@@ -1,7 +1,9 @@
 <?php
 	include 'defines.php';
 
-	OpenPage("Рейтинг");
+	OpenPage("Rating");
+	MainMenu("Rating");
+
 	session_start();
 
 	printf("<div class='header'>Рейтинг</div>\n");
@@ -37,7 +39,7 @@
 	}
 	else
 	{
-		$_SESSION['returnToPage'] = "rating.php";
+		$_SESSION['returnToPage'] = "Rating";
 		printf("<div class='wrapper'> Для просмотра Вашего рейтинга необходимо <a href=auth.php>войти в систему</a>.  </div>\n");
 	}
 
