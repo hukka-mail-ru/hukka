@@ -4,13 +4,9 @@
 <context>
     <name></name>
     <message>
-        <source>OK</source>
-        <translation type="obsolete">ОК</translation>
-    </message>
-    <message>
         <location filename="../src/Base/Defines.h" line="100"/>
         <source>all</source>
-        <translation type="unfinished"></translation>
+        <translation>всех</translation>
     </message>
 </context>
 <context>
@@ -33,11 +29,7 @@
     <message>
         <location filename="../src/Dialogs/AuthorizationDialog.cpp" line="43"/>
         <source>Register the new user</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Register new user</source>
-        <translation type="obsolete">Создать нового пользователя</translation>
+        <translation>Создать нового пользователя</translation>
     </message>
     <message>
         <location filename="../src/Dialogs/AuthorizationDialog.cpp" line="46"/>
@@ -51,33 +43,26 @@
     </message>
 </context>
 <context>
-    <name>Chat</name>
-    <message>
-        <source>Game chat</source>
-        <translation type="obsolete">Чат игры</translation>
-    </message>
-</context>
-<context>
     <name>ChatMessageDialog</name>
     <message>
         <location filename="../src/Dialogs/ChatMessageDialog.cpp" line="13"/>
         <source>Send Message</source>
-        <translation type="unfinished">Послать сообщение</translation>
+        <translation>Послать сообщение</translation>
     </message>
     <message>
         <location filename="../src/Dialogs/ChatMessageDialog.cpp" line="16"/>
         <source>A chat message to </source>
-        <translation type="unfinished"></translation>
+        <translation>Сообщение для</translation>
     </message>
     <message>
         <location filename="../src/Dialogs/ChatMessageDialog.cpp" line="17"/>
         <source>A chat message:</source>
-        <translation type="unfinished"></translation>
+        <translation>Сообщение:</translation>
     </message>
     <message>
         <location filename="../src/Dialogs/ChatMessageDialog.cpp" line="21"/>
         <source>OK</source>
-        <translation type="unfinished">ОК</translation>
+        <translation>ОК</translation>
     </message>
 </context>
 <context>
@@ -161,7 +146,7 @@
     <message>
         <location filename="../src/Network/Client.cpp" line="435"/>
         <source>Can&apos;t get opponent. Table with ID </source>
-        <translation type="unfinished"></translation>
+        <translation>Невозможно получить ID оппонента. ID стола </translation>
     </message>
     <message>
         <location filename="../src/Network/Client.cpp" line="466"/>
@@ -171,7 +156,7 @@
     <message>
         <location filename="../src/Network/Client.cpp" line="489"/>
         <source>Can&apos;t disagree to start game. Table ID </source>
-        <translation type="unfinished"></translation>
+        <translation>Невозможно дать отказ на начало игры. ID стола </translation>
     </message>
     <message>
         <location filename="../src/Network/Client.cpp" line="515"/>
@@ -182,31 +167,27 @@
     <message>
         <location filename="../src/Network/Client.cpp" line="660"/>
         <source>Can&apos;t get last game result </source>
-        <translation type="unfinished"></translation>
+        <translation>Невозможно получить результат последней игры</translation>
     </message>
     <message>
         <location filename="../src/Network/Client.cpp" line="767"/>
         <source>Can&apos;t leave chat </source>
-        <translation type="unfinished"></translation>
+        <translation>Невозможно покинуть чат</translation>
     </message>
     <message>
         <location filename="../src/Network/Client.cpp" line="945"/>
         <source>The user is already online.</source>
-        <translation type="unfinished"></translation>
+        <translation>Такой пользователь уже зашел на сервер</translation>
     </message>
     <message>
         <location filename="../src/Network/Client.cpp" line="1301"/>
         <source>Game over.</source>
-        <translation type="unfinished"></translation>
+        <translation>Игра окончена</translation>
     </message>
     <message>
         <location filename="../src/Network/Client.cpp" line="1322"/>
         <source>Your opponent has rejected the draw</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Can&apos;t get getPlayerID on server: </source>
-        <translation type="obsolete">Невозможно получить ID игрока на сервере: </translation>
+        <translation>Ваш оппонент </translation>
     </message>
     <message>
         <location filename="../src/Network/Client.cpp" line="586"/>
@@ -218,21 +199,17 @@
     <message>
         <location filename="../src/Network/Client.cpp" line="605"/>
         <source>Can&apos;t say TIMEOUT. Table ID </source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Can&apos;t get time. Table ID </source>
-        <translation type="obsolete">Невозможно получить время. ID стола </translation>
+        <translation>Невозможно послать сигнал TIMEOUT. ID стола </translation>
     </message>
     <message>
         <location filename="../src/Network/Client.cpp" line="643"/>
         <source>Can&apos;t get my rating </source>
-        <translation type="unfinished"></translation>
+        <translation>Невозможно получить мой рейтинг</translation>
     </message>
     <message>
         <location filename="../src/Network/Client.cpp" line="677"/>
         <source>Can&apos;t delete last game result </source>
-        <translation type="unfinished"></translation>
+        <translation>Невозможно стереть результат последней игры</translation>
     </message>
     <message>
         <location filename="../src/Network/Client.cpp" line="750"/>
@@ -240,45 +217,19 @@
         <translation>Невозможно присоединиться к чату. ID стола </translation>
     </message>
     <message>
-        <source>Can&apos;t leave chat. Table ID </source>
-        <translation type="obsolete">Невозможно отсоединиться от чата. ID стола </translation>
-    </message>
-    <message>
         <location filename="../src/Network/Client.cpp" line="785"/>
         <source>Can&apos;t send table chat message. Table ID </source>
         <translation>Невозможно послать сообщение чата игрового стола. ID стола </translation>
     </message>
     <message>
-        <source>Can&apos;t join chat on server: </source>
-        <translation type="obsolete">Невозможно присоединиться к чату на сервере: </translation>
-    </message>
-    <message>
-        <source>Can&apos;t leave chat on server: </source>
-        <translation type="obsolete">Невозможно отсоединиться от чата на сервере: </translation>
-    </message>
-    <message>
-        <source>Can&apos;t send common chat message on server: </source>
-        <translation type="obsolete">Невозможно послать сообщение общего чата на сервере: </translation>
-    </message>
-    <message>
         <location filename="../src/Network/Client.cpp" line="1269"/>
         <source>Can&apos;t join to the game table.</source>
-        <translation type="unfinished"></translation>
+        <translation>Невозможно присоединиться к игровому столу</translation>
     </message>
     <message>
         <location filename="../src/Network/Client.cpp" line="1286"/>
         <source>Can&apos;t reject the game.</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Game over. 
-The rating is not affected because of too few number of moves.</source>
-        <translation type="obsolete">Игра окончена. 
-Ваш рейтинг не изменился, т.к. в партии было сделано слишком мало ходов.</translation>
-    </message>
-    <message>
-        <source>Connection has been lost.</source>
-        <translation type="obsolete">Соединение разорвано.</translation>
+        <translation>Невозможно отказаться от игры</translation>
     </message>
     <message>
         <location filename="../src/Network/Client.cpp" line="834"/>
@@ -289,10 +240,6 @@ The rating is not affected because of too few number of moves.</source>
         <location filename="../src/Network/Client.cpp" line="922"/>
         <source>Logic error</source>
         <translation>Ошибка логики</translation>
-    </message>
-    <message>
-        <source>User is already online.</source>
-        <translation type="obsolete">Пользователь с таким именем уже зашел на сервер.</translation>
     </message>
     <message>
         <location filename="../src/Network/Client.cpp" line="946"/>
@@ -316,7 +263,7 @@ The rating is not affected because of too few number of moves.</source>
     <message>
         <location filename="../src/Network/Client.cpp" line="958"/>
         <source>SRV Error: </source>
-        <translation type="unfinished"></translation>
+        <translation>Ошибка SRV: </translation>
     </message>
     <message>
         <location filename="../src/Network/Client.cpp" line="975"/>
@@ -336,7 +283,7 @@ The rating is not affected because of too few number of moves.</source>
     <message>
         <location filename="../src/Network/Client.cpp" line="988"/>
         <source>REG Error: </source>
-        <translation type="unfinished"></translation>
+        <translation>Ошибка REG: </translation>
     </message>
     <message>
         <location filename="../src/Network/Client.cpp" line="1013"/>
@@ -352,38 +299,14 @@ The rating is not affected because of too few number of moves.</source>
         <translation>Внутренняя ошибка сервера</translation>
     </message>
     <message>
-        <source>Invalid parameter. Attempt to delete wrong Game Table?</source>
-        <translation type="obsolete">Неправильный параметр. Попытка удалить неправильный игровой стол?</translation>
-    </message>
-    <message>
         <location filename="../src/Network/Client.cpp" line="1153"/>
         <source>TBM Error: </source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Can&apos;t join to the game table</source>
-        <translation type="obsolete">Невозможно присоединиться к игровому столу</translation>
-    </message>
-    <message>
-        <source>Victory!</source>
-        <translation type="obsolete">Победа!</translation>
-    </message>
-    <message>
-        <source>You have lost!</source>
-        <translation type="obsolete">Вы проиграли!</translation>
-    </message>
-    <message>
-        <source>Time&apos;s up. You have lost!</source>
-        <translation type="obsolete">Время вышло. Вы проиграли!</translation>
+        <translation>Ошибка TBM: </translation>
     </message>
     <message>
         <location filename="../src/Network/Client.cpp" line="1321"/>
         <source>A draw.</source>
         <translation>Ничья.</translation>
-    </message>
-    <message>
-        <source>Your opponent rejected the draw</source>
-        <translation type="obsolete">Ваш противник не согласен на ничью</translation>
     </message>
     <message>
         <location filename="../src/Network/Client.cpp" line="1323"/>
@@ -393,12 +316,12 @@ The rating is not affected because of too few number of moves.</source>
     <message>
         <location filename="../src/Network/Client.cpp" line="1398"/>
         <source>CHS Error: </source>
-        <translation type="unfinished"></translation>
+        <translation>Ошибка CHS: </translation>
     </message>
     <message>
         <location filename="../src/Network/Client.cpp" line="1428"/>
         <source>CHAT Error: </source>
-        <translation type="unfinished"></translation>
+        <translation>Ошибка CHAT: </translation>
     </message>
     <message>
         <location filename="../src/Network/Client.cpp" line="1481"/>
@@ -443,12 +366,6 @@ The rating is not affected because of too few number of moves.</source>
         <source>Exit</source>
         <translation>Выход</translation>
     </message>
-    <message>
-        <source>You have an unfinished game. 
-Please finish it first, then create a new game.</source>
-        <translation type="obsolete">Предыдущая игра не была завершена. 
-Сначала завершите ее, а потом создайте новую игру.</translation>
-    </message>
 </context>
 <context>
     <name>FindGameDialog</name>
@@ -488,17 +405,17 @@ Please finish it first, then create a new game.</source>
     <message>
         <location filename="../src/Dialogs/GameDialog.cpp" line="13"/>
         <source>Game over!</source>
-        <translation type="unfinished"></translation>
+        <translation>Игра окончена!</translation>
     </message>
     <message>
         <location filename="../src/Dialogs/GameDialog.cpp" line="16"/>
         <source>Return to main menu</source>
-        <translation type="unfinished"></translation>
+        <translation>Возврат в главное меню</translation>
     </message>
     <message>
         <location filename="../src/Dialogs/GameDialog.cpp" line="22"/>
         <source>Game menu:</source>
-        <translation type="unfinished"></translation>
+        <translation>Меню игры:</translation>
     </message>
     <message>
         <location filename="../src/Dialogs/GameDialog.cpp" line="25"/>
@@ -529,30 +446,14 @@ Please finish it first, then create a new game.</source>
 <context>
     <name>GameScene</name>
     <message>
-        <source>Move: </source>
-        <translation type="obsolete">Ход: </translation>
-    </message>
-    <message>
-        <source>Game: </source>
-        <translation type="obsolete">Игра: </translation>
-    </message>
-    <message>
         <location filename="../src/UI/GameScene.cpp" line="52"/>
         <source>Game menu</source>
-        <translation type="unfinished">Меню игры</translation>
+        <translation>Меню игры</translation>
     </message>
     <message>
         <location filename="../src/UI/GameScene.cpp" line="69"/>
         <source>Invalid move.</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Your move</source>
-        <translation type="obsolete">Ваш ход</translation>
-    </message>
-    <message>
-        <source>Opponent&apos;s move</source>
-        <translation type="obsolete">Ход противника</translation>
+        <translation>Неправильный ход</translation>
     </message>
 </context>
 <context>
@@ -595,7 +496,7 @@ Please finish it first, then create a new game.</source>
     <message>
         <location filename="../src/Dialogs/JoinGameDialog.cpp" line="89"/>
         <source>N/A</source>
-        <translation type="unfinished"></translation>
+        <translation>НЕТ</translation>
     </message>
 </context>
 <context>
@@ -623,16 +524,12 @@ Please finish it first, then create a new game.</source>
     <message>
         <location filename="../src/UI/MainMenu.cpp" line="295"/>
         <source>The last game has been finished.</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>A draw.</source>
-        <translation type="obsolete">Ничья.</translation>
+        <translation>Предыдущая игра была завершена</translation>
     </message>
     <message>
         <location filename="../src/UI/MainMenu.cpp" line="326"/>
         <source>You have an unfinished game. Please finish it.</source>
-        <translation type="unfinished"></translation>
+        <translation>Пожалуйста завершите предыдущую игру.</translation>
     </message>
 </context>
 <context>
@@ -642,98 +539,71 @@ Please finish it first, then create a new game.</source>
         <source>Chess</source>
         <translation>Шахматы</translation>
     </message>
-    <message>
-        <source>Your opponent has offered a draw. Agree?</source>
-        <translation type="obsolete">Ваш противник предлагает ничью. Согласны?</translation>
-    </message>
-    <message>
-        <source>Error</source>
-        <translation type="obsolete">Ошибка</translation>
-    </message>
-    <message>
-        <source>OK</source>
-        <translation type="obsolete">ОК</translation>
-    </message>
-    <message>
-        <source>Message</source>
-        <translation type="obsolete">Сообщение</translation>
-    </message>
-    <message>
-        <source>Question</source>
-        <translation type="obsolete">Вопрос</translation>
-    </message>
-</context>
-<context>
-    <name>MoveBox</name>
-    <message>
-        <source>Rating</source>
-        <translation type="obsolete">Рейтинг</translation>
-    </message>
 </context>
 <context>
     <name>MyMessageBox</name>
     <message>
         <location filename="../src/Base/MyMessageBox.cpp" line="28"/>
         <source>OK</source>
-        <translation type="unfinished">ОК</translation>
+        <translation>ОК</translation>
     </message>
     <message>
         <location filename="../src/Base/MyMessageBox.cpp" line="34"/>
         <source>Yes</source>
-        <translation type="unfinished"></translation>
+        <translation>Да</translation>
     </message>
     <message>
         <location filename="../src/Base/MyMessageBox.cpp" line="35"/>
         <source>No</source>
-        <translation type="unfinished"></translation>
+        <translation>Нет</translation>
     </message>
 </context>
 <context>
     <name>OptionsDialog</name>
     <message>
-        <location filename="../src/Dialogs/OptionsDialog.cpp" line="20"/>
+        <location filename="../src/Dialogs/OptionsDialog.cpp" line="19"/>
         <source>Options</source>
         <translation>Настройки</translation>
     </message>
     <message>
-        <location filename="../src/Dialogs/OptionsDialog.cpp" line="26"/>
+        <location filename="../src/Dialogs/OptionsDialog.cpp" line="25"/>
         <source>Server</source>
         <translation>Сервер</translation>
     </message>
     <message>
-        <location filename="../src/Dialogs/OptionsDialog.cpp" line="27"/>
+        <location filename="../src/Dialogs/OptionsDialog.cpp" line="26"/>
         <source>Port</source>
         <translation>Порт</translation>
     </message>
     <message>
-        <location filename="../src/Dialogs/OptionsDialog.cpp" line="28"/>
+        <location filename="../src/Dialogs/OptionsDialog.cpp" line="27"/>
         <source>Language</source>
         <translation>Язык</translation>
     </message>
     <message>
-        <location filename="../src/Dialogs/OptionsDialog.cpp" line="34"/>
+        <location filename="../src/Dialogs/OptionsDialog.cpp" line="33"/>
         <source>English</source>
         <translation>Английский</translation>
     </message>
     <message>
-        <location filename="../src/Dialogs/OptionsDialog.cpp" line="35"/>
+        <location filename="../src/Dialogs/OptionsDialog.cpp" line="34"/>
         <source>Russian</source>
         <translation>Русский</translation>
     </message>
     <message>
-        <location filename="../src/Dialogs/OptionsDialog.cpp" line="53"/>
+        <location filename="../src/Dialogs/OptionsDialog.cpp" line="50"/>
         <source>OK</source>
         <translation>ОК</translation>
     </message>
     <message>
-        <location filename="../src/Dialogs/OptionsDialog.cpp" line="54"/>
+        <location filename="../src/Dialogs/OptionsDialog.cpp" line="51"/>
         <source>Exit</source>
         <translation>Выход</translation>
     </message>
     <message>
-        <location filename="../src/Dialogs/OptionsDialog.cpp" line="88"/>
-        <source>Please restart the game to apply the language settings</source>
-        <translation>Пожалуйста перезапустите игру, чтобы настройки языка вступили в силу</translation>
+        <location filename="../src/Dialogs/OptionsDialog.cpp" line="77"/>
+        <source>Please restart the game to apply the settings</source>
+        <translation>Пожалуйста перезапустите игру, чтобы настройки вступили в силу</translation>
     </message>
 </context>
 <context>
@@ -741,7 +611,7 @@ Please finish it first, then create a new game.</source>
     <message>
         <location filename="../src/Dialogs/PromotionDialog.cpp" line="45"/>
         <source>Please choose the promotion:</source>
-        <translation type="unfinished"></translation>
+        <translation>Выберите фигуру:</translation>
     </message>
 </context>
 <context>
@@ -749,132 +619,92 @@ Please finish it first, then create a new game.</source>
     <message>
         <location filename="../src/Base/MoveBox.cpp" line="12"/>
         <source>Move: </source>
-        <translation type="unfinished">Ход: </translation>
+        <translation>Ход: </translation>
     </message>
     <message>
         <location filename="../src/Base/MoveBox.cpp" line="13"/>
         <source>Game: </source>
-        <translation type="unfinished">Игра: </translation>
+        <translation>Игра: </translation>
     </message>
     <message>
         <location filename="../src/Base/MoveBox.cpp" line="61"/>
         <source>White</source>
-        <translation type="unfinished"></translation>
+        <translation>Белые</translation>
     </message>
     <message>
         <location filename="../src/Base/MoveBox.cpp" line="61"/>
         <source>Black</source>
-        <translation type="unfinished"></translation>
+        <translation>Черные</translation>
     </message>
     <message>
         <location filename="../src/Base/MoveBox.cpp" line="64"/>
         <source>N/A</source>
-        <translation type="unfinished"></translation>
+        <translation>НЕТ</translation>
     </message>
     <message>
         <location filename="../src/Base/MoveBox.cpp" line="65"/>
         <source>Rating</source>
-        <translation type="unfinished">Рейтинг</translation>
+        <translation>Рейтинг</translation>
     </message>
     <message>
         <location filename="../src/Base/Defines.h" line="146"/>
         <source>offline</source>
-        <translation type="unfinished"></translation>
+        <translation>оффлайн</translation>
     </message>
     <message>
         <location filename="../src/Base/Defines.h" line="229"/>
         <source>Your rating has been increased to</source>
-        <translation type="unfinished"></translation>
+        <translation>Ваш рейтинг повышен до</translation>
     </message>
     <message>
         <location filename="../src/Base/Defines.h" line="230"/>
         <source>Your rating has been decreased to</source>
-        <translation type="unfinished"></translation>
+        <translation>Ваш рейтинг понижен до</translation>
     </message>
     <message>
         <location filename="../src/Base/Defines.h" line="231"/>
         <source>Your rating has been slightly increased.</source>
-        <translation type="unfinished"></translation>
+        <translation>Ваш рейтинг немного повышен</translation>
     </message>
     <message>
         <location filename="../src/Base/Defines.h" line="232"/>
         <source>Your rating hasn&apos;t been affected because of too few number of moves.</source>
-        <translation type="unfinished"></translation>
+        <translation>Ваш рейтинг не изменился, т.к. в партии было сделано слишком мало ходов.</translation>
     </message>
     <message>
         <location filename="../src/Base/Defines.h" line="233"/>
         <source>Your rating is not available.
 Please visit www.site.com to learn how to enable it.</source>
-        <translation type="unfinished"></translation>
+        <translation>Ваш рейтинг не включен. Вы можете включить его на сайте www.site.com</translation>
     </message>
     <message>
         <location filename="../src/Base/Defines.h" line="237"/>
         <source>You have won!</source>
-        <translation type="unfinished"></translation>
+        <translation>Вы победили!</translation>
     </message>
     <message>
         <location filename="../src/Base/Defines.h" line="242"/>
         <source>Time&apos;s up. You have won!</source>
-        <translation type="unfinished"></translation>
+        <translation>Время вышло. Вы победили!</translation>
     </message>
     <message>
         <location filename="../src/Base/Defines.h" line="247"/>
         <source>You have lost!</source>
-        <translation type="unfinished">Вы проиграли!</translation>
+        <translation>Вы проиграли!</translation>
     </message>
     <message>
         <location filename="../src/Base/Defines.h" line="252"/>
         <source>Time&apos;s up. You have lost!</source>
-        <translation type="unfinished">Время вышло. Вы проиграли!</translation>
+        <translation>Время вышло. Вы проиграли!</translation>
     </message>
     <message>
         <location filename="../src/Base/Defines.h" line="257"/>
         <source>A draw.</source>
-        <translation type="unfinished">Ничья.</translation>
-    </message>
-</context>
-<context>
-    <name>Scene</name>
-    <message>
-        <source>Move: </source>
-        <translation type="obsolete">Ход: </translation>
-    </message>
-    <message>
-        <source>Game: </source>
-        <translation type="obsolete">Игра: </translation>
-    </message>
-    <message>
-        <source>Game menu</source>
-        <translation type="obsolete">Меню игры</translation>
-    </message>
-    <message>
-        <source>Your move</source>
-        <translation type="obsolete">Ваш ход</translation>
-    </message>
-    <message>
-        <source>Opponent&apos;s move</source>
-        <translation type="obsolete">Ход противника</translation>
-    </message>
-</context>
-<context>
-    <name>SendMessageDialog</name>
-    <message>
-        <source>Send Message</source>
-        <translation type="obsolete">Послать сообщение</translation>
-    </message>
-    <message>
-        <source>OK</source>
-        <translation type="obsolete">ОК</translation>
+        <translation>Ничья.</translation>
     </message>
 </context>
 <context>
     <name>UI</name>
-    <message>
-        <source>You have an unfinished game. 
-Please finish it first, then create a new game.</source>
-        <translation type="obsolete">Предыдущая игра не была завершена. 
-Сначала завершите ее, а потом создайте новую игру.</translation>
-    </message>
     <message>
         <location filename="../src/UI/UI.cpp" line="98"/>
         <source>Your opponent has offered a draw. Agree?</source>
@@ -884,17 +714,9 @@ Please finish it first, then create a new game.</source>
 <context>
     <name>WaitAgreeDialog</name>
     <message>
-        <source>Wait</source>
-        <translation type="obsolete">Ожидание</translation>
-    </message>
-    <message>
-        <source>Wait for start...</source>
-        <translation type="obsolete">Ждите начала игры...</translation>
-    </message>
-    <message>
         <location filename="../src/Dialogs/WaitAgreeDialog.cpp" line="8"/>
         <source>Please wait for start of the game...</source>
-        <translation type="unfinished"></translation>
+        <translation>Пожалуйста подождите начала игры...</translation>
     </message>
     <message>
         <location filename="../src/Dialogs/WaitAgreeDialog.cpp" line="9"/>
@@ -905,17 +727,9 @@ Please finish it first, then create a new game.</source>
 <context>
     <name>WaitDrawDialog</name>
     <message>
-        <source>Wait</source>
-        <translation type="obsolete">Ожидание</translation>
-    </message>
-    <message>
-        <source>Wait for opponent response...</source>
-        <translation type="obsolete">Ждите ответа противника...</translation>
-    </message>
-    <message>
         <location filename="../src/Dialogs/WaitDrawDialog.cpp" line="8"/>
         <source>Please wait for a response of your opponent...</source>
-        <translation type="unfinished"></translation>
+        <translation>Пожалуйста подождите ответа противника...</translation>
     </message>
     <message>
         <location filename="../src/Dialogs/WaitDrawDialog.cpp" line="9"/>
@@ -923,37 +737,17 @@ Please finish it first, then create a new game.</source>
         <translation>Выход</translation>
     </message>
     <message>
-        <source>Surrender</source>
-        <translation type="obsolete">Сдаться</translation>
-    </message>
-    <message>
         <location filename="../src/Dialogs/WaitDrawDialog.cpp" line="23"/>
         <source>Exiting now means you surrender. Are you sure?</source>
         <translation>Выход означает, что вы сдаетесь. Согласны?</translation>
-    </message>
-    <message>
-        <source>Draw</source>
-        <translation type="obsolete">Ничья</translation>
-    </message>
-    <message>
-        <source>OK</source>
-        <translation type="obsolete">ОК</translation>
     </message>
 </context>
 <context>
     <name>WaitJoinDialog</name>
     <message>
-        <source>Wait</source>
-        <translation type="obsolete">Ожидание</translation>
-    </message>
-    <message>
-        <source>Wait for oppponent...</source>
-        <translation type="obsolete">Ждите противника...</translation>
-    </message>
-    <message>
         <location filename="../src/Dialogs/WaitJoinDialog.cpp" line="13"/>
         <source>Please wait until an opponent joins your game...</source>
-        <translation type="unfinished"></translation>
+        <translation>Пожалуйста подождите, пока противник присоединится к игре...</translation>
     </message>
     <message>
         <location filename="../src/Dialogs/WaitJoinDialog.cpp" line="14"/>
@@ -963,25 +757,17 @@ Please finish it first, then create a new game.</source>
     <message>
         <location filename="../src/Dialogs/WaitJoinDialog.cpp" line="60"/>
         <source>is not available</source>
-        <translation type="unfinished"></translation>
+        <translation>не доступен</translation>
     </message>
     <message>
         <location filename="../src/Dialogs/WaitJoinDialog.cpp" line="61"/>
         <source> (rating </source>
-        <translation type="unfinished"></translation>
+        <translation>(рейтинг</translation>
     </message>
     <message>
         <location filename="../src/Dialogs/WaitJoinDialog.cpp" line="61"/>
         <source>) wants to play chess with you. Agree?</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Opponent joined</source>
-        <translation type="obsolete">Противник присоединен</translation>
-    </message>
-    <message>
-        <source>Opponent joined. Do you want to start game?</source>
-        <translation type="obsolete">Противник присоединился к вам. Начать игру?</translation>
+        <translation>) хочет сыграть с вами. Начать игру?</translation>
     </message>
 </context>
 </TS>

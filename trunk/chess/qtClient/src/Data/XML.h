@@ -6,7 +6,7 @@
 #include <QtXml/QDomNode>
 
 
-#define XML_CONFIG_FILENAME     QDir::homePath() + "/.wpchess/config.xml"
+#define XML_CONFIG_FILENAME     QString("config/config.xml")
 #define XML_ITEMS_FILENAME      ":/config/items.xml"
 #define XML_FILE_TAG_IDENT      2
 

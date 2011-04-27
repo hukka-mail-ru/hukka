@@ -17,7 +17,7 @@ lupdate client.pro
 lrelease client.pro
 
 
-CONFIGDIR=~/.wpchess
+CONFIGDIR=bin/config
 if [ -d $CONFIGDIR ]
 then
     echo $CONFIGDIR already exists
@@ -33,15 +33,14 @@ cp config/config.xml $CONFIGDIR
 rm bin/client
 qmake client.pro
 make
-cd bin
 
 
 if [ "$PLATFORM" = "LINUX" ] ; then
-    ./client
+    bin/client
 fi
 
 if [ "$PLATFORM" = "MAEMO" ] ; then
     run-standalone.sh ./client
 fi
 
-cd ..
+
