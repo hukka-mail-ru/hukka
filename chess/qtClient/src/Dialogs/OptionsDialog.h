@@ -30,10 +30,7 @@ private:
 
     QLineEdit* serverNameEdit;
     QLineEdit* serverPortEdit;
-
     QComboBox* languageComboBox;
-    QString mLanguageIndex;
-    QString mNewLanguageIndex;
 
     QPushButton* okButton;
     QPushButton* exitButton;
@@ -49,7 +46,6 @@ private slots:
 
     void onOkClicked();
     void onExitClicked();
-    void onLanguageComboBoxActivated(int lang);
 };
 
 #endif /* OPTIONSDIALOG_H_ */
