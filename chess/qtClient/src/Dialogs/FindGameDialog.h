@@ -33,9 +33,8 @@ private:
 
 private slots:
 
-    void onOkClicked();
-    void onCancelClicked();
-    void onRandomGameClicked();
+//    void onCancelClicked();
+    //void onRandomGameClicked();
 
     void onGotGameTables(const QList<GameTable>& tables);
     void onGotGameTableParams(const GameTable& table);

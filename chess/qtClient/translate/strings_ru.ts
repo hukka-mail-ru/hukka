@@ -390,7 +390,7 @@
         <translation>Отмена</translation>
     </message>
     <message>
-        <location filename="../src/Dialogs/FindGameDialog.cpp" line="80"/>
+        <location filename="../src/Dialogs/FindGameDialog.cpp" line="77"/>
         <source>No game table found</source>
         <translation>Игры не найдены</translation>
     </message>
@@ -522,12 +522,12 @@
         <translation>Настройки</translation>
     </message>
     <message>
-        <location filename="../src/UI/MainMenu.cpp" line="295"/>
+        <location filename="../src/UI/MainMenu.cpp" line="310"/>
         <source>The last game has been finished.</source>
         <translation>Предыдущая игра была завершена</translation>
     </message>
     <message>
-        <location filename="../src/UI/MainMenu.cpp" line="326"/>
+        <location filename="../src/UI/MainMenu.cpp" line="341"/>
         <source>You have an unfinished game. Please finish it.</source>
         <translation>Пожалуйста завершите предыдущую игру.</translation>
     </message>
