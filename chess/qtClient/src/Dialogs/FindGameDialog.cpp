@@ -5,7 +5,7 @@
 
 FindGameDialog::FindGameDialog(QWidget *parent): MyDialog(parent)
 {
-    setWindowTitle(tr("Find Game"));
+  /*  setWindowTitle(tr("Find Game"));
 
     okButton = new QPushButton(tr("All Games"), this);
     randomGameButton = new QPushButton(tr("Random Game"), this);
@@ -32,7 +32,7 @@ FindGameDialog::FindGameDialog(QWidget *parent): MyDialog(parent)
     layout->addLayout(lowerLayout);
 
     setLayout(layout);
-
+*/
     MainWindow::instance()->setMode(MW_WAIT);
 
     // find all the games where PARAMETER_ID_TIME2GAME > 0
