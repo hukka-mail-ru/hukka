@@ -11,9 +11,9 @@ FindGameDialog::FindGameDialog(QWidget *parent): MyDialog(parent)
     randomGameButton = new QPushButton(tr("Random Game"), this);
     cancelButton = new QPushButton(tr("Cancel"), this);
 
-    connect(okButton, SIGNAL(clicked()), this, SLOT(onOkClicked()));
-    connect(randomGameButton, SIGNAL(clicked()), this, SLOT(onRandomGameClicked()));
-    connect(cancelButton, SIGNAL(clicked()), this, SLOT(onCancelClicked()));
+    //connect(okButton, SIGNAL(clicked()), this, SLOT(onOkClicked()));
+   // connect(randomGameButton, SIGNAL(clicked()), this, SLOT(onRandomGameClicked()));
+   // connect(cancelButton, SIGNAL(clicked()), this, SLOT(onCancelClicked()));
 
 
     edits = new QGridLayout();
@@ -32,10 +32,7 @@ FindGameDialog::FindGameDialog(QWidget *parent): MyDialog(parent)
     layout->addLayout(lowerLayout);
 
     setLayout(layout);
-}
 
-void FindGameDialog::onOkClicked()
-{
     MainWindow::instance()->setMode(MW_WAIT);
 
     // find all the games where PARAMETER_ID_TIME2GAME > 0
@@ -50,7 +47,7 @@ void FindGameDialog::onOkClicked()
 
 
 
-
+/*
 void FindGameDialog::onCancelClicked()
 {
     MainWindow::instance()->showMainMenu();
@@ -66,7 +63,7 @@ void FindGameDialog::onRandomGameClicked()
     connect(Client::instance(), SIGNAL(gotGameTables(const QList<GameTable>&)), this, SLOT(onGotGameTables(const QList<GameTable>&)));
     Client::instance()->getRandomGameTable(LOGIC_ID_CHESS, empty);
 }
-
+*/
 
 void FindGameDialog::onGotGameTables(const QList<GameTable>& tables)
 {
@@ -78,7 +75,7 @@ void FindGameDialog::onGotGameTables(const QList<GameTable>& tables)
     if(tables.empty() || (tables.size() == 1 && tables[0].id == 0))
     {
         MainWindow::instance()->showError(tr("No game table found"));
-        MainWindow::instance()->showFindGameDialog();
+        hide();
     }
     else
     {
