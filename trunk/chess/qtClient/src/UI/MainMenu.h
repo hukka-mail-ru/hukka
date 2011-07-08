@@ -53,6 +53,7 @@ private slots:
     void onConnectedToHost();
     void onDisonnectedFromHost();
     void onAuthorized();
+    void onNotAuthorized(const QString& what);
 
     void onCreateGameClicked();
     void onFindGameClicked();

@@ -148,6 +148,7 @@ signals:
         void chatUserLeft(const QString& userName);
 
         void error(const QString& what);
+        void notAuthorized(const QString& what);
 
 private:
 
