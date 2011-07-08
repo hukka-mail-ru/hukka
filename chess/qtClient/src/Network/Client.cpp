@@ -942,10 +942,10 @@ void Client::processMessageSRV(const MessageHeader& header, const QByteArray& bu
     {
         switch(buffer[0]) {
             case NOERR:          mClientAuthorized = true; emit authorized(); break;
-            case ERRUSERONLINE:  emit error(tr("The user is already online.")); break;
-            case ERRBADLOGIN:    emit error(tr("Incorrect user name.")); break;
-            case ERRBADPASS:     emit error(tr("Incorrect password.")); break;
-            default:             emit error(tr("Internal server error ") + QString::number(buffer[0]) + "."); break;
+            case ERRUSERONLINE:  emit notAuthorized(tr("The user is already online.")); break;
+            case ERRBADLOGIN:    emit notAuthorized(tr("Incorrect user name.")); break;
+            case ERRBADPASS:     emit notAuthorized(tr("Incorrect password.")); break;
+            default:             emit notAuthorized(tr("Internal server error ") + QString::number(buffer[0]) + "."); break;
         }
     }
     else

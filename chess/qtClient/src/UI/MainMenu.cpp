@@ -214,16 +214,31 @@ void MainMenu::onConnectedToHost()
     }
     else
     {
-        connect(Client::instance(), SIGNAL(registered()), this, SLOT(onAuthorized()));
+        QString login = XML::instance().readValue(XML_CONFIG_FILENAME, QList<QString>() << XML_NODE_USER << XML_NODE_LOGIN);
+        QString pwd = XML::instance().readValue(XML_CONFIG_FILENAME, QList<QString>() << XML_NODE_USER << XML_NODE_PASSWORD);
+
+        UI::instance()->setPlayerName(PT_ME, login);
+
         connect(Client::instance(), SIGNAL(authorized()), this, SLOT(onAuthorized()));
-        MainWindow::instance()->showAuthorizationDialog();
+        connect(Client::instance(), SIGNAL(notAuthorized(const QString&)), this, SLOT(onNotAuthorized(const QString&)));
+
+        Client::instance()->login(login, pwd);
+
     }
 }
+
+void MainMenu::onNotAuthorized(const QString& what)
+{
+    MainWindow::instance()->showError(what);
+    MainWindow::instance()->showAuthorizationDialog();
+}
+
 
 void MainMenu::onAuthorized()
 {
     disconnect(Client::instance(), SIGNAL(registered()), this, SLOT(onAuthorized()));
     disconnect(Client::instance(), SIGNAL(authorized()), this, SLOT(onAuthorized()));
+    disconnect(Client::instance(), SIGNAL(notAuthorized(const QString&)), this, SLOT(onNotAuthorized(const QString&)));
 
   //  qDebug() << "MainMenu::onAuthorized";
 
