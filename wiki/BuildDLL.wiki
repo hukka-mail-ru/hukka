@@ -25,6 +25,8 @@ javah -jni HelloWorld
 DLL-ку на С++ собирать так:
 g++ -c -fPIC client.cpp -o client.o -I/usr/lib/jvm/java-6-sun-1.6.0.22/include -I/usr/lib/jvm/java-6-sun/include/linux
 
+java -Djava.library.path=/home/ssy/devel/hukka/java_project/client HelloWorld
+
 </pre>
 
 
