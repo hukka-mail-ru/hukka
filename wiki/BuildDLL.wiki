@@ -10,7 +10,7 @@ g++ -ldl -lclient -L. main.cpp
 export LD_LIBRARY_PATH=~/devel/hukka/ ... where is the DLL
 
 </pre>
-<b>JAVA<br>
+<b>JAVA</b><br>
 <pre>
 javac HelloWorld.java 
 java HelloWorld  
