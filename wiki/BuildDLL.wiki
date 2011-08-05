@@ -1,66 +1,8 @@
-DLL code:
-
-<font face="Courier">
-<plaintext>
-########################################################
-########################################################
-
-#ifndef CLIENT_H_
-#define CLIENT_H_
-
-class Client
-{
-	public:
-		int sum(int a, int b);
-};
-
-#endif
-
-########################################################
-########################################################
-
-#include "client.h"
-
-int Client::sum(int a, int b)
-{
-	return a + b;
-}
-
-########################################################
-########################################################
-</plaintext>
-</font>
-
-Build:
+DLL build:
 gcc -shared -Wl,-soname,libclient.so.1 -o libclient.so client.o -lc 
 
 
-Invocation code:
-<font face="Courier"><plaintext>
-########################################################
-########################################################
+Invocation code build:
+g++ -ldl -lclient -L. main.cpp
 
-#include <iostream>
-#include <dlfcn.h>
-
-using namespace std;
-
-int main()
-{
-	void* handle = dlopen("libclient.so", RTLD_NOW);
-
-	if(!handle)
-	{
-	   cerr << dlerror() << endl;
-	   return -1;
-	}
-
-	return 0;
-}
-########################################################
-########################################################
-</plaintext></font>
-
-Build:
-g++ -ldl main.cpp
 export LD_LIBRARY_PATH=~/devel/hukka/ ... where is the DLL
