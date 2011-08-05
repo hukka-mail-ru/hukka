@@ -1,7 +1,7 @@
 <b>DLL build:</b> 
 <pre>
 g++ -c -fPIC client.cpp -o client.o
-gcc -shared -Wl,-soname,libclient.so -o libclient.so client.o -lc 
+gcc -shared -Wl,-soname,libclient.so -o libclient.so client.o -lc -lstdc++
 
 
 Invocation code build:
