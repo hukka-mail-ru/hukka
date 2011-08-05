@@ -1,4 +1,4 @@
-A DLL code:
+DLL code:
 
 <font face="Courier">
 ########################################################
@@ -30,6 +30,14 @@ int Client::sum(int a, int b)
 
 </font>
 
+Build:
+gcc -shared -Wl,-soname,libclient.so.1 -o libclient.so client.o -lc 
+
+
+Invocation code:
+<font face="Courier">
+########################################################
+########################################################
 
 #include <iostream>
 #include <dlfcn.h>
@@ -48,3 +56,8 @@ int main()
 
 	return 0;
 }
+</font>
+
+Build:
+g++ -ldl main.cpp
+export LD_LIBRARY_PATH=~/devel/hukka/ ... where is the DLL
