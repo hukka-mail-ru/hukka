@@ -1,8 +1,9 @@
-DLL build:
-gcc -shared -Wl,-soname,libclient.so -o libclient.so client.o -lc 
-
-
-Invocation code build:
-g++ -ldl -lclient -L. main.cpp
-
-export LD_LIBRARY_PATH=~/devel/hukka/ ... where is the DLL
+DLL build: <br>
+g++ -c -fPIC client.cpp -o client.o<br>
+gcc -shared -Wl,-soname,libclient.so -o libclient.so client.o -lc <br>
+<br>
+<br>
+Invocation code build:<br>
+g++ -ldl -lclient -L. main.cpp<br>
+<br>
+export LD_LIBRARY_PATH=~/devel/hukka/ ... where is the DLL<br>
