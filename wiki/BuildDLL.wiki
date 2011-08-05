@@ -12,7 +12,7 @@ export LD_LIBRARY_PATH=~/devel/hukka/ ... where is the DLL<br>
 JAVA + Android emulator <br>
 <br>
 <pre>
-http://rhrn.ru/articles/show/18/Ustanovka_SDK_Android_i_HelloWorld_pod_linux_%28ubuntu%29/<br>
+http://rhrn.ru/articles/show/18/Ustanovka_SDK_Android_i_HelloWorld_pod_linux_(ubuntu)/<br>
 <br>
 android create project --package com.android.helloandroid --activity HelloAndroid --target 1 --path HelloAndroid<br>
 Заходим в директорию HelloAndroid и выполняем ant debug<br>
