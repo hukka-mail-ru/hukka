@@ -18,6 +18,7 @@ java HelloWorld
 
 <b>JAVA + JNI</b><br>
 <pre>
+http://java.sun.com/docs/books/jni/download/jni.pdf
 
 javac HelloWorld.java
 javah -jni HelloWorld
