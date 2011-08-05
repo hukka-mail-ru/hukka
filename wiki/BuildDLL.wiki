@@ -1,5 +1,5 @@
 DLL build:
-gcc -shared -Wl,-soname,libclient.so.1 -o libclient.so client.o -lc 
+gcc -shared -Wl,-soname,libclient.so -o libclient.so client.o -lc 
 
 
 Invocation code build:
