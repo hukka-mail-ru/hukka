@@ -10,6 +10,11 @@ g++ -ldl -lclient -L. main.cpp
 export LD_LIBRARY_PATH=~/devel/hukka/ ... where is the DLL
 
 </pre>
+<b>JAVA<br>
+<pre>
+javac HelloWorld.java 
+java HelloWorld  
+</pre>
 
 <b>JAVA + Android emulator </b><br>
 <pre>
