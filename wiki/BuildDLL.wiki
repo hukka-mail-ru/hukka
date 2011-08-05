@@ -13,9 +13,10 @@ JAVA + Android emulator <br>
 <pre>
 http://rhrn.ru/articles/show/18/Ustanovka_SDK_Android_i_HelloWorld_pod_linux_(ubuntu)/
 
-android create project --package com.android.helloandroid --activity HelloAndroid --target 1 --path HelloAndroid
+1) android create project --package com.android.helloandroid --activity HelloAndroid --target 1 --path HelloAndroid
 
-Заходим в директорию HelloAndroid и выполняем ant debug
+2) Заходим в директорию HelloAndroid и выполняем ant debug
 
-adb install HelloAndroid-debug.apk
+3) adb install HelloAndroid-debug.apk
+
 </pre>
