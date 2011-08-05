@@ -13,7 +13,7 @@ export LD_LIBRARY_PATH=~/devel/hukka/ ... where is the DLL
 <b>JAVA</b><br>
 <pre>
 javac HelloWorld.java 
-java HelloWorld  
+java Hello World  
 </pre>
 
 <b>JAVA + Android emulator </b><br>
