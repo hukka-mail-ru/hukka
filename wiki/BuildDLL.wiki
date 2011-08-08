@@ -33,6 +33,9 @@ java -Djava.library.path=. HelloWorld
 
 <b>JAVA + JNI + QT</b><br>
 
+
+<pre>
+
 qmake
 make
 
