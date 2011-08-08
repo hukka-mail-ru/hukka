@@ -53,3 +53,15 @@ http://rhrn.ru/articles/show/18/Ustanovka_SDK_Android_i_HelloWorld_pod_linux_(ub
 4) adb install -r bin/HelloAndroid-debug.apk
 
 </pre>
+
+<b>JAVA  + Android emulator + JNI + NDK</b><br>
+
+
+<pre>
+
+1) Создать проект (см. JAVA + Android emulator)
+
+2) В каталоге проекта выполнить: android update project -p . -s
+
+</pre>
+
