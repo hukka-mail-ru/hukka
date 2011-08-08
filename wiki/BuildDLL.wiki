@@ -31,6 +31,12 @@ java -Djava.library.path=. HelloWorld
 
 </pre>
 
+<b>JAVA + JNI + QT</b><br>
+
+qmake
+make
+
+</pre>
 
 <b>JAVA + Android emulator </b><br>
 <pre>
