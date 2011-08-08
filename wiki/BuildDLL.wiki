@@ -48,7 +48,8 @@ http://rhrn.ru/articles/show/18/Ustanovka_SDK_Android_i_HelloWorld_pod_linux_(ub
 1) android create project --package com.android.helloandroid --activity HelloAndroid --target 1 --path HelloAndroid
 
 2) Заходим в директорию HelloAndroid и выполняем ~/distr/qt_android/ant-1.8.0/bin/ant debug
+3) Запускаем эмулятор командой android
 
-3) adb install bin/HelloAndroid-debug.apk
+4) adb install -r bin/HelloAndroid-debug.apk
 
 </pre>
