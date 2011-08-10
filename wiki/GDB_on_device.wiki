@@ -7,11 +7,12 @@ On the device, go to Settings > Applications > Development and enable USB debugg
 Check if device is connected properly
 
 adb devices
-=========================================
+---------------------------------------
 Diagnostic Android log
 
 adb logcat
-=========================================
+
+---------------------------------------
 
 
 
