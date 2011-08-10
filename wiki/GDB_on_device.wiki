@@ -2,7 +2,6 @@
 Turn on "USB Debugging" on your device.
 
 On the device, go to Settings > Applications > Development and enable USB debugging.
-
 ---------------------------------------
 Check if device is connected properly
 
@@ -11,9 +10,10 @@ adb devices
 Diagnostic Android log
 
 adb logcat
-
 ---------------------------------------
+DDMS
 
+/home/ssy/distr/qt_android/android-sdk-linux_x86/tools/ddms
 
 
 </pre>
