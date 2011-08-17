@@ -2,12 +2,12 @@
 
   <MainWindow>
     <color value = "black" />
-    <landscape> <width value="800" />  <height value="480" />  </landscape>
+    <landscape> <width value="480" />  <height value="320" />  </landscape>
   </MainWindow>
 
   <Scene>
     <margin>  <width value="5" />  </margin>
-    <landscape>  <x value="0" />   <y value="0" />  <width value="795" />  <height value="475" />  </landscape>
+    <landscape>  <x value="0" />   <y value="0" />  <width value="475" />  <height value="315" />  </landscape>
   </Scene>
 
 
@@ -83,9 +83,9 @@
 
 
   <Buttons>
-    <width value="192" />  <height value="170" />  <textOffset value="120" />
+    <width value="120" />  <height value="106" />  <textOffset value="75" />
     <font>
-      <family value="Helvetica [Cronyx]" /> <size value="16" />  <color value="white" />
+      <family value="Helvetica [Cronyx]" /> <size value="12" />  <color value="white" />
     </font>
 
       <Exit>
@@ -93,19 +93,19 @@
       </Exit>
 
       <NewGame>
-        <landscape> <x value="0" /> <y value="290" /> </landscape>
+        <landscape> <x value="0" /> <y value="180" /> </landscape>
       </NewGame>
 
       <FindGame>
-        <landscape> <x value="192" />  <y value="290" />  </landscape>
+        <landscape> <x value="120" />  <y value="180" />  </landscape>
       </FindGame>
 
       <Chat>
-        <landscape> <x value="384" /> <y value="290" /> </landscape>
+        <landscape> <x value="240" /> <y value="180" /> </landscape>
       </Chat>
 
       <Options>
-        <landscape> <x value="576" />  <y value="290" /> </landscape>
+        <landscape> <x value="360" />  <y value="180" /> </landscape>
       </Options>
 
 
