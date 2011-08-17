@@ -299,6 +299,13 @@ Log.i(QtTAG, "startApp 7");
     public void onCreate(Bundle savedInstanceState)
     {
         super.onCreate(savedInstanceState);
+
+/// No title bar
+        final Window win = getWindow();    
+		win.setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN);    
+		requestWindowFeature(Window.FEATURE_PROGRESS);
+///
+
         requestWindowFeature(Window.FEATURE_NO_TITLE);
         m_quitApp = true;
         QtApplication.setMainActivity(this);

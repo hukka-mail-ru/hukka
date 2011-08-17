@@ -3,6 +3,8 @@
     <array name="qt_libs">
         <item>QtCore</item>
         <item>QtGui</item>
+        <item>QtNetwork</item>
+        <item>QtXml</item>
     </array>
     <array name="bundled_libs"/>
 </resources>
