@@ -6,5 +6,6 @@
 3. Собрать java-приложение:   ~/distr/qt_android/ant-1.8.0/bin/ant debug
 4. Установить java-приложение на трубу:  adb install -r bin/Client-debug.apk
     
+5. Установить Qt-библиотеки на трубу, в каталог ministro
 
 </pre>
