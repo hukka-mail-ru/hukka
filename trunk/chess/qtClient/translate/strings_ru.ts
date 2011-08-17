@@ -370,29 +370,29 @@
 <context>
     <name>FindGameDialog</name>
     <message>
-        <location filename="../src/Dialogs/FindGameDialog.cpp" line="8"/>
         <source>Find Game</source>
-        <translation>Найти игру</translation>
+        <translation type="obsolete">Найти игру</translation>
     </message>
     <message>
-        <location filename="../src/Dialogs/FindGameDialog.cpp" line="10"/>
         <source>All Games</source>
-        <translation>Все игры</translation>
+        <translation type="obsolete">Все игры</translation>
     </message>
     <message>
-        <location filename="../src/Dialogs/FindGameDialog.cpp" line="11"/>
         <source>Random Game</source>
-        <translation>Случайная игра</translation>
+        <translation type="obsolete">Случайная игра</translation>
     </message>
     <message>
-        <location filename="../src/Dialogs/FindGameDialog.cpp" line="12"/>
         <source>Cancel</source>
-        <translation>Отмена</translation>
+        <translation type="obsolete">Отмена</translation>
+    </message>
+    <message>
+        <source>No game table found</source>
+        <translation type="obsolete">Игры не найдены</translation>
     </message>
     <message>
         <location filename="../src/Dialogs/FindGameDialog.cpp" line="77"/>
-        <source>No game table found</source>
-        <translation>Игры не найдены</translation>
+        <source>No games now. Try again later or create a new game.</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>

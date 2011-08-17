@@ -13,13 +13,14 @@ NETWORK = $$SRC/Network
 DATA = $$SRC/Data
 UI = $$SRC/UI
 DIALOGS = $$SRC/Dialogs
+WAPSERVERPATH = /home/ssy/devel/hukka/chess/wapserver3/src
 
 DEPENDPATH += .
 DEPENDPATH += $$NETWORK  $$UI  $$BASE  $$DATA $$DIALOGS
 
 INCLUDEPATH += $$SRC  $$NETWORK  $$UI  $$BASE  $$DATA
 INCLUDEPATH += $$(QTPATH)/QtNetwork $$(QTPATH)/QtXml
-INCLUDEPATH += $$(WAPSERVERPATH) $$(WAPSERVERPATH)/libs $$(WAPSERVERPATH)/libs/header $$(WAPSERVERPATH)/chessserver $$(WAPSERVERPATH)/chessserver/engine
+INCLUDEPATH += $$WAPSERVERPATH $$WAPSERVERPATH/libs $$WAPSERVERPATH/libs/header $$WAPSERVERPATH/chessserver $$WAPSERVERPATH/chessserver/engine
 
 
 DESTDIR = bin
@@ -41,11 +42,42 @@ RESOURCES = resources.qrc
 
 TRANSLATIONS = translate/strings_ru.ts
 
-
-
-QT       += core gui
-CONFIG += meegotouch
-TEMPLATE = app
-target.path=/usr/local/bin
-INSTALLS=target
-
+OTHER_FILES += \
+    android/res/drawable-ldpi/icon.png \
+    android/res/drawable-hdpi/icon.png \
+    android/res/values/libs.xml \
+    android/res/values/strings.xml \
+    android/res/drawable-mdpi/icon.png \
+    android/src/eu/licentia/necessitas/ministro/IMinistro.aidl \
+    android/src/eu/licentia/necessitas/ministro/IMinistroCallback.aidl \
+    android/src/eu/licentia/necessitas/industrius/QtLayout.java \
+    android/src/eu/licentia/necessitas/industrius/QtSurface.java \
+    android/src/eu/licentia/necessitas/industrius/QtApplication.java \
+    android/src/eu/licentia/necessitas/industrius/QtActivity.java \
+    android/src/eu/licentia/necessitas/mobile/QtSystemInfo.java \
+    android/src/eu/licentia/necessitas/mobile/QtSensors.java \
+    android/src/eu/licentia/necessitas/mobile/QtLocation.java \
+    android/src/eu/licentia/necessitas/mobile/QtCamera.java \
+    android/src/eu/licentia/necessitas/mobile/QtMediaPlayer.java \
+    android/src/eu/licentia/necessitas/mobile/QtAndroidContacts.java \
+    android/src/eu/licentia/necessitas/mobile/QtFeedback.java \
+    android/AndroidManifest.xml \
+    android/res/drawable-ldpi/icon.png \
+    android/res/drawable-hdpi/icon.png \
+    android/res/values/libs.xml \
+    android/res/values/strings.xml \
+    android/res/drawable-mdpi/icon.png \
+    android/src/eu/licentia/necessitas/ministro/IMinistro.aidl \
+    android/src/eu/licentia/necessitas/ministro/IMinistroCallback.aidl \
+    android/src/eu/licentia/necessitas/industrius/QtLayout.java \
+    android/src/eu/licentia/necessitas/industrius/QtSurface.java \
+    android/src/eu/licentia/necessitas/industrius/QtApplication.java \
+    android/src/eu/licentia/necessitas/industrius/QtActivity.java \
+    android/src/eu/licentia/necessitas/mobile/QtSystemInfo.java \
+    android/src/eu/licentia/necessitas/mobile/QtSensors.java \
+    android/src/eu/licentia/necessitas/mobile/QtLocation.java \
+    android/src/eu/licentia/necessitas/mobile/QtCamera.java \
+    android/src/eu/licentia/necessitas/mobile/QtMediaPlayer.java \
+    android/src/eu/licentia/necessitas/mobile/QtAndroidContacts.java \
+    android/src/eu/licentia/necessitas/mobile/QtFeedback.java \
+    android/AndroidManifest.xml

@@ -8,10 +8,6 @@ if [ "$QTPATH" = "" ] ; then
 	exit
 fi
 
-if [ "$WAPSERVERPATH" = "" ] ; then
-    echo "Please set WAPSERVERPATH variable first!"
-	exit
-fi
 
 lupdate client.pro
 lrelease client.pro

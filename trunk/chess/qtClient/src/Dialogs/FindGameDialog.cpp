@@ -74,7 +74,7 @@ void FindGameDialog::onGotGameTables(const QList<GameTable>& tables)
 
     if(tables.empty() || (tables.size() == 1 && tables[0].id == 0))
     {
-        MainWindow::instance()->showError(tr("No game table found"));
+        MainWindow::instance()->showError(tr("No games now. Try again later or create a new game."));
         hide();
     }
     else
