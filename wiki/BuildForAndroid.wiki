@@ -1,6 +1,6 @@
 <pre>
 
-1. Установить necessistas
+1. Установить necessistas (т.е. Android SDK и Qt-библиотеки, собранные для Android)
 2. Собрать либу из qt-исходников (с помощью Makefile) и положить ее в ../android/libs/armeabi
 
 3. Собрать java-приложение:   ~/distr/qt_android/ant-1.8.0/bin/ant debug
