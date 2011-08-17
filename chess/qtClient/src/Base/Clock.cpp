@@ -84,7 +84,7 @@ void Clock::onGotTime(quint32 seconds)
 
     if(seconds == INVALID_TIME)
     {
-        mSeconds == 0;
+        mSeconds = 0;
         stop();
     }
  //   qDebug() << "onGotTime " << seconds;

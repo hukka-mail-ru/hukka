@@ -4,7 +4,7 @@
     <port value="1234" />
   </server>
   <client>
-    <language value="1" />
+    <language value="0" />
   </client>
   <user>
     <login value="test" />
