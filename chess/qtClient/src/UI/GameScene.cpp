@@ -54,8 +54,8 @@ void GameScene::initialize()
    // mMenuButton->updatePos(MainWindow::instance()->getOrientation());
     QObject::connect(mMenuButton, SIGNAL(clicked()), this, SLOT(onMenuButtonClicked()));
 
-    mExitButton = new Button(this, Pixmaps::get(PIX_BUTTON_EXIT), "", XML_NODE_BUTTONS, XML_NODE_EXIT);
-    QObject::connect(mExitButton, SIGNAL(clicked()), this, SLOT(onExitClicked()));
+//    mExitButton = new Button(this, Pixmaps::get(PIX_BUTTON_EXIT), "", XML_NODE_BUTTONS, XML_NODE_EXIT);
+//    QObject::connect(mExitButton, SIGNAL(clicked()), this, SLOT(onExitClicked()));
 
 
     connect(Client::instance(), SIGNAL(gotField(Field, bool, bool)), this, SLOT(onGotField(Field, bool, bool)));
@@ -100,11 +100,12 @@ void GameScene::disableItems()
       mChat->disable();
 }
 
+/*
 void GameScene::onExitClicked()
 {
     close();
     UI::instance()->shutdown();
-}
+}*/
 
 void GameScene::onGotField(const Field& field, bool myMove, bool iAmWhite)
 {
@@ -147,7 +148,7 @@ void GameScene::updateItemsPositions(OrientationStatus orientation)
 
     // border
     mMenuButton->updatePos(orientation);
-    mExitButton->updatePos(orientation);
+//    mExitButton->updatePos(orientation);
 
 
     // chat

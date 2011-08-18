@@ -61,7 +61,7 @@
 
 
   <TableChat>
-	<landscape> <x value="5" /> <y value="250" />  <width value="380" /> <height value="215" />  </landscape>
+	<landscape> <x value="5" /> <y value="1000" />  <width value="380" /> <height value="215" />  </landscape>
 	<font>
  	    <me>             <color value="white" /> </me>
 		<opponent>       <color value="#FFCC00" /> </opponent>
@@ -110,7 +110,7 @@
 
 
       <GameMenu>
-        <landscape> <x value="0" />   <y value="70" />  </landscape>
+        <landscape> <x value="20" />   <y value="0" />  </landscape>
       </GameMenu>
 
   </Buttons>
@@ -120,7 +120,7 @@
   </Promotion>
 
   <Cell>
-    <width value="50" />
+    <width value="40" />
   </Cell>
 
   <Animation>
@@ -128,37 +128,37 @@
   </Animation>
 
   <Piece>
-    <width value="50" />  <height value="50" />
+    <width value="40" />  <height value="40" />
   </Piece>
 
   <CaptureBox>
-	<me>       <color value="#D38842" /> <x value="390" />   <y value="5" />  <width value="400" />  <height value="23" /> </me>
-	<opponent> <color value="#7C3B1B" /> <x value="390" />   <y value="440"/> <width value="400" />  <height value="23" /></opponent>
+	<me>       <color value="#D38842" /> <x value="0" />   <y value="273" />  <width value="158" />  <height value="20" /> </me>
+	<opponent> <color value="#7C3B1B" /> <x value="0" />   <y value="295"/> <width value="158" />  <height value="20" /></opponent>
     <border> <width value="1" /> </border>
-    <Piece>  <width value="26" />  <height value="22" />  </Piece>
+    <Piece>  <width value="13" />  <height value="11" />  </Piece>
   </CaptureBox>
 
   <MoveBox>
 
 	<me>       <color> <active value="white" /> <inactive value="grey" />  </color> 
-               <border> <x value="200" />   <y value="125" />  <width value="182" />  <height value="115" /> </border> 
+               <border> <x value="0" />   <y value="195" />  <width value="158" />  <height value="75" /> </border> 
     </me>
 
 	<opponent> <color> <active value="#FFCC00" /> <inactive value="grey" />  </color>
-               <border> <x value="200" />   <y value="5"/> <width value="182" />  <height value="115" /> </border> 
+               <border> <x value="0" />   <y value="118"/> <width value="158" />  <height value="75" /> </border> 
     </opponent>
 
-    <player>     <font> <family value="Helvetica [Cronyx]" />  <size value="12" /> </font>  <x value="5" />  <y value="5"  /> </player>
-    <rating>     <font> <family value="Helvetica [Cronyx]" />  <size value="12" /> </font>  <x value="5" />  <y value="25" /> </rating>
-    <MoveClock>  <font> <family value="Helvetica [Cronyx]" />  <size value="16" /> </font>  <x value="5" />  <y value="65" /> </MoveClock>
-    <GameClock>  <font> <family value="Helvetica [Cronyx]" />  <size value="10" /> </font>  <x value="5" />  <y value="93" /> </GameClock>
+    <player>     <font> <family value="Helvetica [Cronyx]" />  <size value="9" /> </font>  <x value="5" />  <y value="0"  /> </player>
+    <rating>     <font> <family value="Helvetica [Cronyx]" />  <size value="8" /> </font>  <x value="5" />  <y value="15" /> </rating>
+    <MoveClock>  <font> <family value="Helvetica [Cronyx]" />  <size value="12" /> </font>  <x value="5" />  <y value="30" /> </MoveClock>
+    <GameClock>  <font> <family value="Helvetica [Cronyx]" />  <size value="9" /> </font>  <x value="5" />  <y value="50" /> </GameClock>
 
   </MoveBox>
 
   <Board>
-    <width value="400" />
+    <width value="320" />
     <border>  <color value="white" />  </border>
-    <x value="390" /> <y value="35" /> 
+    <x value="160" /> <y value="0" /> 
   </Board>
 
 

@@ -43,7 +43,7 @@ private:
     void updateMoveBoxes(GameState gameState);
 
     Button* mMenuButton;
-    Button* mExitButton;
+  //  Button* mExitButton;
 
     Chat* mChat;
 
@@ -57,7 +57,7 @@ private slots:
     void onGotField(const Field& field, bool myMove, bool iAmWhite);
     void onInvalidMove();
     void onMenuButtonClicked();
-    void onExitClicked();
+ //   void onExitClicked();
 
 };
 
