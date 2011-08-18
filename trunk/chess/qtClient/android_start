@@ -1,0 +1,6 @@
+cd ../client-build-android
+make
+cd ../qtClient/android
+~/distr/qt_android/ant-1.8.0/bin/ant debug
+adb install -r bin/Client-debug.apk
+
