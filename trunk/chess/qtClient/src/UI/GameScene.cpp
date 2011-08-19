@@ -16,8 +16,7 @@
 GameScene::GameScene(QObject *parent):
        QGraphicsScene(parent),
        mChat(NULL),
-       mMeMoveBox(this, PT_ME),
-       mOppMoveBox(this, PT_OPPONENT),
+       mMoveBox(this, PT_ME),
        mBoard(this)
 {
 
@@ -160,10 +159,6 @@ void GameScene::updateItemsPositions(OrientationStatus orientation)
 
 void GameScene::updateMoveBoxes(GameState gameState)
 {
-    mMeMoveBox.setPlayer(UI::instance()->getPlayer(PT_ME));
-    mOppMoveBox.setPlayer(UI::instance()->getPlayer(PT_OPPONENT));
-
-//    qDebug() << "GameScene::updateMoveBoxes " << gameState << endl;
 
     switch(gameState)
     {
@@ -171,16 +166,15 @@ void GameScene::updateMoveBoxes(GameState gameState)
         case GS_WAIT_FOR_PLAYER_MOVE:
         case GS_WAIT_FOR_SERVER:
         case GS_INVALID_MOVE:
-            mMeMoveBox.setActive();
-            mOppMoveBox.setInactive();
+            mMoveBox.setPlayer(UI::instance()->getPlayer(PT_ME));
+            mMoveBox.setActive();
             break;
         case GS_WAIT_FOR_OPPONENT:
-            mMeMoveBox.setInactive();
-            mOppMoveBox.setActive();
+            mMoveBox.setPlayer(UI::instance()->getPlayer(PT_OPPONENT));
+            mMoveBox.setInactive();
             break;
         case GS_GAME_OVER:
-            mMeMoveBox.setInactive();
-            mOppMoveBox.setInactive();
+            mMoveBox.setInactive();
             break;
         default:
             break;

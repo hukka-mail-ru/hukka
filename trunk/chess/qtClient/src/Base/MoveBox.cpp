@@ -9,7 +9,7 @@
 #include <XML.h>
 
 MoveBox::MoveBox(QGraphicsScene* parentScene, PlayerType playerType):
-    mMoveClock(parentScene, QObject::tr("Move: "), SIGNAL(gotMoveTime(quint32)), XML_NODE_MOVE_CLOCK),
+    mMoveClock(parentScene, QObject::tr(""), SIGNAL(gotMoveTime(quint32)), XML_NODE_MOVE_CLOCK),
     mGameClock(parentScene, QObject::tr("Game: "), SIGNAL(gotGameTime(quint32)), XML_NODE_GAME_CLOCK)
 {
     QString playerNode = (playerType == PT_ME) ? XML_NODE_ME : XML_NODE_OPPONENT;
@@ -37,7 +37,7 @@ MoveBox::MoveBox(QGraphicsScene* parentScene, PlayerType playerType):
     mPlayerNameText->setPos(borderX + playerNameX, borderY + playerNameY);
 
     // Player Rating
-    int ratingX           = XML::instance().readValue(XML_ITEMS_FILENAME, QList<QString>() << XML_NODE_MOVE_BOX << XML_NODE_RATING << XML_NODE_X).toInt();
+/*    int ratingX           = XML::instance().readValue(XML_ITEMS_FILENAME, QList<QString>() << XML_NODE_MOVE_BOX << XML_NODE_RATING << XML_NODE_X).toInt();
     int ratingY           = XML::instance().readValue(XML_ITEMS_FILENAME, QList<QString>() << XML_NODE_MOVE_BOX << XML_NODE_RATING << XML_NODE_Y).toInt();
     QString ratingFamily  = XML::instance().readValue(XML_ITEMS_FILENAME, QList<QString>() << XML_NODE_MOVE_BOX << XML_NODE_RATING << XML_NODE_FONT << XML_NODE_FAMILY);
     int ratingSize        = XML::instance().readValue(XML_ITEMS_FILENAME, QList<QString>() << XML_NODE_MOVE_BOX << XML_NODE_RATING << XML_NODE_FONT << XML_NODE_SIZE).toInt();
@@ -45,7 +45,7 @@ MoveBox::MoveBox(QGraphicsScene* parentScene, PlayerType playerType):
     mRatingText->setDefaultTextColor(mActiveColor);
     mRatingText->setParentItem(mBorder);
     mRatingText->setPos(borderX + ratingX, borderY + ratingY);
-
+*/
     mMoveClock.moveBy(borderX, borderY);
     mGameClock.moveBy(borderX, borderY);
 }
@@ -58,11 +58,11 @@ MoveBox::~MoveBox() {
 
 void MoveBox::setPlayer(const Player& player)
 {
-    QString playerColorText = (player.color == PC_WHITE) ? QObject::tr("White") : QObject::tr("Black");
-    mPlayerNameText->setPlainText(playerColorText + ": " + player.name);
+    QString playerColorText = (player.color == PC_WHITE) ? QObject::tr("Move: white (") : QObject::tr("Move: black (");
+    mPlayerNameText->setPlainText(playerColorText  + player.name + ")");
 
     QString ratingText = (player.rating == RATING_NOT_AVAILABLE) ? QObject::tr("N/A") : QString::number(player.rating);
-    mRatingText->setPlainText(QObject::tr("Rating") + ": " + ratingText);
+//    mRatingText->setPlainText(QObject::tr("Rating") + ": " + ratingText);
 }
 
 void MoveBox::setActive()
@@ -79,7 +79,7 @@ void MoveBox::setActive()
 
     mBorder->setPen(mActiveColor);
     mPlayerNameText->setDefaultTextColor(mActiveColor);
-    mRatingText->setDefaultTextColor(mActiveColor);
+//    mRatingText->setDefaultTextColor(mActiveColor);
 }
 
 void MoveBox::setInactive()
@@ -92,5 +92,5 @@ void MoveBox::setInactive()
 
     mBorder->setPen(mInactiveColor);
     mPlayerNameText->setDefaultTextColor(mInactiveColor);
-    mRatingText->setDefaultTextColor(mInactiveColor);
+//    mRatingText->setDefaultTextColor(mInactiveColor);
 }

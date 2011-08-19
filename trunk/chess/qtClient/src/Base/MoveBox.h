@@ -37,7 +37,7 @@ private:
     // childs of mBorder
     //QGraphicsTextItem* mMoveText;
     QGraphicsTextItem* mPlayerNameText;
-    QGraphicsTextItem* mRatingText;
+  //  QGraphicsTextItem* mRatingText;
 
     // Clock mMoveClock;
 
