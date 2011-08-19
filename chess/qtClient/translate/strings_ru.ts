@@ -446,12 +446,12 @@
 <context>
     <name>GameScene</name>
     <message>
-        <location filename="../src/UI/GameScene.cpp" line="52"/>
+        <location filename="../src/UI/GameScene.cpp" line="51"/>
         <source>Game menu</source>
         <translation>Меню игры</translation>
     </message>
     <message>
-        <location filename="../src/UI/GameScene.cpp" line="69"/>
+        <location filename="../src/UI/GameScene.cpp" line="68"/>
         <source>Invalid move.</source>
         <translation>Неправильный ход</translation>
     </message>
@@ -617,9 +617,8 @@
 <context>
     <name>QObject</name>
     <message>
-        <location filename="../src/Base/MoveBox.cpp" line="12"/>
         <source>Move: </source>
-        <translation>Ход: </translation>
+        <translation type="obsolete">Ход: </translation>
     </message>
     <message>
         <location filename="../src/Base/MoveBox.cpp" line="13"/>
@@ -628,13 +627,21 @@
     </message>
     <message>
         <location filename="../src/Base/MoveBox.cpp" line="61"/>
-        <source>White</source>
-        <translation>Белые</translation>
+        <source>Move: white (</source>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../src/Base/MoveBox.cpp" line="61"/>
+        <source>Move: black (</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>White</source>
+        <translation type="obsolete">Белые</translation>
+    </message>
+    <message>
         <source>Black</source>
-        <translation>Черные</translation>
+        <translation type="obsolete">Черные</translation>
     </message>
     <message>
         <location filename="../src/Base/MoveBox.cpp" line="64"/>
@@ -642,9 +649,8 @@
         <translation>НЕТ</translation>
     </message>
     <message>
-        <location filename="../src/Base/MoveBox.cpp" line="65"/>
         <source>Rating</source>
-        <translation>Рейтинг</translation>
+        <translation type="obsolete">Рейтинг</translation>
     </message>
     <message>
         <location filename="../src/Base/Defines.h" line="146"/>

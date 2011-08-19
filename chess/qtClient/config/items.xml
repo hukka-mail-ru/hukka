@@ -7,7 +7,7 @@
 
   <Scene>
     <margin>  <width value="5" />  </margin>
-    <landscape>  <x value="0" />   <y value="0" />  <width value="475" />  <height value="315" />  </landscape>
+    <landscape>  <x value="0" />   <y value="0" />  <width value="477" />  <height value="318" />  </landscape>
   </Scene>
 
 
@@ -150,7 +150,7 @@
 
     <player>     <font> <family value="Helvetica [Cronyx]" />  <size value="9" /> </font>  <x value="5" />  <y value="0"  /> </player>
     <rating>     <font> <family value="Helvetica [Cronyx]" />  <size value="8" /> </font>  <x value="5" />  <y value="15" /> </rating>
-    <MoveClock>  <font> <family value="Helvetica [Cronyx]" />  <size value="12" /> </font>  <x value="5" />  <y value="30" /> </MoveClock>
+    <MoveClock>  <font> <family value="Helvetica [Cronyx]" />  <size value="15" /> </font>  <x value="5" />  <y value="25" /> </MoveClock>
     <GameClock>  <font> <family value="Helvetica [Cronyx]" />  <size value="9" /> </font>  <x value="5" />  <y value="50" /> </GameClock>
 
   </MoveBox>

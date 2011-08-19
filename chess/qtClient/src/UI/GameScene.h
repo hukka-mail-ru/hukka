@@ -47,8 +47,9 @@ private:
 
     Chat* mChat;
 
-    MoveBox mMeMoveBox;
-    MoveBox mOppMoveBox;
+    MoveBox mMoveBox;
+ //   MoveBox mMeMoveBox;
+ //   MoveBox mOppMoveBox;
 
     Board mBoard;
 
