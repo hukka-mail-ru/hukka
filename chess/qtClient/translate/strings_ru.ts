@@ -543,17 +543,17 @@
 <context>
     <name>MyMessageBox</name>
     <message>
-        <location filename="../src/Base/MyMessageBox.cpp" line="28"/>
+        <location filename="../src/Base/MyMessageBox.cpp" line="29"/>
         <source>OK</source>
         <translation>ОК</translation>
     </message>
     <message>
-        <location filename="../src/Base/MyMessageBox.cpp" line="34"/>
+        <location filename="../src/Base/MyMessageBox.cpp" line="35"/>
         <source>Yes</source>
         <translation>Да</translation>
     </message>
     <message>
-        <location filename="../src/Base/MyMessageBox.cpp" line="35"/>
+        <location filename="../src/Base/MyMessageBox.cpp" line="36"/>
         <source>No</source>
         <translation>Нет</translation>
     </message>

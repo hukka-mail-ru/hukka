@@ -29,11 +29,11 @@
   
   <Dialogs>
      <style value="MyDialog    { background: grey; } 
-                   QLineEdit   { font-size: 18px; } 
-                   QLabel      { font-size: 18px; color: white; }
-                   QCheckBox   { font-size: 18px; color: white; }
-                   QComboBox   { font-size: 18px; }
-                   QPushButton { font-size: 18px; }
+                   QLineEdit   { font-size: 20px; } 
+                   QLabel      { font-size: 20px; color: white; }
+                   QCheckBox   { font-size: 20px; color: white; }
+                   QComboBox   { font-size: 20px; }
+                   QPushButton { font-size: 24px; }
                    QTableWidget { font-size: 18px; }"/> 
   </Dialogs>
 
