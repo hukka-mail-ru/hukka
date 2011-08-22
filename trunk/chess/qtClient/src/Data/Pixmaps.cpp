@@ -112,6 +112,11 @@ void Pixmaps::loadPixmaps()
     mPixmaps.insert(PIX_CAPTURED_BLACK_KNIGHT, mPixmaps[PIX_CAPTURED].copy(capturedWidth * 3, capturedHeight, capturedWidth, capturedHeight ));
     mPixmaps.insert(PIX_CAPTURED_BLACK_PAWN,   mPixmaps[PIX_CAPTURED].copy(capturedWidth * 4, capturedHeight, capturedWidth, capturedHeight ));
 
+    ////////////////////////////////////////////////////////////////////////////////////
+    loadPixmap(PIX_CAPTURED_BOX_WHITE, ":/images/capturedBoxWhite.png");
+    loadPixmap(PIX_CAPTURED_BOX_BLACK, ":/images/capturedBoxBlack.png");
+
+
 }
 
 void Pixmaps::loadPixmap(PixmapKey key, const QString& filename)

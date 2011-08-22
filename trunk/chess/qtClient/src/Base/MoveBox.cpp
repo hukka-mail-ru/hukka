@@ -8,21 +8,19 @@
 #include "MoveBox.h"
 #include <XML.h>
 
-MoveBox::MoveBox(QGraphicsScene* parentScene, PlayerType playerType):
+MoveBox::MoveBox(QGraphicsScene* parentScene):
     mMoveClock(parentScene, QObject::tr(""), SIGNAL(gotMoveTime(quint32)), XML_NODE_MOVE_CLOCK),
     mGameClock(parentScene, QObject::tr("Game: "), SIGNAL(gotGameTime(quint32)), XML_NODE_GAME_CLOCK)
 {
-    QString playerNode = (playerType == PT_ME) ? XML_NODE_ME : XML_NODE_OPPONENT;
-
     // colors
-    mActiveColor     = QColor(XML::instance().readValue(XML_ITEMS_FILENAME, QList<QString>() << XML_NODE_MOVE_BOX << playerNode << XML_NODE_COLOR << XML_NODE_ACTIVE));
-    mInactiveColor   = QColor(XML::instance().readValue(XML_ITEMS_FILENAME, QList<QString>() << XML_NODE_MOVE_BOX << playerNode << XML_NODE_COLOR << XML_NODE_INACTIVE));
+    mActiveColor     = QColor(XML::instance().readValue(XML_ITEMS_FILENAME, QList<QString>() << XML_NODE_MOVE_BOX << XML_NODE_COLOR << XML_NODE_ACTIVE));
+    mInactiveColor   = QColor(XML::instance().readValue(XML_ITEMS_FILENAME, QList<QString>() << XML_NODE_MOVE_BOX  << XML_NODE_COLOR << XML_NODE_INACTIVE));
 
     // border
-    int borderX      = XML::instance().readValue(XML_ITEMS_FILENAME, QList<QString>() << XML_NODE_MOVE_BOX << playerNode << XML_NODE_BORDER << XML_NODE_X).toInt();
-    int borderY      = XML::instance().readValue(XML_ITEMS_FILENAME, QList<QString>() << XML_NODE_MOVE_BOX << playerNode << XML_NODE_BORDER << XML_NODE_Y).toInt();
-    int borderWidth  = XML::instance().readValue(XML_ITEMS_FILENAME, QList<QString>() << XML_NODE_MOVE_BOX << playerNode << XML_NODE_BORDER << XML_NODE_WIDTH).toInt();
-    int borderHeight = XML::instance().readValue(XML_ITEMS_FILENAME, QList<QString>() << XML_NODE_MOVE_BOX << playerNode << XML_NODE_BORDER << XML_NODE_HEIGHT).toInt();
+    int borderX      = XML::instance().readValue(XML_ITEMS_FILENAME, QList<QString>() << XML_NODE_MOVE_BOX  << XML_NODE_BORDER << XML_NODE_X).toInt();
+    int borderY      = XML::instance().readValue(XML_ITEMS_FILENAME, QList<QString>() << XML_NODE_MOVE_BOX  << XML_NODE_BORDER << XML_NODE_Y).toInt();
+    int borderWidth  = XML::instance().readValue(XML_ITEMS_FILENAME, QList<QString>() << XML_NODE_MOVE_BOX  << XML_NODE_BORDER << XML_NODE_WIDTH).toInt();
+    int borderHeight = XML::instance().readValue(XML_ITEMS_FILENAME, QList<QString>() << XML_NODE_MOVE_BOX  << XML_NODE_BORDER << XML_NODE_HEIGHT).toInt();
     mBorder = parentScene->addRect (borderX, borderY, borderWidth, borderHeight, QPen(mActiveColor));
 
     // Player Name

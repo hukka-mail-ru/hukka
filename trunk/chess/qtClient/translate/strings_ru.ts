@@ -626,12 +626,12 @@
         <translation>Игра: </translation>
     </message>
     <message>
-        <location filename="../src/Base/MoveBox.cpp" line="61"/>
+        <location filename="../src/Base/MoveBox.cpp" line="59"/>
         <source>Move: white (</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/Base/MoveBox.cpp" line="61"/>
+        <location filename="../src/Base/MoveBox.cpp" line="59"/>
         <source>Move: black (</source>
         <translation type="unfinished"></translation>
     </message>
@@ -644,7 +644,7 @@
         <translation type="obsolete">Черные</translation>
     </message>
     <message>
-        <location filename="../src/Base/MoveBox.cpp" line="64"/>
+        <location filename="../src/Base/MoveBox.cpp" line="62"/>
         <source>N/A</source>
         <translation>НЕТ</translation>
     </message>
