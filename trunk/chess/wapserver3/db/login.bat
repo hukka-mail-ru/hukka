@@ -1,1 +1,0 @@
-mysql -h wapserver3.wapportal.ru -u debug -pdebug WapServer3DB

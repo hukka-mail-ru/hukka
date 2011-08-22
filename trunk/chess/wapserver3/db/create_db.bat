@@ -1,1 +1,0 @@
-mysql -u WapServer3 -pwin74 < create_db.txt > log.txt
