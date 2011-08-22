@@ -21,7 +21,7 @@
 class MoveBox
 {
 public:
-    MoveBox(QGraphicsScene* parentScene, PlayerType playerType);
+    MoveBox(QGraphicsScene* parentScene);
     virtual ~MoveBox();
 
     // change color and "your move" -> "opponent's move"

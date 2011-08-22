@@ -110,7 +110,7 @@
 
 
       <GameMenu>
-        <landscape> <x value="20" />   <y value="0" />  </landscape>
+        <landscape> <x value="20" />   <y value="20" />  </landscape>
       </GameMenu>
 
   </Buttons>
@@ -132,21 +132,16 @@
   </Piece>
 
   <CaptureBox>
-	<me>       <color value="#D38842" /> <x value="0" />   <y value="273" />  <width value="158" />  <height value="20" /> </me>
-	<opponent> <color value="#7C3B1B" /> <x value="0" />   <y value="295"/> <width value="158" />  <height value="20" /></opponent>
-    <border> <width value="1" /> </border>
-    <Piece>  <width value="13" />  <height value="11" />  </Piece>
+	<me>       <x value="3" />   <y value="236" />  </me>
+	<opponent> <x value="3" />   <y value="277"/>  </opponent>
+    <Piece>  <width value="18" />  <height value="18" />  </Piece>
+	<border>  <width value="1" />  </border> 
   </CaptureBox>
 
   <MoveBox>
 
-	<me>       <color> <active value="white" /> <inactive value="grey" />  </color> 
-               <border> <x value="0" />   <y value="195" />  <width value="158" />  <height value="75" /> </border> 
-    </me>
-
-	<opponent> <color> <active value="#FFCC00" /> <inactive value="grey" />  </color>
-               <border> <x value="0" />   <y value="118"/> <width value="158" />  <height value="75" /> </border> 
-    </opponent>
+    <color> <active value="white" /> <inactive value="grey" />  </color> 
+    <border> <x value="3" />   <y value="156" />  <width value="152" />  <height value="75" /> </border> 
 
     <player>     <font> <family value="Helvetica [Cronyx]" />  <size value="9" /> </font>  <x value="5" />  <y value="0"  /> </player>
     <rating>     <font> <family value="Helvetica [Cronyx]" />  <size value="8" /> </font>  <x value="5" />  <y value="15" /> </rating>
@@ -157,7 +152,7 @@
 
   <Board>
     <width value="320" />
-    <border>  <color value="white" />  </border>
+    <border>  <width value="1" /> <color value="#D38842" /> </border>
     <x value="160" /> <y value="0" /> 
   </Board>
 

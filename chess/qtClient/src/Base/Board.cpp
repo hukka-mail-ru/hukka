@@ -29,9 +29,14 @@ Board::Board(QGraphicsScene* parentScene):
     // board and field
     mBoardRectX = XML::instance().readValue(XML_ITEMS_FILENAME, QList<QString>() << XML_NODE_BOARD  << XML_NODE_X).toInt();
     mBoardRectY = XML::instance().readValue(XML_ITEMS_FILENAME, QList<QString>() << XML_NODE_BOARD  << XML_NODE_Y).toInt();
-    int board_width = XML::instance().readValue(XML_ITEMS_FILENAME, QList<QString>() << XML_NODE_BOARD << XML_NODE_WIDTH).toInt();
+    int boardWidth = XML::instance().readValue(XML_ITEMS_FILENAME, QList<QString>() << XML_NODE_BOARD << XML_NODE_WIDTH).toInt();
+    int borderWidth = XML::instance().readValue(XML_ITEMS_FILENAME, QList<QString>() << XML_NODE_BOARD << XML_NODE_BORDER << XML_NODE_WIDTH).toInt();
+    QColor borderColor  = QColor(XML::instance().readValue(XML_ITEMS_FILENAME, QList<QString>() << XML_NODE_BOARD << XML_NODE_BORDER << XML_NODE_COLOR));
 
-    mBoardRect = mParentScene->addRect (mBoardRectX, mBoardRectY, board_width,  board_width, QPen(QColor(0, 0, 0)));
+    qDebug() << borderColor.red();
+
+    mBoardRect = mParentScene->addRect (mBoardRectX - borderWidth, mBoardRectY, boardWidth,  boardWidth, QPen(borderColor));
+
    // updateGameField(mField, mWhite);
 
 }

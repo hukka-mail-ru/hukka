@@ -16,7 +16,7 @@
 GameScene::GameScene(QObject *parent):
        QGraphicsScene(parent),
        mChat(NULL),
-       mMoveBox(this, PT_ME),
+       mMoveBox(this),
        mBoard(this)
 {
 

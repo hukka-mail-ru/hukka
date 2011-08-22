@@ -39,8 +39,8 @@ private:
     QString mBgForWhitesColor;
     QString mBgForBlacksColor;
 
-    QGraphicsRectItem* mMeBox;
-    QGraphicsRectItem* mOppBox;
+    QGraphicsPixmapItem* mMeBox;
+    QGraphicsPixmapItem* mOppBox;
 
     int mCapturedPieceWidth;
 };
