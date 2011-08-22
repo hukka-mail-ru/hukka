@@ -12,6 +12,7 @@ MyMessageBox::MyMessageBox(QWidget *parent, MyMessageBoxType type, const QString
     MyDialog(parent)
 {
     label = new QLabel(text, this);
+    label->setWordWrap(true);
 
    // upperLayout = new QVBoxLayout();
     layout = new QVBoxLayout(this);
