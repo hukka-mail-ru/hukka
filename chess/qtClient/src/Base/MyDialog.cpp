@@ -11,8 +11,10 @@ MyDialog::MyDialog(QWidget *parent, Qt::WindowFlags flags): QDialog(parent, flag
 {
     const int margin = 1; // tiny window margin
 
-    setFixedSize(MainWindow::instance()->width() - 2*margin, MainWindow::instance()->height()/2 - margin);
-    move(margin, MainWindow::instance()->height()/2);
+   // setFixedSize(MainWindow::instance()->width() - 2*margin, MainWindow::instance()->height()/2 - margin);
+   // move(margin, MainWindow::instance()->height()/2);
+    setFixedSize(MainWindow::instance()->width() - 2*margin, MainWindow::instance()->height() - margin);
+    move(margin, margin);
 
     // No title, no [X] button, no bottom
     setWindowFlags(Qt::Widget);
