@@ -7,7 +7,7 @@
 
   <Scene>
     <margin>  <width value="5" />  </margin>
-    <landscape>  <x value="0" />   <y value="0" />  <width value="477" />  <height value="318" />  </landscape>
+    <landscape>  <x value="0" />   <y value="0" />  <width value="475" />  <height value="315" />  </landscape>
   </Scene>
 
 
@@ -28,13 +28,13 @@
   </MainMenu>
   
   <Dialogs>
-     <style value="MyDialog    { background: grey; } 
-                   QLineEdit   { font-size: 20px; } 
-                   QLabel      { font-size: 20px; color: white; }
-                   QCheckBox   { font-size: 20px; color: white; }
-                   QComboBox   { font-size: 20px; }
-                   QPushButton { font-size: 24px; }
-                   QTableWidget { font-size: 18px; }"/> 
+     <style value="MyDialog     { background: grey; } 
+                   QLineEdit    { font-size:  20px; } 
+                   QLabel       { font-size:  20px; color: white; }
+                   QCheckBox    { font-size:  20px; color: white; }
+                   QComboBox    { font-size:  20px; }
+                   QPushButton  { font-size:  24px; }
+                   QTableWidget { font-size:  18px; }"/> 
   </Dialogs>
 
 
