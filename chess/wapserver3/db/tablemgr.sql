@@ -1,10 +1,8 @@
 USE WapServer3DB;
 
-#INSERT INTO wsUsers (GUID,User,Password) VALUES (4,'tbm','02B0B3AA_F677_4E83_B440_FCFBCF00D35F');
 
-#DROP TABLE tbLogicList ;
-
-CREATE TABLE IF NOT EXISTS tbLogicList 
+DROP TABLE IF EXISTS tbLogicList;
+CREATE TABLE tbLogicList 
 (
       LogicId INT UNSIGNED NOT NULL, 
       LogicName VARCHAR(50) NOT NULL, 
@@ -15,15 +13,14 @@ CREATE TABLE IF NOT EXISTS tbLogicList
 INSERT INTO tbLogicList  (LogicId, LogicName) VALUES (1,'Gammon');
 INSERT INTO tbLogicList  (LogicId, LogicName) VALUES (2,'Chess');
 
-DESCRIBE tbLogicList;
-
-
-
+#DESCRIBE tbLogicList;
 SELECT * FROM tbLogicList;
 
 
 
-CREATE TABLE IF NOT EXISTS tbParamList
+
+DROP TABLE IF EXISTS tbParamList;
+CREATE TABLE tbParamList
 (
   ParamID INT UNSIGNED NOT NULL, 
   ParamName VARCHAR(50) NOT NULL, 
@@ -42,8 +39,7 @@ INSERT INTO tbParamList (ParamID, ParamName, Min, Max, IsPassword, IsPlayerID) V
 INSERT INTO tbParamList (ParamID, ParamName, Min, Max, IsPassword, IsPlayerID) VALUES (5, 'MinRating', NULL, NULL, 0, 0);
 INSERT INTO tbParamList (ParamID, ParamName, Min, Max, IsPassword, IsPlayerID) VALUES (6, 'MaxRating', NULL, NULL, 0, 0);
 
-DESCRIBE tbParamList;
-
+#DESCRIBE tbParamList;
 SELECT * FROM tbParamList;
 
 

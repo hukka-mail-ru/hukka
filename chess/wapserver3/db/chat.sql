@@ -3,9 +3,7 @@ delimiter //
 
 
 DROP TABLE IF EXISTS tbChessChat;
-DROP TABLE IF EXISTS tbChessChatTbl;
-
-CREATE TABLE IF NOT EXISTS tbChessChat
+CREATE TABLE tbChessChat
 (
       TableID INT UNSIGNED,
       Msg TEXT NOT NULL,
@@ -15,8 +13,7 @@ CREATE TABLE IF NOT EXISTS tbChessChat
 
 
 DROP TABLE IF EXISTS tbChessChatUserOnline;
-
-CREATE TABLE IF NOT EXISTS tbChessChatUserOnline
+CREATE TABLE tbChessChatUserOnline
 (
       PlayerID INT UNSIGNED NOT NULL DEFAULT '0',
       TableID INT UNSIGNED DEFAULT '0',
@@ -29,12 +26,6 @@ CREATE TABLE IF NOT EXISTS tbChessChatUserOnline
 #######################################################################################################################
 
 DROP PROCEDURE IF EXISTS AddToHistory;
-DROP PROCEDURE IF EXISTS AddToHistoryTbl;
-
-#######################################################################################################################
-#######################################################################################################################
-
-
 CREATE PROCEDURE AddToHistory (IN tab INT, IN message TEXT, IN maxEntries INT)
 sproc:BEGIN
 
