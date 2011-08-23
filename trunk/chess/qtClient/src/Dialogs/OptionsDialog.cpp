@@ -48,7 +48,7 @@ OptionsDialog::OptionsDialog(QWidget *parent):
     upperLayout->addStretch();
 
     okButton = new QPushButton(tr("OK"), this);
-    exitButton = new QPushButton(tr("Exit"), this);
+    exitButton = new QPushButton(tr("Cancel"), this);
 
     lowerLayout = new QHBoxLayout();
     lowerLayout->addWidget(okButton);

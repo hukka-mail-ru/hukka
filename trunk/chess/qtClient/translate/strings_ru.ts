@@ -597,8 +597,12 @@
     </message>
     <message>
         <location filename="../src/Dialogs/OptionsDialog.cpp" line="51"/>
+        <source>Cancel</source>
+        <translation type="unfinished">Отмена</translation>
+    </message>
+    <message>
         <source>Exit</source>
-        <translation>Выход</translation>
+        <translation type="obsolete">Выход</translation>
     </message>
     <message>
         <location filename="../src/Dialogs/OptionsDialog.cpp" line="77"/>
