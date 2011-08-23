@@ -1,8 +1,7 @@
 USE WapServer3DB;
 
 DROP TABLE IF EXISTS tbChessTableList;
-
-CREATE TABLE IF NOT EXISTS tbChessTableList
+CREATE TABLE tbChessTableList
 (
   TableID INT UNSIGNED NOT NULL AUTO_INCREMENT,
   State TINYINT UNSIGNED NOT NULL DEFAULT '1',
@@ -26,10 +25,13 @@ CREATE TABLE IF NOT EXISTS tbChessTableList
   PRIMARY KEY( TableID )
 );
 
-DESCRIBE tbChessTableList;
+#DESCRIBE tbChessTableList;
 SELECT * FROM tbChessTableList;
 
-CREATE TABLE IF NOT EXISTS tbChessRating
+
+
+DROP TABLE IF EXISTS tbChessRating;
+CREATE TABLE tbChessRating
 (
   PlayerID INT UNSIGNED NOT NULL DEFAULT '0',
   Rating INT UNSIGNED NOT NULL DEFAULT '0',
@@ -38,4 +40,7 @@ CREATE TABLE IF NOT EXISTS tbChessRating
   PRIMARY KEY(PlayerID)
 );
 
-DESCRIBE tbChessRating;
+INSERT INTO tbChessRating (PlayerID, Rating, Available) VALUES (100, 1000, TRUE);
+
+#DESCRIBE tbChessRating;
+SELECT * FROM tbChessRating;
