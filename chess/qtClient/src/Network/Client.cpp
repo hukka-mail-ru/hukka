@@ -1462,8 +1462,16 @@ void Client::onDisconnected()
 ====================================================================================================*/
 void Client::onError()
 {
+    QString text = mSocket.errorString();
+
+    if(text == "Connection refused")
+    {
+        text = tr("Connection refused. \n\nPlease check whether you are connected to Internet. "
+                  "Check the server name and port as well.");
+    }
+
     //qDebug() << "Client::onError: " << mSocket.errorString();
-    emit error(mSocket.errorString());
+    emit error(text);
 }
 
 /*====================================================================================================

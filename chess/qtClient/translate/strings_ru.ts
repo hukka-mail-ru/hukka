@@ -5,8 +5,13 @@
     <name></name>
     <message>
         <location filename="../src/Base/Defines.h" line="100"/>
-        <source>all</source>
+        <source></source>
         <translation>всех</translation>
+    </message>
+    <message>
+        <location filename="../src/Base/Defines.h" line="100"/>
+        <source>all</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -190,6 +195,15 @@
         <translation>Ваш оппонент </translation>
     </message>
     <message>
+        <location filename="../src/Network/Client.cpp" line="1469"/>
+        <source>Connection refused. 
+
+Please check whether you are connected to Internet. Check the server name and port as well.</source>
+        <translation type="unfinished">Нет соединения с сервером. 
+
+Проверьте, доступна ли Вам сеть Интернет. Также проверьте, правильно ли Вы указали адрес сервера и номер порта.</translation>
+    </message>
+    <message>
         <location filename="../src/Network/Client.cpp" line="586"/>
         <location filename="../src/Network/Client.cpp" line="704"/>
         <location filename="../src/Network/Client.cpp" line="731"/>
@@ -324,7 +338,7 @@
         <translation>Ошибка CHAT: </translation>
     </message>
     <message>
-        <location filename="../src/Network/Client.cpp" line="1481"/>
+        <location filename="../src/Network/Client.cpp" line="1489"/>
         <source>Server doesn&apos;t respond</source>
         <translation>Сервер не отвечает</translation>
     </message>
@@ -538,6 +552,11 @@
         <location filename="../src/UI/MainWindow.cpp" line="68"/>
         <source>Chess</source>
         <translation>Шахматы</translation>
+    </message>
+    <message>
+        <location filename="../src/UI/MainWindow.cpp" line="201"/>
+        <source>Connection refused. Please check whether you are connected to Internet.</source>
+        <translation>Нет соединения с сервером. Проверьте, доступна ли вам сеть Интернет. Также проверьте, правильно ли Вы указали адрес сервера и номер порта.</translation>
     </message>
 </context>
 <context>
