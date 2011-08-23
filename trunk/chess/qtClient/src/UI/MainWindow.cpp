@@ -194,8 +194,14 @@ void MainWindow::showMessage(const QString& text)
 
 void MainWindow::showError(const QString& text)
 {
+    QString translated = text;
+
+    if(text == "Connection refused")
+    {
+        translated = tr("Connection refused. Please check whether you are connected to Internet.");
+    }
    // qDebug() << "MainWindow::showError";
-    showMessageBox(MB_ERROR, text);
+    showMessageBox(MB_ERROR, translated);
 }
 
 bool MainWindow::showQuestion(const QString& text)
