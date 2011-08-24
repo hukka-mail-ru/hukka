@@ -30,6 +30,9 @@ public:
 
     void setPlayer(const Player& player);
 
+    void setGameOver();
+
+
 private:
 
     QGraphicsRectItem* mBorder;

@@ -122,7 +122,7 @@ signals:
 
         void gameStarted();
         void gameRejected();
-        void gameOver(const QString& message);
+        void gameOver(const QString& message, int status, int rating);
         void gameTableCreated(TABLEID id);
         void gameTableDeleted();
 

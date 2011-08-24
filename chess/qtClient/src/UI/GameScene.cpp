@@ -175,6 +175,7 @@ void GameScene::updateMoveBoxes(GameState gameState)
             break;
         case GS_GAME_OVER:
             mMoveBox.setInactive();
+            mMoveBox.setGameOver();
             break;
         default:
             break;

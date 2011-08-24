@@ -185,17 +185,17 @@
         <translation>Такой пользователь уже зашел на сервер</translation>
     </message>
     <message>
-        <location filename="../src/Network/Client.cpp" line="1301"/>
+        <location filename="../src/Network/Client.cpp" line="1302"/>
         <source>Game over.</source>
         <translation>Игра окончена</translation>
     </message>
     <message>
-        <location filename="../src/Network/Client.cpp" line="1322"/>
+        <location filename="../src/Network/Client.cpp" line="1319"/>
         <source>Your opponent has rejected the draw</source>
         <translation>Ваш оппонент </translation>
     </message>
     <message>
-        <location filename="../src/Network/Client.cpp" line="1469"/>
+        <location filename="../src/Network/Client.cpp" line="1466"/>
         <source>Connection refused. 
 
 Please check whether you are connected to Internet. Check the server name and port as well.</source>
@@ -270,7 +270,7 @@ Please check whether you are connected to Internet. Check the server name and po
         <location filename="../src/Network/Client.cpp" line="978"/>
         <location filename="../src/Network/Client.cpp" line="1270"/>
         <location filename="../src/Network/Client.cpp" line="1287"/>
-        <location filename="../src/Network/Client.cpp" line="1324"/>
+        <location filename="../src/Network/Client.cpp" line="1321"/>
         <source>Internal server error </source>
         <translation>Внутренняя ошибка сервера </translation>
     </message>
@@ -318,27 +318,27 @@ Please check whether you are connected to Internet. Check the server name and po
         <translation>Ошибка TBM: </translation>
     </message>
     <message>
-        <location filename="../src/Network/Client.cpp" line="1321"/>
+        <location filename="../src/Network/Client.cpp" line="1318"/>
         <source>A draw.</source>
         <translation>Ничья.</translation>
     </message>
     <message>
-        <location filename="../src/Network/Client.cpp" line="1323"/>
+        <location filename="../src/Network/Client.cpp" line="1320"/>
         <source>Please wait for your next move to offer a draw</source>
         <translation>Подождите своего хода, а затем предложите ничью</translation>
     </message>
     <message>
-        <location filename="../src/Network/Client.cpp" line="1398"/>
+        <location filename="../src/Network/Client.cpp" line="1395"/>
         <source>CHS Error: </source>
         <translation>Ошибка CHS: </translation>
     </message>
     <message>
-        <location filename="../src/Network/Client.cpp" line="1428"/>
+        <location filename="../src/Network/Client.cpp" line="1425"/>
         <source>CHAT Error: </source>
         <translation>Ошибка CHAT: </translation>
     </message>
     <message>
-        <location filename="../src/Network/Client.cpp" line="1489"/>
+        <location filename="../src/Network/Client.cpp" line="1486"/>
         <source>Server doesn&apos;t respond</source>
         <translation>Сервер не отвечает</translation>
     </message>
@@ -554,9 +554,15 @@ Please check whether you are connected to Internet. Check the server name and po
         <translation>Шахматы</translation>
     </message>
     <message>
-        <location filename="../src/UI/MainWindow.cpp" line="201"/>
         <source>Connection refused. Please check whether you are connected to Internet.</source>
-        <translation>Нет соединения с сервером. Проверьте, доступна ли вам сеть Интернет. Также проверьте, правильно ли Вы указали адрес сервера и номер порта.</translation>
+        <translation type="obsolete">Нет соединения с сервером. Проверьте, доступна ли вам сеть Интернет. Также проверьте, правильно ли Вы указали адрес сервера и номер порта.</translation>
+    </message>
+</context>
+<context>
+    <name>MoveBox</name>
+    <message>
+        <source>Game over.</source>
+        <translation type="obsolete">Игра окончена</translation>
     </message>
 </context>
 <context>
@@ -644,19 +650,24 @@ Please check whether you are connected to Internet. Check the server name and po
         <translation type="obsolete">Ход: </translation>
     </message>
     <message>
-        <location filename="../src/Base/MoveBox.cpp" line="13"/>
+        <location filename="../src/Base/MoveBox.cpp" line="14"/>
         <source>Game: </source>
         <translation>Игра: </translation>
     </message>
     <message>
-        <location filename="../src/Base/MoveBox.cpp" line="59"/>
+        <location filename="../src/Base/MoveBox.cpp" line="60"/>
         <source>Move: white (</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/Base/MoveBox.cpp" line="59"/>
+        <location filename="../src/Base/MoveBox.cpp" line="60"/>
         <source>Move: black (</source>
         <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/Base/MoveBox.cpp" line="99"/>
+        <source>Game over.</source>
+        <translation type="unfinished">Игра окончена</translation>
     </message>
     <message>
         <source>White</source>
@@ -667,7 +678,7 @@ Please check whether you are connected to Internet. Check the server name and po
         <translation type="obsolete">Черные</translation>
     </message>
     <message>
-        <location filename="../src/Base/MoveBox.cpp" line="62"/>
+        <location filename="../src/Base/MoveBox.cpp" line="63"/>
         <source>N/A</source>
         <translation>НЕТ</translation>
     </message>
@@ -735,7 +746,12 @@ Please visit www.site.com to learn how to enable it.</source>
 <context>
     <name>UI</name>
     <message>
-        <location filename="../src/UI/UI.cpp" line="98"/>
+        <location filename="../src/UI/UI.cpp" line="87"/>
+        <source>Game over.</source>
+        <translation type="unfinished">Игра окончена</translation>
+    </message>
+    <message>
+        <location filename="../src/UI/UI.cpp" line="100"/>
         <source>Your opponent has offered a draw. Agree?</source>
         <translation type="unfinished">Ваш противник предлагает ничью. Согласны?</translation>
     </message>
