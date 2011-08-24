@@ -7,6 +7,7 @@
 
 #include "MoveBox.h"
 #include <XML.h>
+#include <QObject>
 
 MoveBox::MoveBox(QGraphicsScene* parentScene):
     mMoveClock(parentScene, QObject::tr(""), SIGNAL(gotMoveTime(quint32)), XML_NODE_MOVE_CLOCK),
@@ -91,4 +92,9 @@ void MoveBox::setInactive()
     mBorder->setPen(mInactiveColor);
     mPlayerNameText->setDefaultTextColor(mInactiveColor);
 //    mRatingText->setDefaultTextColor(mInactiveColor);
+}
+
+void MoveBox::setGameOver()
+{
+    mPlayerNameText->setPlainText(QObject::tr("Game over."));
 }
