@@ -801,18 +801,35 @@ Please visit www.site.com to learn how to enable it.</source>
     </message>
     <message>
         <location filename="../src/Dialogs/WaitJoinDialog.cpp" line="60"/>
+        <source>not available</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/Dialogs/WaitJoinDialog.cpp" line="61"/>
+        <source>wants to play chess with you</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/Dialogs/WaitJoinDialog.cpp" line="62"/>
+        <source>opponent rating</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/Dialogs/WaitJoinDialog.cpp" line="63"/>
+        <source>Start the game?</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
         <source>is not available</source>
-        <translation>не доступен</translation>
+        <translation type="obsolete">не доступен</translation>
     </message>
     <message>
-        <location filename="../src/Dialogs/WaitJoinDialog.cpp" line="61"/>
         <source> (rating </source>
-        <translation>(рейтинг</translation>
+        <translation type="obsolete">(рейтинг</translation>
     </message>
     <message>
-        <location filename="../src/Dialogs/WaitJoinDialog.cpp" line="61"/>
         <source>) wants to play chess with you. Agree?</source>
-        <translation>) хочет сыграть с вами. Начать игру?</translation>
+        <translation type="obsolete">) хочет сыграть с вами. Начать игру?</translation>
     </message>
 </context>
 </TS>
