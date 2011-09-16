@@ -687,58 +687,58 @@ Please check whether you are connected to Internet. Check the server name and po
         <translation type="obsolete">Рейтинг</translation>
     </message>
     <message>
-        <location filename="../src/Base/Defines.h" line="146"/>
+        <location filename="../src/Base/Defines.h" line="153"/>
         <source>offline</source>
         <translation>оффлайн</translation>
     </message>
     <message>
-        <location filename="../src/Base/Defines.h" line="229"/>
+        <location filename="../src/Base/Defines.h" line="236"/>
         <source>Your rating has been increased to</source>
         <translation>Ваш рейтинг повышен до</translation>
     </message>
     <message>
-        <location filename="../src/Base/Defines.h" line="230"/>
+        <location filename="../src/Base/Defines.h" line="237"/>
         <source>Your rating has been decreased to</source>
         <translation>Ваш рейтинг понижен до</translation>
     </message>
     <message>
-        <location filename="../src/Base/Defines.h" line="231"/>
+        <location filename="../src/Base/Defines.h" line="238"/>
         <source>Your rating has been slightly increased.</source>
         <translation>Ваш рейтинг немного повышен</translation>
     </message>
     <message>
-        <location filename="../src/Base/Defines.h" line="232"/>
+        <location filename="../src/Base/Defines.h" line="239"/>
         <source>Your rating hasn&apos;t been affected because of too few number of moves.</source>
         <translation>Ваш рейтинг не изменился, т.к. в партии было сделано слишком мало ходов.</translation>
     </message>
     <message>
-        <location filename="../src/Base/Defines.h" line="233"/>
+        <location filename="../src/Base/Defines.h" line="240"/>
         <source>Your rating is not available.
 Please visit www.site.com to learn how to enable it.</source>
         <translation>Ваш рейтинг не включен. Вы можете включить его на сайте www.site.com</translation>
     </message>
     <message>
-        <location filename="../src/Base/Defines.h" line="237"/>
+        <location filename="../src/Base/Defines.h" line="244"/>
         <source>You have won!</source>
         <translation>Вы победили!</translation>
     </message>
     <message>
-        <location filename="../src/Base/Defines.h" line="242"/>
+        <location filename="../src/Base/Defines.h" line="249"/>
         <source>Time&apos;s up. You have won!</source>
         <translation>Время вышло. Вы победили!</translation>
     </message>
     <message>
-        <location filename="../src/Base/Defines.h" line="247"/>
+        <location filename="../src/Base/Defines.h" line="254"/>
         <source>You have lost!</source>
         <translation>Вы проиграли!</translation>
     </message>
     <message>
-        <location filename="../src/Base/Defines.h" line="252"/>
+        <location filename="../src/Base/Defines.h" line="259"/>
         <source>Time&apos;s up. You have lost!</source>
         <translation>Время вышло. Вы проиграли!</translation>
     </message>
     <message>
-        <location filename="../src/Base/Defines.h" line="257"/>
+        <location filename="../src/Base/Defines.h" line="264"/>
         <source>A draw.</source>
         <translation>Ничья.</translation>
     </message>
