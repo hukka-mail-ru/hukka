@@ -175,6 +175,28 @@ void Board::updateGameField()
     updateGameField(mField, current_color);
 }
 
+
+bool getMove(const Field& oldField , const Field& newField, Move& move)
+{
+    if( oldField.empty() || newField.empty() || oldField.size() != newField.size())
+        return false;
+
+    for(int i=0; i<oldField.size(); i++)
+    {
+        if((oldField[i] != Empty) && (newField[i] == Empty))
+            move.srcCell = i;
+
+        if((oldField[i] == Empty) && (newField[i] != Empty))
+            move.dstCell = i;
+
+        if((oldField[i] != Empty) && (newField[i] != Empty) && (oldField[i] != newField[i]))
+            move.dstCell = i;
+    }
+
+    return true;
+}
+
+
 void Board::updateGameField(const Field& field, bool white)
 {
     disableAnimation();
@@ -183,6 +205,8 @@ void Board::updateGameField(const Field& field, bool white)
  //   {
  //       MainWindow::instance()->showMessage(tr("Invalid move."));
  //   }
+    Move move;
+    bool lastMove = getMove(mField, field, move);
 
     mField = field;
 
@@ -224,6 +248,12 @@ void Board::updateGameField(const Field& field, bool white)
         cell->setPos(x, y);
     }
 
+    if(lastMove)
+    {
+        highlightCell(move.srcCell, HC_GRAY);
+        highlightCell(move.dstCell, HC_GRAY);
+    }
+
     // show Captured pieces
     mCaptureBox.update(field, white);
 
@@ -231,9 +261,9 @@ void Board::updateGameField(const Field& field, bool white)
 }
 
 
-void Board::highlightCell(CELLID cell)
+void Board::highlightCell(CELLID cell, HighlightColor color)
 {
-    mCellArray[cell]->highlight();
+    mCellArray[cell]->highlight(color);
     mHighlightedCell = cell;
 }
 

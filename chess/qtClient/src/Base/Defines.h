@@ -122,6 +122,13 @@ enum PlayerColor
     PC_BLACK
 };
 
+enum HighlightColor
+{
+    HC_WHITE,
+    HC_GRAY
+};
+
+
 enum PlayerType
 {
     PT_ME,

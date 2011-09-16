@@ -20,8 +20,7 @@ Cell::Cell(QGraphicsScene* scene, CELLID cellID, PixmapKey cellPixmapKey, QObjec
     mIsHighlight(false),
     mPieceType(Empty)
 {
-    mHighlight = (UI::instance()->getPlayer(PT_ME).color == PC_WHITE) ?
-                      PIX_CELL_BLACK_HIGHLIGHT : PIX_CELL_WHITE_HIGHLIGHT;
+    mHighlight = PIX_CELL_WHITE_HIGHLIGHT;
 }
 
 void Cell::setPiece(piece_type pieceType)
@@ -102,8 +101,10 @@ void Cell::hidePiece()
     mIsPiece = false;
 }
 
-void Cell::highlight()
+void Cell::highlight(HighlightColor color)
 {
+    mHighlight = (color == HC_WHITE) ? PIX_CELL_WHITE_HIGHLIGHT : PIX_CELL_GRAY_HIGHLIGHT;
+
     applyPixmap(mHighlight);
     mIsHighlight = true;
 }

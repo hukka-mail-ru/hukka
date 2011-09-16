@@ -27,7 +27,7 @@ public:
     void showPiece();
     void hidePiece();
 
-    void highlight();
+    void highlight(HighlightColor color = HC_WHITE);
     void removeHighlight();
 
     int width() { return Pixmaps::get(mCellPixmapKey).width(); }

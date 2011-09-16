@@ -38,7 +38,7 @@ private:
     bool isEnemyPiece(CELLID cell);
 
 
-    void highlightCell(CELLID cell);
+    void highlightCell(CELLID cell, HighlightColor color = HC_WHITE);
     void enableAnimation(const Move& move);
 
     QGraphicsScene* mParentScene;
