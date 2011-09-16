@@ -291,6 +291,10 @@ ChessGameStatus ChessBoard::do_move(int from, int to, piece_type promotion) {
         m_CurPos.status=TripleOccurrence;
         in_progress=false;
     }
+    if (no_pieces_for_mate()) {
+        m_CurPos.status=Stalemate;
+        in_progress=false;
+    }
     else if (moves.empty() && is_in_check(m_CurPos.w_turn)) {
         m_CurPos.status=Checkmate;
         in_progress=false;
@@ -309,6 +313,24 @@ ChessGameStatus ChessBoard::do_move(int from, int to, piece_type promotion) {
         m_CurPos.status=Normal;
 
     return m_CurPos.status;
+}
+
+// -------------------------------------------------------------------
+// King against King = a draw.
+// -------------------------------------------------------------------
+bool ChessBoard::no_pieces_for_mate(void) const {
+    int num = 0;
+    for (int i=a1;i<=h8;i++) {
+        piece_type piece = make_neutral(m_CurPos.square[i]);
+        if (piece == King || piece == Empty) {
+            continue;
+        }
+        else
+        {
+            num++;
+        }
+    }
+    return num == 0;
 }
 
 // -------------------------------------------------------------------
