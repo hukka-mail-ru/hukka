@@ -638,7 +638,7 @@ Please check whether you are connected to Internet. Check the server name and po
 <context>
     <name>PromotionDialog</name>
     <message>
-        <location filename="../src/Dialogs/PromotionDialog.cpp" line="45"/>
+        <location filename="../src/Dialogs/PromotionDialog.cpp" line="48"/>
         <source>Please choose the promotion:</source>
         <translation>Выберите фигуру:</translation>
     </message>

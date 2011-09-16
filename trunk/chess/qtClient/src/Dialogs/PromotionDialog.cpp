@@ -15,8 +15,11 @@ QPushButton* PromotionDialog::newButton(const QPixmap& pixmap, const char* slot)
 {
     QPushButton* button = new QPushButton();
 
-    QIcon icon(pixmap);
-    button->setIcon(icon);
+    button->setIcon(QIcon(pixmap));
+
+    int height = XML::instance().readValue(XML_ITEMS_FILENAME, QList<QString>() << XML_NODE_PROMOTION << XML_NODE_HEIGHT).toInt() * 2;
+    button->setMinimumHeight(height);
+    button->setIconSize(QSize(pixmap.width(),pixmap.height()));
 
     QObject::connect(button, SIGNAL(clicked()), this, slot);
     return button;
