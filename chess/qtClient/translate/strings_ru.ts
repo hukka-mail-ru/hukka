@@ -1,17 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
-<!DOCTYPE TS>
-<TS version="2.0" language="ru_RU" sourcelanguage="en_US">
+<!DOCTYPE TS><TS version="1.1" language="ru_RU">
 <context>
-    <name></name>
+    <name>@default</name>
     <message>
-        <location filename="../src/Base/Defines.h" line="100"/>
-        <source></source>
-        <translation>всех</translation>
-    </message>
-    <message>
-        <location filename="../src/Base/Defines.h" line="100"/>
+        <location filename="../src/Base/Defines.h" line="102"/>
         <source>all</source>
-        <translation type="unfinished"></translation>
+        <translation>всем</translation>
     </message>
 </context>
 <context>
@@ -57,7 +51,7 @@
     <message>
         <location filename="../src/Dialogs/ChatMessageDialog.cpp" line="16"/>
         <source>A chat message to </source>
-        <translation>Сообщение для</translation>
+        <translation>Сообщение для </translation>
     </message>
     <message>
         <location filename="../src/Dialogs/ChatMessageDialog.cpp" line="17"/>
@@ -123,22 +117,6 @@
         <translation>Невозможно удалить игровой стол. ID </translation>
     </message>
     <message>
-        <location filename="../src/Network/Client.cpp" line="369"/>
-        <location filename="../src/Network/Client.cpp" line="416"/>
-        <location filename="../src/Network/Client.cpp" line="435"/>
-        <location filename="../src/Network/Client.cpp" line="466"/>
-        <location filename="../src/Network/Client.cpp" line="489"/>
-        <location filename="../src/Network/Client.cpp" line="515"/>
-        <location filename="../src/Network/Client.cpp" line="560"/>
-        <location filename="../src/Network/Client.cpp" line="586"/>
-        <location filename="../src/Network/Client.cpp" line="605"/>
-        <location filename="../src/Network/Client.cpp" line="643"/>
-        <location filename="../src/Network/Client.cpp" line="660"/>
-        <location filename="../src/Network/Client.cpp" line="677"/>
-        <location filename="../src/Network/Client.cpp" line="704"/>
-        <location filename="../src/Network/Client.cpp" line="731"/>
-        <location filename="../src/Network/Client.cpp" line="750"/>
-        <location filename="../src/Network/Client.cpp" line="767"/>
         <location filename="../src/Network/Client.cpp" line="785"/>
         <source> on server: </source>
         <translation> на сервере: </translation>
@@ -164,7 +142,6 @@
         <translation>Невозможно дать отказ на начало игры. ID стола </translation>
     </message>
     <message>
-        <location filename="../src/Network/Client.cpp" line="515"/>
         <location filename="../src/Network/Client.cpp" line="560"/>
         <source>Can&apos;t get field. Table ID </source>
         <translation>Невозможно получить игровое поле. ID стола </translation>
@@ -195,17 +172,15 @@
         <translation>Ваш оппонент </translation>
     </message>
     <message>
-        <location filename="../src/Network/Client.cpp" line="1466"/>
+        <location filename="../src/Network/Client.cpp" line="1467"/>
         <source>Connection refused. 
 
 Please check whether you are connected to Internet. Check the server name and port as well.</source>
-        <translation type="unfinished">Нет соединения с сервером. 
+        <translation>Нет соединения с сервером. 
 
 Проверьте, доступна ли Вам сеть Интернет. Также проверьте, правильно ли Вы указали адрес сервера и номер порта.</translation>
     </message>
     <message>
-        <location filename="../src/Network/Client.cpp" line="586"/>
-        <location filename="../src/Network/Client.cpp" line="704"/>
         <location filename="../src/Network/Client.cpp" line="731"/>
         <source>Can&apos;t surrender. Table ID </source>
         <translation>Невозможно сдаться. ID стола </translation>
@@ -266,10 +241,6 @@ Please check whether you are connected to Internet. Check the server name and po
         <translation>Неправильный пароль.</translation>
     </message>
     <message>
-        <location filename="../src/Network/Client.cpp" line="948"/>
-        <location filename="../src/Network/Client.cpp" line="978"/>
-        <location filename="../src/Network/Client.cpp" line="1270"/>
-        <location filename="../src/Network/Client.cpp" line="1287"/>
         <location filename="../src/Network/Client.cpp" line="1321"/>
         <source>Internal server error </source>
         <translation>Внутренняя ошибка сервера </translation>
@@ -305,9 +276,6 @@ Please check whether you are connected to Internet. Check the server name and po
         <translation>Неправильный параметр (или такой стол уже существует)</translation>
     </message>
     <message>
-        <location filename="../src/Network/Client.cpp" line="1014"/>
-        <location filename="../src/Network/Client.cpp" line="1032"/>
-        <location filename="../src/Network/Client.cpp" line="1075"/>
         <location filename="../src/Network/Client.cpp" line="1252"/>
         <source>Internal server error</source>
         <translation>Внутренняя ошибка сервера</translation>
@@ -384,29 +352,34 @@ Please check whether you are connected to Internet. Check the server name and po
 <context>
     <name>FindGameDialog</name>
     <message>
+        <location filename="../src/Dialogs/CreateGameDialog.cpp" line="22"/>
         <source>Find Game</source>
         <translation type="obsolete">Найти игру</translation>
     </message>
     <message>
+        <location filename="../src/Dialogs/CreateGameDialog.cpp" line="22"/>
         <source>All Games</source>
         <translation type="obsolete">Все игры</translation>
     </message>
     <message>
+        <location filename="../src/Dialogs/CreateGameDialog.cpp" line="22"/>
         <source>Random Game</source>
         <translation type="obsolete">Случайная игра</translation>
     </message>
     <message>
+        <location filename="../src/Dialogs/CreateGameDialog.cpp" line="22"/>
         <source>Cancel</source>
         <translation type="obsolete">Отмена</translation>
     </message>
     <message>
+        <location filename="../src/Dialogs/CreateGameDialog.cpp" line="22"/>
         <source>No game table found</source>
         <translation type="obsolete">Игры не найдены</translation>
     </message>
     <message>
         <location filename="../src/Dialogs/FindGameDialog.cpp" line="77"/>
         <source>No games now. Try again later or create a new game.</source>
-        <translation type="unfinished"></translation>
+        <translation>Ни одной игры не найдено. Попробуйте еще раз через некоторое время или создайте новую игру.</translation>
     </message>
 </context>
 <context>
@@ -554,6 +527,7 @@ Please check whether you are connected to Internet. Check the server name and po
         <translation>Шахматы</translation>
     </message>
     <message>
+        <location filename="../src/UI/MainWindow.cpp" line="68"/>
         <source>Connection refused. Please check whether you are connected to Internet.</source>
         <translation type="obsolete">Нет соединения с сервером. Проверьте, доступна ли вам сеть Интернет. Также проверьте, правильно ли Вы указали адрес сервера и номер порта.</translation>
     </message>
@@ -561,6 +535,7 @@ Please check whether you are connected to Internet. Check the server name and po
 <context>
     <name>MoveBox</name>
     <message>
+        <location filename="../src/UI/MainWindow.cpp" line="68"/>
         <source>Game over.</source>
         <translation type="obsolete">Игра окончена</translation>
     </message>
@@ -623,9 +598,10 @@ Please check whether you are connected to Internet. Check the server name and po
     <message>
         <location filename="../src/Dialogs/OptionsDialog.cpp" line="51"/>
         <source>Cancel</source>
-        <translation type="unfinished">Отмена</translation>
+        <translation>Отмена</translation>
     </message>
     <message>
+        <location filename="../src/Dialogs/OptionsDialog.cpp" line="51"/>
         <source>Exit</source>
         <translation type="obsolete">Выход</translation>
     </message>
@@ -646,6 +622,7 @@ Please check whether you are connected to Internet. Check the server name and po
 <context>
     <name>QObject</name>
     <message>
+        <location filename="../src/Dialogs/PromotionDialog.cpp" line="48"/>
         <source>Move: </source>
         <translation type="obsolete">Ход: </translation>
     </message>
@@ -657,23 +634,25 @@ Please check whether you are connected to Internet. Check the server name and po
     <message>
         <location filename="../src/Base/MoveBox.cpp" line="60"/>
         <source>Move: white (</source>
-        <translation type="unfinished"></translation>
+        <translation>Ход белых (</translation>
     </message>
     <message>
         <location filename="../src/Base/MoveBox.cpp" line="60"/>
         <source>Move: black (</source>
-        <translation type="unfinished"></translation>
+        <translation>Ход черных (</translation>
     </message>
     <message>
         <location filename="../src/Base/MoveBox.cpp" line="99"/>
         <source>Game over.</source>
-        <translation type="unfinished">Игра окончена</translation>
+        <translation>Игра окончена.</translation>
     </message>
     <message>
+        <location filename="../src/Base/MoveBox.cpp" line="99"/>
         <source>White</source>
         <translation type="obsolete">Белые</translation>
     </message>
     <message>
+        <location filename="../src/Base/MoveBox.cpp" line="99"/>
         <source>Black</source>
         <translation type="obsolete">Черные</translation>
     </message>
@@ -683,6 +662,7 @@ Please check whether you are connected to Internet. Check the server name and po
         <translation>НЕТ</translation>
     </message>
     <message>
+        <location filename="../src/Base/MoveBox.cpp" line="63"/>
         <source>Rating</source>
         <translation type="obsolete">Рейтинг</translation>
     </message>
@@ -748,12 +728,12 @@ Please visit www.site.com to learn how to enable it.</source>
     <message>
         <location filename="../src/UI/UI.cpp" line="87"/>
         <source>Game over.</source>
-        <translation type="unfinished">Игра окончена</translation>
+        <translation>Игра окончена.</translation>
     </message>
     <message>
         <location filename="../src/UI/UI.cpp" line="100"/>
         <source>Your opponent has offered a draw. Agree?</source>
-        <translation type="unfinished">Ваш противник предлагает ничью. Согласны?</translation>
+        <translation>Ваш противник предлагает ничью. Согласны?</translation>
     </message>
 </context>
 <context>
@@ -802,34 +782,22 @@ Please visit www.site.com to learn how to enable it.</source>
     <message>
         <location filename="../src/Dialogs/WaitJoinDialog.cpp" line="60"/>
         <source>not available</source>
-        <translation type="unfinished"></translation>
+        <translation>не включен</translation>
     </message>
     <message>
         <location filename="../src/Dialogs/WaitJoinDialog.cpp" line="61"/>
         <source>wants to play chess with you</source>
-        <translation type="unfinished"></translation>
+        <translation>желает сыграть с вами</translation>
     </message>
     <message>
         <location filename="../src/Dialogs/WaitJoinDialog.cpp" line="62"/>
         <source>opponent rating</source>
-        <translation type="unfinished"></translation>
+        <translation>Рейтинг противника</translation>
     </message>
     <message>
         <location filename="../src/Dialogs/WaitJoinDialog.cpp" line="63"/>
         <source>Start the game?</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>is not available</source>
-        <translation type="obsolete">не доступен</translation>
-    </message>
-    <message>
-        <source> (rating </source>
-        <translation type="obsolete">(рейтинг</translation>
-    </message>
-    <message>
-        <source>) wants to play chess with you. Agree?</source>
-        <translation type="obsolete">) хочет сыграть с вами. Начать игру?</translation>
+        <translation>Начать игру?</translation>
     </message>
 </context>
 </TS>

@@ -13,13 +13,13 @@ NETWORK = $$SRC/Network
 DATA = $$SRC/Data
 UI = $$SRC/UI
 DIALOGS = $$SRC/Dialogs
-WAPSERVERPATH = /home/ssy/devel/hukka/chess/wapserver3/src
+WAPSERVERPATH = /home/hukka/devel/chess/wapserver3/src
 
 DEPENDPATH += .
 DEPENDPATH += $$NETWORK  $$UI  $$BASE  $$DATA $$DIALOGS
 
 INCLUDEPATH += $$SRC  $$NETWORK  $$UI  $$BASE  $$DATA
-INCLUDEPATH += $$(QTPATH)/QtNetwork $$(QTPATH)/QtXml
+INCLUDEPATH += $$(QTPATH) $$(QTPATH)/QtCore $$(QTPATH)/QtNetwork $$(QTPATH)/QtXml $$(QTPATH)/QtGui
 INCLUDEPATH += $$WAPSERVERPATH $$WAPSERVERPATH/libs $$WAPSERVERPATH/libs/header $$WAPSERVERPATH/chessserver $$WAPSERVERPATH/chessserver/engine
 
 
