@@ -13,7 +13,7 @@ NETWORK = $$SRC/Network
 DATA = $$SRC/Data
 UI = $$SRC/UI
 DIALOGS = $$SRC/Dialogs
-WAPSERVERPATH = /home/hukka/devel/chess/wapserver3/src
+WAPSERVERPATH = /home/ssy/devel/hukka/chess/wapserver3/src
 
 DEPENDPATH += .
 DEPENDPATH += $$NETWORK  $$UI  $$BASE  $$DATA $$DIALOGS
