@@ -1,11 +1,19 @@
 <?xml version="1.0" encoding="utf-8"?>
-<!DOCTYPE TS><TS version="1.1" language="ru_RU">
+<!DOCTYPE TS>
+<TS version="2.0" language="ru_RU">
+<context>
+    <name></name>
+    <message>
+        <location filename="../src/Base/Defines.h" line="100"/>
+        <source>all</source>
+        <translation type="unfinished">всем</translation>
+    </message>
+</context>
 <context>
     <name>@default</name>
     <message>
-        <location filename="../src/Base/Defines.h" line="102"/>
         <source>all</source>
-        <translation>всем</translation>
+        <translation type="obsolete">всем</translation>
     </message>
 </context>
 <context>
@@ -117,6 +125,22 @@
         <translation>Невозможно удалить игровой стол. ID </translation>
     </message>
     <message>
+        <location filename="../src/Network/Client.cpp" line="369"/>
+        <location filename="../src/Network/Client.cpp" line="416"/>
+        <location filename="../src/Network/Client.cpp" line="435"/>
+        <location filename="../src/Network/Client.cpp" line="466"/>
+        <location filename="../src/Network/Client.cpp" line="489"/>
+        <location filename="../src/Network/Client.cpp" line="515"/>
+        <location filename="../src/Network/Client.cpp" line="560"/>
+        <location filename="../src/Network/Client.cpp" line="586"/>
+        <location filename="../src/Network/Client.cpp" line="605"/>
+        <location filename="../src/Network/Client.cpp" line="643"/>
+        <location filename="../src/Network/Client.cpp" line="660"/>
+        <location filename="../src/Network/Client.cpp" line="677"/>
+        <location filename="../src/Network/Client.cpp" line="704"/>
+        <location filename="../src/Network/Client.cpp" line="731"/>
+        <location filename="../src/Network/Client.cpp" line="750"/>
+        <location filename="../src/Network/Client.cpp" line="767"/>
         <location filename="../src/Network/Client.cpp" line="785"/>
         <source> on server: </source>
         <translation> на сервере: </translation>
@@ -142,6 +166,7 @@
         <translation>Невозможно дать отказ на начало игры. ID стола </translation>
     </message>
     <message>
+        <location filename="../src/Network/Client.cpp" line="515"/>
         <location filename="../src/Network/Client.cpp" line="560"/>
         <source>Can&apos;t get field. Table ID </source>
         <translation>Невозможно получить игровое поле. ID стола </translation>
@@ -172,7 +197,7 @@
         <translation>Ваш оппонент </translation>
     </message>
     <message>
-        <location filename="../src/Network/Client.cpp" line="1467"/>
+        <location filename="../src/Network/Client.cpp" line="1466"/>
         <source>Connection refused. 
 
 Please check whether you are connected to Internet. Check the server name and port as well.</source>
@@ -181,6 +206,8 @@ Please check whether you are connected to Internet. Check the server name and po
 Проверьте, доступна ли Вам сеть Интернет. Также проверьте, правильно ли Вы указали адрес сервера и номер порта.</translation>
     </message>
     <message>
+        <location filename="../src/Network/Client.cpp" line="586"/>
+        <location filename="../src/Network/Client.cpp" line="704"/>
         <location filename="../src/Network/Client.cpp" line="731"/>
         <source>Can&apos;t surrender. Table ID </source>
         <translation>Невозможно сдаться. ID стола </translation>
@@ -241,6 +268,10 @@ Please check whether you are connected to Internet. Check the server name and po
         <translation>Неправильный пароль.</translation>
     </message>
     <message>
+        <location filename="../src/Network/Client.cpp" line="948"/>
+        <location filename="../src/Network/Client.cpp" line="978"/>
+        <location filename="../src/Network/Client.cpp" line="1270"/>
+        <location filename="../src/Network/Client.cpp" line="1287"/>
         <location filename="../src/Network/Client.cpp" line="1321"/>
         <source>Internal server error </source>
         <translation>Внутренняя ошибка сервера </translation>
@@ -276,6 +307,9 @@ Please check whether you are connected to Internet. Check the server name and po
         <translation>Неправильный параметр (или такой стол уже существует)</translation>
     </message>
     <message>
+        <location filename="../src/Network/Client.cpp" line="1014"/>
+        <location filename="../src/Network/Client.cpp" line="1032"/>
+        <location filename="../src/Network/Client.cpp" line="1075"/>
         <location filename="../src/Network/Client.cpp" line="1252"/>
         <source>Internal server error</source>
         <translation>Внутренняя ошибка сервера</translation>
@@ -352,27 +386,22 @@ Please check whether you are connected to Internet. Check the server name and po
 <context>
     <name>FindGameDialog</name>
     <message>
-        <location filename="../src/Dialogs/CreateGameDialog.cpp" line="22"/>
         <source>Find Game</source>
         <translation type="obsolete">Найти игру</translation>
     </message>
     <message>
-        <location filename="../src/Dialogs/CreateGameDialog.cpp" line="22"/>
         <source>All Games</source>
         <translation type="obsolete">Все игры</translation>
     </message>
     <message>
-        <location filename="../src/Dialogs/CreateGameDialog.cpp" line="22"/>
         <source>Random Game</source>
         <translation type="obsolete">Случайная игра</translation>
     </message>
     <message>
-        <location filename="../src/Dialogs/CreateGameDialog.cpp" line="22"/>
         <source>Cancel</source>
         <translation type="obsolete">Отмена</translation>
     </message>
     <message>
-        <location filename="../src/Dialogs/CreateGameDialog.cpp" line="22"/>
         <source>No game table found</source>
         <translation type="obsolete">Игры не найдены</translation>
     </message>
@@ -527,7 +556,6 @@ Please check whether you are connected to Internet. Check the server name and po
         <translation>Шахматы</translation>
     </message>
     <message>
-        <location filename="../src/UI/MainWindow.cpp" line="68"/>
         <source>Connection refused. Please check whether you are connected to Internet.</source>
         <translation type="obsolete">Нет соединения с сервером. Проверьте, доступна ли вам сеть Интернет. Также проверьте, правильно ли Вы указали адрес сервера и номер порта.</translation>
     </message>
@@ -535,7 +563,6 @@ Please check whether you are connected to Internet. Check the server name and po
 <context>
     <name>MoveBox</name>
     <message>
-        <location filename="../src/UI/MainWindow.cpp" line="68"/>
         <source>Game over.</source>
         <translation type="obsolete">Игра окончена</translation>
     </message>
@@ -601,7 +628,6 @@ Please check whether you are connected to Internet. Check the server name and po
         <translation>Отмена</translation>
     </message>
     <message>
-        <location filename="../src/Dialogs/OptionsDialog.cpp" line="51"/>
         <source>Exit</source>
         <translation type="obsolete">Выход</translation>
     </message>
@@ -622,7 +648,6 @@ Please check whether you are connected to Internet. Check the server name and po
 <context>
     <name>QObject</name>
     <message>
-        <location filename="../src/Dialogs/PromotionDialog.cpp" line="48"/>
         <source>Move: </source>
         <translation type="obsolete">Ход: </translation>
     </message>
@@ -647,12 +672,10 @@ Please check whether you are connected to Internet. Check the server name and po
         <translation>Игра окончена.</translation>
     </message>
     <message>
-        <location filename="../src/Base/MoveBox.cpp" line="99"/>
         <source>White</source>
         <translation type="obsolete">Белые</translation>
     </message>
     <message>
-        <location filename="../src/Base/MoveBox.cpp" line="99"/>
         <source>Black</source>
         <translation type="obsolete">Черные</translation>
     </message>
@@ -662,7 +685,6 @@ Please check whether you are connected to Internet. Check the server name and po
         <translation>НЕТ</translation>
     </message>
     <message>
-        <location filename="../src/Base/MoveBox.cpp" line="63"/>
         <source>Rating</source>
         <translation type="obsolete">Рейтинг</translation>
     </message>

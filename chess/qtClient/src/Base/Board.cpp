@@ -178,7 +178,7 @@ void Board::updateGameField()
 
 bool getMove(const Field& oldField , const Field& newField, Move& move)
 {
-    if( oldField.empty() || newField.empty() || oldField.size() != newField.size())
+    if( oldField.empty() || newField.empty() || oldField.size() != newField.size() || oldField == newField)
         return false;
 
     for(int i=0; i<oldField.size(); i++)
