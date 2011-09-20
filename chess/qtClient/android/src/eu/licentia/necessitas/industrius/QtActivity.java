@@ -59,6 +59,8 @@ import android.view.inputmethod.InputMethodManager;
 import eu.licentia.necessitas.ministro.IMinistro;
 import eu.licentia.necessitas.ministro.IMinistroCallback;
 
+import android.os.PowerManager;
+
 public class QtActivity extends Activity {
 
     private final static int MINISTRO_INSTALL_REQUEST_CODE = 0xf3ee;
@@ -75,11 +77,21 @@ public class QtActivity extends Activity {
     private QtSurface m_surface=null;
     private QtLayout m_layout=null;
 
+	// don't lock the screen
+	private PowerManager.WakeLock wl;
+
 public static final String QtTAG = "Qt JAVA"; 
 
 
     private void startApplication(String [] libs, String environment, String params)
     {
+
+	// don't lock the screen
+	PowerManager pm = (PowerManager) getSystemService(Context.POWER_SERVICE);
+	wl = pm.newWakeLock(PowerManager.SCREEN_DIM_WAKE_LOCK, "My Tag");
+	wl.acquire();
+
+
 Log.i(QtTAG, "startApplication 1");
         QtApplication.loadQtLibraries(libs);
         try
@@ -184,6 +196,9 @@ Log.i(QtTAG, "startApplication 9");
     private Process m_debuggerProcess=null; // debugger process
     private void exitApplication()
     {
+		// may lock the screen
+		wl.release();
+
         AlertDialog errorDialog = new AlertDialog.Builder(QtActivity.this).create();
         errorDialog.setMessage("Can't find Ministro service.\nThe application can't start.");
         errorDialog.setButton("OK", new DialogInterface.OnClickListener() {
