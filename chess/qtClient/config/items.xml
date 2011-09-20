@@ -6,8 +6,8 @@
   </MainWindow>
 
   <Scene>
-    <margin>  <width value="5" />  </margin>
-    <landscape>  <x value="0" />   <y value="0" />  <width value="475" />  <height value="315" />  </landscape>
+    <margin>  <width value="0" />  </margin>
+    <landscape>  <x value="0" />   <y value="0" />  <width value="480" />  <height value="320" />  </landscape>
   </Scene>
 
 

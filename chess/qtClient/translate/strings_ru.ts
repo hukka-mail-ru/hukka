@@ -551,7 +551,7 @@ Please check whether you are connected to Internet. Check the server name and po
 <context>
     <name>MainWindow</name>
     <message>
-        <location filename="../src/UI/MainWindow.cpp" line="68"/>
+        <location filename="../src/UI/MainWindow.cpp" line="69"/>
         <source>Chess</source>
         <translation>Шахматы</translation>
     </message>
