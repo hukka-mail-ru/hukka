@@ -57,6 +57,7 @@ MainWindow::MainWindow(QWidget *parent):
 
     vboxLayout    = new QVBoxLayout(centralwidget);
     mGraphicsView  = new QGraphicsView(centralwidget);
+    mGraphicsView->setFrameShape(QFrame::NoFrame);
 
     vboxLayout->addWidget(mGraphicsView);
     vboxLayout->setContentsMargins(0,0,0,0); // no margins around the scene
