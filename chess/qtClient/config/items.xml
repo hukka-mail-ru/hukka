@@ -132,8 +132,8 @@
   </Piece>
 
   <CaptureBox>
-	<me>       <x value="3" />   <y value="156" />  </me>
-	<opponent> <x value="3" />   <y value="277"/>  </opponent>
+	<me>       <x value="3" />   <y value="162" />  </me>
+	<opponent> <x value="3" />   <y value="281"/>  </opponent>
     <Piece>  <width value="18" />  <height value="18" />  </Piece>
 	<border>  <width value="1" />  </border> 
   </CaptureBox>
@@ -141,7 +141,7 @@
   <MoveBox>
 
     <color> <active value="white" /> <inactive value="grey" />  </color> 
-    <border> <x value="3" />   <y value="198" />  <width value="152" />  <height value="75" /> </border> 
+    <border> <x value="3" />   <y value="203" />  <width value="152" />  <height value="75" /> </border> 
 
     <player>     <font> <family value="Helvetica [Cronyx]" />  <size value="9" /> </font>  <x value="5" />  <y value="0"  /> </player>
     <rating>     <font> <family value="Helvetica [Cronyx]" />  <size value="8" /> </font>  <x value="5" />  <y value="15" /> </rating>
