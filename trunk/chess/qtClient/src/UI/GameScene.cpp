@@ -69,7 +69,7 @@ void GameScene::onInvalidMove()
     UI::instance()->setGameState(GS_WAIT_FOR_PLAYER_TOUCH);
 
     mBoard.removeHighlight();
-    mBoard.updateGameField();
+    mBoard.updatePosition();
 }
 
 
@@ -118,7 +118,7 @@ void GameScene::onGotPosition(const Position& position)
 
     MainWindow::instance()->showGameScene();
 
-    mBoard.updateGameField(position.field, position.iAmWhite);
+    mBoard.updatePosition(position);
 
     GameState state = UI::instance()->updateGameState(position.myMove, position.iAmWhite);
     updateMoveBoxes(state);

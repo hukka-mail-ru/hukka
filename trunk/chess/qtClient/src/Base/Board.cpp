@@ -37,7 +37,6 @@ Board::Board(QGraphicsScene* parentScene):
 
     mBoardRect = mParentScene->addRect (mBoardRectX - borderWidth, mBoardRectY, boardWidth,  boardWidth, QPen(borderColor));
 
-   // updateGameField(mField, mWhite);
 
 }
 
@@ -50,23 +49,23 @@ bool Board::isEnemyPiece(CELLID cell)
     bool res = false;
     if(UI::instance()->getPlayer(PT_ME).color == PC_WHITE)
     {
-        // qDebug() <<"isEnemyPiece" << cell << (mField.cells[cell] == PIX_BLACK_ROOK);
+        // qDebug() <<"isEnemyPiece" << cell << (mPosition.field.cells[cell] == PIX_BLACK_ROOK);
 
-        res = (mField[cell] == b_Pawn) ||
-              (mField[cell] == b_Rook) ||
-              (mField[cell] == b_Knight) ||
-              (mField[cell] == b_Bishop) ||
-              (mField[cell] == b_Queen) ||
-              (mField[cell] == b_King);
+        res = (mPosition.field[cell] == b_Pawn) ||
+              (mPosition.field[cell] == b_Rook) ||
+              (mPosition.field[cell] == b_Knight) ||
+              (mPosition.field[cell] == b_Bishop) ||
+              (mPosition.field[cell] == b_Queen) ||
+              (mPosition.field[cell] == b_King);
     }
     else
     {
-        res = (mField[cell] == w_Pawn) ||
-              (mField[cell] == w_Rook) ||
-              (mField[cell] == w_Knight) ||
-              (mField[cell] == w_Bishop) ||
-              (mField[cell] == w_Queen) ||
-              (mField[cell] == w_King);
+        res = (mPosition.field[cell] == w_Pawn) ||
+              (mPosition.field[cell] == w_Rook) ||
+              (mPosition.field[cell] == w_Knight) ||
+              (mPosition.field[cell] == w_Bishop) ||
+              (mPosition.field[cell] == w_Queen) ||
+              (mPosition.field[cell] == w_King);
     }
 
     return res;
@@ -115,7 +114,7 @@ void Board::onCellClicked(CELLID cell)
 
     case GS_WAIT_FOR_PLAYER_TOUCH:
 
-        if(mField[cell] == Empty || isEnemyPiece(cell))
+        if(mPosition.field[cell] == Empty || isEnemyPiece(cell))
         {
             // qDebug() << "No action - Epmty field or Enemy piece";
             return;
@@ -133,7 +132,7 @@ void Board::onCellClicked(CELLID cell)
 
     case GS_WAIT_FOR_PLAYER_MOVE:
 
-        if(mField[cell] == Empty || isEnemyPiece(cell)) // I've moved my piece
+        if(mPosition.field[cell] == Empty || isEnemyPiece(cell)) // I've moved my piece
         {
             mMove.dstCell = cell;
             // qDebug() << "OK! mDestinationCell = " << cell;
@@ -141,10 +140,10 @@ void Board::onCellClicked(CELLID cell)
             removeHighlight();
             enableAnimation(mMove);
 
-         //   qDebug() << "mField[move.srcCell]" << mField[move.srcCell];
+         //   qDebug() << "mPosition.field[move.srcCell]" << mPosition.field[move.srcCell];
          //   qDebug() << "move.dstCell" << move.dstCell;
 
-            piece_type promotion = getPromotion(mField[mMove.srcCell], mMove.dstCell);
+            piece_type promotion = getPromotion(mPosition.field[mMove.srcCell], mMove.dstCell);
 
             Client::instance()->move(UI::instance()->getGameTable(), mMove, promotion);
 
@@ -169,46 +168,18 @@ void Board::onCellClicked(CELLID cell)
 
 }
 
-void Board::updateGameField()
+void Board::updatePosition()
 {
-    bool current_color = UI::instance()->getPlayer(PT_ME).color == PC_WHITE;
-    updateGameField(mField, current_color);
+//    bool current_color = UI::instance()->getPlayer(PT_ME).color == PC_WHITE;
+    updatePosition(mPosition);
 }
 
 
-bool getMove(const Field& oldField , const Field& newField, Move& move)
-{
-    if( oldField.empty() || newField.empty() || oldField.size() != newField.size() || oldField == newField)
-        return false;
-
-    for(int i=0; i<oldField.size(); i++)
-    {
-        if((oldField[i] != Empty) && (newField[i] == Empty))
-            move.srcCell = i;
-
-        if((oldField[i] == Empty) && (newField[i] != Empty))
-            move.dstCell = i;
-
-        if((oldField[i] != Empty) && (newField[i] != Empty) && (oldField[i] != newField[i]))
-            move.dstCell = i;
-    }
-
-    return true;
-}
-
-
-void Board::updateGameField(const Field& field, bool white)
+void Board::updatePosition(const Position& position)
 {
     disableAnimation();
 
-  //  if(mField == field)
- //   {
- //       MainWindow::instance()->showMessage(tr("Invalid move."));
- //   }
-    Move move;
-    bool lastMove = getMove(mField, field, move);
-
-    mField = field;
+    mPosition = position;
 
 
     if(mCells)
@@ -232,8 +203,8 @@ void Board::updateGameField(const Field& field, bool white)
         cell = new Cell(mParentScene, cellID, cellKey);
 
 
-        if(cell && !field.empty())
-            cell->setPiece(field[i * CELLS_IN_ROW + j]);
+        if(cell && !mPosition.field.empty())
+            cell->setPiece(mPosition.field[i * CELLS_IN_ROW + j]);
 
         QObject::connect(cell, SIGNAL(cellClicked(CELLID)), this, SLOT(onCellClicked(CELLID)));
 
@@ -242,20 +213,20 @@ void Board::updateGameField(const Field& field, bool white)
         cell->setParentItem(mCells);
 
         int x = mBoardRectX + j * cell->width();
-        int y = (white) ? mBoardRectY  + (CELLS_IN_ROW - 1 - i) * cell->width() :
+        int y = (mPosition.iAmWhite) ? mBoardRectY  + (CELLS_IN_ROW - 1 - i) * cell->width() :
                           mBoardRectY + i * cell->width();
 
         cell->setPos(x, y);
     }
 
-    if(lastMove)
+    if(mPosition.move.srcCell != No_square && mPosition.move.dstCell != No_square)
     {
-        highlightCell(move.srcCell, HC_GRAY);
-        highlightCell(move.dstCell, HC_GRAY);
+        highlightCell(mPosition.move.srcCell, HC_GRAY);
+        highlightCell(mPosition.move.dstCell, HC_GRAY);
     }
 
     // show Captured pieces
-    mCaptureBox.update(field, white);
+    mCaptureBox.update(mPosition.field, mPosition.iAmWhite);
 
 
 }
