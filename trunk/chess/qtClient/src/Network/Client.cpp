@@ -492,14 +492,8 @@ void Client::rejectGame (TABLEID tableID)
     }
 }
 
-/*====================================================================================================
-  __  ___  ____    ___  __  ___  __    ___
- / _)(  _)(_  _)  (  _)(  )(  _)(  )  (   \
-( (/\ ) _)  )(     ) _) )(  ) _) )(__  ) ) )
- \__/(___) (__)   (_)  (__)(___)(____)(___/
-====================================================================================================*/
 
-void Client::getField (TABLEID tableID)
+void Client::getPosition (TABLEID tableID)
 {
     QT_TRACEOUT;
 
@@ -509,7 +503,7 @@ void Client::getField (TABLEID tableID)
 
         // send command
         QByteArray data = Q_BYTE_ARRAY(tableID);
-        sendCmd(CHS, CMD_GET_FIELD, data);
+        sendCmd(CHS, CMD_GET_POSITION, data);
     }
     catch (Exception& e) {
         e.add(tr("Can't get field. Table ID ") + QString::number(tableID) + tr(" on server: ") + mSocket.peerName() + ". ");
@@ -1208,8 +1202,8 @@ void Client::processMessageCHS(const MessageHeader& header, const QByteArray& bu
         emit gameStarted();
     }
 
-    // GET FIELD
-    else if(header.cmd == ANS_FIELD)
+    // GET POSITION
+    else if(header.cmd == ANS_POSITION)
     {
         struct Reply {
             TABLEID     tableID;
@@ -1234,12 +1228,21 @@ void Client::processMessageCHS(const MessageHeader& header, const QByteArray& bu
         qDebug() << "last_move_from" << (int)reply->last_move_from;
         qDebug() << "last_move_to" << (int)reply->last_move_to;
 
-        Field field;
+        Position position;
         for(int i = 0; i<CELLS_IN_FIELD; ++i)
-            field.push_back((piece_type)reply->cells[i]);
+            position.field.push_back((piece_type)reply->cells[i]);
 
+        position.move.srcCell = reply->last_move_from;
+        position.move.dstCell = reply->last_move_to;
+        position.myMove = reply->myMove;
+        position.iAmWhite = (reply->playerNr == reply->whitePlayerNr);
 
-        emit gotField(field, reply->myMove, reply->playerNr == reply->whitePlayerNr);
+        // TODO : status
+        // TODO : w_check
+        // TODO : b_check
+
+        emit gotPosition(position);
+
         emit gotMoveTime(reply->moveTime);
         emit gotGameTime(reply->gameTime);
     }

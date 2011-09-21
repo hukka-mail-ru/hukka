@@ -24,7 +24,7 @@ void ChessService::sendAnsStart(uint32_t _nTableID, uint32_t nPlayer1, uint32_t 
     sendMsg( nPlayer2, &msg, sizeof( msg ) );
 }
 
-void ChessService::cmdGetField( uint32_t _nPlayerID, uint32_t _nTableID )
+void ChessService::cmdGetPosition( uint32_t _nPlayerID, uint32_t _nTableID )
 {
 
     TVecChar vecField;
@@ -39,7 +39,7 @@ void ChessService::cmdGetField( uint32_t _nPlayerID, uint32_t _nTableID )
 	else
 		sCmd.m_nPlayerNbr = 1;
 
-    sCmd.m_chCmd = ANS_FIELD;
+    sCmd.m_chCmd = ANS_POSITION;
     sCmd.m_nTableID = 0;
 
 
@@ -57,7 +57,7 @@ void ChessService::cmdGetField( uint32_t _nPlayerID, uint32_t _nTableID )
         sCmd.m_moveTime = INVALID_TIME;
         sCmd.m_gameTime = INVALID_TIME;
 
-        // Return here is not needed, because cmdGetField can be called after GAMEOVER,
+        // Return here is not needed, because cmdGetPosition can be called after GAMEOVER,
         // to show the last move.
         //  return;
     }

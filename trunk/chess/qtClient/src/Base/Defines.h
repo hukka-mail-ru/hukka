@@ -106,6 +106,7 @@ typedef quint32             PLAYERID;
 
 typedef vector<piece_type>  Field;
 
+
 enum GameState
 {
     GS_WAIT_FOR_PLAYER_TOUCH,
@@ -146,6 +147,14 @@ struct Move
 {
     CELLID srcCell;
     CELLID dstCell;
+};
+
+struct Position
+{
+    Field field;
+    Move move;
+    bool myMove;
+    bool iAmWhite;
 };
 
 struct Player

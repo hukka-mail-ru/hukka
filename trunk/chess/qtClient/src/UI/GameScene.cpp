@@ -57,7 +57,7 @@ void GameScene::initialize()
 //    QObject::connect(mExitButton, SIGNAL(clicked()), this, SLOT(onExitClicked()));
 
 
-    connect(Client::instance(), SIGNAL(gotField(Field, bool, bool)), this, SLOT(onGotField(Field, bool, bool)));
+    connect(Client::instance(), SIGNAL(gotPosition(const Position&)), this, SLOT(onGotPosition(const Position&)));
     connect(Client::instance(), SIGNAL(invalidMove()), this, SLOT(onInvalidMove()));
 
 }
@@ -106,21 +106,21 @@ void GameScene::onExitClicked()
     UI::instance()->shutdown();
 }*/
 
-void GameScene::onGotField(const Field& field, bool myMove, bool iAmWhite)
+void GameScene::onGotPosition(const Position& position)
 {
 //    qDebug() << "GameScene::onGotField" << endl;
     // a verification. It should be the first in this method,
     // because user mustn't see an empty field anyway.
-    if(Global::isFieldEmpty(field))
+    if(Global::isFieldEmpty(position.field))
     {
         return;
     }
 
     MainWindow::instance()->showGameScene();
 
-    mBoard.updateGameField(field, iAmWhite);
+    mBoard.updateGameField(position.field, position.iAmWhite);
 
-    GameState state = UI::instance()->updateGameState(myMove, iAmWhite);
+    GameState state = UI::instance()->updateGameState(position.myMove, position.iAmWhite);
     updateMoveBoxes(state);
 
     MainWindow::instance()->setMode(MW_NORMAL);

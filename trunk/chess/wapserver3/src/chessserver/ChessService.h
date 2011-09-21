@@ -43,7 +43,7 @@ public:
 
 	uint8_t GetCurColor(const TVecChar* pField);
 
-	void cmdGetField( uint32_t _nPlayerID, uint32_t _nTableID );
+	void cmdGetPosition( uint32_t _nPlayerID, uint32_t _nTableID );
 
 	SqlGameTable* GetSqlGameTable() { return &m_SqlChessTable; }
 

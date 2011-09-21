@@ -65,7 +65,7 @@ void UI::startGame()
 
     assert(mGameTable);
 
-    Client::instance()->getField(mGameTable);
+    Client::instance()->getPosition(mGameTable);
 }
 
 
@@ -79,9 +79,9 @@ void UI::onGameOver(const QString& message, int status, int rating)
     disconnect(Client::instance(), SIGNAL(gameOver(const QString&, int, int)), this, SLOT(onGameOver(const QString&, int, int)));
     disconnect(Client::instance(), SIGNAL(drawOffered()), this, SLOT(onDrawOffered()));
 
-    // getField must be earlier than showMessage because the clocks must not tick while
+    // getPosition must be earlier than showMessage because the clocks must not tick while
     // user looks at the message box.
-    Client::instance()->getField(mGameTable); // player must see the victory move
+    Client::instance()->getPosition(mGameTable); // player must see the victory move
     Client::instance()->deleteLastGameResult();
 
     QString text = tr("Game over.") + "\n\n" + Global::getGameResultText(status, rating);
