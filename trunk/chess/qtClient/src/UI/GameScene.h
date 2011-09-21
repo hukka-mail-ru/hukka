@@ -43,13 +43,12 @@ private:
     void updateMoveBoxes(GameState gameState);
 
     Button* mMenuButton;
-  //  Button* mExitButton;
 
     Chat* mChat;
 
     MoveBox mMoveBox;
- //   MoveBox mMeMoveBox;
- //   MoveBox mOppMoveBox;
+
+    QGraphicsTextItem* mGameStateText;
 
     Board mBoard;
 

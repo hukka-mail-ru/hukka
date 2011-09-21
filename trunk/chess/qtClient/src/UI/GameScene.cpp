@@ -56,6 +56,16 @@ void GameScene::initialize()
 //    mExitButton = new Button(this, Pixmaps::get(PIX_BUTTON_EXIT), "", XML_NODE_BUTTONS, XML_NODE_EXIT);
 //    QObject::connect(mExitButton, SIGNAL(clicked()), this, SLOT(onExitClicked()));
 
+    // GameState (check, mate, etc..)
+    int gameStateX           = XML::instance().readValue(XML_ITEMS_FILENAME, QList<QString>() << XML_NODE_GAME_STATE << XML_NODE_X).toInt();
+    int gameStateY           = XML::instance().readValue(XML_ITEMS_FILENAME, QList<QString>() << XML_NODE_GAME_STATE << XML_NODE_Y).toInt();
+    QString gameStateFamily  = XML::instance().readValue(XML_ITEMS_FILENAME, QList<QString>() << XML_NODE_GAME_STATE << XML_NODE_FONT << XML_NODE_FAMILY);
+    int gameStateSize        = XML::instance().readValue(XML_ITEMS_FILENAME, QList<QString>() << XML_NODE_GAME_STATE << XML_NODE_FONT << XML_NODE_SIZE).toInt();
+    QString gameStateColor   = XML::instance().readValue(XML_ITEMS_FILENAME, QList<QString>() << XML_NODE_GAME_STATE << XML_NODE_FONT << XML_NODE_COLOR);
+    mGameStateText = this->addText("", QFont(gameStateFamily, gameStateSize));
+    mGameStateText->setDefaultTextColor(gameStateColor);
+    mGameStateText->setPos(gameStateX, gameStateY);
+
 
     connect(Client::instance(), SIGNAL(gotPosition(const Position&)), this, SLOT(onGotPosition(const Position&)));
     connect(Client::instance(), SIGNAL(invalidMove()), this, SLOT(onInvalidMove()));
@@ -122,6 +132,24 @@ void GameScene::onGotPosition(const Position& position)
 
     GameState state = UI::instance()->updateGameState(position.myMove, position.iAmWhite);
     updateMoveBoxes(state);
+
+    // Show game state
+    QString gameState = "";
+    if((position.status == Check && position.w_check && position.iAmWhite) ||
+       (position.status == Check && position.b_check && !position.iAmWhite))
+    {
+        gameState = tr("Check!");
+    }
+    else if ((position.w_check || position.b_check) && position.status == Checkmate)
+    {
+        gameState = tr("Mate.");
+    }
+    else if (position.status == Stalemate)
+    {
+        mGameStateText->setPlainText(tr("Stalemate."));
+    }
+    mGameStateText->setPlainText(gameState);
+
 
     MainWindow::instance()->setMode(MW_NORMAL);
 }

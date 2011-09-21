@@ -155,6 +155,9 @@ struct Position
     Move move;
     bool myMove;
     bool iAmWhite;
+    bool w_check;
+    bool b_check;
+    ChessGameStatus status;
 };
 
 struct Player

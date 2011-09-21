@@ -110,7 +110,7 @@
 
 
       <GameMenu>
-        <landscape> <x value="20" />   <y value="20" />  </landscape>
+        <landscape> <x value="20" />   <y value="10" />  </landscape>
       </GameMenu>
 
   </Buttons>
@@ -156,6 +156,10 @@
     <x value="160" /> <y value="0" /> 
   </Board>
 
+  <GameState>
+    <font> <family value="Helvetica [Cronyx]" />  <size value="14" /> <color value="white" /> </font>
+    <x value="3" />  <y value="131" /> 
+  </GameState>
 
 
 

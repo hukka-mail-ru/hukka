@@ -1222,12 +1222,6 @@ void Client::processMessageCHS(const MessageHeader& header, const QByteArray& bu
 
         Reply* reply = (Reply*)buffer.data();
 
-        qDebug() << "w_check" << (int)reply->w_check;
-        qDebug() << "b_check" << (int)reply->b_check;
-        qDebug() << "status" << (int)reply->status;
-        qDebug() << "last_move_from" << (int)reply->last_move_from;
-        qDebug() << "last_move_to" << (int)reply->last_move_to;
-
         Position position;
         for(int i = 0; i<CELLS_IN_FIELD; ++i)
             position.field.push_back((piece_type)reply->cells[i]);
@@ -1236,6 +1230,9 @@ void Client::processMessageCHS(const MessageHeader& header, const QByteArray& bu
         position.move.dstCell = reply->last_move_to;
         position.myMove = reply->myMove;
         position.iAmWhite = (reply->playerNr == reply->whitePlayerNr);
+        position.status = (ChessGameStatus)reply->status;
+        position.w_check = reply->w_check;
+        position.b_check = reply->b_check;
 
         // TODO : status
         // TODO : w_check
@@ -1473,8 +1470,11 @@ void Client::onError()
 
     if(text == "Connection refused")
     {
-        text = tr("Connection refused. \n\nPlease check whether you are connected to Internet. "
-                  "Check the server name and port as well.");
+        text = tr("Connection refused. Please check the server name and port.");
+    }
+    else if(text == "Network unreachable")
+    {
+        text = tr("Network unreachable. Please check your Internet connection.");
     }
 
     //qDebug() << "Client::onError: " << mSocket.errorString();

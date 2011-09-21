@@ -6,14 +6,7 @@
     <message>
         <location filename="../src/Base/Defines.h" line="100"/>
         <source>all</source>
-        <translation type="unfinished">всем</translation>
-    </message>
-</context>
-<context>
-    <name>@default</name>
-    <message>
-        <source>all</source>
-        <translation type="obsolete">всем</translation>
+        <translation>всем</translation>
     </message>
 </context>
 <context>
@@ -187,23 +180,14 @@
         <translation>Такой пользователь уже зашел на сервер</translation>
     </message>
     <message>
-        <location filename="../src/Network/Client.cpp" line="1312"/>
+        <location filename="../src/Network/Client.cpp" line="1309"/>
         <source>Game over.</source>
         <translation>Игра окончена</translation>
     </message>
     <message>
-        <location filename="../src/Network/Client.cpp" line="1329"/>
+        <location filename="../src/Network/Client.cpp" line="1326"/>
         <source>Your opponent has rejected the draw</source>
         <translation>Ваш оппонент </translation>
-    </message>
-    <message>
-        <location filename="../src/Network/Client.cpp" line="1476"/>
-        <source>Connection refused. 
-
-Please check whether you are connected to Internet. Check the server name and port as well.</source>
-        <translation>Нет соединения с сервером. 
-
-Проверьте, доступна ли Вам сеть Интернет. Также проверьте, правильно ли Вы указали адрес сервера и номер порта.</translation>
     </message>
     <message>
         <location filename="../src/Network/Client.cpp" line="580"/>
@@ -238,12 +222,12 @@ Please check whether you are connected to Internet. Check the server name and po
         <translation>Невозможно послать сообщение чата игрового стола. ID стола </translation>
     </message>
     <message>
-        <location filename="../src/Network/Client.cpp" line="1279"/>
+        <location filename="../src/Network/Client.cpp" line="1276"/>
         <source>Can&apos;t join to the game table.</source>
         <translation>Невозможно присоединиться к игровому столу</translation>
     </message>
     <message>
-        <location filename="../src/Network/Client.cpp" line="1296"/>
+        <location filename="../src/Network/Client.cpp" line="1293"/>
         <source>Can&apos;t reject the game.</source>
         <translation>Невозможно отказаться от игры</translation>
     </message>
@@ -270,9 +254,9 @@ Please check whether you are connected to Internet. Check the server name and po
     <message>
         <location filename="../src/Network/Client.cpp" line="942"/>
         <location filename="../src/Network/Client.cpp" line="972"/>
-        <location filename="../src/Network/Client.cpp" line="1280"/>
-        <location filename="../src/Network/Client.cpp" line="1297"/>
-        <location filename="../src/Network/Client.cpp" line="1331"/>
+        <location filename="../src/Network/Client.cpp" line="1277"/>
+        <location filename="../src/Network/Client.cpp" line="1294"/>
+        <location filename="../src/Network/Client.cpp" line="1328"/>
         <source>Internal server error </source>
         <translation>Внутренняя ошибка сервера </translation>
     </message>
@@ -310,7 +294,7 @@ Please check whether you are connected to Internet. Check the server name and po
         <location filename="../src/Network/Client.cpp" line="1008"/>
         <location filename="../src/Network/Client.cpp" line="1026"/>
         <location filename="../src/Network/Client.cpp" line="1069"/>
-        <location filename="../src/Network/Client.cpp" line="1262"/>
+        <location filename="../src/Network/Client.cpp" line="1259"/>
         <source>Internal server error</source>
         <translation>Внутренняя ошибка сервера</translation>
     </message>
@@ -320,24 +304,34 @@ Please check whether you are connected to Internet. Check the server name and po
         <translation>Ошибка TBM: </translation>
     </message>
     <message>
-        <location filename="../src/Network/Client.cpp" line="1328"/>
+        <location filename="../src/Network/Client.cpp" line="1325"/>
         <source>A draw.</source>
         <translation>Ничья.</translation>
     </message>
     <message>
-        <location filename="../src/Network/Client.cpp" line="1330"/>
+        <location filename="../src/Network/Client.cpp" line="1327"/>
         <source>Please wait for your next move to offer a draw</source>
         <translation>Подождите своего хода, а затем предложите ничью</translation>
     </message>
     <message>
-        <location filename="../src/Network/Client.cpp" line="1405"/>
+        <location filename="../src/Network/Client.cpp" line="1402"/>
         <source>CHS Error: </source>
         <translation>Ошибка CHS: </translation>
     </message>
     <message>
-        <location filename="../src/Network/Client.cpp" line="1435"/>
+        <location filename="../src/Network/Client.cpp" line="1432"/>
         <source>CHAT Error: </source>
         <translation>Ошибка CHAT: </translation>
+    </message>
+    <message>
+        <location filename="../src/Network/Client.cpp" line="1473"/>
+        <source>Connection refused. Please check the server name and port.</source>
+        <translation>Нет соединения с сервером. Правильно ли Вы указали адрес сервера и номер порта?</translation>
+    </message>
+    <message>
+        <location filename="../src/Network/Client.cpp" line="1477"/>
+        <source>Network unreachable. Please check your Internet connection.</source>
+        <translation>Сеть недоступна. Проверьте Ваше соединение с сетью Интернет.</translation>
     </message>
     <message>
         <location filename="../src/Network/Client.cpp" line="1496"/>
@@ -467,9 +461,24 @@ Please check whether you are connected to Internet. Check the server name and po
         <translation>Меню игры</translation>
     </message>
     <message>
-        <location filename="../src/UI/GameScene.cpp" line="68"/>
+        <location filename="../src/UI/GameScene.cpp" line="78"/>
         <source>Invalid move.</source>
         <translation>Неправильный ход</translation>
+    </message>
+    <message>
+        <location filename="../src/UI/GameScene.cpp" line="141"/>
+        <source>Check!</source>
+        <translation>Шах!</translation>
+    </message>
+    <message>
+        <location filename="../src/UI/GameScene.cpp" line="145"/>
+        <source>Mate.</source>
+        <translation>Мат.</translation>
+    </message>
+    <message>
+        <location filename="../src/UI/GameScene.cpp" line="149"/>
+        <source>Stalemate.</source>
+        <translation>Пат.</translation>
     </message>
 </context>
 <context>
@@ -689,58 +698,58 @@ Please check whether you are connected to Internet. Check the server name and po
         <translation type="obsolete">Рейтинг</translation>
     </message>
     <message>
-        <location filename="../src/Base/Defines.h" line="162"/>
+        <location filename="../src/Base/Defines.h" line="165"/>
         <source>offline</source>
         <translation>оффлайн</translation>
     </message>
     <message>
-        <location filename="../src/Base/Defines.h" line="245"/>
+        <location filename="../src/Base/Defines.h" line="248"/>
         <source>Your rating has been increased to</source>
         <translation>Ваш рейтинг повышен до</translation>
     </message>
     <message>
-        <location filename="../src/Base/Defines.h" line="246"/>
+        <location filename="../src/Base/Defines.h" line="249"/>
         <source>Your rating has been decreased to</source>
         <translation>Ваш рейтинг понижен до</translation>
     </message>
     <message>
-        <location filename="../src/Base/Defines.h" line="247"/>
+        <location filename="../src/Base/Defines.h" line="250"/>
         <source>Your rating has been slightly increased.</source>
         <translation>Ваш рейтинг немного повышен</translation>
     </message>
     <message>
-        <location filename="../src/Base/Defines.h" line="248"/>
+        <location filename="../src/Base/Defines.h" line="251"/>
         <source>Your rating hasn&apos;t been affected because of too few number of moves.</source>
         <translation>Ваш рейтинг не изменился, т.к. в партии было сделано слишком мало ходов.</translation>
     </message>
     <message>
-        <location filename="../src/Base/Defines.h" line="249"/>
+        <location filename="../src/Base/Defines.h" line="252"/>
         <source>Your rating is not available.
 Please visit www.site.com to learn how to enable it.</source>
         <translation>Ваш рейтинг не включен. Вы можете включить его на сайте www.site.com</translation>
     </message>
     <message>
-        <location filename="../src/Base/Defines.h" line="253"/>
+        <location filename="../src/Base/Defines.h" line="256"/>
         <source>You have won!</source>
         <translation>Вы победили!</translation>
     </message>
     <message>
-        <location filename="../src/Base/Defines.h" line="258"/>
+        <location filename="../src/Base/Defines.h" line="261"/>
         <source>Time&apos;s up. You have won!</source>
         <translation>Время вышло. Вы победили!</translation>
     </message>
     <message>
-        <location filename="../src/Base/Defines.h" line="263"/>
+        <location filename="../src/Base/Defines.h" line="266"/>
         <source>You have lost!</source>
         <translation>Вы проиграли!</translation>
     </message>
     <message>
-        <location filename="../src/Base/Defines.h" line="268"/>
+        <location filename="../src/Base/Defines.h" line="271"/>
         <source>Time&apos;s up. You have lost!</source>
         <translation>Время вышло. Вы проиграли!</translation>
     </message>
     <message>
-        <location filename="../src/Base/Defines.h" line="273"/>
+        <location filename="../src/Base/Defines.h" line="276"/>
         <source>A draw.</source>
         <translation>Ничья.</translation>
     </message>
