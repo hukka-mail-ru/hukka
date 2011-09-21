@@ -84,7 +84,7 @@ public:
         // Slave
         void joinGame            (TABLEID tableID);
         // Both
-        void getField            (TABLEID tableID);
+        void getPosition         (TABLEID tableID);
         void move                (TABLEID tableID, const Move& move, piece_type promotion = Empty);
         void surrender           (TABLEID tableID);
       //  void getTime             (TABLEID tableID);
@@ -131,7 +131,7 @@ signals:
 
         void gotMyGameTable(TABLEID id, bool isOwner);
         void gotGameTables(const QList<GameTable>& tables);
-        void gotField(const Field& field, bool myMove, bool iAmWhite);
+        void gotPosition(const Position& position);
         void gotGameTableParams(const GameTable& table);
 
         void gotMoveTime(quint32);

@@ -55,7 +55,7 @@ private:
 
 private slots:
 
-    void onGotField(const Field& field, bool myMove, bool iAmWhite);
+    void onGotPosition(const Position& position);
     void onInvalidMove();
     void onMenuButtonClicked();
  //   void onExitClicked();

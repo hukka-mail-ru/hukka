@@ -36,7 +36,7 @@ public:
 
 	virtual uint8_t GetCurColor(const TVecChar* pField) = 0;
 
-	virtual void cmdGetField(uint32_t _nPlayerID, uint32_t _nTableID ) = 0;
+	virtual void cmdGetPosition(uint32_t _nPlayerID, uint32_t _nTableID ) = 0;
 
 protected:
 
@@ -108,14 +108,14 @@ private:
 	//		std::cout << "GameService::newMsg from =" << _pClientMsg->GetTo() << " cmd = CMD_STEP" <<  std::endl;
 			cmdMove( _pClientMsg->GetTo(), &vecCmd );
 		}
-		else if( cmd == CMD_GET_FIELD )
+		else if( cmd == CMD_GET_POSITION )
 		{
-//			std::cout << "GameService::newMsg from = " << _pClientMsg->GetTo() << " cmd = CMD_GET_FIELD" <<  std::endl;
+//			std::cout << "GameService::newMsg from = " << _pClientMsg->GetTo() << " cmd = CMD_GET_POSITION" <<  std::endl;
 			uint32_t *nTableID = (uint32_t*) &vecCmd[0];
 
 			uint32_t _nPlayer = _pClientMsg->GetTo();
 
-			cmdGetField( _nPlayer, *nTableID );
+			cmdGetPosition( _nPlayer, *nTableID );
 
 			sendDrawState( _nPlayer, *nTableID );
 
@@ -556,8 +556,8 @@ private:
 
         	GetSqlGameTable()->setCurPlayer( nTableID, GetCurColor(pField) );
 
-	        cmdGetField( nPlayer0, nTableID);
-	        cmdGetField( nPlayer1, nTableID);
+	        cmdGetPosition( nPlayer0, nTableID);
+	        cmdGetPosition( nPlayer1, nTableID);
 
 		    uint32_t nStep;
 		    GetSqlGameTable()->getStepNum( nTableID, nStep );
@@ -575,7 +575,7 @@ private:
 			sCmd.m_nTableID = nTableID;
 			sCmd.m_chData = ( char ) P_NOT_VALID;
  		    sendMsg( _nPlayerID, &sCmd, sizeof( sCmd ) );
-	    	cmdGetField( _nPlayerID, nTableID);
+	    	cmdGetPosition( _nPlayerID, nTableID);
             delete logic;
 			return;
 	    }
