@@ -10,9 +10,9 @@
 #include "../libs/gameserver/GameService.h"
 
 
-#define CH_FIELD_SIZE 66
-#define CH_COLOR 64
-#define CH_CUR_MOVE 65
+#define CH_FIELD_SIZE 71
+#define CH_COLOR 69
+#define CH_CUR_MOVE 70
 
 #pragma pack(1)
 struct ChessBigMsg: public GameMsgBase

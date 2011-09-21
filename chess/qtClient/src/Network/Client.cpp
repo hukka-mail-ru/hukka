@@ -1217,15 +1217,22 @@ void Client::processMessageCHS(const MessageHeader& header, const QByteArray& bu
             uint32_t    moveTime;
             uint32_t    gameTime;
             char        cells[CELLS_IN_FIELD];
+            char        w_check;
+            char        b_check;
+            char        status;
+            char        last_move_from;
+            char        last_move_to;
             char        whitePlayerNr;
             char        myMove;
         };
 
         Reply* reply = (Reply*)buffer.data();
 
-/*        qDebug() << "playerNr " << (int)reply->playerNr  <<
-                    " whitePlayerNr " << (int)reply->whitePlayerNr <<
-                    " myMove "<< (int)reply->myMove;*/
+        qDebug() << "w_check" << (int)reply->w_check;
+        qDebug() << "b_check" << (int)reply->b_check;
+        qDebug() << "status" << (int)reply->status;
+        qDebug() << "last_move_from" << (int)reply->last_move_from;
+        qDebug() << "last_move_to" << (int)reply->last_move_to;
 
         Field field;
         for(int i = 0; i<CELLS_IN_FIELD; ++i)

@@ -72,6 +72,12 @@ const TVByte* CHEOPSEngine::getPositionForClient()
         m_vecbtPosition.push_back( pieceType );
     }
 
+    m_vecbtPosition.push_back( static_cast<uint8_t> ( position->w_check ) );
+    m_vecbtPosition.push_back( static_cast<uint8_t> ( position->b_check ) );
+    m_vecbtPosition.push_back( static_cast<uint8_t> ( position->status ) );
+    m_vecbtPosition.push_back( static_cast<uint8_t> ( position->last_move_from ) );
+    m_vecbtPosition.push_back( static_cast<uint8_t> ( position->last_move_to ) );
+
     return &m_vecbtPosition;
 }
 

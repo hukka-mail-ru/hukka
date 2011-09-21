@@ -187,17 +187,17 @@
         <translation>Такой пользователь уже зашел на сервер</translation>
     </message>
     <message>
-        <location filename="../src/Network/Client.cpp" line="1302"/>
+        <location filename="../src/Network/Client.cpp" line="1309"/>
         <source>Game over.</source>
         <translation>Игра окончена</translation>
     </message>
     <message>
-        <location filename="../src/Network/Client.cpp" line="1319"/>
+        <location filename="../src/Network/Client.cpp" line="1326"/>
         <source>Your opponent has rejected the draw</source>
         <translation>Ваш оппонент </translation>
     </message>
     <message>
-        <location filename="../src/Network/Client.cpp" line="1466"/>
+        <location filename="../src/Network/Client.cpp" line="1473"/>
         <source>Connection refused. 
 
 Please check whether you are connected to Internet. Check the server name and port as well.</source>
@@ -238,12 +238,12 @@ Please check whether you are connected to Internet. Check the server name and po
         <translation>Невозможно послать сообщение чата игрового стола. ID стола </translation>
     </message>
     <message>
-        <location filename="../src/Network/Client.cpp" line="1269"/>
+        <location filename="../src/Network/Client.cpp" line="1276"/>
         <source>Can&apos;t join to the game table.</source>
         <translation>Невозможно присоединиться к игровому столу</translation>
     </message>
     <message>
-        <location filename="../src/Network/Client.cpp" line="1286"/>
+        <location filename="../src/Network/Client.cpp" line="1293"/>
         <source>Can&apos;t reject the game.</source>
         <translation>Невозможно отказаться от игры</translation>
     </message>
@@ -270,9 +270,9 @@ Please check whether you are connected to Internet. Check the server name and po
     <message>
         <location filename="../src/Network/Client.cpp" line="948"/>
         <location filename="../src/Network/Client.cpp" line="978"/>
-        <location filename="../src/Network/Client.cpp" line="1270"/>
-        <location filename="../src/Network/Client.cpp" line="1287"/>
-        <location filename="../src/Network/Client.cpp" line="1321"/>
+        <location filename="../src/Network/Client.cpp" line="1277"/>
+        <location filename="../src/Network/Client.cpp" line="1294"/>
+        <location filename="../src/Network/Client.cpp" line="1328"/>
         <source>Internal server error </source>
         <translation>Внутренняя ошибка сервера </translation>
     </message>
@@ -310,7 +310,7 @@ Please check whether you are connected to Internet. Check the server name and po
         <location filename="../src/Network/Client.cpp" line="1014"/>
         <location filename="../src/Network/Client.cpp" line="1032"/>
         <location filename="../src/Network/Client.cpp" line="1075"/>
-        <location filename="../src/Network/Client.cpp" line="1252"/>
+        <location filename="../src/Network/Client.cpp" line="1259"/>
         <source>Internal server error</source>
         <translation>Внутренняя ошибка сервера</translation>
     </message>
@@ -320,27 +320,27 @@ Please check whether you are connected to Internet. Check the server name and po
         <translation>Ошибка TBM: </translation>
     </message>
     <message>
-        <location filename="../src/Network/Client.cpp" line="1318"/>
+        <location filename="../src/Network/Client.cpp" line="1325"/>
         <source>A draw.</source>
         <translation>Ничья.</translation>
     </message>
     <message>
-        <location filename="../src/Network/Client.cpp" line="1320"/>
+        <location filename="../src/Network/Client.cpp" line="1327"/>
         <source>Please wait for your next move to offer a draw</source>
         <translation>Подождите своего хода, а затем предложите ничью</translation>
     </message>
     <message>
-        <location filename="../src/Network/Client.cpp" line="1395"/>
+        <location filename="../src/Network/Client.cpp" line="1402"/>
         <source>CHS Error: </source>
         <translation>Ошибка CHS: </translation>
     </message>
     <message>
-        <location filename="../src/Network/Client.cpp" line="1425"/>
+        <location filename="../src/Network/Client.cpp" line="1432"/>
         <source>CHAT Error: </source>
         <translation>Ошибка CHAT: </translation>
     </message>
     <message>
-        <location filename="../src/Network/Client.cpp" line="1486"/>
+        <location filename="../src/Network/Client.cpp" line="1493"/>
         <source>Server doesn&apos;t respond</source>
         <translation>Сервер не отвечает</translation>
     </message>
