@@ -60,13 +60,21 @@ const TVByte* ChessLogic::GetPosForDB()
 
 const TVByte* ChessLogic::GetPosForClient()
 {
+    /*
     TVByte::const_iterator i = m_Engine.getPositionForClient()->begin();
     m_vecbtPosForClient.clear();
 
-    for ( int n = 0; n < 64; ++n )
+    for ( int n = 0; n < 64 + 5; ++n )
     {
         m_vecbtPosForClient.push_back( *i++ );
     }
 
     return &m_vecbtPosForClient;
+  */
+    m_vecbtPosForClient = *m_Engine.getPositionForClient();
+
+    return &m_vecbtPosForClient;
+
+
+
 }

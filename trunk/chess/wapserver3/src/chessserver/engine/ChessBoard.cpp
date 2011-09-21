@@ -62,6 +62,8 @@ ChessBoard::ChessBoard() {
     m_CurPos.en_passant=No_square;
     m_CurPos.w_king_pos=e1;
     m_CurPos.b_king_pos=e8;
+    m_CurPos.last_move_from = No_square;
+    m_CurPos.last_move_to = No_square;
 
     // Put the empty squares on the board
     int i;
@@ -311,6 +313,10 @@ ChessGameStatus ChessBoard::do_move(int from, int to, piece_type promotion) {
         m_CurPos.status=Check;
     else
         m_CurPos.status=Normal;
+
+    // save the move
+    m_CurPos.last_move_from = from;
+    m_CurPos.last_move_to   = to;
 
     return m_CurPos.status;
 }
