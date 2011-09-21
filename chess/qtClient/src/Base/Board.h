@@ -24,8 +24,8 @@ public:
     Board(QGraphicsScene* parentScene);
     virtual ~Board();
 
-    void updateGameField();
-    void updateGameField(const Field& field, bool white);
+    void updatePosition();
+    void updatePosition(const Position& position);
 
     // prevents artifacts
     void repaintCells();
@@ -43,7 +43,7 @@ private:
 
     QGraphicsScene* mParentScene;
 
-    Field mField;
+    Position mPosition;
 
     QGraphicsRectItem* mBoardRect;
     int mBoardRectX;
