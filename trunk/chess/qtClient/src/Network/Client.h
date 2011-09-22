@@ -117,8 +117,8 @@ signals:
         void registered();
         void joined(TABLEID id);
 
-        void opponentJoined(const QString& opponentName, int opponentRating);
-        void gotOpponent(const QString& opponentName, int opponentRating);
+        void opponentJoined(const Player& opponent);
+        void gotOpponent(const Player& opponent);
 
         void gameStarted();
         void gameRejected();

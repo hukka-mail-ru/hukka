@@ -49,6 +49,6 @@ void WaitAgreeDialog::onGameRejected()
     disconnect(Client::instance(), SIGNAL(gameStarted()), this, SLOT(onGameStarted()));
     disconnect(Client::instance(), SIGNAL(gameRejected()), this, SLOT(onGameRejected()));
 
-    MainWindow::instance()->showMessage("The game host has rejected the game.");
+    MainWindow::instance()->showMessage(tr("The game host has rejected the game."));
     close();
 }

@@ -62,7 +62,7 @@ private slots:
     void onExitClicked();
     void onGotMyGameTable(TABLEID id, bool isOwner);
     void onGotMyRating(quint32 myRating);
-    void onGotOpponent(const QString& opponentName, int opponentRating);
+    void onGotOpponent(const Player& opponent);
     void onGotLastGameResult(int result);
 
 

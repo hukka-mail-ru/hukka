@@ -289,7 +289,7 @@ void MainMenu::onGotMyGameTable(TABLEID tableID, bool isOwner)
     {
         UI::instance()->setGameTable(tableID);
 
-        connect(Client::instance(), SIGNAL(gotOpponent(const QString&, int)), this, SLOT(onGotOpponent(const QString&, int)));
+        connect(Client::instance(), SIGNAL(gotOpponent(const Player&)), this, SLOT(onGotOpponent(const Player&)));
         Client::instance()->getOpponent(tableID);
     }
     else
@@ -331,11 +331,11 @@ void MainMenu::onGotLastGameResult(int result)
 }
 
 
-void MainMenu::onGotOpponent(const QString& opponentName, int opponentRating)
+void MainMenu::onGotOpponent(const Player& opponent)
 {
-    disconnect(Client::instance(), SIGNAL(gotOpponent(const QString&, int)), this, SLOT(onGotOpponent(const QString&, int)));
-   UI::instance()->setPlayerName(PT_OPPONENT, opponentName);
-   UI::instance()->setPlayerRating(PT_OPPONENT, opponentRating);
+   disconnect(Client::instance(), SIGNAL(gotOpponent(const Player&)), this, SLOT(onGotOpponent(const Player&)));
+   UI::instance()->setPlayerName(PT_OPPONENT, opponent.name);
+   UI::instance()->setPlayerRating(PT_OPPONENT, opponent.rating);
 
    MainWindow::instance()->showMessage(
            tr("You have an unfinished game. Please finish it."));

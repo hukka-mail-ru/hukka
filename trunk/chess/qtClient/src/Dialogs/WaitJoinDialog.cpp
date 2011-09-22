@@ -21,7 +21,7 @@ WaitJoinDialog::WaitJoinDialog(QWidget *parent):
     layout->addWidget(exitButton);
     this->setLayout(layout);
 
-    connect(Client::instance(), SIGNAL(opponentJoined(const QString&, int)), this, SLOT(onOpponentJoined(const QString&, int)));
+    connect(Client::instance(), SIGNAL(opponentJoined(const Player&)), this, SLOT(onOpponentJoined(const Player&)));
 }
 
 void WaitJoinDialog::onExitClicked()
@@ -37,8 +37,10 @@ void  WaitJoinDialog::onGameTableDeleted()
 }
 
 
-void WaitJoinDialog::onOpponentJoined(const QString& opponentName, int opponentRating)
+void WaitJoinDialog::onOpponentJoined(const Player& opponent)
 {
+    qDebug() << "WaitJoinDialog::onOpponentJoined ";
+    /*
     // Thiss should fix a bug with a double calling of onOpponentJoined
     if(mJoined)
     {
@@ -48,19 +50,19 @@ void WaitJoinDialog::onOpponentJoined(const QString& opponentName, int opponentR
     else
     {
         mJoined = true;
-    }
+    }*/
 
-    disconnect(Client::instance(), SIGNAL(opponentJoined(const QString&, int)), this, SLOT(onOpponentJoined(const QString&, int)));
- //   qDebug() << "WaitJoinDialog::onOpponentJoined " << res;
+    disconnect(Client::instance(), SIGNAL(opponentJoined(const Player&)), this, SLOT(onOpponentJoined(const Player&)));
+
 
     int tableID = UI::instance()->getGameTable();
 
-    UI::instance()->setPlayerName(PT_OPPONENT, opponentName);
-    UI::instance()->setPlayerRating(PT_OPPONENT, opponentRating);
+    UI::instance()->setPlayerName(PT_OPPONENT, opponent.name);
+    UI::instance()->setPlayerRating(PT_OPPONENT, opponent.rating);
 
     // Get player name by ID
-    QString ratingText = (opponentRating == RATING_NOT_AVAILABLE) ? tr("not available") : QString::number(opponentRating);
-    if(MainWindow::instance()->showQuestion(opponentName + " " + tr("wants to play chess with you") + "\n" +
+    QString ratingText = (opponent.rating == RATING_NOT_AVAILABLE) ? tr("not available") : QString::number(opponent.rating);
+    if(MainWindow::instance()->showQuestion(opponent.name + " " + tr("wants to play chess with you") + "\n" +
               "(" + tr("opponent rating") + ": "+ ratingText + ") \n\n" +
               tr("Start the game?")))
     {
@@ -89,5 +91,5 @@ void WaitJoinDialog::onGameRejected()
 {
     mJoined = false;
     disconnect(Client::instance(), SIGNAL(gameRejected()), this, SLOT(onGameRejected()));
-    connect(Client::instance(), SIGNAL(opponentJoined(const QString&)), this, SLOT(onOpponentJoined(const QString&)));
+    connect(Client::instance(), SIGNAL(opponentJoined(const Player&)), this, SLOT(onOpponentJoined(const Player&)));
 }
