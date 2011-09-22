@@ -1168,12 +1168,16 @@ void Client::processMessageCHS(const MessageHeader& header, const QByteArray& bu
         Reply* reply = (Reply*)buffer.data();
 
         // Opponent name goes after the struct 'Reply'
-        QString opponentName = "";
-        opponentName.append(QByteArray(buffer.data() + sizeof(Reply), buffer.size() - sizeof(Reply)));
+        Player opponent;
+        opponent.rating = reply->rating;
+        opponent.name =  "";
+        opponent.name.append(QByteArray(buffer.data() + sizeof(Reply), buffer.size() - sizeof(Reply)));
 
         mGameStatus = GAM_OPPONENT_JOINED;
         qDebug() << mName << "emit opponentJoined " << reply->opponentID;
-        emit opponentJoined(opponentName, reply->rating);
+
+
+        emit opponentJoined(opponent);
     }
     else if(header.cmd == ANS_GET_OPPONENT)
     {
@@ -1186,12 +1190,14 @@ void Client::processMessageCHS(const MessageHeader& header, const QByteArray& bu
         Reply* reply = (Reply*)buffer.data();
 
         // Opponent name goes after the struct 'Reply'
-        QString opponentName = "";
-        opponentName.append(QByteArray(buffer.data() + sizeof(Reply), buffer.size() - sizeof(Reply)));
+        Player opponent;
+        opponent.rating = reply->rating;
+        opponent.name =  "";
+        opponent.name.append(QByteArray(buffer.data() + sizeof(Reply), buffer.size() - sizeof(Reply)));
 
         mGameStatus = GAM_OPPONENT_JOINED;
         //qDebug() << mName << "GAM_OPPONENT_JOINED " << reply->opponentID;
-        emit gotOpponent(opponentName, reply->rating);
+        emit gotOpponent(opponent);
     }
 
     // GAME STARTED

@@ -180,12 +180,12 @@
         <translation>Такой пользователь уже зашел на сервер</translation>
     </message>
     <message>
-        <location filename="../src/Network/Client.cpp" line="1309"/>
+        <location filename="../src/Network/Client.cpp" line="1315"/>
         <source>Game over.</source>
         <translation>Игра окончена</translation>
     </message>
     <message>
-        <location filename="../src/Network/Client.cpp" line="1326"/>
+        <location filename="../src/Network/Client.cpp" line="1332"/>
         <source>Your opponent has rejected the draw</source>
         <translation>Ваш оппонент </translation>
     </message>
@@ -222,12 +222,12 @@
         <translation>Невозможно послать сообщение чата игрового стола. ID стола </translation>
     </message>
     <message>
-        <location filename="../src/Network/Client.cpp" line="1276"/>
+        <location filename="../src/Network/Client.cpp" line="1282"/>
         <source>Can&apos;t join to the game table.</source>
         <translation>Невозможно присоединиться к игровому столу</translation>
     </message>
     <message>
-        <location filename="../src/Network/Client.cpp" line="1293"/>
+        <location filename="../src/Network/Client.cpp" line="1299"/>
         <source>Can&apos;t reject the game.</source>
         <translation>Невозможно отказаться от игры</translation>
     </message>
@@ -254,9 +254,9 @@
     <message>
         <location filename="../src/Network/Client.cpp" line="942"/>
         <location filename="../src/Network/Client.cpp" line="972"/>
-        <location filename="../src/Network/Client.cpp" line="1277"/>
-        <location filename="../src/Network/Client.cpp" line="1294"/>
-        <location filename="../src/Network/Client.cpp" line="1328"/>
+        <location filename="../src/Network/Client.cpp" line="1283"/>
+        <location filename="../src/Network/Client.cpp" line="1300"/>
+        <location filename="../src/Network/Client.cpp" line="1334"/>
         <source>Internal server error </source>
         <translation>Внутренняя ошибка сервера </translation>
     </message>
@@ -294,7 +294,7 @@
         <location filename="../src/Network/Client.cpp" line="1008"/>
         <location filename="../src/Network/Client.cpp" line="1026"/>
         <location filename="../src/Network/Client.cpp" line="1069"/>
-        <location filename="../src/Network/Client.cpp" line="1259"/>
+        <location filename="../src/Network/Client.cpp" line="1265"/>
         <source>Internal server error</source>
         <translation>Внутренняя ошибка сервера</translation>
     </message>
@@ -304,37 +304,37 @@
         <translation>Ошибка TBM: </translation>
     </message>
     <message>
-        <location filename="../src/Network/Client.cpp" line="1325"/>
+        <location filename="../src/Network/Client.cpp" line="1331"/>
         <source>A draw.</source>
         <translation>Ничья.</translation>
     </message>
     <message>
-        <location filename="../src/Network/Client.cpp" line="1327"/>
+        <location filename="../src/Network/Client.cpp" line="1333"/>
         <source>Please wait for your next move to offer a draw</source>
         <translation>Подождите своего хода, а затем предложите ничью</translation>
     </message>
     <message>
-        <location filename="../src/Network/Client.cpp" line="1402"/>
+        <location filename="../src/Network/Client.cpp" line="1408"/>
         <source>CHS Error: </source>
         <translation>Ошибка CHS: </translation>
     </message>
     <message>
-        <location filename="../src/Network/Client.cpp" line="1432"/>
+        <location filename="../src/Network/Client.cpp" line="1438"/>
         <source>CHAT Error: </source>
         <translation>Ошибка CHAT: </translation>
     </message>
     <message>
-        <location filename="../src/Network/Client.cpp" line="1473"/>
+        <location filename="../src/Network/Client.cpp" line="1479"/>
         <source>Connection refused. Please check the server name and port.</source>
         <translation>Нет соединения с сервером. Правильно ли Вы указали адрес сервера и номер порта?</translation>
     </message>
     <message>
-        <location filename="../src/Network/Client.cpp" line="1477"/>
+        <location filename="../src/Network/Client.cpp" line="1483"/>
         <source>Network unreachable. Please check your Internet connection.</source>
         <translation>Сеть недоступна. Проверьте Ваше соединение с сетью Интернет.</translation>
     </message>
     <message>
-        <location filename="../src/Network/Client.cpp" line="1496"/>
+        <location filename="../src/Network/Client.cpp" line="1502"/>
         <source>Server doesn&apos;t respond</source>
         <translation>Сервер не отвечает</translation>
     </message>
@@ -775,9 +775,14 @@ Please visit www.site.com to learn how to enable it.</source>
         <translation>Пожалуйста подождите начала игры...</translation>
     </message>
     <message>
-        <location filename="../src/Dialogs/WaitAgreeDialog.cpp" line="9"/>
+        <location filename="../src/Dialogs/WaitAgreeDialog.cpp" line="11"/>
         <source>Exit</source>
         <translation>Выход</translation>
+    </message>
+    <message>
+        <location filename="../src/Dialogs/WaitAgreeDialog.cpp" line="52"/>
+        <source>The game host has rejected the game.</source>
+        <translation>Ваш оппонент отказался начать игру.</translation>
     </message>
 </context>
 <context>
@@ -788,12 +793,12 @@ Please visit www.site.com to learn how to enable it.</source>
         <translation>Пожалуйста подождите ответа противника...</translation>
     </message>
     <message>
-        <location filename="../src/Dialogs/WaitDrawDialog.cpp" line="9"/>
+        <location filename="../src/Dialogs/WaitDrawDialog.cpp" line="11"/>
         <source>Exit</source>
         <translation>Выход</translation>
     </message>
     <message>
-        <location filename="../src/Dialogs/WaitDrawDialog.cpp" line="23"/>
+        <location filename="../src/Dialogs/WaitDrawDialog.cpp" line="25"/>
         <source>Exiting now means you surrender. Are you sure?</source>
         <translation>Выход означает, что вы сдаетесь. Согласны?</translation>
     </message>
@@ -806,27 +811,27 @@ Please visit www.site.com to learn how to enable it.</source>
         <translation>Пожалуйста подождите, пока противник присоединится к игре...</translation>
     </message>
     <message>
-        <location filename="../src/Dialogs/WaitJoinDialog.cpp" line="14"/>
+        <location filename="../src/Dialogs/WaitJoinDialog.cpp" line="16"/>
         <source>Exit</source>
         <translation>Выход</translation>
     </message>
     <message>
-        <location filename="../src/Dialogs/WaitJoinDialog.cpp" line="60"/>
+        <location filename="../src/Dialogs/WaitJoinDialog.cpp" line="64"/>
         <source>not available</source>
         <translation>не включен</translation>
     </message>
     <message>
-        <location filename="../src/Dialogs/WaitJoinDialog.cpp" line="61"/>
+        <location filename="../src/Dialogs/WaitJoinDialog.cpp" line="65"/>
         <source>wants to play chess with you</source>
         <translation>желает сыграть с вами</translation>
     </message>
     <message>
-        <location filename="../src/Dialogs/WaitJoinDialog.cpp" line="62"/>
+        <location filename="../src/Dialogs/WaitJoinDialog.cpp" line="66"/>
         <source>opponent rating</source>
         <translation>Рейтинг противника</translation>
     </message>
     <message>
-        <location filename="../src/Dialogs/WaitJoinDialog.cpp" line="63"/>
+        <location filename="../src/Dialogs/WaitJoinDialog.cpp" line="67"/>
         <source>Start the game?</source>
         <translation>Начать игру?</translation>
     </message>
