@@ -50,6 +50,9 @@ FindGameDialog::FindGameDialog(QWidget *parent): MyDialog(parent)
 /*
 void FindGameDialog::onCancelClicked()
 {
+    qDebug() << "FindGameDialog::onCancelClicked()";
+    disconnect(Client::instance(), SIGNAL(gotGameTables(const QList<GameTable>&)), this, SLOT(onGotGameTables(const QList<GameTable>&)));
+
     MainWindow::instance()->showMainMenu();
 }
 

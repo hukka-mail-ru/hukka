@@ -49,6 +49,8 @@ void UI::onDisconnected()
 
 void UI::startGame()
 {
+    qDebug() << "UI::startGame()";
+
     MainWindow::instance()->closeCurrentDialog();
 
     if(mMe.color == PC_WHITE)

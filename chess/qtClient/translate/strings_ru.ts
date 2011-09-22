@@ -400,7 +400,7 @@
         <translation type="obsolete">Игры не найдены</translation>
     </message>
     <message>
-        <location filename="../src/Dialogs/FindGameDialog.cpp" line="77"/>
+        <location filename="../src/Dialogs/FindGameDialog.cpp" line="80"/>
         <source>No games now. Try again later or create a new game.</source>
         <translation>Ни одной игры не найдено. Попробуйте еще раз через некоторое время или создайте новую игру.</translation>
     </message>
@@ -757,12 +757,12 @@ Please visit www.site.com to learn how to enable it.</source>
 <context>
     <name>UI</name>
     <message>
-        <location filename="../src/UI/UI.cpp" line="87"/>
+        <location filename="../src/UI/UI.cpp" line="89"/>
         <source>Game over.</source>
         <translation>Игра окончена.</translation>
     </message>
     <message>
-        <location filename="../src/UI/UI.cpp" line="100"/>
+        <location filename="../src/UI/UI.cpp" line="102"/>
         <source>Your opponent has offered a draw. Agree?</source>
         <translation>Ваш противник предлагает ничью. Согласны?</translation>
     </message>
@@ -780,9 +780,14 @@ Please visit www.site.com to learn how to enable it.</source>
         <translation>Выход</translation>
     </message>
     <message>
-        <location filename="../src/Dialogs/WaitAgreeDialog.cpp" line="52"/>
+        <location filename="../src/Dialogs/WaitAgreeDialog.cpp" line="56"/>
         <source>The game host has rejected the game.</source>
         <translation>Ваш оппонент отказался начать игру.</translation>
+    </message>
+    <message>
+        <location filename="../src/Dialogs/WaitAgreeDialog.cpp" line="66"/>
+        <source>The game host has closed the game.</source>
+        <translation>Ваш оппонент вышел из игры.</translation>
     </message>
 </context>
 <context>

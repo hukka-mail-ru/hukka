@@ -19,6 +19,7 @@ WaitAgreeDialog::WaitAgreeDialog(QWidget *parent):  MyDialog(parent)
 
     connect(Client::instance(), SIGNAL(gameStarted()), this, SLOT(onGameStarted()));
     connect(Client::instance(), SIGNAL(gameRejected()), this, SLOT(onGameRejected()));
+    connect(Client::instance(), SIGNAL(gameOver(const QString&, int, int)), this, SLOT(onGameOver(const QString&, int, int)));
 }
 
 
@@ -26,6 +27,7 @@ void WaitAgreeDialog::onExitClicked()
 {
     disconnect(Client::instance(), SIGNAL(gameStarted()), this, SLOT(onGameStarted()));
     disconnect(Client::instance(), SIGNAL(gameRejected()), this, SLOT(onGameRejected()));
+    disconnect(Client::instance(), SIGNAL(gameOver(const QString&, int, int)), this, SLOT(onGameOver(const QString&, int, int)));
 
     close();
 
@@ -38,6 +40,7 @@ void WaitAgreeDialog::onGameStarted()
 {
     disconnect(Client::instance(), SIGNAL(gameStarted()), this, SLOT(onGameStarted()));
     disconnect(Client::instance(), SIGNAL(gameRejected()), this, SLOT(onGameRejected()));
+    disconnect(Client::instance(), SIGNAL(gameOver(const QString&, int, int)), this, SLOT(onGameOver(const QString&, int, int)));
 
     MainWindow::instance()->setMode(MW_WAIT);
     UI::instance()->setPlayerColor(PT_ME, PC_BLACK);
@@ -48,7 +51,18 @@ void WaitAgreeDialog::onGameRejected()
 {
     disconnect(Client::instance(), SIGNAL(gameStarted()), this, SLOT(onGameStarted()));
     disconnect(Client::instance(), SIGNAL(gameRejected()), this, SLOT(onGameRejected()));
+    disconnect(Client::instance(), SIGNAL(gameOver(const QString&, int, int)), this, SLOT(onGameOver(const QString&, int, int)));
 
     MainWindow::instance()->showMessage(tr("The game host has rejected the game."));
+    close();
+}
+
+void WaitAgreeDialog::onGameOver(const QString& message, int status, int rating)
+{
+    disconnect(Client::instance(), SIGNAL(gameStarted()), this, SLOT(onGameStarted()));
+    disconnect(Client::instance(), SIGNAL(gameRejected()), this, SLOT(onGameRejected()));
+    disconnect(Client::instance(), SIGNAL(gameOver(const QString&, int, int)), this, SLOT(onGameOver(const QString&, int, int)));
+
+    MainWindow::instance()->showMessage(tr("The game host has closed the game."));
     close();
 }

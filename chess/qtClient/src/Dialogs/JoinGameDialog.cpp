@@ -138,5 +138,5 @@ void JoinGameDialog::onJoined(TABLEID id)
 
 void JoinGameDialog::onCancelClicked()
 {
-    MainWindow::instance()->showFindGameDialog();
+    MainWindow::instance()->showMainMenu();
 }
