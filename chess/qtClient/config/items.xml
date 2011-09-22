@@ -18,12 +18,12 @@
 
   <MainMenu>
     <player>
-        <font> <family value="Helvetica [Cronyx]" />  <size value="20" /> <color value="white" /> </font>
-        <landscape> <x value="540" />  <y value="150" />  </landscape>
+        <font> <family value="Helvetica [Cronyx]" />  <size value="18" /> <color value="#F8C356" /> </font>
+        <landscape> <x value="320" />  <y value="125" />  </landscape>
     </player>
     <rating>
-        <font> <family value="Helvetica [Cronyx]" />  <size value="12" />  <color value="white" /></font>
-        <landscape> <x value="540" />  <y value="190" />  </landscape>
+        <font> <family value="Helvetica [Cronyx]" />  <size value="11" />  <color value="white" /></font>
+        <landscape> <x value="320" />  <y value="160" />  </landscape>
     </rating>
   </MainMenu>
   
