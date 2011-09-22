@@ -547,6 +547,16 @@
         <translation>Настройки</translation>
     </message>
     <message>
+        <location filename="../src/UI/MainMenu.cpp" line="276"/>
+        <source>Rating: not available</source>
+        <translation>Рейтинг: не доступен</translation>
+    </message>
+    <message>
+        <location filename="../src/UI/MainMenu.cpp" line="277"/>
+        <source>Rating: </source>
+        <translation>Рейтинг: </translation>
+    </message>
+    <message>
         <location filename="../src/UI/MainMenu.cpp" line="310"/>
         <source>The last game has been finished.</source>
         <translation>Предыдущая игра была завершена</translation>

@@ -273,8 +273,8 @@ void MainMenu::onGotMyRating(quint32 myRating)
     mPlayerNameText->setPlainText(UI::instance()->getPlayer(PT_ME).name);
 
     QString ratingText =  (myRating == RATING_NOT_AVAILABLE) ?
-                          "Your rating is not available.\nPlease visit www.site.com\nto learn how to enable it." :
-                          "Your rating: " + QString::number(myRating);
+                          tr("Rating: not available") :
+                          tr("Rating: ") + QString::number(myRating);
 
     mPlayerRatingText->setPlainText(ratingText);
 }
