@@ -641,7 +641,7 @@
         <translation type="obsolete">Выход</translation>
     </message>
     <message>
-        <location filename="../src/Dialogs/OptionsDialog.cpp" line="77"/>
+        <location filename="../src/Dialogs/OptionsDialog.cpp" line="79"/>
         <source>Please restart the game to apply the settings</source>
         <translation>Пожалуйста перезапустите игру, чтобы настройки вступили в силу</translation>
     </message>
