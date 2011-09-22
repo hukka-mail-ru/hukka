@@ -157,8 +157,8 @@
   </Board>
 
   <GameState>
-    <font> <family value="Helvetica [Cronyx]" />  <size value="14" /> <color value="white" /> </font>
-    <x value="3" />  <y value="131" /> 
+    <font> <family value="Helvetica [Cronyx]" />  <size value="14" /> <color value="#FB9D0A" /> </font>
+    <x value="50" />  <y value="131" /> 
   </GameState>
 
 
