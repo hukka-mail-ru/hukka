@@ -6,6 +6,8 @@
 WaitAgreeDialog::WaitAgreeDialog(QWidget *parent):  MyDialog(parent)
 {
     label = new QLabel(tr("Please wait for start of the game..."), this);
+    label->setWordWrap(true);
+
     exitButton = new QPushButton(tr("Exit"), this);
     connect(exitButton, SIGNAL(clicked()), this, SLOT(onExitClicked()));
 

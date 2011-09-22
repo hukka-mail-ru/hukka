@@ -11,6 +11,8 @@ WaitJoinDialog::WaitJoinDialog(QWidget *parent):
     qDebug() << "WaitJoinDialog::WaitJoinDialog";
 
     label = new QLabel(tr("Please wait until an opponent joins your game..."), this);
+    label->setWordWrap(true);
+
     exitButton = new QPushButton(tr("Exit"), this);
     connect(exitButton, SIGNAL(clicked()), this, SLOT(onExitClicked()));
 
