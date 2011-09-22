@@ -42,6 +42,8 @@ private:
     QHBoxLayout* lowerLayout;
     QVBoxLayout* layout;
 
+    int mLanguageIndex;
+
 private slots:
 
     void onOkClicked();

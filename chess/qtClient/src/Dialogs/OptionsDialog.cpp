@@ -20,7 +20,7 @@ OptionsDialog::OptionsDialog(QWidget *parent):
 
     QString serverName = XML::instance().readValue(XML_CONFIG_FILENAME, QList<QString>() << XML_NODE_SERVER << XML_NODE_NAME);
     QString serverPort = XML::instance().readValue(XML_CONFIG_FILENAME, QList<QString>() << XML_NODE_SERVER << XML_NODE_PORT);
-    int languageIndex = XML::instance().readValue(XML_CONFIG_FILENAME, QList<QString>() << XML_NODE_CLIENT << XML_NODE_LANGUAGE).toInt();
+    mLanguageIndex = XML::instance().readValue(XML_CONFIG_FILENAME, QList<QString>() << XML_NODE_CLIENT << XML_NODE_LANGUAGE).toInt();
 
     serverNameLabel = new QLabel(tr("Server"), this);
     serverPortLabel = new QLabel(tr("Port"), this);
@@ -32,7 +32,7 @@ OptionsDialog::OptionsDialog(QWidget *parent):
     languageComboBox = new QComboBox(this);
     languageComboBox->addItem(tr("English"));
     languageComboBox->addItem(tr("Russian"));
-    languageComboBox->setCurrentIndex(languageIndex);
+    languageComboBox->setCurrentIndex(mLanguageIndex);
 
     edits = new QGridLayout();
     edits->addWidget(serverNameLabel, 0, 0);
@@ -73,8 +73,11 @@ void OptionsDialog::onOkClicked()
     XML::instance().writeValue(XML_CONFIG_FILENAME, QList<QString>() << XML_NODE_SERVER << XML_NODE_PORT, serverPortEdit->text());
     XML::instance().writeValue(XML_CONFIG_FILENAME, QList<QString>() << XML_NODE_CLIENT << XML_NODE_LANGUAGE, QString::number(languageComboBox->currentIndex()));
 
-    MainWindow::instance()->showMessage(
+    if(mLanguageIndex != languageComboBox->currentIndex())
+    {
+        MainWindow::instance()->showMessage(
              tr("Please restart the game to apply the settings"));
+    }
 
     close();
 }
