@@ -113,6 +113,9 @@ void GameScene::onExitClicked()
 
 void GameScene::onGotPosition(const Position& position)
 {
+    if(UI::instance()->getGameState() == GS_GAME_OVER )
+        return;
+
 //    qDebug() << "GameScene::onGotField" << endl;
     // a verification. It should be the first in this method,
     // because user mustn't see an empty field anyway.
@@ -182,8 +185,6 @@ void GameScene::updateMoveBoxes(GameState gameState)
     }
 
 }
-
-
 
 
 
