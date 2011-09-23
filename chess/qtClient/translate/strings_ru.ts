@@ -461,22 +461,22 @@
         <translation type="unfinished">Меню игры</translation>
     </message>
     <message>
-        <location filename="../src/UI/GameScene.cpp" line="73"/>
+        <location filename="../src/UI/GameScene.cpp" line="67"/>
         <source>Invalid move.</source>
         <translation>Неправильный ход</translation>
     </message>
     <message>
-        <location filename="../src/UI/GameScene.cpp" line="139"/>
+        <location filename="../src/UI/GameScene.cpp" line="133"/>
         <source>Check!</source>
         <translation>Шах!</translation>
     </message>
     <message>
-        <location filename="../src/UI/GameScene.cpp" line="143"/>
+        <location filename="../src/UI/GameScene.cpp" line="137"/>
         <source>Mate.</source>
         <translation>Мат.</translation>
     </message>
     <message>
-        <location filename="../src/UI/GameScene.cpp" line="147"/>
+        <location filename="../src/UI/GameScene.cpp" line="141"/>
         <source>Stalemate.</source>
         <translation>Пат.</translation>
     </message>
@@ -547,22 +547,22 @@
         <translation>Настройки</translation>
     </message>
     <message>
-        <location filename="../src/UI/MainMenu.cpp" line="249"/>
+        <location filename="../src/UI/MainMenu.cpp" line="240"/>
         <source>Rating: not available</source>
         <translation>Рейтинг: не доступен</translation>
     </message>
     <message>
-        <location filename="../src/UI/MainMenu.cpp" line="250"/>
+        <location filename="../src/UI/MainMenu.cpp" line="241"/>
         <source>Rating: </source>
         <translation>Рейтинг: </translation>
     </message>
     <message>
-        <location filename="../src/UI/MainMenu.cpp" line="283"/>
+        <location filename="../src/UI/MainMenu.cpp" line="274"/>
         <source>The last game has been finished.</source>
         <translation>Предыдущая игра была завершена</translation>
     </message>
     <message>
-        <location filename="../src/UI/MainMenu.cpp" line="314"/>
+        <location filename="../src/UI/MainMenu.cpp" line="305"/>
         <source>You have an unfinished game. Please finish it.</source>
         <translation>Пожалуйста завершите предыдущую игру.</translation>
     </message>

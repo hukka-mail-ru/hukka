@@ -31,12 +31,6 @@ Chat::Chat(QWidget* parent, ChatType type):
     mHistory = new History(this, mChatType);
     mUserlist = new Userlist(this, mChatType);
 
-}
-
-void Chat::updatePos(OrientationStatus orientation)
-{
-    QString chatNode = (mChatType == CT_COMMON_CHAT) ? XML_NODE_COMMON_CHAT : XML_NODE_TABLE_CHAT;
-
     QString orientNode = XML_NODE_LANDSCAPE; //(orientation == OrientationVertical) ? XML_NODE_PORTRAIT : XML_NODE_LANDSCAPE;
 
     int x      = XML::instance().readValue(XML_ITEMS_FILENAME, QList<QString>() << chatNode << orientNode << XML_NODE_X).toInt();

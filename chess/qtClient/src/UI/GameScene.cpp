@@ -41,11 +41,6 @@ GameScene::GameScene(QObject *parent):
     mGameMenuButton = new Button(this, Pixmaps::get(PIX_BUTTON_MENU), tr("Game menu"), XML_NODE_BUTTONS, XML_NODE_GAME_MENU);
     QObject::connect(mGameMenuButton, SIGNAL(clicked()), this, SLOT(onMenuButtonClicked()));
 
-    // chat
-    if(mChat)
-        mChat->updatePos(OrientationHorizontal);
-
-
     connect(Client::instance(), SIGNAL(gotPosition(const Position&)), this, SLOT(onGotPosition(const Position&)));
     connect(Client::instance(), SIGNAL(invalidMove()), this, SLOT(onInvalidMove()));
 }
@@ -55,7 +50,6 @@ GameScene::GameScene(QObject *parent):
 void GameScene::showChat()
 {
     mChat = new Chat(MainWindow::instance(), CT_TABLE_CHAT);
-    mChat->updatePos(OrientationHorizontal);
     //this->addWidget(mChat);
     mChat->show();
 }
