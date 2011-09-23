@@ -31,12 +31,6 @@ MainMenu::MainMenu(QObject *parent):
     mSplash = addPixmap(Pixmaps::get(PIX_SPLASH));
     mSplash->setZValue(Z_CELLS_LAYER);
 
-    createGameButton = newButton(Pixmaps::get(PIX_BUTTON_CREATE_GAME), SLOT(onCreateGameClicked()), tr("New Game"), XML_NODE_NEW_GAME);
-    findGameButton   = newButton(Pixmaps::get(PIX_BUTTON_FIND_GAME),   SLOT(onFindGameClicked()), tr("Find game"), XML_NODE_FIND_GAME);
-    chatButton       = newButton(Pixmaps::get(PIX_BUTTON_CHAT),        SLOT(onChatClicked()), tr("Chat"), XML_NODE_CHAT);
-    optionsButton    = newButton(Pixmaps::get(PIX_BUTTON_OPTIONS),     SLOT(onOptionsClicked()), tr("Options"), XML_NODE_OPTIONS);
-    exitButton       = newButton(Pixmaps::get(PIX_BUTTON_EXIT),        SLOT(onExitClicked()), "", XML_NODE_EXIT);
-
 
     // scene
     int scene_x      = XML::instance().readValue(XML_ITEMS_FILENAME, QList<QString>() << XML_NODE_SCENE << XML_NODE_LANDSCAPE << XML_NODE_X).toInt();
@@ -48,11 +42,11 @@ MainMenu::MainMenu(QObject *parent):
     setSceneRect( scene_x, scene_y, scene_width, scene_height );
 
     // buttons
-    createGameButton->updatePos(OrientationHorizontal);
-    findGameButton->updatePos(OrientationHorizontal);
-    chatButton->updatePos(OrientationHorizontal);
-    optionsButton->updatePos(OrientationHorizontal);
-    exitButton->updatePos(OrientationHorizontal);
+    createGameButton = newButton(Pixmaps::get(PIX_BUTTON_CREATE_GAME), SLOT(onCreateGameClicked()), tr("New Game"), XML_NODE_NEW_GAME);
+    findGameButton   = newButton(Pixmaps::get(PIX_BUTTON_FIND_GAME),   SLOT(onFindGameClicked()), tr("Find game"), XML_NODE_FIND_GAME);
+    chatButton       = newButton(Pixmaps::get(PIX_BUTTON_CHAT),        SLOT(onChatClicked()), tr("Chat"), XML_NODE_CHAT);
+    optionsButton    = newButton(Pixmaps::get(PIX_BUTTON_OPTIONS),     SLOT(onOptionsClicked()), tr("Options"), XML_NODE_OPTIONS);
+    exitButton       = newButton(Pixmaps::get(PIX_BUTTON_EXIT),        SLOT(onExitClicked()), "", XML_NODE_EXIT);
 
     // splash
     int x = XML::instance().readValue(XML_ITEMS_FILENAME, QList<QString>() << XML_NODE_SPLASH << XML_NODE_LANDSCAPE << XML_NODE_X).toInt();
@@ -322,6 +316,7 @@ void MainMenu::onGotOpponent(const Player& opponent)
    Client::instance()->setGameStatus(GAM_STARTED);
 
    MainWindow::instance()->setMode(MW_WAIT);
+
    UI::instance()->setPlayerColor(PT_ME, PC_WHITE);
   // MainWindow::instance()->showGameScene(PC_WHITE);
 

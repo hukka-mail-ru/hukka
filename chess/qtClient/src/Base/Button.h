@@ -13,8 +13,6 @@ public:
     Button(QGraphicsScene* scene, const QPixmap& pixmap, const QString& text,
            const QString& xmlNodeGroupName, const QString& xmlNodeName);
 
-    void updatePos(OrientationStatus orientation);
-
 signals:
     void clicked();
 

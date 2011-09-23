@@ -38,7 +38,7 @@ private:
 
     void updateMoveBoxes(GameState gameState);
 
-    Button* mMenuButton;
+    Button* mGameMenuButton;
 
     Chat* mChat;
 
