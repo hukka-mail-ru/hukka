@@ -163,11 +163,11 @@ void GameScene::updateMoveBoxes(GameState gameState)
         case GS_WAIT_FOR_PLAYER_MOVE:
         case GS_WAIT_FOR_SERVER:
         case GS_INVALID_MOVE:
-            mMoveBox.setPlayer(UI::instance()->getPlayer(PT_ME));
+            mMoveBox.setPlayer(PT_ME);
             mMoveBox.setActive();
             break;
         case GS_WAIT_FOR_OPPONENT:
-            mMoveBox.setPlayer(UI::instance()->getPlayer(PT_OPPONENT));
+            mMoveBox.setPlayer(PT_OPPONENT);
             mMoveBox.setInactive();
             break;
         case GS_GAME_OVER:
