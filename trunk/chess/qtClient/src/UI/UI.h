@@ -12,11 +12,11 @@ class UI: public QObject
 {
     Q_OBJECT
 
-    UI();
+    UI() {}
 
 public:
 
-    ~UI();
+    ~UI() {}
 
     static UI* instance()
     {

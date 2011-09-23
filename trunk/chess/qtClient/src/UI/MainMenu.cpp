@@ -23,28 +23,6 @@
 #include "Defines.h"
 #include "Pixmaps.h"
 
-MainMenu::MainMenu(QObject *parent):
-    QGraphicsScene(parent),
-    mChat(NULL)
-{
-}
-
-
-MainMenu::~MainMenu()
-{
-  // qDebug() << "MainMenu::~MainMenu()";
-}
-
-
-Button* MainMenu::newButton(const QPixmap& pixmap, const char* slot,
-                            const QString& text, const QString& xmlNodeName)
-{
-    Button* button = new Button(this, pixmap, text, XML_NODE_BUTTONS, xmlNodeName);
-    QObject::connect(button, SIGNAL(clicked()), this, slot);
-    return button;
-}
-
-
 
 void MainMenu::initialize()
 {
@@ -60,6 +38,18 @@ void MainMenu::initialize()
     exitButton       = newButton(Pixmaps::get(PIX_BUTTON_EXIT),        SLOT(onExitClicked()), "", XML_NODE_EXIT);
 
 }
+
+
+
+Button* MainMenu::newButton(const QPixmap& pixmap, const char* slot,
+                            const QString& text, const QString& xmlNodeName)
+{
+    Button* button = new Button(this, pixmap, text, XML_NODE_BUTTONS, xmlNodeName);
+    QObject::connect(button, SIGNAL(clicked()), this, slot);
+    return button;
+}
+
+
 
 
 void MainMenu::updateItemsPositions(OrientationStatus orientation)
@@ -256,7 +246,7 @@ void MainMenu::onAuthorized()
     else if(mClickedButton == chatButton && !mChat)
     {
         mChat = new Chat(MainWindow::instance(), CT_COMMON_CHAT);
-        mChat->updatePos(MainWindow::instance()->getOrientation());
+        mChat->updatePos(OrientationHorizontal);
         mChat->show();
 
         MainWindow::instance()->setMode(MW_NORMAL);

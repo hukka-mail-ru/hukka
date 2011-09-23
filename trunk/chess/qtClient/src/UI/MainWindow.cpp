@@ -34,26 +34,16 @@
 #include "Pixmaps.h"
 
 
-MainWindow::MainWindow(QWidget *parent):
-    QMainWindow(parent),
-    mCurrentDialog(NULL),
-    mMode(MW_NORMAL)
+
+void MainWindow::initialize()
 {
-  //  qDebug() << "MainWindow::MainWindow";
+    mCurrentDialog = NULL;
 
-    mGameScene = new GameScene(this);
-    mMainMenu = new MainMenu(this);
-
+    // MAIN WINDOW BASICS
     centralwidget = new QWidget(this);
 
     QString color = XML::instance().readValue(XML_ITEMS_FILENAME, QList<QString>() << XML_NODE_MAIN_WINDOW << XML_NODE_COLOR);
     centralwidget->setPalette(QPalette(QColor(color)));
-
-    /*
-    qDebug() << "Window Geometry:";
-    qDebug() << this->geometry().width();
-    qDebug() << this->geometry().height();
-*/
 
     vboxLayout    = new QVBoxLayout(centralwidget);
     mGraphicsView  = new QGraphicsView(centralwidget);
@@ -66,73 +56,35 @@ MainWindow::MainWindow(QWidget *parent):
     // centralwidget->showFullScreen(); // This may be redundant
    // this->showFullScreen(); // This is TRUE! Tested on Meego Emulator.
 
-    setWindowTitle(tr("Chess"));
-    Q_UNUSED(this);
-
-    QMetaObject::connectSlotsByName(this);
-
-    connect(&mOrientation, SIGNAL(orientationChanged(OrientationStatus)), this, SLOT(onOrientationChanged(OrientationStatus)));
-}
-
-MainWindow::~MainWindow()
-{
-   // qDebug() << "MainWindow::~MainWindow()";
-}
-
-
-void MainWindow::onOrientationChanged(OrientationStatus orientation)
-{
-
-   // qDebug() << "onOrientationChanged: " << orientation;
-
-    static bool initialized = false;
-
-    if(!initialized)
-    {
-        // load pixmaps
-        Pixmaps::loadPixmaps();
-
-        mMainMenu->initialize();
-        mGameScene->initialize();
-
-        showMainMenu();
-
-        show();
-    }
-
-    QString orientNode = (orientation == OrientationHorizontal) ? XML_NODE_LANDSCAPE : XML_NODE_PORTRAIT;
-
-    // Rotation
-    if(orientation == OrientationVertical)
-    {
-        mGraphicsView->rotate(-90); // degrees
-    }
-
-    if(initialized && orientation == OrientationHorizontal)
-    {
-        mGraphicsView->rotate(90); // degrees
-    }
-
     // Resize
     QList<QString> path;
-    mWidth = XML::instance().readValue(XML_ITEMS_FILENAME, path << XML_NODE_MAIN_WINDOW << orientNode << XML_NODE_WIDTH).toInt(); path.clear();
-    mHeight = XML::instance().readValue(XML_ITEMS_FILENAME, path << XML_NODE_MAIN_WINDOW << orientNode << XML_NODE_HEIGHT).toInt(); path.clear();
+    mWidth = XML::instance().readValue(XML_ITEMS_FILENAME, path << XML_NODE_MAIN_WINDOW << XML_NODE_LANDSCAPE << XML_NODE_WIDTH).toInt(); path.clear();
+    mHeight = XML::instance().readValue(XML_ITEMS_FILENAME, path << XML_NODE_MAIN_WINDOW << XML_NODE_LANDSCAPE << XML_NODE_HEIGHT).toInt(); path.clear();
     setFixedSize(mWidth, mHeight);
 
-
-    mMainMenu->updateItemsPositions(orientation);
-    mGameScene->updateItemsPositions(orientation);
-
-    initialized = true;
-}
+    setWindowTitle(tr("Good Old Chess"));
 
 
-void MainWindow::initialize()
-{
-    // the initialization was moved into 'onOrientationChanged'
-    //onOrientationChanged(mOrientation.getActualOrientation());
-    onOrientationChanged(OrientationHorizontal);
-    setMode(MW_NORMAL);
+     // PIXMAPS
+     Pixmaps::loadPixmaps();
+
+
+     // SCENES
+     mGameScene = new GameScene(this);
+     mMainMenu = new MainMenu(this);
+
+     mMainMenu->initialize();
+     mGameScene->initialize();
+
+     mMainMenu->updateItemsPositions(OrientationHorizontal);
+     mGameScene->updateItemsPositions(OrientationHorizontal);
+
+
+     // OK, LET'S ROCK!
+     showMainMenu();
+     show();
+
+     setMode(MW_NORMAL);
 }
 
 

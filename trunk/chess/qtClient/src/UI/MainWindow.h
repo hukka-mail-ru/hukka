@@ -28,13 +28,12 @@ enum MainWindowMode
 // This class is responsible for VISUALIZATION of the game
 class MainWindow : public QMainWindow
 {
-    Q_OBJECT
 
-    MainWindow(QWidget *parent = 0);
+    MainWindow(QWidget *parent = 0): QMainWindow(parent) {}
 
 public:
 
-    ~MainWindow();
+    ~MainWindow() {}
 
     static MainWindow* instance()
     {
@@ -76,8 +75,6 @@ public:
     void setMode(MainWindowMode mode);
     MainWindowMode getMode() { return mMode; }
 
-    OrientationStatus getOrientation() { return mOrientation.getActualOrientation(); }
-
     int width() { return mWidth; }
     int height() { return mHeight; }
 
@@ -99,16 +96,11 @@ private:
     MainMenu* mMainMenu;
     GameScene* mGameScene;
 
-    Orientation mOrientation;
-
     MainWindowMode mMode;
 
     int mWidth;
     int mHeight;
 
-private slots:
-
-    void onOrientationChanged(OrientationStatus orientation);
 
 };
 
