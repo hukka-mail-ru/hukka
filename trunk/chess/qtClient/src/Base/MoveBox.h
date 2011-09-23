@@ -28,7 +28,7 @@ public:
     void setActive();
     void setInactive();
 
-    void setPlayer(const Player& player);
+    void setPlayer(PlayerType type);
 
     void setGameOver();
 

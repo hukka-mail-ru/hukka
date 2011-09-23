@@ -105,5 +105,7 @@ void Clock::onTick()
     }
 
     mText->setPlainText(mHeader + Global::seconds2hrs(mSeconds));
+
+    MainWindow::instance()->update();
 }
 

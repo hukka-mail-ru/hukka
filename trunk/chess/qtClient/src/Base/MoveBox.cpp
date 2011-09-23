@@ -7,6 +7,7 @@
 
 #include "MoveBox.h"
 #include <XML.h>
+#include <UI.h>
 #include <QObject>
 
 MoveBox::MoveBox(QGraphicsScene* parentScene):
@@ -55,12 +56,22 @@ MoveBox::~MoveBox() {
 
 
 
-void MoveBox::setPlayer(const Player& player)
+void MoveBox::setPlayer(PlayerType type)
 {
-    QString playerColorText = (player.color == PC_WHITE) ? QObject::tr("Move: white (") : QObject::tr("Move: black (");
-    mPlayerNameText->setPlainText(playerColorText  + player.name + ")");
+    QString text = "";
+    if(type == PT_ME)
+    {
+        text = QObject::tr("Your move!");
+    }
+    else if(type == PT_OPPONENT)
+    {
+        Player opponent = UI::instance()->getPlayer(type);
+        QString oppColorText = (opponent.color == PC_WHITE) ? QObject::tr("white") : QObject::tr("black");
+        text = QObject::tr("Move: ") + oppColorText + " (" + opponent.name + ")";
+    }
+    mPlayerNameText->setPlainText(text);
 
-    QString ratingText = (player.rating == RATING_NOT_AVAILABLE) ? QObject::tr("N/A") : QString::number(player.rating);
+//    QString ratingText = (player.rating == RATING_NOT_AVAILABLE) ? QObject::tr("N/A") : QString::number(player.rating);
 //    mRatingText->setPlainText(QObject::tr("Rating") + ": " + ratingText);
 }
 

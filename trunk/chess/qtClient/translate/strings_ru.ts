@@ -458,7 +458,7 @@
     <message>
         <location filename="../src/UI/GameScene.cpp" line="41"/>
         <source>Game menu</source>
-        <translation type="unfinished">Меню игры</translation>
+        <translation>Меню игры</translation>
     </message>
     <message>
         <location filename="../src/UI/GameScene.cpp" line="67"/>
@@ -580,7 +580,7 @@
     <message>
         <location filename="../src/UI/MainWindow.cpp" line="65"/>
         <source>Good Old Chess</source>
-        <translation type="unfinished">Good Old Chess</translation>
+        <translation>Good Old Chess</translation>
     </message>
 </context>
 <context>
@@ -671,26 +671,40 @@
 <context>
     <name>QObject</name>
     <message>
-        <source>Move: </source>
-        <translation type="obsolete">Ход: </translation>
+        <location filename="../src/Base/MoveBox.cpp" line="64"/>
+        <source>Your move!</source>
+        <translation>Ваш ход!</translation>
     </message>
     <message>
-        <location filename="../src/Base/MoveBox.cpp" line="14"/>
+        <location filename="../src/Base/MoveBox.cpp" line="69"/>
+        <source>white</source>
+        <translation>белых</translation>
+    </message>
+    <message>
+        <location filename="../src/Base/MoveBox.cpp" line="69"/>
+        <source>black</source>
+        <translation>черных</translation>
+    </message>
+    <message>
+        <location filename="../src/Base/MoveBox.cpp" line="70"/>
+        <source>Move: </source>
+        <translation>Ход </translation>
+    </message>
+    <message>
+        <location filename="../src/Base/MoveBox.cpp" line="15"/>
         <source>Game: </source>
         <translation>Игра: </translation>
     </message>
     <message>
-        <location filename="../src/Base/MoveBox.cpp" line="60"/>
         <source>Move: white (</source>
-        <translation>Ход белых (</translation>
+        <translation type="obsolete">Ход белых (</translation>
     </message>
     <message>
-        <location filename="../src/Base/MoveBox.cpp" line="60"/>
         <source>Move: black (</source>
-        <translation>Ход черных (</translation>
+        <translation type="obsolete">Ход черных (</translation>
     </message>
     <message>
-        <location filename="../src/Base/MoveBox.cpp" line="99"/>
+        <location filename="../src/Base/MoveBox.cpp" line="110"/>
         <source>Game over.</source>
         <translation>Игра окончена.</translation>
     </message>
@@ -703,9 +717,8 @@
         <translation type="obsolete">Черные</translation>
     </message>
     <message>
-        <location filename="../src/Base/MoveBox.cpp" line="63"/>
         <source>N/A</source>
-        <translation>НЕТ</translation>
+        <translation type="obsolete">НЕТ</translation>
     </message>
     <message>
         <source>Rating</source>
