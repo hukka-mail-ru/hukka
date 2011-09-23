@@ -19,14 +19,6 @@ GameScene::GameScene(QObject *parent):
     mMoveBox(this),
     mBoard(this)
 {
-    // MENU BUTTON
-    mMenuButton = new Button(this, Pixmaps::get(PIX_BUTTON_MENU), tr("Game menu"), XML_NODE_BUTTONS, XML_NODE_GAME_MENU);
-
-   // mMenuButton->updatePos(MainWindow::instance()->getOrientation());
-    QObject::connect(mMenuButton, SIGNAL(clicked()), this, SLOT(onMenuButtonClicked()));
-
-//    mExitButton = new Button(this, Pixmaps::get(PIX_BUTTON_EXIT), "", XML_NODE_BUTTONS, XML_NODE_EXIT);
-//    QObject::connect(mExitButton, SIGNAL(clicked()), this, SLOT(onExitClicked()));
 
     // GameState (check, mate, etc..)
     int gameStateX           = XML::instance().readValue(XML_ITEMS_FILENAME, QList<QString>() << XML_NODE_GAME_STATE << XML_NODE_X).toInt();
@@ -45,8 +37,9 @@ GameScene::GameScene(QObject *parent):
     int scene_height = XML::instance().readValue(XML_ITEMS_FILENAME, QList<QString>() << XML_NODE_SCENE << XML_NODE_LANDSCAPE << XML_NODE_HEIGHT).toInt();
     setSceneRect( scene_x, scene_y, scene_width, scene_height );
 
-    // border
-    mMenuButton->updatePos(OrientationHorizontal);
+    // game menu
+    mGameMenuButton = new Button(this, Pixmaps::get(PIX_BUTTON_MENU), tr("Game menu"), XML_NODE_BUTTONS, XML_NODE_GAME_MENU);
+    QObject::connect(mGameMenuButton, SIGNAL(clicked()), this, SLOT(onMenuButtonClicked()));
 
     // chat
     if(mChat)
@@ -55,7 +48,6 @@ GameScene::GameScene(QObject *parent):
 
     connect(Client::instance(), SIGNAL(gotPosition(const Position&)), this, SLOT(onGotPosition(const Position&)));
     connect(Client::instance(), SIGNAL(invalidMove()), this, SLOT(onInvalidMove()));
-
 }
 
 
@@ -197,8 +189,6 @@ void GameScene::updateMoveBoxes(GameState gameState)
 
 void GameScene::onMenuButtonClicked()
 {
-
-    //qDebug() << "onMenuButtonClicked";
     MainWindow::instance()->showGameDialog();
 }
 
