@@ -13,9 +13,12 @@
 #include <Client.h>
 
 
-void GameScene::initialize()
+GameScene::GameScene(QObject *parent):
+    QGraphicsScene(parent),
+    mChat(NULL),
+    mMoveBox(this),
+    mBoard(this)
 {
-
     // MENU BUTTON
     mMenuButton = new Button(this, Pixmaps::get(PIX_BUTTON_MENU), tr("Game menu"), XML_NODE_BUTTONS, XML_NODE_GAME_MENU);
 
@@ -35,11 +38,26 @@ void GameScene::initialize()
     mGameStateText->setDefaultTextColor(gameStateColor);
     mGameStateText->setPos(gameStateX, gameStateY);
 
+    // scene
+    int scene_x      = XML::instance().readValue(XML_ITEMS_FILENAME, QList<QString>() << XML_NODE_SCENE << XML_NODE_LANDSCAPE << XML_NODE_X).toInt();
+    int scene_y      = XML::instance().readValue(XML_ITEMS_FILENAME, QList<QString>() << XML_NODE_SCENE << XML_NODE_LANDSCAPE << XML_NODE_Y).toInt();
+    int scene_width  = XML::instance().readValue(XML_ITEMS_FILENAME, QList<QString>() << XML_NODE_SCENE << XML_NODE_LANDSCAPE << XML_NODE_WIDTH).toInt();
+    int scene_height = XML::instance().readValue(XML_ITEMS_FILENAME, QList<QString>() << XML_NODE_SCENE << XML_NODE_LANDSCAPE << XML_NODE_HEIGHT).toInt();
+    setSceneRect( scene_x, scene_y, scene_width, scene_height );
+
+    // border
+    mMenuButton->updatePos(OrientationHorizontal);
+
+    // chat
+    if(mChat)
+        mChat->updatePos(OrientationHorizontal);
+
 
     connect(Client::instance(), SIGNAL(gotPosition(const Position&)), this, SLOT(onGotPosition(const Position&)));
     connect(Client::instance(), SIGNAL(invalidMove()), this, SLOT(onInvalidMove()));
 
 }
+
 
 
 void GameScene::showChat()
@@ -143,29 +161,6 @@ void GameScene::update()
 {
     GameState state = UI::instance()->getGameState();
     updateMoveBoxes(state);
-}
-
-void GameScene::updateItemsPositions(OrientationStatus orientation)
-{
-    // TODO copy-paste!
-    QString orientNode = (orientation == OrientationHorizontal) ? XML_NODE_LANDSCAPE : XML_NODE_PORTRAIT;
-
-    // scene
-    int scene_x      = XML::instance().readValue(XML_ITEMS_FILENAME, QList<QString>() << XML_NODE_SCENE << orientNode << XML_NODE_X).toInt();
-    int scene_y      = XML::instance().readValue(XML_ITEMS_FILENAME, QList<QString>() << XML_NODE_SCENE << orientNode << XML_NODE_Y).toInt();
-    int scene_width  = XML::instance().readValue(XML_ITEMS_FILENAME, QList<QString>() << XML_NODE_SCENE << orientNode << XML_NODE_WIDTH).toInt();
-    int scene_height = XML::instance().readValue(XML_ITEMS_FILENAME, QList<QString>() << XML_NODE_SCENE << orientNode << XML_NODE_HEIGHT).toInt();
-    setSceneRect( scene_x, scene_y, scene_width, scene_height );
-   // addRect( scene_x, scene_y, scene_width, scene_height, QPen(QColor(255, 255, 255)) );
-
-    // border
-    mMenuButton->updatePos(orientation);
-//    mExitButton->updatePos(orientation);
-
-
-    // chat
-    if(mChat)
-        mChat->updatePos(orientation);
 }
 
 

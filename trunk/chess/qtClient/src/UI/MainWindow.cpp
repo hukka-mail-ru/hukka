@@ -73,12 +73,6 @@ void MainWindow::initialize()
      mGameScene = new GameScene(this);
      mMainMenu = new MainMenu(this);
 
-     mMainMenu->initialize();
-     mGameScene->initialize();
-
-     mMainMenu->updateItemsPositions(OrientationHorizontal);
-     mGameScene->updateItemsPositions(OrientationHorizontal);
-
 
      // OK, LET'S ROCK!
      showMainMenu();
