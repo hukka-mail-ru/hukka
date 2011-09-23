@@ -13,37 +13,6 @@
 #include <Client.h>
 
 
-GameScene::GameScene(QObject *parent):
-       QGraphicsScene(parent),
-       mChat(NULL),
-       mMoveBox(this),
-       mBoard(this)
-{
-
-}
-
-GameScene::~GameScene()
-{
-    //qDebug() << "GameScene::~GameScene()";
-}
-
-
-
-void GameScene::showChat()
-{
-    mChat = new Chat(MainWindow::instance(), CT_TABLE_CHAT);
-    mChat->updatePos(OrientationHorizontal);
-    //this->addWidget(mChat);
-    mChat->show();
-}
-
-
-void GameScene::close()
-{
-   if(mChat)
-       mChat->close();
-}
-
 void GameScene::initialize()
 {
 
@@ -70,6 +39,22 @@ void GameScene::initialize()
     connect(Client::instance(), SIGNAL(gotPosition(const Position&)), this, SLOT(onGotPosition(const Position&)));
     connect(Client::instance(), SIGNAL(invalidMove()), this, SLOT(onInvalidMove()));
 
+}
+
+
+void GameScene::showChat()
+{
+    mChat = new Chat(MainWindow::instance(), CT_TABLE_CHAT);
+    mChat->updatePos(OrientationHorizontal);
+    //this->addWidget(mChat);
+    mChat->show();
+}
+
+
+void GameScene::close()
+{
+   if(mChat)
+       mChat->close();
 }
 
 

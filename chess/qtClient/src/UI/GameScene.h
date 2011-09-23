@@ -21,9 +21,14 @@ class GameScene: public QGraphicsScene
 public:
 
 
-    GameScene(QObject *parent = 0);
+    GameScene(QObject *parent = 0):
+        QGraphicsScene(parent),
+        mChat(NULL),
+        mMoveBox(this),
+        mBoard(this) {}
 
-    ~GameScene();
+
+    ~GameScene() {}
 
     void initialize();
     void update();

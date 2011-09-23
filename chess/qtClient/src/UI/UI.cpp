@@ -7,19 +7,11 @@
 #include "Pixmaps.h"
 
 
-UI::UI():
-    mGameTable(0)
-{
-    mMe.isAuthorized = false;
-}
-
-UI::~UI()
-{
-  //  qDebug() << "UI::~UI()";
-}
-
 void UI::initialize(QApplication* app)
 {
+    mGameTable = 0;
+    mMe.isAuthorized = false;
+
   //  qDebug() << "UI::initialize()";
 
     connect(Client::instance(), SIGNAL(error(const QString&)), this, SLOT(onError(const QString&)));

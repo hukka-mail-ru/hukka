@@ -456,27 +456,27 @@
 <context>
     <name>GameScene</name>
     <message>
-        <location filename="../src/UI/GameScene.cpp" line="51"/>
+        <location filename="../src/UI/GameScene.cpp" line="20"/>
         <source>Game menu</source>
         <translation>Меню игры</translation>
     </message>
     <message>
-        <location filename="../src/UI/GameScene.cpp" line="78"/>
+        <location filename="../src/UI/GameScene.cpp" line="63"/>
         <source>Invalid move.</source>
         <translation>Неправильный ход</translation>
     </message>
     <message>
-        <location filename="../src/UI/GameScene.cpp" line="141"/>
+        <location filename="../src/UI/GameScene.cpp" line="126"/>
         <source>Check!</source>
         <translation>Шах!</translation>
     </message>
     <message>
-        <location filename="../src/UI/GameScene.cpp" line="145"/>
+        <location filename="../src/UI/GameScene.cpp" line="130"/>
         <source>Mate.</source>
         <translation>Мат.</translation>
     </message>
     <message>
-        <location filename="../src/UI/GameScene.cpp" line="149"/>
+        <location filename="../src/UI/GameScene.cpp" line="134"/>
         <source>Stalemate.</source>
         <translation>Пат.</translation>
     </message>
@@ -527,42 +527,42 @@
 <context>
     <name>MainMenu</name>
     <message>
-        <location filename="../src/UI/MainMenu.cpp" line="56"/>
+        <location filename="../src/UI/MainMenu.cpp" line="34"/>
         <source>New Game</source>
         <translation>Новая игра</translation>
     </message>
     <message>
-        <location filename="../src/UI/MainMenu.cpp" line="57"/>
+        <location filename="../src/UI/MainMenu.cpp" line="35"/>
         <source>Find game</source>
         <translation>Найти игру</translation>
     </message>
     <message>
-        <location filename="../src/UI/MainMenu.cpp" line="58"/>
+        <location filename="../src/UI/MainMenu.cpp" line="36"/>
         <source>Chat</source>
         <translation>Чат</translation>
     </message>
     <message>
-        <location filename="../src/UI/MainMenu.cpp" line="59"/>
+        <location filename="../src/UI/MainMenu.cpp" line="37"/>
         <source>Options</source>
         <translation>Настройки</translation>
     </message>
     <message>
-        <location filename="../src/UI/MainMenu.cpp" line="276"/>
+        <location filename="../src/UI/MainMenu.cpp" line="266"/>
         <source>Rating: not available</source>
         <translation>Рейтинг: не доступен</translation>
     </message>
     <message>
-        <location filename="../src/UI/MainMenu.cpp" line="277"/>
+        <location filename="../src/UI/MainMenu.cpp" line="267"/>
         <source>Rating: </source>
         <translation>Рейтинг: </translation>
     </message>
     <message>
-        <location filename="../src/UI/MainMenu.cpp" line="310"/>
+        <location filename="../src/UI/MainMenu.cpp" line="300"/>
         <source>The last game has been finished.</source>
         <translation>Предыдущая игра была завершена</translation>
     </message>
     <message>
-        <location filename="../src/UI/MainMenu.cpp" line="341"/>
+        <location filename="../src/UI/MainMenu.cpp" line="331"/>
         <source>You have an unfinished game. Please finish it.</source>
         <translation>Пожалуйста завершите предыдущую игру.</translation>
     </message>
@@ -570,13 +570,17 @@
 <context>
     <name>MainWindow</name>
     <message>
-        <location filename="../src/UI/MainWindow.cpp" line="69"/>
         <source>Chess</source>
-        <translation>Шахматы</translation>
+        <translation type="obsolete">Шахматы</translation>
     </message>
     <message>
         <source>Connection refused. Please check whether you are connected to Internet.</source>
         <translation type="obsolete">Нет соединения с сервером. Проверьте, доступна ли вам сеть Интернет. Также проверьте, правильно ли Вы указали адрес сервера и номер порта.</translation>
+    </message>
+    <message>
+        <location filename="../src/UI/MainWindow.cpp" line="65"/>
+        <source>Good Old Chess</source>
+        <translation type="unfinished">Good Old Chess</translation>
     </message>
 </context>
 <context>
@@ -767,12 +771,12 @@ Please visit www.site.com to learn how to enable it.</source>
 <context>
     <name>UI</name>
     <message>
-        <location filename="../src/UI/UI.cpp" line="89"/>
+        <location filename="../src/UI/UI.cpp" line="81"/>
         <source>Game over.</source>
         <translation>Игра окончена.</translation>
     </message>
     <message>
-        <location filename="../src/UI/UI.cpp" line="102"/>
+        <location filename="../src/UI/UI.cpp" line="94"/>
         <source>Your opponent has offered a draw. Agree?</source>
         <translation>Ваш противник предлагает ничью. Согласны?</translation>
     </message>

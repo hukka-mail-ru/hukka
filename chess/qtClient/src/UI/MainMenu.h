@@ -14,8 +14,11 @@ class MainMenu: public QGraphicsScene
 {
 Q_OBJECT
 public:
-    MainMenu(QObject *parent = 0);
-    ~MainMenu();
+    MainMenu(QObject *parent = 0):
+        QGraphicsScene(parent),
+        mChat(NULL) {}
+
+    ~MainMenu() {}
 
     void initialize();
 
