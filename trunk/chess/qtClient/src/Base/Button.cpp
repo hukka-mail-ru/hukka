@@ -41,8 +41,8 @@ Button::Button(QGraphicsScene* scene, const QPixmap& pixmap, const QString& text
 
     if(mXMLNodeName != "" && mXMLNodeGroupName != "")
     {
-        int x = XML::instance().readValue(XML_ITEMS_FILENAME, QList<QString>() << mXMLNodeGroupName << mXMLNodeName << XML_NODE_LANDSCAPE << XML_NODE_X).toInt();
-        int y = XML::instance().readValue(XML_ITEMS_FILENAME, QList<QString>() << mXMLNodeGroupName << mXMLNodeName << XML_NODE_LANDSCAPE << XML_NODE_Y).toInt();
+        int x = XML::instance().readValue(XML_ITEMS_FILENAME, QList<QString>() << mXMLNodeGroupName << mXMLNodeName << XML_NODE_X).toInt();
+        int y = XML::instance().readValue(XML_ITEMS_FILENAME, QList<QString>() << mXMLNodeGroupName << mXMLNodeName << XML_NODE_Y).toInt();
         this->setPos(x, y);
 
         if(mText)

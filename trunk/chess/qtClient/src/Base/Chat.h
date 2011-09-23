@@ -12,7 +12,6 @@
 #include <QTableWidget>
 #include <QString>
 #include <Defines.h>
-#include <orientation.h>
 
 enum ChatState
 {

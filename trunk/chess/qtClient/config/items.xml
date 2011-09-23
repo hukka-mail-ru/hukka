@@ -2,28 +2,28 @@
 
   <MainWindow>
     <color value = "black" />
-    <landscape> <width value="480" />  <height value="320" />  </landscape>
+    <width value="480" />  <height value="320" />  
   </MainWindow>
 
   <Scene>
     <margin>  <width value="0" />  </margin>
-    <landscape>  <x value="0" />   <y value="0" />  <width value="480" />  <height value="320" />  </landscape>
+     <x value="0" />   <y value="0" />  <width value="480" />  <height value="320" />  
   </Scene>
 
 
   <Splash>
-    <landscape>  <x value="0" />   <y value="20" /> </landscape>
+     <x value="0" />   <y value="20" /> 
   </Splash>
  
 
   <MainMenu>
     <player>
         <font> <family value="Helvetica [Cronyx]" />  <size value="18" /> <color value="#F8C356" /> </font>
-        <landscape> <x value="320" />  <y value="125" />  </landscape>
+        <x value="320" />  <y value="125" />  
     </player>
     <rating>
         <font> <family value="Helvetica [Cronyx]" />  <size value="11" />  <color value="white" /></font>
-        <landscape> <x value="320" />  <y value="160" />  </landscape>
+        <x value="320" />  <y value="160" />  
     </rating>
   </MainMenu>
   
@@ -39,7 +39,7 @@
 
 
   <CommonChat>
-    <landscape> <x value="55" /> <y value="5" />  <width value="420" /> <height value="190" />  </landscape>
+    <x value="55" /> <y value="5" />  <width value="420" /> <height value="190" />  
 	<font>
  	    <me>             <color value="white" /> </me>
 		<opponent>       <color value="#FFCC00" /> </opponent>
@@ -50,18 +50,18 @@
                   QTableWidget { background: black; color: white; }"/>
 
 	<history>
-	    <landscape> <x value="0" /> <y value="0" />  <width value="305" /> <height value="190" />  </landscape>
+	    <x value="0" /> <y value="0" />  <width value="305" /> <height value="190" />  
 	</history>
 
 	<userlist>
-	    <landscape> <x value="310" /> <y value="0" />  <width value="110" /> <height value="190" />  </landscape>
+	    <x value="310" /> <y value="0" />  <width value="110" /> <height value="190" />  
 	</userlist>
 
   </CommonChat>
 
 
   <TableChat>
-	<landscape> <x value="5" /> <y value="1000" />  <width value="380" /> <height value="215" />  </landscape>
+	<x value="5" /> <y value="1000" />  <width value="380" /> <height value="215" />  
 	<font>
  	    <me>             <color value="white" /> </me>
 		<opponent>       <color value="#FFCC00" /> </opponent>
@@ -72,11 +72,11 @@
                   QTableWidget { background: black; color: white; }"/> 
 
 	<history>
-		<landscape> <x value="0" /> <y value="0" />  <width value="380" /> <height value="215" />  </landscape>
+		<x value="0" /> <y value="0" />  <width value="380" /> <height value="215" />  
 	</history>
 
 	<userlist>
-		<landscape> <x value="0" /> <y value="0" />  <width value="0" /> <height value="0" />  </landscape>
+		<x value="0" /> <y value="0" />  <width value="0" /> <height value="0" />  
 	</userlist>
 
   </TableChat>
@@ -89,28 +89,28 @@
     </font>
 
       <Exit>
-        <landscape> <x value="0" />  <y value="0" />  </landscape>
+        <x value="0" />  <y value="0" />  
       </Exit>
 
       <NewGame>
-        <landscape> <x value="0" /> <y value="200" /> </landscape>
+        <x value="0" /> <y value="200" /> 
       </NewGame>
 
       <FindGame>
-        <landscape> <x value="120" />  <y value="200" />  </landscape>
+        <x value="120" />  <y value="200" />  
       </FindGame>
 
       <Chat>
-        <landscape> <x value="240" /> <y value="200" /> </landscape>
+        <x value="240" /> <y value="200" /> 
       </Chat>
 
       <Options>
-        <landscape> <x value="360" />  <y value="200" /> </landscape>
+        <x value="360" />  <y value="200" /> 
       </Options>
 
 
       <GameMenu>
-        <landscape> <x value="20" />   <y value="10" />  </landscape>
+        <x value="20" />   <y value="10" />  
       </GameMenu>
 
   </Buttons>

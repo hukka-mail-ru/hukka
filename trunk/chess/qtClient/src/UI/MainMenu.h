@@ -7,7 +7,6 @@
 #include <QString>
 #include <Button.h>
 #include <Chat.h>
-#include <orientation.h>
 
 
 class MainMenu: public QGraphicsScene
