@@ -466,17 +466,17 @@
         <translation>Неправильный ход</translation>
     </message>
     <message>
-        <location filename="../src/UI/GameScene.cpp" line="136"/>
+        <location filename="../src/UI/GameScene.cpp" line="139"/>
         <source>Check!</source>
         <translation>Шах!</translation>
     </message>
     <message>
-        <location filename="../src/UI/GameScene.cpp" line="140"/>
+        <location filename="../src/UI/GameScene.cpp" line="143"/>
         <source>Mate.</source>
         <translation>Мат.</translation>
     </message>
     <message>
-        <location filename="../src/UI/GameScene.cpp" line="144"/>
+        <location filename="../src/UI/GameScene.cpp" line="147"/>
         <source>Stalemate.</source>
         <translation>Пат.</translation>
     </message>
