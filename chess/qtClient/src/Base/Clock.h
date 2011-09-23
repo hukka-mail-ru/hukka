@@ -13,7 +13,6 @@
 #include <QGraphicsScene>
 #include <QString>
 #include <QGraphicsTextItem>
-#include <orientation.h>
 
 class Clock: public QObject
 {

@@ -31,10 +31,10 @@ GameScene::GameScene(QObject *parent):
     mGameStateText->setPos(gameStateX, gameStateY);
 
     // scene
-    int scene_x      = XML::instance().readValue(XML_ITEMS_FILENAME, QList<QString>() << XML_NODE_SCENE << XML_NODE_LANDSCAPE << XML_NODE_X).toInt();
-    int scene_y      = XML::instance().readValue(XML_ITEMS_FILENAME, QList<QString>() << XML_NODE_SCENE << XML_NODE_LANDSCAPE << XML_NODE_Y).toInt();
-    int scene_width  = XML::instance().readValue(XML_ITEMS_FILENAME, QList<QString>() << XML_NODE_SCENE << XML_NODE_LANDSCAPE << XML_NODE_WIDTH).toInt();
-    int scene_height = XML::instance().readValue(XML_ITEMS_FILENAME, QList<QString>() << XML_NODE_SCENE << XML_NODE_LANDSCAPE << XML_NODE_HEIGHT).toInt();
+    int scene_x      = XML::instance().readValue(XML_ITEMS_FILENAME, QList<QString>() << XML_NODE_SCENE << XML_NODE_X).toInt();
+    int scene_y      = XML::instance().readValue(XML_ITEMS_FILENAME, QList<QString>() << XML_NODE_SCENE << XML_NODE_Y).toInt();
+    int scene_width  = XML::instance().readValue(XML_ITEMS_FILENAME, QList<QString>() << XML_NODE_SCENE << XML_NODE_WIDTH).toInt();
+    int scene_height = XML::instance().readValue(XML_ITEMS_FILENAME, QList<QString>() << XML_NODE_SCENE << XML_NODE_HEIGHT).toInt();
     setSceneRect( scene_x, scene_y, scene_width, scene_height );
 
     // game menu

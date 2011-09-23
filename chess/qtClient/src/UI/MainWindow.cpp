@@ -58,8 +58,8 @@ void MainWindow::initialize()
 
     // Resize
     QList<QString> path;
-    mWidth = XML::instance().readValue(XML_ITEMS_FILENAME, path << XML_NODE_MAIN_WINDOW << XML_NODE_LANDSCAPE << XML_NODE_WIDTH).toInt(); path.clear();
-    mHeight = XML::instance().readValue(XML_ITEMS_FILENAME, path << XML_NODE_MAIN_WINDOW << XML_NODE_LANDSCAPE << XML_NODE_HEIGHT).toInt(); path.clear();
+    mWidth = XML::instance().readValue(XML_ITEMS_FILENAME, path << XML_NODE_MAIN_WINDOW << XML_NODE_WIDTH).toInt(); path.clear();
+    mHeight = XML::instance().readValue(XML_ITEMS_FILENAME, path << XML_NODE_MAIN_WINDOW << XML_NODE_HEIGHT).toInt(); path.clear();
     setFixedSize(mWidth, mHeight);
 
     setWindowTitle(tr("Good Old Chess"));

@@ -4,7 +4,6 @@
 #include <QObject>
 #include <QGraphicsWidget>
 #include <QGraphicsTextItem>
-#include <orientation.h>
 
 class Button: public QObject, public QGraphicsPixmapItem
 {

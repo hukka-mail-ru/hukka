@@ -33,10 +33,10 @@ MainMenu::MainMenu(QObject *parent):
 
 
     // scene
-    int scene_x      = XML::instance().readValue(XML_ITEMS_FILENAME, QList<QString>() << XML_NODE_SCENE << XML_NODE_LANDSCAPE << XML_NODE_X).toInt();
-    int scene_y      = XML::instance().readValue(XML_ITEMS_FILENAME, QList<QString>() << XML_NODE_SCENE << XML_NODE_LANDSCAPE << XML_NODE_Y).toInt();
-    int scene_width  = XML::instance().readValue(XML_ITEMS_FILENAME, QList<QString>() << XML_NODE_SCENE << XML_NODE_LANDSCAPE << XML_NODE_WIDTH).toInt();
-    int scene_height = XML::instance().readValue(XML_ITEMS_FILENAME, QList<QString>() << XML_NODE_SCENE << XML_NODE_LANDSCAPE << XML_NODE_HEIGHT).toInt();
+    int scene_x      = XML::instance().readValue(XML_ITEMS_FILENAME, QList<QString>() << XML_NODE_SCENE << XML_NODE_X).toInt();
+    int scene_y      = XML::instance().readValue(XML_ITEMS_FILENAME, QList<QString>() << XML_NODE_SCENE << XML_NODE_Y).toInt();
+    int scene_width  = XML::instance().readValue(XML_ITEMS_FILENAME, QList<QString>() << XML_NODE_SCENE << XML_NODE_WIDTH).toInt();
+    int scene_height = XML::instance().readValue(XML_ITEMS_FILENAME, QList<QString>() << XML_NODE_SCENE << XML_NODE_HEIGHT).toInt();
 
    // qDebug() << scene_x << scene_y << scene_width << scene_height;
     setSceneRect( scene_x, scene_y, scene_width, scene_height );
@@ -49,8 +49,8 @@ MainMenu::MainMenu(QObject *parent):
     exitButton       = newButton(Pixmaps::get(PIX_BUTTON_EXIT),        SLOT(onExitClicked()), "", XML_NODE_EXIT);
 
     // splash
-    int x = XML::instance().readValue(XML_ITEMS_FILENAME, QList<QString>() << XML_NODE_SPLASH << XML_NODE_LANDSCAPE << XML_NODE_X).toInt();
-    int y = XML::instance().readValue(XML_ITEMS_FILENAME, QList<QString>() << XML_NODE_SPLASH << XML_NODE_LANDSCAPE << XML_NODE_Y).toInt();
+    int x = XML::instance().readValue(XML_ITEMS_FILENAME, QList<QString>() << XML_NODE_SPLASH << XML_NODE_X).toInt();
+    int y = XML::instance().readValue(XML_ITEMS_FILENAME, QList<QString>() << XML_NODE_SPLASH << XML_NODE_Y).toInt();
 
     mSplash->setPos(x, y);
 
@@ -58,8 +58,8 @@ MainMenu::MainMenu(QObject *parent):
     QString player_family = XML::instance().readValue(XML_ITEMS_FILENAME, QList<QString>() << XML_NODE_MAIN_MENU << XML_NODE_PLAYER << XML_NODE_FONT << XML_NODE_FAMILY);
     int player_size  =      XML::instance().readValue(XML_ITEMS_FILENAME, QList<QString>() << XML_NODE_MAIN_MENU << XML_NODE_PLAYER << XML_NODE_FONT << XML_NODE_SIZE).toInt();
     QString player_color =  XML::instance().readValue(XML_ITEMS_FILENAME, QList<QString>() << XML_NODE_MAIN_MENU << XML_NODE_PLAYER << XML_NODE_FONT << XML_NODE_COLOR);
-    int player_x =          XML::instance().readValue(XML_ITEMS_FILENAME, QList<QString>() << XML_NODE_MAIN_MENU << XML_NODE_PLAYER << XML_NODE_LANDSCAPE << XML_NODE_X).toInt();
-    int player_y =          XML::instance().readValue(XML_ITEMS_FILENAME, QList<QString>() << XML_NODE_MAIN_MENU << XML_NODE_PLAYER << XML_NODE_LANDSCAPE << XML_NODE_Y).toInt();
+    int player_x =          XML::instance().readValue(XML_ITEMS_FILENAME, QList<QString>() << XML_NODE_MAIN_MENU << XML_NODE_PLAYER << XML_NODE_X).toInt();
+    int player_y =          XML::instance().readValue(XML_ITEMS_FILENAME, QList<QString>() << XML_NODE_MAIN_MENU << XML_NODE_PLAYER << XML_NODE_Y).toInt();
 
     mPlayerNameText = addText("",QFont(player_family, player_size));
     mPlayerNameText->setPos(player_x, player_y);
@@ -70,8 +70,8 @@ MainMenu::MainMenu(QObject *parent):
     QString rating_family = XML::instance().readValue(XML_ITEMS_FILENAME, QList<QString>() << XML_NODE_MAIN_MENU << XML_NODE_RATING << XML_NODE_FONT << XML_NODE_FAMILY);
     int rating_size =       XML::instance().readValue(XML_ITEMS_FILENAME, QList<QString>() << XML_NODE_MAIN_MENU << XML_NODE_RATING << XML_NODE_FONT << XML_NODE_SIZE).toInt();
     QString rating_color =  XML::instance().readValue(XML_ITEMS_FILENAME, QList<QString>() << XML_NODE_MAIN_MENU << XML_NODE_RATING << XML_NODE_FONT << XML_NODE_COLOR);
-    int rating_x =          XML::instance().readValue(XML_ITEMS_FILENAME, QList<QString>() << XML_NODE_MAIN_MENU << XML_NODE_RATING << XML_NODE_LANDSCAPE << XML_NODE_X).toInt();
-    int rating_y =          XML::instance().readValue(XML_ITEMS_FILENAME, QList<QString>() << XML_NODE_MAIN_MENU << XML_NODE_RATING << XML_NODE_LANDSCAPE << XML_NODE_Y).toInt();
+    int rating_x =          XML::instance().readValue(XML_ITEMS_FILENAME, QList<QString>() << XML_NODE_MAIN_MENU << XML_NODE_RATING << XML_NODE_X).toInt();
+    int rating_y =          XML::instance().readValue(XML_ITEMS_FILENAME, QList<QString>() << XML_NODE_MAIN_MENU << XML_NODE_RATING << XML_NODE_Y).toInt();
 
     mPlayerRatingText = addText("",QFont(rating_family, rating_size));
     mPlayerRatingText->setPos(rating_x, rating_y);

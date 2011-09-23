@@ -59,8 +59,6 @@
 
 
 // 2nd level
-#define XML_NODE_PORTRAIT    "portrait"
-#define XML_NODE_LANDSCAPE   "landscape"
 #define XML_NODE_BORDER      "border"
 #define XML_NODE_X           "x"
 #define XML_NODE_Y           "y"
