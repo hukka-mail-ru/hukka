@@ -78,14 +78,6 @@ MainMenu::MainMenu(QObject *parent):
     mPlayerRatingText->setDefaultTextColor( QColor(rating_color) );
     mPlayerRatingText->setZValue(Z_TEXT_LAYER);
 
-
-
-  //  qDebug() << "MainMenu::updateItemsPositions " << orientation;
-    // chat
-    if(mChat)
-    {
-        mChat->updatePos(OrientationHorizontal);
-    }
 }
 
 
@@ -229,7 +221,6 @@ void MainMenu::onAuthorized()
     else if(mClickedButton == chatButton && !mChat)
     {
         mChat = new Chat(MainWindow::instance(), CT_COMMON_CHAT);
-        mChat->updatePos(OrientationHorizontal);
         mChat->show();
 
         MainWindow::instance()->setMode(MW_NORMAL);

@@ -28,7 +28,6 @@ public:
 
     ~Chat();
 
-    void updatePos(OrientationStatus orientation);
     ChatState getState() { return mState; }
 
     // derived from QWidged
