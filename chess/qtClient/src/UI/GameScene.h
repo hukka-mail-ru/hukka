@@ -21,24 +21,15 @@ class GameScene: public QGraphicsScene
 public:
 
 
-    GameScene(QObject *parent = 0):
-        QGraphicsScene(parent),
-        mChat(NULL),
-        mMoveBox(this),
-        mBoard(this) {}
-
-
+    GameScene(QObject *parent = 0);
     ~GameScene() {}
 
-    void initialize();
     void update();
 
     void enableItems();
     void disableItems();
 
     void showChat();
-
-    void updateItemsPositions(OrientationStatus orientation);
 
     void close();
 

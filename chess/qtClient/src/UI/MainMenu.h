@@ -14,18 +14,11 @@ class MainMenu: public QGraphicsScene
 {
 Q_OBJECT
 public:
-    MainMenu(QObject *parent = 0):
-        QGraphicsScene(parent),
-        mChat(NULL) {}
-
+    MainMenu(QObject *parent = 0);
     ~MainMenu() {}
-
-    void initialize();
 
     void enableItems();
     void disableItems();
-
-    void updateItemsPositions(OrientationStatus orientation);
 
     void close();
 

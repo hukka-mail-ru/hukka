@@ -24,12 +24,12 @@
 #include "Pixmaps.h"
 
 
-void MainMenu::initialize()
+MainMenu::MainMenu(QObject *parent):
+    QGraphicsScene(parent),
+    mChat(NULL)
 {
     mSplash = addPixmap(Pixmaps::get(PIX_SPLASH));
     mSplash->setZValue(Z_CELLS_LAYER);
-
-
 
     createGameButton = newButton(Pixmaps::get(PIX_BUTTON_CREATE_GAME), SLOT(onCreateGameClicked()), tr("New Game"), XML_NODE_NEW_GAME);
     findGameButton   = newButton(Pixmaps::get(PIX_BUTTON_FIND_GAME),   SLOT(onFindGameClicked()), tr("Find game"), XML_NODE_FIND_GAME);
@@ -37,46 +37,26 @@ void MainMenu::initialize()
     optionsButton    = newButton(Pixmaps::get(PIX_BUTTON_OPTIONS),     SLOT(onOptionsClicked()), tr("Options"), XML_NODE_OPTIONS);
     exitButton       = newButton(Pixmaps::get(PIX_BUTTON_EXIT),        SLOT(onExitClicked()), "", XML_NODE_EXIT);
 
-}
-
-
-
-Button* MainMenu::newButton(const QPixmap& pixmap, const char* slot,
-                            const QString& text, const QString& xmlNodeName)
-{
-    Button* button = new Button(this, pixmap, text, XML_NODE_BUTTONS, xmlNodeName);
-    QObject::connect(button, SIGNAL(clicked()), this, slot);
-    return button;
-}
-
-
-
-
-void MainMenu::updateItemsPositions(OrientationStatus orientation)
-{
-    // TODO copy-paste!
-    QString orientNode = (orientation == OrientationHorizontal) ? XML_NODE_LANDSCAPE : XML_NODE_PORTRAIT;
-
 
     // scene
-    int scene_x      = XML::instance().readValue(XML_ITEMS_FILENAME, QList<QString>() << XML_NODE_SCENE << orientNode << XML_NODE_X).toInt();
-    int scene_y      = XML::instance().readValue(XML_ITEMS_FILENAME, QList<QString>() << XML_NODE_SCENE << orientNode << XML_NODE_Y).toInt();
-    int scene_width  = XML::instance().readValue(XML_ITEMS_FILENAME, QList<QString>() << XML_NODE_SCENE << orientNode << XML_NODE_WIDTH).toInt();
-    int scene_height = XML::instance().readValue(XML_ITEMS_FILENAME, QList<QString>() << XML_NODE_SCENE << orientNode << XML_NODE_HEIGHT).toInt();
+    int scene_x      = XML::instance().readValue(XML_ITEMS_FILENAME, QList<QString>() << XML_NODE_SCENE << XML_NODE_LANDSCAPE << XML_NODE_X).toInt();
+    int scene_y      = XML::instance().readValue(XML_ITEMS_FILENAME, QList<QString>() << XML_NODE_SCENE << XML_NODE_LANDSCAPE << XML_NODE_Y).toInt();
+    int scene_width  = XML::instance().readValue(XML_ITEMS_FILENAME, QList<QString>() << XML_NODE_SCENE << XML_NODE_LANDSCAPE << XML_NODE_WIDTH).toInt();
+    int scene_height = XML::instance().readValue(XML_ITEMS_FILENAME, QList<QString>() << XML_NODE_SCENE << XML_NODE_LANDSCAPE << XML_NODE_HEIGHT).toInt();
 
    // qDebug() << scene_x << scene_y << scene_width << scene_height;
     setSceneRect( scene_x, scene_y, scene_width, scene_height );
 
     // buttons
-    createGameButton->updatePos(orientation);
-    findGameButton->updatePos(orientation);
-    chatButton->updatePos(orientation);
-    optionsButton->updatePos(orientation);
-    exitButton->updatePos(orientation);
+    createGameButton->updatePos(OrientationHorizontal);
+    findGameButton->updatePos(OrientationHorizontal);
+    chatButton->updatePos(OrientationHorizontal);
+    optionsButton->updatePos(OrientationHorizontal);
+    exitButton->updatePos(OrientationHorizontal);
 
     // splash
-    int x = XML::instance().readValue(XML_ITEMS_FILENAME, QList<QString>() << XML_NODE_SPLASH << orientNode << XML_NODE_X).toInt();
-    int y = XML::instance().readValue(XML_ITEMS_FILENAME, QList<QString>() << XML_NODE_SPLASH << orientNode << XML_NODE_Y).toInt();
+    int x = XML::instance().readValue(XML_ITEMS_FILENAME, QList<QString>() << XML_NODE_SPLASH << XML_NODE_LANDSCAPE << XML_NODE_X).toInt();
+    int y = XML::instance().readValue(XML_ITEMS_FILENAME, QList<QString>() << XML_NODE_SPLASH << XML_NODE_LANDSCAPE << XML_NODE_Y).toInt();
 
     mSplash->setPos(x, y);
 
@@ -84,8 +64,8 @@ void MainMenu::updateItemsPositions(OrientationStatus orientation)
     QString player_family = XML::instance().readValue(XML_ITEMS_FILENAME, QList<QString>() << XML_NODE_MAIN_MENU << XML_NODE_PLAYER << XML_NODE_FONT << XML_NODE_FAMILY);
     int player_size  =      XML::instance().readValue(XML_ITEMS_FILENAME, QList<QString>() << XML_NODE_MAIN_MENU << XML_NODE_PLAYER << XML_NODE_FONT << XML_NODE_SIZE).toInt();
     QString player_color =  XML::instance().readValue(XML_ITEMS_FILENAME, QList<QString>() << XML_NODE_MAIN_MENU << XML_NODE_PLAYER << XML_NODE_FONT << XML_NODE_COLOR);
-    int player_x =          XML::instance().readValue(XML_ITEMS_FILENAME, QList<QString>() << XML_NODE_MAIN_MENU << XML_NODE_PLAYER << orientNode << XML_NODE_X).toInt();
-    int player_y =          XML::instance().readValue(XML_ITEMS_FILENAME, QList<QString>() << XML_NODE_MAIN_MENU << XML_NODE_PLAYER << orientNode << XML_NODE_Y).toInt();
+    int player_x =          XML::instance().readValue(XML_ITEMS_FILENAME, QList<QString>() << XML_NODE_MAIN_MENU << XML_NODE_PLAYER << XML_NODE_LANDSCAPE << XML_NODE_X).toInt();
+    int player_y =          XML::instance().readValue(XML_ITEMS_FILENAME, QList<QString>() << XML_NODE_MAIN_MENU << XML_NODE_PLAYER << XML_NODE_LANDSCAPE << XML_NODE_Y).toInt();
 
     mPlayerNameText = addText("",QFont(player_family, player_size));
     mPlayerNameText->setPos(player_x, player_y);
@@ -96,8 +76,8 @@ void MainMenu::updateItemsPositions(OrientationStatus orientation)
     QString rating_family = XML::instance().readValue(XML_ITEMS_FILENAME, QList<QString>() << XML_NODE_MAIN_MENU << XML_NODE_RATING << XML_NODE_FONT << XML_NODE_FAMILY);
     int rating_size =       XML::instance().readValue(XML_ITEMS_FILENAME, QList<QString>() << XML_NODE_MAIN_MENU << XML_NODE_RATING << XML_NODE_FONT << XML_NODE_SIZE).toInt();
     QString rating_color =  XML::instance().readValue(XML_ITEMS_FILENAME, QList<QString>() << XML_NODE_MAIN_MENU << XML_NODE_RATING << XML_NODE_FONT << XML_NODE_COLOR);
-    int rating_x =          XML::instance().readValue(XML_ITEMS_FILENAME, QList<QString>() << XML_NODE_MAIN_MENU << XML_NODE_RATING << orientNode << XML_NODE_X).toInt();
-    int rating_y =          XML::instance().readValue(XML_ITEMS_FILENAME, QList<QString>() << XML_NODE_MAIN_MENU << XML_NODE_RATING << orientNode << XML_NODE_Y).toInt();
+    int rating_x =          XML::instance().readValue(XML_ITEMS_FILENAME, QList<QString>() << XML_NODE_MAIN_MENU << XML_NODE_RATING << XML_NODE_LANDSCAPE << XML_NODE_X).toInt();
+    int rating_y =          XML::instance().readValue(XML_ITEMS_FILENAME, QList<QString>() << XML_NODE_MAIN_MENU << XML_NODE_RATING << XML_NODE_LANDSCAPE << XML_NODE_Y).toInt();
 
     mPlayerRatingText = addText("",QFont(rating_family, rating_size));
     mPlayerRatingText->setPos(rating_x, rating_y);
@@ -110,10 +90,19 @@ void MainMenu::updateItemsPositions(OrientationStatus orientation)
     // chat
     if(mChat)
     {
-        mChat->updatePos(orientation);
+        mChat->updatePos(OrientationHorizontal);
     }
 }
 
+
+
+Button* MainMenu::newButton(const QPixmap& pixmap, const char* slot,
+                            const QString& text, const QString& xmlNodeName)
+{
+    Button* button = new Button(this, pixmap, text, XML_NODE_BUTTONS, xmlNodeName);
+    QObject::connect(button, SIGNAL(clicked()), this, slot);
+    return button;
+}
 
 
 void MainMenu::enableItems()
