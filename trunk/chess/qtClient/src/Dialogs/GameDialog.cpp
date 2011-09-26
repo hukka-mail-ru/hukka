@@ -54,6 +54,8 @@ void GameDialog::onSurrenderClicked()
 
         TABLEID id = UI::instance()->getGameTable();
         Client::instance()->surrender(id);
+
+        UI::instance()->setGameState(GS_SURRENDER);
     }
 }
 

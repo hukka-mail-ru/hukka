@@ -448,7 +448,7 @@
         <translation>Хотите сдаться?</translation>
     </message>
     <message>
-        <location filename="../src/Dialogs/GameDialog.cpp" line="62"/>
+        <location filename="../src/Dialogs/GameDialog.cpp" line="64"/>
         <source>Do you want to offer a draw?</source>
         <translation>Хотите предложить ничью?</translation>
     </message>
@@ -725,58 +725,58 @@
         <translation type="obsolete">Рейтинг</translation>
     </message>
     <message>
-        <location filename="../src/Base/Defines.h" line="165"/>
+        <location filename="../src/Base/Defines.h" line="166"/>
         <source>offline</source>
         <translation>оффлайн</translation>
     </message>
     <message>
-        <location filename="../src/Base/Defines.h" line="248"/>
+        <location filename="../src/Base/Defines.h" line="249"/>
         <source>Your rating has been increased to</source>
         <translation>Ваш рейтинг повышен до</translation>
     </message>
     <message>
-        <location filename="../src/Base/Defines.h" line="249"/>
+        <location filename="../src/Base/Defines.h" line="250"/>
         <source>Your rating has been decreased to</source>
         <translation>Ваш рейтинг понижен до</translation>
     </message>
     <message>
-        <location filename="../src/Base/Defines.h" line="250"/>
+        <location filename="../src/Base/Defines.h" line="251"/>
         <source>Your rating has been slightly increased.</source>
         <translation>Ваш рейтинг немного повышен</translation>
     </message>
     <message>
-        <location filename="../src/Base/Defines.h" line="251"/>
+        <location filename="../src/Base/Defines.h" line="252"/>
         <source>Your rating hasn&apos;t been affected because of too few number of moves.</source>
         <translation>Ваш рейтинг не изменился, т.к. в партии было сделано слишком мало ходов.</translation>
     </message>
     <message>
-        <location filename="../src/Base/Defines.h" line="252"/>
+        <location filename="../src/Base/Defines.h" line="253"/>
         <source>Your rating is not available.
 Please visit www.site.com to learn how to enable it.</source>
         <translation>Ваш рейтинг не включен. Вы можете включить его на сайте www.site.com</translation>
     </message>
     <message>
-        <location filename="../src/Base/Defines.h" line="256"/>
+        <location filename="../src/Base/Defines.h" line="257"/>
         <source>You have won!</source>
         <translation>Вы победили!</translation>
     </message>
     <message>
-        <location filename="../src/Base/Defines.h" line="261"/>
+        <location filename="../src/Base/Defines.h" line="262"/>
         <source>Time&apos;s up. You have won!</source>
         <translation>Время вышло. Вы победили!</translation>
     </message>
     <message>
-        <location filename="../src/Base/Defines.h" line="266"/>
+        <location filename="../src/Base/Defines.h" line="267"/>
         <source>You have lost!</source>
         <translation>Вы проиграли!</translation>
     </message>
     <message>
-        <location filename="../src/Base/Defines.h" line="271"/>
+        <location filename="../src/Base/Defines.h" line="272"/>
         <source>Time&apos;s up. You have lost!</source>
         <translation>Время вышло. Вы проиграли!</translation>
     </message>
     <message>
-        <location filename="../src/Base/Defines.h" line="276"/>
+        <location filename="../src/Base/Defines.h" line="277"/>
         <source>A draw.</source>
         <translation>Ничья.</translation>
     </message>
@@ -784,12 +784,12 @@ Please visit www.site.com to learn how to enable it.</source>
 <context>
     <name>UI</name>
     <message>
-        <location filename="../src/UI/UI.cpp" line="81"/>
+        <location filename="../src/UI/UI.cpp" line="77"/>
         <source>Game over.</source>
         <translation>Игра окончена.</translation>
     </message>
     <message>
-        <location filename="../src/UI/UI.cpp" line="94"/>
+        <location filename="../src/UI/UI.cpp" line="100"/>
         <source>Your opponent has offered a draw. Agree?</source>
         <translation>Ваш противник предлагает ничью. Согласны?</translation>
     </message>

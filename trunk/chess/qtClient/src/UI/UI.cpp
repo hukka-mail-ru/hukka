@@ -66,10 +66,6 @@ void UI::startGame()
 
 void UI::onGameOver(const QString& message, int status, int rating)
 {
-    qDebug() << "UI::onGameOver" << endl;
-
-    mGameState = GS_GAME_OVER;
-
     disconnect(Client::instance(), SIGNAL(gameOver(const QString&, int, int)), this, SLOT(onGameOver(const QString&, int, int)));
     disconnect(Client::instance(), SIGNAL(drawOffered()), this, SLOT(onDrawOffered()));
 
@@ -80,9 +76,19 @@ void UI::onGameOver(const QString& message, int status, int rating)
 
     QString text = tr("Game over.") + "\n\n" + Global::getGameResultText(status, rating);
 
-    MainWindow::instance()->updateGameScene();
     MainWindow::instance()->closeCurrentDialog();
     MainWindow::instance()->showMessage(text);
+
+    if(mGameState == GS_SURRENDER)
+    {
+        MainWindow::instance()->showMainMenu();
+    }
+    else
+    {
+        mGameState = GS_GAME_OVER;
+        MainWindow::instance()->updateGameScene();
+    }
+
 }
 
 
