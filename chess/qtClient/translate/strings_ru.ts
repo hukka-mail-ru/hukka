@@ -638,7 +638,7 @@
         <translation>Игра: </translation>
     </message>
     <message>
-        <location filename="../src/Base/Global.cpp" line="126"/>
+        <location filename="../src/Base/Global.cpp" line="140"/>
         <location filename="../src/Base/MoveBox.cpp" line="110"/>
         <source>Game over.</source>
         <translation>Игра окончена.</translation>
@@ -705,9 +705,24 @@ Please visit www.site.com to learn how to enable it.</source>
         <translation>Вы сдались.</translation>
     </message>
     <message>
-        <location filename="../src/Base/Global.cpp" line="121"/>
+        <location filename="../src/Base/Global.cpp" line="120"/>
         <source>A draw.</source>
         <translation>Ничья.</translation>
+    </message>
+    <message>
+        <location filename="../src/Base/Global.cpp" line="125"/>
+        <source>A draw (a stalemate).</source>
+        <translation>Ничья (пат).</translation>
+    </message>
+    <message>
+        <location filename="../src/Base/Global.cpp" line="130"/>
+        <source>A draw (the same position has occurred three times).</source>
+        <translation>Ничья (троекратное повторение одной и той же позиции).</translation>
+    </message>
+    <message>
+        <location filename="../src/Base/Global.cpp" line="135"/>
+        <source>A draw (there has been no capture or pawn move in the last 50 moves).</source>
+        <translation>Ничья (50 последних ходов без взятия или хода пешкой).</translation>
     </message>
 </context>
 <context>

@@ -582,6 +582,9 @@ private:
 
 	    if(  Result == IGameLogic::CheckMate ||
              Result == IGameLogic::Draw ||
+             Result == IGameLogic::DrawStalemate ||
+             Result == IGameLogic::DrawTripleOccurrence ||
+             Result == IGameLogic::DrawFiftyMoves ||
              Result == IGameLogic::TimeOut )
 	    {
 	        endGame( nTableID, Result, 0, 0 );
@@ -718,9 +721,24 @@ private:
 	    else if ( _Result == IGameLogic::Draw )
 	    {
             sCmd0.m_chData = sCmd1.m_chData = ( char ) P_DRAW;
-    //        GetSqlGameTable()->setState( _nTableID, ST_DRAW );
             setRatingDraw( nPlayer1, nPlayer0 );
 	    }
+        else if ( _Result == IGameLogic::DrawStalemate )
+        {
+            sCmd0.m_chData = sCmd1.m_chData = ( char ) P_DRAW_STALEMATE;
+            setRatingDraw( nPlayer1, nPlayer0 );
+        }
+        else if ( _Result == IGameLogic::DrawTripleOccurrence )
+        {
+            sCmd0.m_chData = sCmd1.m_chData = ( char ) P_DRAW_TRIPPLE_OCCURRENCE;
+            setRatingDraw( nPlayer1, nPlayer0 );
+        }
+        else if ( _Result == IGameLogic::DrawFiftyMoves )
+        {
+            sCmd0.m_chData = sCmd1.m_chData = ( char ) P_DRAW_FIFTY_MOVES;
+            setRatingDraw( nPlayer1, nPlayer0 );
+        }
+
 	    else if ( _Result == IGameLogic::TimeOut )
 	    {
 	        if ( nCurPlayer == nPlayer0 )

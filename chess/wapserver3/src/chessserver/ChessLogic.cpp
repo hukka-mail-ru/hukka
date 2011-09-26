@@ -39,15 +39,13 @@ IGameLogic::StepRes ChessLogic::StepAnl( TVByte *_vecBytes)
         return NotValid;
     }
 
-    if ( m_Engine.getResult() == Checkmate )
+    switch ( m_Engine.getResult())
     {
-    	return CheckMate;
-    }
-    else if ( m_Engine.getResult() == Stalemate ||
-              m_Engine.getResult() == FiftyMoves ||
-              m_Engine.getResult() == TripleOccurrence )
-    {
-        return Draw;
+        case Checkmate: return CheckMate;
+        case Stalemate: return DrawStalemate;
+        case FiftyMoves: return DrawFiftyMoves;
+        case TripleOccurrence: return DrawTripleOccurrence;
+        default: break;
     }
 
     return Valid;

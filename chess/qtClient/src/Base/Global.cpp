@@ -117,8 +117,22 @@ QString Global::getGameResultText(int status, int rating)
                                    ratingDecreased + " " + ratingText;
                            break;
 
-
         case P_DRAW:       text = QObject::tr("A draw.") + "\n\n";
+                           text += (rating == RATING_NOT_AVAILABLE) ? ratingUnavailable :
+                                   ratingSlightlyIncreased;
+                           break;
+
+        case P_DRAW_STALEMATE:       text = QObject::tr("A draw (a stalemate).") + "\n\n";
+                           text += (rating == RATING_NOT_AVAILABLE) ? ratingUnavailable :
+                                   ratingSlightlyIncreased;
+                           break;
+
+        case P_DRAW_TRIPPLE_OCCURRENCE:       text = QObject::tr("A draw (the same position has occurred three times).") + "\n\n";
+                           text += (rating == RATING_NOT_AVAILABLE) ? ratingUnavailable :
+                                   ratingSlightlyIncreased;
+                           break;
+
+        case P_DRAW_FIFTY_MOVES:       text = QObject::tr("A draw (there has been no capture or pawn move in the last 50 moves).") + "\n\n";
                            text += (rating == RATING_NOT_AVAILABLE) ? ratingUnavailable :
                                    ratingSlightlyIncreased;
                            break;

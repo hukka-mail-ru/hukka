@@ -62,7 +62,17 @@ class IGameLogic
 
 public:
 
-	enum StepRes  { NotValid /*= 0*/,  Valid, CheckMate, Surrender, Draw, TimeOut };
+	enum StepRes  {
+	    NotValid /*= 0*/,
+	    Valid,
+	    CheckMate,
+	    Surrender,
+	    Draw,
+	    DrawStalemate,
+	    DrawTripleOccurrence,
+	    DrawFiftyMoves,
+	    TimeOut
+	};
 
 	virtual bool SetPos(const TVByte& _vecbtPos) = 0;		// Установить позицию на доске.
 
