@@ -57,6 +57,7 @@ Button::Button(QGraphicsScene* scene, const QPixmap& pixmap, const QString& text
 
 void Button::mousePressEvent (QGraphicsSceneMouseEvent * event)
 {
+    Q_UNUSED(event);
     if(MainWindow::instance()->getMode() == MW_NORMAL)
     {
         this->setOpacity(OPAQUE_HALF);
@@ -73,6 +74,7 @@ void Button::mousePressEvent (QGraphicsSceneMouseEvent * event)
 
 void Button::mouseReleaseEvent (QGraphicsSceneMouseEvent * event)
 {
+    Q_UNUSED(event);
     if(MainWindow::instance()->getMode() == MW_NORMAL)
     {
         this->setOpacity(OPAQUE_NORMAL);
