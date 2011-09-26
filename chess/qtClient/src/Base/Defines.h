@@ -114,8 +114,7 @@ enum GameState
     GS_WAIT_FOR_SERVER,
     GS_WAIT_FOR_OPPONENT,
     GS_INVALID_MOVE,
-    GS_GAME_OVER,
-    GS_SURRENDER
+    GS_GAME_OVER
 };
 
 enum PlayerColor
@@ -180,115 +179,5 @@ struct GameTable
 };
 
 
-class Global
-{
-public:
-    static char letter(CELLID cell) { return 'a' + cell % CELLS_IN_ROW; }
-    static char number(CELLID cell) { return '1' + cell / CELLS_IN_ROW; }
-
-    static QString seconds2hrs (quint32 seconds)
-    {
-        quint32 hrs = seconds / SECONDS_IN_HOUR;
-        quint32 mins = (seconds - hrs * SECONDS_IN_HOUR) / SECONDS_IN_MINUTE;
-        quint32 secs = seconds - hrs * SECONDS_IN_HOUR - mins * SECONDS_IN_MINUTE;
-
-        QChar fill = QLatin1Char('0');
-
-        return QString("%1:%2:%3")
-                .arg(hrs, 1, 10, fill)
-                .arg(mins, 2, 10, fill)
-                .arg(secs, 2, 10, fill);
-    }
-
-    static QString timestamp()
-    {
-        return QString::number(QTime::currentTime().minute()).rightJustified(2, '0') + ":" +
-               QString::number(QTime::currentTime().second()).rightJustified(2, '0') + "." +
-               QString::number(QTime::currentTime().msec()).rightJustified(3, '0');
-    }
-
-    static char getCRC(const QByteArray& data)
-    {
-        char crc = 0;
-        for(int i = 0; i < data.size(); i++) {
-            crc ^= data[i];
-        }
-
-        return crc;
-    }
-
-    static QString serviceToString(quint32 service)
-    {
-      //  QT_TRACEOUT;
-
-        switch(service) {
-            case SRV: return "SRV";
-            case REG: return "REG";
-            case TBM: return "TBM";
-            case CHS: return "CHS";
-            case CHAT: return "CHAT";
-            default:  return QString::number((int)service);
-        }
-    }
-
-    static bool isFieldEmpty(const Field& field)
-    {
-        int allPieces = Empty;
-        for(unsigned i=0; i<field.size(); i++)
-        {
-            allPieces += (int)field[i];
-        }
-
-        return (field.empty() || allPieces == Empty);
-    }
-
-    static QString getGameResultText(int status, int rating)
-    {
-        QString text = "";
-        QString ratingText = QString::number(rating);
-        QString ratingIncreased = QObject::tr("Your rating has been increased to");
-        QString ratingDecreased = QObject::tr("Your rating has been decreased to");
-        QString ratingSlightlyIncreased = QObject::tr("Your rating has been slightly increased.");
-        QString ratingNotAffected = QObject::tr("Your rating hasn't been affected because of too few number of moves.");
-        QString ratingUnavailable = QObject::tr("Your rating is not available.\nPlease visit www.site.com to learn how to enable it.");
-
-        switch(status)
-        {
-            case P_WIN:        text = QObject::tr("You have won!") + "\n";
-                               text += (rating == RATING_NOT_AVAILABLE) ? ratingUnavailable :
-                                       ratingIncreased + " " + ratingText;
-                               break;
-
-            case P_WIN_TIME:   text = QObject::tr("Time's up. You have won!") + "\n";
-                               text += (rating == RATING_NOT_AVAILABLE) ? ratingUnavailable :
-                                       ratingIncreased + " " + ratingText;
-                               break;
-
-            case P_LOOSE:      text = QObject::tr("You have lost!") + "\n";
-                               text += (rating == RATING_NOT_AVAILABLE) ? ratingUnavailable :
-                                       ratingDecreased + " " + ratingText;
-                               break;
-
-            case P_LOOSE_TIME: text = QObject::tr("Time's up. You have lost!") + "\n";
-                               text += (rating == RATING_NOT_AVAILABLE) ? ratingUnavailable :
-                                       ratingDecreased + " " + ratingText;
-                               break;
-
-            case P_DRAW:       text = QObject::tr("A draw.") + "\n";
-                               text += (rating == RATING_NOT_AVAILABLE) ? ratingUnavailable :
-                                       ratingSlightlyIncreased;
-                               break;
-
-            case P_NO_RES:     text = "\n";
-                               text += (rating == RATING_NOT_AVAILABLE) ? ratingUnavailable :
-                                       ratingNotAffected;
-                               break;
-
-            default:   break;
-        }
-
-        return text;
-    }
-};
 
 #endif /* DEFINES_H_ */

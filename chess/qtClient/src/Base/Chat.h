@@ -11,7 +11,7 @@
 #include <QList>
 #include <QTableWidget>
 #include <QString>
-#include <Defines.h>
+#include <Global.h>
 
 enum ChatState
 {

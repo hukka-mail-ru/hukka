@@ -184,7 +184,7 @@ void GameScene::updateMoveBoxes(GameState gameState)
 
 void GameScene::onMenuButtonClicked()
 {
-    MainWindow::instance()->showGameDialog();
+    MainWindow::instance()->showGameDialog(tr("Game menu"));
 }
 
 

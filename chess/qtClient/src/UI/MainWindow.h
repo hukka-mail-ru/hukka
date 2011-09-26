@@ -48,7 +48,7 @@ public:
     void showCreateGameDialog();
     void showFindGameDialog();
     void showJoinGameDialog(const QList<GameTable>& tables);
-    void showGameDialog();
+    void showGameDialog(const QString& text);
     void showOptionsDialog();
     void showChatMessageDialog(const QString& addressee, ChatType chatType);
     piece_type showPromotionDialog(PlayerColor color);

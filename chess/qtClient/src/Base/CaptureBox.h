@@ -12,7 +12,7 @@
 #include <QGraphicsRectItem>
 #include <QString>
 
-#include <Defines.h>
+#include <Global.h>
 #include <Pixmaps.h>
 
 class CaptureBox {

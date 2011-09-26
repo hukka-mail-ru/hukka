@@ -180,11 +180,6 @@
         <translation>Такой пользователь уже зашел на сервер</translation>
     </message>
     <message>
-        <location filename="../src/Network/Client.cpp" line="1315"/>
-        <source>Game over.</source>
-        <translation>Игра окончена</translation>
-    </message>
-    <message>
         <location filename="../src/Network/Client.cpp" line="1332"/>
         <source>Your opponent has rejected the draw</source>
         <translation>Ваш оппонент </translation>
@@ -304,11 +299,6 @@
         <translation>Ошибка TBM: </translation>
     </message>
     <message>
-        <location filename="../src/Network/Client.cpp" line="1331"/>
-        <source>A draw.</source>
-        <translation>Ничья.</translation>
-    </message>
-    <message>
         <location filename="../src/Network/Client.cpp" line="1333"/>
         <source>Please wait for your next move to offer a draw</source>
         <translation>Подождите своего хода, а затем предложите ничью</translation>
@@ -380,26 +370,6 @@
 <context>
     <name>FindGameDialog</name>
     <message>
-        <source>Find Game</source>
-        <translation type="obsolete">Найти игру</translation>
-    </message>
-    <message>
-        <source>All Games</source>
-        <translation type="obsolete">Все игры</translation>
-    </message>
-    <message>
-        <source>Random Game</source>
-        <translation type="obsolete">Случайная игра</translation>
-    </message>
-    <message>
-        <source>Cancel</source>
-        <translation type="obsolete">Отмена</translation>
-    </message>
-    <message>
-        <source>No game table found</source>
-        <translation type="obsolete">Игры не найдены</translation>
-    </message>
-    <message>
         <location filename="../src/Dialogs/FindGameDialog.cpp" line="80"/>
         <source>No games now. Try again later or create a new game.</source>
         <translation>Ни одной игры не найдено. Попробуйте еще раз через некоторое время или создайте новую игру.</translation>
@@ -409,46 +379,36 @@
     <name>GameDialog</name>
     <message>
         <location filename="../src/Dialogs/GameDialog.cpp" line="8"/>
-        <source>Game</source>
-        <translation>Игра</translation>
+        <source>Game Menu</source>
+        <translation>Меню игры</translation>
     </message>
     <message>
-        <location filename="../src/Dialogs/GameDialog.cpp" line="13"/>
-        <source>Game over!</source>
-        <translation>Игра окончена!</translation>
+        <location filename="../src/Dialogs/GameDialog.cpp" line="17"/>
+        <source>Main menu</source>
+        <translation>Главное меню</translation>
     </message>
     <message>
-        <location filename="../src/Dialogs/GameDialog.cpp" line="16"/>
-        <source>Return to main menu</source>
-        <translation>Возврат в главное меню</translation>
-    </message>
-    <message>
-        <location filename="../src/Dialogs/GameDialog.cpp" line="22"/>
-        <source>Game menu:</source>
-        <translation>Меню игры:</translation>
-    </message>
-    <message>
-        <location filename="../src/Dialogs/GameDialog.cpp" line="25"/>
+        <location filename="../src/Dialogs/GameDialog.cpp" line="23"/>
         <source>Surrender</source>
         <translation>Сдаться</translation>
     </message>
     <message>
-        <location filename="../src/Dialogs/GameDialog.cpp" line="29"/>
+        <location filename="../src/Dialogs/GameDialog.cpp" line="27"/>
         <source>Draw</source>
         <translation>Ничья</translation>
     </message>
     <message>
-        <location filename="../src/Dialogs/GameDialog.cpp" line="34"/>
+        <location filename="../src/Dialogs/GameDialog.cpp" line="32"/>
         <source>Return to game</source>
         <translation>Назад к игре</translation>
     </message>
     <message>
-        <location filename="../src/Dialogs/GameDialog.cpp" line="51"/>
+        <location filename="../src/Dialogs/GameDialog.cpp" line="49"/>
         <source>Do you want to surrender?</source>
         <translation>Хотите сдаться?</translation>
     </message>
     <message>
-        <location filename="../src/Dialogs/GameDialog.cpp" line="64"/>
+        <location filename="../src/Dialogs/GameDialog.cpp" line="60"/>
         <source>Do you want to offer a draw?</source>
         <translation>Хотите предложить ничью?</translation>
     </message>
@@ -457,6 +417,7 @@
     <name>GameScene</name>
     <message>
         <location filename="../src/UI/GameScene.cpp" line="41"/>
+        <location filename="../src/UI/GameScene.cpp" line="187"/>
         <source>Game menu</source>
         <translation>Меню игры</translation>
     </message>
@@ -570,24 +531,9 @@
 <context>
     <name>MainWindow</name>
     <message>
-        <source>Chess</source>
-        <translation type="obsolete">Шахматы</translation>
-    </message>
-    <message>
-        <source>Connection refused. Please check whether you are connected to Internet.</source>
-        <translation type="obsolete">Нет соединения с сервером. Проверьте, доступна ли вам сеть Интернет. Также проверьте, правильно ли Вы указали адрес сервера и номер порта.</translation>
-    </message>
-    <message>
         <location filename="../src/UI/MainWindow.cpp" line="65"/>
         <source>Good Old Chess</source>
         <translation>Good Old Chess</translation>
-    </message>
-</context>
-<context>
-    <name>MoveBox</name>
-    <message>
-        <source>Game over.</source>
-        <translation type="obsolete">Игра окончена</translation>
     </message>
 </context>
 <context>
@@ -651,10 +597,6 @@
         <translation>Отмена</translation>
     </message>
     <message>
-        <source>Exit</source>
-        <translation type="obsolete">Выход</translation>
-    </message>
-    <message>
         <location filename="../src/Dialogs/OptionsDialog.cpp" line="79"/>
         <source>Please restart the game to apply the settings</source>
         <translation>Пожалуйста перезапустите игру, чтобы настройки вступили в силу</translation>
@@ -696,87 +638,74 @@
         <translation>Игра: </translation>
     </message>
     <message>
-        <source>Move: white (</source>
-        <translation type="obsolete">Ход белых (</translation>
-    </message>
-    <message>
-        <source>Move: black (</source>
-        <translation type="obsolete">Ход черных (</translation>
-    </message>
-    <message>
+        <location filename="../src/Base/Global.cpp" line="126"/>
         <location filename="../src/Base/MoveBox.cpp" line="110"/>
         <source>Game over.</source>
         <translation>Игра окончена.</translation>
     </message>
     <message>
-        <source>White</source>
-        <translation type="obsolete">Белые</translation>
-    </message>
-    <message>
-        <source>Black</source>
-        <translation type="obsolete">Черные</translation>
-    </message>
-    <message>
-        <source>N/A</source>
-        <translation type="obsolete">НЕТ</translation>
-    </message>
-    <message>
-        <source>Rating</source>
-        <translation type="obsolete">Рейтинг</translation>
-    </message>
-    <message>
-        <location filename="../src/Base/Defines.h" line="166"/>
+        <location filename="../src/Base/Defines.h" line="165"/>
         <source>offline</source>
         <translation>оффлайн</translation>
     </message>
     <message>
-        <location filename="../src/Base/Defines.h" line="249"/>
+        <location filename="../src/Base/Global.cpp" line="82"/>
         <source>Your rating has been increased to</source>
         <translation>Ваш рейтинг повышен до</translation>
     </message>
     <message>
-        <location filename="../src/Base/Defines.h" line="250"/>
+        <location filename="../src/Base/Global.cpp" line="83"/>
         <source>Your rating has been decreased to</source>
         <translation>Ваш рейтинг понижен до</translation>
     </message>
     <message>
-        <location filename="../src/Base/Defines.h" line="251"/>
+        <location filename="../src/Base/Global.cpp" line="84"/>
         <source>Your rating has been slightly increased.</source>
         <translation>Ваш рейтинг немного повышен</translation>
     </message>
     <message>
-        <location filename="../src/Base/Defines.h" line="252"/>
+        <location filename="../src/Base/Global.cpp" line="85"/>
         <source>Your rating hasn&apos;t been affected because of too few number of moves.</source>
         <translation>Ваш рейтинг не изменился, т.к. в партии было сделано слишком мало ходов.</translation>
     </message>
     <message>
-        <location filename="../src/Base/Defines.h" line="253"/>
+        <location filename="../src/Base/Global.cpp" line="86"/>
         <source>Your rating is not available.
 Please visit www.site.com to learn how to enable it.</source>
         <translation>Ваш рейтинг не включен. Вы можете включить его на сайте www.site.com</translation>
     </message>
     <message>
-        <location filename="../src/Base/Defines.h" line="257"/>
+        <location filename="../src/Base/Global.cpp" line="90"/>
         <source>You have won!</source>
         <translation>Вы победили!</translation>
     </message>
     <message>
-        <location filename="../src/Base/Defines.h" line="262"/>
-        <source>Time&apos;s up. You have won!</source>
-        <translation>Время вышло. Вы победили!</translation>
+        <location filename="../src/Base/Global.cpp" line="95"/>
+        <source>Your opponent&apos;s time is up. You have won!</source>
+        <translation>Ваш противник просрочил время. Вы победили!</translation>
     </message>
     <message>
-        <location filename="../src/Base/Defines.h" line="267"/>
+        <location filename="../src/Base/Global.cpp" line="100"/>
+        <source>Your opponent has surrendered!</source>
+        <translation>Ваш противник сдался!</translation>
+    </message>
+    <message>
+        <location filename="../src/Base/Global.cpp" line="105"/>
         <source>You have lost!</source>
         <translation>Вы проиграли!</translation>
     </message>
     <message>
-        <location filename="../src/Base/Defines.h" line="272"/>
+        <location filename="../src/Base/Global.cpp" line="110"/>
         <source>Time&apos;s up. You have lost!</source>
         <translation>Время вышло. Вы проиграли!</translation>
     </message>
     <message>
-        <location filename="../src/Base/Defines.h" line="277"/>
+        <location filename="../src/Base/Global.cpp" line="115"/>
+        <source>You have surrendered.</source>
+        <translation>Вы сдались.</translation>
+    </message>
+    <message>
+        <location filename="../src/Base/Global.cpp" line="121"/>
         <source>A draw.</source>
         <translation>Ничья.</translation>
     </message>
@@ -784,12 +713,7 @@ Please visit www.site.com to learn how to enable it.</source>
 <context>
     <name>UI</name>
     <message>
-        <location filename="../src/UI/UI.cpp" line="77"/>
-        <source>Game over.</source>
-        <translation>Игра окончена.</translation>
-    </message>
-    <message>
-        <location filename="../src/UI/UI.cpp" line="100"/>
+        <location filename="../src/UI/UI.cpp" line="93"/>
         <source>Your opponent has offered a draw. Agree?</source>
         <translation>Ваш противник предлагает ничью. Согласны?</translation>
     </message>

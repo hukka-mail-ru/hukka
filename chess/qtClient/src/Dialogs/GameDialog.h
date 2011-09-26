@@ -11,7 +11,7 @@ class GameDialog: public MyDialog
 {
     Q_OBJECT
 public:
-    GameDialog(QWidget *parent = 0);
+    GameDialog(const QString& text, QWidget *parent = 0);
 
 private:
 

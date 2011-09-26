@@ -704,14 +704,14 @@ private:
 	    {
 	        if ( _nSurrenderedID == nPlayer0 )
 	        {
-	           sCmd0.m_chData = ( char ) P_LOOSE;
-	           sCmd1.m_chData = ( char ) P_WIN;
+	           sCmd0.m_chData = ( char ) P_LOOSE_SURRENDER;
+	           sCmd1.m_chData = ( char ) P_WIN_SURRENDER;
 	           setRating( nPlayer1, nPlayer0 );
 	        }
 	        else
 	        {
-	           sCmd0.m_chData = (char) P_WIN;
-	           sCmd1.m_chData = (char) P_LOOSE;
+	           sCmd0.m_chData = (char) P_WIN_SURRENDER;
+	           sCmd1.m_chData = (char) P_LOOSE_SURRENDER;
 	           setRating( nPlayer0, nPlayer1 );
 	        }
 	    }

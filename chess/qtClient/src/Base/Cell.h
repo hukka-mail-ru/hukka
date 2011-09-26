@@ -8,7 +8,7 @@
 #ifndef CELL_H_
 #define CELL_H_
 #include "Button.h"
-#include <Defines.h>
+#include <Global.h>
 #include <Pixmaps.h>
 #include <QObject>
 

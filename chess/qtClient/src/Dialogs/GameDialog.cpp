@@ -3,25 +3,23 @@
 #include "Client.h"
 #include "UI.h"
 
-GameDialog::GameDialog(QWidget *parent): MyDialog(parent)
+GameDialog::GameDialog(const QString& text, QWidget *parent): MyDialog(parent)
 {
-    setWindowTitle(tr("Game"));
+    setWindowTitle(tr("Game Menu"));
     layout = new QVBoxLayout(this);
+
+    label = new QLabel(text);
+    label->setWordWrap(true);
+    layout->addWidget(label);
 
     if(UI::instance()->getGameState() == GS_GAME_OVER)
     {
-        label = new QLabel(tr("Game over!"));
-        layout->addWidget(label);
-
-        returnToMenuButton = new QPushButton(tr("Return to main menu"), this);
+        returnToMenuButton = new QPushButton(tr("Main menu"), this);
         connect(returnToMenuButton, SIGNAL(clicked()), this, SLOT(onReturnToMenuClicked()));
         layout->addWidget(returnToMenuButton);
     }
     else
     {
-        label = new QLabel(tr("Game menu:"));
-        layout->addWidget(label);
-
         surrenderButton = new QPushButton(tr("Surrender"), this);
         connect(surrenderButton, SIGNAL(clicked()), this, SLOT(onSurrenderClicked()));
         layout->addWidget(surrenderButton);
@@ -54,8 +52,6 @@ void GameDialog::onSurrenderClicked()
 
         TABLEID id = UI::instance()->getGameTable();
         Client::instance()->surrender(id);
-
-        UI::instance()->setGameState(GS_SURRENDER);
     }
 }
 

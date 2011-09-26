@@ -12,7 +12,7 @@
 #include <QGraphicsScene>
 #include <QList>
 
-#include <Defines.h>
+#include <Global.h>
 #include <Animation.h>
 #include <CaptureBox.h>
 #include <Cell.h>
