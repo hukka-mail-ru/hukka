@@ -114,7 +114,8 @@ enum GameState
     GS_WAIT_FOR_SERVER,
     GS_WAIT_FOR_OPPONENT,
     GS_INVALID_MOVE,
-    GS_GAME_OVER
+    GS_GAME_OVER,
+    GS_SURRENDER
 };
 
 enum PlayerColor
