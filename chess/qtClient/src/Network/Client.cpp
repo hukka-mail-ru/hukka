@@ -1328,7 +1328,7 @@ void Client::processMessageCHS(const MessageHeader& header, const QByteArray& bu
         switch(reply->status) {
             case P_OFFER:      emit drawOffered(); break;
             case P_WAIT:        break; // TODO send a message "Please wait"
-            case P_ACCEPT:     emit gameOver(P_DRAW, 0); break;
+            case P_ACCEPT:      break; // Nothing todo, because AND_END follows.
             case P_REJECT:     emit drawRejected(tr("Your opponent has rejected the draw")); break;
             case P_NOTALLOWED: emit drawRejected(tr("Please wait for your next move to offer a draw")); break;
             default:           emit error(tr("Internal server error ") + QString::number(reply->status)); break;
