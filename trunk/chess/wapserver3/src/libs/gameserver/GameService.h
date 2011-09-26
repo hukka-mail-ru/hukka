@@ -587,7 +587,7 @@ private:
              Result == IGameLogic::DrawFiftyMoves ||
              Result == IGameLogic::TimeOut )
 	    {
-	        endGame( nTableID, Result, 0, 0 );
+	        endGame( nTableID, Result, 0);
 	        // add SZ
             delete logic;
 	        return; // ???
@@ -657,6 +657,7 @@ private:
         cerr << "nPlayer1 " << nPlayer1 << endl;
         cerr << "nCurPlayer " << nCurPlayer << endl;
         cerr << "nStepNum " << nStepNum << endl;
+        cerr << "nMinStepCountForRating " << nMinStepCountForRating << endl;
         cerr << "nXPlayer " << nXPlayer << endl;
 
 
@@ -673,7 +674,7 @@ private:
 
 		if ( nStepNum < nMinStepCountForRating)
 		{
-		//    cerr << "if ( nStepNum < nMinStepCountForRating) " << nCurPlayer << endl;
+		    cerr << "nStepNum < nMinStepCountForRating " << nCurPlayer << endl;
 
             sCmd0.m_chData = (char) P_NO_RES;
 			sCmd1.m_chData = (char) P_NO_RES;
@@ -720,6 +721,8 @@ private:
 	    }
 	    else if ( _Result == IGameLogic::Draw )
 	    {
+	        cerr << "_Result == IGameLogic::Draw " << nCurPlayer << endl;
+
             sCmd0.m_chData = sCmd1.m_chData = ( char ) P_DRAW;
             setRatingDraw( nPlayer1, nPlayer0 );
 	    }
@@ -926,7 +929,7 @@ private:
 //		        	GetSqlGameTable()->setState( _nTableID, ST_DRAW );
 		    		sendAscDraw(_nTableID, nPlayer0, P_ACCEPT);
 		    		sendAscDraw(_nTableID, nPlayer1, P_ACCEPT);
-		    		endGame(_nTableID, IGameLogic::Draw, 0, 0);
+		    		endGame(_nTableID, IGameLogic::Draw, 0);
 		    	}
 		    	else if (value == 'N')
 		    	{
