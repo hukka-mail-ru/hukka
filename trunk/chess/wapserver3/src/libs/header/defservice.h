@@ -107,6 +107,8 @@ const int       P_WAIT      = 37;
 const int		P_WIN_TIME  = 38;
 const int		P_NOT_FULL  = 39;
 const int       P_NO_RES    = 40;
+const int       P_WIN_SURRENDER = 41;
+const int       P_LOOSE_SURRENDER = 42;
 
 
 class GlobalServer

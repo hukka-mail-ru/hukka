@@ -16,7 +16,7 @@
 #include <QObject>
 #include <Clock.h>
 
-#include <Defines.h>
+#include <Global.h>
 
 class MoveBox
 {

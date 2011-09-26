@@ -193,9 +193,9 @@ void MainWindow::showJoinGameDialog(const QList<GameTable>& tables)
     setMode(MW_NORMAL);
 }
 
-void MainWindow::showGameDialog()
+void MainWindow::showGameDialog(const QString& text)
 {
-    setCurrentDialog(new GameDialog(this));
+    setCurrentDialog(new GameDialog(text, this));
     setMode(MW_NORMAL);
 }
 

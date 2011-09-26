@@ -10,7 +10,7 @@
 #include <QReadWriteLock>
 #include <QLinkedList>
 #include <deferror.h>
-#include "Defines.h"
+#include <Global.h>
 #include "Pixmaps.h"
 
 
@@ -122,7 +122,7 @@ signals:
 
         void gameStarted();
         void gameRejected();
-        void gameOver(const QString& message, int status, int rating);
+        void gameOver(int status, int rating);
         void gameTableCreated(TABLEID id);
         void gameTableDeleted();
 

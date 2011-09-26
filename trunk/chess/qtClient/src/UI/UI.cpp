@@ -54,7 +54,7 @@ void UI::startGame()
         mGameState = GS_WAIT_FOR_SERVER;
     }
 
-    connect(Client::instance(), SIGNAL(gameOver(const QString&, int, int)), this, SLOT(onGameOver(const QString&, int, int)));
+    connect(Client::instance(), SIGNAL(gameOver(int, int)), this, SLOT(onGameOver(int, int)));
     connect(Client::instance(), SIGNAL(drawOffered()), this, SLOT(onDrawOffered()));
 
     assert(mGameTable);
@@ -64,9 +64,9 @@ void UI::startGame()
 
 
 
-void UI::onGameOver(const QString& message, int status, int rating)
+void UI::onGameOver(int status, int rating)
 {
-    disconnect(Client::instance(), SIGNAL(gameOver(const QString&, int, int)), this, SLOT(onGameOver(const QString&, int, int)));
+    disconnect(Client::instance(), SIGNAL(gameOver(int, int)), this, SLOT(onGameOver(int, int)));
     disconnect(Client::instance(), SIGNAL(drawOffered()), this, SLOT(onDrawOffered()));
 
     // getPosition must be earlier than showMessage because the clocks must not tick while
@@ -74,20 +74,13 @@ void UI::onGameOver(const QString& message, int status, int rating)
     Client::instance()->getPosition(mGameTable); // player must see the victory move
     Client::instance()->deleteLastGameResult();
 
-    QString text = tr("Game over.") + "\n\n" + Global::getGameResultText(status, rating);
+    QString text = Global::getGameResultText(status, rating) + "\n";
 
     MainWindow::instance()->closeCurrentDialog();
-    MainWindow::instance()->showMessage(text);
 
-    if(mGameState == GS_SURRENDER)
-    {
-        MainWindow::instance()->showMainMenu();
-    }
-    else
-    {
-        mGameState = GS_GAME_OVER;
-        MainWindow::instance()->updateGameScene();
-    }
+    mGameState = GS_GAME_OVER;
+    MainWindow::instance()->updateGameScene();
+    MainWindow::instance()->showGameDialog(text);
 
 }
 
