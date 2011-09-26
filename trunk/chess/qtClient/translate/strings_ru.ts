@@ -519,7 +519,7 @@
         <translation>Время игры</translation>
     </message>
     <message>
-        <location filename="../src/Dialogs/JoinGameDialog.cpp" line="89"/>
+        <location filename="../src/Dialogs/JoinGameDialog.cpp" line="105"/>
         <source>N/A</source>
         <translation>НЕТ</translation>
     </message>
