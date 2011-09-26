@@ -51,10 +51,26 @@ JoinGameDialog::JoinGameDialog(const QList<GameTable>& tables, QWidget *parent):
     tableWidget->setColumnWidth(COLUMN_FOR_TIME2STEP, MainWindow::instance()->width()/NUMBER_OF_COLUMNS - 2 * margin);
     tableWidget->setColumnWidth(COLUMN_FOR_TIME2GAME, MainWindow::instance()->width()/NUMBER_OF_COLUMNS - 2 * margin);
 
+    connect(tableWidget, SIGNAL(cellPressed(int, int)), this, SLOT(onCellPressed(int, int)));
+    connect(tableWidget, SIGNAL(cellClicked(int, int)), this, SLOT(onCellClicked(int, int)));
+
     mCurrentTable = 0;
     if(!mGameTables.empty())
         onGotGameTableParams(mGameTables[mCurrentTable]);
 }
+
+
+void JoinGameDialog::onCellPressed(int row, int column)
+{
+    Q_UNUSED(column);
+    tableWidget->setRangeSelected(QTableWidgetSelectionRange(row, 0 ,row, tableWidget->columnCount()-1), true);
+}
+void JoinGameDialog::onCellClicked(int row, int column)
+{
+    Q_UNUSED(column);
+    tableWidget->setRangeSelected(QTableWidgetSelectionRange(row, 0 ,row, tableWidget->columnCount()-1), true);
+}
+
 
 
 void JoinGameDialog::getParams(const GameTable& table)
