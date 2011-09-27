@@ -202,8 +202,7 @@ void CTblMgrServer::Create( uint32_t _nUserID, const TVecChar* _vecData )
 
 	if ( (nVecSize > sizeof(uint32_t)) && (nVecSize - sizeof(uint32_t)) <= sizeof(uint32_t) )
 	{
-		sMsg.m_nTableID = pLogicID;
-		sMsg.m_chData = ST_NOTVALID;
+	    Result = TbmCommands::NVSIZE;
 	}
 	else
 	{
@@ -211,7 +210,7 @@ void CTblMgrServer::Create( uint32_t _nUserID, const TVecChar* _vecData )
 	    {
 		    if ( i >= ( nVecSize - sizeof( uint32_t ) ) )
 		    {
-			    Result = TbmCommands::NVPAR;
+			    Result = TbmCommands::NVSIZE;
 			    break;
 		    }
 		    nParamID = (uint32_t) _vecData->at(i);
@@ -232,20 +231,35 @@ void CTblMgrServer::Create( uint32_t _nUserID, const TVecChar* _vecData )
 	    }
 
 	    Result = m_TbmCommands.Create( pLogicID, _nUserID, vec, &strPassword );
-
-	    switch ( Result )
-	    {
-		    case TbmCommands::DONE:
-			    sMsg.m_nTableID = m_TbmCommands.LastInsertId();
-			    sMsg.m_chData = ST_VALID;
-			    break;
-		    case TbmCommands::TABEX:
-		    case TbmCommands::NVPAR:
-			    sMsg.m_nTableID = pLogicID;
-			    sMsg.m_chData = ST_NOTVALID;
-			    break;
-	    }
 	}
+
+    switch ( Result )
+    {
+        case TbmCommands::DONE:
+            sMsg.m_nTableID = m_TbmCommands.LastInsertId();
+            sMsg.m_chData = ST_VALID;
+            break;
+        case TbmCommands::NVSIZE:
+            sMsg.m_nTableID = pLogicID;
+            sMsg.m_chData = ST_NOTVALID_SIZE;
+        case TbmCommands::TABEX:
+            sMsg.m_nTableID = pLogicID;
+            sMsg.m_chData = ST_NOTVALID_TABLE_EXISTS;
+        case TbmCommands::DBERR:
+            sMsg.m_nTableID = pLogicID;
+            sMsg.m_chData = ST_NOTVALID_DB_ERROR;
+        case TbmCommands::NVPAR:
+            sMsg.m_nTableID = pLogicID;
+            sMsg.m_chData = ST_NOTVALID_PARAM;
+        case TbmCommands::TOOSMALL:
+            sMsg.m_nTableID = pLogicID;
+            sMsg.m_chData = ST_NOTVALID_VALUE_TOO_SMALL;
+        case TbmCommands::TOOLARGE:
+            sMsg.m_nTableID = pLogicID;
+            sMsg.m_chData = ST_NOTVALID_VALUE_TOO_LARGE;
+            break;
+    }
+
 
 	sendMsg( _nUserID, &sMsg, sizeof (sMsg ) );
 }
