@@ -41,7 +41,7 @@ TbmCommands::~TbmCommands()
 
 }
 
-bool TbmCommands::CheckParams(const TVecPrms &_vecPrms)
+TbmCommands::CrRes TbmCommands::CheckParams(const TVecPrms &_vecPrms)
 {
 	CMyStr strWhere;
 	TTable tbl;
@@ -55,20 +55,27 @@ bool TbmCommands::CheckParams(const TVecPrms &_vecPrms)
 		paramsTable.Select("*", strWhere.c_str(), &tbl);
 
         if ( tbl.empty() )
-			return false;
+			return TbmCommands::NVPAR;
 
 		if ( ( tbl.begin()->at(4) != "0" ) )
 			continue;
 
+		// IsPlayerID should be 0
 		if ( tbl.begin()->at(5) != "0" )
-			return false;
+		    return TbmCommands::NVPAR;
 
-		if ( (atoi(tbl.begin()->at(2).c_str()) > i->second) || (atoi(tbl.begin()->at(3).c_str()) < i->second) )
-			return false;
+		// the value should be in range: MIN ... MAX
+		// if MAX = 0 => no constrains.
+		if (  i->second < atoi(tbl.begin()->at(2).c_str()) )// val < MIN ?
+		    return TbmCommands::TOOSMALL;
+
+		 // MAX exists AND val > MAX ?
+        if ( atoi(tbl.begin()->at(3).c_str()) != 0 &&  i->second > atoi(tbl.begin()->at(3).c_str()) )
+            return TbmCommands::TOOLARGE;
 
         tbl.clear();
 	}
-	return true;
+	return TbmCommands::DONE;
 }
 
 bool TbmCommands::GetLogicTable(int _nLogicID, SqlTable* _pRes)
@@ -108,12 +115,13 @@ TbmCommands::CrRes TbmCommands::Create(uint32_t _nLogicID, uint32_t _nPlayerID,
 		if ( !_vecPrms.empty() )
 		{
 
-			if ( !CheckParams( _vecPrms ) )
+		    TbmCommands::CrRes res = CheckParams( _vecPrms );
+			if ( res != TbmCommands::DONE )
             {
 #ifdef MYDEBUG
                 std::cout << "Not valid parameters" << std::endl;
 #endif
-				return NVPAR;
+				return res;
             }
 
 			SqlTable paramsTable("tbParamList");
@@ -147,7 +155,7 @@ TbmCommands::CrRes TbmCommands::Create(uint32_t _nLogicID, uint32_t _nPlayerID,
 #ifdef MYDEBUG
         	    std::cout << "TbmCommands::Create return false! (GetLogicTable return false)" << std::endl;
 #endif
-                return NVPAR;
+                return DBERR;
             }
 		    m_nLastId = sqlLogicTable.LastInsertId();
 #ifdef MYDEBUG
@@ -215,7 +223,8 @@ bool TbmCommands::Find(uint32_t _nLogicID, uint32_t _nPlayerID, uint32_t _nCount
 
     }
 
-    if ( !CheckParams( vecPrms ) )
+    TbmCommands::CrRes res = CheckParams( vecPrms );
+    if (  res != TbmCommands::DONE )
     {
 #ifdef MYDEBUG
         std::cout << "TbmCommands::Find - Not valid parameters" << std::endl;

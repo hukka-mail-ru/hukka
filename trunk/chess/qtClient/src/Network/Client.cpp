@@ -250,10 +250,12 @@ void Client::getGameTableParams(LOGICID logicID, TABLEID tableID)
         quint32 time2game = PARAMETER_ID_GAMETIME;
         quint32 time2step = PARAMETER_ID_MOVETIME;
         quint32 playerID  = PARAMETER_ID_PLAYER_NAME;
+        quint32 betID  = PARAMETER_ID_BET;
 
         // Note! If you add some parameters here, don't forget to change ANS_GET_PARAM!
         QByteArray data = Q_BYTE_ARRAY(logicID) +
                           Q_BYTE_ARRAY(tableID) +
+                          Q_BYTE_ARRAY(betID) +
                           Q_BYTE_ARRAY(time2game) +
                           Q_BYTE_ARRAY(time2step) +
                           Q_BYTE_ARRAY(playerID);
@@ -1001,11 +1003,23 @@ void Client::processMessageTBM(const MessageHeader& header, const QByteArray& bu
 
         Reply* reply = (Reply*)buffer.data();
 
+        QString cant = tr("Can't create the game. ");
+        if(reply->tableID <= 0)
+        {
+            emit error(cant + tr("Server returned an invalid game table ID."));
+            return;
+        }
+
         switch(reply->isValid)
         {
             case ST_VALID:       emit gameTableCreated(reply->tableID); qDebug() << "Table ID" << reply->tableID; break;
-            case ST_NOTVALID:    emit error(tr("Invalid parameter or table already exists")); break; // TODO What parameter is wrong (exactly)?
-            default:             emit error(tr("Internal server error") + QString::number(reply->isValid)); break;
+            case ST_NOTVALID_SIZE:          emit error(cant + tr("Invalid message size.")); break; // TODO What parameter is wrong (exactly)?
+            case ST_NOTVALID_TABLE_EXISTS:  emit error(cant + tr("Game table already exists.")); break; // TODO What parameter is wrong (exactly)?
+            case ST_NOTVALID_PARAM:         emit error(cant + tr("Invalid parameter.")); break; // TODO What parameter is wrong (exactly)?
+            case ST_NOTVALID_VALUE_TOO_SMALL:         emit error(cant + tr("Value too small.")); break; // TODO What parameter is wrong (exactly)?
+            case ST_NOTVALID_VALUE_TOO_LARGE:         emit error(cant + tr("Value too large.")); break; // TODO What parameter is wrong (exactly)?
+            case ST_NOTVALID_DB_ERROR:      emit error(cant + tr("Database error.")); break; // TODO What parameter is wrong (exactly)?
+            default:             emit error(cant + tr("Internal server error.") + QString::number(reply->isValid)); break;
         }
     }
     // DELETE GAME TABLE
@@ -1098,10 +1112,16 @@ void Client::processMessageTBM(const MessageHeader& header, const QByteArray& bu
         struct Reply {
             TABLEID     tableID;
             char        isValid;
+
+            qint32      betID;
+            qint32      bet;
+
             qint32      gameTimeID;
             qint32      gameTime;
+
             qint32      moveTimeID;
             qint32      moveTime;
+
             qint32      playerNameID;
         };
 
@@ -1116,6 +1136,7 @@ void Client::processMessageTBM(const MessageHeader& header, const QByteArray& bu
         assert(reply->moveTimeID == PARAMETER_ID_MOVETIME);
         assert(reply->gameTimeID == PARAMETER_ID_GAMETIME);
         assert(reply->playerNameID == PARAMETER_ID_PLAYER_NAME);
+        assert(reply->betID == PARAMETER_ID_BET);
 
 
         for(char* c = (char*)(buffer.data() + sizeof(Reply)); *c != '\0'; c++)
@@ -1131,6 +1152,7 @@ void Client::processMessageTBM(const MessageHeader& header, const QByteArray& bu
         table.host.rating = *rating;
         table.time2step = reply->moveTime;
         table.time2game = reply->gameTime;
+        table.bet = reply->bet;
 
         emit gotGameTableParams(table);
 

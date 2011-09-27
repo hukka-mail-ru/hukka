@@ -22,11 +22,13 @@ private:
     QLabel* nameLabel;
 
 
+    QLabel* betLabel;
     QLabel* moveTimeLabel;
     QLabel* gameTimeLabel;
     QLabel* maxRatingLabel;
     QLabel* minRatingLabel;
 
+    QLineEdit* betEdit;
     QLineEdit* moveTimeEdit;
     QLineEdit* gameTimeEdit;
     QLineEdit* maxRatingEdit;

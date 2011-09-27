@@ -8,10 +8,11 @@
 
 const int COLUMN_FOR_NAME        = 0;
 const int COLUMN_FOR_RATING      = 1;
-const int COLUMN_FOR_TIME2STEP  = 2;
-const int COLUMN_FOR_TIME2GAME  = 3;
+const int COLUMN_FOR_BET         = 2;
+const int COLUMN_FOR_TIME2STEP   = 3;
+const int COLUMN_FOR_TIME2GAME   = 4;
 
-const int NUMBER_OF_COLUMNS = 4;
+const int NUMBER_OF_COLUMNS = 5;
 
 JoinGameDialog::JoinGameDialog(const QList<GameTable>& tables, QWidget *parent):
     MyDialog(parent),
@@ -26,7 +27,7 @@ JoinGameDialog::JoinGameDialog(const QList<GameTable>& tables, QWidget *parent):
     connect(cancelButton, SIGNAL(clicked()), this, SLOT(onCancelClicked()));
 
     QStringList labels;
-    labels << tr("Name") << tr("Rating") << tr("Move time") << tr("Game time");
+    labels << tr("Name") << tr("Rating") << tr("Bet") << tr("Move time") << tr("Game time");
     tableWidget = new QTableWidget(0, NUMBER_OF_COLUMNS, this);
     tableWidget->setHorizontalHeaderLabels(labels);
 
@@ -48,6 +49,7 @@ JoinGameDialog::JoinGameDialog(const QList<GameTable>& tables, QWidget *parent):
 
     tableWidget->setColumnWidth(COLUMN_FOR_NAME,      MainWindow::instance()->width()/NUMBER_OF_COLUMNS - 2 * margin);
     tableWidget->setColumnWidth(COLUMN_FOR_RATING,    MainWindow::instance()->width()/NUMBER_OF_COLUMNS - 2 * margin);
+    tableWidget->setColumnWidth(COLUMN_FOR_BET,       MainWindow::instance()->width()/NUMBER_OF_COLUMNS - 2 * margin);
     tableWidget->setColumnWidth(COLUMN_FOR_TIME2STEP, MainWindow::instance()->width()/NUMBER_OF_COLUMNS - 2 * margin);
     tableWidget->setColumnWidth(COLUMN_FOR_TIME2GAME, MainWindow::instance()->width()/NUMBER_OF_COLUMNS - 2 * margin);
 
@@ -106,6 +108,9 @@ void JoinGameDialog::onGotGameTableParams(const GameTable& table)
     QTableWidgetItem* ratingItem = new QTableWidgetItem(ratingText);
     tableWidget->setItem(mCurrentTable, COLUMN_FOR_RATING, ratingItem);
 
+    QTableWidgetItem* betItem = new QTableWidgetItem(QString::number(table.bet));
+    tableWidget->setItem(mCurrentTable, COLUMN_FOR_BET, betItem);
+
     QTableWidgetItem* time2stepItem = new QTableWidgetItem(Global::seconds2hrs(table.time2step));
     tableWidget->setItem(mCurrentTable, COLUMN_FOR_TIME2STEP, time2stepItem);
 
@@ -113,8 +118,6 @@ void JoinGameDialog::onGotGameTableParams(const GameTable& table)
     tableWidget->setItem(mCurrentTable, COLUMN_FOR_TIME2GAME, time2gameItem);
 
     mCurrentTable++;
-
-    qDebug() << "mCurrentTable = " << mCurrentTable << " mGameTables.size() = " << mGameTables.size();
 
     // recursively call again (until all the rows of the table are filled)
     if(mCurrentTable < mGameTables.size())

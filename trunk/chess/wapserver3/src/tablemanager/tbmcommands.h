@@ -32,7 +32,7 @@ public:
 
 	virtual ~TbmCommands();
 
-	enum CrRes { DONE, TABEX, NVPAR };
+	enum CrRes { DONE, NVSIZE, TABEX, NVPAR, TOOSMALL, TOOLARGE, DBERR };
 
 	/**
 	 * @brief Method for creation new game table
@@ -131,7 +131,7 @@ private:
 	 * @return TRUE if parameters if valid, FALSE else
 	 */
 
-	bool CheckParams(const TVecPrms &_vecPrms);
+    TbmCommands::CrRes CheckParams(const TVecPrms &_vecPrms);
 
 	/**
 	 * @brief Method for searching free game tables
