@@ -264,6 +264,7 @@ void CTblMgrServer::Create( uint32_t _nUserID, const TVecChar* _vecData )
             break;
     }
 
+    sMsg.m_Parameter = m_TbmCommands.getLastParameterID();
 
 	sendMsg( _nUserID, &sMsg, sizeof (sMsg ) );
 }

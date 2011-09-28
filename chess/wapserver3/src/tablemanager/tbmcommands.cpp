@@ -23,7 +23,7 @@
 
 
 TbmCommands::TbmCommands()
-: m_nLastId(0)
+: m_nLastId(0), m_LastParameterID(0)
 {
 	SqlTable paramsTable("tbParamList");
 	CMyStr strWhere = "isPassword != 0";
@@ -41,6 +41,12 @@ TbmCommands::~TbmCommands()
 {
 
 }
+
+uint32_t TbmCommands::getLastParameterID()
+{
+    return m_LastParameterID;
+}
+
 
 TbmCommands::CrRes TbmCommands::CheckParams(const TVecPrms& params, uint32_t playerID)
 {
@@ -63,16 +69,25 @@ TbmCommands::CrRes TbmCommands::CheckParams(const TVecPrms& params, uint32_t pla
 
 		// IsPlayerID should be 0
 		if ( tbl.begin()->at(5) != "0" )
+        {
+            m_LastParameterID = i->first;
 		    return TbmCommands::NVPAR;
+        }
 
 		// the value should be in range: MIN ... MAX
 		// if MAX = 0 => no constrains.
 		if (  i->second < atoi(tbl.begin()->at(2).c_str()) )// val < MIN ?
+		{
+		    m_LastParameterID = i->first;
 		    return TbmCommands::TOOSMALL;
+		}
 
 		 // MAX exists AND val > MAX ?
         if ( atoi(tbl.begin()->at(3).c_str()) != 0 &&  i->second > atoi(tbl.begin()->at(3).c_str()) )
+        {
+            m_LastParameterID = i->first;
             return TbmCommands::TOOLARGE;
+        }
 
         tbl.clear();
 	}
@@ -133,7 +148,7 @@ TbmCommands::CrRes TbmCommands::Create(uint32_t _nLogicID, uint32_t _nPlayerID,
 			if ( res != TbmCommands::DONE )
             {
 #ifdef MYDEBUG
-                std::cout << "Not valid parameters" << std::endl;
+                std::cout << "Not valid parameters: " << getLastParameterID() << std::endl;
 #endif
 				return res;
             }

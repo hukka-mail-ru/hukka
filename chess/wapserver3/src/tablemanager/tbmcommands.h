@@ -121,7 +121,10 @@ public:
 
     uint32_t RandomOpponent(uint32_t _nLogicID, uint32_t _nPlayerID, const TVecFindPrms* _pvecPrms = NULL);
 
+    uint32_t getLastParameterID();
+
     CSqlLogicList* getSqlLogicList() { return &m_sqlLogicList; }
+
 
 private:
 
@@ -159,6 +162,8 @@ private:
 	CSqlLogicList 	m_sqlLogicList;
 
 	int m_nLastId, m_nPasswordID;
+
+	uint32_t m_LastParameterID;
 };
 
 #endif
