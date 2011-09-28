@@ -36,17 +36,6 @@ const int PROTOCOL_VERSION               = 2;
 
 
 
-
-// game table parameter ids (see tbParameterList table)
-const int  PARAMETER_ID_PLAYER_NAME      =  0;
-const int  PARAMETER_ID_OPPONENT_NAME    =  1;
-const int  PARAMETER_ID_PASSWD           =  2;
-const int  PARAMETER_ID_MOVETIME         =  3;
-const int  PARAMETER_ID_GAMETIME         =  4;
-const int  PARAMETER_ID_MINRATING        =  5;
-const int  PARAMETER_ID_MAXRATING        =  6;
-const int  PARAMETER_ID_BET              =  7;
-
 // game table parameter constrains (see tbParamList table)
 const int  DEFAULT_BET                    = 0;
 const int  DEFAULT_MOVETIME               = 7; // minutes

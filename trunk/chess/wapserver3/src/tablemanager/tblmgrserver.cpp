@@ -258,6 +258,10 @@ void CTblMgrServer::Create( uint32_t _nUserID, const TVecChar* _vecData )
             sMsg.m_nTableID = pLogicID;
             sMsg.m_chData = ST_NOTVALID_VALUE_TOO_LARGE;
             break;
+        case TbmCommands::NOBALANCE:
+            sMsg.m_nTableID = pLogicID;
+            sMsg.m_chData = ST_NOTVALID_NO_BALANCE;
+            break;
     }
 
 

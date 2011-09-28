@@ -356,9 +356,3 @@ bool SqlGameTable::getPlayerGameTime( uint32_t _nTableID, uint8_t _nPlayerNum, u
 
 
 
-int SqlGameTable::vec2i(TVecChar *_pvecData)
-{
-    std::string str(_pvecData->begin(), _pvecData->end());
-
-    return atoi(str.c_str());
-}

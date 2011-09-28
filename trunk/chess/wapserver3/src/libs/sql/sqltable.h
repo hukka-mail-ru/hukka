@@ -85,9 +85,12 @@ public:
 
 	static void ar2blob(const TVecByte& _cvecIn, CMyStr* _pRes);
 
+    int vec2i(TVecChar* v);
+
 private:
 
 	void CopyToTable(TTable* _pTable, MYSQL_RES* pRes);
+
 
 private:
 

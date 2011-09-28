@@ -4,7 +4,7 @@
 <context>
     <name></name>
     <message>
-        <location filename="../src/Base/Defines.h" line="102"/>
+        <location filename="../src/Base/Defines.h" line="91"/>
         <source>all</source>
         <translation>всем</translation>
     </message>
@@ -248,17 +248,17 @@
         <translation type="obsolete">Значение параметра слишком мало или слишком велико.</translation>
     </message>
     <message>
-        <location filename="../src/Network/Client.cpp" line="1021"/>
+        <location filename="../src/Network/Client.cpp" line="1022"/>
         <source>Database error.</source>
         <translation>Ошибка базы данных.</translation>
     </message>
     <message>
-        <location filename="../src/Network/Client.cpp" line="1022"/>
+        <location filename="../src/Network/Client.cpp" line="1023"/>
         <source>Internal server error.</source>
         <translation>Внутренняя ошибка сервера.</translation>
     </message>
     <message>
-        <location filename="../src/Network/Client.cpp" line="1354"/>
+        <location filename="../src/Network/Client.cpp" line="1355"/>
         <source>Your opponent has rejected the draw</source>
         <translation>Ваш оппонент не согласен на ничью</translation>
     </message>
@@ -310,12 +310,17 @@
         <translation>Значение одного из параметров слишком велико.</translation>
     </message>
     <message>
-        <location filename="../src/Network/Client.cpp" line="1304"/>
+        <location filename="../src/Network/Client.cpp" line="1021"/>
+        <source>Not enough balance. Replenish your account or decrease your bet.</source>
+        <translation>Недостаточно денег на счету. Пополните счет или уменьшите ставку.</translation>
+    </message>
+    <message>
+        <location filename="../src/Network/Client.cpp" line="1305"/>
         <source>Can&apos;t join to the game table.</source>
         <translation>Невозможно присоединиться к игровому столу</translation>
     </message>
     <message>
-        <location filename="../src/Network/Client.cpp" line="1321"/>
+        <location filename="../src/Network/Client.cpp" line="1322"/>
         <source>Can&apos;t reject the game.</source>
         <translation>Невозможно отказаться от игры</translation>
     </message>
@@ -342,9 +347,9 @@
     <message>
         <location filename="../src/Network/Client.cpp" line="944"/>
         <location filename="../src/Network/Client.cpp" line="974"/>
-        <location filename="../src/Network/Client.cpp" line="1305"/>
-        <location filename="../src/Network/Client.cpp" line="1322"/>
-        <location filename="../src/Network/Client.cpp" line="1356"/>
+        <location filename="../src/Network/Client.cpp" line="1306"/>
+        <location filename="../src/Network/Client.cpp" line="1323"/>
+        <location filename="../src/Network/Client.cpp" line="1357"/>
         <source>Internal server error </source>
         <translation>Внутренняя ошибка сервера </translation>
     </message>
@@ -378,44 +383,44 @@
         <translation type="obsolete">Неправильный параметр (или такой стол уже существует)</translation>
     </message>
     <message>
-        <location filename="../src/Network/Client.cpp" line="1040"/>
-        <location filename="../src/Network/Client.cpp" line="1083"/>
-        <location filename="../src/Network/Client.cpp" line="1287"/>
+        <location filename="../src/Network/Client.cpp" line="1041"/>
+        <location filename="../src/Network/Client.cpp" line="1084"/>
+        <location filename="../src/Network/Client.cpp" line="1288"/>
         <source>Internal server error</source>
         <translation>Внутренняя ошибка сервера</translation>
     </message>
     <message>
-        <location filename="../src/Network/Client.cpp" line="1169"/>
+        <location filename="../src/Network/Client.cpp" line="1170"/>
         <source>TBM Error: </source>
         <translation>Ошибка TBM: </translation>
     </message>
     <message>
-        <location filename="../src/Network/Client.cpp" line="1355"/>
+        <location filename="../src/Network/Client.cpp" line="1356"/>
         <source>Please wait for your next move to offer a draw</source>
         <translation>Подождите своего хода, а затем предложите ничью</translation>
     </message>
     <message>
-        <location filename="../src/Network/Client.cpp" line="1430"/>
+        <location filename="../src/Network/Client.cpp" line="1431"/>
         <source>CHS Error: </source>
         <translation>Ошибка CHS: </translation>
     </message>
     <message>
-        <location filename="../src/Network/Client.cpp" line="1460"/>
+        <location filename="../src/Network/Client.cpp" line="1461"/>
         <source>CHAT Error: </source>
         <translation>Ошибка CHAT: </translation>
     </message>
     <message>
-        <location filename="../src/Network/Client.cpp" line="1501"/>
+        <location filename="../src/Network/Client.cpp" line="1502"/>
         <source>Connection refused. Please check the server name and port.</source>
         <translation>Нет соединения с сервером. Правильно ли Вы указали адрес сервера и номер порта?</translation>
     </message>
     <message>
-        <location filename="../src/Network/Client.cpp" line="1505"/>
+        <location filename="../src/Network/Client.cpp" line="1506"/>
         <source>Network unreachable. Please check your Internet connection.</source>
         <translation>Сеть недоступна. Проверьте Ваше соединение с сетью Интернет.</translation>
     </message>
     <message>
-        <location filename="../src/Network/Client.cpp" line="1524"/>
+        <location filename="../src/Network/Client.cpp" line="1525"/>
         <source>Server doesn&apos;t respond</source>
         <translation>Сервер не отвечает</translation>
     </message>
@@ -745,7 +750,7 @@
         <translation>Игра окончена.</translation>
     </message>
     <message>
-        <location filename="../src/Base/Defines.h" line="167"/>
+        <location filename="../src/Base/Defines.h" line="156"/>
         <source>offline</source>
         <translation>оффлайн</translation>
     </message>

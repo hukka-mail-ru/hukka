@@ -71,9 +71,6 @@ public:
 
     bool getPlayerGameTime( uint32_t _nTableID, uint8_t _nPlayerNum, uint32_t &_nGameTime );
 
-private:
-
-    int vec2i(TVecChar *_pvecData);
 
 };
 

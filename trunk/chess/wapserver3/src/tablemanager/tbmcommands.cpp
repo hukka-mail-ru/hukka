@@ -1,5 +1,6 @@
 #include "../libs/header/defparams.h"
 #include "../libs/sql/sqltable.h"
+#include "../libs/sql/sqlaccounttable.h"
 #include "../header/defservice.h"
 #include "tbmcommands.h"
 #include <stdlib.h>
@@ -41,14 +42,14 @@ TbmCommands::~TbmCommands()
 
 }
 
-TbmCommands::CrRes TbmCommands::CheckParams(const TVecPrms &_vecPrms)
+TbmCommands::CrRes TbmCommands::CheckParams(const TVecPrms& params, uint32_t playerID)
 {
 	CMyStr strWhere;
 	TTable tbl;
 
 	SqlTable paramsTable("tbParamList");
 
-	for (TVecPrms::const_iterator i = _vecPrms.begin(); i != _vecPrms.end(); ++i)
+	for (TVecPrms::const_iterator i = params.begin(); i != params.end(); ++i)
 	{
 
 		strWhere = "ParamID = " + CMyStr(i->first);
@@ -75,6 +76,19 @@ TbmCommands::CrRes TbmCommands::CheckParams(const TVecPrms &_vecPrms)
 
         tbl.clear();
 	}
+
+	// Check balance
+	SqlAccountTable accountTable;
+	for(int i=0; i<params.size(); i++)
+	{
+	    if(params[i].first == PARAMETER_ID_BET &&
+	       accountTable.getBalance(playerID) < params[i].second)
+	    {
+	        return TbmCommands::NOBALANCE;
+	    }
+	}
+
+
 	return TbmCommands::DONE;
 }
 
@@ -115,7 +129,7 @@ TbmCommands::CrRes TbmCommands::Create(uint32_t _nLogicID, uint32_t _nPlayerID,
 		if ( !_vecPrms.empty() )
 		{
 
-		    TbmCommands::CrRes res = CheckParams( _vecPrms );
+		    TbmCommands::CrRes res = CheckParams( _vecPrms, _nPlayerID );
 			if ( res != TbmCommands::DONE )
             {
 #ifdef MYDEBUG
@@ -223,7 +237,7 @@ bool TbmCommands::Find(uint32_t _nLogicID, uint32_t _nPlayerID, uint32_t _nCount
 
     }
 
-    TbmCommands::CrRes res = CheckParams( vecPrms );
+    TbmCommands::CrRes res = CheckParams( vecPrms, _nPlayerID );
     if (  res != TbmCommands::DONE )
     {
 #ifdef MYDEBUG
