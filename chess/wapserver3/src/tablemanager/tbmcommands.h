@@ -12,8 +12,8 @@ struct SFindParameters
     uint8_t m_nLogic;
 };
 
-typedef std::pair<int, int> TTbmPrm; // TTbmPrm::first
-typedef std::vector<TTbmPrm> TVecPrms;
+typedef std::pair<int, int> ParamValue;
+typedef std::vector<ParamValue> TVecPrms;
 typedef std::vector<SFindParameters> TVecFindPrms;
 
 /**
@@ -32,7 +32,7 @@ public:
 
 	virtual ~TbmCommands();
 
-	enum CrRes { DONE, NVSIZE, TABEX, NVPAR, TOOSMALL, TOOLARGE, DBERR };
+	enum CrRes { DONE, NVSIZE, TABEX, NVPAR, TOOSMALL, TOOLARGE, DBERR, NOBALANCE };
 
 	/**
 	 * @brief Method for creation new game table
@@ -131,7 +131,7 @@ private:
 	 * @return TRUE if parameters if valid, FALSE else
 	 */
 
-    TbmCommands::CrRes CheckParams(const TVecPrms &_vecPrms);
+    TbmCommands::CrRes CheckParams(const TVecPrms &params, uint32_t playerID);
 
 	/**
 	 * @brief Method for searching free game tables

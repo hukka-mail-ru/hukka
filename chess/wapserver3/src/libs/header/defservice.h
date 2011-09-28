@@ -113,6 +113,16 @@ const int       P_DRAW_STALEMATE = 43;
 const int       P_DRAW_TRIPPLE_OCCURRENCE = 44;
 const int       P_DRAW_FIFTY_MOVES = 45;
 
+// game table parameter ids (see tbParameterList table)
+const int  PARAMETER_ID_PLAYER_NAME      =  0;
+const int  PARAMETER_ID_OPPONENT_NAME    =  1;
+const int  PARAMETER_ID_PASSWD           =  2;
+const int  PARAMETER_ID_MOVETIME         =  3;
+const int  PARAMETER_ID_GAMETIME         =  4;
+const int  PARAMETER_ID_MINRATING        =  5;
+const int  PARAMETER_ID_MAXRATING        =  6;
+const int  PARAMETER_ID_BET              =  7;
+
 
 class GlobalServer
 {

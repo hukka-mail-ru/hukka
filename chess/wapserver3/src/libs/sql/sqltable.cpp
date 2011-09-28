@@ -26,6 +26,7 @@
 #include <syslog.h>
 #include <stdio.h>
 #include <stdint.h>
+#include <stdlib.h>
 
 /*
 const char* g_cszDefDbLogin = 0;
@@ -312,3 +313,11 @@ void SqlTable::ar2blob(const TVecByte& _cvecIn, CMyStr* _pRes)
 
 	*_pRes = str.rdbuf()->str();
 }
+
+int SqlTable::vec2i(TVecChar* v)
+{
+    std::string str(v->begin(), v->end());
+
+    return atoi(str.c_str());
+}
+

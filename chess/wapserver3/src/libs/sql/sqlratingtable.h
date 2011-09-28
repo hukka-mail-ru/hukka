@@ -22,7 +22,6 @@ public:
 
 private:
 
-    int             vec2i(TVecChar *_pvecData);
 	uint32_t		m_nInitialRating;
 
 };

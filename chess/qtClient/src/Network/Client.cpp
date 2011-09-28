@@ -1003,7 +1003,7 @@ void Client::processMessageTBM(const MessageHeader& header, const QByteArray& bu
 
         Reply* reply = (Reply*)buffer.data();
 
-        QString cant = tr("Can't create the game. ");
+        QString cant = tr("Can't create the game. ") + "\n\n";
         if(reply->tableID <= 0)
         {
             emit error(cant + tr("Server returned an invalid game table ID."));
@@ -1013,12 +1013,13 @@ void Client::processMessageTBM(const MessageHeader& header, const QByteArray& bu
         switch(reply->isValid)
         {
             case ST_VALID:       emit gameTableCreated(reply->tableID); qDebug() << "Table ID" << reply->tableID; break;
-            case ST_NOTVALID_SIZE:          emit error(cant + tr("Invalid message size.")); break; // TODO What parameter is wrong (exactly)?
-            case ST_NOTVALID_TABLE_EXISTS:  emit error(cant + tr("Game table already exists.")); break; // TODO What parameter is wrong (exactly)?
-            case ST_NOTVALID_PARAM:         emit error(cant + tr("Invalid parameter.")); break; // TODO What parameter is wrong (exactly)?
-            case ST_NOTVALID_VALUE_TOO_SMALL:         emit error(cant + tr("Value too small.")); break; // TODO What parameter is wrong (exactly)?
-            case ST_NOTVALID_VALUE_TOO_LARGE:         emit error(cant + tr("Value too large.")); break; // TODO What parameter is wrong (exactly)?
-            case ST_NOTVALID_DB_ERROR:      emit error(cant + tr("Database error.")); break; // TODO What parameter is wrong (exactly)?
+            case ST_NOTVALID_SIZE:          emit error(cant + tr("Invalid message size.")); break;
+            case ST_NOTVALID_TABLE_EXISTS:  emit error(cant + tr("Game table already exists.")); break;
+            case ST_NOTVALID_PARAM:         emit error(cant + tr("Invalid parameter.")); break;
+            case ST_NOTVALID_VALUE_TOO_SMALL:    emit error(cant + tr("Value too small.")); break;
+            case ST_NOTVALID_VALUE_TOO_LARGE:    emit error(cant + tr("Value too large.")); break;
+            case ST_NOTVALID_NO_BALANCE:    emit error(cant + tr("Not enough balance. Replenish your account or decrease your bet.")); break;
+            case ST_NOTVALID_DB_ERROR:      emit error(cant + tr("Database error.")); break;
             default:             emit error(cant + tr("Internal server error.") + QString::number(reply->isValid)); break;
         }
     }

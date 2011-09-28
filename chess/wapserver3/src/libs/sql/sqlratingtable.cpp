@@ -127,11 +127,5 @@ CSqlRatingTable::~CSqlRatingTable()
 {
 }
 
-int CSqlRatingTable::vec2i(TVecChar *_pvecData)
-{
-    std::string str(_pvecData->begin(), _pvecData->end());
-
-    return atoi(str.c_str());
-}
 
 
