@@ -5,7 +5,7 @@
  *      Author: ssy
  */
 #include "Global.h"
-
+#include <QObject>
 
 char Global::letter(CELLID cell)
 {
@@ -62,6 +62,23 @@ QString Global::serviceToString(quint32 service)
     }
 }
 
+QString Global::paramIdToString(int paramId)
+{
+    QString res;
+    switch(paramId) {
+        case  PARAMETER_ID_PLAYER_NAME     : res = QObject::tr("Player name"); break;
+        case  PARAMETER_ID_OPPONENT_NAME   : res = QObject::tr("Opponent name");  break;
+        case  PARAMETER_ID_PASSWD          : res = QObject::tr("Password"); break;
+        case  PARAMETER_ID_MOVETIME        : res = QObject::tr("Move time"); break;
+        case  PARAMETER_ID_GAMETIME        : res = QObject::tr("Game time"); break;
+        case  PARAMETER_ID_MINRATING       : res = QObject::tr("Min. rating");  break;
+        case  PARAMETER_ID_MAXRATING       : res = QObject::tr("Max. rating");  break;
+        case  PARAMETER_ID_BET             : res = QObject::tr("Bet"); break;
+        default : res = QString::number(paramId);
+    }
+
+    return res;
+}
 
 bool Global::isFieldEmpty(const Field& field)
 {

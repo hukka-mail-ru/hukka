@@ -224,41 +224,55 @@
         <translation>Такой пользователь уже зашел на сервер</translation>
     </message>
     <message>
-        <location filename="../src/Network/Client.cpp" line="1006"/>
+        <location filename="../src/Network/Client.cpp" line="1007"/>
         <source>Can&apos;t create the game. </source>
         <translation>Невозможно создать игру. </translation>
     </message>
     <message>
-        <location filename="../src/Network/Client.cpp" line="1016"/>
+        <location filename="../src/Network/Client.cpp" line="1017"/>
         <source>Invalid message size.</source>
         <translation>Неправильный размер сообщения.</translation>
     </message>
     <message>
-        <location filename="../src/Network/Client.cpp" line="1017"/>
+        <location filename="../src/Network/Client.cpp" line="1018"/>
         <source>Game table already exists.</source>
         <translation>Игровой стол уже существует.</translation>
     </message>
     <message>
-        <location filename="../src/Network/Client.cpp" line="1018"/>
         <source>Invalid parameter.</source>
-        <translation>Неправильный параметр.</translation>
+        <translation type="obsolete">Неправильный параметр.</translation>
     </message>
     <message>
         <source>Value out of range.</source>
         <translation type="obsolete">Значение параметра слишком мало или слишком велико.</translation>
     </message>
     <message>
-        <location filename="../src/Network/Client.cpp" line="1022"/>
+        <location filename="../src/Network/Client.cpp" line="1020"/>
         <source>Database error.</source>
         <translation>Ошибка базы данных.</translation>
     </message>
     <message>
+        <location filename="../src/Network/Client.cpp" line="1021"/>
+        <source>Invalid parameter: </source>
+        <translation>Неправильный параметр:</translation>
+    </message>
+    <message>
+        <location filename="../src/Network/Client.cpp" line="1022"/>
+        <source> is too small.</source>
+        <translation>: значение слишком мало.</translation>
+    </message>
+    <message>
         <location filename="../src/Network/Client.cpp" line="1023"/>
+        <source> is too large.</source>
+        <translation>: значение слишком велико.</translation>
+    </message>
+    <message>
+        <location filename="../src/Network/Client.cpp" line="1024"/>
         <source>Internal server error.</source>
         <translation>Внутренняя ошибка сервера.</translation>
     </message>
     <message>
-        <location filename="../src/Network/Client.cpp" line="1355"/>
+        <location filename="../src/Network/Client.cpp" line="1356"/>
         <source>Your opponent has rejected the draw</source>
         <translation>Ваш оппонент не согласен на ничью</translation>
     </message>
@@ -295,32 +309,30 @@
         <translation>Невозможно послать сообщение чата игрового стола. ID стола </translation>
     </message>
     <message>
-        <location filename="../src/Network/Client.cpp" line="1009"/>
+        <location filename="../src/Network/Client.cpp" line="1010"/>
         <source>Server returned an invalid game table ID.</source>
         <translation>Сервер вернул неправильный ID игрового стола.</translation>
     </message>
     <message>
-        <location filename="../src/Network/Client.cpp" line="1019"/>
         <source>Value too small.</source>
-        <translation>Значение одного из параметров слишком мало.</translation>
+        <translation type="obsolete">Значение одного из параметров слишком мало.</translation>
     </message>
     <message>
-        <location filename="../src/Network/Client.cpp" line="1020"/>
         <source>Value too large.</source>
-        <translation>Значение одного из параметров слишком велико.</translation>
+        <translation type="obsolete">Значение одного из параметров слишком велико.</translation>
     </message>
     <message>
-        <location filename="../src/Network/Client.cpp" line="1021"/>
+        <location filename="../src/Network/Client.cpp" line="1019"/>
         <source>Not enough balance. Replenish your account or decrease your bet.</source>
         <translation>Недостаточно денег на счету. Пополните счет или уменьшите ставку.</translation>
     </message>
     <message>
-        <location filename="../src/Network/Client.cpp" line="1305"/>
+        <location filename="../src/Network/Client.cpp" line="1306"/>
         <source>Can&apos;t join to the game table.</source>
         <translation>Невозможно присоединиться к игровому столу</translation>
     </message>
     <message>
-        <location filename="../src/Network/Client.cpp" line="1322"/>
+        <location filename="../src/Network/Client.cpp" line="1323"/>
         <source>Can&apos;t reject the game.</source>
         <translation>Невозможно отказаться от игры</translation>
     </message>
@@ -347,9 +359,9 @@
     <message>
         <location filename="../src/Network/Client.cpp" line="944"/>
         <location filename="../src/Network/Client.cpp" line="974"/>
-        <location filename="../src/Network/Client.cpp" line="1306"/>
-        <location filename="../src/Network/Client.cpp" line="1323"/>
-        <location filename="../src/Network/Client.cpp" line="1357"/>
+        <location filename="../src/Network/Client.cpp" line="1307"/>
+        <location filename="../src/Network/Client.cpp" line="1324"/>
+        <location filename="../src/Network/Client.cpp" line="1358"/>
         <source>Internal server error </source>
         <translation>Внутренняя ошибка сервера </translation>
     </message>
@@ -383,44 +395,44 @@
         <translation type="obsolete">Неправильный параметр (или такой стол уже существует)</translation>
     </message>
     <message>
-        <location filename="../src/Network/Client.cpp" line="1041"/>
-        <location filename="../src/Network/Client.cpp" line="1084"/>
-        <location filename="../src/Network/Client.cpp" line="1288"/>
+        <location filename="../src/Network/Client.cpp" line="1042"/>
+        <location filename="../src/Network/Client.cpp" line="1085"/>
+        <location filename="../src/Network/Client.cpp" line="1289"/>
         <source>Internal server error</source>
         <translation>Внутренняя ошибка сервера</translation>
     </message>
     <message>
-        <location filename="../src/Network/Client.cpp" line="1170"/>
+        <location filename="../src/Network/Client.cpp" line="1171"/>
         <source>TBM Error: </source>
         <translation>Ошибка TBM: </translation>
     </message>
     <message>
-        <location filename="../src/Network/Client.cpp" line="1356"/>
+        <location filename="../src/Network/Client.cpp" line="1357"/>
         <source>Please wait for your next move to offer a draw</source>
         <translation>Подождите своего хода, а затем предложите ничью</translation>
     </message>
     <message>
-        <location filename="../src/Network/Client.cpp" line="1431"/>
+        <location filename="../src/Network/Client.cpp" line="1432"/>
         <source>CHS Error: </source>
         <translation>Ошибка CHS: </translation>
     </message>
     <message>
-        <location filename="../src/Network/Client.cpp" line="1461"/>
+        <location filename="../src/Network/Client.cpp" line="1462"/>
         <source>CHAT Error: </source>
         <translation>Ошибка CHAT: </translation>
     </message>
     <message>
-        <location filename="../src/Network/Client.cpp" line="1502"/>
+        <location filename="../src/Network/Client.cpp" line="1503"/>
         <source>Connection refused. Please check the server name and port.</source>
         <translation>Нет соединения с сервером. Правильно ли Вы указали адрес сервера и номер порта?</translation>
     </message>
     <message>
-        <location filename="../src/Network/Client.cpp" line="1506"/>
+        <location filename="../src/Network/Client.cpp" line="1507"/>
         <source>Network unreachable. Please check your Internet connection.</source>
         <translation>Сеть недоступна. Проверьте Ваше соединение с сетью Интернет.</translation>
     </message>
     <message>
-        <location filename="../src/Network/Client.cpp" line="1525"/>
+        <location filename="../src/Network/Client.cpp" line="1526"/>
         <source>Server doesn&apos;t respond</source>
         <translation>Сервер не отвечает</translation>
     </message>
@@ -744,7 +756,7 @@
         <translation>Игра: </translation>
     </message>
     <message>
-        <location filename="../src/Base/Global.cpp" line="140"/>
+        <location filename="../src/Base/Global.cpp" line="157"/>
         <location filename="../src/Base/MoveBox.cpp" line="110"/>
         <source>Game over.</source>
         <translation>Игра окончена.</translation>
@@ -755,78 +767,118 @@
         <translation>оффлайн</translation>
     </message>
     <message>
-        <location filename="../src/Base/Global.cpp" line="82"/>
+        <location filename="../src/Base/Global.cpp" line="69"/>
+        <source>Player name</source>
+        <translation>Имя игрока</translation>
+    </message>
+    <message>
+        <location filename="../src/Base/Global.cpp" line="70"/>
+        <source>Opponent name</source>
+        <translation>Имя оппонента</translation>
+    </message>
+    <message>
+        <location filename="../src/Base/Global.cpp" line="71"/>
+        <source>Password</source>
+        <translation>Пароль</translation>
+    </message>
+    <message>
+        <location filename="../src/Base/Global.cpp" line="72"/>
+        <source>Move time</source>
+        <translation>Время хода</translation>
+    </message>
+    <message>
+        <location filename="../src/Base/Global.cpp" line="73"/>
+        <source>Game time</source>
+        <translation>Время игры</translation>
+    </message>
+    <message>
+        <location filename="../src/Base/Global.cpp" line="74"/>
+        <source>Min. rating</source>
+        <translation>Мин. рейтинг</translation>
+    </message>
+    <message>
+        <location filename="../src/Base/Global.cpp" line="75"/>
+        <source>Max. rating</source>
+        <translation>Макс. рейтинг</translation>
+    </message>
+    <message>
+        <location filename="../src/Base/Global.cpp" line="76"/>
+        <source>Bet</source>
+        <translation>Ставка</translation>
+    </message>
+    <message>
+        <location filename="../src/Base/Global.cpp" line="99"/>
         <source>Your rating has been increased to</source>
         <translation>Ваш рейтинг повышен до</translation>
     </message>
     <message>
-        <location filename="../src/Base/Global.cpp" line="83"/>
+        <location filename="../src/Base/Global.cpp" line="100"/>
         <source>Your rating has been decreased to</source>
         <translation>Ваш рейтинг понижен до</translation>
     </message>
     <message>
-        <location filename="../src/Base/Global.cpp" line="84"/>
+        <location filename="../src/Base/Global.cpp" line="101"/>
         <source>Your rating has been slightly increased.</source>
         <translation>Ваш рейтинг немного повышен</translation>
     </message>
     <message>
-        <location filename="../src/Base/Global.cpp" line="85"/>
+        <location filename="../src/Base/Global.cpp" line="102"/>
         <source>Your rating hasn&apos;t been affected because of too few number of moves.</source>
         <translation>Ваш рейтинг не изменился, т.к. в партии было сделано слишком мало ходов.</translation>
     </message>
     <message>
-        <location filename="../src/Base/Global.cpp" line="86"/>
+        <location filename="../src/Base/Global.cpp" line="103"/>
         <source>Your rating is not available.
 Please visit www.site.com to learn how to enable it.</source>
         <translation>Ваш рейтинг не включен. Вы можете включить его на сайте www.site.com</translation>
     </message>
     <message>
-        <location filename="../src/Base/Global.cpp" line="90"/>
+        <location filename="../src/Base/Global.cpp" line="107"/>
         <source>You have won!</source>
         <translation>Вы победили!</translation>
     </message>
     <message>
-        <location filename="../src/Base/Global.cpp" line="95"/>
+        <location filename="../src/Base/Global.cpp" line="112"/>
         <source>Your opponent&apos;s time is up. You have won!</source>
         <translation>Ваш противник просрочил время. Вы победили!</translation>
     </message>
     <message>
-        <location filename="../src/Base/Global.cpp" line="100"/>
+        <location filename="../src/Base/Global.cpp" line="117"/>
         <source>Your opponent has surrendered!</source>
         <translation>Ваш противник сдался!</translation>
     </message>
     <message>
-        <location filename="../src/Base/Global.cpp" line="105"/>
+        <location filename="../src/Base/Global.cpp" line="122"/>
         <source>You have lost!</source>
         <translation>Вы проиграли!</translation>
     </message>
     <message>
-        <location filename="../src/Base/Global.cpp" line="110"/>
+        <location filename="../src/Base/Global.cpp" line="127"/>
         <source>Time&apos;s up. You have lost!</source>
         <translation>Время вышло. Вы проиграли!</translation>
     </message>
     <message>
-        <location filename="../src/Base/Global.cpp" line="115"/>
+        <location filename="../src/Base/Global.cpp" line="132"/>
         <source>You have surrendered.</source>
         <translation>Вы сдались.</translation>
     </message>
     <message>
-        <location filename="../src/Base/Global.cpp" line="120"/>
+        <location filename="../src/Base/Global.cpp" line="137"/>
         <source>A draw.</source>
         <translation>Ничья.</translation>
     </message>
     <message>
-        <location filename="../src/Base/Global.cpp" line="125"/>
+        <location filename="../src/Base/Global.cpp" line="142"/>
         <source>A draw (a stalemate).</source>
         <translation>Ничья (пат).</translation>
     </message>
     <message>
-        <location filename="../src/Base/Global.cpp" line="130"/>
+        <location filename="../src/Base/Global.cpp" line="147"/>
         <source>A draw (the same position has occurred three times).</source>
         <translation>Ничья (троекратное повторение одной и той же позиции).</translation>
     </message>
     <message>
-        <location filename="../src/Base/Global.cpp" line="135"/>
+        <location filename="../src/Base/Global.cpp" line="152"/>
         <source>A draw (there has been no capture or pawn move in the last 50 moves).</source>
         <translation>Ничья (50 последних ходов без взятия или хода пешкой).</translation>
     </message>

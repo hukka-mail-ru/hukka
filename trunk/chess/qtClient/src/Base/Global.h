@@ -23,6 +23,8 @@ public:
 
     static QString serviceToString(quint32 service);
 
+    static QString paramIdToString(int paramId);
+
     static bool isFieldEmpty(const Field& field);
 
     static QString getGameResultText(int status, int rating);
