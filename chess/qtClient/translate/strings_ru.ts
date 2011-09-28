@@ -219,22 +219,57 @@
         <translation>Невозможно покинуть чат</translation>
     </message>
     <message>
-        <location filename="../src/Network/Client.cpp" line="941"/>
+        <location filename="../src/Network/Client.cpp" line="949"/>
         <source>The user is already online.</source>
         <translation>Такой пользователь уже зашел на сервер</translation>
     </message>
     <message>
-        <location filename="../src/Network/Client.cpp" line="1007"/>
+        <location filename="../src/Network/Client.cpp" line="958"/>
+        <source>Server error: service </source>
+        <translation>Ошибка сервера: сервис </translation>
+    </message>
+    <message>
+        <location filename="../src/Network/Client.cpp" line="962"/>
+        <source>is undefined.</source>
+        <translation>не определен.</translation>
+    </message>
+    <message>
+        <location filename="../src/Network/Client.cpp" line="963"/>
+        <source>is not accessible. Check if the service is running.</source>
+        <translation>не доступен. Проверьте, запущен ли сервис.</translation>
+    </message>
+    <message>
+        <location filename="../src/Network/Client.cpp" line="964"/>
+        <source>got an invalid command.</source>
+        <translation>получил неправильную команду.</translation>
+    </message>
+    <message>
+        <location filename="../src/Network/Client.cpp" line="965"/>
+        <source>got an invalid message.</source>
+        <translation>получил неправильное сообщение.</translation>
+    </message>
+    <message>
+        <location filename="../src/Network/Client.cpp" line="966"/>
+        <source>has a wrong address. Check if the service is running.</source>
+        <translation>имеет неправильный адрес. Проверьте, запущен ли сервис.</translation>
+    </message>
+    <message>
+        <location filename="../src/Network/Client.cpp" line="967"/>
+        <source>Server error: </source>
+        <translation>Ошибка сервера: </translation>
+    </message>
+    <message>
+        <location filename="../src/Network/Client.cpp" line="1021"/>
         <source>Can&apos;t create the game. </source>
         <translation>Невозможно создать игру. </translation>
     </message>
     <message>
-        <location filename="../src/Network/Client.cpp" line="1017"/>
+        <location filename="../src/Network/Client.cpp" line="1031"/>
         <source>Invalid message size.</source>
         <translation>Неправильный размер сообщения.</translation>
     </message>
     <message>
-        <location filename="../src/Network/Client.cpp" line="1018"/>
+        <location filename="../src/Network/Client.cpp" line="1032"/>
         <source>Game table already exists.</source>
         <translation>Игровой стол уже существует.</translation>
     </message>
@@ -247,32 +282,32 @@
         <translation type="obsolete">Значение параметра слишком мало или слишком велико.</translation>
     </message>
     <message>
-        <location filename="../src/Network/Client.cpp" line="1020"/>
+        <location filename="../src/Network/Client.cpp" line="1034"/>
         <source>Database error.</source>
         <translation>Ошибка базы данных.</translation>
     </message>
     <message>
-        <location filename="../src/Network/Client.cpp" line="1021"/>
+        <location filename="../src/Network/Client.cpp" line="1035"/>
         <source>Invalid parameter: </source>
         <translation>Неправильный параметр:</translation>
     </message>
     <message>
-        <location filename="../src/Network/Client.cpp" line="1022"/>
+        <location filename="../src/Network/Client.cpp" line="1036"/>
         <source> is too small.</source>
         <translation>: значение слишком мало.</translation>
     </message>
     <message>
-        <location filename="../src/Network/Client.cpp" line="1023"/>
+        <location filename="../src/Network/Client.cpp" line="1037"/>
         <source> is too large.</source>
         <translation>: значение слишком велико.</translation>
     </message>
     <message>
-        <location filename="../src/Network/Client.cpp" line="1024"/>
+        <location filename="../src/Network/Client.cpp" line="1038"/>
         <source>Internal server error.</source>
         <translation>Внутренняя ошибка сервера.</translation>
     </message>
     <message>
-        <location filename="../src/Network/Client.cpp" line="1356"/>
+        <location filename="../src/Network/Client.cpp" line="1370"/>
         <source>Your opponent has rejected the draw</source>
         <translation>Ваш оппонент не согласен на ничью</translation>
     </message>
@@ -309,7 +344,7 @@
         <translation>Невозможно послать сообщение чата игрового стола. ID стола </translation>
     </message>
     <message>
-        <location filename="../src/Network/Client.cpp" line="1010"/>
+        <location filename="../src/Network/Client.cpp" line="1024"/>
         <source>Server returned an invalid game table ID.</source>
         <translation>Сервер вернул неправильный ID игрового стола.</translation>
     </message>
@@ -322,17 +357,17 @@
         <translation type="obsolete">Значение одного из параметров слишком велико.</translation>
     </message>
     <message>
-        <location filename="../src/Network/Client.cpp" line="1019"/>
+        <location filename="../src/Network/Client.cpp" line="1033"/>
         <source>Not enough balance. Replenish your account or decrease your bet.</source>
         <translation>Недостаточно денег на счету. Пополните счет или уменьшите ставку.</translation>
     </message>
     <message>
-        <location filename="../src/Network/Client.cpp" line="1306"/>
+        <location filename="../src/Network/Client.cpp" line="1320"/>
         <source>Can&apos;t join to the game table.</source>
         <translation>Невозможно присоединиться к игровому столу</translation>
     </message>
     <message>
-        <location filename="../src/Network/Client.cpp" line="1323"/>
+        <location filename="../src/Network/Client.cpp" line="1337"/>
         <source>Can&apos;t reject the game.</source>
         <translation>Невозможно отказаться от игры</translation>
     </message>
@@ -347,46 +382,45 @@
         <translation>Ошибка логики</translation>
     </message>
     <message>
-        <location filename="../src/Network/Client.cpp" line="942"/>
+        <location filename="../src/Network/Client.cpp" line="950"/>
         <source>Incorrect user name.</source>
         <translation>Неправильное имя пользователя.</translation>
     </message>
     <message>
-        <location filename="../src/Network/Client.cpp" line="943"/>
+        <location filename="../src/Network/Client.cpp" line="951"/>
         <source>Incorrect password.</source>
         <translation>Неправильный пароль.</translation>
     </message>
     <message>
-        <location filename="../src/Network/Client.cpp" line="944"/>
-        <location filename="../src/Network/Client.cpp" line="974"/>
-        <location filename="../src/Network/Client.cpp" line="1307"/>
-        <location filename="../src/Network/Client.cpp" line="1324"/>
-        <location filename="../src/Network/Client.cpp" line="1358"/>
+        <location filename="../src/Network/Client.cpp" line="952"/>
+        <location filename="../src/Network/Client.cpp" line="988"/>
+        <location filename="../src/Network/Client.cpp" line="1321"/>
+        <location filename="../src/Network/Client.cpp" line="1338"/>
+        <location filename="../src/Network/Client.cpp" line="1372"/>
         <source>Internal server error </source>
         <translation>Внутренняя ошибка сервера </translation>
     </message>
     <message>
-        <location filename="../src/Network/Client.cpp" line="954"/>
         <source>SRV Error: </source>
-        <translation>Ошибка SRV: </translation>
+        <translation type="obsolete">Ошибка SRV: </translation>
     </message>
     <message>
-        <location filename="../src/Network/Client.cpp" line="971"/>
+        <location filename="../src/Network/Client.cpp" line="985"/>
         <source>Incorrect user name</source>
         <translation>Неправильное имя пользователя</translation>
     </message>
     <message>
-        <location filename="../src/Network/Client.cpp" line="972"/>
+        <location filename="../src/Network/Client.cpp" line="986"/>
         <source>Incorrect password</source>
         <translation>Неправильный пароль</translation>
     </message>
     <message>
-        <location filename="../src/Network/Client.cpp" line="973"/>
+        <location filename="../src/Network/Client.cpp" line="987"/>
         <source>User already exists.</source>
         <translation>Такой пользователь уже существует.</translation>
     </message>
     <message>
-        <location filename="../src/Network/Client.cpp" line="984"/>
+        <location filename="../src/Network/Client.cpp" line="998"/>
         <source>REG Error: </source>
         <translation>Ошибка REG: </translation>
     </message>
@@ -395,44 +429,44 @@
         <translation type="obsolete">Неправильный параметр (или такой стол уже существует)</translation>
     </message>
     <message>
-        <location filename="../src/Network/Client.cpp" line="1042"/>
-        <location filename="../src/Network/Client.cpp" line="1085"/>
-        <location filename="../src/Network/Client.cpp" line="1289"/>
+        <location filename="../src/Network/Client.cpp" line="1056"/>
+        <location filename="../src/Network/Client.cpp" line="1099"/>
+        <location filename="../src/Network/Client.cpp" line="1303"/>
         <source>Internal server error</source>
         <translation>Внутренняя ошибка сервера</translation>
     </message>
     <message>
-        <location filename="../src/Network/Client.cpp" line="1171"/>
+        <location filename="../src/Network/Client.cpp" line="1185"/>
         <source>TBM Error: </source>
         <translation>Ошибка TBM: </translation>
     </message>
     <message>
-        <location filename="../src/Network/Client.cpp" line="1357"/>
+        <location filename="../src/Network/Client.cpp" line="1371"/>
         <source>Please wait for your next move to offer a draw</source>
         <translation>Подождите своего хода, а затем предложите ничью</translation>
     </message>
     <message>
-        <location filename="../src/Network/Client.cpp" line="1432"/>
+        <location filename="../src/Network/Client.cpp" line="1446"/>
         <source>CHS Error: </source>
         <translation>Ошибка CHS: </translation>
     </message>
     <message>
-        <location filename="../src/Network/Client.cpp" line="1462"/>
+        <location filename="../src/Network/Client.cpp" line="1476"/>
         <source>CHAT Error: </source>
         <translation>Ошибка CHAT: </translation>
     </message>
     <message>
-        <location filename="../src/Network/Client.cpp" line="1503"/>
+        <location filename="../src/Network/Client.cpp" line="1517"/>
         <source>Connection refused. Please check the server name and port.</source>
         <translation>Нет соединения с сервером. Правильно ли Вы указали адрес сервера и номер порта?</translation>
     </message>
     <message>
-        <location filename="../src/Network/Client.cpp" line="1507"/>
+        <location filename="../src/Network/Client.cpp" line="1521"/>
         <source>Network unreachable. Please check your Internet connection.</source>
         <translation>Сеть недоступна. Проверьте Ваше соединение с сетью Интернет.</translation>
     </message>
     <message>
-        <location filename="../src/Network/Client.cpp" line="1526"/>
+        <location filename="../src/Network/Client.cpp" line="1540"/>
         <source>Server doesn&apos;t respond</source>
         <translation>Сервер не отвечает</translation>
     </message>

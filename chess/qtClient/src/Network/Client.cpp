@@ -934,9 +934,17 @@ void Client::processMessageSRV(const MessageHeader& header, const QByteArray& bu
 {
  //   qDebug() << "Client::processMessageSRV: buffer[0]=" << (int)buffer[0] <<  "  cmd =" << (int)header.cmd;
     // LOGIN
+
+    //SRV UNKNOWN (3); 90 8 0 0 0 2 1 0 0 0 3 131 131 " "
+    struct Reply {
+        unsigned char        err;
+    };
+
+    Reply* reply = (Reply*)buffer.data();
+
     if(header.cmd == LOGIN_STATUS)
     {
-        switch(buffer[0]) {
+        switch(reply->err) {
             case NOERR:          mClientAuthorized = true; emit authorized(); break;
             case ERRUSERONLINE:  emit notAuthorized(tr("The user is already online.")); break;
             case ERRBADLOGIN:    emit notAuthorized(tr("Incorrect user name.")); break;
@@ -946,12 +954,18 @@ void Client::processMessageSRV(const MessageHeader& header, const QByteArray& bu
     }
     else
     {
-        struct Reply {
-            char        err;
-        };
+        // service is obtained as 'cmd'
+        QString err = tr("Server error: service ") + Global::serviceToString((quint32)header.cmd) + " ";
 
-        Reply* reply = (Reply*)buffer.data();
-        emit error(tr("SRV Error: ") + QString::number((int)reply->err));
+        switch(reply->err)
+        {
+            case ERRUNDEF:      emit error(err + tr("is undefined.")); break;
+            case ERRNOACCESSTO: emit error(err + tr("is not accessible. Check if the service is running.")); break;
+            case ERRCOMMAND :   emit error(err + tr("got an invalid command.")); break;
+            case ERRMSG :       emit error(err + tr("got an invalid message.")); break;
+            case ERRNOADDR:     emit error(err + tr("has a wrong address. Check if the service is running.")); break;
+            default: emit error(tr("Server error: ") + QString::number((int)reply->err));
+        }
     }
 }
 
