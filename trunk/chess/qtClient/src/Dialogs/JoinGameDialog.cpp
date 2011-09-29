@@ -134,16 +134,26 @@ void JoinGameDialog::onOkClicked()
     if(tableWidget->currentRow() < 0)
         return;
 
-    GameTable& currentTable = mGameTables[tableWidget->currentRow()];
+
+    GameTable& selectedGameTable = mGameTables[tableWidget->currentRow()];
+
+    // check balance
+    if(selectedGameTable.bet > UI::instance()->getPlayer(PT_ME).balance)
+    {
+        MainWindow::instance()->showMessage(
+             tr("Not enough balance. Replenish your account or select another game."));
+        return;
+    }
+
 
     MainWindow::instance()->setMode(MW_WAIT);
 
     // save name and rating of selected opponent
-    UI::instance()->setPlayerName(PT_OPPONENT, currentTable.host.name);
-    UI::instance()->setPlayerRating(PT_OPPONENT, currentTable.host.rating);
+    UI::instance()->setPlayerName(PT_OPPONENT, selectedGameTable.host.name);
+    UI::instance()->setPlayerRating(PT_OPPONENT, selectedGameTable.host.rating);
 
     connect(Client::instance(), SIGNAL(joined(TABLEID)), this, SLOT(onJoined(TABLEID)));
-    Client::instance()->joinGame( currentTable.id );
+    Client::instance()->joinGame( selectedGameTable.id );
 }
 
 void JoinGameDialog::onJoined(TABLEID id)
