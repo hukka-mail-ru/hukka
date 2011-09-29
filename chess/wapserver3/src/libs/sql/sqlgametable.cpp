@@ -355,4 +355,15 @@ bool SqlGameTable::getPlayerGameTime( uint32_t _nTableID, uint8_t _nPlayerNum, u
 }
 
 
+bool SqlGameTable::getBet( uint32_t _nTableID, uint32_t& bet )
+{
+    TVecChar vecData;
+
+    if( !SelectToStr( "Bet", "TableID", CMyStr( _nTableID ).c_str(), &vecData ) )
+        return false;
+
+    bet = vec2i( &vecData );
+    return true;
+}
+
 

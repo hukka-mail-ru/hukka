@@ -7,6 +7,7 @@
 #include "../tools/structs.h"
 #include "../sql/sqlgametable.h"
 #include "../sql/sqltableusers.h"
+#include "../sql/sqlaccounttable.h"
 #include "../libs/header/defservice.h"
 #include "gamestructs.h"
 #include "../header/defserver.h"
@@ -180,6 +181,12 @@ private:
   //          std::cout << "GameService::newMsg from = " << _pClientMsg->GetTo() << " cmd = CMD_RATING" <<  std::endl;
 
             cmdRating( _pClientMsg->GetTo() );
+        }
+        else if ( cmd == CMD_BALANCE )
+        {
+  //          std::cout << "GameService::newMsg from = " << _pClientMsg->GetTo() << " cmd = CMD_RATING" <<  std::endl;
+
+            cmdBalance( _pClientMsg->GetTo() );
         }
         else if ( cmd == CMD_GET_OPPONENT )
         {
@@ -693,6 +700,7 @@ private:
 	            sCmd0.m_chData = (char) P_WIN;
 	            sCmd1.m_chData = (char) P_LOOSE;
 	            setRating( nPlayer0, nPlayer1 );
+	            setBalance( nPlayer0, nPlayer1, _nTableID );
 	        }
 	        else
 	        {
@@ -701,6 +709,7 @@ private:
 	            sCmd0.m_chData = ( char ) P_LOOSE;
 	            sCmd1.m_chData = ( char ) P_WIN;
 	            setRating( nPlayer1, nPlayer0 );
+	            setBalance( nPlayer1, nPlayer0, _nTableID );
 	        }
 
 	    }
@@ -711,12 +720,14 @@ private:
 	           sCmd0.m_chData = ( char ) P_LOOSE_SURRENDER;
 	           sCmd1.m_chData = ( char ) P_WIN_SURRENDER;
 	           setRating( nPlayer1, nPlayer0 );
+	           setBalance( nPlayer1, nPlayer0, _nTableID );
 	        }
 	        else
 	        {
 	           sCmd0.m_chData = (char) P_WIN_SURRENDER;
 	           sCmd1.m_chData = (char) P_LOOSE_SURRENDER;
 	           setRating( nPlayer0, nPlayer1 );
+	           setBalance( nPlayer0, nPlayer1, _nTableID );
 	        }
 	    }
 	    else if ( _Result == IGameLogic::Draw )
@@ -725,21 +736,25 @@ private:
 
             sCmd0.m_chData = sCmd1.m_chData = ( char ) P_DRAW;
             setRatingDraw( nPlayer1, nPlayer0 );
+            setBalanceDraw( nPlayer1, nPlayer0, _nTableID );
 	    }
         else if ( _Result == IGameLogic::DrawStalemate )
         {
             sCmd0.m_chData = sCmd1.m_chData = ( char ) P_DRAW_STALEMATE;
             setRatingDraw( nPlayer1, nPlayer0 );
+            setBalanceDraw( nPlayer1, nPlayer0, _nTableID );
         }
         else if ( _Result == IGameLogic::DrawTripleOccurrence )
         {
             sCmd0.m_chData = sCmd1.m_chData = ( char ) P_DRAW_TRIPPLE_OCCURRENCE;
             setRatingDraw( nPlayer1, nPlayer0 );
+            setBalanceDraw( nPlayer1, nPlayer0, _nTableID );
         }
         else if ( _Result == IGameLogic::DrawFiftyMoves )
         {
             sCmd0.m_chData = sCmd1.m_chData = ( char ) P_DRAW_FIFTY_MOVES;
             setRatingDraw( nPlayer1, nPlayer0 );
+            setBalanceDraw( nPlayer1, nPlayer0, _nTableID );
         }
 
 	    else if ( _Result == IGameLogic::TimeOut )
@@ -750,6 +765,7 @@ private:
 	            sCmd1.m_chData = ( char ) P_WIN_TIME;
 	 //           GetSqlGameTable()->setState( _nTableID, ST_WIN_0 );
 	            setRating( nPlayer1, nPlayer0 );
+	            setBalance( nPlayer1, nPlayer0, _nTableID );
 	        }
 	        else
 	        {
@@ -757,6 +773,7 @@ private:
 	            sCmd1.m_chData = (char) P_LOOSE_TIME;
 	    //        GetSqlGameTable()->setState( _nTableID, ST_WIN_X );
 	            setRating( nPlayer0, nPlayer1 );
+	            setBalance( nPlayer0, nPlayer1, _nTableID );
 	        }
 	    }
 	    else
@@ -769,6 +786,8 @@ private:
 		// to the Players: ANS_END
 	    sCmd0.rating = m_RatingTable.getRating(nPlayer0);
 	    sCmd1.rating = m_RatingTable.getRating(nPlayer1);
+        sCmd0.balance = m_AccountTable.getBalance(nPlayer0);
+        sCmd1.balance = m_AccountTable.getBalance(nPlayer1);
 
 	    sendMsg( nPlayer0, &sCmd0, sizeof( sCmd0 ) );
 	    sendMsg( nPlayer1, &sCmd1, sizeof( sCmd1 ) );
@@ -827,6 +846,25 @@ private:
 	    m_RatingTable.setLastGameResult(_nPlayer0, P_DRAW);
 	    m_RatingTable.setLastGameResult(_nPlayer1, P_DRAW);
 	}
+
+    void setBalance( uint32_t _nWinnerID, uint32_t _nLooserID, uint32_t _nTableID)
+    {
+        uint32_t bet = 0;
+        GetSqlGameTable()->getBet(_nTableID, bet);
+
+        uint32_t dealerPrize = (int) ( (float)bet / 100.0 * (float)DEALER_PERCENT );
+        uint32_t _nDealerID = CHS; // ChessServer is the Dealer. It has got its own account
+
+        m_AccountTable.addToBalance( _nWinnerID, bet - dealerPrize);
+        m_AccountTable.addToBalance( _nLooserID, -bet );
+        m_AccountTable.addToBalance( _nDealerID, dealerPrize );
+    }
+
+    void setBalanceDraw( uint32_t _nWinnerID, uint32_t _nLooserID, uint32_t _nTableID )
+    {
+        // No change in balance when draw (may be changed later)
+    }
+
 
 	void cmdDraw(uint32_t _nPlayerID, uint32_t _nTableID)
 	{
@@ -1118,6 +1156,16 @@ private:
 	    sendMsg( _nPlayerID, &sCmd, sizeof( sCmd ) );
 	}
 
+   void cmdBalance(uint32_t _nPlayerID)
+    {
+        SNGameMsg sCmd;
+        sCmd.m_chCmd = ANS_BALANCE;
+        sCmd.m_nData = m_AccountTable.getBalance( _nPlayerID );
+
+        sendMsg( _nPlayerID, &sCmd, sizeof( sCmd ) );
+    }
+
+
 	void cmdLastGameResult(uint32_t _nPlayerID )
     {
         SNGameMsg sCmd;
@@ -1138,6 +1186,7 @@ private:
 	CPlayerSelection	*m_pPlayerSelection;
 
 	CSqlRatingTable		m_RatingTable;
+	SqlAccountTable     m_AccountTable;
 
 	MySocket			*m_pSocket;
 

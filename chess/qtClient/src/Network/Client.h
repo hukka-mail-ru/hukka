@@ -90,6 +90,7 @@ public:
       //  void getTime             (TABLEID tableID);
         void timeout             (TABLEID tableID);
         void getMyRating         ();
+        void getMyBalance        ();
         void getOpponent         (TABLEID tableID);
         void getLastGameResult   ();
         void deleteLastGameResult();
@@ -138,6 +139,7 @@ signals:
         void gotGameTime(quint32);
 
         void gotMyRating(quint32);
+        void gotMyBalance(quint32);
         void gotLastGameResult(int);
 
         void invalidMove();

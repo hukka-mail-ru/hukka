@@ -24,6 +24,9 @@
 #include "Pixmaps.h"
 
 
+
+
+
 MainMenu::MainMenu(QObject *parent):
     QGraphicsScene(parent),
     mChat(NULL)
@@ -54,33 +57,28 @@ MainMenu::MainMenu(QObject *parent):
 
     mSplash->setPos(x, y);
 
-    // text (player name)
-    QString player_family = XML::instance().readValue(XML_ITEMS_FILENAME, QList<QString>() << XML_NODE_MAIN_MENU << XML_NODE_PLAYER << XML_NODE_FONT << XML_NODE_FAMILY);
-    int player_size  =      XML::instance().readValue(XML_ITEMS_FILENAME, QList<QString>() << XML_NODE_MAIN_MENU << XML_NODE_PLAYER << XML_NODE_FONT << XML_NODE_SIZE).toInt();
-    QString player_color =  XML::instance().readValue(XML_ITEMS_FILENAME, QList<QString>() << XML_NODE_MAIN_MENU << XML_NODE_PLAYER << XML_NODE_FONT << XML_NODE_COLOR);
-    int player_x =          XML::instance().readValue(XML_ITEMS_FILENAME, QList<QString>() << XML_NODE_MAIN_MENU << XML_NODE_PLAYER << XML_NODE_X).toInt();
-    int player_y =          XML::instance().readValue(XML_ITEMS_FILENAME, QList<QString>() << XML_NODE_MAIN_MENU << XML_NODE_PLAYER << XML_NODE_Y).toInt();
-
-    mPlayerNameText = addText("",QFont(player_family, player_size));
-    mPlayerNameText->setPos(player_x, player_y);
-    mPlayerNameText->setDefaultTextColor( QColor(player_color) );
-    mPlayerNameText->setZValue(Z_TEXT_LAYER);
-
-    // text (rating)
-    QString rating_family = XML::instance().readValue(XML_ITEMS_FILENAME, QList<QString>() << XML_NODE_MAIN_MENU << XML_NODE_RATING << XML_NODE_FONT << XML_NODE_FAMILY);
-    int rating_size =       XML::instance().readValue(XML_ITEMS_FILENAME, QList<QString>() << XML_NODE_MAIN_MENU << XML_NODE_RATING << XML_NODE_FONT << XML_NODE_SIZE).toInt();
-    QString rating_color =  XML::instance().readValue(XML_ITEMS_FILENAME, QList<QString>() << XML_NODE_MAIN_MENU << XML_NODE_RATING << XML_NODE_FONT << XML_NODE_COLOR);
-    int rating_x =          XML::instance().readValue(XML_ITEMS_FILENAME, QList<QString>() << XML_NODE_MAIN_MENU << XML_NODE_RATING << XML_NODE_X).toInt();
-    int rating_y =          XML::instance().readValue(XML_ITEMS_FILENAME, QList<QString>() << XML_NODE_MAIN_MENU << XML_NODE_RATING << XML_NODE_Y).toInt();
-
-    mPlayerRatingText = addText("",QFont(rating_family, rating_size));
-    mPlayerRatingText->setPos(rating_x, rating_y);
-    mPlayerRatingText->setDefaultTextColor( QColor(rating_color) );
-    mPlayerRatingText->setZValue(Z_TEXT_LAYER);
-
+    // text items
+    mPlayerNameText = newTextItem(XML_NODE_PLAYER);
+    mPlayerRatingText = newTextItem(XML_NODE_RATING);
+    mPlayerBalanceText = newTextItem(XML_NODE_BALANCE);
 }
 
 
+QGraphicsTextItem* MainMenu::newTextItem(const QString& xmlNode)
+{
+    QString family = XML::instance().readValue(XML_ITEMS_FILENAME, QList<QString>() << XML_NODE_MAIN_MENU << xmlNode << XML_NODE_FONT << XML_NODE_FAMILY);
+    int size  =      XML::instance().readValue(XML_ITEMS_FILENAME, QList<QString>() << XML_NODE_MAIN_MENU << xmlNode << XML_NODE_FONT << XML_NODE_SIZE).toInt();
+    QString color =  XML::instance().readValue(XML_ITEMS_FILENAME, QList<QString>() << XML_NODE_MAIN_MENU << xmlNode << XML_NODE_FONT << XML_NODE_COLOR);
+    int x =          XML::instance().readValue(XML_ITEMS_FILENAME, QList<QString>() << XML_NODE_MAIN_MENU << xmlNode << XML_NODE_X).toInt();
+    int y =          XML::instance().readValue(XML_ITEMS_FILENAME, QList<QString>() << XML_NODE_MAIN_MENU << xmlNode << XML_NODE_Y).toInt();
+
+    QGraphicsTextItem* item = addText("",QFont(family, size));
+    item->setPos(x, y);
+    item->setDefaultTextColor( QColor(color) );
+    item->setZValue(Z_TEXT_LAYER);
+
+    return item;
+}
 
 Button* MainMenu::newButton(const QPixmap& pixmap, const char* slot,
                             const QString& text, const QString& xmlNodeName)
@@ -228,6 +226,10 @@ void MainMenu::onAuthorized()
 
     connect(Client::instance(), SIGNAL(gotMyRating(quint32)), this, SLOT(onGotMyRating(quint32)));
     Client::instance()->getMyRating();
+
+    connect(Client::instance(), SIGNAL(gotMyBalance(quint32)), this, SLOT(onGotMyBalance(quint32)));
+    Client::instance()->getMyBalance();
+
 }
 
 void MainMenu::onGotMyRating(quint32 myRating)
@@ -241,6 +243,13 @@ void MainMenu::onGotMyRating(quint32 myRating)
                           tr("Rating: ") + QString::number(myRating);
 
     mPlayerRatingText->setPlainText(ratingText);
+}
+
+void MainMenu::onGotMyBalance(quint32 myBalance)
+{
+    UI::instance()->setPlayerBalance(PT_ME, myBalance);
+
+    mPlayerBalanceText->setPlainText(tr("Balance: ") + QString::number(myBalance));
 }
 
 void MainMenu::onGotMyGameTable(TABLEID tableID, bool isOwner)

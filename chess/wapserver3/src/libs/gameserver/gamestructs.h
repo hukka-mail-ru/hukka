@@ -31,6 +31,7 @@ struct AnsOpponentMessage
 struct AnsEndMessage: public SGameMsg
 {
     uint32_t rating;
+    uint32_t balance;
 };
 
 #pragma pack()

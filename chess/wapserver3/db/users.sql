@@ -23,3 +23,35 @@ INSERT INTO wsUsers (GUID,User,Password) VALUES (101,'test1','test');
 INSERT INTO wsUsers (GUID,User,Password) VALUES (102,'robot','test');
 
 SELECT * FROM wsUsers;
+
+
+
+DROP TABLE IF EXISTS tbAccount;
+CREATE TABLE tbAccount
+(
+  PlayerID INT UNSIGNED NOT NULL DEFAULT '0',
+  Balance INT UNSIGNED NOT NULL DEFAULT '0',
+  PRIMARY KEY(PlayerID)
+);
+
+INSERT INTO tbAccount (PlayerID, Balance) VALUES (6, 0);
+INSERT INTO tbAccount (PlayerID, Balance) VALUES (100, 500);
+INSERT INTO tbAccount (PlayerID, Balance) VALUES (101, 700);
+
+SELECT * FROM tbAccount;
+
+
+
+
+delimiter //
+DROP PROCEDURE IF EXISTS AddToBalance;
+CREATE PROCEDURE AddToBalance (IN player INT, IN val INT)
+sproc:BEGIN
+
+DECLARE curBalance INT;
+
+select Balance into curBalance from tbAccount where PlayerID = player;
+
+update tbAccount set Balance=curBalance+val where PlayerID=player;
+
+END;

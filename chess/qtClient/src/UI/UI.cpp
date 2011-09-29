@@ -143,6 +143,7 @@ void UI::setPlayerRating(PlayerType type, unsigned rating)
         default: break;
     }
 }
+
 void UI::setPlayerColor(PlayerType type, PlayerColor color)
 {
     switch(type)
@@ -153,6 +154,15 @@ void UI::setPlayerColor(PlayerType type, PlayerColor color)
     }
 }
 
+void UI::setPlayerBalance(PlayerType type, unsigned balance)
+{
+    switch(type)
+    {
+        case PT_ME:       mMe.balance = balance; break;
+        case PT_OPPONENT: mOpponent.balance = balance; break;
+        default: break;
+    }
+}
 
 
 

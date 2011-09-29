@@ -22,10 +22,14 @@ WaitJoinDialog::WaitJoinDialog(QWidget *parent):
     this->setLayout(layout);
 
     connect(Client::instance(), SIGNAL(opponentJoined(const Player&)), this, SLOT(onOpponentJoined(const Player&)));
+    qDebug() << "connect 'opponentJoined' to WaitJoinDialog::onOpponentJoined (constructor)";
 }
 
 void WaitJoinDialog::onExitClicked()
 {
+    disconnect(Client::instance(), SIGNAL(opponentJoined(const Player&)), this, SLOT(onOpponentJoined(const Player&)));
+    qDebug() << "disconnect 'opponentJoined' to WaitJoinDialog::onOpponentJoined (onExitClicked)";
+
     MainWindow::instance()->setMode(MW_WAIT);
     connect(Client::instance(), SIGNAL(gameTableDeleted()), this, SLOT(onGameTableDeleted()));
     Client::instance()->deleteGameTable(LOGIC_ID_CHESS, UI::instance()->getGameTable());
@@ -33,6 +37,9 @@ void WaitJoinDialog::onExitClicked()
 
 void  WaitJoinDialog::onGameTableDeleted()
 {
+    disconnect(Client::instance(), SIGNAL(opponentJoined(const Player&)), this, SLOT(onOpponentJoined(const Player&)));
+    qDebug() << "disconnect 'opponentJoined' to WaitJoinDialog::onOpponentJoined (onGameTableDeleted)";
+
     MainWindow::instance()->showMainMenu();
 }
 
@@ -53,6 +60,7 @@ void WaitJoinDialog::onOpponentJoined(const Player& opponent)
     }*/
 
     disconnect(Client::instance(), SIGNAL(opponentJoined(const Player&)), this, SLOT(onOpponentJoined(const Player&)));
+    qDebug() << "disconnect 'opponentJoined' to WaitJoinDialog::onOpponentJoined ";
 
 
     int tableID = UI::instance()->getGameTable();
@@ -81,6 +89,8 @@ void WaitJoinDialog::onGameStarted()
 {
     mJoined = false;
     disconnect(Client::instance(), SIGNAL(gameStarted()), this, SLOT(onGameStarted()));
+    disconnect(Client::instance(), SIGNAL(opponentJoined(const Player&)), this, SLOT(onOpponentJoined(const Player&)));
+    qDebug() << "disconnect 'opponentJoined' to WaitJoinDialog::onOpponentJoined (onGameStarted)";
 
     MainWindow::instance()->setMode(MW_WAIT);
     UI::instance()->setPlayerColor(PT_ME, PC_WHITE);
@@ -92,4 +102,5 @@ void WaitJoinDialog::onGameRejected()
     mJoined = false;
     disconnect(Client::instance(), SIGNAL(gameRejected()), this, SLOT(onGameRejected()));
     connect(Client::instance(), SIGNAL(opponentJoined(const Player&)), this, SLOT(onOpponentJoined(const Player&)));
+    qDebug() << "connect 'opponentJoined' to WaitJoinDialog::onOpponentJoined (onGameRejected)";
 }

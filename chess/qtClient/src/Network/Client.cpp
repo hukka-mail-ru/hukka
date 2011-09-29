@@ -641,6 +641,23 @@ void Client::getMyRating()
     }
 }
 
+void Client::getMyBalance()
+{
+    QT_TRACEOUT;
+
+    try {
+        assert(mClientAuthorized);
+
+        // send command
+        QByteArray data;
+        sendCmd(CHS, CMD_BALANCE, data);
+    }
+    catch (Exception& e) {
+        e.add(tr("Can't get my balance ") + tr(" on server: ") + mSocket.peerName() + ". ");
+        emit error (e.what());
+    }
+}
+
 void Client::getLastGameResult()
 {
     QT_TRACEOUT;
@@ -1345,11 +1362,13 @@ void Client::processMessageCHS(const MessageHeader& header, const QByteArray& bu
             TABLEID     tableID;
             char        status;
             quint32     rating;
+            quint32     balance;
         };
 
         Reply* reply = (Reply*)buffer.data();
 
         emit gotMyRating(reply->rating);
+        emit gotMyBalance(reply->balance);
         emit gameOver(reply->status, reply->rating);
     }
 
@@ -1409,6 +1428,18 @@ void Client::processMessageCHS(const MessageHeader& header, const QByteArray& bu
         Reply* reply = (Reply*)buffer.data();
 
         emit gotMyRating(reply->rating);
+       // qDebug() << "time2game: " << reply->time2game;
+    }
+    else if(header.cmd == ANS_BALANCE)
+    {
+        struct Reply {
+            TABLEID     tableID;
+            qint32      balance;
+        };
+
+        Reply* reply = (Reply*)buffer.data();
+
+        emit gotMyBalance(reply->balance);
        // qDebug() << "time2game: " << reply->time2game;
     }
     else if(header.cmd == ANS_LAST_GAME_RESULT)

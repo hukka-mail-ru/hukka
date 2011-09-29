@@ -47,6 +47,7 @@ public:
     void setPlayerName(PlayerType type, const QString& name);
     void setPlayerRating(PlayerType type, unsigned rating);
     void setPlayerColor(PlayerType type, PlayerColor color);
+    void setPlayerBalance(PlayerType type, unsigned balance);
 
  //   bool isOwner() { return mIsOwner; }
  //   void setOwner(bool isOwner) { mIsOwner = isOwner; }
