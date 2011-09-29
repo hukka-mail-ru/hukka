@@ -520,27 +520,27 @@
         <translation>Выход</translation>
     </message>
     <message>
-        <location filename="../src/Dialogs/CreateGameDialog.cpp" line="78"/>
+        <location filename="../src/Dialogs/CreateGameDialog.cpp" line="80"/>
         <source>bet</source>
         <translation>ставка</translation>
     </message>
     <message>
-        <location filename="../src/Dialogs/CreateGameDialog.cpp" line="83"/>
+        <location filename="../src/Dialogs/CreateGameDialog.cpp" line="85"/>
         <source>move time</source>
         <translation>время хода</translation>
     </message>
     <message>
-        <location filename="../src/Dialogs/CreateGameDialog.cpp" line="89"/>
+        <location filename="../src/Dialogs/CreateGameDialog.cpp" line="91"/>
         <source>game time</source>
         <translation>время игры</translation>
     </message>
     <message>
-        <location filename="../src/Dialogs/CreateGameDialog.cpp" line="96"/>
+        <location filename="../src/Dialogs/CreateGameDialog.cpp" line="98"/>
         <source>max. rating</source>
         <translation>макс. рейтинг</translation>
     </message>
     <message>
-        <location filename="../src/Dialogs/CreateGameDialog.cpp" line="101"/>
+        <location filename="../src/Dialogs/CreateGameDialog.cpp" line="103"/>
         <source>min. rating</source>
         <translation>мин. рейтинг</translation>
     </message>

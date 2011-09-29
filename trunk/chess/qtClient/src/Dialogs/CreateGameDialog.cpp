@@ -61,11 +61,13 @@ CreateGameDialog::CreateGameDialog(QWidget *parent): MyDialog(parent)
 bool checkInt(const QString& parameter, quint32& value, const QString& description)
 {
     bool ok;
-    if(value = parameter.toInt(&ok) < 0 || !ok)
+    if(parameter.toInt(&ok) < 0 || !ok)
     {
         MainWindow::instance()->showMessage(QObject::tr("Invalid value: ") + description);
         return false;
     }
+
+    value = parameter.toInt();
     return true;
 }
 
