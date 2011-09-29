@@ -58,27 +58,48 @@ CreateGameDialog::CreateGameDialog(QWidget *parent): MyDialog(parent)
     setLayout(layout);
 }
 
+bool checkInt(const QString& parameter, quint32& value, const QString& description)
+{
+    bool ok;
+    if(value = parameter.toInt(&ok) < 0 || !ok)
+    {
+        MainWindow::instance()->showMessage(QObject::tr("Invalid value: ") + description);
+        return false;
+    }
+    return true;
+}
+
+
 void CreateGameDialog::onOkClicked()
 {
+
     Param bet;
     bet.id = PARAMETER_ID_BET;
-    bet.value = betEdit->text().toInt();
+    if(!checkInt(betEdit->text(), bet.value, tr("bet")))
+        return;
 
     Param moveTime;
     moveTime.id = PARAMETER_ID_MOVETIME;
-    moveTime.value = moveTimeEdit->text().toInt() * SECONDS_IN_MINUTE;
+    if(!checkInt(moveTimeEdit->text(), moveTime.value, tr("move time")))
+        return;
+    moveTime.value *= SECONDS_IN_MINUTE;
 
     Param gameTime;
     gameTime.id = PARAMETER_ID_GAMETIME;
-    gameTime.value = gameTimeEdit->text().toInt() * SECONDS_IN_MINUTE;
+    if(!checkInt(gameTimeEdit->text(), gameTime.value, tr("game time")))
+        return;
+    gameTime.value *= SECONDS_IN_MINUTE;
+
 
     Param maxRating;
     maxRating.id = PARAMETER_ID_MAXRATING;
-    maxRating.value = maxRatingEdit->text().toInt();
+    if(!checkInt(maxRatingEdit->text(), maxRating.value, tr("max. rating")))
+        return;
 
     Param minRating;
     minRating.id = PARAMETER_ID_MINRATING;
-    minRating.value = minRatingEdit->text().toInt();
+    if(!checkInt(minRatingEdit->text(), minRating.value, tr("min. rating")))
+        return;
 
     QList<Param> params;
     params << bet << moveTime << gameTime << maxRating << minRating;
