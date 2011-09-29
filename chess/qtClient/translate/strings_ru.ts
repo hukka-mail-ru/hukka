@@ -519,6 +519,31 @@
         <source>Exit</source>
         <translation>Выход</translation>
     </message>
+    <message>
+        <location filename="../src/Dialogs/CreateGameDialog.cpp" line="78"/>
+        <source>bet</source>
+        <translation>ставка</translation>
+    </message>
+    <message>
+        <location filename="../src/Dialogs/CreateGameDialog.cpp" line="83"/>
+        <source>move time</source>
+        <translation>время хода</translation>
+    </message>
+    <message>
+        <location filename="../src/Dialogs/CreateGameDialog.cpp" line="89"/>
+        <source>game time</source>
+        <translation>время игры</translation>
+    </message>
+    <message>
+        <location filename="../src/Dialogs/CreateGameDialog.cpp" line="96"/>
+        <source>max. rating</source>
+        <translation>макс. рейтинг</translation>
+    </message>
+    <message>
+        <location filename="../src/Dialogs/CreateGameDialog.cpp" line="101"/>
+        <source>min. rating</source>
+        <translation>мин. рейтинг</translation>
+    </message>
 </context>
 <context>
     <name>FindGameDialog</name>
@@ -780,6 +805,11 @@
 </context>
 <context>
     <name>QObject</name>
+    <message>
+        <location filename="../src/Dialogs/CreateGameDialog.cpp" line="66"/>
+        <source>Invalid value: </source>
+        <translation>Неправильное значение: </translation>
+    </message>
     <message>
         <location filename="../src/Base/MoveBox.cpp" line="64"/>
         <source>Your move!</source>
