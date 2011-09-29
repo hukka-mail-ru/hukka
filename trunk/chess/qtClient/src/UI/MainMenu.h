@@ -28,6 +28,8 @@ private:
     Button* newButton(const QPixmap& pixmap, const char* slot,
                       const QString& text, const QString& xmlNodeName);
 
+    QGraphicsTextItem* newTextItem(const QString& xmlNode);
+
     Button* createGameButton;
     Button* findGameButton;
     Button* chatButton;
@@ -42,6 +44,7 @@ private:
 
     QGraphicsTextItem* mPlayerNameText;
     QGraphicsTextItem* mPlayerRatingText;
+    QGraphicsTextItem* mPlayerBalanceText;
 
 private slots:
 
@@ -57,6 +60,7 @@ private slots:
     void onExitClicked();
     void onGotMyGameTable(TABLEID id, bool isOwner);
     void onGotMyRating(quint32 myRating);
+    void onGotMyBalance(quint32 myBalance);
     void onGotOpponent(const Player& opponent);
     void onGotLastGameResult(int result);
 

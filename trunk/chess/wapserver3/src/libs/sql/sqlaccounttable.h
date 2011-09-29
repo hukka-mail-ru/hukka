@@ -16,6 +16,8 @@ public:
     virtual ~SqlAccountTable();
 
     uint32_t  getBalance( uint32_t playerID );
+
+    void addToBalance( uint32_t playerID, uint32_t value );
 };
 
 #endif /* SQLACCOUNTTABLE_H_ */

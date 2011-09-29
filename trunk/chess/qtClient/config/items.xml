@@ -22,9 +22,13 @@
         <x value="320" />  <y value="125" />  
     </player>
     <rating>
-        <font> <family value="Helvetica [Cronyx]" />  <size value="11" />  <color value="white" /></font>
+        <font> <family value="Helvetica [Cronyx]" />  <size value="10" />  <color value="white" /></font>
         <x value="320" />  <y value="160" />  
     </rating>
+    <balance>
+        <font> <family value="Helvetica [Cronyx]" />  <size value="10" />  <color value="white" /></font>
+        <x value="320" />  <y value="180" />  
+    </balance>
   </MainMenu>
   
   <Dialogs>

@@ -157,6 +157,7 @@ struct Player
 
     QString     name;
     unsigned    rating;
+    unsigned    balance;
     PlayerColor color;
     bool        isAuthorized;
 };

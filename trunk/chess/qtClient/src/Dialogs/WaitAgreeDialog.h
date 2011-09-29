@@ -22,7 +22,7 @@ private slots:
     void onExitClicked();
     void onGameStarted();
     void onGameRejected();
-    void onGameOver(const QString& message, int status, int rating);
+    void onGameOver(int status, int rating);
 
 };
 

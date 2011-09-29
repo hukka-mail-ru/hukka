@@ -71,7 +71,7 @@ public:
 
     bool getPlayerGameTime( uint32_t _nTableID, uint8_t _nPlayerNum, uint32_t &_nGameTime );
 
-
+    bool getBet( uint32_t _nTableID, uint32_t& bet);
 };
 
 #endif

@@ -33,3 +33,15 @@ uint32_t SqlAccountTable::getBalance( uint32_t playerID )
 
     return  vec2i( &v );
 }
+
+
+void SqlAccountTable::addToBalance( uint32_t playerID, uint32_t value )
+{
+    TVecMyStr parameters;
+    CMyStr playerID_str = CMyStr( playerID );
+    CMyStr value_str = CMyStr( value );
+    parameters.push_back(&playerID_str);
+    parameters.push_back(&value_str);
+
+    Call("AddToBalance", parameters);
+}

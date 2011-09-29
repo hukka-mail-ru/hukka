@@ -79,6 +79,7 @@
 #define XML_NODE_ME          "me"
 #define XML_NODE_OPPONENT    "opponent"
 #define XML_NODE_RATING      "rating"
+#define XML_NODE_BALANCE     "balance"
 
 #define XML_NODE_TIMER       "timer"
 
