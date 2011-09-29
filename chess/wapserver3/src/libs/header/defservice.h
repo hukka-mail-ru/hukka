@@ -5,7 +5,8 @@
 #include <string>
 
 const int       INVALID_TIME = 0xFFFFFFFF;
-const int       DEALER_PERCENT = 10;
+const int       DEALER_PERCENT = 10; // PERCENT
+const int       MIN_DEALER_PRIZE = 1; // RUR
 
 const int		ST_CREATION	= 0;
 const int		ST_OPEN		= 1;

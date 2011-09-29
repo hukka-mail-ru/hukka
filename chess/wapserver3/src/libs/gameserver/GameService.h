@@ -853,6 +853,10 @@ private:
         GetSqlGameTable()->getBet(_nTableID, bet);
 
         uint32_t dealerPrize = (int) ( (float)bet / 100.0 * (float)DEALER_PERCENT );
+
+        if(dealerPrize < MIN_DEALER_PRIZE)
+            dealerPrize = MIN_DEALER_PRIZE;
+
         uint32_t _nDealerID = CHS; // ChessServer is the Dealer. It has got its own account
 
         m_AccountTable.addToBalance( _nWinnerID, bet - dealerPrize);
