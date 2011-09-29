@@ -212,7 +212,7 @@
     <message>
         <location filename="../src/Network/Client.cpp" line="656"/>
         <source>Can&apos;t get my balance </source>
-        <translation type="unfinished"></translation>
+        <translation>Невозможно получить баланс счета.</translation>
     </message>
     <message>
         <location filename="../src/Network/Client.cpp" line="673"/>
@@ -642,6 +642,11 @@
         <source>N/A</source>
         <translation>НЕТ</translation>
     </message>
+    <message>
+        <location filename="../src/Dialogs/JoinGameDialog.cpp" line="144"/>
+        <source>Not enough balance. Replenish your account or select another game.</source>
+        <translation>Недостаточно денег на счету чтобы принять ставку. Пополните счет или выберите другую игру.</translation>
+    </message>
 </context>
 <context>
     <name>MainMenu</name>
@@ -678,7 +683,7 @@
     <message>
         <location filename="../src/UI/MainMenu.cpp" line="252"/>
         <source>Balance: </source>
-        <translation type="unfinished"></translation>
+        <translation>Баланс (руб.): </translation>
     </message>
     <message>
         <location filename="../src/UI/MainMenu.cpp" line="283"/>
