@@ -4,13 +4,17 @@
 #include "UI.h"
 
 
-WaitJoinDialog::WaitJoinDialog(QWidget *parent):
+WaitJoinDialog::WaitJoinDialog(const GameTable& gameTable, QWidget *parent):
     MyDialog(parent),
     mJoined(false)
 {
     qDebug() << "WaitJoinDialog::WaitJoinDialog";
 
-    label = new QLabel(tr("Please wait until an opponent joins your game..."), this);
+    label = new QLabel(tr("You have created the game:") + "\n\n" +
+                       tr("Bet: ") + QString::number(gameTable.bet) + "\n" +
+                       tr("Move time: ") + QString::number(gameTable.time2step) + "\n" +
+                       tr("Game time: ") + QString::number(gameTable.time2game) + "\n\n" +
+                       tr("Please wait until an opponent joins your game..."), this);
     label->setWordWrap(true);
 
     exitButton = new QPushButton(tr("Exit"), this);
