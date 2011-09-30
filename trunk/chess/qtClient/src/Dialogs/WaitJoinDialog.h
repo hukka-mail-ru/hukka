@@ -12,7 +12,7 @@ class WaitJoinDialog: public MyDialog
 {
 Q_OBJECT
 public:
-    WaitJoinDialog(QWidget *parent = 0);
+    WaitJoinDialog(const GameTable& gameTable, QWidget *parent = 0);
 
 private:
     QPushButton* exitButton;

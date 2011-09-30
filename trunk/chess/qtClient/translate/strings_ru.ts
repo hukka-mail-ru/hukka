@@ -1063,31 +1063,51 @@ Please visit www.site.com to learn how to enable it.</source>
     <name>WaitJoinDialog</name>
     <message>
         <location filename="../src/Dialogs/WaitJoinDialog.cpp" line="13"/>
-        <source>Please wait until an opponent joins your game...</source>
-        <translation>Пожалуйста подождите, пока противник присоединится к игре...</translation>
+        <source>You have created the game:</source>
+        <translation>Вы создали игру:</translation>
+    </message>
+    <message>
+        <location filename="../src/Dialogs/WaitJoinDialog.cpp" line="14"/>
+        <source>Bet: </source>
+        <translation>Ставка: </translation>
+    </message>
+    <message>
+        <location filename="../src/Dialogs/WaitJoinDialog.cpp" line="15"/>
+        <source>Move time: </source>
+        <translation>Время хода: </translation>
     </message>
     <message>
         <location filename="../src/Dialogs/WaitJoinDialog.cpp" line="16"/>
+        <source>Game time: </source>
+        <translation>Время игры: </translation>
+    </message>
+    <message>
+        <location filename="../src/Dialogs/WaitJoinDialog.cpp" line="17"/>
+        <source>Please wait until an opponent joins your game...</source>
+        <translation>Пожалуйста подождите, пока противник присоединится к вашей игре...</translation>
+    </message>
+    <message>
+        <location filename="../src/Dialogs/WaitJoinDialog.cpp" line="20"/>
         <source>Exit</source>
         <translation>Выход</translation>
     </message>
     <message>
-        <location filename="../src/Dialogs/WaitJoinDialog.cpp" line="72"/>
+        <location filename="../src/Dialogs/WaitJoinDialog.cpp" line="76"/>
         <source>not available</source>
         <translation>не включен</translation>
     </message>
     <message>
-        <location filename="../src/Dialogs/WaitJoinDialog.cpp" line="73"/>
+        <location filename="../src/Dialogs/WaitJoinDialog.cpp" line="77"/>
         <source>wants to play chess with you</source>
         <translation>желает сыграть с вами</translation>
     </message>
     <message>
-        <location filename="../src/Dialogs/WaitJoinDialog.cpp" line="74"/>
+        <location filename="../src/Dialogs/WaitJoinDialog.cpp" line="78"/>
         <source>opponent rating</source>
         <translation>Рейтинг противника</translation>
     </message>
     <message>
-        <location filename="../src/Dialogs/WaitJoinDialog.cpp" line="75"/>
+        <location filename="../src/Dialogs/WaitJoinDialog.cpp" line="79"/>
         <source>Start the game?</source>
         <translation>Начать игру?</translation>
     </message>

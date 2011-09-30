@@ -45,12 +45,15 @@ private:
     QHBoxLayout* lowerLayout;
     QVBoxLayout* layout;
 
+    GameTable mGameTable; // the created game
+
 private slots:
 
     void onOkClicked();
     void onExitClicked();
 
     void onGameTableCreated(TABLEID id);
+
 };
 
 #endif /* CREATEGAMEDIALOG_H_ */

@@ -112,6 +112,10 @@ void CreateGameDialog::onOkClicked()
     if(!checkInt(minRatingEdit->text(), minRating.value, tr("min. rating")))
         return;
 
+    mGameTable.bet = bet.value;
+    mGameTable.time2step = moveTime.value;
+    mGameTable.time2game = gameTime.value;
+
     QList<Param> params;
     params << bet << moveTime << gameTime << maxRating << minRating;
 
@@ -136,5 +140,5 @@ void CreateGameDialog::onGameTableCreated(TABLEID id)
     disconnect(Client::instance(), SIGNAL(gameTableCreated(TABLEID)), this, SLOT(onGameTableCreated(TABLEID)));
 
     UI::instance()->setGameTable(id);
-    MainWindow::instance()->showWaitJoinDialog();
+    MainWindow::instance()->showWaitJoinDialog(mGameTable);
 }

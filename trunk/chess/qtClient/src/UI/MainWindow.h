@@ -61,7 +61,7 @@ public:
     void updateGameScene();
 
     // TODO create 1 method instead 4
-    void showWaitJoinDialog();
+    void showWaitJoinDialog(const GameTable& gameTable);
     void showWaitAgreeDialog();
     void showWaitDrawDialog();
 

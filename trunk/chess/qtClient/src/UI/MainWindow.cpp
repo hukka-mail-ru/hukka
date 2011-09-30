@@ -212,9 +212,9 @@ void MainWindow::showWaitDrawDialog()
     setMode(MW_NORMAL);
 }
 
-void MainWindow::showWaitJoinDialog()
+void MainWindow::showWaitJoinDialog(const GameTable& gameTable)
 {
-    setCurrentDialog(new WaitJoinDialog(this));
+    setCurrentDialog(new WaitJoinDialog(gameTable, this));
     setMode(MW_NORMAL);
 }
 
