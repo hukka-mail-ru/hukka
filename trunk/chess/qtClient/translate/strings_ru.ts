@@ -52,6 +52,34 @@
         <source>Server doesn&apos;t respond</source>
         <translation type="obsolete">Сервер не отвечает</translation>
     </message>
+    <message>
+        <source>bet</source>
+        <translation type="obsolete">ставка</translation>
+    </message>
+    <message>
+        <source>Bet is too high! Maximal bet is </source>
+        <translation type="obsolete">Ставка слишком высока. Максимальная ставка </translation>
+    </message>
+    <message>
+        <source> RUR</source>
+        <translation type="obsolete"> руб.</translation>
+    </message>
+    <message>
+        <source>move time</source>
+        <translation type="obsolete">время хода</translation>
+    </message>
+    <message>
+        <source>game time</source>
+        <translation type="obsolete">время игры</translation>
+    </message>
+    <message>
+        <source>max. rating</source>
+        <translation type="obsolete">макс. рейтинг</translation>
+    </message>
+    <message>
+        <source>min. rating</source>
+        <translation type="obsolete">мин. рейтинг</translation>
+    </message>
 </context>
 <context>
     <name>AuthorizationDialog</name>
@@ -485,72 +513,81 @@
         <translation>Создать игру</translation>
     </message>
     <message>
-        <location filename="../src/Dialogs/CreateGameDialog.cpp" line="11"/>
         <source>Bet (RUR)</source>
-        <translation>Ставка (руб.)</translation>
+        <translation type="obsolete">Ставка (руб.)</translation>
     </message>
     <message>
         <location filename="../src/Dialogs/CreateGameDialog.cpp" line="12"/>
+        <source>Bet (no more than </source>
+        <translation>Ставка (не более </translation>
+    </message>
+    <message>
+        <location filename="../src/Dialogs/CreateGameDialog.cpp" line="12"/>
+        <source> RUR)</source>
+        <translation> руб.)</translation>
+    </message>
+    <message>
+        <location filename="../src/Dialogs/CreateGameDialog.cpp" line="13"/>
         <source>Move time (min)</source>
         <translation>Время хода (в минутах)</translation>
     </message>
     <message>
-        <location filename="../src/Dialogs/CreateGameDialog.cpp" line="13"/>
+        <location filename="../src/Dialogs/CreateGameDialog.cpp" line="14"/>
         <source>Game time (min)</source>
         <translation>Время игры (в минутах)</translation>
     </message>
     <message>
-        <location filename="../src/Dialogs/CreateGameDialog.cpp" line="14"/>
+        <location filename="../src/Dialogs/CreateGameDialog.cpp" line="15"/>
         <source>Min opponent rating</source>
         <translation>Минимальный рейтинг противника</translation>
     </message>
     <message>
-        <location filename="../src/Dialogs/CreateGameDialog.cpp" line="15"/>
+        <location filename="../src/Dialogs/CreateGameDialog.cpp" line="16"/>
         <source>Max opponent rating</source>
         <translation>Максимальный рейтинг противника</translation>
     </message>
     <message>
-        <location filename="../src/Dialogs/CreateGameDialog.cpp" line="23"/>
+        <location filename="../src/Dialogs/CreateGameDialog.cpp" line="24"/>
         <source>OK</source>
         <translation>ОК</translation>
     </message>
     <message>
-        <location filename="../src/Dialogs/CreateGameDialog.cpp" line="24"/>
+        <location filename="../src/Dialogs/CreateGameDialog.cpp" line="25"/>
         <source>Exit</source>
         <translation>Выход</translation>
     </message>
     <message>
-        <location filename="../src/Dialogs/CreateGameDialog.cpp" line="80"/>
+        <location filename="../src/Dialogs/CreateGameDialog.cpp" line="81"/>
         <source>bet</source>
         <translation>ставка</translation>
     </message>
     <message>
-        <location filename="../src/Dialogs/CreateGameDialog.cpp" line="86"/>
+        <location filename="../src/Dialogs/CreateGameDialog.cpp" line="87"/>
         <source>Bet is too high! Maximal bet is </source>
         <translation>Ставка слишком высока. Максимальная ставка </translation>
     </message>
     <message>
-        <location filename="../src/Dialogs/CreateGameDialog.cpp" line="87"/>
+        <location filename="../src/Dialogs/CreateGameDialog.cpp" line="88"/>
         <source> RUR</source>
         <translation> руб.</translation>
     </message>
     <message>
-        <location filename="../src/Dialogs/CreateGameDialog.cpp" line="93"/>
+        <location filename="../src/Dialogs/CreateGameDialog.cpp" line="94"/>
         <source>move time</source>
         <translation>время хода</translation>
     </message>
     <message>
-        <location filename="../src/Dialogs/CreateGameDialog.cpp" line="99"/>
+        <location filename="../src/Dialogs/CreateGameDialog.cpp" line="100"/>
         <source>game time</source>
         <translation>время игры</translation>
     </message>
     <message>
-        <location filename="../src/Dialogs/CreateGameDialog.cpp" line="106"/>
+        <location filename="../src/Dialogs/CreateGameDialog.cpp" line="107"/>
         <source>max. rating</source>
         <translation>макс. рейтинг</translation>
     </message>
     <message>
-        <location filename="../src/Dialogs/CreateGameDialog.cpp" line="111"/>
+        <location filename="../src/Dialogs/CreateGameDialog.cpp" line="112"/>
         <source>min. rating</source>
         <translation>мин. рейтинг</translation>
     </message>
@@ -816,7 +853,7 @@
 <context>
     <name>QObject</name>
     <message>
-        <location filename="../src/Dialogs/CreateGameDialog.cpp" line="66"/>
+        <location filename="../src/Dialogs/CreateGameDialog.cpp" line="67"/>
         <source>Invalid value: </source>
         <translation>Неправильное значение: </translation>
     </message>

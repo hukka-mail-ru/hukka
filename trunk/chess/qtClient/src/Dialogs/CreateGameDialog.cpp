@@ -8,7 +8,8 @@ CreateGameDialog::CreateGameDialog(QWidget *parent): MyDialog(parent)
 {
     setWindowTitle(tr("Create Game"));
 
-    betLabel = new QLabel(tr("Bet (RUR)"), this);
+    unsigned balance = UI::instance()->getPlayer(PT_ME).balance;
+    betLabel = new QLabel(tr("Bet (no more than ") + QString::number(balance) + tr(" RUR)"), this);
     moveTimeLabel = new QLabel(tr("Move time (min)"), this);
     gameTimeLabel = new QLabel(tr("Game time (min)"), this);
     minRatingLabel = new QLabel(tr("Min opponent rating"), this);
