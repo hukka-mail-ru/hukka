@@ -802,42 +802,52 @@
         <translation>Настройки</translation>
     </message>
     <message>
-        <location filename="../src/Dialogs/OptionsDialog.cpp" line="25"/>
+        <location filename="../src/Dialogs/OptionsDialog.cpp" line="27"/>
+        <source>Login</source>
+        <translation type="unfinished">Логин</translation>
+    </message>
+    <message>
+        <location filename="../src/Dialogs/OptionsDialog.cpp" line="28"/>
+        <source>Password</source>
+        <translation type="unfinished">Пароль</translation>
+    </message>
+    <message>
+        <location filename="../src/Dialogs/OptionsDialog.cpp" line="29"/>
         <source>Server</source>
         <translation>Сервер</translation>
     </message>
     <message>
-        <location filename="../src/Dialogs/OptionsDialog.cpp" line="26"/>
+        <location filename="../src/Dialogs/OptionsDialog.cpp" line="30"/>
         <source>Port</source>
         <translation>Порт</translation>
     </message>
     <message>
-        <location filename="../src/Dialogs/OptionsDialog.cpp" line="27"/>
+        <location filename="../src/Dialogs/OptionsDialog.cpp" line="31"/>
         <source>Language</source>
         <translation>Язык</translation>
     </message>
     <message>
-        <location filename="../src/Dialogs/OptionsDialog.cpp" line="33"/>
+        <location filename="../src/Dialogs/OptionsDialog.cpp" line="40"/>
         <source>English</source>
         <translation>Английский</translation>
     </message>
     <message>
-        <location filename="../src/Dialogs/OptionsDialog.cpp" line="34"/>
+        <location filename="../src/Dialogs/OptionsDialog.cpp" line="41"/>
         <source>Russian</source>
         <translation>Русский</translation>
     </message>
     <message>
-        <location filename="../src/Dialogs/OptionsDialog.cpp" line="50"/>
+        <location filename="../src/Dialogs/OptionsDialog.cpp" line="61"/>
         <source>OK</source>
         <translation>ОК</translation>
     </message>
     <message>
-        <location filename="../src/Dialogs/OptionsDialog.cpp" line="51"/>
+        <location filename="../src/Dialogs/OptionsDialog.cpp" line="62"/>
         <source>Cancel</source>
         <translation>Отмена</translation>
     </message>
     <message>
-        <location filename="../src/Dialogs/OptionsDialog.cpp" line="79"/>
+        <location filename="../src/Dialogs/OptionsDialog.cpp" line="93"/>
         <source>Please restart the game to apply the settings</source>
         <translation>Пожалуйста перезапустите игру, чтобы настройки вступили в силу</translation>
     </message>
