@@ -80,6 +80,14 @@ void CreateGameDialog::onOkClicked()
     if(!checkInt(betEdit->text(), bet.value, tr("bet")))
         return;
 
+    unsigned balance = UI::instance()->getPlayer(PT_ME).balance;
+    if(bet.value > balance)
+    {
+        MainWindow::instance()->showMessage(tr("Bet is too high! Maximal bet is ") +
+                QString::number(balance) + tr(" RUR"));
+        return;
+    }
+
     Param moveTime;
     moveTime.id = PARAMETER_ID_MOVETIME;
     if(!checkInt(moveTimeEdit->text(), moveTime.value, tr("move time")))

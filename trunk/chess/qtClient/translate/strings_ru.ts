@@ -525,22 +525,32 @@
         <translation>ставка</translation>
     </message>
     <message>
-        <location filename="../src/Dialogs/CreateGameDialog.cpp" line="85"/>
+        <location filename="../src/Dialogs/CreateGameDialog.cpp" line="86"/>
+        <source>Bet is too high! Maximal bet is </source>
+        <translation>Ставка слишком высока. Максимальная ставка </translation>
+    </message>
+    <message>
+        <location filename="../src/Dialogs/CreateGameDialog.cpp" line="87"/>
+        <source> RUR</source>
+        <translation> руб.</translation>
+    </message>
+    <message>
+        <location filename="../src/Dialogs/CreateGameDialog.cpp" line="93"/>
         <source>move time</source>
         <translation>время хода</translation>
     </message>
     <message>
-        <location filename="../src/Dialogs/CreateGameDialog.cpp" line="91"/>
+        <location filename="../src/Dialogs/CreateGameDialog.cpp" line="99"/>
         <source>game time</source>
         <translation>время игры</translation>
     </message>
     <message>
-        <location filename="../src/Dialogs/CreateGameDialog.cpp" line="98"/>
+        <location filename="../src/Dialogs/CreateGameDialog.cpp" line="106"/>
         <source>max. rating</source>
         <translation>макс. рейтинг</translation>
     </message>
     <message>
-        <location filename="../src/Dialogs/CreateGameDialog.cpp" line="103"/>
+        <location filename="../src/Dialogs/CreateGameDialog.cpp" line="111"/>
         <source>min. rating</source>
         <translation>мин. рейтинг</translation>
     </message>
