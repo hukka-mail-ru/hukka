@@ -27,10 +27,14 @@ private:
     QLabel* serverNameLabel;
     QLabel* serverPortLabel;
     QLabel* languageLabel;
+    QLabel* loginLabel;
+    QLabel* pwdLabel;
 
     QLineEdit* serverNameEdit;
     QLineEdit* serverPortEdit;
     QComboBox* languageComboBox;
+    QLineEdit* loginEdit;
+    QLineEdit* pwdEdit;
 
     QPushButton* okButton;
     QPushButton* exitButton;
@@ -43,6 +47,8 @@ private:
     QVBoxLayout* layout;
 
     int mLanguageIndex;
+    QString mLogin;
+    QString mPwd;
 
 private slots:
 
