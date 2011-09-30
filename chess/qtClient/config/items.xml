@@ -19,15 +19,15 @@
   <MainMenu>
     <player>
         <font> <family value="Helvetica [Cronyx]" />  <size value="18" /> <color value="#F8C356" /> </font>
-        <x value="320" />  <y value="125" />  
+        <x value="320" />  <y value="120" />  
     </player>
     <rating>
         <font> <family value="Helvetica [Cronyx]" />  <size value="10" />  <color value="white" /></font>
-        <x value="320" />  <y value="160" />  
+        <x value="320" />  <y value="152" />  
     </rating>
     <balance>
         <font> <family value="Helvetica [Cronyx]" />  <size value="10" />  <color value="white" /></font>
-        <x value="320" />  <y value="180" />  
+        <x value="320" />  <y value="172" />  
     </balance>
   </MainMenu>
   
