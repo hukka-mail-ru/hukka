@@ -60,6 +60,10 @@ import eu.licentia.necessitas.ministro.IMinistro;
 import eu.licentia.necessitas.ministro.IMinistroCallback;
 
 import android.os.PowerManager;
+import android.content.res.Resources;
+
+import eu.licentia.necessitas.industrius.example.client.*;
+import java.io.*;
 
 public class QtActivity extends Activity {
 
@@ -81,6 +85,48 @@ public class QtActivity extends Activity {
 	private PowerManager.WakeLock wl;
 
 public static final String QtTAG = "Qt JAVA"; 
+
+
+	private void copyConfigFile()
+	{
+		Log.i(QtTAG, "openRawResource");
+
+		StringBuilder text = new StringBuilder();
+
+		// READ FILE "config.xml" (from raw/res )
+		try
+		{
+			InputStream is = getResources().openRawResource(R.raw.config);
+			DataInputStream in = new DataInputStream(is);
+			BufferedReader br = new BufferedReader(new InputStreamReader(in));
+			String strLine;		
+			String NL = System.getProperty("line.separator");
+
+			//Read File Line By Line
+			while ((strLine = br.readLine()) != null)   
+			{
+				text.append(strLine + NL);
+			}
+			in.close();
+		}
+        catch (Exception se)
+        {
+             Log.e(QtApplication.QtTAG,"openRawResource failed: "+se.getMessage());
+        }
+
+		// WRITE FILE "config.xml" (to the mobile device file system )
+		try
+		{
+			FileWriter fstream = new FileWriter("/data/data/eu.licentia.necessitas.industrius.example.client/files/config/config.xml");
+			BufferedWriter out = new BufferedWriter(fstream);
+			out.write(text.toString());
+			out.close();
+	   }
+		catch (Exception se){
+             Log.e(QtApplication.QtTAG,"Create file failed: "+se.getMessage());
+		}
+
+	}
 
 
     private void startApplication(String [] libs, String environment, String params)
@@ -135,7 +181,7 @@ Log.i(QtTAG, "startApplication 7");
                 }
             }
             // start application
-Log.i(QtTAG, "startApplication 8");
+
             if (ai.metaData.containsKey("android.app.application_startup_params"))
             {
                 if (params.length()>0)
@@ -148,6 +194,9 @@ Log.i(QtTAG, "startApplication 8");
                 environment=homePath+"\t"+environment;
             else
                 environment=homePath;
+
+Log.i(QtTAG, "copyConfigFile");			
+			copyConfigFile();
 
 Log.i(QtTAG, "startApplication 9");
             QtApplication.startApplication(params, environment);
