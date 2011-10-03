@@ -84,11 +84,16 @@ public class QtActivity extends Activity {
 	// don't lock the screen
 	private PowerManager.WakeLock wl;
 
-public static final String QtTAG = "Qt JAVA"; 
+	public static final String QtTAG = "Qt JAVA"; 
 
+	private String ConfigFile = "/data/data/eu.licentia.necessitas.industrius.example.client/files/config/config.xml";
 
 	private void copyConfigFile()
 	{
+	    File f = new File(ConfigFile);
+		if(f.exists())
+			return;
+
 		Log.i(QtTAG, "openRawResource");
 
 		StringBuilder text = new StringBuilder();
@@ -117,7 +122,7 @@ public static final String QtTAG = "Qt JAVA";
 		// WRITE FILE "config.xml" (to the mobile device file system )
 		try
 		{
-			FileWriter fstream = new FileWriter("/data/data/eu.licentia.necessitas.industrius.example.client/files/config/config.xml");
+			FileWriter fstream = new FileWriter(ConfigFile);
 			BufferedWriter out = new BufferedWriter(fstream);
 			out.write(text.toString());
 			out.close();
