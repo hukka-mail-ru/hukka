@@ -1,6 +1,6 @@
 <xml>
   <server>
-    <name value="localhost" />
+    <name value="192.168.1.100" />
     <port value="1234" />
   </server>
   <client>
