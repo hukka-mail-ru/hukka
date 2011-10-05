@@ -84,7 +84,7 @@ void CreateGameDialog::onOkClicked()
     unsigned balance = UI::instance()->getPlayer(PT_ME).balance;
     if(bet.value > balance)
     {
-        MainWindow::instance()->showMessage(tr("Bet is too high! Maximal bet is ") +
+        MainWindow::instance()->showMessage(tr("Bet is too high! Maximum is ") +
                 QString::number(balance) + tr(" RUR"));
         return;
     }
@@ -93,12 +93,25 @@ void CreateGameDialog::onOkClicked()
     moveTime.id = PARAMETER_ID_MOVETIME;
     if(!checkInt(moveTimeEdit->text(), moveTime.value, tr("move time")))
         return;
+    if(moveTime.value < MINIMAL_TIME)
+    {
+        MainWindow::instance()->showMessage(tr("Move time is too low! Minimum is ") +
+                QString::number(MINIMAL_TIME) + tr(" min."));
+        return;
+    }
     moveTime.value *= SECONDS_IN_MINUTE;
+
 
     Param gameTime;
     gameTime.id = PARAMETER_ID_GAMETIME;
     if(!checkInt(gameTimeEdit->text(), gameTime.value, tr("game time")))
         return;
+    if(gameTime.value < MINIMAL_TIME)
+    {
+        MainWindow::instance()->showMessage(tr("Game time is too low! Minimum is ") +
+                QString::number(MINIMAL_TIME) + tr(" min."));
+        return;
+    }
     gameTime.value *= SECONDS_IN_MINUTE;
 
 
