@@ -92,10 +92,6 @@
       <family value="Helvetica [Cronyx]" /> <size value="12" />  <color value="white" />
     </font>
 
-      <Exit>
-        <x value="0" />  <y value="0" />  
-      </Exit>
-
       <NewGame>
         <x value="0" /> <y value="200" /> 
       </NewGame>
@@ -103,14 +99,18 @@
       <FindGame>
         <x value="120" />  <y value="200" />  
       </FindGame>
-
+<!--
       <Chat>
         <x value="240" /> <y value="200" /> 
       </Chat>
-
+-->
       <Options>
-        <x value="360" />  <y value="200" /> 
+        <x value="240" />  <y value="200" /> 
       </Options>
+
+      <Exit>
+        <x value="360" />  <y value="200" /> 
+      </Exit>
 
 
       <GameMenu>
