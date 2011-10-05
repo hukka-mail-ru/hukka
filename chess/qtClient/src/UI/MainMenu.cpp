@@ -224,15 +224,15 @@ void MainMenu::onAuthorized()
         MainWindow::instance()->setMode(MW_NORMAL);
     }
 
-    connect(Client::instance(), SIGNAL(gotMyRating(quint32)), this, SLOT(onGotMyRating(quint32)));
+    connect(Client::instance(), SIGNAL(gotMyRating(unsigned)), this, SLOT(onGotMyRating(unsigned)));
     Client::instance()->getMyRating();
 
-    connect(Client::instance(), SIGNAL(gotMyBalance(quint32)), this, SLOT(onGotMyBalance(quint32)));
+    connect(Client::instance(), SIGNAL(gotMyBalance(unsigned)), this, SLOT(onGotMyBalance(unsigned)));
     Client::instance()->getMyBalance();
 
 }
 
-void MainMenu::onGotMyRating(quint32 myRating)
+void MainMenu::onGotMyRating(unsigned myRating)
 {
     UI::instance()->setPlayerRating(PT_ME, myRating);
 
@@ -245,7 +245,7 @@ void MainMenu::onGotMyRating(quint32 myRating)
     mPlayerRatingText->setPlainText(ratingText);
 }
 
-void MainMenu::onGotMyBalance(quint32 myBalance)
+void MainMenu::onGotMyBalance(unsigned myBalance)
 {
     UI::instance()->setPlayerBalance(PT_ME, myBalance);
 
@@ -267,7 +267,7 @@ void MainMenu::onGotMyGameTable(TABLEID tableID, bool isOwner)
     }
     else
     {
-        connect(Client::instance(), SIGNAL(gotLastGameResult(int)), this, SLOT(onGotLastGameResult(int)));
+        connect(Client::instance(), SIGNAL(gotLastGameResult(unsigned)), this, SLOT(onGotLastGameResult(unsigned)));
         Client::instance()->getLastGameResult();
 
     }
@@ -276,9 +276,9 @@ void MainMenu::onGotMyGameTable(TABLEID tableID, bool isOwner)
 }
 
 
-void MainMenu::onGotLastGameResult(int result)
+void MainMenu::onGotLastGameResult(unsigned result)
 {
-    disconnect(Client::instance(), SIGNAL(gotLastGameResult(int)), this, SLOT(onGotLastGameResult(int)));
+    disconnect(Client::instance(), SIGNAL(gotLastGameResult(unsigned)), this, SLOT(onGotLastGameResult(unsigned)));
 
     QString finished = tr("The last game has been finished.") + "\n\n" +
                        Global::getGameResultText(result, UI::instance()->getPlayer(PT_ME).rating);

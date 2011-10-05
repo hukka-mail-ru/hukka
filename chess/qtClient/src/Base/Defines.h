@@ -58,8 +58,8 @@ const int  OPERATOR_LAST                  = 0;
 #define Q_BYTE_ARRAY(var)        QByteArray((char*)&var, sizeof(var))
 
 
-typedef quint32 PARAMID;
-typedef quint32 GameTableStatus;
+typedef unsigned PARAMID;
+typedef unsigned GameTableStatus;
 
 const int  ID_NOT_DEFINED                 = 0xFFFFFFFF;
 
@@ -91,10 +91,10 @@ const int  Z_CELLS_LAYER                  = 0;
 // Chat
 #define ADDRESSEE_ALL tr("all")
 
-typedef quint32             CELLID;
-typedef quint32             TABLEID;
-typedef quint32             LOGICID;
-typedef quint32             PLAYERID;
+typedef unsigned             CELLID;
+typedef unsigned             TABLEID;
+typedef unsigned             LOGICID;
+typedef unsigned             PLAYERID;
 
 typedef vector<piece_type>  Field;
 
@@ -167,9 +167,9 @@ struct GameTable
 {
     TABLEID id;
     Player host;
-    qint32 bet;
-    qint32 time2step;
-    qint32 time2game;
+    int bet;
+    int time2step;
+    int time2game;
 };
 
 

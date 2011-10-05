@@ -59,7 +59,7 @@ CreateGameDialog::CreateGameDialog(QWidget *parent): MyDialog(parent)
     setLayout(layout);
 }
 
-bool checkInt(const QString& parameter, quint32& value, const QString& description)
+bool checkInt(const QString& parameter, unsigned& value, const QString& description)
 {
     bool ok;
     if(parameter.toInt(&ok) < 0 || !ok)

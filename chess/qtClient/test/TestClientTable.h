@@ -197,7 +197,7 @@ public:
 
 
 
-                quint32 id = 0;
+                unsigned id = 0;
                 CPPUNIT_ASSERT_NO_THROW(id = client.getRandomGameTable(LOGIC_ID_CHESS, condition));
                 CPPUNIT_ASSERT(id > 0);
 
@@ -215,8 +215,8 @@ public:
                 condition << p1;
 
                 TABLEID id = 0;
-                quint32 maxCount = 10;
-                QList<quint32> ids;
+                unsigned maxCount = 10;
+                QList<unsigned> ids;
                 CPPUNIT_ASSERT_NO_THROW(client.findGameTables(LOGIC_ID_CHESS, maxCount, condition, ids));
                 CPPUNIT_ASSERT(ids.size() > 0);
                 CPPUNIT_ASSERT(ids.size() <= maxCount);
@@ -239,8 +239,8 @@ public:
                 condition << c1 << c2 << c3 << c4;
 
                 TABLEID id = 0;
-                quint32 maxCount = 10;
-                QList<quint32> ids;
+                unsigned maxCount = 10;
+                QList<unsigned> ids;
                 CPPUNIT_ASSERT_NO_THROW(client.findGameTables(LOGIC_ID_CHESS, maxCount, condition, ids));
                 CPPUNIT_ASSERT(ids.size() == 0);
         }

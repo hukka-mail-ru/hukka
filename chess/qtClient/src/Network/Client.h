@@ -135,12 +135,12 @@ signals:
         void gotPosition(const Position& position);
         void gotGameTableParams(const GameTable& table);
 
-        void gotMoveTime(quint32);
-        void gotGameTime(quint32);
+        void gotMoveTime(unsigned);
+        void gotGameTime(unsigned);
 
-        void gotMyRating(quint32);
-        void gotMyBalance(quint32);
-        void gotLastGameResult(int);
+        void gotMyRating(unsigned);
+        void gotMyBalance(unsigned);
+        void gotLastGameResult(unsigned);
 
         void invalidMove();
 

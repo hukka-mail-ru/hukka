@@ -1269,8 +1269,8 @@ void Client::processMessageCHS(const MessageHeader& header, const QByteArray& bu
         struct Reply {
             TABLEID     tableID;
             char        playerNr; // table owner (?)
-            uint32_t    moveTime;
-            uint32_t    gameTime;
+            quint32     moveTime;
+            quint32     gameTime;
             char        cells[CELLS_IN_FIELD];
             char        w_check;
             char        b_check;

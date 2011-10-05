@@ -16,12 +16,12 @@ public:
     static char letter(CELLID cell);
     static char number(CELLID cell);
 
-    static QString seconds2hrs (quint32 seconds);
+    static QString seconds2hrs (unsigned seconds);
     static QString timestamp();
 
     static char getCRC(const QByteArray& data);
 
-    static QString serviceToString(quint32 service);
+    static QString serviceToString(unsigned service);
 
     static QString paramIdToString(int paramId);
 
