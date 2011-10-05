@@ -4,7 +4,7 @@
 <context>
     <name></name>
     <message>
-        <location filename="../src/Base/Defines.h" line="91"/>
+        <location filename="../src/Base/Defines.h" line="92"/>
         <source>all</source>
         <translation>всем</translation>
     </message>
@@ -563,8 +563,8 @@
     </message>
     <message>
         <location filename="../src/Dialogs/CreateGameDialog.cpp" line="87"/>
-        <source>Bet is too high! Maximal bet is </source>
-        <translation>Ставка слишком высока. Максимальная ставка </translation>
+        <source>Bet is too high! Maximum is </source>
+        <translation><Ставка слишком высока. Максимальная ставка </translation>
     </message>
     <message>
         <location filename="../src/Dialogs/CreateGameDialog.cpp" line="88"/>
@@ -577,17 +577,33 @@
         <translation>время хода</translation>
     </message>
     <message>
-        <location filename="../src/Dialogs/CreateGameDialog.cpp" line="100"/>
+        <location filename="../src/Dialogs/CreateGameDialog.cpp" line="98"/>
+        <source>Move time is too low! Minimum is </source>
+        <translation>Время хода слишком мало. Минимальное время хода </translation>
+    </message>
+    <message>
+        <location filename="../src/Dialogs/CreateGameDialog.cpp" line="99"/>
+        <location filename="../src/Dialogs/CreateGameDialog.cpp" line="112"/>
+        <source> min.</source>
+        <translation> мин.</translation>
+    </message>
+    <message>
+        <location filename="../src/Dialogs/CreateGameDialog.cpp" line="107"/>
         <source>game time</source>
         <translation>время игры</translation>
     </message>
     <message>
-        <location filename="../src/Dialogs/CreateGameDialog.cpp" line="107"/>
+        <location filename="../src/Dialogs/CreateGameDialog.cpp" line="111"/>
+        <source>Game time is too low! Minimum is </source>
+        <translation>Время игры слишком мало. Минимальное время игры </translation>
+    </message>
+    <message>
+        <location filename="../src/Dialogs/CreateGameDialog.cpp" line="120"/>
         <source>max. rating</source>
         <translation>макс. рейтинг</translation>
     </message>
     <message>
-        <location filename="../src/Dialogs/CreateGameDialog.cpp" line="112"/>
+        <location filename="../src/Dialogs/CreateGameDialog.cpp" line="125"/>
         <source>min. rating</source>
         <translation>мин. рейтинг</translation>
     </message>
@@ -899,7 +915,7 @@
         <translation>Игра окончена.</translation>
     </message>
     <message>
-        <location filename="../src/Base/Defines.h" line="156"/>
+        <location filename="../src/Base/Defines.h" line="157"/>
         <source>offline</source>
         <translation>оффлайн</translation>
     </message>

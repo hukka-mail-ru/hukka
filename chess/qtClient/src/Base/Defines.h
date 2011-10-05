@@ -22,6 +22,7 @@ const int MINUTES_IN_HOUR                = 60;
 const int SECONDS_IN_MINUTE              = 60;
 const int SECONDS_IN_HOUR                = 3600;
 
+const int MINIMAL_TIME                   = 1; // minutes
 const int WAIT_CONNECT_TIMEOUT           = 3; // seconds
 const int WAIT_RESPONSE_TIMEOUT          = 10000; // milliseconds
 const int MESSAGE_POOL_QUERY_DELAY       = 1000;  // milliseconds
