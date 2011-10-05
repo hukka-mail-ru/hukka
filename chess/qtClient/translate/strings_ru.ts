@@ -749,37 +749,41 @@
         <translation>Найти игру</translation>
     </message>
     <message>
-        <location filename="../src/UI/MainMenu.cpp" line="50"/>
         <source>Chat</source>
-        <translation>Чат</translation>
+        <translation type="obsolete">Чат</translation>
     </message>
     <message>
-        <location filename="../src/UI/MainMenu.cpp" line="51"/>
+        <location filename="../src/UI/MainMenu.cpp" line="50"/>
         <source>Options</source>
         <translation>Настройки</translation>
     </message>
     <message>
-        <location filename="../src/UI/MainMenu.cpp" line="242"/>
+        <location filename="../src/UI/MainMenu.cpp" line="51"/>
+        <source>Exit</source>
+        <translation type="unfinished">Выход</translation>
+    </message>
+    <message>
+        <location filename="../src/UI/MainMenu.cpp" line="244"/>
         <source>Rating: not available</source>
         <translation>Рейтинг: не доступен</translation>
     </message>
     <message>
-        <location filename="../src/UI/MainMenu.cpp" line="243"/>
+        <location filename="../src/UI/MainMenu.cpp" line="245"/>
         <source>Rating: </source>
         <translation>Рейтинг: </translation>
     </message>
     <message>
-        <location filename="../src/UI/MainMenu.cpp" line="252"/>
+        <location filename="../src/UI/MainMenu.cpp" line="254"/>
         <source>Balance: </source>
         <translation>Баланс (руб.): </translation>
     </message>
     <message>
-        <location filename="../src/UI/MainMenu.cpp" line="283"/>
+        <location filename="../src/UI/MainMenu.cpp" line="285"/>
         <source>The last game has been finished.</source>
         <translation>Предыдущая игра была завершена</translation>
     </message>
     <message>
-        <location filename="../src/UI/MainMenu.cpp" line="314"/>
+        <location filename="../src/UI/MainMenu.cpp" line="316"/>
         <source>You have an unfinished game. Please finish it.</source>
         <translation>Пожалуйста завершите предыдущую игру.</translation>
     </message>

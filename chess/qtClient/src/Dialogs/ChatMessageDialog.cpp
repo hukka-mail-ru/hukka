@@ -52,7 +52,7 @@ void ChatMessageDialog::onOkClicked()
         QString msg;
         if (mChatType == CT_COMMON_CHAT)
         {
-            msg = (mAddressee == ADDRESSEE_ALL) ? mEdit->text() : mAddressee + ", " + mEdit->text();
+            msg = (mAddressee == ADDRESSEE_ALL) ? mEdit->text() : "-> " + mAddressee + ": " + mEdit->text();
         }
         else
         {

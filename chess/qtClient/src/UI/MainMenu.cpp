@@ -47,9 +47,8 @@ MainMenu::MainMenu(QObject *parent):
     // buttons
     createGameButton = newButton(Pixmaps::get(PIX_BUTTON_CREATE_GAME), SLOT(onCreateGameClicked()), tr("New Game"), XML_NODE_NEW_GAME);
     findGameButton   = newButton(Pixmaps::get(PIX_BUTTON_FIND_GAME),   SLOT(onFindGameClicked()), tr("Find game"), XML_NODE_FIND_GAME);
-    chatButton       = newButton(Pixmaps::get(PIX_BUTTON_CHAT),        SLOT(onChatClicked()), tr("Chat"), XML_NODE_CHAT);
     optionsButton    = newButton(Pixmaps::get(PIX_BUTTON_OPTIONS),     SLOT(onOptionsClicked()), tr("Options"), XML_NODE_OPTIONS);
-    exitButton       = newButton(Pixmaps::get(PIX_BUTTON_EXIT),        SLOT(onExitClicked()), "", XML_NODE_EXIT);
+    exitButton       = newButton(Pixmaps::get(PIX_BUTTON_EXIT),        SLOT(onExitClicked()), tr("Exit"), XML_NODE_EXIT);
 
     // splash
     int x = XML::instance().readValue(XML_ITEMS_FILENAME, QList<QString>() << XML_NODE_SPLASH << XML_NODE_X).toInt();
@@ -131,6 +130,7 @@ void MainMenu::onFindGameClicked()
     connectToGameServer();
 }
 
+/*
 void MainMenu::onChatClicked()
 {
     if(!mChat)
@@ -149,6 +149,7 @@ void MainMenu::onChatClicked()
         mChat->setVisible( !mChat->isVisible() );
     }
 }
+*/
 
 void MainMenu::close()
 {
@@ -216,13 +217,14 @@ void MainMenu::onAuthorized()
         connect(Client::instance(), SIGNAL(gotMyGameTable(TABLEID, bool)), this, SLOT(onGotMyGameTable(TABLEID, bool)));
         Client::instance()->getMyGameTable(LOGIC_ID_CHESS);
     }
+    /*
     else if(mClickedButton == chatButton && !mChat)
     {
         mChat = new Chat(MainWindow::instance(), CT_COMMON_CHAT);
         mChat->show();
 
         MainWindow::instance()->setMode(MW_NORMAL);
-    }
+    }*/
 
     connect(Client::instance(), SIGNAL(gotMyRating(unsigned)), this, SLOT(onGotMyRating(unsigned)));
     Client::instance()->getMyRating();

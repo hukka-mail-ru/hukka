@@ -37,11 +37,11 @@ void Pixmaps::loadPixmaps()
 
     mPixmaps.insert(PIX_BUTTON_CREATE_GAME,   mPixmaps[PIX_BUTTONS].copy(width * 0, 0, width, height ));
     mPixmaps.insert(PIX_BUTTON_FIND_GAME,     mPixmaps[PIX_BUTTONS].copy(width * 1, 0, width, height ));
-    mPixmaps.insert(PIX_BUTTON_CHAT,          mPixmaps[PIX_BUTTONS].copy(width * 2, 0, width, height ));
-    mPixmaps.insert(PIX_BUTTON_OPTIONS,       mPixmaps[PIX_BUTTONS].copy(width * 3, 0, width, height ));
+    mPixmaps.insert(PIX_BUTTON_OPTIONS,       mPixmaps[PIX_BUTTONS].copy(width * 2, 0, width, height ));
+    mPixmaps.insert(PIX_BUTTON_EXIT,          mPixmaps[PIX_BUTTONS].copy(width * 3, 0, width, height ));
     mPixmaps.insert(PIX_BUTTON_MENU,          mPixmaps[PIX_BUTTONS].copy(width * 4, 0, width, height ));
 
-    loadPixmap(PIX_BUTTON_EXIT,":/images/exit.png");
+   // loadPixmap(PIX_BUTTON_EXIT,":/images/exit.png");
     ////////////////////////////////////////////////////////////////////////////////////
 
 
