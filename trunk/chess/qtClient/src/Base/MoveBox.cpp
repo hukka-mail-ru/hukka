@@ -11,8 +11,8 @@
 #include <QObject>
 
 MoveBox::MoveBox(QGraphicsScene* parentScene):
-    mMoveClock(parentScene, QObject::tr(""), SIGNAL(gotMoveTime(quint32)), XML_NODE_MOVE_CLOCK),
-    mGameClock(parentScene, QObject::tr("Game: "), SIGNAL(gotGameTime(quint32)), XML_NODE_GAME_CLOCK)
+    mMoveClock(parentScene, QObject::tr(""), SIGNAL(gotMoveTime(unsigned)), XML_NODE_MOVE_CLOCK),
+    mGameClock(parentScene, QObject::tr("Game: "), SIGNAL(gotGameTime(unsigned)), XML_NODE_GAME_CLOCK)
 {
     // colors
     mActiveColor     = QColor(XML::instance().readValue(XML_ITEMS_FILENAME, QList<QString>() << XML_NODE_MOVE_BOX << XML_NODE_COLOR << XML_NODE_ACTIVE));

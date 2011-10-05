@@ -35,7 +35,7 @@ public:
 
 private:
 
-    quint32 mSeconds;
+    unsigned mSeconds;
     QTimer *mTimer;
 
     QGraphicsScene* mParentScene;
@@ -43,7 +43,7 @@ private:
     QGraphicsTextItem* mText;
 
     QString mHeader;
-    qint32 mTextFontSize;
+    int mTextFontSize;
 
     QString mXMLNodeName;
 
@@ -52,7 +52,7 @@ private:
 private slots:
 
     void onTick();
-    void onGotTime(quint32 seconds);
+    void onGotTime(unsigned seconds);
 
 
 };

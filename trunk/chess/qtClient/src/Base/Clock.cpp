@@ -48,14 +48,14 @@ void Clock::moveBy(int x, int y)
 
 void Clock::start()
 {
-    connect(Client::instance(), mUpdateSignal, this, SLOT(onGotTime(quint32)));
+    connect(Client::instance(), mUpdateSignal, this, SLOT(onGotTime(unsigned)));
     connect(mTimer, SIGNAL(timeout()), this, SLOT(onTick()));
     mTimer->start(1000);
 }
 
 void Clock::stop()
 {
-    connect(Client::instance(), mUpdateSignal, this, SLOT(onGotTime(quint32)));
+    connect(Client::instance(), mUpdateSignal, this, SLOT(onGotTime(unsigned)));
     disconnect(mTimer, SIGNAL(timeout()), this, SLOT(onTick()));
     mTimer->stop();
 }
@@ -78,7 +78,7 @@ void Clock::setColor(const QColor& color)
 
 
 
-void Clock::onGotTime(quint32 seconds)
+void Clock::onGotTime(unsigned seconds)
 {
     mSeconds = seconds;
 

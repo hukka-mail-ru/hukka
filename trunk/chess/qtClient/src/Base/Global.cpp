@@ -17,11 +17,11 @@ char Global::number(CELLID cell)
     return '1' + cell / CELLS_IN_ROW;
 }
 
-QString Global::seconds2hrs (quint32 seconds)
+QString Global::seconds2hrs (unsigned seconds)
 {
-    quint32 hrs = seconds / SECONDS_IN_HOUR;
-    quint32 mins = (seconds - hrs * SECONDS_IN_HOUR) / SECONDS_IN_MINUTE;
-    quint32 secs = seconds - hrs * SECONDS_IN_HOUR - mins * SECONDS_IN_MINUTE;
+    unsigned hrs = seconds / SECONDS_IN_HOUR;
+    unsigned mins = (seconds - hrs * SECONDS_IN_HOUR) / SECONDS_IN_MINUTE;
+    unsigned secs = seconds - hrs * SECONDS_IN_HOUR - mins * SECONDS_IN_MINUTE;
 
     QChar fill = QLatin1Char('0');
 
@@ -48,7 +48,7 @@ char Global::getCRC(const QByteArray& data)
     return crc;
 }
 
-QString Global::serviceToString(quint32 service)
+QString Global::serviceToString(unsigned service)
 {
   //  QT_TRACEOUT;
 

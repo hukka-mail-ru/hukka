@@ -59,10 +59,10 @@ private slots:
     void onOptionsClicked();
     void onExitClicked();
     void onGotMyGameTable(TABLEID id, bool isOwner);
-    void onGotMyRating(quint32 myRating);
-    void onGotMyBalance(quint32 myBalance);
+    void onGotMyRating(unsigned myRating);
+    void onGotMyBalance(unsigned myBalance);
     void onGotOpponent(const Player& opponent);
-    void onGotLastGameResult(int result);
+    void onGotLastGameResult(unsigned result);
 
 
 };

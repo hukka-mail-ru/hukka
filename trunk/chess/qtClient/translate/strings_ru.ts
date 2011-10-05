@@ -564,7 +564,7 @@
     <message>
         <location filename="../src/Dialogs/CreateGameDialog.cpp" line="87"/>
         <source>Bet is too high! Maximum is </source>
-        <translation><Ставка слишком высока. Максимальная ставка </translation>
+        <translation>Ставка слишком высока. Максимальная ставка </translation>
     </message>
     <message>
         <location filename="../src/Dialogs/CreateGameDialog.cpp" line="88"/>
