@@ -47,6 +47,7 @@ public:
     void showAuthorizationDialog();
     void showCreateGameDialog();
     void showFindGameDialog();
+    void showWalletDialog();
     void showJoinGameDialog(const QList<GameTable>& tables);
     void showGameDialog(const QString& text);
     void showOptionsDialog();

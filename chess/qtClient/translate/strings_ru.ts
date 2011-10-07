@@ -758,32 +758,36 @@
         <translation>Настройки</translation>
     </message>
     <message>
-        <location filename="../src/UI/MainMenu.cpp" line="51"/>
         <source>Exit</source>
-        <translation type="unfinished">Выход</translation>
+        <translation type="obsolete">Выход</translation>
     </message>
     <message>
-        <location filename="../src/UI/MainMenu.cpp" line="244"/>
+        <location filename="../src/UI/MainMenu.cpp" line="51"/>
+        <source>Wallet</source>
+        <translation>Кошелек</translation>
+    </message>
+    <message>
+        <location filename="../src/UI/MainMenu.cpp" line="254"/>
         <source>Rating: not available</source>
-        <translation>Рейтинг: не доступен</translation>
+        <translation>Рейтинг: не включен</translation>
     </message>
     <message>
-        <location filename="../src/UI/MainMenu.cpp" line="245"/>
+        <location filename="../src/UI/MainMenu.cpp" line="255"/>
         <source>Rating: </source>
         <translation>Рейтинг: </translation>
     </message>
     <message>
-        <location filename="../src/UI/MainMenu.cpp" line="254"/>
+        <location filename="../src/UI/MainMenu.cpp" line="264"/>
         <source>Balance: </source>
         <translation>Баланс (руб.): </translation>
     </message>
     <message>
-        <location filename="../src/UI/MainMenu.cpp" line="285"/>
+        <location filename="../src/UI/MainMenu.cpp" line="300"/>
         <source>The last game has been finished.</source>
         <translation>Предыдущая игра была завершена</translation>
     </message>
     <message>
-        <location filename="../src/UI/MainMenu.cpp" line="316"/>
+        <location filename="../src/UI/MainMenu.cpp" line="329"/>
         <source>You have an unfinished game. Please finish it.</source>
         <translation>Пожалуйста завершите предыдущую игру.</translation>
     </message>
@@ -791,7 +795,7 @@
 <context>
     <name>MainWindow</name>
     <message>
-        <location filename="../src/UI/MainWindow.cpp" line="65"/>
+        <location filename="../src/UI/MainWindow.cpp" line="66"/>
         <source>Good Old Chess</source>
         <translation>Good Old Chess</translation>
     </message>
@@ -824,12 +828,12 @@
     <message>
         <location filename="../src/Dialogs/OptionsDialog.cpp" line="27"/>
         <source>Login</source>
-        <translation type="unfinished">Логин</translation>
+        <translation>Логин</translation>
     </message>
     <message>
         <location filename="../src/Dialogs/OptionsDialog.cpp" line="28"/>
         <source>Password</source>
-        <translation type="unfinished">Пароль</translation>
+        <translation>Пароль</translation>
     </message>
     <message>
         <location filename="../src/Dialogs/OptionsDialog.cpp" line="29"/>
@@ -1140,6 +1144,44 @@ Please visit www.site.com to learn how to enable it.</source>
         <location filename="../src/Dialogs/WaitJoinDialog.cpp" line="79"/>
         <source>Start the game?</source>
         <translation>Начать игру?</translation>
+    </message>
+</context>
+<context>
+    <name>WalletDialog</name>
+    <message>
+        <location filename="../src/Dialogs/WalletDialog.cpp" line="15"/>
+        <source>You have now </source>
+        <translation>В вашем кошельке сейчас </translation>
+    </message>
+    <message>
+        <location filename="../src/Dialogs/WalletDialog.cpp" line="16"/>
+        <source> RUR in your wallet. </source>
+        <translation> руб.</translation>
+    </message>
+    <message>
+        <location filename="../src/Dialogs/WalletDialog.cpp" line="17"/>
+        <source>To replenish your wallet please enter your PIN and press &apos;OK&apos;. </source>
+        <translation>Чтобы пополнить кошелек, введите ваш ПИН-код и нажмите ОК.</translation>
+    </message>
+    <message>
+        <location filename="../src/Dialogs/WalletDialog.cpp" line="33"/>
+        <source>If you have no PIN, you can obtain it here: money.yandex.ru</source>
+        <translation>Если у вас пока еще нет ПИН-кода, вы можете получить его здесь: money.yandex.ru</translation>
+    </message>
+    <message>
+        <location filename="../src/Dialogs/WalletDialog.cpp" line="29"/>
+        <source>PIN:</source>
+        <translation>ПИН-код:</translation>
+    </message>
+    <message>
+        <location filename="../src/Dialogs/WalletDialog.cpp" line="20"/>
+        <source>Exit</source>
+        <translation>Выход</translation>
+    </message>
+    <message>
+        <location filename="../src/Dialogs/WalletDialog.cpp" line="23"/>
+        <source>Ok</source>
+        <translation>ОК</translation>
     </message>
 </context>
 </TS>

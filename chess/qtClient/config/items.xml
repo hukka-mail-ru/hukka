@@ -108,8 +108,12 @@
         <x value="240" />  <y value="200" /> 
       </Options>
 
-      <Exit>
+      <Wallet>
         <x value="360" />  <y value="200" /> 
+      </Wallet>
+
+      <Exit>
+        <x value="0" />  <y value="0" /> 
       </Exit>
 
 

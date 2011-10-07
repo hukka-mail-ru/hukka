@@ -101,6 +101,7 @@ public class QtSurface extends SurfaceView implements SurfaceHolder.Callback
         m_bitmap=Bitmap.createBitmap(width, height, Bitmap.Config.RGB_565);
         QtApplication.setSurface(m_bitmap);
         QtApplication.unlockSurface();
+		Log.i(QtApplication.QtTAG,"surfaceChanged: updateWindow ");
         QtApplication.updateWindow();
     }
 

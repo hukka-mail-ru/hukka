@@ -33,6 +33,7 @@ private:
     Button* createGameButton;
     Button* findGameButton;
     Button* optionsButton;
+    Button* walletButton;
     Button* exitButton;
 
     Button* mClickedButton;
@@ -56,6 +57,7 @@ private slots:
     void onFindGameClicked();
     //void onChatClicked();
     void onOptionsClicked();
+    void onWalletClicked();
     void onExitClicked();
     void onGotMyGameTable(TABLEID id, bool isOwner);
     void onGotMyRating(unsigned myRating);
