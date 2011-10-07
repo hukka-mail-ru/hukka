@@ -76,6 +76,7 @@ public:
     //  void getGameTableParams  (LOGICID logicID, TABLEID tableID, const QList<PARAMID>& ids);
     //  void setGameTableParams  (LOGICID logicID, TABLEID tableID, const QList<Param>& params);
         void findGameTables      (LOGICID logicID, quint32 maxCount, const QList<Param>& params);
+        void replenishBalance    (const QString& pin);
 
         // communication with Chess Server
         // Master
@@ -141,6 +142,8 @@ signals:
         void gotMyRating(unsigned);
         void gotMyBalance(unsigned);
         void gotLastGameResult(unsigned);
+
+        void balanceReplenished(unsigned);
 
         void invalidMove();
 

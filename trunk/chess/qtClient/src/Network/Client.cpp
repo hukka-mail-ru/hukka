@@ -347,6 +347,23 @@ void Client::findGameTables(LOGICID logicID, quint32 maxCount, const QList<Param
 
 }
 
+void Client::replenishBalance (const QString& pin)
+{
+    QT_TRACEOUT;
+
+    try
+    {
+        // send command
+        QByteArray data = pin.toAscii();
+        sendCmd(TBM, CMD_REPLENISH, data);
+    }
+    catch (Exception& e) {
+        e.add(tr("Can't replenish balance on server: ") + mSocket.peerName() + ". ");;
+        emit error (e.what());
+    }
+
+}
+
 /*====================================================================================================
  ___  ___  __    ___  ____  ___     __   __   __  __  ___    ____  __   ___  __    ___
 (   \(  _)(  )  (  _)(_  _)(  _)   / _) (  ) (  \/  )(  _)  (_  _)(  ) (  ,)(  )  (  _)
@@ -1137,6 +1154,18 @@ void Client::processMessageTBM(const MessageHeader& header, const QByteArray& bu
 
         emit gotGameTables(tables);
 
+    }
+
+    else if(header.cmd == ANS_REPLENISH)
+    {
+        // get server reply
+        struct Reply {
+            quint32     sum;
+        };
+
+        Reply* reply = (Reply*)buffer.data();
+
+        emit balanceReplenished(reply->sum);
     }
 
     else if(header.cmd == ANS_GET_PARAMS)
