@@ -50,6 +50,7 @@
 #define XML_NODE_NEW_GAME         "NewGame"
 #define XML_NODE_FIND_GAME        "FindGame"
 #define XML_NODE_CHAT             "Chat"
+#define XML_NODE_WALLET           "Wallet"
 #define XML_NODE_OPTIONS          "Options"
 #define XML_NODE_GAME_MENU        "GameMenu"
 

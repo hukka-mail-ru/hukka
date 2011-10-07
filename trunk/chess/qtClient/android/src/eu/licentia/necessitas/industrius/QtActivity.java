@@ -38,6 +38,8 @@ import android.content.ComponentName;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.IntentFilter;
+import android.content.BroadcastReceiver;
 import android.content.ServiceConnection;
 import android.content.pm.ActivityInfo;
 import android.content.pm.PackageManager;
@@ -369,6 +371,12 @@ Log.i(QtTAG, "startApp 7");
     {
         super.onCreate(savedInstanceState);
 
+        // initialize receiver
+        IntentFilter filter = new IntentFilter(Intent.ACTION_SCREEN_ON);
+        filter.addAction(Intent.ACTION_SCREEN_OFF);
+        BroadcastReceiver mReceiver = new ScreenReceiver();
+        registerReceiver(mReceiver, filter);
+
 /// No title bar
         final Window win = getWindow();    
 		win.setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN);    
@@ -424,9 +432,30 @@ Log.i(QtTAG, "startApp 7");
         QtApplication.setMainActivity(null);
     }
 
+	    @Override
+	    protected void onPause() {
+	        // when the screen is about to turn off
+	        if (ScreenReceiver.wasScreenOn) {
+	            // this is the case when onPause() is called by the system due to a screen state change
+				Log.i(QtApplication.QtTAG, "SCREEN TURNED OFF");
+	        } else {
+	            // this is when onPause() is called when the screen state has not changed
+	        }
+	        super.onPause();
+	    }
+
     @Override
     protected void onResume()
     {
+		Log.i(QtTAG, "onResume");
+        // only when screen turns on
+        if (!ScreenReceiver.wasScreenOn) {
+            // this is when onResume() is called due to a screen state change
+			Log.i(QtTAG, "SCREEN TURNED ON");
+        } else {
+            // this is when onResume() is called when the screen state has not changed
+        }
+
         // fire all lostActions
         synchronized (QtApplication.m_mainActivityMutex)
         {
@@ -435,6 +464,8 @@ Log.i(QtTAG, "startApp 7");
                 runOnUiThread(itr.next());
                 if (m_started)
                 {
+Log.i(QtTAG, "updateWindow");
+
                     QtApplication.clearLostActions();
                     QtApplication.updateWindow();
                 }

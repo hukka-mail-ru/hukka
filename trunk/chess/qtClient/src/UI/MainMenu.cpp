@@ -48,7 +48,8 @@ MainMenu::MainMenu(QObject *parent):
     createGameButton = newButton(Pixmaps::get(PIX_BUTTON_CREATE_GAME), SLOT(onCreateGameClicked()), tr("New Game"), XML_NODE_NEW_GAME);
     findGameButton   = newButton(Pixmaps::get(PIX_BUTTON_FIND_GAME),   SLOT(onFindGameClicked()), tr("Find game"), XML_NODE_FIND_GAME);
     optionsButton    = newButton(Pixmaps::get(PIX_BUTTON_OPTIONS),     SLOT(onOptionsClicked()), tr("Options"), XML_NODE_OPTIONS);
-    exitButton       = newButton(Pixmaps::get(PIX_BUTTON_EXIT),        SLOT(onExitClicked()), tr("Exit"), XML_NODE_EXIT);
+    walletButton     = newButton(Pixmaps::get(PIX_BUTTON_WALLET),      SLOT(onWalletClicked()), tr("Wallet"), XML_NODE_WALLET);
+    exitButton       = newButton(Pixmaps::get(PIX_BUTTON_EXIT),        SLOT(onExitClicked()), tr(""), XML_NODE_EXIT);
 
     // splash
     int x = XML::instance().readValue(XML_ITEMS_FILENAME, QList<QString>() << XML_NODE_SPLASH << XML_NODE_X).toInt();
@@ -126,6 +127,15 @@ void MainMenu::onFindGameClicked()
     MainWindow::instance()->setMode(MW_WAIT);
 
     mClickedButton = findGameButton;
+
+    connectToGameServer();
+}
+
+void MainMenu::onWalletClicked()
+{
+    MainWindow::instance()->setMode(MW_WAIT);
+
+    mClickedButton = walletButton;
 
     connectToGameServer();
 }
@@ -252,6 +262,11 @@ void MainMenu::onGotMyBalance(unsigned myBalance)
     UI::instance()->setPlayerBalance(PT_ME, myBalance);
 
     mPlayerBalanceText->setPlainText(tr("Balance: ") + QString::number(myBalance));
+
+    if(mClickedButton == walletButton)
+    {
+        MainWindow::instance()->showWalletDialog();
+    }
 }
 
 void MainMenu::onGotMyGameTable(TABLEID tableID, bool isOwner)
@@ -295,12 +310,10 @@ void MainMenu::onGotLastGameResult(unsigned result)
 
     if(mClickedButton == createGameButton)
     {
-//            UI::instance()->setOwner(true);
         MainWindow::instance()->showCreateGameDialog();
     }
     else if(mClickedButton == findGameButton)
     {
-//            UI::instance()->setOwner(false);
         MainWindow::instance()->showFindGameDialog();
     }
 }
@@ -336,6 +349,7 @@ void MainMenu::onOptionsClicked()
     // should be the last operation in this method
   //  Client::instance()->disconnectFromHost();
 }
+
 
 void MainMenu::onDisonnectedFromHost()
 {

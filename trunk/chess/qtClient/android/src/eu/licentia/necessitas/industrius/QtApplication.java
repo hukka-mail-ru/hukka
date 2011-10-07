@@ -257,12 +257,15 @@ Log.i(QtTAG, "QtApplication::startApplication: 'QtApp" + params + "' '" + enviro
 
     public static void resumeApplication()
     {
+		Log.i(QtApplication.QtTAG, "QtApplication.resumeApplication");
         synchronized (m_mainActivityMutex)
         {
             if (m_started)
             {
                 resumeQtApp();
+		Log.i(QtApplication.QtTAG, "QtApplication.resumeApplication resumeQtApp");
                 updateWindow();
+		Log.i(QtApplication.QtTAG, "QtApplication.resumeApplication updateWindow");
             }
         }
     }

@@ -31,6 +31,7 @@
 #include "Dialogs/ChatMessageDialog.h"
 #include "Dialogs/OptionsDialog.h"
 #include "Dialogs/PromotionDialog.h"
+#include "Dialogs/WalletDialog.h"
 #include "Pixmaps.h"
 
 
@@ -183,6 +184,12 @@ void MainWindow::showCreateGameDialog()
 void MainWindow::showFindGameDialog()
 {
     setCurrentDialog(new FindGameDialog(this));
+    setMode(MW_NORMAL);
+}
+
+void MainWindow::showWalletDialog()
+{
+    setCurrentDialog(new WalletDialog(this));
     setMode(MW_NORMAL);
 }
 
