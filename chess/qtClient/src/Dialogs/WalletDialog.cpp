@@ -7,6 +7,8 @@
 
 #include "WalletDialog.h"
 #include <UI.h>
+#include <Client.h>
+#include <MainWindow.h>
 
 WalletDialog::WalletDialog(QWidget *parent):
     MyDialog(parent)
@@ -21,7 +23,7 @@ WalletDialog::WalletDialog(QWidget *parent):
     connect(exitButton, SIGNAL(clicked()), this, SLOT(onExitClicked()));
 
     okButton = new QPushButton(tr("Ok"), this);
-    connect(exitButton, SIGNAL(clicked()), this, SLOT(onExitClicked()));
+    connect(okButton, SIGNAL(clicked()), this, SLOT(onOkClicked()));
 
     pinEdit = new QLineEdit("", this);
 
@@ -58,6 +60,21 @@ WalletDialog::~WalletDialog() {
 
 void WalletDialog::onOkClicked()
 {
+    connect(Client::instance(), SIGNAL(balanceReplenished(unsigned)), this, SLOT(onBalanceReplenished(unsigned)));
+    Client::instance()->replenishBalance(pinEdit->text());
+
+    MainWindow::instance()->setMode(MW_WAIT);
+}
+
+void WalletDialog::onBalanceReplenished(unsigned sum)
+{
+    disconnect(Client::instance(), SIGNAL(balanceReplenished(unsigned)), this, SLOT(onBalanceReplenished(unsigned)));
+    MainWindow::instance()->setMode(MW_NORMAL);
+
+    MainWindow::instance()->showMessage(
+         tr("Your balance replenished by ") + QString::number(sum) + tr(" RUR."));
+
+    close();
 }
 
 void WalletDialog::onExitClicked()
