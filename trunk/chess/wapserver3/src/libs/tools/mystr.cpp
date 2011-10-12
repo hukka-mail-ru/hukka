@@ -16,12 +16,12 @@ CMyStr::CMyStr( const char* _pcStr )
 	append( _pcStr );
 }
 
-CMyStr::CMyStr( TVecChar * _pcStr )
+CMyStr::CMyStr( const TVecChar * _pcStr )
 {
     append( &_pcStr->at(0), _pcStr->size() );
 }
 
-CMyStr::CMyStr( std::string _cstdStr )
+CMyStr::CMyStr( const std::string& _cstdStr )
 {
 	append( _cstdStr );
 }
@@ -39,6 +39,14 @@ CMyStr CMyStr::operator+( CMyStr& _myStr ) const
 	myStr.append( _myStr );
 
 	return myStr;
+}
+
+int CMyStr::toInt() const
+{
+    std::istringstream stream(*this);
+    int number = 0;
+    stream >> number;
+    return number;
 }
 
 CMyStr Int2Str( int _nVal )

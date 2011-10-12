@@ -40,24 +40,25 @@ class CMyStr : public std::string
 
 public:
 
-	
+
 
 	CMyStr();
 
 	CMyStr( int );
 
 	CMyStr( const char* );
-    
-    CMyStr( TVecChar * );
 
-	CMyStr( std::string );
+    CMyStr( const TVecChar * );
+
+	CMyStr( const std::string& );
 
 	virtual ~CMyStr();
 
 
 
-	CMyStr	operator+( CMyStr& ) const;	
+	CMyStr	operator+( CMyStr& ) const;
 
+	int toInt() const;
 };
 
 

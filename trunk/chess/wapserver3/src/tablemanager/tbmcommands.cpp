@@ -21,6 +21,7 @@
  * 7 - DELETED ?
  */
 
+using namespace std;
 
 TbmCommands::TbmCommands()
 : m_nLastId(0), m_LastParameterID(0)
@@ -597,3 +598,20 @@ uint32_t TbmCommands::RandomOpponent(uint32_t _nLogicID, uint32_t _nPlayerID, co
 
 }
 
+
+int TbmCommands::ReplenishBalance( uint32_t userID, const CMyStr& pin )
+{
+    int replenished = 0;
+
+    CMyStr query = CMyStr("select ReplenishBalance(")  + CMyStr(userID) + CMyStr(", ") + pin + CMyStr(")");
+
+    TTable table;
+    SqlTable sqlTable("");
+    bool res = sqlTable.Query(query, &table);
+    if(!res || table.empty() || table.size() != 1)
+    {
+        return QUERY_ERROR;
+    }
+
+    return table[0][0].toInt();
+}

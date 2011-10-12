@@ -41,9 +41,31 @@ INSERT INTO tbAccount (PlayerID, Balance) VALUES (101, 700);
 SELECT * FROM tbAccount;
 
 
+DROP TABLE IF EXISTS tbPIN;
+CREATE TABLE tbPIN
+(
+  GUID INT UNSIGNED NOT NULL AUTO_INCREMENT,
+  PIN VARCHAR(50) NOT NULL,
+  FixedSum INT UNSIGNED DEFAULT '0',
+  PRIMARY KEY(GUID)
+);
+
+INSERT INTO tbPIN (PIN, FixedSum) VALUES ('1100', 100);
+INSERT INTO tbPIN (PIN, FixedSum) VALUES ('1200', 200);
+INSERT INTO tbPIN (PIN, FixedSum) VALUES ('1300', 300);
+INSERT INTO tbPIN (PIN, FixedSum) VALUES ('1400', 400);
+INSERT INTO tbPIN (PIN, FixedSum) VALUES ('1500', 500);
+INSERT INTO tbPIN (PIN, FixedSum) VALUES ('1600', 600);
+INSERT INTO tbPIN (PIN, FixedSum) VALUES ('1700', 700);
+INSERT INTO tbPIN (PIN, FixedSum) VALUES ('1800', 800);
+INSERT INTO tbPIN (PIN, FixedSum) VALUES ('1900', 900);
+
+SELECT * FROM tbPIN;
+
 
 
 delimiter //
+
 DROP PROCEDURE IF EXISTS AddToBalance;
 CREATE PROCEDURE AddToBalance (IN player INT, IN val INT)
 sproc:BEGIN
@@ -54,4 +76,24 @@ select Balance into curBalance from tbAccount where PlayerID = player;
 
 update tbAccount set Balance=curBalance+val where PlayerID=player;
 
+END;
+
+
+
+DROP FUNCTION IF EXISTS ReplenishBalance;
+CREATE FUNCTION ReplenishBalance (player INT, PinValue VARCHAR(50))
+returns INT 
+DETERMINISTIC
+BEGIN
+
+DECLARE fixSum INT;
+set fixSum = -1;
+
+select FixedSum into fixSum from tbPIN where PIN = PinValue;
+if fixSum > 0 THEN 
+	call AddToBalance(player, fixSum);
+	delete from tbPIN where PIN = PinValue;
+end if;
+
+return fixSum;
 END;

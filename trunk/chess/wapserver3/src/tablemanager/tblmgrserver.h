@@ -75,6 +75,8 @@ class CTblMgrServer : public SocketManager, public AccessInfo
 
         void    Random( uint32_t _nUserID, const TVecChar* _vecData );
 
+        void    ReplenishBalance( uint32_t userID, const TVecChar* vec );
+
         void	DoAllMsg( MySocket* );
         void	setSocket( MySocket * _pSocket );
         void	newMsg( ClientMsg* _pMsg );

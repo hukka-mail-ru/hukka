@@ -16,5 +16,6 @@ const int ST_NOTVALID_VALUE_TOO_SMALL    = 17;
 const int ST_NOTVALID_VALUE_TOO_LARGE    = 18;
 const int ST_NOTVALID_DB_ERROR           = 19;
 const int ST_NOTVALID_NO_BALANCE         = 20;
+const int ST_NOTVALID_NO_SUCH_PIN        = 21;
 
 #endif
