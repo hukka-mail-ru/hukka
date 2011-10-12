@@ -9,6 +9,7 @@
 
 #include "Client.h"
 #include "Exception.h"
+#include <UI.h>
 #include <assert.h>
 #include <QtNetwork/QNetworkProxyQuery>
 #include <QtEndian>
@@ -1160,12 +1161,23 @@ void Client::processMessageTBM(const MessageHeader& header, const QByteArray& bu
     {
         // get server reply
         struct Reply {
+            char        isValid;
             quint32     sum;
         };
 
         Reply* reply = (Reply*)buffer.data();
 
-        emit balanceReplenished(reply->sum);
+        QString cant = tr("Can't replenish your account. ") + "\n\n";
+
+        switch(reply->isValid)
+        {
+            case ST_VALID:                  emit balanceReplenished(reply->sum);
+                                            emit gotMyBalance(UI::instance()->getPlayer(PT_ME).balance + reply->sum);
+                                            break;
+            case ST_NOTVALID_DB_ERROR:      emit error(cant + tr("Database error.")); break;
+            case ST_NOTVALID_NO_SUCH_PIN:   emit error(cant + QString(tr("No such PIN."))) ; break;
+            default:                        emit error(cant + tr("Internal server error.") + QString::number(reply->isValid)); break;
+        }
     }
 
     else if(header.cmd == ANS_GET_PARAMS)

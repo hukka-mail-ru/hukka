@@ -227,6 +227,7 @@ void MainMenu::onAuthorized()
         connect(Client::instance(), SIGNAL(gotMyGameTable(TABLEID, bool)), this, SLOT(onGotMyGameTable(TABLEID, bool)));
         Client::instance()->getMyGameTable(LOGIC_ID_CHESS);
     }
+
     /*
     else if(mClickedButton == chatButton && !mChat)
     {
@@ -266,6 +267,7 @@ void MainMenu::onGotMyBalance(unsigned myBalance)
     if(mClickedButton == walletButton)
     {
         MainWindow::instance()->showWalletDialog();
+        mClickedButton = NULL;
     }
 }
 

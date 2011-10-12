@@ -13,6 +13,8 @@
 WalletDialog::WalletDialog(QWidget *parent):
     MyDialog(parent)
 {
+    qDebug() << "WalletDialog constr";
+
     // TODO Auto-generated constructor stub
     label = new QLabel(tr("You have now ") + QString::number(UI::instance()->getPlayer(PT_ME).balance) +
                        tr(" RUR in your wallet. ") + "\n\n" +
@@ -55,6 +57,7 @@ WalletDialog::WalletDialog(QWidget *parent):
 
 WalletDialog::~WalletDialog() {
     // TODO Auto-generated destructor stub
+    qDebug() << "WalletDialog destr";
 }
 
 
