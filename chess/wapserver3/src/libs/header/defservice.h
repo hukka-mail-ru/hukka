@@ -8,6 +8,9 @@ const int       INVALID_TIME = 0xFFFFFFFF;
 const int       DEALER_PERCENT = 10; // PERCENT
 const int       MIN_DEALER_PRIZE = 1; // RUR
 
+const int       NO_SUCH_PIN = -1; // invalid Pin on calling ReplenishBalance
+const int       QUERY_ERROR = -10;
+
 const int		ST_CREATION	= 0;
 const int		ST_OPEN		= 1;
 const int		ST_FULL		= 2;
@@ -53,6 +56,8 @@ const int ANS_RANDOM_OP      = 61;
 const int ANS_GET_PARAMS     = 62;
 const int ANS_SET_PARAMS     = 63;
 const int ANS_DELETE         = 64;
+const int CMD_REPLENISH      = 65;
+const int ANS_REPLENISH      = 66;
 
 
 // CHESS SERVER MESSAGES 80 -
@@ -165,6 +170,8 @@ public:
                 case ANS_GET_PARAMS  :     res = "ANS_GET_PARAMS"; break;
                 case ANS_SET_PARAMS  :     res = "ANS_SET_PARAMS"; break;
                 case ANS_DELETE      :     res = "ANS_DELETE"; break;
+                case CMD_REPLENISH :     res = "CMD_REPLENISH"; break;
+                case ANS_REPLENISH :     res = "ANS_REPLENISH"; break;
 
                 // CHS
                 case CMD_JOIN:  res = "CMD_JOIN"; break;

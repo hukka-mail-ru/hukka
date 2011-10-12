@@ -16,6 +16,8 @@
 CTblMgrServer* CTblMgrServer::m_pSelf = 0;
 int CTblMgrServer::m_nRefCount = 0;
 
+using namespace std;
+
 CTblMgrServer* CTblMgrServer::Instance()
 {
 	if( m_pSelf == 0 )
@@ -154,6 +156,11 @@ void CTblMgrServer::newMsg( ClientMsg* _pMsg )
         }
         case CMD_SET_PARAMS:
         {
+            break;
+        }
+        case CMD_REPLENISH:
+        {
+            ReplenishBalance( _pMsg->GetTo(), &vecCmd );
             break;
         }
 		case CMD_GETMYTBL:
@@ -415,6 +422,26 @@ void CTblMgrServer::Random( uint32_t _nUserID, const TVecChar* _vecData )
 
     sendMsg( _nUserID, &sendedMsg );
 
+}
+
+void CTblMgrServer::ReplenishBalance( uint32_t userID, const TVecChar* vec )
+{
+    CMyStr pin(vec);
+    int res = m_TbmCommands.ReplenishBalance( userID, pin );
+    char valid = ST_VALID;
+    switch(res)
+    {
+        case NO_SUCH_PIN: valid = ST_NOTVALID_NO_SUCH_PIN; break;
+        case QUERY_ERROR: valid = ST_NOTVALID_DB_ERROR;    break;
+        default: break;
+    }
+
+    CSendedMsg sendedMsg;
+    sendedMsg.addData((char)ANS_REPLENISH);
+    sendedMsg.addData((char)valid);
+    sendedMsg.addData((unsigned)res);
+
+    sendMsg( userID, &sendedMsg );
 }
 
 void CTblMgrServer::GetParams( uint32_t _nUserID, const TVecChar* _vecData )

@@ -3,6 +3,7 @@
 
 #include "sqllogiclist.h"
 #include <stdint.h>
+#include <string>
 
 struct SFindParameters
 {
@@ -110,6 +111,8 @@ public:
 
 
 	int GetOwner(int _nLogicID, int _nPlayerID);
+
+	int ReplenishBalance( uint32_t userID, const CMyStr& pin );
 
 	/**
 	 * @brief Метод возвращает ID случаного стола среди открытых со статусом 2
