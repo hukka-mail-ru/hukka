@@ -507,17 +507,23 @@ Log.i(QtTAG, "updateWindow");
     {
         softwareKeyboardIsVisible = true;
         InputMethodManager imm = (InputMethodManager)getSystemService(Context.INPUT_METHOD_SERVICE);
-        imm.toggleSoftInput(InputMethodManager.SHOW_FORCED, InputMethodManager.HIDE_IMPLICIT_ONLY );
+		// commented to prevent showing SoftKeyboar again
+        //imm.toggleSoftInput(InputMethodManager.SHOW_FORCED, InputMethodManager.HIDE_NOT_ALWAYS );
+		imm.toggleSoftInput(0, 0 );
+
     }
 
     public void hideSoftwareKeyboard()
     {
+/* commented to prevent showing SoftKeyboar again
         if (softwareKeyboardIsVisible)
         {
             InputMethodManager imm = (InputMethodManager)getSystemService(Context.INPUT_METHOD_SERVICE);
             imm.toggleSoftInput(0, 0);
         }
         softwareKeyboardIsVisible = false;
+
+*/
     }
 
     @Override
