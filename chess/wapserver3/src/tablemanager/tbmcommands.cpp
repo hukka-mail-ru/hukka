@@ -603,7 +603,7 @@ int TbmCommands::ReplenishBalance( uint32_t userID, const CMyStr& pin )
 {
     int replenished = 0;
 
-    CMyStr query = CMyStr("select ReplenishBalance(")  + CMyStr(userID) + CMyStr(", ") + pin + CMyStr(")");
+    CMyStr query = CMyStr("select ReplenishBalance(")  + CMyStr(userID) + CMyStr(", '") + pin + CMyStr("')");
 
     TTable table;
     SqlTable sqlTable("");
