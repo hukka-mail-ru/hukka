@@ -92,6 +92,7 @@ private:
     QGraphicsView *mGraphicsView;
 
     QDialog*  mCurrentDialog;
+    bool mGameDialogActivated;
 
     MainMenu* mMainMenu;
     GameScene* mGameScene;
@@ -100,6 +101,7 @@ private:
 
     int mWidth;
     int mHeight;
+
 
 
 };

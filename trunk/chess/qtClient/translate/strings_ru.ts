@@ -4,7 +4,7 @@
 <context>
     <name></name>
     <message>
-        <location filename="../src/Base/Defines.h" line="92"/>
+        <location filename="../src/Base/Defines.h" line="94"/>
         <source>all</source>
         <translation>всем</translation>
     </message>
@@ -812,7 +812,7 @@
 <context>
     <name>MainWindow</name>
     <message>
-        <location filename="../src/UI/MainWindow.cpp" line="66"/>
+        <location filename="../src/UI/MainWindow.cpp" line="67"/>
         <source>Good Old Chess</source>
         <translation>Good Old Chess</translation>
     </message>
@@ -940,7 +940,7 @@
         <translation>Игра окончена.</translation>
     </message>
     <message>
-        <location filename="../src/Base/Defines.h" line="157"/>
+        <location filename="../src/Base/Defines.h" line="159"/>
         <source>offline</source>
         <translation>оффлайн</translation>
     </message>
@@ -1064,7 +1064,7 @@ Please visit www.site.com to learn how to enable it.</source>
 <context>
     <name>UI</name>
     <message>
-        <location filename="../src/UI/UI.cpp" line="93"/>
+        <location filename="../src/UI/UI.cpp" line="102"/>
         <source>Your opponent has offered a draw. Agree?</source>
         <translation>Ваш противник предлагает ничью. Согласны?</translation>
     </message>
