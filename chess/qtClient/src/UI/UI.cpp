@@ -20,6 +20,7 @@ void UI::initialize(QApplication* app)
 
     mApp = app;
 
+    mGameOverTimer = new QTimer(this);
  //   qDebug() << "UI::initialize() ok";
 }
 
@@ -74,14 +75,22 @@ void UI::onGameOver(int status, int rating)
     Client::instance()->getPosition(mGameTable); // player must see the victory move
     Client::instance()->deleteLastGameResult();
 
-    QString text = Global::getGameResultText(status, rating) + "\n";
-
-    MainWindow::instance()->closeCurrentDialog();
+    mGameOverText = Global::getGameResultText(status, rating) + "\n";
 
     mGameState = GS_GAME_OVER;
     MainWindow::instance()->updateGameScene();
-    MainWindow::instance()->showGameDialog(text);
 
+    mGameOverTimer->start(GAME_OVER_TIMEOUT * 1000);
+    connect(mGameOverTimer, SIGNAL(timeout()), this, SLOT(onGameOverTimeout()));
+
+}
+
+void UI::onGameOverTimeout()
+{
+    mGameOverTimer->stop();
+    disconnect(mGameOverTimer, SIGNAL(timeout()), this, SLOT(onGameOverTimeout()));
+
+    MainWindow::instance()->showGameDialog(mGameOverText);
 }
 
 

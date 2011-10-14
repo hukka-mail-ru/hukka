@@ -6,6 +6,7 @@
 
 #include <Defines.h>
 #include <Pixmaps.h>
+#include <QTimer>
 
 // This class is responsible for LOGIC of the game and INSTANTIATIONS of main objects
 class UI: public QObject
@@ -64,6 +65,9 @@ private:
     Player mMe;
     Player mOpponent;
 
+    QTimer* mGameOverTimer;
+    QString mGameOverText;
+
 private slots:
 
 
@@ -71,6 +75,7 @@ private slots:
     void onDrawOffered();
     void onError(const QString& what);
     void onDisconnected();
+    void onGameOverTimeout();
 };
 
 

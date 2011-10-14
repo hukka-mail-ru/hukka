@@ -39,6 +39,7 @@
 void MainWindow::initialize()
 {
     mCurrentDialog = NULL;
+    mGameDialogActivated = false;
 
     // MAIN WINDOW BASICS
     centralwidget = new QWidget(this);
@@ -122,6 +123,8 @@ void MainWindow::setCurrentDialog(QDialog* dialog)
 
 void MainWindow::closeCurrentDialog()
 {
+    mGameDialogActivated = false;
+
     if(mCurrentDialog)
     {
         mCurrentDialog->close();
@@ -198,8 +201,12 @@ void MainWindow::showJoinGameDialog(const QList<GameTable>& tables)
 
 void MainWindow::showGameDialog(const QString& text)
 {
-    setCurrentDialog(new GameDialog(text, this));
-    setMode(MW_NORMAL);
+    if(!mGameDialogActivated)
+    {
+        setCurrentDialog(new GameDialog(text, this));
+        mGameDialogActivated = true;
+        setMode(MW_NORMAL);
+    }
 }
 
 void MainWindow::showOptionsDialog()
@@ -210,7 +217,6 @@ void MainWindow::showOptionsDialog()
 
 void MainWindow::showWaitDrawDialog()
 {
-  //  qDebug() << "MainWindow::showWaitDrawDialog";
     setCurrentDialog(new WaitDrawDialog(this));
     setMode(MW_NORMAL);
 }
