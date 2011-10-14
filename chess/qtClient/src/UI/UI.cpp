@@ -80,9 +80,10 @@ void UI::onGameOver(int status, int rating)
     mGameState = GS_GAME_OVER;
     MainWindow::instance()->updateGameScene();
 
+    // a timeout before showing the GameDialog,
+    // user must enjoy his victory:)
     mGameOverTimer->start(GAME_OVER_TIMEOUT * 1000);
     connect(mGameOverTimer, SIGNAL(timeout()), this, SLOT(onGameOverTimeout()));
-
 }
 
 void UI::onGameOverTimeout()
