@@ -1,3 +1,5 @@
+NOCOMMIT
+
 1>d:\dejarik\src\ui\Video.h(42) : error C2059: syntax error : '<L_TYPE_raw>'
 1>d:\dejarik\src\ui\Video.h(42) : error C2059: syntax error : ')'
 1>d:\dejarik\src\ui\Video.h(42) : error C2334: unexpected token(s) preceding ':'; skipping apparent function body
