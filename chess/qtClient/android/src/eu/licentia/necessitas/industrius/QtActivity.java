@@ -466,8 +466,12 @@ Log.i(QtTAG, "startApp 7");
                 {
 Log.i(QtTAG, "updateWindow");
 
-                    QtApplication.clearLostActions();
+                //    QtApplication.clearLostActions();
+
+
+
                     QtApplication.updateWindow();
+
                 }
         }
         super.onResume();

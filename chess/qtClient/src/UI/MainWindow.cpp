@@ -113,10 +113,6 @@ void MainWindow::setCurrentDialog(QDialog* dialog)
 
     mCurrentDialog = dialog;
 
-
-    // bind dialog to the current scene
-    QGraphicsScene* curScene = mGraphicsView->scene();
-
     mCurrentDialog->show();
 }
 
