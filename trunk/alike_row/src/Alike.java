@@ -39,9 +39,11 @@ class DescSortMismatches implements Comparator<Row>
 public class Alike 
 {    
     private ArrayList<Row> rows = new ArrayList<Row>();
+    private String fileName;
        
-   private void readFile(String fileName) 
+   private void readFile(String name) throws Exception
    {
+       fileName = name;
        Scanner scanner = null;
                
        try {
@@ -52,20 +54,15 @@ public class Alike
                processLine( scanner.nextLine() );
            }
        }
-       catch (IOException e) {
-           System.err.println("Ошибка: " + e);
-           e.printStackTrace();
-       }
        catch (Exception e)  {
-           System.err.println("Ошибка: " + e);
-           e.printStackTrace();
+           throw new Exception("Ошибка чтения файла. " + e);
        }
        finally  {
            scanner.close();
        }
    }
    
-   private void processLine(String line) throws Exception
+   private void processLine(String line)
    {
        Scanner scanner = new Scanner(line);
        scanner.useDelimiter("=");
@@ -90,10 +87,7 @@ public class Alike
                    
            rows.add(row);
        }
-       else 
-       {
-           throw new Exception("пустой или неправильный файл.");
-       }
+
    }
    
    private void checkLength() throws Exception
@@ -164,7 +158,6 @@ public class Alike
             alike.output();
         }
         catch (Exception e)  {
-            System.err.println("Ошибка: " + e);
             e.printStackTrace();
         }
         
