@@ -55,14 +55,14 @@ public class Alike
            }
        }
        catch (Exception e)  {
-           throw new Exception("Ошибка чтения файла. " + e);
+           throw new Exception("OSHIBKA CHTENIYA FAILA: " + e);
        }
        finally  {
            scanner.close();
        }
    }
    
-   private void processLine(String line)
+   private void processLine(String line) throws Exception
    {
        Scanner scanner = new Scanner(line);
        scanner.useDelimiter("=");
@@ -80,13 +80,21 @@ public class Alike
            {
                Character c = new Character(value.charAt(i));
                String s = c.toString();
-               numbers.add(Integer.parseInt(s));
+               try
+               {
+                   numbers.add(Integer.parseInt(s));
+               }
+               catch (NumberFormatException e)  {
+                   throw new Exception("NEPRAVILNYE DANNYE v stroke '" + name + "'. " + e);
+               }
+               
            }
            
            row.numbers = numbers;
                    
            rows.add(row);
        }
+       
 
    }
    
@@ -98,13 +106,13 @@ public class Alike
            {
                if(rows.get(row).numbers.size() != rows.get(i).numbers.size())
                {
-                   throw new Exception("разная длина данных в рядах " + rows.get(row).name + " и " + rows.get(i).name);
+                   throw new Exception("RAZNAYA DLINA: '" + rows.get(row).name + "' I '" + rows.get(i).name +  "'");
                }
            }
        }
    }
    
-   private void compareRows()
+   private void countMismatches()
    {
        for(int row=0; row<rows.size(); row++)
        {
@@ -133,7 +141,7 @@ public class Alike
        
        for(int i=0; i<rows.size(); i++)
        {
-           System.out.println(rows.get(i).name + ": отличий:  " +  rows.get(i).mismatches);
+           System.out.println(rows.get(i).name + ": OTLICHIJ:  " +  rows.get(i).mismatches);
            
          /*  ArrayList<Integer> numbers = rows.get(i).numbers;
            for(int j=0; j<numbers.size(); j++)
@@ -154,10 +162,11 @@ public class Alike
         {
             alike.readFile(args[0]);
             alike.checkLength();
-            alike.compareRows();
+            alike.countMismatches();
             alike.output();
         }
         catch (Exception e)  {
+            System.out.println(e);
             e.printStackTrace();
         }
         
