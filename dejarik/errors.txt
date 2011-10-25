@@ -1,4 +1,4 @@
-NOCOMMITfdsf
+NOCOMMITfdsfcds
 
 1>d:\dejarik\src\ui\Video.h(42) : error C2059: syntax error : '<L_TYPE_raw>'
 1>d:\dejarik\src\ui\Video.h(42) : error C2059: syntax error : ')'

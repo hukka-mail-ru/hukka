@@ -16,6 +16,12 @@ int main(int argc, char *argv[])
 {
     char led = 3;
 
+    if(argc != 2) 
+    {
+      printf("Please specify the byte, which is sent to the parallel port. Example: 'led 3'.\n");
+      exit(1);
+    }
+
     if(argc > 1)
     {
         led = atoi(argv[1]);
