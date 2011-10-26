@@ -70,7 +70,6 @@ public class Alike
        {
            String name = scanner.next().trim();
            String value = scanner.next().trim();
-        //   System.out.println("Name is : " + name.trim() + ", and Value is : " + value.trim());
 
            Row row = new Row();
            row.name = name;
@@ -139,15 +138,9 @@ public class Alike
    {
        Collections.sort(rows, new DescSortMismatches());  
        
-       for(int i=0; i<rows.size(); i++)
+       for(Row row : rows)
        {
-           System.out.println(rows.get(i).name + ": OTLICHIJ:  " +  rows.get(i).mismatches);
-           
-         /*  ArrayList<Integer> numbers = rows.get(i).numbers;
-           for(int j=0; j<numbers.size(); j++)
-           {
-               System.out.println("val is : " + numbers.get(j));
-           }*/
+           System.out.println(row.name + ": OTLICHIJ:  " +  row.mismatches);
        }
    }
    
@@ -157,6 +150,7 @@ public class Alike
 	
     public static void main(String[] args) 
     {
+        
         Alike alike = new Alike();
         try
         {
