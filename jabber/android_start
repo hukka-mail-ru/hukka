@@ -1,0 +1,2 @@
+~/distr/qt_android/ant-1.8.0/bin/ant debug
+adb install -r bin/JabberClient-debug.apk
