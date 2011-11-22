@@ -36,6 +36,7 @@ class DescSortMismatches implements Comparator<Row>
 
 
 
+
 public class Alike 
 {    
     private ArrayList<Row> rows = new ArrayList<Row>();
@@ -55,7 +56,7 @@ public class Alike
            }
        }
        catch (Exception e)  {
-           throw new Exception("OSHIBKA CHTENIYA FAILA: " + e);
+           throw new Exception("Ошибка чтения файла '" + fileName + "'. " + e);
        }
        finally  {
            scanner.close();
@@ -84,7 +85,7 @@ public class Alike
                    numbers.add(Integer.parseInt(s));
                }
                catch (NumberFormatException e)  {
-                   throw new Exception("NEPRAVILNYE DANNYE v stroke '" + name + "'. " + e);
+                   throw new Exception("Неправильные данные в строке '" + name + "'. " + e);
                }
                
            }
@@ -105,7 +106,7 @@ public class Alike
            {
                if(rows.get(row).numbers.size() != rows.get(i).numbers.size())
                {
-                   throw new Exception("RAZNAYA DLINA: '" + rows.get(row).name + "' I '" + rows.get(i).name +  "'");
+                   throw new Exception("Разная длина: '" + rows.get(row).name + "' и '" + rows.get(i).name +  "'");
                }
            }
        }
@@ -137,10 +138,10 @@ public class Alike
    private void output()
    {
        Collections.sort(rows, new DescSortMismatches());  
-       
+               
        for(Row row : rows)
-       {
-           System.out.println(row.name + ": OTLICHIJ:  " +  row.mismatches);
+       {   
+           Utf8.println(row.name + ":\t кол-во отличий: " +  row.mismatches);
        }
    }
    
@@ -160,7 +161,7 @@ public class Alike
             alike.output();
         }
         catch (Exception e)  {
-            System.out.println(e);
+            Utf8.println(e.getMessage());
             e.printStackTrace();
         }
         
