@@ -1,5 +1,8 @@
 <h3>Установка EJB</h3>
 Скачать и установить J2EE SDK отсюда: http://java.sun.com/j2ee/sdk_1.3/index.html.<br>
+Также должно быть установлено:
+     J2SE SDK (JDK)
+     ant  
 <br>
 
 <h3>Исходники примеров </h3>
