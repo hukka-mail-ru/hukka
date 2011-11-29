@@ -3,6 +3,16 @@
 <br>
 
 <h3>Исходники примеров </h3>
+На сайте java/oracle они недоступны. поэтому можно скачать и установить  glassfish??? (поддерживающий спецификацию Java EE). У меня он установился с такими параметрами:<br>
+<br>
+glassfish server: ~/distr/glassfish3<br>
+domain name: domain1<br>
+admin port: 4848<br>
+http port: 8080<br>
+username: admin<br>
+pwd: 1<br>
+<br>
+Исходники примеров будут здесь:
 ~/distr/glassfish3/glassfish/docs/javaee-tutorial/examples
 
 <h3>Окружение</h3>
@@ -22,12 +32,3 @@ http://java.sun.com/j2ee/tutorial/1_3-fcs/doc/GettingStarted.html
 <br>
 http://java.sun.com/j2ee/sdk_1.3/install.html
 http://java.sun.com/j2ee/tutorial/1_3-fcs/doc/GettingStarted2.html#67955
-<br>
-Скачать и установить сервер glassfish??? (поддерживающий спецификацию Java EE). У меня он установился с такими параметрами:<br>
-<br>
-glassfish server: ~/distr/glassfish3<br>
-domain name: domain1<br>
-admin port: 4848<br>
-http port: 8080<br>
-username: admin<br>
-pwd: 1<br>
