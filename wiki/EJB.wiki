@@ -3,7 +3,7 @@
 Скачать и установить J2EE SDK.<br>
 При этом установится и запустится сервер glassfish с такими параметрами:<br>
 <br>
-Glass Fish server: ~/distr/glassfish3<br>
+glassfish server: ~/distr/glassfish3<br>
 Domain name: domain1<br>
 admin port: 4848<br>
 http port: 8080<br>
