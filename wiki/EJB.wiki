@@ -9,3 +9,7 @@ admin port: 4848<br>
 http port: 8080<br>
 username: admin<br>
 pwd: 1<br>
+
+<h3>Hello World: J2EE application client</h3>
+
+http://java.sun.com/j2ee/tutorial/1_3-fcs/doc/GettingStarted.html
