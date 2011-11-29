@@ -1,7 +1,9 @@
 <h3>Установка EJB</h3>
 
 Скачать и установить J2EE SDK.<br>
-При этом установится и запустится сервер glassfish (поддерживающий спецификацию Java EE) с такими параметрами:<br>
+http://java.sun.com/j2ee/sdk_1.3/index.html.<br>
+<br>
+Скачать и установить сервер glassfish??? (поддерживающий спецификацию Java EE). У меня он установился с такими параметрами:<br>
 <br>
 glassfish server: ~/distr/glassfish3<br>
 domain name: domain1<br>
