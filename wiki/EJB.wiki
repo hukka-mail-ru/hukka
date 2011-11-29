@@ -17,9 +17,9 @@ http://glassfish.java.net/downloads/quickstart/index.html
 
 <h3>Glass fish </h3>
 Команда запуска GlassFish<br>
-После этого, войти на сервер: home/ssy/distr/glassfish3/bin/asadmin<br>
-start-domain<br>
-start-database --dbhome /home/ssy/distr/glassfish3/javadb<br>
+После этого, войти на сервер: home/ssy/distr/glassfish3/bin/asadmin и выполнить:<br>
+    start-domain<br>
+    start-database --dbhome /home/ssy/distr/glassfish3/javadb<br>
 <br>
 После этого становится доступен вход на сервер через web-interface:<br>
 http://localhost:4848
