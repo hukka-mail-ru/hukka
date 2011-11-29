@@ -1,22 +1,15 @@
 <h3>Установка EJB</h3>
-Скачать и установить J2EE SDK отсюда: http://java.sun.com/j2ee/sdk_1.3/index.html.<br>
-Также должно быть установлено:
-     J2SE SDK (JDK)<br>
-     ant  <br>
+Скачать и установить J2EE SDK. При этом установится и application-сервер glassfish.
 
-
+   glassfish server: ~/distr/glassfish3<br>
+   domain name: domain1<br>
+   admin port: 4848<br>
+   http port: 8080<br>
+   username: admin<br>
+   pwd: 1<br>
 
 <h3>Исходники примеров </h3>
-На сайте java/oracle они недоступны. поэтому можно скачать и установить  сервер glassfish (поддерживающий спецификацию Java EE). У меня он установился с такими параметрами:<br>
-<br>
-glassfish server: ~/distr/glassfish3<br>
-domain name: domain1<br>
-admin port: 4848<br>
-http port: 8080<br>
-username: admin<br>
-pwd: 1<br>
-<br>
-Исходники примеров будут здесь:
+
 ~/distr/glassfish3/glassfish/docs/javaee-tutorial/examples
 
 <h3>Glass fish </h3>
