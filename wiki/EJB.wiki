@@ -1,9 +1,9 @@
 <h3>Установка EJB</h3>
 
 Скачать и установить J2EE SDK.<br>
-При этом установится и запустится сервер GlassFish с такими параметрами:<br>
+При этом установится и запустится сервер glassfish с такими параметрами:<br>
 <br>
-GlassFish server: ~/distr/glassfish3<br>
+Glass Fish server: ~/distr/glassfish3<br>
 Domain name: domain1<br>
 admin port: 4848<br>
 http port: 8080<br>
