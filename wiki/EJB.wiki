@@ -4,7 +4,7 @@
 При этом установится и запустится сервер glassfish с такими параметрами:<br>
 <br>
 glassfish server: ~/distr/glassfish3<br>
-Domain name: domain1<br>
+domain name: domain1<br>
 admin port: 4848<br>
 http port: 8080<br>
 username: admin<br>
