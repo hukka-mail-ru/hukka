@@ -19,8 +19,8 @@ pwd: 1<br>
 Исходники примеров будут здесь:
 ~/distr/glassfish3/glassfish/docs/javaee-tutorial/examples
 
-
-
+<h3>Glass fish </h3>
+[Команда запуска glassfish]
 
 <h3>Окружение</h3>
     J2EE_HOME - the directory where you've installed this release.<br>
