@@ -10,6 +10,8 @@ http port: 8080<br>
 username: admin<br>
 pwd: 1<br>
 
+<h3>Исходники примеров </h3>
+~/distr/glassfish3/glassfish/docs/javaee-tutorial/examples
 
 <h3>Окружение(???) </h3>
 Before running the J2EE SDK, you must set these environment variables:<br>
