@@ -21,6 +21,9 @@ http://glassfish.java.net/downloads/quickstart/index.html
 start-domain<br>
 start-database --dbhome /home/ssy/distr/glassfish3/javadb<br>
 <br>
+После этого становится доступен вход на сервер через web-interface:<br>
+http://localhost:4848
+<br>
 
 <h3>Окружение</h3>
     J2EE_HOME - the directory where you've installed this release.<br>
