@@ -15,7 +15,7 @@ pwd: 1<br>
 <h3>Исходники примеров </h3>
 ~/distr/glassfish3/glassfish/docs/javaee-tutorial/examples
 
-<h3>Окружение(???) </h3>
+<h3>Окружение</h3>
 Before running the J2EE SDK, you must set these environment variables:<br>
     J2EE_HOME - the directory where you've installed this release.<br>
     JAVA_HOME - the directory where the Java 2 SDK Standard Edition is installed.<br>
