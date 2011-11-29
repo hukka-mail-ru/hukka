@@ -24,6 +24,10 @@ http://glassfish.java.net/downloads/quickstart/index.html
 После этого становится доступен вход на сервер через web-interface:<br>
 http://localhost:4848
 <br>
+    развернуть приложение: deploy sample-dir/hello.war
+    обратиться к веб-интерфейсу приложения: http://localhost:8080/hello
+    список развернутых приложений: list-applications
+<br>
 
 <h3>Окружение</h3>
     J2EE_HOME - the directory where you've installed this release.<br>
