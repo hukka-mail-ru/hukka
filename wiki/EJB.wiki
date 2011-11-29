@@ -20,7 +20,8 @@ pwd: 1<br>
 <h3>Окружение</h3>
     J2EE_HOME - the directory where you've installed this release.<br>
     JAVA_HOME - the directory where the Java 2 SDK Standard Edition is installed.<br>
-    PATH - include the bin directory beneath the directory where you've installed this release.<br>
+    ANT_HOME - The location of the ant installation
+    PATH - Should include the bin directories of the J2EE SDK, J2SE, and ant installations.<br>
 
 У меня:<br>
     export JAVA_HOME=/usr/lib/jvm/java-6-sun-1.6.0.22<br>
