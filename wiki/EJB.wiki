@@ -9,6 +9,10 @@
     J2EE_HOME - the directory where you've installed this release.<br>
     JAVA_HOME - the directory where the Java 2 SDK Standard Edition is installed.<br>
     PATH - include the bin directory beneath the directory where you've installed this release.<br>
+<br>
+export JAVA_HOME=/usr/lib/jvm/java-6-sun-1.6.0.22<br>
+export J2EE_HOME=~/distr/j2sdkee1.3.1<br>
+export PATH=$PATH:$J2EE_HOME/bin<br>
 
 
 <h3>Hello World: J2EE application client</h3>
