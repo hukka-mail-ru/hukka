@@ -35,7 +35,14 @@ pwd: 1<br>
 
 ANT_HOME я не ставил, т.к. у меня есть ссылка в /usr/bin<br>
 
-
+<h3>Сборка примеров из tutorial-a</h3>
+<pre>
+cd ~/distr
+ln -s glassfish3/glassfish/docs/javaee-tutorial
+cd ~/distr/javaee-tutorial/examples/ejb/converter
+ant
+</pre>
+Ant создает каталог build.
 
 
 <h3>Hello World: J2EE application client</h3>
