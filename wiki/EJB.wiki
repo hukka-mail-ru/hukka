@@ -1,5 +1,5 @@
 <h3>Установка EJB</h3>
-Скачать и установить J2EE SDK. При этом установится и application-сервер glassfish.
+Скачать и установить J2EE SDK (http://www.oracle.com/technetwork/java/javaee/downloads/java-ee-sdk-6u3-jdk-7u1-downloads-523391.html). При этом установится и application-сервер glassfish.
 
    glassfish server: ~/distr/glassfish3<br>
    domain name: domain1<br>
