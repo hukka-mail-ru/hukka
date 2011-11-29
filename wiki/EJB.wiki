@@ -1,7 +1,26 @@
 <h3>Установка EJB</h3>
+(http://java.sun.com/j2ee/sdk_1.3/install.html)<br>
+<br>
+Скачать и установить J2EE SDK отсюда: http://java.sun.com/j2ee/sdk_1.3/index.html.<br>
+<br>
 
-Скачать и установить J2EE SDK.<br>
-http://java.sun.com/j2ee/sdk_1.3/index.html.<br>
+<h3>Исходники примеров </h3>
+http://java.sun.com/j2ee/tutorial/1_3-fcs/doc/GettingStarted2.html#67955
+~/distr/glassfish3/glassfish/docs/javaee-tutorial/examples
+
+<h3>Окружение</h3>
+(http://java.sun.com/j2ee/sdk_1.3/install.html#linux_soft)<br>
+<br>
+    J2EE_HOME - the directory where you've installed this release.<br>
+    JAVA_HOME - the directory where the Java 2 SDK Standard Edition is installed.<br>
+    PATH - include the bin directory beneath the directory where you've installed this release.<br>
+
+
+<h3>Hello World: J2EE application client</h3>
+
+http://java.sun.com/j2ee/tutorial/1_3-fcs/doc/GettingStarted.html
+<br>
+<br>
 <br>
 Скачать и установить сервер glassfish??? (поддерживающий спецификацию Java EE). У меня он установился с такими параметрами:<br>
 <br>
@@ -11,17 +30,3 @@ admin port: 4848<br>
 http port: 8080<br>
 username: admin<br>
 pwd: 1<br>
-
-<h3>Исходники примеров </h3>
-~/distr/glassfish3/glassfish/docs/javaee-tutorial/examples
-
-<h3>Окружение</h3>
-Before running the J2EE SDK, you must set these environment variables:<br>
-    J2EE_HOME - the directory where you've installed this release.<br>
-    JAVA_HOME - the directory where the Java 2 SDK Standard Edition is installed.<br>
-    PATH - include the bin directory beneath the directory where you've installed this release.<br>
-
-
-<h3>Hello World: J2EE application client</h3>
-
-http://java.sun.com/j2ee/tutorial/1_3-fcs/doc/GettingStarted.html
