@@ -10,6 +10,16 @@ http port: 8080<br>
 username: admin<br>
 pwd: 1<br>
 
+
+<h3>Окружение</h3>
+(???) <br>
+Before running the J2EE SDK, you must set these environment variables:<br>
+<br>
+    J2EE_HOME - the directory where you've installed this release.<br>
+    JAVA_HOME - the directory where the Java 2 SDK Standard Edition is installed.<br>
+    PATH - include the bin directory beneath the directory where you've installed this release.<br>
+
+
 <h3>Hello World: J2EE application client</h3>
 
 http://java.sun.com/j2ee/tutorial/1_3-fcs/doc/GettingStarted.html
