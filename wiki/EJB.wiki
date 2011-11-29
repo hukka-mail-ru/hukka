@@ -24,9 +24,9 @@ http://glassfish.java.net/downloads/quickstart/index.html
 После этого становится доступен вход на сервер через web-interface:<br>
 http://localhost:4848
 <br>
-    развернуть приложение: deploy sample-dir/hello.war
-    обратиться к веб-интерфейсу приложения: http://localhost:8080/hello
-    список развернутых приложений: list-applications
+    развернуть приложение: deploy sample-dir/hello.war<br>
+    обратиться к веб-интерфейсу приложения: http://localhost:8080/hello<br>
+    список развернутых приложений: list-applications<br>
 <br>
 
 <h3>Окружение</h3>
