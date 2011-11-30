@@ -1,23 +1,12 @@
-<h3>Установка EJB</h3>
-Скачать и установить J2EE SDK (http://www.oracle.com/technetwork/java/javaee/downloads/java-ee-sdk-6u3-jdk-7u1-downloads-523391.html). При этом установится и application-сервер glassfish.
+<h3>Установка IDE</h3>
 
-   glassfish server: ~/distr/glassfish3<br>
-   domain name: domain1<br>
-   admin port: 4848<br>
-   http port: 8080<br>
-   username: admin<br>
-   pwd: 1<br>
+Рекомендуется установить Netbeans EE, приспособленный для работы с сервером glassfish. Сервер входит в поставку Netbeans EE.
 
 Отдельный хелп по серверу glassfish:<br>
 http://glassfish.java.net/downloads/quickstart/index.html
 
-<h3>Исходники примеров </h3>
-
-~/distr/glassfish3/glassfish/docs/javaee-tutorial/examples
-
-<h3>Glass fish </h3>
-Команда запуска GlassFish<br>
-После этого, войти на сервер: home/ssy/distr/glassfish3/bin/asadmin и выполнить:<br>
+<h3>glassfish </h3>
+Войти на сервер: home/ssy/distr/glassfish3/bin/asadmin и выполнить:<br>
     start-domain<br>
     start-database --dbhome /home/ssy/distr/glassfish3/javadb<br>
 <br>
@@ -29,9 +18,10 @@ http://localhost:4848
     список развернутых приложений: list-applications<br>
 <br>
 
-<h3>Netbeans</h3>
 
-Рекомендуется установить Netbeans EE, приспособленный для работы с сервером glassfish.
+<h3>Исходники примеров </h3>
+
+~/distr/glassfish3/glassfish/docs/javaee-tutorial/examples
 
 
 <h3>Сборка примеров из tutorial-a</h3>
