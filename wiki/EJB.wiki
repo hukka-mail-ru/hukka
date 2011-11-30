@@ -1,3 +1,7 @@
+<h3>Tutorial</h3>
+http://docs.oracle.com/javaee/6/tutorial/doc/gexaj.html#gexba
+
+
 <h3>Установка IDE</h3>
 
 Рекомендуется установить Netbeans EE, приспособленный для работы с сервером glassfish. Сервер входит в поставку Netbeans EE.
@@ -23,7 +27,9 @@ http://localhost:4848
 
 <h3>Исходники примеров </h3>
 
-~/distr/glassfish3/glassfish/docs/javaee-tutorial/examples
+You can get the examples using the Update Tool.
+A detailed explanation can be found in the tutorial itself.
+
 
 
 <h3>Сборка примеров из tutorial-a</h3>
