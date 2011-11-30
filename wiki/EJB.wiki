@@ -29,18 +29,10 @@ http://localhost:4848
     список развернутых приложений: list-applications<br>
 <br>
 
-<h3>Окружение</h3>
-    J2EE_HOME - the directory where you've installed this release.<br>
-    JAVA_HOME - the directory where the Java 2 SDK Standard Edition is installed.<br>
-    ANT_HOME - The location of the ant installation<br>
-    PATH - Should include the bin directories of the J2EE SDK, J2SE, and ant installations.<br>
+<h3>Netbeans</h3>
 
-У меня:<br>
-    export JAVA_HOME=/usr/lib/jvm/java-6-sun-1.6.0.22<br>
-    export J2EE_HOME=~/distr/j2sdkee1.3.1<br>
-    export PATH=$PATH:$J2EE_HOME/bin<br>
+Рекомендуется установить Netbeans EE, приспособленный для работы с сервером glassfish.
 
-ANT_HOME я не ставил, т.к. у меня есть ссылка в /usr/bin<br>
 
 <h3>Сборка примеров из tutorial-a</h3>
 <pre>
