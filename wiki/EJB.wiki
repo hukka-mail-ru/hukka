@@ -1,5 +1,6 @@
-<h3>Tutorial</h3>
-http://docs.oracle.com/javaee/6/tutorial/doc/gexaj.html#gexba
+<h3>Общие сведения</h3>
+EJB - это технология в составе J2EE.
+Tutorial: http://docs.oracle.com/javaee/6/tutorial/doc/gexaj.html#gexba
 
 
 <h3>Установка IDE</h3>
