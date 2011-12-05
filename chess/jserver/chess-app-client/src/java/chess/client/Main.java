@@ -14,13 +14,13 @@ import chess.ejb.Chess;
 public class Main {
 
     @EJB
-    private static Chess chess;
+    private static Chess server;
     /**
      * @param args the command line arguments
      */
     public static void main(String[] args) {
         // TODO code application logic here
-        int i = chess.move();
+        String i = server.move();
         System.out.println(i);
     }
 }

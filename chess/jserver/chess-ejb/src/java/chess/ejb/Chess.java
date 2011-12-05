@@ -10,6 +10,6 @@ import javax.ejb.Remote;
 @Remote
 public interface Chess {
     
-    public int move();
+    public String move();
 
 }
