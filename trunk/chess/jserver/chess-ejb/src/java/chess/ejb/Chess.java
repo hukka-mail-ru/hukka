@@ -4,12 +4,17 @@
  */
 package chess.ejb;
 
-import javax.ejb.Remote;
 
+import javax.ejb.Remote;
+import java.util.concurrent.Future;
+import javax.ejb.Asynchronous;
 
 @Remote
 public interface Chess {
     
     public String move();
+    
+    public Future<String> win();
+
 
 }
