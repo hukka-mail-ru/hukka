@@ -6,7 +6,11 @@ package chess.ejb;
 
 import javax.ejb.Stateless;
 import java.sql.*;
-import java.util.*;
+import javax.ejb.Remote;
+import java.util.concurrent.Future;
+import javax.ejb.AsyncResult;
+import javax.ejb.Asynchronous;
+
 
 /**
  *
@@ -23,7 +27,14 @@ public class ChessBean implements Chess {
          return name;
      }
      
+     @Asynchronous
+     @Override
+     public Future<String> win()
+     {
+         return new AsyncResult<String>("Win!");
+     }
      
+         
      public String getData() 
      {
         Connection con = null;
