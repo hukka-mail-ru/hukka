@@ -13,7 +13,7 @@ http://glassfish.java.net/downloads/quickstart/index.html
 Также нужен ant, версии от 1.7
 
 <h3>glassfish </h3>
-Войти на сервер: home/ssy/distr/glassfish3/bin/asadmin и выполнить:<br>
+Войти на сервер: ~/distr/glassfish-3.1.1/bin/asadmin и выполнить:<br>
     start-domain<br>
     start-database --dbhome /home/ssy/distr/glassfish3/javadb<br>
 <br>
