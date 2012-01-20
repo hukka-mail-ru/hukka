@@ -1,8 +1,8 @@
 1. sudo aptitude install apache2 <br>
 2. In browser: http://127.0.0.1/   => it works! <br>
 3. sudo gedit /etc/apache2/sites-available/default => set my directory<br>
-4. sudo gedit /etc/apache2/httpd.conf => add:  ServerName localhost
-5. sudo /etc/init.d/apache2 restart  
-
-6. sudo aptitude install php5
-7. sudo aptitude install php5-mysql
+4. sudo gedit /etc/apache2/httpd.conf => add:  ServerName localhost<br>
+5. sudo /etc/init.d/apache2 restart  <br>
+<br>
+6. sudo aptitude install php5<br>
+7. sudo aptitude install php5-mysql<br>
