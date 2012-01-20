@@ -3,3 +3,5 @@
 3. sudo gedit /etc/apache2/sites-available/default => set my directory<br>
 4. sudo gedit /etc/apache2/httpd.conf => add:  ServerName localhost
 5. sudo /etc/init.d/apache2 restart  
+
+6. sudo aptitude install php5
