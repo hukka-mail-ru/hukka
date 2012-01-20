@@ -1,3 +1,4 @@
 1. sudo aptitude install apache2 <br>
 2. In browser: http://127.0.0.1/   => it works! <br>
-3. sudo gedit /etc/apache2/sites-available/default <br>
+3. sudo gedit /etc/apache2/sites-available/default => set my directory<br>
+4. sudo /etc/init.d/apache2 restart  
