@@ -13,7 +13,7 @@
 //		RUSSIAN		//
 
 //default character set, that will be used
-define('DEFAULT_CHARSET', 'windows-1251');
+define('DEFAULT_CHARSET', 'utf-8');
 define('LINK_TO_HOMEPAGE', 'Главная');
 define('PRODUCTS_BEST_CHOISE', '<h5>Популярные продукты</h5>');
 define('MORE_INFO_ON_PRODUCT', 'подробнее...');

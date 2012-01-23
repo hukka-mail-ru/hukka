@@ -13,7 +13,7 @@
 //		ENGLISH		//
 
 //default character set, that will be used
-define('DEFAULT_CHARSET', 'windows-1251');
+define('DEFAULT_CHARSET', 'utf-8');
 define('LINK_TO_HOMEPAGE', 'Home');
 define('PRODUCTS_BEST_CHOISE', '<h5>Highest rated products:</h5>');
 define('MORE_INFO_ON_PRODUCT', 'more info...');
@@ -168,6 +168,7 @@ define('CUSTOMER_ADDRESS', 'Address:');
 define('CUSTOMER_PHONE_NUMBER', 'Phone number:');
 
 define('ADMIN_PICTURE_NOT_UPLOADED', '(picture not uploaded)');
+
 
 
 //errors
