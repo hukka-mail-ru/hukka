@@ -14,199 +14,199 @@
 
 //default character set, that will be used
 define('DEFAULT_CHARSET', 'windows-1251');
-define('LINK_TO_HOMEPAGE', 'Главная');
-define('PRODUCTS_BEST_CHOISE', '<h5>Популярные продукты</h5>');
-define('MORE_INFO_ON_PRODUCT', 'подробнее...');
-define('ENLARGE_PICTURE', 'увеличить...');
-define('ADD_TO_CART_STRING', 'добавить в корзину');
-define('LIST_PRICE', 'Старая цена');
-define('CURRENT_PRICE', 'Наша цена');
-define('YOU_SAVE', 'Вы экономите');
-define('IN_STOCK', 'Наличие на складе');
-define('VOTING_FOR_ITEM_TITLE', 'Оцените товар!');
-define('MARK_EXCELLENT', 'Отлично!');
-define('MARK_GOOD', 'Хорошо');
-define('MARK_AVERAGE', 'Средне');
-define('MARK_POOR', 'Плохо');
-define('MARK_PUNY', 'Очень плохо');
-define('VOTE_BUTTON', 'Оценить!');
-define('VOTES_FOR_ITEM_STRING', 'голосов');
+define('LINK_TO_HOMEPAGE', 'Р“Р»Р°РІРЅР°СЏ');
+define('PRODUCTS_BEST_CHOISE', '<h5>РџРѕРїСѓР»СЏСЂРЅС‹Рµ РїСЂРѕРґСѓРєС‚С‹</h5>');
+define('MORE_INFO_ON_PRODUCT', 'РїРѕРґСЂРѕР±РЅРµРµ...');
+define('ENLARGE_PICTURE', 'СѓРІРµР»РёС‡РёС‚СЊ...');
+define('ADD_TO_CART_STRING', 'РґРѕР±Р°РІРёС‚СЊ РІ РєРѕСЂР·РёРЅСѓ');
+define('LIST_PRICE', 'РЎС‚Р°СЂР°СЏ С†РµРЅР°');
+define('CURRENT_PRICE', 'РќР°С€Р° С†РµРЅР°');
+define('YOU_SAVE', 'Р’С‹ СЌРєРѕРЅРѕРјРёС‚Рµ');
+define('IN_STOCK', 'РќР°Р»РёС‡РёРµ РЅР° СЃРєР»Р°РґРµ');
+define('VOTING_FOR_ITEM_TITLE', 'РћС†РµРЅРёС‚Рµ С‚РѕРІР°СЂ!');
+define('MARK_EXCELLENT', 'РћС‚Р»РёС‡РЅРѕ!');
+define('MARK_GOOD', 'РҐРѕСЂРѕС€Рѕ');
+define('MARK_AVERAGE', 'РЎСЂРµРґРЅРµ');
+define('MARK_POOR', 'РџР»РѕС…Рѕ');
+define('MARK_PUNY', 'РћС‡РµРЅСЊ РїР»РѕС…Рѕ');
+define('VOTE_BUTTON', 'РћС†РµРЅРёС‚СЊ!');
+define('VOTES_FOR_ITEM_STRING', 'РіРѕР»РѕСЃРѕРІ');
 
-define('LOGOUT_LINK', 'Выйти из сеанса...');
-define('ADMINISTRATE_LINK', '>> АДМИНИСТРИРОВАНИЕ <<');
+define('LOGOUT_LINK', 'Р’С‹Р№С‚Рё РёР· СЃРµР°РЅСЃР°...');
+define('ADMINISTRATE_LINK', '>> РђР”РњРРќРРЎРўР РР РћР’РђРќРР• <<');
 
-define('ANSWER_YES', 'да');
-define('ANSWER_NO', 'нет');
-define('SAVE_BUTTON', 'Сохранить');
-define('DELETE_BUTTON', 'Удалить');
-define('CLOSE_BUTTON', 'Закрыть');
-define('CANCEL_BUTTON', 'Отмена');
-define('UPDATE_BUTTON', 'Обновить');
-define('ADD_BUTTON', 'Добавить');
-define('ADMIN_ENABLED', 'Вкл.');
+define('ANSWER_YES', 'РґР°');
+define('ANSWER_NO', 'РЅРµС‚');
+define('SAVE_BUTTON', 'РЎРѕС…СЂР°РЅРёС‚СЊ');
+define('DELETE_BUTTON', 'РЈРґР°Р»РёС‚СЊ');
+define('CLOSE_BUTTON', 'Р—Р°РєСЂС‹С‚СЊ');
+define('CANCEL_BUTTON', 'РћС‚РјРµРЅР°');
+define('UPDATE_BUTTON', 'РћР±РЅРѕРІРёС‚СЊ');
+define('ADD_BUTTON', 'Р”РѕР±Р°РІРёС‚СЊ');
+define('ADMIN_ENABLED', 'Р’РєР».');
 
-define('STRING_BACK_TO_SHOPPING', 'Вернуться к покупкам');
-define('STRING_SHOW', 'показывать');
-define('STRING_NUMBER', 'числа');
-define('STRING_RELATED_ITEMS', 'С этим товаром мы рекомендуем');
-define('STRING_NUMBER_ONLY', 'только число');
-define('STRING_EMPTY_CATEGORY', 'нет товаров');
-define('STRING_NO_ORDERS', 'нет заказов');
-define('STRING_SEARCH', 'Поиск');
-define('STRING_LANGUAGE', 'Язык');
-define('STRING_PRICELIST', 'Прайс-лист');
-define('STRING_GREETINGS', '<h1>Мой интернет-магазин</h1>
-<p>Этот интернет-магазин работает с использованием программного обеспечения <a href="http://www.shop-script.ru/php-shopping-cart-software-1.html">Shop-Script FREE</a> - бесплатных скриптов для создания интернет-магазинов и каталогов.<br>
-<p>Для редактирования этого текста откройте файл <b>languages/russian.php</b><br>
-в любом текстовом редакторе (например, Блокноте).');
-define('STRING_FOUND', 'Найдено ');
-define('STRING_NO_MATCHES_FOUND', 'Ничего не найдено');
-define('STRING_PRODUCTS', 'товар(ов)');
-define('STRING_ORDER_ID', 'Номер заказа');
-define('STRING_ORDER_PLACED', '<div align="center"><h1>Спасибо за Ваш заказ!</h1><h3>Мы свяжемся с Вами для подтверждения заказа в ближайшее время.</h3></div>');
-define('STRING_PLACE_ORDER', 'Оформить заказ!');
-define('STRING_NEXT', 'след');
-define('STRING_PREVIOUS', 'пред');
-define('STRING_SHOWALL', 'показать все');
-define('STRING_REQUIRED', '<font color=red>*</font> обязательны для заполнения');
-define('STRING_CONTACT_INFORMATION', 'КОНТАКТНАЯ ИНФОРМАЦИЯ');
+define('STRING_BACK_TO_SHOPPING', 'Р’РµСЂРЅСѓС‚СЊСЃСЏ Рє РїРѕРєСѓРїРєР°Рј');
+define('STRING_SHOW', 'РїРѕРєР°Р·С‹РІР°С‚СЊ');
+define('STRING_NUMBER', 'С‡РёСЃР»Р°');
+define('STRING_RELATED_ITEMS', 'РЎ СЌС‚РёРј С‚РѕРІР°СЂРѕРј РјС‹ СЂРµРєРѕРјРµРЅРґСѓРµРј');
+define('STRING_NUMBER_ONLY', 'С‚РѕР»СЊРєРѕ С‡РёСЃР»Рѕ');
+define('STRING_EMPTY_CATEGORY', 'РЅРµС‚ С‚РѕРІР°СЂРѕРІ');
+define('STRING_NO_ORDERS', 'РЅРµС‚ Р·Р°РєР°Р·РѕРІ');
+define('STRING_SEARCH', 'РџРѕРёСЃРє');
+define('STRING_LANGUAGE', 'РЇР·С‹Рє');
+define('STRING_PRICELIST', 'РџСЂР°Р№СЃ-Р»РёСЃС‚');
+define('STRING_GREETINGS', '<h1>РњРѕР№ РёРЅС‚РµСЂРЅРµС‚-РјР°РіР°Р·РёРЅ</h1>
+<p>Р­С‚РѕС‚ РёРЅС‚РµСЂРЅРµС‚-РјР°РіР°Р·РёРЅ СЂР°Р±РѕС‚Р°РµС‚ СЃ РёСЃРїРѕР»СЊР·РѕРІР°РЅРёРµРј РїСЂРѕРіСЂР°РјРјРЅРѕРіРѕ РѕР±РµСЃРїРµС‡РµРЅРёСЏ <a href="http://www.shop-script.ru/php-shopping-cart-software-1.html">Shop-Script FREE</a> - Р±РµСЃРїР»Р°С‚РЅС‹С… СЃРєСЂРёРїС‚РѕРІ РґР»СЏ СЃРѕР·РґР°РЅРёСЏ РёРЅС‚РµСЂРЅРµС‚-РјР°РіР°Р·РёРЅРѕРІ Рё РєР°С‚Р°Р»РѕРіРѕРІ.<br>
+<p>Р”Р»СЏ СЂРµРґР°РєС‚РёСЂРѕРІР°РЅРёСЏ СЌС‚РѕРіРѕ С‚РµРєСЃС‚Р° РѕС‚РєСЂРѕР№С‚Рµ С„Р°Р№Р» <b>languages/russian.php</b><br>
+РІ Р»СЋР±РѕРј С‚РµРєСЃС‚РѕРІРѕРј СЂРµРґР°РєС‚РѕСЂРµ (РЅР°РїСЂРёРјРµСЂ, Р‘Р»РѕРєРЅРѕС‚Рµ).');
+define('STRING_FOUND', 'РќР°Р№РґРµРЅРѕ ');
+define('STRING_NO_MATCHES_FOUND', 'РќРёС‡РµРіРѕ РЅРµ РЅР°Р№РґРµРЅРѕ');
+define('STRING_PRODUCTS', 'С‚РѕРІР°СЂ(РѕРІ)');
+define('STRING_ORDER_ID', 'РќРѕРјРµСЂ Р·Р°РєР°Р·Р°');
+define('STRING_ORDER_PLACED', '<div align="center"><h1>РЎРїР°СЃРёР±Рѕ Р·Р° Р’Р°С€ Р·Р°РєР°Р·!</h1><h3>РњС‹ СЃРІСЏР¶РµРјСЃСЏ СЃ Р’Р°РјРё РґР»СЏ РїРѕРґС‚РІРµСЂР¶РґРµРЅРёСЏ Р·Р°РєР°Р·Р° РІ Р±Р»РёР¶Р°Р№С€РµРµ РІСЂРµРјСЏ.</h3></div>');
+define('STRING_PLACE_ORDER', 'РћС„РѕСЂРјРёС‚СЊ Р·Р°РєР°Р·!');
+define('STRING_NEXT', 'СЃР»РµРґ');
+define('STRING_PREVIOUS', 'РїСЂРµРґ');
+define('STRING_SHOWALL', 'РїРѕРєР°Р·Р°С‚СЊ РІСЃРµ');
+define('STRING_REQUIRED', '<font color=red>*</font> РѕР±СЏР·Р°С‚РµР»СЊРЅС‹ РґР»СЏ Р·Р°РїРѕР»РЅРµРЅРёСЏ');
+define('STRING_CONTACT_INFORMATION', 'РљРћРќРўРђРљРўРќРђРЇ РРќР¤РћР РњРђР¦РРЇ');
 
-define('CART_CONTENT_EMPTY', '(нет товаров)');
-define('CART_CONTENT_NOT_EMPTY', 'товар(ов): ');
-define('CART_TITLE', 'Корзина');
-define('CART_CLEAR', 'очистить');
-define('CART_PROCEED_TO_CHECKOUT', 'Оформить заказ');
-define('CART_EMPTY', 'Ваша корзина пуста');
+define('CART_CONTENT_EMPTY', '(РЅРµС‚ С‚РѕРІР°СЂРѕРІ)');
+define('CART_CONTENT_NOT_EMPTY', 'С‚РѕРІР°СЂ(РѕРІ): ');
+define('CART_TITLE', 'РљРѕСЂР·РёРЅР°');
+define('CART_CLEAR', 'РѕС‡РёСЃС‚РёС‚СЊ');
+define('CART_PROCEED_TO_CHECKOUT', 'РћС„РѕСЂРјРёС‚СЊ Р·Р°РєР°Р·');
+define('CART_EMPTY', 'Р’Р°С€Р° РєРѕСЂР·РёРЅР° РїСѓСЃС‚Р°');
 
 //table titles
 
-define('TABLE_PRODUCT_NAME', 'Название');
-define('TABLE_PRODUCT_QUANTITY', 'Количество');
-define('TABLE_PRODUCT_COST', 'Стоимость');
-define('TABLE_TOTAL', 'Итого:');
-define('TABLE_ORDER_TIME', 'Время заказа');
-define('TABLE_ORDERED_PRODUCTS', 'Заказанные товары');
-define('TABLE_ORDER_TOTAL', 'Стоимость заказа');
-define('TABLE_CUSTOMER', 'Покупатель');
+define('TABLE_PRODUCT_NAME', 'РќР°Р·РІР°РЅРёРµ');
+define('TABLE_PRODUCT_QUANTITY', 'РљРѕР»РёС‡РµСЃС‚РІРѕ');
+define('TABLE_PRODUCT_COST', 'РЎС‚РѕРёРјРѕСЃС‚СЊ');
+define('TABLE_TOTAL', 'РС‚РѕРіРѕ:');
+define('TABLE_ORDER_TIME', 'Р’СЂРµРјСЏ Р·Р°РєР°Р·Р°');
+define('TABLE_ORDERED_PRODUCTS', 'Р—Р°РєР°Р·Р°РЅРЅС‹Рµ С‚РѕРІР°СЂС‹');
+define('TABLE_ORDER_TOTAL', 'РЎС‚РѕРёРјРѕСЃС‚СЊ Р·Р°РєР°Р·Р°');
+define('TABLE_CUSTOMER', 'РџРѕРєСѓРїР°С‚РµР»СЊ');
 
 //different admin strings
 
-define('ADMIN_TITLE', 'Администрирование');
+define('ADMIN_TITLE', 'РђРґРјРёРЅРёСЃС‚СЂРёСЂРѕРІР°РЅРёРµ');
 
-define('ADMIN_WELCOME', '<p><font class=big>Добро пожаловать в режим администрирования!</font><p>Используйте меню для доступа к разделам администраторской части.');
-define('ADMIN_NEW_ORDERS', 'Новые заказы');
-define('ADMIN_CATEGORIES_PRODUCTS', 'Категории и товары');
-define('ADMIN_CATALOG', 'Каталог');
-define('ADMIN_SETTINGS', 'Настройки');
-define('ADMIN_SETTINGS_GENERAL', 'Общие');
-define('ADMIN_SETTINGS_APPEARENCE', 'Оформление');
-define('ADMIN_CUSTOMERS_AND_ORDERS', 'Заказы');
-define('ADMIN_ABOUT_PAGE', 'О магазине');
-define('ADMIN_SHIPPING_PAGE', 'Доставка и оплата');
-define('ADMIN_AUX_INFO', 'Дополнительная информация');
-define('ADMIN_BACK_TO_SHOP', 'в общедоступную часть ...');
-define('ADMIN_SORT_ORDER', 'Порядок сортировки');
-define('ADMIN_LOGIN_PASSWORD', 'Доступ к администрированию');
-define('ADMIN_CHANGE_LOGINPASSWORD', 'Изменить логин и пароль администратора');
-define('ADMIN_CURRENT_LOGIN', 'Логин');
-define('ADMIN_OLD_PASS', 'Старый пароль');
-define('ADMIN_NEW_PASS', 'Новый пароль');
-define('ADMIN_NEW_PASS_CONFIRM', 'Подтвердите новый пароль');
-define('ADMIN_UPDATE_SUCCESSFUL', '<font color=blue><b>Обновление прошло успешно!</b></font>');
-define('ADMIN_NO_SPECIAL_OFFERS', 'Спец-предложения не выбраны');
-define('ADMIN_ADD_SPECIAL_OFFERS', 'Добавить в список спец-предложений');
-define('ADMIN_SPECIAL_OFFERS_DESC', 'Спец-предложения показываются на витрине Вашего магазина.<br>
-Выбрать товарные позиции, которые будут показаны как спец-предложения<br>
-Вы можете в подразделе <a href="admin.php?dpt=catalog&sub=products_categories">"Категории и товары"</a>, кликнув по значку <img src="images/admin_special_offer.gif" border=0> в таблице товаров.<br>
-В спец-предложения можно выбрать только товары с фотографией.');
-define('ADMIN_ROOT_WARNING', '<font color=red>Все товары, находящиеся в корне, не видны пользователям!</font>');
-define('ADMIN_ABOUT_PRICES', '<font class=small>// цены актуальны на момент заказа и указаны без налога //</font>');
-define('ADMIN_SHOP_NAME', 'Название магазина');
-define('ADMIN_SHOP_URL', 'URL магазина');
-define('ADMIN_SHOP_EMAIL', 'Контактный email адрес Вашего магазина');
-define('ADMIN_ORDERS_EMAIL', 'Email, на который будут отправляться уведомления о заказах');
-define('ADMIN_SHOW_ADD2CART', 'Включить возможность добавления товаров в корзину и оформления заказов');
-define('ADMIN_SHOW_BESTCHOICE', 'Показывать наиболее популярные товары в пустых категориях');
-define('ADMIN_MAX_PRODUCTS_COUNT_PER_PAGE', 'Максимальное количество товаров на странице');
-define('ADMIN_MAX_COLUMNS_PER_PAGE', 'Количество столбцов при показе товаров');
-define('ADMIN_MAIN_COLORS', 'Цвета, используемые для отображения таблиц:');
-define('ADMIN_COLOR', 'Цвет');
-define('ADMIN_SPECIAL_OFFERS', 'Специальные предложения');
-define('ADMIN_CATEGORY_TITLE', 'Категории');
-define('ADMIN_CATEGORY_NEW', 'Создать новую категорию');
-define('ADMIN_CATEGORY_PARENT', 'Родительская категория:');
-define('ADMIN_CATEGORY_MOVE_TO', 'Переместить в:');
-define('ADMIN_CATEGORY_NAME', 'Название категории:');
-define('ADMIN_CATEGORY_LOGO', 'Логотип:');
-define('ADMIN_CATEGORY_ROOT', 'Корень');
-define('ADMIN_CATEGORY_DESC', 'Описание');
-define('ADMIN_PRODUCT_TITLE', 'Товары');
-define('ADMIN_PRODUCT_NEW', 'Добавить новый товар');
-define('ADMIN_PRODUCT_CODE', 'Внутренний код (артикул)');
-define('ADMIN_PRODUCT_NAME', 'Наименование');
-define('ADMIN_PRODUCT_RATING', 'Рейтинг');
-define('ADMIN_PRODUCT_PRICE', 'Цена');
-define('ADMIN_PRODUCT_LISTPRICE', 'Старая цена');
-define('ADMIN_PRODUCT_INSTOCK', 'На складе');
-define('ADMIN_PRODUCT_PICTURE', 'Фотография');
-define('ADMIN_PRODUCT_THUMBNAIL', 'Маленькая фотография');
-define('ADMIN_PRODUCT_BIGPICTURE', 'Большая фотография');
-define('ADMIN_PRODUCT_DESC', 'Описание');
-define('ADMIN_PRODUCT_BRIEF_DESC', 'Краткое описание');
-define('ADMIN_PRODUCT_SOLD', 'Продано');
+define('ADMIN_WELCOME', '<p><font class=big>Р”РѕР±СЂРѕ РїРѕР¶Р°Р»РѕРІР°С‚СЊ РІ СЂРµР¶РёРј Р°РґРјРёРЅРёСЃС‚СЂРёСЂРѕРІР°РЅРёСЏ!</font><p>РСЃРїРѕР»СЊР·СѓР№С‚Рµ РјРµРЅСЋ РґР»СЏ РґРѕСЃС‚СѓРїР° Рє СЂР°Р·РґРµР»Р°Рј Р°РґРјРёРЅРёСЃС‚СЂР°С‚РѕСЂСЃРєРѕР№ С‡Р°СЃС‚Рё.');
+define('ADMIN_NEW_ORDERS', 'РќРѕРІС‹Рµ Р·Р°РєР°Р·С‹');
+define('ADMIN_CATEGORIES_PRODUCTS', 'РљР°С‚РµРіРѕСЂРёРё Рё С‚РѕРІР°СЂС‹');
+define('ADMIN_CATALOG', 'РљР°С‚Р°Р»РѕРі');
+define('ADMIN_SETTINGS', 'РќР°СЃС‚СЂРѕР№РєРё');
+define('ADMIN_SETTINGS_GENERAL', 'РћР±С‰РёРµ');
+define('ADMIN_SETTINGS_APPEARENCE', 'РћС„РѕСЂРјР»РµРЅРёРµ');
+define('ADMIN_CUSTOMERS_AND_ORDERS', 'Р—Р°РєР°Р·С‹');
+define('ADMIN_ABOUT_PAGE', 'Рћ РјР°РіР°Р·РёРЅРµ');
+define('ADMIN_SHIPPING_PAGE', 'Р”РѕСЃС‚Р°РІРєР° Рё РѕРїР»Р°С‚Р°');
+define('ADMIN_AUX_INFO', 'Р”РѕРїРѕР»РЅРёС‚РµР»СЊРЅР°СЏ РёРЅС„РѕСЂРјР°С†РёСЏ');
+define('ADMIN_BACK_TO_SHOP', 'РІ РѕР±С‰РµРґРѕСЃС‚СѓРїРЅСѓСЋ С‡Р°СЃС‚СЊ ...');
+define('ADMIN_SORT_ORDER', 'РџРѕСЂСЏРґРѕРє СЃРѕСЂС‚РёСЂРѕРІРєРё');
+define('ADMIN_LOGIN_PASSWORD', 'Р”РѕСЃС‚СѓРї Рє Р°РґРјРёРЅРёСЃС‚СЂРёСЂРѕРІР°РЅРёСЋ');
+define('ADMIN_CHANGE_LOGINPASSWORD', 'РР·РјРµРЅРёС‚СЊ Р»РѕРіРёРЅ Рё РїР°СЂРѕР»СЊ Р°РґРјРёРЅРёСЃС‚СЂР°С‚РѕСЂР°');
+define('ADMIN_CURRENT_LOGIN', 'Р›РѕРіРёРЅ');
+define('ADMIN_OLD_PASS', 'РЎС‚Р°СЂС‹Р№ РїР°СЂРѕР»СЊ');
+define('ADMIN_NEW_PASS', 'РќРѕРІС‹Р№ РїР°СЂРѕР»СЊ');
+define('ADMIN_NEW_PASS_CONFIRM', 'РџРѕРґС‚РІРµСЂРґРёС‚Рµ РЅРѕРІС‹Р№ РїР°СЂРѕР»СЊ');
+define('ADMIN_UPDATE_SUCCESSFUL', '<font color=blue><b>РћР±РЅРѕРІР»РµРЅРёРµ РїСЂРѕС€Р»Рѕ СѓСЃРїРµС€РЅРѕ!</b></font>');
+define('ADMIN_NO_SPECIAL_OFFERS', 'РЎРїРµС†-РїСЂРµРґР»РѕР¶РµРЅРёСЏ РЅРµ РІС‹Р±СЂР°РЅС‹');
+define('ADMIN_ADD_SPECIAL_OFFERS', 'Р”РѕР±Р°РІРёС‚СЊ РІ СЃРїРёСЃРѕРє СЃРїРµС†-РїСЂРµРґР»РѕР¶РµРЅРёР№');
+define('ADMIN_SPECIAL_OFFERS_DESC', 'РЎРїРµС†-РїСЂРµРґР»РѕР¶РµРЅРёСЏ РїРѕРєР°Р·С‹РІР°СЋС‚СЃСЏ РЅР° РІРёС‚СЂРёРЅРµ Р’Р°С€РµРіРѕ РјР°РіР°Р·РёРЅР°.<br>
+Р’С‹Р±СЂР°С‚СЊ С‚РѕРІР°СЂРЅС‹Рµ РїРѕР·РёС†РёРё, РєРѕС‚РѕСЂС‹Рµ Р±СѓРґСѓС‚ РїРѕРєР°Р·Р°РЅС‹ РєР°Рє СЃРїРµС†-РїСЂРµРґР»РѕР¶РµРЅРёСЏ<br>
+Р’С‹ РјРѕР¶РµС‚Рµ РІ РїРѕРґСЂР°Р·РґРµР»Рµ <a href="admin.php?dpt=catalog&sub=products_categories">"РљР°С‚РµРіРѕСЂРёРё Рё С‚РѕРІР°СЂС‹"</a>, РєР»РёРєРЅСѓРІ РїРѕ Р·РЅР°С‡РєСѓ <img src="images/admin_special_offer.gif" border=0> РІ С‚Р°Р±Р»РёС†Рµ С‚РѕРІР°СЂРѕРІ.<br>
+Р’ СЃРїРµС†-РїСЂРµРґР»РѕР¶РµРЅРёСЏ РјРѕР¶РЅРѕ РІС‹Р±СЂР°С‚СЊ С‚РѕР»СЊРєРѕ С‚РѕРІР°СЂС‹ СЃ С„РѕС‚РѕРіСЂР°С„РёРµР№.');
+define('ADMIN_ROOT_WARNING', '<font color=red>Р’СЃРµ С‚РѕРІР°СЂС‹, РЅР°С…РѕРґСЏС‰РёРµСЃСЏ РІ РєРѕСЂРЅРµ, РЅРµ РІРёРґРЅС‹ РїРѕР»СЊР·РѕРІР°С‚РµР»СЏРј!</font>');
+define('ADMIN_ABOUT_PRICES', '<font class=small>// С†РµРЅС‹ Р°РєС‚СѓР°Р»СЊРЅС‹ РЅР° РјРѕРјРµРЅС‚ Р·Р°РєР°Р·Р° Рё СѓРєР°Р·Р°РЅС‹ Р±РµР· РЅР°Р»РѕРіР° //</font>');
+define('ADMIN_SHOP_NAME', 'РќР°Р·РІР°РЅРёРµ РјР°РіР°Р·РёРЅР°');
+define('ADMIN_SHOP_URL', 'URL РјР°РіР°Р·РёРЅР°');
+define('ADMIN_SHOP_EMAIL', 'РљРѕРЅС‚Р°РєС‚РЅС‹Р№ email Р°РґСЂРµСЃ Р’Р°С€РµРіРѕ РјР°РіР°Р·РёРЅР°');
+define('ADMIN_ORDERS_EMAIL', 'Email, РЅР° РєРѕС‚РѕСЂС‹Р№ Р±СѓРґСѓС‚ РѕС‚РїСЂР°РІР»СЏС‚СЊСЃСЏ СѓРІРµРґРѕРјР»РµРЅРёСЏ Рѕ Р·Р°РєР°Р·Р°С…');
+define('ADMIN_SHOW_ADD2CART', 'Р’РєР»СЋС‡РёС‚СЊ РІРѕР·РјРѕР¶РЅРѕСЃС‚СЊ РґРѕР±Р°РІР»РµРЅРёСЏ С‚РѕРІР°СЂРѕРІ РІ РєРѕСЂР·РёРЅСѓ Рё РѕС„РѕСЂРјР»РµРЅРёСЏ Р·Р°РєР°Р·РѕРІ');
+define('ADMIN_SHOW_BESTCHOICE', 'РџРѕРєР°Р·С‹РІР°С‚СЊ РЅР°РёР±РѕР»РµРµ РїРѕРїСѓР»СЏСЂРЅС‹Рµ С‚РѕРІР°СЂС‹ РІ РїСѓСЃС‚С‹С… РєР°С‚РµРіРѕСЂРёСЏС…');
+define('ADMIN_MAX_PRODUCTS_COUNT_PER_PAGE', 'РњР°РєСЃРёРјР°Р»СЊРЅРѕРµ РєРѕР»РёС‡РµСЃС‚РІРѕ С‚РѕРІР°СЂРѕРІ РЅР° СЃС‚СЂР°РЅРёС†Рµ');
+define('ADMIN_MAX_COLUMNS_PER_PAGE', 'РљРѕР»РёС‡РµСЃС‚РІРѕ СЃС‚РѕР»Р±С†РѕРІ РїСЂРё РїРѕРєР°Р·Рµ С‚РѕРІР°СЂРѕРІ');
+define('ADMIN_MAIN_COLORS', 'Р¦РІРµС‚Р°, РёСЃРїРѕР»СЊР·СѓРµРјС‹Рµ РґР»СЏ РѕС‚РѕР±СЂР°Р¶РµРЅРёСЏ С‚Р°Р±Р»РёС†:');
+define('ADMIN_COLOR', 'Р¦РІРµС‚');
+define('ADMIN_SPECIAL_OFFERS', 'РЎРїРµС†РёР°Р»СЊРЅС‹Рµ РїСЂРµРґР»РѕР¶РµРЅРёСЏ');
+define('ADMIN_CATEGORY_TITLE', 'РљР°С‚РµРіРѕСЂРёРё');
+define('ADMIN_CATEGORY_NEW', 'РЎРѕР·РґР°С‚СЊ РЅРѕРІСѓСЋ РєР°С‚РµРіРѕСЂРёСЋ');
+define('ADMIN_CATEGORY_PARENT', 'Р РѕРґРёС‚РµР»СЊСЃРєР°СЏ РєР°С‚РµРіРѕСЂРёСЏ:');
+define('ADMIN_CATEGORY_MOVE_TO', 'РџРµСЂРµРјРµСЃС‚РёС‚СЊ РІ:');
+define('ADMIN_CATEGORY_NAME', 'РќР°Р·РІР°РЅРёРµ РєР°С‚РµРіРѕСЂРёРё:');
+define('ADMIN_CATEGORY_LOGO', 'Р›РѕРіРѕС‚РёРї:');
+define('ADMIN_CATEGORY_ROOT', 'РљРѕСЂРµРЅСЊ');
+define('ADMIN_CATEGORY_DESC', 'РћРїРёСЃР°РЅРёРµ');
+define('ADMIN_PRODUCT_TITLE', 'РўРѕРІР°СЂС‹');
+define('ADMIN_PRODUCT_NEW', 'Р”РѕР±Р°РІРёС‚СЊ РЅРѕРІС‹Р№ С‚РѕРІР°СЂ');
+define('ADMIN_PRODUCT_CODE', 'Р’РЅСѓС‚СЂРµРЅРЅРёР№ РєРѕРґ (Р°СЂС‚РёРєСѓР»)');
+define('ADMIN_PRODUCT_NAME', 'РќР°РёРјРµРЅРѕРІР°РЅРёРµ');
+define('ADMIN_PRODUCT_RATING', 'Р РµР№С‚РёРЅРі');
+define('ADMIN_PRODUCT_PRICE', 'Р¦РµРЅР°');
+define('ADMIN_PRODUCT_LISTPRICE', 'РЎС‚Р°СЂР°СЏ С†РµРЅР°');
+define('ADMIN_PRODUCT_INSTOCK', 'РќР° СЃРєР»Р°РґРµ');
+define('ADMIN_PRODUCT_PICTURE', 'Р¤РѕС‚РѕРіСЂР°С„РёСЏ');
+define('ADMIN_PRODUCT_THUMBNAIL', 'РњР°Р»РµРЅСЊРєР°СЏ С„РѕС‚РѕРіСЂР°С„РёСЏ');
+define('ADMIN_PRODUCT_BIGPICTURE', 'Р‘РѕР»СЊС€Р°СЏ С„РѕС‚РѕРіСЂР°С„РёСЏ');
+define('ADMIN_PRODUCT_DESC', 'РћРїРёСЃР°РЅРёРµ');
+define('ADMIN_PRODUCT_BRIEF_DESC', 'РљСЂР°С‚РєРѕРµ РѕРїРёСЃР°РЅРёРµ');
+define('ADMIN_PRODUCT_SOLD', 'РџСЂРѕРґР°РЅРѕ');
 define('CUSTOMER_EMAIL', 'Email:');
-define('CUSTOMER_FIRST_NAME', 'Имя:');
-define('CUSTOMER_LAST_NAME', 'Фамилия:');
-define('CUSTOMER_ZIP', 'Почтовый индекс:');
-define('CUSTOMER_STATE', 'Область:');
-define('CUSTOMER_COUNTRY', 'Страна:');
-define('CUSTOMER_CITY', 'Город:');
-define('CUSTOMER_ADDRESS', 'Адрес:');
-define('CUSTOMER_PHONE_NUMBER', 'Телефон:');
+define('CUSTOMER_FIRST_NAME', 'РРјСЏ:');
+define('CUSTOMER_LAST_NAME', 'Р¤Р°РјРёР»РёСЏ:');
+define('CUSTOMER_ZIP', 'РџРѕС‡С‚РѕРІС‹Р№ РёРЅРґРµРєСЃ:');
+define('CUSTOMER_STATE', 'РћР±Р»Р°СЃС‚СЊ:');
+define('CUSTOMER_COUNTRY', 'РЎС‚СЂР°РЅР°:');
+define('CUSTOMER_CITY', 'Р“РѕСЂРѕРґ:');
+define('CUSTOMER_ADDRESS', 'РђРґСЂРµСЃ:');
+define('CUSTOMER_PHONE_NUMBER', 'РўРµР»РµС„РѕРЅ:');
 
-define('ADMIN_PICTURE_NOT_UPLOADED', '(фотография не загружена)');
+define('ADMIN_PICTURE_NOT_UPLOADED', '(С„РѕС‚РѕРіСЂР°С„РёСЏ РЅРµ Р·Р°РіСЂСѓР¶РµРЅР°)');
 
 
 //errors
 
-define('ERROR_FAILED_TO_UPLOAD_FILE', '<b><font color=red>Не удалось закачать файл на сервер. Убедитесь,<br>что включены права на создание файлов на сервере в папке products_pictures/</font></b>');
-define('ERROR_CANT_FIND_REQUIRED_PAGE', 'Извините, запрашиваемый документ не был найден на сервере');
-define('ERROR_INPUT_EMAIL', 'Пожалуйста, введите email');
-define('ERROR_INPUT_NAME', 'Пожалуйста, введите Ваши ФИО');
-define('ERROR_INPUT_COUNTRY', 'Пожалуйста, введите страну');
-define('ERROR_INPUT_CITY', 'Пожалуйста, введите название города');
-define('ERROR_INPUT_ZIP', 'Пожалуйста, введите почтовый индекс');
-define('ERROR_INPUT_STATE', 'Пожалуйста, введите область');
-define('ERROR_FILL_FORM', 'Пожалуйста, заполните все поля');
-define('ERROR_WRONG_PASSWORD', 'Неверный старый пароль');
-define('ERROR_PASS_CONFIRMATION', 'Неверное повторение пароля');
+define('ERROR_FAILED_TO_UPLOAD_FILE', '<b><font color=red>РќРµ СѓРґР°Р»РѕСЃСЊ Р·Р°РєР°С‡Р°С‚СЊ С„Р°Р№Р» РЅР° СЃРµСЂРІРµСЂ. РЈР±РµРґРёС‚РµСЃСЊ,<br>С‡С‚Рѕ РІРєР»СЋС‡РµРЅС‹ РїСЂР°РІР° РЅР° СЃРѕР·РґР°РЅРёРµ С„Р°Р№Р»РѕРІ РЅР° СЃРµСЂРІРµСЂРµ РІ РїР°РїРєРµ products_pictures/</font></b>');
+define('ERROR_CANT_FIND_REQUIRED_PAGE', 'РР·РІРёРЅРёС‚Рµ, Р·Р°РїСЂР°С€РёРІР°РµРјС‹Р№ РґРѕРєСѓРјРµРЅС‚ РЅРµ Р±С‹Р» РЅР°Р№РґРµРЅ РЅР° СЃРµСЂРІРµСЂРµ');
+define('ERROR_INPUT_EMAIL', 'РџРѕР¶Р°Р»СѓР№СЃС‚Р°, РІРІРµРґРёС‚Рµ email');
+define('ERROR_INPUT_NAME', 'РџРѕР¶Р°Р»СѓР№СЃС‚Р°, РІРІРµРґРёС‚Рµ Р’Р°С€Рё Р¤РРћ');
+define('ERROR_INPUT_COUNTRY', 'РџРѕР¶Р°Р»СѓР№СЃС‚Р°, РІРІРµРґРёС‚Рµ СЃС‚СЂР°РЅСѓ');
+define('ERROR_INPUT_CITY', 'РџРѕР¶Р°Р»СѓР№СЃС‚Р°, РІРІРµРґРёС‚Рµ РЅР°Р·РІР°РЅРёРµ РіРѕСЂРѕРґР°');
+define('ERROR_INPUT_ZIP', 'РџРѕР¶Р°Р»СѓР№СЃС‚Р°, РІРІРµРґРёС‚Рµ РїРѕС‡С‚РѕРІС‹Р№ РёРЅРґРµРєСЃ');
+define('ERROR_INPUT_STATE', 'РџРѕР¶Р°Р»СѓР№СЃС‚Р°, РІРІРµРґРёС‚Рµ РѕР±Р»Р°СЃС‚СЊ');
+define('ERROR_FILL_FORM', 'РџРѕР¶Р°Р»СѓР№СЃС‚Р°, Р·Р°РїРѕР»РЅРёС‚Рµ РІСЃРµ РїРѕР»СЏ');
+define('ERROR_WRONG_PASSWORD', 'РќРµРІРµСЂРЅС‹Р№ СЃС‚Р°СЂС‹Р№ РїР°СЂРѕР»СЊ');
+define('ERROR_PASS_CONFIRMATION', 'РќРµРІРµСЂРЅРѕРµ РїРѕРІС‚РѕСЂРµРЅРёРµ РїР°СЂРѕР»СЏ');
 
 //questions
 
-define('QUESTION_DELETE_PICTURE', 'Удалить фотографию?');
-define('QUESTION_DELETE_CONFIRMATION', 'Удалить?');
+define('QUESTION_DELETE_PICTURE', 'РЈРґР°Р»РёС‚СЊ С„РѕС‚РѕРіСЂР°С„РёСЋ?');
+define('QUESTION_DELETE_CONFIRMATION', 'РЈРґР°Р»РёС‚СЊ?');
 
 //emails
-define('EMAIL_ADMIN_ORDER_NOTIFICATION_SUBJECT', 'Новый заказ!');
-define('EMAIL_CUSTOMER_ORDER_NOTIFICATION_SUBJECT', 'Ваш заказ');
+define('EMAIL_ADMIN_ORDER_NOTIFICATION_SUBJECT', 'РќРѕРІС‹Р№ Р·Р°РєР°Р·!');
+define('EMAIL_CUSTOMER_ORDER_NOTIFICATION_SUBJECT', 'Р’Р°С€ Р·Р°РєР°Р·');
 define('EMAIL_MESSAGE_PARAMETERS', 'Content-Type: text/plain; charset="'.DEFAULT_CHARSET.'"');
-define('EMAIL_HELLO', 'Здравствуйте');
-define('EMAIL_SINCERELY', 'С уважением');
-define('EMAIL_THANK_YOU_FOR_SHOPPING_AT', 'Спасибо за Ваш выбор');
-define('EMAIL_ORDER_WILL_BE_SHIPPED_TO', 'Ваш заказ будет доставлен по адресу');
-define('EMAIL_OUR_MANAGER_WILL_CONTACT_YOU', 'Мы свяжемся с Вами для подтверждения заказа в ближайшее время.');
+define('EMAIL_HELLO', 'Р—РґСЂР°РІСЃС‚РІСѓР№С‚Рµ');
+define('EMAIL_SINCERELY', 'РЎ СѓРІР°Р¶РµРЅРёРµРј');
+define('EMAIL_THANK_YOU_FOR_SHOPPING_AT', 'РЎРїР°СЃРёР±Рѕ Р·Р° Р’Р°С€ РІС‹Р±РѕСЂ');
+define('EMAIL_ORDER_WILL_BE_SHIPPED_TO', 'Р’Р°С€ Р·Р°РєР°Р· Р±СѓРґРµС‚ РґРѕСЃС‚Р°РІР»РµРЅ РїРѕ Р°РґСЂРµСЃСѓ');
+define('EMAIL_OUR_MANAGER_WILL_CONTACT_YOU', 'РњС‹ СЃРІСЏР¶РµРјСЃСЏ СЃ Р’Р°РјРё РґР»СЏ РїРѕРґС‚РІРµСЂР¶РґРµРЅРёСЏ Р·Р°РєР°Р·Р° РІ Р±Р»РёР¶Р°Р№С€РµРµ РІСЂРµРјСЏ.');
 
 //warnings
 
-define('WARNING_DELETE_INSTALL_PHP', 'Файл <b>install.php</b> не удален из директории со скриптами Shop-Script. Вам необходимо удалить его вручную.<br>');
-define('WARNING_DELETE_FORGOTPW_PHP', 'Файл <b>forgot_password.php</b> не удален из директории со скриптами Shop-Script. Вам необходимо удалить его вручную.<br>');
-define('WARNING_WRONG_CHMOD', 'Неверные атрибуты для папки cfg, ее содержимого, а также папок products_pictures и templates_c (либо эти не из этих папок существуют).<br>Необходимо установить правильные атрибуты на них для разрешения (пере)записи файлов в этих папках (как правило, это атрибуты 775).');
+define('WARNING_DELETE_INSTALL_PHP', 'Р¤Р°Р№Р» <b>install.php</b> РЅРµ СѓРґР°Р»РµРЅ РёР· РґРёСЂРµРєС‚РѕСЂРёРё СЃРѕ СЃРєСЂРёРїС‚Р°РјРё Shop-Script. Р’Р°Рј РЅРµРѕР±С…РѕРґРёРјРѕ СѓРґР°Р»РёС‚СЊ РµРіРѕ РІСЂСѓС‡РЅСѓСЋ.<br>');
+define('WARNING_DELETE_FORGOTPW_PHP', 'Р¤Р°Р№Р» <b>forgot_password.php</b> РЅРµ СѓРґР°Р»РµРЅ РёР· РґРёСЂРµРєС‚РѕСЂРёРё СЃРѕ СЃРєСЂРёРїС‚Р°РјРё Shop-Script. Р’Р°Рј РЅРµРѕР±С…РѕРґРёРјРѕ СѓРґР°Р»РёС‚СЊ РµРіРѕ РІСЂСѓС‡РЅСѓСЋ.<br>');
+define('WARNING_WRONG_CHMOD', 'РќРµРІРµСЂРЅС‹Рµ Р°С‚СЂРёР±СѓС‚С‹ РґР»СЏ РїР°РїРєРё cfg, РµРµ СЃРѕРґРµСЂР¶РёРјРѕРіРѕ, Р° С‚Р°РєР¶Рµ РїР°РїРѕРє products_pictures Рё templates_c (Р»РёР±Рѕ СЌС‚Рё РЅРµ РёР· СЌС‚РёС… РїР°РїРѕРє СЃСѓС‰РµСЃС‚РІСѓСЋС‚).<br>РќРµРѕР±С…РѕРґРёРјРѕ СѓСЃС‚Р°РЅРѕРІРёС‚СЊ РїСЂР°РІРёР»СЊРЅС‹Рµ Р°С‚СЂРёР±СѓС‚С‹ РЅР° РЅРёС… РґР»СЏ СЂР°Р·СЂРµС€РµРЅРёСЏ (РїРµСЂРµ)Р·Р°РїРёСЃРё С„Р°Р№Р»РѕРІ РІ СЌС‚РёС… РїР°РїРєР°С… (РєР°Рє РїСЂР°РІРёР»Рѕ, СЌС‚Рѕ Р°С‚СЂРёР±СѓС‚С‹ 775).');
 
 //currencies
 
-define('ADMIN_CURRENCY', 'Валюта');
-define('ADMIN_CURRENCY_ID_LEFT', 'Обозначение валюты слева от суммы (цены)<br>(например, "$")');
-define('ADMIN_CURRENCY_ID_RIGHT', 'Обозначение валюты справа от суммы (цены)<br>(например, "руб.")');
-define('ADMIN_CURRENCY_ISO3', 'Трехбуквенный код валюты ISO3<br>(например, USD, EUR, RUR)');
+define('ADMIN_CURRENCY', 'Р’Р°Р»СЋС‚Р°');
+define('ADMIN_CURRENCY_ID_LEFT', 'РћР±РѕР·РЅР°С‡РµРЅРёРµ РІР°Р»СЋС‚С‹ СЃР»РµРІР° РѕС‚ СЃСѓРјРјС‹ (С†РµРЅС‹)<br>(РЅР°РїСЂРёРјРµСЂ, "$")');
+define('ADMIN_CURRENCY_ID_RIGHT', 'РћР±РѕР·РЅР°С‡РµРЅРёРµ РІР°Р»СЋС‚С‹ СЃРїСЂР°РІР° РѕС‚ СЃСѓРјРјС‹ (С†РµРЅС‹)<br>(РЅР°РїСЂРёРјРµСЂ, "СЂСѓР±.")');
+define('ADMIN_CURRENCY_ISO3', 'РўСЂРµС…Р±СѓРєРІРµРЅРЅС‹Р№ РєРѕРґ РІР°Р»СЋС‚С‹ ISO3<br>(РЅР°РїСЂРёРјРµСЂ, USD, EUR, RUR)');
 
 ?>
