@@ -1,0 +1,9 @@
+{* order is placed *}
+
+{if $order_is_placed ne 0}
+
+	{$smarty.const.STRING_ORDER_PLACED}
+
+{else}
+	<br><br><br><center><b>{$smarty.const.CART_EMPTY}</b></center>
+{/if}
