@@ -23,7 +23,7 @@ class Language
 	//to add new languages add similiar structures
 
 	$lang_list[0] = new Language();
-	$lang_list[0]->description = "Ðóññêèé";
+	$lang_list[0]->description = "Ð ÑƒÑÑÐºÐ¸Ð¹";
 	$lang_list[0]->filename = "russian.php";
 	$lang_list[0]->template_path = "./templates/tmpl1/";
 
