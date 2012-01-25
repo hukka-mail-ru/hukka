@@ -6,3 +6,5 @@
 <br>
 6. sudo aptitude install php5<br>
 7. sudo aptitude install php5-mysql<br>
+
+Mysql collation settings: http://cameronyule.com/2008/07/configuring-mysql-to-use-utf-8
