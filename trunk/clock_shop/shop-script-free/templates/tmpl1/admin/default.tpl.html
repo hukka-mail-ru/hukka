@@ -15,17 +15,17 @@
 		<table cellpadding="3">
 		<tr>
 		 <td><img src="images/backend/custord_new_orders_32.gif"></td>
-		 <td class="big"><b><u>Заказы</u></b></td>
+		 <td class="big"><b><u>Р—Р°РєР°Р·С‹</u></b></td>
 		</tr>
 		<tr>
 		 <td>&nbsp;</td>
 		 <td>
 
 			<table style="margin-left: 5px;" cellpadding="0">
-			<tr><td>Сегодня:</td><td>{if $totals.orders_today>0}<b>{/if}{$totals.orders_today} заказ(ов) ({$totals.revenue_today}){if $totals.orders_today>0}</b>{/if}</td></tr>
-			<tr><td>Вчера:</td><td>{$totals.orders_yesterday} заказ(ов) ({$totals.revenue_yesterday})</td></tr>
-			<tr><td>В этом месяце:</td><td>{$totals.orders_thismonth} заказ(ов) ({$totals.revenue_thismonth})</td></tr>
-			<tr><td>Всего:</td><td>{$totals.orders} заказ(ов) ({$totals.revenue})</td></tr>
+			<tr><td>РЎРµРіРѕРґРЅСЏ:</td><td>{if $totals.orders_today>0}<b>{/if}{$totals.orders_today} Р·Р°РєР°Р·(РѕРІ) ({$totals.revenue_today}){if $totals.orders_today>0}</b>{/if}</td></tr>
+			<tr><td>Р’С‡РµСЂР°:</td><td>{$totals.orders_yesterday} Р·Р°РєР°Р·(РѕРІ) ({$totals.revenue_yesterday})</td></tr>
+			<tr><td>Р’ СЌС‚РѕРј РјРµСЃСЏС†Рµ:</td><td>{$totals.orders_thismonth} Р·Р°РєР°Р·(РѕРІ) ({$totals.revenue_thismonth})</td></tr>
+			<tr><td>Р’СЃРµРіРѕ:</td><td>{$totals.orders} Р·Р°РєР°Р·(РѕРІ) ({$totals.revenue})</td></tr>
 			</table>
 
 		 </td>
@@ -39,15 +39,15 @@
 		<table cellpadding="3">
 		<tr>
 		 <td><img src="images/backend/catalog_products_categories_32.gif"></td>
-		 <td class="big"><b><u>Продукты</u></b></td>
+		 <td class="big"><b><u>РџСЂРѕРґСѓРєС‚С‹</u></b></td>
 		</tr>
 		<tr>
 		 <td>&nbsp;</td>
 		 <td>
 
-			Общее количество продуктов: <b>{$totals.products}</b><br />
-			Из них продаются<br />(доступны в пользовательской части): <b>{$totals.products_enabled}</b><br />
-			Категорий продуктов: <b>{$totals.categories}</b><br /><br />
+			РћР±С‰РµРµ РєРѕР»РёС‡РµСЃС‚РІРѕ РїСЂРѕРґСѓРєС‚РѕРІ: <b>{$totals.products}</b><br />
+			РР· РЅРёС… РїСЂРѕРґР°СЋС‚СЃСЏ<br />(РґРѕСЃС‚СѓРїРЅС‹ РІ РїРѕР»СЊР·РѕРІР°С‚РµР»СЊСЃРєРѕР№ С‡Р°СЃС‚Рё): <b>{$totals.products_enabled}</b><br />
+			РљР°С‚РµРіРѕСЂРёР№ РїСЂРѕРґСѓРєС‚РѕРІ: <b>{$totals.categories}</b><br /><br />
 
 		 </td>
 		</tr>
