@@ -52,7 +52,7 @@ define('STRING_RELATED_ITEMS', 'С этим товаром мы рекоменд
 define('STRING_NUMBER_ONLY', 'только число');
 define('STRING_EMPTY_CATEGORY', 'нет товаров');
 define('STRING_NO_ORDERS', 'нет заказов');
-define('STRING_SEARCH', 'Поиск');
+define('STRING_SEARCH', 'Suche');
 define('STRING_LANGUAGE', 'Sprache');
 define('STRING_PRICELIST', 'Preisliste');
 define('STRING_GREETINGS', '<h1>Мой интернет-магазин</h1>
@@ -61,7 +61,7 @@ define('STRING_GREETINGS', '<h1>Мой интернет-магазин</h1>
 в любом текстовом редакторе (например, Блокноте).');
 define('STRING_FOUND', 'Найдено ');
 define('STRING_NO_MATCHES_FOUND', 'Ничего не найдено');
-define('STRING_PRODUCTS', 'товар(ов)');
+define('STRING_PRODUCTS', 'Ware(n)');
 define('STRING_ORDER_ID', 'Номер заказа');
 define('STRING_ORDER_PLACED', '<div align="center"><h1>Спасибо за Ваш заказ!</h1><h3>Мы свяжемся с Вами для подтверждения заказа в ближайшее время.</h3></div>');
 define('STRING_PLACE_ORDER', 'Bestellen!');
@@ -71,8 +71,8 @@ define('STRING_SHOWALL', 'показать все');
 define('STRING_REQUIRED', '<font color=red>*</font> обязательны для заполнения');
 define('STRING_CONTACT_INFORMATION', 'КОНТАКТНАЯ ИНФОРМАЦИЯ');
 
-define('CART_CONTENT_EMPTY', '(нет товаров)');
-define('CART_CONTENT_NOT_EMPTY', 'товар(ов): ');
+define('CART_CONTENT_EMPTY', '(keine Ware)');
+define('CART_CONTENT_NOT_EMPTY', 'Ware(n): ');
 define('CART_TITLE', 'Warenkorb');
 define('CART_CLEAR', 'очистить');
 define('CART_PROCEED_TO_CHECKOUT', 'Kasse');
@@ -96,8 +96,8 @@ define('ADMIN_TITLE', 'Администрирование');
 define('ADMIN_WELCOME', '<p><font class=big>Добро пожаловать в режим администрирования!</font><p>Используйте меню для доступа к разделам администраторской части.');
 define('ADMIN_NEW_ORDERS', 'Новые заказы');
 define('ADMIN_CATEGORIES_PRODUCTS', 'Категории и товары');
-define('ADMIN_CATALOG', 'Каталог');
-define('ADMIN_SETTINGS', 'Настройки');
+define('ADMIN_CATALOG', 'Katalog');
+define('ADMIN_SETTINGS', 'Einstellung');
 define('ADMIN_SETTINGS_GENERAL', 'Общие');
 define('ADMIN_SETTINGS_APPEARENCE', 'Оформление');
 define('ADMIN_CUSTOMERS_AND_ORDERS', 'Заказы');
