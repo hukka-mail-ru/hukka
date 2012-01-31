@@ -15,13 +15,13 @@
 	//make sure that URL does not contain something like index.php/?parameter1=1&... //
 
 	//include core files
+	include("./cfg/language_list.php");
 	include("./cfg/connect.inc.php");
 	include("./includes/database/mysql.php");
 	include("./cfg/general.inc.php");
 	include("./cfg/appearence.inc.php");
 	include("./cfg/functions.php");
 	include("./cfg/category_functions.php");
-	include("./cfg/language_list.php");
 
 	session_start();
 
