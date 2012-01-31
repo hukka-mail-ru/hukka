@@ -16,7 +16,13 @@ function pricessCategories($parent,$level)
 	$out = array();
 	$cnt = 0;
 
-	$q1 = db_query("select categoryID, name from ".CATEGORIES_TABLE." where parent=$parent order by name") or die (db_error());
+	$name = "name";
+	if($_SESSION["current_language"] == 1)
+		$name = "name_de";
+	if($_SESSION["current_language"] == 2)
+		$name = "name_en";
+
+	$q1 = db_query("select categoryID, ".$name." from ".CATEGORIES_TABLE." where parent=$parent order by ".$name) or die (db_error());
 	while ($row = db_fetch_row($q1))
 	{
 
@@ -39,7 +45,7 @@ function pricessCategories($parent,$level)
 		$cnt++;
 
 		//add products
-		$q = db_query("select productID, name, Price from ".PRODUCTS_TABLE." where categoryID=".$row[0]." and Price>0 and enabled=1 order by name") or die (db_error());
+		$q = db_query("select productID, ".$name.", Price from ".PRODUCTS_TABLE." where categoryID=".$row[0]." and Price>0 and enabled=1 order by ".$name) or die (db_error());
 		while ($row1 = db_fetch_row($q))
 		 {
 			if ($row1[2] <= 0)
