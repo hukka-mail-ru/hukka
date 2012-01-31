@@ -6,6 +6,13 @@
  *                                                                           *
  ****************************************************************************/
 
+	$name = "name";
+	if($_SESSION["current_language"] == 1)
+		$name = "name_de";
+	if($_SESSION["current_language"] == 2)
+		$name = "name_en";
+
+
 	// product detailed information view
 
 	if (isset($_GET["vote"]) && isset($productID)) //vote for a product
@@ -23,7 +30,7 @@
 
 			$smarty->assign("main_content_template", "product_detailed.tpl.html");
 
-			$q = db_query("select categoryID, name, description, customers_rating, Price, picture, in_stock, thumbnail, customer_votes, big_picture, list_price, productID, product_code from ".PRODUCTS_TABLE." where productID='$productID' and enabled=1") or die (db_error());
+			$q = db_query("select categoryID, ".$name.", description, customers_rating, Price, picture, in_stock, thumbnail, customer_votes, big_picture, list_price, productID, product_code from ".PRODUCTS_TABLE." where productID='$productID' and enabled=1") or die (db_error());
 			$a = db_fetch_row($q);
 
 			if ($a) //product found
@@ -31,7 +38,7 @@
 				$a["product_code"] = $a[12];
 
 				//get selected category info
-				$q = db_query("SELECT categoryID, name, description, picture FROM ".CATEGORIES_TABLE." WHERE categoryID='$categoryID'") or die (db_error());
+				$q = db_query("SELECT categoryID, ".$name.", description, picture FROM ".CATEGORIES_TABLE." WHERE categoryID='$categoryID'") or die (db_error());
 				$row = db_fetch_row($q);
 				if ($row)
 				{
@@ -46,7 +53,7 @@
 				$curr = $categoryID;
 				do
 				{
-					$q = db_query("SELECT parent, name FROM ".CATEGORIES_TABLE." WHERE categoryID='$curr'") or die (db_error());
+					$q = db_query("SELECT parent, ".$name." FROM ".CATEGORIES_TABLE." WHERE categoryID='$curr'") or die (db_error());
 					$row = db_fetch_row($q);
 					$tmp = $curr;
 					$curr = $row[0]; //get parent ID

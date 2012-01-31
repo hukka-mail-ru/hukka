@@ -22,6 +22,13 @@ function get_Subs($cid) //get current category's subcategories IDs (of all level
 	return $r;
 }
 
+
+	$name = "name";
+	if($_SESSION["current_language"] == 1)
+		$name = "name_de";
+	if($_SESSION["current_language"] == 2)
+		$name = "name_en";
+
 	if (isset($categoryID) && !isset($productID) && $categoryID)
 	{
 
@@ -46,7 +53,7 @@ function get_Subs($cid) //get current category's subcategories IDs (of all level
 		$curr = $categoryID;
 		do
 		{
-			$q = db_query("SELECT parent, name FROM ".CATEGORIES_TABLE." WHERE categoryID='$curr'") or die (db_error());
+			$q = db_query("SELECT parent, ".$name." FROM ".CATEGORIES_TABLE." WHERE categoryID='$curr'") or die (db_error());
 			$row = db_fetch_row($q);
 			$tmp = $curr;
 			$curr = $row[0]; //get parent ID
@@ -59,7 +66,7 @@ function get_Subs($cid) //get current category's subcategories IDs (of all level
 		$smarty->assign("product_category_path",$path);
 
 		//show subcategories
-		$q = db_query("SELECT categoryID, name, products_count FROM ".CATEGORIES_TABLE." WHERE parent='$categoryID'") or die (db_error());
+		$q = db_query("SELECT categoryID, ".$name.", products_count FROM ".CATEGORIES_TABLE." WHERE parent='$categoryID'") or die (db_error());
 		$result = array();
 		while ($row = db_fetch_row($q))
 		{
@@ -90,7 +97,7 @@ function get_Subs($cid) //get current category's subcategories IDs (of all level
 			{
 				if (isset($_GET["show_all"]) || ($i>=$offset && $i<$offset+CONF_PRODUCTS_PER_PAGE))
 				{
-					$q1 = db_query("select categoryID, name, brief_description, customers_rating, Price, picture, in_stock, thumbnail, customer_votes, big_picture, list_price, productID from ".PRODUCTS_TABLE." where productID='$row[0]'") or die (db_error());
+					$q1 = db_query("select categoryID, ".$name.", brief_description, customers_rating, Price, picture, in_stock, thumbnail, customer_votes, big_picture, list_price, productID from ".PRODUCTS_TABLE." where productID='$row[0]'") or die (db_error());
 					$row1 = db_fetch_row($q1);
 					//update several product fields
 					if (!file_exists("./products_pictures/".$row1[5])) $row1[5] = 0;
@@ -156,7 +163,7 @@ function get_Subs($cid) //get current category's subcategories IDs (of all level
 					$result = array();
 					while ($i<CONF_PRODUCTS_PER_PAGE && $row = db_fetch_row($q))
 					{
-						$q1 = db_query("select categoryID, name, brief_description, customers_rating, Price, picture, in_stock, thumbnail, customer_votes, big_picture, list_price, productID from ".PRODUCTS_TABLE." where productID=$row[0]") or die (db_error());
+						$q1 = db_query("select categoryID, ".$name.", brief_description, customers_rating, Price, picture, in_stock, thumbnail, customer_votes, big_picture, list_price, productID from ".PRODUCTS_TABLE." where productID=$row[0]") or die (db_error());
 						$row1 = db_fetch_row($q1);
 						//update several product fields
 						if (!file_exists("./products_pictures/".$row1[5])) $row1[5] = 0;

@@ -8,17 +8,23 @@
 
 	// head variables definition: title, meta
 
+	$name = "name";
+	if($_SESSION["current_language"] == 1)
+		$name = "name_de";
+	if($_SESSION["current_language"] == 2)
+		$name = "name_en";
+
 	// title
 	$r = array(); $r[0] = "";
 	if (isset($categoryID) && !isset($productID) && $categoryID>0)
 	{
-		$q = db_query("SELECT name FROM ".CATEGORIES_TABLE." WHERE categoryID<>0 and categoryID='$categoryID'") or die (db_error());
+		$q = db_query("SELECT ".$name." FROM ".CATEGORIES_TABLE." WHERE categoryID<>0 and categoryID='$categoryID'") or die (db_error());
 		$r = db_fetch_row($q);
 		$page_title = str_replace("\"","'",$r[0]." - ".CONF_SHOP_NAME);
 	}
 	else if (isset($productID) && $productID>0)
 	{
-		$q = db_query("SELECT name FROM ".PRODUCTS_TABLE." WHERE productID='$productID'") or die (db_error());
+		$q = db_query("SELECT ".$name." FROM ".PRODUCTS_TABLE." WHERE productID='$productID'") or die (db_error());
 		$r = db_fetch_row($q);
 		$page_title = str_replace("\"","'",$r[0]." - ".CONF_SHOP_NAME);
 	}
@@ -29,13 +35,13 @@
 	$r = array(); $r[0] = "";
 	if (isset($categoryID) && !isset($productID) && $categoryID>0)
 	{
-		$q = db_query("SELECT name, description FROM ".CATEGORIES_TABLE." WHERE categoryID<>0 and categoryID='$categoryID'") or die (db_error());
+		$q = db_query("SELECT ".$name.", description FROM ".CATEGORIES_TABLE." WHERE categoryID<>0 and categoryID='$categoryID'") or die (db_error());
 		$r = db_fetch_row($q);
 		$page_meta = str_replace("\"","'",$r[0].", ".$r[1]);
 	}
 	else if (isset($productID) && $productID>0)
 	{
-		$q = db_query("SELECT name, brief_description FROM ".PRODUCTS_TABLE." WHERE productID='$productID'") or die (db_error());
+		$q = db_query("SELECT ".$name.", brief_description FROM ".PRODUCTS_TABLE." WHERE productID='$productID'") or die (db_error());
 		$r = db_fetch_row($q);
 		$page_meta = str_replace("\"","'",$r[0].", ".$r[1]);
 	}
