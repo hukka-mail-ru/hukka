@@ -94,6 +94,12 @@ function confirmDelete(text,url)
 		return $a;
 	}
 
+	$name = "name";
+	if($_SESSION["current_language"] == 1)
+		$name = "name_de";
+	if($_SESSION["current_language"] == 2)
+		$name = "name_en";
+
 	if (!isset($w)) $w=-1; //parent
 
 	if (isset($_GET["picture_remove"])) //delete category thumbnail from server
@@ -180,7 +186,10 @@ function confirmDelete(text,url)
 
 		if (isset($_GET["c_id"])) //edit existing category
 		{
-			$q = db_query("SELECT name, description, picture FROM ".CATEGORIES_TABLE." WHERE categoryID='".$_GET["c_id"]."' and categoryID<>0") or die (db_error());
+			
+
+
+			$q = db_query("SELECT ".$name.", description, picture FROM ".CATEGORIES_TABLE." WHERE categoryID='".$_GET["c_id"]."' and categoryID<>0") or die (db_error());
 			$row = db_fetch_row($q);
 			if (!$row) //can't find category....
 			{

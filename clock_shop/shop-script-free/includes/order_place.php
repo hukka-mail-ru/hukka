@@ -5,7 +5,11 @@
  * Copyright (c) 2005 WebAsyst LLC. All rights reserved.                     *
  *                                                                           *
  ****************************************************************************/
-
+	$name = "name";
+	if($_SESSION["current_language"] == 1)
+		$name = "name_de";
+	if($_SESSION["current_language"] == 2)
+		$name = "name_en";
 
 	//place order: save to the database, send notifications, gateway processing
 
@@ -43,7 +47,7 @@
 			for ($i=0; $i<count($_SESSION["gids"]); $i++)
 			  if ($_SESSION["gids"][$i])
 			  {
-				$q = db_query("SELECT name, Price, product_code FROM ".PRODUCTS_TABLE." WHERE productID='".$_SESSION["gids"][$i]."'") or die (db_error());
+				$q = db_query("SELECT ".$name.", Price, product_code FROM ".PRODUCTS_TABLE." WHERE productID='".$_SESSION["gids"][$i]."'") or die (db_error());
 				if ($r = db_fetch_row($q))
 				{
 					//product info

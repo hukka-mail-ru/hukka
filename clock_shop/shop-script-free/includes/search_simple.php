@@ -7,6 +7,12 @@
  ****************************************************************************/
 
 	// simple search
+	$name = "name";
+	if($_SESSION["current_language"] == 1)
+		$name = "name_de";
+	if($_SESSION["current_language"] == 2)
+		$name = "name_en";
+
 
 	if (isset($_GET["inside"])) $smarty->assign("search_in_results", $_GET["inside"]);
 
@@ -34,7 +40,7 @@
 			$smarty->assign("searchstring", $_GET["searchstring"]);
 
 			//searching for categories
-			$s = "SELECT categoryID, name FROM ".CATEGORIES_TABLE." WHERE categoryID<>0 and name LIKE '%".$search[0]."%' ";
+			$s = "SELECT categoryID, ".$name." FROM ".CATEGORIES_TABLE." WHERE categoryID<>0 and ".$name." LIKE '%".$search[0]."%' ";
 			for ($i=1; $i<count($search); $i++)
 			{
 				$s .= "AND name LIKE '%".$search[$i]."%' ";
@@ -46,8 +52,8 @@
 			//searching for products
 			$s_search = "SELECT count(*) FROM ".PRODUCTS_TABLE." WHERE Enabled=1 and categoryID<>0 and ";
 
-			$s_search .= "((name LIKE '%".$search[0]."%' OR description LIKE '%".$search[0]."%' OR brief_description LIKE '%".$search[0]."%') ";
-			for ($j=1; $j<count($search); $j++) $s_search .= "AND (name LIKE '%".$search[$j]."%' OR description LIKE '%".$search[$j]."%' OR brief_description LIKE '%".$search[$j]."%') ";
+			$s_search .= "((".$name." LIKE '%".$search[0]."%' OR description LIKE '%".$search[0]."%' OR brief_description LIKE '%".$search[0]."%') ";
+			for ($j=1; $j<count($search); $j++) $s_search .= "AND (".$name." LIKE '%".$search[$j]."%' OR description LIKE '%".$search[$j]."%' OR brief_description LIKE '%".$search[$j]."%') ";
 			$s_search .= ") ";
 
 
@@ -56,7 +62,7 @@
 
 			if ($offset>$g_search_count) $offset = 0;
 
-			$q = db_query(str_replace("SELECT count(*)", "SELECT categoryID, name, brief_description, customers_rating, Price, picture, in_stock, thumbnail, customer_votes, big_picture, list_price, productID", $s_search)."ORDER BY customers_rating DESC") or die (db_error());
+			$q = db_query(str_replace("SELECT count(*)", "SELECT categoryID, ".$name.", brief_description, customers_rating, Price, picture, in_stock, thumbnail, customer_votes, big_picture, list_price, productID", $s_search)."ORDER BY customers_rating DESC") or die (db_error());
 
 			$i = 0;
 			$k = 0;

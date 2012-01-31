@@ -7,6 +7,11 @@
  ****************************************************************************/
 
 	// shopping cart
+	$name = "name";
+	if($_SESSION["current_language"] == 1)
+		$name = "name_de";
+	if($_SESSION["current_language"] == 2)
+		$name = "name_en";
 
 	//calculate shopping cart value
 
@@ -112,7 +117,7 @@
 			for ($i=0; $i<count($_SESSION["gids"]); $i++)
 			  if ($_SESSION["gids"][$i])
 			  {
-				$q = db_query("SELECT name, Price, product_code FROM ".PRODUCTS_TABLE." WHERE productID='".$_SESSION["gids"][$i]."'") or die (db_error());
+				$q = db_query("SELECT ".$name.", Price, product_code FROM ".PRODUCTS_TABLE." WHERE productID='".$_SESSION["gids"][$i]."'") or die (db_error());
 				if ($r = db_fetch_row($q))
 				{
 					$tmp = array("id"=>$_SESSION["gids"][$i], "name"=>$r[0], "quantity"=>$_SESSION["counts"][$i], "cost"=>show_price($_SESSION["counts"][$i]*$r[1]), "product_code"=>$r[2]);

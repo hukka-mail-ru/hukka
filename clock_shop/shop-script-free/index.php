@@ -59,9 +59,15 @@
 	$smarty->assign("currency_iso_3", $currency_iso_3);
 
 	//load all categories to array $cats to avoid multiple DB queries (frequently used in future - but not always!)
+	$name = "name";
+	if($_SESSION["current_language"] == 1)
+		$name = "name_de";
+	if($_SESSION["current_language"] == 2)
+		$name = "name_en";
+
 	$cats = array();
 	$i=0;
-	$q = db_query("SELECT categoryID, name, parent, products_count, description, picture FROM ".CATEGORIES_TABLE." where categoryID<>0 ORDER BY name") or die (db_error());	
+	$q = db_query("SELECT categoryID, ".$name.", parent, products_count, description, picture FROM ".CATEGORIES_TABLE." where categoryID<>0 ORDER BY ".$name) or die (db_error());	
 	while ($row = db_fetch_row($q))
 	{
 		$cats[$i++] = $row;
