@@ -61,13 +61,13 @@ define('STRING_FOUND', 'Ergebnisse der Suche');
 define('STRING_NO_MATCHES_FOUND', 'keine Ergebnisse');
 define('STRING_PRODUCTS', 'Ware(n)');
 define('STRING_ORDER_ID', 'Bestellungnummer');
-define('STRING_ORDER_PLACED', '<div align="center"><h1>Vielen dank für Ihre Bestellung!</h1><h3>Wir werden kontaktiren Sie für Bestätigung der Bestellung bald zu.</h3></div>');
+define('STRING_ORDER_PLACED', '<div align="center"><h1>Vielen dank für Ihre Bestellung!</h1><h3>Bald werden wir Sie für Bestätigung der Bestellung kontaktiren</h3></div>');
 define('STRING_PLACE_ORDER', 'Bestellen!');
 define('STRING_NEXT', 'nächste');
 define('STRING_PREVIOUS', 'vorig');
 define('STRING_SHOWALL', 'zeige alle');
-define('STRING_REQUIRED', '<font color=red>*</font> обязательны для заполнения');
-define('STRING_CONTACT_INFORMATION', 'КОНТАКТНАЯ ИНФОРМАЦИЯ');
+define('STRING_REQUIRED', '<font color=red>*</font> füllen Sie bitte unbedingt');
+define('STRING_CONTACT_INFORMATION', 'KONTAKT INFORMATION');
 
 define('CART_CONTENT_EMPTY', '(keine Ware)');
 define('CART_CONTENT_NOT_EMPTY', 'Ware(n): ');
@@ -153,14 +153,14 @@ define('ADMIN_PRODUCT_DESC', 'Описание');
 define('ADMIN_PRODUCT_BRIEF_DESC', 'Краткое описание');
 define('ADMIN_PRODUCT_SOLD', 'Продано');
 define('CUSTOMER_EMAIL', 'Email:');
-define('CUSTOMER_FIRST_NAME', 'Имя:');
-define('CUSTOMER_LAST_NAME', 'Фамилия:');
-define('CUSTOMER_ZIP', 'Почтовый индекс:');
-define('CUSTOMER_STATE', 'Область:');
-define('CUSTOMER_COUNTRY', 'Страна:');
-define('CUSTOMER_CITY', 'Город:');
-define('CUSTOMER_ADDRESS', 'Адрес:');
-define('CUSTOMER_PHONE_NUMBER', 'Телефон:');
+define('CUSTOMER_FIRST_NAME', 'Name:');
+define('CUSTOMER_LAST_NAME', 'Nachname:');
+define('CUSTOMER_ZIP', 'Postleitzahl:');
+define('CUSTOMER_STATE', 'Region:');
+define('CUSTOMER_COUNTRY', 'Land:');
+define('CUSTOMER_CITY', 'Stadt:');
+define('CUSTOMER_ADDRESS', 'Adresse:');
+define('CUSTOMER_PHONE_NUMBER', 'Telefon:');
 
 define('ADMIN_PICTURE_NOT_UPLOADED', '(фотография не загружена)');
 
@@ -169,15 +169,15 @@ define('ADMIN_PICTURE_NOT_UPLOADED', '(фотография не загруже�
 
 define('ERROR_FAILED_TO_UPLOAD_FILE', '<b><font color=red>Не удалось закачать файл на сервер. Убедитесь,<br>что включены права на создание файлов на сервере в папке products_pictures/</font></b>');
 define('ERROR_CANT_FIND_REQUIRED_PAGE', 'Извините, запрашиваемый документ не был найден на сервере');
-define('ERROR_INPUT_EMAIL', 'Пожалуйста, введите email');
-define('ERROR_INPUT_NAME', 'Пожалуйста, введите Ваши ФИО');
-define('ERROR_INPUT_COUNTRY', 'Пожалуйста, введите страну');
-define('ERROR_INPUT_CITY', 'Пожалуйста, введите название города');
-define('ERROR_INPUT_ZIP', 'Пожалуйста, введите почтовый индекс');
-define('ERROR_INPUT_STATE', 'Пожалуйста, введите область');
-define('ERROR_FILL_FORM', 'Пожалуйста, заполните все поля');
-define('ERROR_WRONG_PASSWORD', 'Неверный старый пароль');
-define('ERROR_PASS_CONFIRMATION', 'Неверное повторение пароля');
+define('ERROR_INPUT_EMAIL', 'Schreiben Sie bitte Ihren Email ein');
+define('ERROR_INPUT_NAME', 'Schreiben Sie bitte Ihren Namen ein');
+define('ERROR_INPUT_COUNTRY', 'Schreiben Sie bitte Ihres Land ein');
+define('ERROR_INPUT_CITY', 'Schreiben Sie bitte Ihre Stadt ein');
+define('ERROR_INPUT_ZIP', 'Schreiben Sie bitte Ihre Postzahl ein');
+define('ERROR_INPUT_STATE', 'Schreiben Sie bitte Ihre Region ein');
+define('ERROR_FILL_FORM', 'Schreiben Sie bitte aller Felde ein');
+define('ERROR_WRONG_PASSWORD', 'Ihr altes Kennwort ist ungultig');
+define('ERROR_PASS_CONFIRMATION', 'Kennworte sind nicht gleich');
 
 //questions
 
