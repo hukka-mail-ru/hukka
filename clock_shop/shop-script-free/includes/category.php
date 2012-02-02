@@ -24,16 +24,26 @@ function get_Subs($cid) //get current category's subcategories IDs (of all level
 
 
 	$name = "name";
+	$description = "description";
+	$brief_description = "brief_description";
 	if($_SESSION["current_language"] == 1)
+	{
 		$name = "name_de";
+		$description = "description_de";
+		$brief_description = "brief_description_de";
+	}
 	if($_SESSION["current_language"] == 2)
+	{
 		$name = "name_en";
+		$description = "description_en";
+		$brief_description = "brief_description_en";
+	}
 
 	if (isset($categoryID) && !isset($productID) && $categoryID)
 	{
 
 		//get selected category info
-		$q = db_query("SELECT categoryID, name, description, picture FROM ".CATEGORIES_TABLE." WHERE categoryID='$categoryID'") or die (db_error());
+		$q = db_query("SELECT categoryID, ".$name.", ".$description.", picture FROM ".CATEGORIES_TABLE." WHERE categoryID='$categoryID'") or die (db_error());
 		$row = db_fetch_row($q);
 		if ($row)
 		{
@@ -97,7 +107,7 @@ function get_Subs($cid) //get current category's subcategories IDs (of all level
 			{
 				if (isset($_GET["show_all"]) || ($i>=$offset && $i<$offset+CONF_PRODUCTS_PER_PAGE))
 				{
-					$q1 = db_query("select categoryID, ".$name.", brief_description, customers_rating, Price, picture, in_stock, thumbnail, customer_votes, big_picture, list_price, productID from ".PRODUCTS_TABLE." where productID='$row[0]'") or die (db_error());
+					$q1 = db_query("select categoryID, ".$name.", ".$brief_description.", customers_rating, Price, picture, in_stock, thumbnail, customer_votes, big_picture, list_price, productID from ".PRODUCTS_TABLE." where productID='$row[0]'") or die (db_error());
 					$row1 = db_fetch_row($q1);
 					//update several product fields
 					if (!file_exists("./products_pictures/".$row1[5])) $row1[5] = 0;
@@ -163,7 +173,7 @@ function get_Subs($cid) //get current category's subcategories IDs (of all level
 					$result = array();
 					while ($i<CONF_PRODUCTS_PER_PAGE && $row = db_fetch_row($q))
 					{
-						$q1 = db_query("select categoryID, ".$name.", brief_description, customers_rating, Price, picture, in_stock, thumbnail, customer_votes, big_picture, list_price, productID from ".PRODUCTS_TABLE." where productID=$row[0]") or die (db_error());
+						$q1 = db_query("select categoryID, ".$name.", ".$brief_description.", customers_rating, Price, picture, in_stock, thumbnail, customer_votes, big_picture, list_price, productID from ".PRODUCTS_TABLE." where productID=$row[0]") or die (db_error());
 						$row1 = db_fetch_row($q1);
 						//update several product fields
 						if (!file_exists("./products_pictures/".$row1[5])) $row1[5] = 0;
