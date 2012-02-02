@@ -23,14 +23,14 @@ define('LIST_PRICE', 'Alter Preis');
 define('CURRENT_PRICE', 'Unser Preis');
 define('YOU_SAVE', 'Sie sparen');
 define('IN_STOCK', 'Auf Lager');
-define('VOTING_FOR_ITEM_TITLE', 'Оцените товар!');
-define('MARK_EXCELLENT', 'Отлично!');
-define('MARK_GOOD', 'Хорошо');
-define('MARK_AVERAGE', 'Средне');
-define('MARK_POOR', 'Плохо');
-define('MARK_PUNY', 'Очень плохо');
-define('VOTE_BUTTON', 'Оценить!');
-define('VOTES_FOR_ITEM_STRING', 'голосов');
+define('VOTING_FOR_ITEM_TITLE', 'Stimmen Sie für die Ware!');
+define('MARK_EXCELLENT', 'Super!');
+define('MARK_GOOD', 'Gut');
+define('MARK_AVERAGE', 'Mäßig');
+define('MARK_POOR', 'Schlecht');
+define('MARK_PUNY', 'Sehr schlecht');
+define('VOTE_BUTTON', 'Stimmen!');
+define('VOTES_FOR_ITEM_STRING', 'Stimmen');
 
 define('LOGOUT_LINK', 'Выйти из сеанса...');
 define('ADMINISTRATE_LINK', '>> АДМИНИСТРИРОВАНИЕ <<');
@@ -55,10 +55,8 @@ define('STRING_NO_ORDERS', 'нет заказов');
 define('STRING_SEARCH', 'Suche');
 define('STRING_LANGUAGE', 'Sprache');
 define('STRING_PRICELIST', 'Preisliste');
-define('STRING_GREETINGS', '<h1>Мой интернет-магазин</h1>
-<p>Этот интернет-магазин работает с использованием программного обеспечения <a href="http://www.shop-script.ru/php-shopping-cart-software-1.html">Shop-Script FREE</a> - бесплатных скриптов для создания интернет-магазинов и каталогов.<br>
-<p>Для редактирования этого текста откройте файл <b>languages/russian.php</b><br>
-в любом текстовом редакторе (например, Блокноте).');
+define('STRING_GREETINGS', '<h1>Herzlich willkommen!</h1>
+<p>Herzlich willkommen! Das ist unser Online-Shop');
 define('STRING_FOUND', 'Найдено ');
 define('STRING_NO_MATCHES_FOUND', 'Ничего не найдено');
 define('STRING_PRODUCTS', 'Ware(n)');
@@ -131,7 +129,7 @@ define('ADMIN_MAX_PRODUCTS_COUNT_PER_PAGE', 'Максимальное колич
 define('ADMIN_MAX_COLUMNS_PER_PAGE', 'Количество столбцов при показе товаров');
 define('ADMIN_MAIN_COLORS', 'Цвета, используемые для отображения таблиц:');
 define('ADMIN_COLOR', 'Цвет');
-define('ADMIN_SPECIAL_OFFERS', 'Специальные предложения');
+define('ADMIN_SPECIAL_OFFERS', 'Spezialangebote');
 define('ADMIN_CATEGORY_TITLE', 'Категории');
 define('ADMIN_CATEGORY_NEW', 'Создать новую категорию');
 define('ADMIN_CATEGORY_PARENT', 'Родительская категория:');
