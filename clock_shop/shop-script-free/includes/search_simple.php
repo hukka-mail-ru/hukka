@@ -8,10 +8,20 @@
 
 	// simple search
 	$name = "name";
+	$description = "description";
+	$brief_description = "brief_description";
 	if($_SESSION["current_language"] == 1)
+	{
 		$name = "name_de";
+		$description = "description_de";
+		$brief_description = "brief_description_de";
+	}
 	if($_SESSION["current_language"] == 2)
+	{
 		$name = "name_en";
+		$description = "description_en";
+		$brief_description = "brief_description_en";
+	}
 
 
 	if (isset($_GET["inside"])) $smarty->assign("search_in_results", $_GET["inside"]);
@@ -52,8 +62,8 @@
 			//searching for products
 			$s_search = "SELECT count(*) FROM ".PRODUCTS_TABLE." WHERE Enabled=1 and categoryID<>0 and ";
 
-			$s_search .= "((".$name." LIKE '%".$search[0]."%' OR description LIKE '%".$search[0]."%' OR brief_description LIKE '%".$search[0]."%') ";
-			for ($j=1; $j<count($search); $j++) $s_search .= "AND (".$name." LIKE '%".$search[$j]."%' OR description LIKE '%".$search[$j]."%' OR brief_description LIKE '%".$search[$j]."%') ";
+			$s_search .= "((".$name." LIKE '%".$search[0]."%' OR ".$description." LIKE '%".$search[0]."%' OR ".$brief_description." LIKE '%".$search[0]."%') ";
+			for ($j=1; $j<count($search); $j++) $s_search .= "AND (".$name." LIKE '%".$search[$j]."%' OR ".$description." LIKE '%".$search[$j]."%' OR brief_".$brief_description." LIKE '%".$search[$j]."%') ";
 			$s_search .= ") ";
 
 
@@ -62,7 +72,7 @@
 
 			if ($offset>$g_search_count) $offset = 0;
 
-			$q = db_query(str_replace("SELECT count(*)", "SELECT categoryID, ".$name.", brief_description, customers_rating, Price, picture, in_stock, thumbnail, customer_votes, big_picture, list_price, productID", $s_search)."ORDER BY customers_rating DESC") or die (db_error());
+			$q = db_query(str_replace("SELECT count(*)", "SELECT categoryID, ".$name.", ".$brief_description.", customers_rating, Price, picture, in_stock, thumbnail, customer_votes, big_picture, list_price, productID", $s_search)."ORDER BY customers_rating DESC") or die (db_error());
 
 			$i = 0;
 			$k = 0;
