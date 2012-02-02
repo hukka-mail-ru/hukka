@@ -30,16 +30,16 @@ class Language
 	$lang_list[0]->template_path = "./templates/tmpl1/";
 
 	$lang_list[1] = new Language();
-	$lang_list[1]->id = "en";
+	$lang_list[1]->id = "de";
 	$lang_list[1]->description = "Deutsch";
 	$lang_list[1]->filename = "deutsch.php";
-	$lang_list[1]->template_path = "./templates/tmpl1/";
+	$lang_list[1]->template_path = "./templates/tmpl_de/";
 
 	$lang_list[2] = new Language();
-	$lang_list[2]->id = "de";
+	$lang_list[2]->id = "en";
 	$lang_list[2]->description = "English";
 	$lang_list[2]->filename = "english.php";
-	$lang_list[2]->template_path = "./templates/tmpl1/";
+	$lang_list[2]->template_path = "./templates/tmpl_en/";
 
 
 ?>

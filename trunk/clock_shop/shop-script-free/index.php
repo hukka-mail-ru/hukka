@@ -174,9 +174,9 @@
 	}
 
 	//show administrative mode link if logged in as administrator
-	include("./checklogin.php");
-	if (isset($_SESSION["log"]) && isset($_SESSION["pass"]))
-		echo "<br><center><a href=\"admin.php\"><font color=red>".ADMINISTRATE_LINK."</font></a></center><p>";
+	//include("./checklogin.php");
+	//if (isset($_SESSION["log"]) && isset($_SESSION["pass"]))
+	//	echo "<br><center><a href=\"admin.php\"><font color=red>".ADMINISTRATE_LINK."</font></a></center><p>";
 
 	//show Smarty output
 	$smarty->display($lang_list[$_SESSION["current_language"]]->template_path."index.tpl.html"); 
