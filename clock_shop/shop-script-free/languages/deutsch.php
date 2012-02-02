@@ -41,51 +41,51 @@ define('SAVE_BUTTON', 'Speichern');
 define('DELETE_BUTTON', 'Entfernen');
 define('CLOSE_BUTTON', 'Schließen');
 define('CANCEL_BUTTON', 'Abbrechen');
-define('UPDATE_BUTTON', 'Обновить');
-define('ADD_BUTTON', 'Добавить');
-define('ADMIN_ENABLED', 'Вкл.');
+define('UPDATE_BUTTON', 'Aktualisieren');
+define('ADD_BUTTON', 'Hinzufügen');
+define('ADMIN_ENABLED', 'Einschalten');
 
-define('STRING_BACK_TO_SHOPPING', 'Вернуться к покупкам');
-define('STRING_SHOW', 'показывать');
-define('STRING_NUMBER', 'числа');
-define('STRING_RELATED_ITEMS', 'С этим товаром мы рекомендуем');
-define('STRING_NUMBER_ONLY', 'только число');
-define('STRING_EMPTY_CATEGORY', 'нет товаров');
-define('STRING_NO_ORDERS', 'нет заказов');
+define('STRING_BACK_TO_SHOPPING', 'Zurück...');
+define('STRING_SHOW', 'anzeigen');
+define('STRING_NUMBER', 'Zahlen');
+define('STRING_RELATED_ITEMS', 'Wir raten auch an');
+define('STRING_NUMBER_ONLY', 'nur Zahl');
+define('STRING_EMPTY_CATEGORY', 'keine Waren');
+define('STRING_NO_ORDERS', 'keine Bestellungen');
 define('STRING_SEARCH', 'Suche');
 define('STRING_LANGUAGE', 'Sprache');
 define('STRING_PRICELIST', 'Preisliste');
 define('STRING_GREETINGS', '<h1>Herzlich willkommen!</h1>
 <p>Herzlich willkommen! Das ist unser Online-Shop');
-define('STRING_FOUND', 'Найдено ');
-define('STRING_NO_MATCHES_FOUND', 'Ничего не найдено');
+define('STRING_FOUND', 'Ergebnisse der Suche');
+define('STRING_NO_MATCHES_FOUND', 'keine Ergebnisse');
 define('STRING_PRODUCTS', 'Ware(n)');
-define('STRING_ORDER_ID', 'Номер заказа');
-define('STRING_ORDER_PLACED', '<div align="center"><h1>Спасибо за Ваш заказ!</h1><h3>Мы свяжемся с Вами для подтверждения заказа в ближайшее время.</h3></div>');
+define('STRING_ORDER_ID', 'Bestellungnummer');
+define('STRING_ORDER_PLACED', '<div align="center"><h1>Vielen dank für Ihre Bestellung!</h1><h3>Wir werden kontaktiren Sie für Bestätigung der Bestellung bald zu.</h3></div>');
 define('STRING_PLACE_ORDER', 'Bestellen!');
 define('STRING_NEXT', 'nächste');
-define('STRING_PREVIOUS', 'пред');
-define('STRING_SHOWALL', 'показать все');
+define('STRING_PREVIOUS', 'vorig');
+define('STRING_SHOWALL', 'zeige alle');
 define('STRING_REQUIRED', '<font color=red>*</font> обязательны для заполнения');
 define('STRING_CONTACT_INFORMATION', 'КОНТАКТНАЯ ИНФОРМАЦИЯ');
 
 define('CART_CONTENT_EMPTY', '(keine Ware)');
 define('CART_CONTENT_NOT_EMPTY', 'Ware(n): ');
 define('CART_TITLE', 'Warenkorb');
-define('CART_CLEAR', 'очистить');
-define('CART_PROCEED_TO_CHECKOUT', 'Kasse');
+define('CART_CLEAR', 'löschen');
+define('CART_PROCEED_TO_CHECKOUT', 'Bestellen');
 define('CART_EMPTY', 'Ihr Warenkorb ist derzeit leer');
 
 //table titles
 
-define('TABLE_PRODUCT_NAME', 'Название');
-define('TABLE_PRODUCT_QUANTITY', 'Количество');
-define('TABLE_PRODUCT_COST', 'Стоимость');
-define('TABLE_TOTAL', 'Итого:');
-define('TABLE_ORDER_TIME', 'Время заказа');
-define('TABLE_ORDERED_PRODUCTS', 'Заказанные товары');
-define('TABLE_ORDER_TOTAL', 'Стоимость заказа');
-define('TABLE_CUSTOMER', 'Покупатель');
+define('TABLE_PRODUCT_NAME', 'Bezeichnung');
+define('TABLE_PRODUCT_QUANTITY', 'Menge');
+define('TABLE_PRODUCT_COST', 'Preis');
+define('TABLE_TOTAL', 'Summe:');
+define('TABLE_ORDER_TIME', 'Bestellungzeit');
+define('TABLE_ORDERED_PRODUCTS', 'Bestellte Ware');
+define('TABLE_ORDER_TOTAL', 'Kosten der Bestellung');
+define('TABLE_CUSTOMER', 'Käufer');
 
 //different admin strings
 
