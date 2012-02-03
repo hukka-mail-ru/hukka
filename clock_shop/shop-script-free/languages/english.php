@@ -56,12 +56,7 @@ define('STRING_NO_ORDERS', 'no orders');
 define('STRING_SEARCH', 'Search products');
 define('STRING_LANGUAGE', 'Language');
 define('STRING_PRICELIST', 'Price list');
-define('STRING_GREETINGS', '<h1>Welcome to My Online Store!</h1>
-<p>This online store is powered by <a href="http://www.shop-script.com/php-shopping-cart-software-1.html">
-Shop-Script FREE shopping cart software</a>.<br />
-Shop-Script FREE is lite PHP shopping cart solution that allows you to create your own online store. Shop-Script FREE comes with fully open source code, and is free to use and modify.
-<p>This text is editable.<br />
-To edit open file <b>languages/english.php</b> in your text editor (e.g. Notepad).</p>');
+define('STRING_GREETINGS', '');
 define('STRING_FOUND', 'Found ');
 define('STRING_NO_MATCHES_FOUND', 'No matches found');
 define('STRING_PRODUCTS', 'product(s)');

@@ -12,7 +12,6 @@
 
 //		RUSSIAN		//
 
-//default character set, that will be used
 define('DEFAULT_CHARSET', 'utf-8');
 define('LINK_TO_HOMEPAGE', 'Главная');
 define('PRODUCTS_BEST_CHOISE', '<h5>Популярные продукты</h5>');
@@ -55,10 +54,7 @@ define('STRING_NO_ORDERS', 'нет заказов');
 define('STRING_SEARCH', 'Поиск');
 define('STRING_LANGUAGE', 'Язык');
 define('STRING_PRICELIST', 'Прайс-лист');
-define('STRING_GREETINGS', '<h1>Мой интернет-магазин</h1>
-<p>Этот интернет-магазин работает с использованием программного обеспечения <a href="http://www.shop-script.ru/php-shopping-cart-software-1.html">Shop-Script FREE</a> - бесплатных скриптов для создания интернет-магазинов и каталогов.<br>
-<p>Для редактирования этого текста откройте файл <b>languages/russian.php</b><br>
-в любом текстовом редакторе (например, Блокноте).');
+define('STRING_GREETINGS', ''); // строка снизу от меню. Там можно разместить нечто типа "Добро пожаловать"
 define('STRING_FOUND', 'Найдено ');
 define('STRING_NO_MATCHES_FOUND', 'Ничего не найдено');
 define('STRING_PRODUCTS', 'товар(ов)');

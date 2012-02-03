@@ -17,7 +17,7 @@ define('DEFAULT_CHARSET', 'utf-8');
 define('LINK_TO_HOMEPAGE', 'Startseite');
 define('PRODUCTS_BEST_CHOISE', '<h5>Beste Produkte</h5>');
 define('MORE_INFO_ON_PRODUCT', 'Beschreibung..');
-define('ENLARGE_PICTURE', 'zoom...');
+define('ENLARGE_PICTURE', 'vergrößern...');
 define('ADD_TO_CART_STRING', 'in den Korb');
 define('LIST_PRICE', 'Alter Preis');
 define('CURRENT_PRICE', 'Unser Preis');
@@ -55,8 +55,7 @@ define('STRING_NO_ORDERS', 'keine Bestellungen');
 define('STRING_SEARCH', 'Suche');
 define('STRING_LANGUAGE', 'Sprache');
 define('STRING_PRICELIST', 'Preisliste');
-define('STRING_GREETINGS', '<h1>Herzlich willkommen!</h1>
-<p>Herzlich willkommen! Das ist unser Online-Shop');
+define('STRING_GREETINGS', '');
 define('STRING_FOUND', 'Ergebnisse der Suche');
 define('STRING_NO_MATCHES_FOUND', 'keine Ergebnisse');
 define('STRING_PRODUCTS', 'Ware(n)');

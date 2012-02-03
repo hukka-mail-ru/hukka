@@ -55,7 +55,7 @@
 	db_select_db(DB_NAME) or die (db_error());
 
 	//get currency ISO 3 code
-	$currency_iso_3 = (defined('CONF_CURRENCY_ISO3')) ? CONF_CURRENCY_ISO3 : "USD" ;
+	$currency_iso_3 = (defined('CONF_CURRENCY_ISO3')) ? CONF_CURRENCY_ISO3 : "EUR" ;
 	$smarty->assign("currency_iso_3", $currency_iso_3);
 
 	//load all categories to array $cats to avoid multiple DB queries (frequently used in future - but not always!)
