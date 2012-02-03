@@ -28,7 +28,7 @@
 	}
 
 	//get currency ISO 3 code
-	$currency_iso_3 = (defined('CONF_CURRENCY_ISO3')) ? CONF_CURRENCY_ISO3 : "USD" ;
+	$currency_iso_3 = (defined('CONF_CURRENCY_ISO3')) ? CONF_CURRENCY_ISO3 : "EUR" ;
 
 	//current language
 	include("./cfg/language_list.php");
