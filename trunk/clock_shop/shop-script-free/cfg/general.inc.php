@@ -4,6 +4,6 @@
 	define('CONF_GENERAL_EMAIL', 'your@email.ru');
 	define('CONF_ORDERS_EMAIL', 'your@email.ru');
 	define('CONF_CURRENCY_ID_LEFT', '');
-	define('CONF_CURRENCY_ID_RIGHT', ' EUR');
-	define('CONF_CURRENCY_ISO3', 'EUR');
+	define('CONF_CURRENCY_ID_RIGHT', ' руб.');
+	define('CONF_CURRENCY_ISO3', 'RUR');
 ?>

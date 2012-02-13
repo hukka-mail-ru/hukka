@@ -71,7 +71,7 @@ define('STRING_CONTACT_INFORMATION', 'KONTAKT INFORMATION');
 define('CART_CONTENT_EMPTY', '(keine Ware)');
 define('CART_CONTENT_NOT_EMPTY', 'Ware(n): ');
 define('CART_TITLE', 'Warenkorb');
-define('CART_CLEAR', 'löschen');
+define('CART_CLEAR', 'alles löschen');
 define('CART_PROCEED_TO_CHECKOUT', 'Bestellen');
 define('CART_EMPTY', 'Ihr Warenkorb ist derzeit leer');
 
