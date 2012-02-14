@@ -1,0 +1,115 @@
+#!/usr/bin/perl
+
+# Usage : perl unit.pl [filename.h]
+
+$body = 0;
+$parenthess = 0;
+while ($line = <>) # read a file
+{ 
+    #skip comments
+    if($line =~ m/^\s*\/\*/) # meet '/*'
+    {
+        $comment = 1;
+    }
+
+    if($line =~ m/^\s*\*\//) # meet '*/'
+    {
+        $comment = 0;
+    }
+
+    if($comment == 1 || $line =~ m/^\s*\/\//) # inside of comment, or meet '//'
+    {
+        next;
+    }
+    
+
+    # class body starts
+    if($line =~ m/^\s*class\s*(\w+)\s*/)
+    {
+       $class = $1;
+       $body = 1;
+    }
+
+    # class body ends
+    if($line =~ m/^\s*};/)
+    {
+        $body = 0;
+    }
+
+    if($body == 1)
+    {
+        # skip implementations of functions
+        if($line =~ m/{/)
+        {
+            $parenthess++;
+        }
+
+        if($line =~ m/}/)
+        {
+            $parenthess--;
+        }
+
+        if($parenthess > 1) # skip implementations of functions
+        {
+            next;
+        }
+
+        #skip friends
+        if($line =~ m/^\s*friend\s+/)
+        {
+        next;
+        }
+
+        # get function as  '>..smth..NAME..('
+        if($line =~ m/^.*\S+\s+(\w+)\s*\(/)
+        {
+            next; # if this is a function, it can't be a variable.
+        }
+
+        # get variable as '..TYPE..NAME..;..<'
+        if($line =~ m/\s*(\S+)\s+(\w+)\s*;\s*$/)
+        {
+             if($line =~ m/\)/) # no ')' in variable names; skip situations like 'void foo() const;'
+             {
+                 next;
+             }
+
+            $type = $1;
+            $Name = "\u$2"; # name in upper case
+
+            @constrArgs[$i++] = "$type a$Name, ";
+	    @constrInit[$i++] = "$2(a$Name),\n";
+
+            @getters[$i++] = "        /**\n";
+            @getters[$i++] = "         * \@brief  get$Name\n";
+            @getters[$i++] = "         * \@return $type\n";
+            @getters[$i++] = "         */\n";
+            @getters[$i++] = "        $type get$Name()\n";
+            @getters[$i++] = "        { \n";
+            @getters[$i++] = "            return $2;\n";
+            @getters[$i++] = "        } \n\n";
+
+            @setters[$i++] = "        /**\n";
+            @setters[$i++] = "         * \@brief     set$Name\n";
+            @setters[$i++] = "         * \@param[in] $type $2\n";
+            @setters[$i++] = "         */\n";
+            @setters[$i++] = "        void set$Name($type a$Name)\n";
+            @setters[$i++] = "        { \n";
+            @setters[$i++] = "            $2 = a$Name;\n";
+            @setters[$i++] = "        } \n\n";
+
+        }
+    }
+   
+}
+
+
+#output the results
+print "$class(@constrArgs):\n";
+print "       @constrInit";
+print "{}\n";
+
+print @getters;
+print @setters;
+
+

@@ -1,0 +1,19 @@
+#!/usr/bin/perl
+
+# Usage : perl logging.pl [filename.h]
+
+$flag = 0;
+while ($line = <>) # read a file
+{ 
+    if($line =~ m/^\s*LINE  2\s*/)
+    {
+       $flag = 1;
+    }
+    if($line =~ m/^\s*LINE  3\s*/)
+    {
+       $flag = 0;
+    }
+    
+    @lines[$i++] = $1;
+
+print @lines;
