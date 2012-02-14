@@ -18,19 +18,23 @@ while ($line = <>) # read a file
 	$stock        = $5;
 	$name         = $6;
 	$color        = $7;
+	
+	$color = ($color =~ "NA") ? "" : "Цвет: $color. ";
 
-	$color = ($color == "NA") ? "" : "Цвет: $color. ";
-
-	print "INSERT INTO ClockShop.SS_products (product_code, categoryID, name, brief_description, description, 
-	       enabled, customers_rating, customer_votes, in_stock, items_sold,
-	       Price, list_price,
-	       thumbnail, picture, big_picture)
-	       VALUES (
-	       '$code', $categoryID, '$name', 'Размер: $size', 
-               'Керамические часы ручной работы. Бесшумный механизм. Питание от двух батареек АА. $colorРазмер: $size',
-	       1, 0, 0, 1, 0,
-	       $price, $price,
-	       'thumbnail/$code.jpg', 'small/$code.jpg', 'big/$code.jpg'); \n\n"
+	# skip 'Not in stock'
+	if($stock =~ "да")
+	{
+		print "INSERT INTO ClockShop.SS_products (product_code, categoryID, name, brief_description, description, 
+		       enabled, customers_rating, customer_votes, in_stock, items_sold,
+		       Price, list_price,
+		       thumbnail, picture, big_picture)
+		       VALUES (
+		       '$code', $categoryID, '$name', 'Размер: $size', 
+	               'Керамические часы ручной работы. Бесшумный механизм. Питание от двух батареек АА. $colorРазмер: $size',
+		       1, 0, 0, 1, 0,
+		       $price, $price,
+		       'thumbnail/$code.jpg', 'small/$code.jpg', 'big/$code.jpg'); \n\n"
+	}
     }
 
 
