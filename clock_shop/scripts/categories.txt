@@ -1,12 +1,12 @@
-1	0	Часы с маятником	00.2227.00	description	
-2	0	Часы круглой формы	03.2783.00	description	
-3	0	Часы овальной формы	03.2518.00	description	
-4	0	Часы стальные		NA		description	
-5	0	Часы "Фристайл"		03.2912.00	description	
-10	1	Frischer Wind		NA		description	
-11	1	Home Garden		NA		description	
-12	1	Country style		NA		description	
-13	1	Landhausstil		NA		description	
-14	2	Uhren klein		NA		description	
-15	2	Uhren gross		NA		description	
+1	0	Часы с маятником	Pendeluhren	00.2227.00	description	
+2	0	Часы круглой формы	Rundbogen	03.2783.00	description	
+3	0	Часы овальной формы	Wanduhren	03.2518.00	description	
+4	0	Часы стальные		Edelstein	NA		description	
+5	0	Часы "Фристайл"		NA		03.2912.00	description	
+10	1	Новые поступления	Frischer Wind	NA		description	
+11	1	"Дом и сад"		Home & Garden	NA		description	
+12	1	"Кантри"		Country-Style	NA		description	
+13	1	Загородный стиль	Landhausstil	NA		description	
+14	2	Маленькие		Uhren klein	NA		description	
+15	2	Большие			Uhren groß	NA		description	
 
