@@ -1,0 +1,139 @@
+#!/usr/bin/perl
+
+# Usage : perl unit.pl [filename.h]
+
+$body = 0;
+$parenthess = 0;
+while ($line = <>) # read a file
+{ 
+    #skip comments
+    if($line =~ m/^\s*\/\*/) # meet '/*'
+    {
+        $comment = 1;
+    }
+
+    if($line =~ m/^\s*\*\//) # meet '*/'
+    {
+        $comment = 0;
+    }
+
+    if($comment == 1 || $line =~ m/^\s*\/\//) # inside of comment, or meet '//'
+    {
+        next;
+    }
+    
+
+    # class body starts
+    if($line =~ m/^\s*class\s*(\w+)\s*/)
+    {
+       $class = $1;
+       $body = 1;
+    }
+
+    # class body ends
+    if($line =~ m/^\s*};/)
+    {
+        $body = 0;
+    }
+
+    if($body == 1)
+    {
+    
+        # skip implementations of functions
+        if($line =~ m/{/)
+        {
+            $parenthess++;
+        }
+
+        if($line =~ m/}/)
+        {
+            $parenthess--;
+        }
+
+        if($parenthess > 1) # skip implementations of functions
+        {
+            next;
+        }
+
+        #skip friends
+        if($line =~ m/^\s*friend\s+/)
+        {
+        next;
+        }
+
+        # get function as  '>..smth..NAME..('
+        if($line =~ m/^.*\S+\s+(\w+)\s*\(/)
+        {
+            $func = $1;
+            
+            if($func =~ m/$class/) # skip constructors and destructors
+            {
+                next;
+            }
+
+	    if($line =~ m/(^.*);.*/)   # delete ';'
+	    {
+		$line = $1;
+	    }
+
+            @impl[$i++] = "        $line\n";
+	    @impl[$i++] = "              { return NO_ERROR; } \n\n";
+
+            next; # if this is a function, it can't be a variable.
+        }
+
+    }
+   
+}
+
+
+#output the results
+
+print "/*\n";
+print " * Copyright (c) 2008 Satellic Traffic Management GmbH\n";
+print " * All Rights Reserved\n";
+print " *\n";
+print " * This software is the confidential and proprietary information of\n";
+print " * Satellic Traffic Management GmbH (\"Confidential Information\").\n";
+print " * You shall not disclose such Confidential Information and shall\n";
+print " * use it only in accordance with the terms of the license agreement\n";
+print " * you entered into with Satellic Traffic Management GmbH.\n";
+print " */\n\n";
+
+print "/* \n";
+print " * \$Id: $class\Dummy.h 4291 2008-06-30 13:12:55Z ssadovni \$ \n";
+print " * \$HeadURL: $class\Dummy.h \$ \n";
+print " */ \n\n";
+
+print "/** \n";
+print " * \@file $class\Dummy.h \n";
+print " * \@author ssadovni \n";
+print " */ \n\n";
+
+print "#ifndef \U$class\DUMMY_H \n";
+print "#define \U$class\DUMMY_H \n\n";
+
+print "#include \"$class.h\" \n\n";
+
+print "namespace APPETC \n";
+print "{ \n";
+
+print "/**  \n";
+print " * \@class $class\Dummy \n";
+print " * \@brief dummy for $class class \n";
+print " */ \n";
+
+# class
+print "class $class\Dummy : public $class \n";
+print "{ \n";
+print "    public:\n\n";
+
+print @impl;
+
+
+# EO class
+print "}; // EO class $class\Dummy \n\n";
+
+print "} // EO namespace \n";
+print "#endif\n";
+

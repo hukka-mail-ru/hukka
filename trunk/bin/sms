@@ -1,0 +1,163 @@
+#!/usr/bin/perl
+# Usage : perl sms [filename]
+
+
+$i = 0;
+my @froms;
+while ($line = <>) # read a file
+{ 
+    $line =~ s/\\;/T_Z_P/g;
+
+
+    if($line !~ m/^0x00,0x00/ || 
+       $line =~ m/.*IPM.MMS.*/ || 
+       $line =~ m/.*REPORT.IPM.SMStext.DR.*/)
+    {
+        next;
+    }
+
+
+    if($line =~ m/^0x00,0x00;"(.*)";(.*);(.*);(.*);"(.*)";(.*);(.*);(.*);(.*);(.*);(.*);(.*);(.*);(.*);(.*);(.*);(.*);(.*);(.*);(.*)$/)
+    {
+        $from = $1;
+        $fullname = $2;
+        $fake = $3;
+        $fake = $4;
+        
+        $text = $5;
+        
+        $fake = $6;
+        $fake = $7;
+        
+        $mdf = $8;
+        $sms = $9;
+        $ipm = $10;
+        
+        $fake = $11;
+        $fake = $12;
+        $fake = $13;
+        $fake = $14;
+        
+        $received  = $15;
+        $sent      = $16;
+       
+        $fake = $17;
+        $to   = $18;
+        $fake = $19;
+        $fake = $20;
+        
+        
+        $text =~ s/T_Z_P/\;/g;
+        $to =~ s/T_Z_P/\;/g;
+        
+        if($to =~ m/.*;(.*);.*;.*;.*;.*/)
+        {
+        	$to = $1;
+        }
+        
+        
+        @froms[$i] = $from;
+        @tos[$i] = $to;
+        @texts[$i] = $text;
+        
+        if($from =~ m/.+/)
+        {
+	   @times[$i] = $received;
+        }
+        else
+        {
+	   @times[$i] = $sent;
+        }
+        
+        $i++;        
+    }
+}
+
+
+# finding persons
+@persons;
+$p = 0;
+foreach $i (0..$#froms) 
+{ 
+	$flag = 0;
+	foreach $j (0..$#persons) 
+	{
+		if(@persons[$j] eq @froms[$i] || @froms[$i] eq "")
+		{
+			$flag = 1; 
+		}
+	}
+	
+	if($flag == 0)
+	{
+		@persons[$p] = @froms[$i];
+		$p++;
+	}
+}
+
+# parsing timestamp, format 2009,07,17,17,14,47
+$i = 0;
+foreach $time (0..$#times) 
+{ 
+	if($times[$i] =~ m/(.+),(.+),(.+),(.+),(.+),(.+)/)
+	{
+		@years[$i]  = $1;
+		@months[$i] = $2;
+		@days[$i]   = $3;
+		@hours[$i]  = $4;
+		@mins[$i]   = $5;
+		@secs[$i]   = $6;
+	}
+	$i++;
+}
+
+
+# binding indices for sorting
+%hash = ();
+$i = 0;
+foreach $time (0..$#times) 
+{ 
+	$hash{ $times[$i] } = $i;  
+	$i++;
+}
+
+
+# output
+foreach $p (0..$#persons) 
+{
+	print " ====================================================================== \n";
+	print " \033[1m           @persons[$p]      \033[0m\n";
+	print " ====================================================================== \n";
+	
+	foreach $key (sort (keys(%hash))) 
+	{
+		$i = $hash{$key};	
+		$time = "@hours[$i]:@mins[$i]:@secs[$i], @days[$i].@months[$i].@years[$i]";
+		
+		if(@froms[$i] =~ m/.+/)
+		{
+		  if(@persons[$p] eq @froms[$i])
+		  {
+	   	      print "      --------  $time. FROM @froms[$i] -------- \n\n";
+	   	      print "@texts[$i]\n\n"; 
+	          }
+		}
+		else
+		{
+		   if(@persons[$p] eq @tos[$i])
+		   {
+		       print "      --------  $time. TO @tos[$i] -------- \n\n";
+		       print "@texts[$i]\n\n"; 
+                   }
+		}
+		
+		
+	}
+
+	print "\n"; 
+}
+
+
+
+
+

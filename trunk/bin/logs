@@ -1,0 +1,18 @@
+#!/usr/bin/perl
+
+# Usage : perl unit.pl [filename.h]
+
+while ($line = <>) # read a file
+{ 
+    if($line =~ m/FLOW_CONTEXT/) # meet '*/'
+    {
+        if($line =~ m/ADD_DUMP/) # meet '*/'
+   	   {
+		  continue; 
+		} 
+		else
+		{
+			print $line;
+		}
+    }
+}
