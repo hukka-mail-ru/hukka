@@ -1,7 +1,0 @@
-cd big
-
-for f in *.jpg
-do
-	echo $f
-	convert $f -resize 180x180 ../small/$f
-done
