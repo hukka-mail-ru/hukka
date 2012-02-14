@@ -9,7 +9,7 @@ while ($line = <>) # read a file
   #  print "a new line\n";
 
 
-    if($line =~ m/([^\t]+)\t+([^\t]+)\t+([^\t]+)\t+([^\t]+)\t+([^\t]+)\t+([^\t]+)\t+/)
+    if($line =~ m/([^\t]+)\t+([^\t]+)\t+([^\t]+)\t+([^\t]+)\t+([^\t]+)\t+/)
     {
 
 	print "INSERT INTO ClockShop.SS_products (product_code, categoryID, name, brief_description, description, 
@@ -17,7 +17,7 @@ while ($line = <>) # read a file
 	       Price, list_price,
 	       thumbnail, picture, big_picture)
 	       VALUES (
-	       '$1', $4, '$6', 'brief_description', 'description',
+	       '$1', $3, '$5', 'brief_description', 'description: $2',
 	       1, 0, 0, 1, 0,
 	       1999, 1999,
 	       'thumbnail/$1.jpg', 'small/$1.jpg', 'big/$1.jpg'); \n\n"
