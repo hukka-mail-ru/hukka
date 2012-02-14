@@ -9,18 +9,28 @@ while ($line = <>) # read a file
   #  print "a new line\n";
 
 
-    if($line =~ m/([^\t]+)\t+([^\t]+)\t+([^\t]+)\t+([^\t]+)\t+([^\t]+)\t+/)
+    if($line =~ m/([^\t]+)\t+([^\t]+)\t+([^\t]+)\t+([^\t]+)\t+([^\t]+)\t+([^\t]+)\t+([^\t]+)\t+/)
     {
+	$code         = $1;
+	$size         = $2;
+	$categoryID   = $3;
+	$price        = $4;
+	$stock        = $5;
+	$name         = $6;
+	$color        = $7;
+
+	$color = ($color == "NA") ? "" : "Цвет: $color. ";
 
 	print "INSERT INTO ClockShop.SS_products (product_code, categoryID, name, brief_description, description, 
 	       enabled, customers_rating, customer_votes, in_stock, items_sold,
 	       Price, list_price,
 	       thumbnail, picture, big_picture)
 	       VALUES (
-	       '$1', $3, '$5', 'brief_description', 'description: $2',
+	       '$code', $categoryID, '$name', 'Размер: $size', 
+               'Керамические часы ручной работы. Бесшумный механизм. Питание от двух батареек АА. $colorРазмер: $size',
 	       1, 0, 0, 1, 0,
-	       1999, 1999,
-	       'thumbnail/$1.jpg', 'small/$1.jpg', 'big/$1.jpg'); \n\n"
+	       $price, $price,
+	       'thumbnail/$code.jpg', 'small/$code.jpg', 'big/$code.jpg'); \n\n"
     }
 
 
