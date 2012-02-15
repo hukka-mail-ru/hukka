@@ -4,8 +4,8 @@
 4	0	Часы стальные		Edelstein	NA		description	
 5	0	Часы "Фристайл"		NA		03.2912.00	description	
 10	1	Новые поступления	Frischer Wind	NA		description	
-11	1	"Дом и сад"		Home & Garden	NA		description	
-12	1	"Кантри"		Country-Style	NA		description	
+11	1	Серия "Дом и сад"	Home & Garden	NA		description	
+12	1	Серия "Кантри"		Country-Style	NA		description	
 13	1	Загородный стиль	Landhausstil	NA		description	
 14	2	Маленькие		Uhren klein	NA		description	
 15	2	Большие			Uhren groß	NA		description	
