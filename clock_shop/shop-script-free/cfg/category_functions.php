@@ -32,7 +32,7 @@ function processCategories($level, $path, $sel)
 	if($_SESSION["current_language"] == 2)
 		$name = "name_en";
 
-	$q = db_query("select categoryID, ".$name." from ".CATEGORIES_TABLE." where parent=$path[$level] order by ".$name) or die (db_error());
+	$q = db_query("select categoryID, ".$name." from ".CATEGORIES_TABLE." where parent=$path[$level] order by categoryID") or die (db_error());
 	while ($row = db_fetch_row($q))
 	{
 		$out[$cnt][0] = $row[0];

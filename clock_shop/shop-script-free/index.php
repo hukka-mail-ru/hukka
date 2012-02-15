@@ -67,7 +67,7 @@
 
 	$cats = array();
 	$i=0;
-	$q = db_query("SELECT categoryID, ".$name.", parent, products_count, description, picture FROM ".CATEGORIES_TABLE." where categoryID<>0 ORDER BY ".$name) or die (db_error());	
+	$q = db_query("SELECT categoryID, ".$name.", parent, products_count, description, picture FROM ".CATEGORIES_TABLE." where categoryID<>0 ORDER BY categoryID") or die (db_error());	
 	while ($row = db_fetch_row($q))
 	{
 		$cats[$i++] = $row;

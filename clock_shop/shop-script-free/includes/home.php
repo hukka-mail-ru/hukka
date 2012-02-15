@@ -15,7 +15,7 @@
 	// front-end homepage
 
 	//get root categories to be shown in the front-end homepage
-	$q = db_query("SELECT categoryID, ".$name.", products_count, picture FROM ".CATEGORIES_TABLE." WHERE categoryID<>0 and parent=0 ORDER BY ".$name) or die (db_error());
+	$q = db_query("SELECT categoryID, ".$name.", products_count, picture FROM ".CATEGORIES_TABLE." WHERE categoryID<>0 and parent=0 ORDER BY categoryID") or die (db_error());
 	$root = array();
 	while ($row = db_fetch_row($q))
 	{
