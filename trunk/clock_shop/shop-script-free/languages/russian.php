@@ -97,7 +97,7 @@ define('ADMIN_SETTINGS', 'Настройки');
 define('ADMIN_SETTINGS_GENERAL', 'Общие');
 define('ADMIN_SETTINGS_APPEARENCE', 'Оформление');
 define('ADMIN_CUSTOMERS_AND_ORDERS', 'Заказы');
-define('ADMIN_ABOUT_PAGE', 'О магазине');
+define('ADMIN_ABOUT_PAGE', 'Контакты');
 define('ADMIN_SHIPPING_PAGE', 'Доставка и оплата');
 define('ADMIN_AUX_INFO', 'Дополнительная информация');
 define('ADMIN_BACK_TO_SHOP', 'в общедоступную часть ...');
