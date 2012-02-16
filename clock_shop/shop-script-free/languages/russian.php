@@ -128,6 +128,7 @@ define('ADMIN_MAX_COLUMNS_PER_PAGE', 'Количество столбцов пр
 define('ADMIN_MAIN_COLORS', 'Цвета, используемые для отображения таблиц:');
 define('ADMIN_COLOR', 'Цвет');
 define('ADMIN_SPECIAL_OFFERS', 'Специальные предложения');
+define('ADMIN_NEW_OFFERS', 'Минимальная цена!');
 define('ADMIN_CATEGORY_TITLE', 'Категории');
 define('ADMIN_CATEGORY_NEW', 'Создать новую категорию');
 define('ADMIN_CATEGORY_PARENT', 'Родительская категория:');
