@@ -10,7 +10,7 @@
 <center>
 <table border=0 cellspacing=0 cellpadding=10>
 {section name=i loop=$special_offers}
-{if $smarty.section.i.index is div by 2}<tr>{/if}
+{if $smarty.section.i.index is div by 3}<tr>{/if}
 <td valign="top" align="center">
 
 
@@ -19,7 +19,7 @@
    <font color=red><b>{$special_offers[i][3]}</b></font>
 
 </td>
-{if ($smarty.section.i.index+1) is div by 2}</tr>{/if}
+{if ($smarty.section.i.index+1) is div by 3}</tr>{/if}
 {/section}
 </table>
 </center>

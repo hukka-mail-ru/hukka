@@ -196,7 +196,7 @@ CREATE TABLE `SS_special_offers` (
   `productID` int(11) DEFAULT NULL,
   `sort_order` int(11) DEFAULT NULL,
   PRIMARY KEY (`offerID`)
-) ENGINE=MyISAM AUTO_INCREMENT=19 DEFAULT CHARSET=utf8;
+) ENGINE=MyISAM AUTO_INCREMENT=21 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -205,7 +205,7 @@ CREATE TABLE `SS_special_offers` (
 
 LOCK TABLES `SS_special_offers` WRITE;
 /*!40000 ALTER TABLE `SS_special_offers` DISABLE KEYS */;
-INSERT INTO `SS_special_offers` VALUES (3,3,NULL),(18,1,1),(17,33,1),(14,24,1);
+INSERT INTO `SS_special_offers` VALUES (20,26,1),(3,3,NULL),(18,1,1),(17,33,1),(19,23,1),(14,24,1);
 /*!40000 ALTER TABLE `SS_special_offers` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
@@ -218,4 +218,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2012-02-16 16:48:05
+-- Dump completed on 2012-02-16 17:04:54
