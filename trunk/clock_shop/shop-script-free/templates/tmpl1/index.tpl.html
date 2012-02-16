@@ -85,39 +85,47 @@
 	-->
 	
 
+
+
           <tr> 
+		{* new offers *}
+		<p>
+
+		{section name=i loop=$new_offers}
+		{if $smarty.section.i.index is div by 2}<tr>{/if}
+		<td  valign="top" align="center">
+
+			<br>
+			<h3>{$smarty.const.ADMIN_NEW_OFFERS}</h3>
+			 <a href="index.php?productID={$new_offers[i][0]}"><img border="1" src="products_pictures/{$new_offers[i][2]}" border="0" alt="{$new_offers[i][1]|replace:'"':'&quot;'}"></a><br />
+			 <a href="index.php?productID={$new_offers[i][0]}">{$new_offers[i][1]}</a><br />
+   			<font color=red><b>{$new_offers[i][3]}</b></font>
+
+		</td>
+		{if ($smarty.section.i.index+1) is div by 2}</tr>{/if}
+		{/section}
+
+
+		{* end of new offers *}
+
+<!--
             <td align="right" valign="top"><div align="right"> 
                 <table width="200" border="0" align="left" cellpadding="0" cellspacing="0">
-
-
-
-
-
-				  <tr> 
+		  <tr> 
                     <td align="center" valign="top">
-					
 						<br>
-
-
-						<h3>Хотите больше возможностей?</h3>
+						<h3>Новинка!</h3>
 						<p>Посмотрите коммерческие версии Shop-Script:<br /><br />
 						<a href="http://www.shop-script.ru" target="_blank">www.shop-script.ru</a>
 						<br><br>
-
 						<h3>От 4950 рублей</h3>
-
 						<p>
-
-
-
-					</td>
+			</td>
                   </tr>
-
-
-
                 </table>
               </div>
 			</td>
+-->
           </tr>
 
 	 <!--

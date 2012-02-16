@@ -5,5 +5,6 @@
 	define('ORDERED_CARTS_TABLE', 'SS_ordered_carts');
 	define('CATEGORIES_TABLE', 'SS_categories');
 	define('SPECIAL_OFFERS_TABLE', 'SS_special_offers');
+	define('NEW_OFFERS_TABLE', 'SS_new_offers');
 
 ?>

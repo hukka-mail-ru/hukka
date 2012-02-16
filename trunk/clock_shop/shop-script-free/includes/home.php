@@ -52,5 +52,22 @@
 	}
 	$smarty->assign("special_offers",$result);
 
+	//new offers
+	$result = array();
+	$q = db_query("SELECT productID FROM ".NEW_OFFERS_TABLE) or die (db_error());
+	while ($row = db_fetch_row($q))
+	{
+		$q1 = db_query("SELECT productID, ".$name.", thumbnail, Price FROM ".PRODUCTS_TABLE." where productID=$row[0]") or die (db_error());
+		if ($row1 = db_fetch_row($q1))
+		{
+			if (trim($row1[2])!="" && file_exists("./products_pictures/$row1[2]"))
+			{
+				$row1[3] = show_price($row1[3]);
+				$result[] = $row1;
+			}
+		}
+	}
+	$smarty->assign("new_offers",$result);
+
 
 ?>
