@@ -14,7 +14,7 @@
 
 define('DEFAULT_CHARSET', 'utf-8');
 define('LINK_TO_HOMEPAGE', 'Главная');
-define('PRODUCTS_BEST_CHOISE', '<h5>Популярные продукты</h5>');
+define('PRODUCTS_BEST_CHOISE', '<h5>Популярные модели:</h5>');
 define('MORE_INFO_ON_PRODUCT', 'подробнее...');
 define('ENLARGE_PICTURE', 'увеличить...');
 define('ADD_TO_CART_STRING', 'добавить в корзину');
@@ -56,7 +56,8 @@ define('STRING_NO_ORDERS', 'нет заказов');
 define('STRING_SEARCH', 'Поиск');
 define('STRING_LANGUAGE', 'Язык');
 define('STRING_PRICELIST', 'Прайс-лист');
-define('STRING_GREETINGS', ''); // строка снизу от меню. Там можно разместить нечто типа "Добро пожаловать"
+define('STRING_GREETINGS', ''); //<p><center><font class=big color="#602035">Добро пожаловать на Часики.com.ru!</center></font><p>'); 
+define('STRING_BEFORE_CATALOG', 'В нашем магазине имеется более сотни моделей настенных часов ручной работы. Эти замечательные изделия способны притягивать взгляд в любой обстановке и послужат стильным аксессуаром для Вашего дома или прекрасным и необычным подарком Вашим близким.');
 define('STRING_FOUND', 'Найдено ');
 define('STRING_NO_MATCHES_FOUND', 'Ничего не найдено');
 define('STRING_PRODUCTS', 'товар(ов)');
@@ -129,7 +130,7 @@ define('ADMIN_MAX_PRODUCTS_COUNT_PER_PAGE', 'Максимальное колич
 define('ADMIN_MAX_COLUMNS_PER_PAGE', 'Количество столбцов при показе товаров');
 define('ADMIN_MAIN_COLORS', 'Цвета, используемые для отображения таблиц:');
 define('ADMIN_COLOR', 'Цвет');
-define('ADMIN_SPECIAL_OFFERS', 'Специальные предложения');
+define('ADMIN_SPECIAL_OFFERS', 'Скидки на часы ручной работы!');
 define('ADMIN_NEW_OFFERS', 'Минимальная цена!');
 define('ADMIN_CATEGORY_TITLE', 'Категории');
 define('ADMIN_CATEGORY_NEW', 'Создать новую категорию');
