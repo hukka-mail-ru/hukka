@@ -44,6 +44,8 @@ define('UPDATE_BUTTON', 'Обновить');
 define('ADD_BUTTON', 'Добавить');
 define('ADMIN_ENABLED', 'Вкл.');
 
+define('VIEW_AGREEMENT', 'Посмотреть договор купли-продажи');
+
 define('STRING_BACK_TO_SHOPPING', 'Вернуться к покупкам');
 define('STRING_SHOW', 'показывать');
 define('STRING_NUMBER', 'числа');
@@ -60,7 +62,7 @@ define('STRING_NO_MATCHES_FOUND', 'Ничего не найдено');
 define('STRING_PRODUCTS', 'товар(ов)');
 define('STRING_ORDER_ID', 'Номер заказа');
 define('STRING_ORDER_PLACED', '<div align="center"><h1>Спасибо за Ваш заказ!</h1><h3>Мы свяжемся с Вами для подтверждения заказа в ближайшее время.</h3></div>');
-define('STRING_PLACE_ORDER', 'Оформить заказ!');
+define('STRING_PLACE_ORDER', 'Принять условия договора и оформить заказ!');
 define('STRING_NEXT', 'след');
 define('STRING_PREVIOUS', 'пред');
 define('STRING_SHOWALL', 'показать все');
