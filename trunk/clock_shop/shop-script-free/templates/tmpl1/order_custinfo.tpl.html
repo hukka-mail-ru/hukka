@@ -65,7 +65,15 @@
 <td><input type="text" name="country" value="{$reg_userinfo[3]|replace:'"':'&quot;'}"></td>
 </tr>
 
+
+
 </table>
+
+<!-- Посмотреть договор -->
+<br>
+<a href="javascript:open_window('cfg/agreement.html',800,600);">
+<font class=average>{$smarty.const.VIEW_AGREEMENT}</font></a>
+
 
 <p>
 <input type="submit" value="{$smarty.const.STRING_PLACE_ORDER}" style="font-weight: bold; font-size: 120%;">
