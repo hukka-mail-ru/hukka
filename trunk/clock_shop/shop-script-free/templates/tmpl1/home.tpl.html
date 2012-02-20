@@ -39,7 +39,8 @@
 	{if $root_categories[i][3] ne ""}<a href="index.php?categoryID={$root_categories[i][0]}"><img border=0 src="products_pictures/{$root_categories[i][3]}" alt="{$root_categories[i][1]}">{/if}
 </td>
 <td>
-		<a href="index.php?categoryID={$root_categories[i][0]}" class=cat>{$root_categories[i][1]}</a> <b>[{$root_categories[i][2]}]</b>:<br>
+	    <!-- <a href="index.php?categoryID={$root_categories[i][0]}" class=cat>{$root_categories[i][1]}</a> <b>[{$root_categories[i][2]}]</b>:<br> -->
+	        <a href="index.php?categoryID={$root_categories[i][0]}" class=cat>{$root_categories[i][1]}</a> <br> 
 
 		{* show sub categories *}
 		{assign var="tmp" value=0}
