@@ -11,7 +11,11 @@
 function db_connect($host,$user,$pass) //create connection
 {
 	$r = mysql_connect($host,$user,$pass);
-	if(preg_match('/^5\./',mysql_get_server_info($r)))db_query('SET SESSION sql_mode=0');
+	if(preg_match('/^5\./',mysql_get_server_info($r))) 
+	{
+		db_query("SET NAMES 'utf8'");
+		db_query('SET SESSION sql_mode=0');
+	}
 	return $r;
 }
 
