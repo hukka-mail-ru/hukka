@@ -41,5 +41,4 @@ class Language
 	$lang_list[2]->filename = "english.php";
 	$lang_list[2]->template_path = "./templates/tmpl_en/";
 
-
 ?>
