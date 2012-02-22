@@ -1,3 +1,7 @@
+mkdir -p category
+mkdir -p thumbnail
+mkdir -p small
+
 
 cd big
 
