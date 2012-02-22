@@ -42,19 +42,21 @@
 	    <!-- <a href="index.php?categoryID={$root_categories[i][0]}" class=cat>{$root_categories[i][1]}</a> <b>[{$root_categories[i][2]}]</b>:<br> -->
 	        <a href="index.php?categoryID={$root_categories[i][0]}" class=cat>{$root_categories[i][1]}</a> <br> 
 
-		{* show sub categories *}
+		{* show sub categories *}	
 		{assign var="tmp" value=0}
 		{section name=j loop=$root_categories_subs}
 		  {if $root_categories_subs[j][3] == $root_categories[i][0]}
 		    
-			{if $tmp == 1}|
+			{if $tmp == 1}<br>
 			{else}
 				{assign var="tmp" value=1}
 			{/if}
 			
+			&nbsp;-&nbsp;
 			<a href="index.php?categoryID={$root_categories_subs[j][0]}" class=standard>{$root_categories_subs[j][1]}</a>
+			
 		  {/if}
-		{/section}
+		{/section}		
 </td>
 
 </td>
