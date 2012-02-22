@@ -19,7 +19,7 @@ define('MORE_INFO_ON_PRODUCT', 'подробнее...');
 define('ENLARGE_PICTURE', 'увеличить...');
 define('ADD_TO_CART_STRING', 'добавить в корзину');
 define('LIST_PRICE', 'Старая цена');
-define('CURRENT_PRICE', 'Наша цена');
+define('CURRENT_PRICE', 'Цена');
 define('YOU_SAVE', 'Вы экономите');
 define('IN_STOCK', 'Наличие на складе');
 define('VOTING_FOR_ITEM_TITLE', 'Оцените товар!');
