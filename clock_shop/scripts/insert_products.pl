@@ -9,20 +9,23 @@ while ($line = <>) # read a file
   #  print "a new line\n";
 
 
-    if($line =~ m/([^\t]+)\t+([^\t]+)\t+([^\t]+)\t+([^\t]+)\t+([^\t]+)\t+([^\t]+)\t+([^\t]+)\t+([^\t]+)\t+/)
+    if($line =~ m/([^\t]+)\t+([^\t]+)\t+([^\t]+)\t+([^\t]+)\t+([^\t]+)\t+([^\t]+)\t+([^\t]+)\t+([^\t]+)\t+([^\t]+)\t+/)
     {
 	$code         = $1;
 	$size         = $2;
 	$categoryID   = $3;
-	$price        = $4;
-	$stock_price  = $5;
-	$stock        = $6;
-	$name         = $7;
-	$color        = $8;
+	$list_price   = $4;
+	$discount_price = $5;
+	$stock_price  = $6;
+	$stock        = $7;
+	$name         = $8;
+	$color        = $9;
 	
 	$colorText = ($color =~ "-") ? "" : "Цвет: $color. ";
 
-	$list_price   = $price;
+	$price = ($discount_price =~ "-") ? $list_price : $discount_price;
+
+
 	$brief_description = "Размер: $size";
 	$description   	= "Керамические часы ручной работы. Бесшумный механизм. Питание от двух батареек АА. $colorTextРазмер: $size";
 	$enabled	= 1;
@@ -67,6 +70,7 @@ while ($line = <>) # read a file
 				in_stock = $in_stock, 
 			        Price = $price, 
                                 stock_price = $stock_price,
+				list_price = $list_price,
 			        thumbnail = '$thumbnail', 
                                 picture = '$picture', 
                                 big_picture = '$big_picture'
@@ -78,12 +82,12 @@ while ($line = <>) # read a file
 		{
 			print "INSERT INTO ClockShop.SS_products (product_code, categoryID, name, brief_description, description, color,
 		       		enabled, customers_rating, customer_votes, in_stock, items_sold,
-			       Price, list_price, stock_price,
+			       Price, list_price, stock_price, list_price,
 			       thumbnail, picture, big_picture)
 			       VALUES (
 			       '$code', $categoryID, '$name', '$brief_description', '$description', '$color'
 			       $enabled, $customers_rating, $customer_votes, $in_stock, $items_sold,
-			       $price, $list_price, $stock_price,
+			       $price, $list_price, $stock_price, $list_price,
 			       '$thumbnail', '$picture', '$big_picture'); \n\n"
 		}
 	}
