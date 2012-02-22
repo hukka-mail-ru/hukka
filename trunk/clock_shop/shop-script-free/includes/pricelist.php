@@ -45,7 +45,7 @@ function pricessCategories($parent,$level)
 		$cnt++;
 
 		//add products
-		$q = db_query("select productID, ".$name.", Price from ".PRODUCTS_TABLE." where categoryID=".$row[0]." and Price>0 and enabled=1 order by ".$name) or die (db_error());
+		$q = db_query("select productID, ".$name.", Price, color from ".PRODUCTS_TABLE." where categoryID=".$row[0]." and Price>0 and enabled=1 order by ".$name) or die (db_error());
 		while ($row1 = db_fetch_row($q))
 		 {
 			if ($row1[2] <= 0)
@@ -60,6 +60,7 @@ function pricessCategories($parent,$level)
 			$out[$cnt][3] = "FFFFFF";
 			$out[$cnt][4] = 1; //0 is for category, 1 - product
 			$out[$cnt][5] = $row1[2];
+			$out[$cnt][6] = $row1[3]; // color
 			$cnt++;
 
 		 }

@@ -20,11 +20,11 @@ while ($line = <>) # read a file
 	$name         = $7;
 	$color        = $8;
 	
-	$color = ($color =~ "NA") ? "" : "Цвет: $color. ";
+	$colorText = ($color =~ "-") ? "" : "Цвет: $color. ";
 
 	$list_price   = $price;
 	$brief_description = "Размер: $size";
-	$description   	= "Керамические часы ручной работы. Бесшумный механизм. Питание от двух батареек АА. $colorРазмер: $size";
+	$description   	= "Керамические часы ручной работы. Бесшумный механизм. Питание от двух батареек АА. $colorTextРазмер: $size";
 	$enabled	= 1;
 	$customers_rating = 0; 
 	$customer_votes	= 0; 
@@ -60,12 +60,12 @@ while ($line = <>) # read a file
 				name = '$name',
 				brief_description = '$brief_description', 
 				description = '$description', 
+				color = '$color',
 		       		enabled = $enabled, 
 				customers_rating = $customers_rating, 
 				customer_votes = $customer_votes, 
 				in_stock = $in_stock, 
 			        Price = $price, 
-                                list_price = $list_price, 
                                 stock_price = $stock_price,
 			        thumbnail = '$thumbnail', 
                                 picture = '$picture', 
@@ -76,12 +76,12 @@ while ($line = <>) # read a file
 		}
 		else
 		{
-			print "INSERT INTO ClockShop.SS_products (product_code, categoryID, name, brief_description, description, 
+			print "INSERT INTO ClockShop.SS_products (product_code, categoryID, name, brief_description, description, color,
 		       		enabled, customers_rating, customer_votes, in_stock, items_sold,
 			       Price, list_price, stock_price,
 			       thumbnail, picture, big_picture)
 			       VALUES (
-			       '$code', $categoryID, '$name', '$brief_description', '$description',
+			       '$code', $categoryID, '$name', '$brief_description', '$description', '$color'
 			       $enabled, $customers_rating, $customer_votes, $in_stock, $items_sold,
 			       $price, $list_price, $stock_price,
 			       '$thumbnail', '$picture', '$big_picture'); \n\n"
