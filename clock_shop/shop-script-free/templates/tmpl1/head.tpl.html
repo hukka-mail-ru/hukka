@@ -35,29 +35,24 @@
 			alert("{/literal}{$smarty.const.ERROR_INPUT_NAME}{literal}");
 			return false;
 		}
-		if (document.custinfo_form.email.value=="")
+		if (document.custinfo_form.phone.value=="")
 		{
-			alert("{/literal}{$smarty.const.ERROR_INPUT_EMAIL}{literal}");
+			alert("{/literal}{$smarty.const.ERROR_INPUT_PHONE}{literal}");
 			return false;
 		}
-		if (document.custinfo_form.country.value=="")
+		if (document.custinfo_form.address.value=="")
 		{
-			alert("{/literal}{$smarty.const.ERROR_INPUT_COUNTRY}{literal}");
-			return false;
-		}
-		if (document.custinfo_form.state.value=="")
-		{
-			alert("{/literal}{$smarty.const.ERROR_INPUT_STATE}{literal}");
-			return false;
-		}
-		if (document.custinfo_form.zip.value=="")
-		{
-			alert("{/literal}{$smarty.const.ERROR_INPUT_ZIP}{literal}");
+			alert("{/literal}{$smarty.const.ERROR_INPUT_ADDRESS}{literal}");
 			return false;
 		}
 		if (document.custinfo_form.city.value=="")
 		{
 			alert("{/literal}{$smarty.const.ERROR_INPUT_CITY}{literal}");
+			return false;
+		}
+		if (document.custinfo_form.country.value=="")
+		{
+			alert("{/literal}{$smarty.const.ERROR_INPUT_COUNTRY}{literal}");
 			return false;
 		}
 
