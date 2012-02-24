@@ -4,16 +4,17 @@ SHOP=shop-script-free
 
 rm -rf $SHARED/$SHOP
 
-mkdir $TEMP
+rm -rf $TEMP
+mkdir -p $TEMP
 
 echo "Copying to temp"
 cp -r ../$SHOP $TEMP
 
 echo "Deleting .svn"
-find . -name '*.svn' | xargs rm -rf
+find $TEMP -name '*.svn' | xargs rm -rf
 
 echo "Deleting .tar.gz"
-find . -name '*.tar.gz' | xargs rm -v
+find $TEMP -name '*.tar.gz' | xargs rm -v
 
 echo "Setting properties to connect to hoster.hu"
 mv $TEMP/$SHOP/cfg/connect.inc.hoster.php $TEMP/$SHOP/cfg/connect.inc.php
