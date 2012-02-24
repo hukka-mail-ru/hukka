@@ -27,7 +27,7 @@ while ($line = <>) # read a file
 
 
 	$brief_description = "Размер: $size";
-	$description   	= "Керамические часы ручной работы. Бесшумный механизм. Питание от двух батареек АА. $colorTextРазмер: $size";
+	$description   	= "Керамические часы ручной работы. Бесшумный механизм. Питание от одной батарейки АА. $colorTextРазмер: $size";
 	$enabled	= 1;
 	$customers_rating = 0; 
 	$customer_votes	= 0; 
