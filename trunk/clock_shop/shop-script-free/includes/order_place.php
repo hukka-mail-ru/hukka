@@ -89,7 +89,7 @@
 
 			//notification for administrator
 			$od = STRING_ORDER_ID.": $oid\n\n";
-			$link = "Инструкция: http://www.chasiki.com.ru/info.php?orderID=$oid\n\n";
+			$link = "Инф. о заказе и инструкция для потребителя: http://www.chasiki.com.ru/info.php?orderID=$oid\n\n";
 			$adm .= "\n".CUSTOMER_FIRST_NAME." ".$_POST["first_name"]."\n".CUSTOMER_LAST_NAME." ".$_POST["last_name"]."\n".CUSTOMER_ADDRESS.": ".$_POST["country"].", ".$_POST["zip"].", ".$_POST["state"].",  ".$_POST["city"].", ".$_POST["address"]."\n".CUSTOMER_PHONE_NUMBER.": ".$_POST["phone"]."\n".CUSTOMER_EMAIL.": ".$_POST["email"];
 			mail(CONF_ORDERS_EMAIL, EMAIL_ADMIN_ORDER_NOTIFICATION_SUBJECT, $od.$link.$adm, "From: \"".CONF_SHOP_NAME."\"<".CONF_GENERAL_EMAIL.">\n".stripslashes(EMAIL_MESSAGE_PARAMETERS)."\nReturn-path: <".CONF_GENERAL_EMAIL.">");
 
