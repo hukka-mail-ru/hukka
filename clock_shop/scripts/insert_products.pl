@@ -53,8 +53,8 @@ while ($line = <>) # read a file
 
 
 	# skip 'Not in stock'
-	if($stock =~ "да")
-	{
+	 if($stock =~ "да")
+	 {
 		if($codeExists == 1)
 		{
 
@@ -82,15 +82,19 @@ while ($line = <>) # read a file
 		{
 			print "INSERT INTO ClockShop.SS_products (product_code, categoryID, name, brief_description, description, color,
 		       		enabled, customers_rating, customer_votes, in_stock, items_sold,
-			       Price, list_price, stock_price, list_price,
+			       Price, stock_price, list_price,
 			       thumbnail, picture, big_picture)
 			       VALUES (
-			       '$code', $categoryID, '$name', '$brief_description', '$description', '$color'
+			       '$code', $categoryID, '$name', '$brief_description', '$description', '$color',
 			       $enabled, $customers_rating, $customer_votes, $in_stock, $items_sold,
-			       $price, $list_price, $stock_price, $list_price,
+			       $price, $stock_price, $list_price,
 			       '$thumbnail', '$picture', '$big_picture'); \n\n"
 		}
-	}
+	 }
+	 else
+	 {
+			print "DELETE FROM ClockShop.SS_products WHERE product_code = '$code'; \n\n"
+	 } 
     }
 
 

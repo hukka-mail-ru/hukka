@@ -28,8 +28,8 @@ if(!defined('WORKING_THROUGH_ADMIN_SCRIPT'))
 			$f = fopen("./cfg/general.inc.php","w");
 			fputs($f,"<?php\n\tdefine('CONF_SHOP_NAME', '".__escape_string($_POST["shop_name"])."');\n");
 			fputs($f,"\tdefine('CONF_SHOP_URL', '".__escape_string($_POST["shop_url"])."');\n");
-			fputs($f,"\tdefine('CONF_GENERAL_EMAIL', '".__escape_string($_POST["general_email"])."');\n");
-			fputs($f,"\tdefine('CONF_ORDERS_EMAIL', '".__escape_string($_POST["orders_email"])."');\n");
+			fputs($f,"\tdefine('CONF_SHOP_EMAIL', '".__escape_string($_POST["general_email"])."');\n");
+			fputs($f,"\tdefine('CONF_SHOP_EMAIL', '".__escape_string($_POST["orders_email"])."');\n");
 			fputs($f,"\tdefine('CONF_CURRENCY_ID_LEFT', '".__escape_string($_POST["currency_id_left"])."');\n");
 			fputs($f,"\tdefine('CONF_CURRENCY_ID_RIGHT', '".__escape_string($_POST["currency_id_right"])."');\n");
 			fputs($f,"\tdefine('CONF_CURRENCY_ISO3', '".__escape_string($_POST["currency_iso3"])."');\n");
