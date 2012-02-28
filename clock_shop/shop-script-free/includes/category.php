@@ -142,7 +142,7 @@ function get_Subs($cid) //get current category's subcategories IDs (of all level
 			$smarty->assign("catalog_navigator", $navigator);
 
 		}
-		else if (CONF_SHOW_BEST_CHOICE == 1) //there are no items in the category. search for items in it's subcategories if CONF_SHOW_BEST_CHOICE is set
+		else if (CONF_SHOW_ALL == 1) //there are no items in the category. search for items in it's subcategories if CONF_SHOW_ALL is set
 		{
 			//are there sub categories?
 			$q = db_query("SELECT count(*) FROM ".CATEGORIES_TABLE." WHERE parent='$categoryID'") or die (db_error());
@@ -163,31 +163,56 @@ function get_Subs($cid) //get current category's subcategories IDs (of all level
 					$s.= ")";
 				}
 
+
 				$q = db_query(str_replace("SELECT productID","SELECT count(*)",$s)) or die (db_error());
 				$cnt = db_fetch_row($q); $cnt = $cnt[0];
 
 				if ($cnt) //there are products in the subcategories
 				{
-					$q = db_query($s." ORDER BY customers_rating DESC") or die (db_error());
+					$q = db_query($s." ORDER BY name") or die (db_error());
 					$i=0;
 					$result = array();
-					while ($i<CONF_PRODUCTS_PER_PAGE && $row = db_fetch_row($q))
+					while ($row = db_fetch_row($q))
 					{
-						$q1 = db_query("select categoryID, ".$name.", ".$brief_description.", customers_rating, Price, picture, in_stock, thumbnail, customer_votes, big_picture, list_price, productID from ".PRODUCTS_TABLE." where productID=$row[0]") or die (db_error());
-						$row1 = db_fetch_row($q1);
-						//update several product fields
-						if (!file_exists("./products_pictures/".$row1[5])) $row1[5] = 0;
-						if (!file_exists("./products_pictures/".$row1[7])) $row1[7] = 0;
-						if (!file_exists("./products_pictures/".$row1[9])) $row1[9] = 0;
-						$row1[12] = show_price($row1[4]);
-						$row1[13] = show_price($row1[10]);
-						$row1[14] = show_price($row1[10]-$row1[4]); //you save (value)
-						if ($row1[10]) $row1[15] = ceil(((($row1[10]-$row1[4])/$row1[10])*100)); //you save (%)
-						$result[] = $row1;
+						if (isset($_GET["show_all"]) || ($i>=$offset && $i<$offset+CONF_PRODUCTS_PER_PAGE))
+						{
+
+							$q1 = db_query("select categoryID, ".$name.", ".$brief_description.", customers_rating, Price, picture, in_stock, thumbnail, customer_votes, big_picture, list_price, productID from ".PRODUCTS_TABLE." where productID=$row[0]") or die (db_error());
+							$row1 = db_fetch_row($q1);
+							//update several product fields
+							if (!file_exists("./products_pictures/".$row1[5])) $row1[5] = 0;
+							if (!file_exists("./products_pictures/".$row1[7])) $row1[7] = 0;
+							if (!file_exists("./products_pictures/".$row1[9])) $row1[9] = 0;
+							$row1[12] = show_price($row1[4]);
+							$row1[13] = show_price($row1[10]);
+							$row1[14] = show_price($row1[10]-$row1[4]); //you save (value)
+							if ($row1[10]) $row1[15] = ceil(((($row1[10]-$row1[4])/$row1[10])*100)); //you save (%)
+							$result[] = $row1;
+						}
+						$i++;
 					}
+					$g_count = $i;
+
+					//number of products to show on this page
+					if (!isset($_GET["show_all"]))
+					{
+						$min = CONF_PRODUCTS_PER_PAGE;
+						if ($min > $g_count-$offset) $min = $g_count-$offset;
+					}
+					else
+					{
+						$min = $g_count;
+						$offset = "show_all";
+					}
+
 					$smarty->assign("products_to_show", $result);
 					$smarty->assign("products_to_show_count", min($cnt, CONF_PRODUCTS_PER_PAGE));
 					$smarty->assign("products_to_show_best_choice", min($cnt, CONF_PRODUCTS_PER_PAGE));
+
+					$navigator = ""; //navigation links
+					showNavigator($g_count, $offset, CONF_PRODUCTS_PER_PAGE, "index.php?categoryID=$categoryID&",$navigator);
+					$smarty->assign("catalog_navigator", $navigator);
+
 				}
 
 			}
