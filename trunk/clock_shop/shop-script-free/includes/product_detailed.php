@@ -43,6 +43,7 @@
 			if ($a) //product found
 			{
 				$a["product_code"] = $a[12];
+				$a["productID"] = $a[11];
 
 				//get selected category info
 				$q = db_query("SELECT categoryID, ".$name.", ".$description.", picture FROM ".CATEGORIES_TABLE." WHERE categoryID='$categoryID'") or die (db_error());
