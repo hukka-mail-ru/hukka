@@ -37,13 +37,14 @@
 
 			$smarty->assign("main_content_template", "product_detailed.tpl.html");
 
-			$q = db_query("select categoryID, ".$name.", ".$description.", customers_rating, Price, picture, in_stock, thumbnail, customer_votes, big_picture, list_price, productID, product_code from ".PRODUCTS_TABLE." where productID='$productID' and enabled=1") or die (db_error());
+			$q = db_query("select categoryID, ".$name.", ".$description.", customers_rating, Price, picture, in_stock, thumbnail, customer_votes, big_picture, list_price, productID, product_code, color from ".PRODUCTS_TABLE." where productID='$productID' and enabled=1") or die (db_error());
 			$a = db_fetch_row($q);
 
 			if ($a) //product found
 			{
 				$a["product_code"] = $a[12];
 				$a["productID"] = $a[11];
+				$a["color"] = $a[13];
 
 				//get selected category info
 				$q = db_query("SELECT categoryID, ".$name.", ".$description.", picture FROM ".CATEGORIES_TABLE." WHERE categoryID='$categoryID'") or die (db_error());
