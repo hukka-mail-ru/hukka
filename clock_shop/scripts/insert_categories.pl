@@ -9,7 +9,7 @@ while ($line = <>) # read a file
   #  print "a new line\n";
 
 
-    if($line =~ m/([^\t]+)\t+([^\t]+)\t+([^\t]+)\t+([^\t]+)\t+([^\t]+)\t+([^\t]+)\t+/)
+    if($line =~ m/([^\t]+)\t+([^\t]+)\t+([^\t]+)\t+([^\t]+)\t+([^\t]+)\t+([^\t]+)$/)
     {
 	$categoryID  = $1;
 	$parent      = $2;
