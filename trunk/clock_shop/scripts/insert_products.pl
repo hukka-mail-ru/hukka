@@ -56,7 +56,9 @@ while ($line = <>) # read a file
 	$brief_description = "Размер: $size";
 
 	$type   	= ($categoryID == 4) ? "Часы из нержавеющей стали" : "Керамические часы";
-	$mech		= ($categoryID == 10 || $categoryID == 11 || $categoryID == 12) ? "Бесшумный маятниковый механизм" : "Бесшумный кварцевый механизм";
+
+	$mech		= ($categoryID == 10 || $categoryID == 11 || $categoryID == 12 || $categoryID == 4) ? 
+			  "Бесшумный маятниковый механизм" : "Бесшумный кварцевый механизм";
 
 	$description	= "$type, ручная работа. $mech. Гарантия 2 года. Питание от одной батарейки АА. Размер: $size.";
 	$enabled	= 1;
