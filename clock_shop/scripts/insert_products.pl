@@ -4,6 +4,31 @@ use POSIX;
 
 # Usage : perl insert.pl artikul.txt
 
+$transport = 15; # EUR
+$transport_insurance = $transport/10; # EUR, one time of 10 we need to resend
+$refuse_insurance = $transport/10; # EUR, one time of 10 customer returns
+$gurantee_insurance = $transport/100; # EUR, one time of 100 we need to repair
+$kurs = 40; # RUB/EUR
+$advertising = 200; # RUB
+$my_interest = 400; # RUB	
+$discount = 10;# RUB	
+
+$expencies = ($transport + $transport_insurance + $gurantee_insurance + $refuse_insurance) * $kurs + $advertising;
+$total_margin = $expencies +  $my_interest;
+
+print "# CALC: transport:\t $transport EUR\n";
+print "# CALC: transport insurance:\t $transport_insurance EUR\n";
+print "# CALC: refuse insurance:\t $refuse_insurance EUR\n";
+print "# CALC: gurantee insurance:\t $gurantee_insurance EUR\n";
+print "# CALC: advertising:\t $advertising RUB\n";
+print "# CALC: ====================\n";
+print "# CALC: kurs:\t $kurs RUB/EUR\n";
+print "# CALC: expencies:\t $expencies RUB\n";
+print "# CALC: ====================\n";
+print "# CALC: my interest:\t $my_interest RUB\n";
+print "# CALC: TOTAL MARGIN:\t $total_margin RUB\n";
+
+
 #print "DELETE FROM ClockShop.SS_products;\n\n";
 
 while ($line = <>) # read a file
@@ -24,17 +49,7 @@ while ($line = <>) # read a file
 	
 	$colorText = ($color =~ "-") ? "" : "Цвет: $color. ";
 
-
-	$transport = 15; # EUR
-	$transport_insurance = $transport/10;     # EUR, one time of 10 we need to resend
-	$gurantee_insurance = $transport/100; # EUR, one time of 100 we need to repair
-	$kurs = 40; # RUB/EUR
-	$advertising = 200; # RUB
-	$my_interst = 500; # RUB	
-	$discount = 10;# RUB	
-
-	$price = ($stock_price + $transport + $transport_insurance + $gurantee_insurance) * $kurs + $my_interst + $advertising;
-	$price = ceil($price); # round to integer
+	$price = ceil($stock_price * $kurs + $total_margin);
 	$price  = $price + 100 - ($price % 100) - $discount; # round to the nearest 100, discount 10.
 
 	$list_price = $price;
