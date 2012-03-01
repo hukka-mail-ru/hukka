@@ -54,7 +54,11 @@ while ($line = <>) # read a file
 	$list_price = $price;
 
 	$brief_description = "Размер: $size";
-	$description   	= "Керамические часы ручной работы. Гарантия 2 года. Бесшумный механизм. Питание от одной батарейки АА. Размер: $size";
+
+	$type   	= ($categoryID == 4) ? "Часы из нержавеющей стали" : "Керамические часы";
+	$mech		= ($categoryID == 10 || $categoryID == 11 || $categoryID == 12) ? "Бесшумный маятниковый механизм" : "Бесшумный кварцевый механизм";
+
+	$description	= "$type, ручная работа. $mech. Гарантия 2 года. Питание от одной батарейки АА. Размер: $size.";
 	$enabled	= 1;
 	$customers_rating = 0; 
 	$customer_votes	= 0; 
