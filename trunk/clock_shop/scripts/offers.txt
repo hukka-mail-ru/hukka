@@ -1,5 +1,5 @@
-special		10	200
-special		11	200
+special		2	200
+special		8	200
 special		12	200
 special		13	200
 special		14	200
