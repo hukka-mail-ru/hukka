@@ -1,5 +1,7 @@
 #!/usr/bin/perl
 
+use POSIX;
+
 # Usage : perl insert.pl artikul.txt
 
 #print "DELETE FROM ClockShop.SS_products;\n\n";
@@ -21,6 +23,20 @@ while ($line = <>) # read a file
 	$color        = $8;
 	
 	$colorText = ($color =~ "-") ? "" : "Цвет: $color. ";
+
+
+	$transport = 15; # EUR
+	$transport_insurance = $transport/10;     # EUR, one time of 10 we need to resend
+	$gurantee_insurance = $transport/100; # EUR, one time of 100 we need to repair
+	$kurs = 40; # RUB/EUR
+	$advertising = 200; # RUB
+	$my_interst = 500; # RUB	
+	$discount = 10;# RUB	
+
+	$price = ($stock_price + $transport + $transport_insurance + $gurantee_insurance) * $kurs + $my_interst + $advertising;
+	$price = ceil($price); # round to integer
+	$price  = $price + 100 - ($price % 100) - $discount; # round to the nearest 100, discount 10.
+
 	$list_price = $price;
 
 	$brief_description = "Размер: $size";
