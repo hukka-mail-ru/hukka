@@ -9,22 +9,19 @@ while ($line = <>) # read a file
   #  print "a new line\n";
 
 
-    if($line =~ m/([^\t]+)\t+([^\t]+)\t+([^\t]+)\t+([^\t]+)\t+([^\t]+)\t+([^\t]+)\t+([^\t]+)\t+([^\t]+)\t+([^\t]+)\t+/)
+    if($line =~ m/([^\t]+)\t+([^\t]+)\t+([^\t]+)\t+([^\t]+)\t+([^\t]+)\t+([^\t]+)\t+([^\t]+)\t+([^\t]+)\t+/)
     {
 	$code         = $1;
 	$size         = $2;
 	$categoryID   = $3;
-	$list_price   = $4;
-	$discount_price = $5;
-	$stock_price  = $6;
-	$stock        = $7;
-	$name         = $8;
-	$color        = $9;
+	$price        = $4;
+	$stock_price  = $5;
+	$stock        = $6;
+	$name         = $7;
+	$color        = $8;
 	
 	$colorText = ($color =~ "-") ? "" : "Цвет: $color. ";
-
-	$price = ($discount_price =~ "-") ? $list_price : $discount_price;
-
+	$list_price = $price;
 
 	$brief_description = "Размер: $size";
 	$description   	= "Керамические часы ручной работы. Гарантия 2 года. Бесшумный механизм. Питание от одной батарейки АА. $colorTextРазмер: $size";

@@ -1,7 +1,7 @@
-special		10	300
-special		11	300
-special		12	300
-special		13	300
-special		14	300
-special		15	300
-new		26	400
+special		10	200
+special		11	200
+special		12	200
+special		13	200
+special		14	200
+special		15	200
+new		26	300
