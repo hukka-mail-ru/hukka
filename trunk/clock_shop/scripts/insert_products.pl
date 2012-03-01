@@ -10,7 +10,7 @@ $refuse_insurance = $transport/10; # EUR, one time of 10 customer returns
 $gurantee_insurance = $transport/100; # EUR, one time of 100 we need to repair
 $kurs = 40; # RUB/EUR
 $advertising = 200; # RUB
-$my_interest = 400; # RUB	
+$my_interest = 500; # RUB	
 $discount = 10;# RUB	
 
 $expencies = ($transport + $transport_insurance + $gurantee_insurance + $refuse_insurance) * $kurs + $advertising;
@@ -36,7 +36,7 @@ while ($line = <>) # read a file
   #  print "a new line\n";
 
 
-    if($line =~ m/([^\t]+)\t+([^\t]+)\t+([^\t]+)\t+([^\t]+)\t+([^\t]+)\t+([^\t]+)\t+([^\t]+)\t+([^\t]+)\t+/)
+    if($line =~ m/([^\t]+)\t+([^\t]+)\t+([^\t]+)\t+([^\t]+)\t+([^\t]+)\t+([^\t]+)\t+([^\t]+)\t+([^\t]+)$/)
     {
 	$code         = $1;
 	$size         = $2;
@@ -47,7 +47,6 @@ while ($line = <>) # read a file
 	$name         = $7;
 	$color        = $8;
 	
-	$colorText = ($color =~ "-") ? "" : "Цвет: $color. ";
 
 	$price = ceil($stock_price * $kurs + $total_margin);
 	$price  = $price + 100 - ($price % 100) - $discount; # round to the nearest 100, discount 10.
@@ -55,7 +54,7 @@ while ($line = <>) # read a file
 	$list_price = $price;
 
 	$brief_description = "Размер: $size";
-	$description   	= "Керамические часы ручной работы. Гарантия 2 года. Бесшумный механизм. Питание от одной батарейки АА. $colorTextРазмер: $size";
+	$description   	= "Керамические часы ручной работы. Гарантия 2 года. Бесшумный механизм. Питание от одной батарейки АА. Размер: $size";
 	$enabled	= 1;
 	$customers_rating = 0; 
 	$customer_votes	= 0; 

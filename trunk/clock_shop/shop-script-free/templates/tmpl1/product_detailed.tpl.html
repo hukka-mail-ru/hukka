@@ -59,7 +59,6 @@
 
   <h1>{$product_info[1]}</h1>
 
-
   {if $product_info[8] > 0} {* rating *}
 
 	{section name=i loop=5}{if $smarty.section.i.index<$product_info[3]}<img src="images/redstar_big.gif">{else}<img src="images/blackstar_big.gif">{/if}{/section}
@@ -109,6 +108,7 @@
   {/if}
 
 
+
  </td>
  </tr>
 
@@ -122,8 +122,11 @@
 		</b>
 		{/if}
 
+
 		{* in stock info *}
 		<br><br>
+		Цвет/исполнение: {$product_info.color}<br>
+
 		{$smarty.const.IN_STOCK}: <b>
 		{if $product_info[6] > 0}{$smarty.const.ANSWER_YES}{else}<font color=red>{$smarty.const.ANSWER_NO}</font>{/if}
 		</b>
