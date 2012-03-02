@@ -29,7 +29,9 @@ print "# CALC: my interest:\t $my_interest RUB\n";
 print "# CALC: TOTAL MARGIN:\t $total_margin RUB\n";
 
 
-print "DELETE FROM ClockShop.SS_products;\n\n";
+print "\n\n";
+print "DELETE FROM ClockShop.SS_products;\n";
+print "ALTER TABLE ClockShop.SS_products AUTO_INCREMENT = 100;\n\n";
 
 while ($line = <>) # read a file
 { 
