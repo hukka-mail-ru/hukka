@@ -29,7 +29,7 @@ print "# CALC: my interest:\t $my_interest RUB\n";
 print "# CALC: TOTAL MARGIN:\t $total_margin RUB\n";
 
 
-#print "DELETE FROM ClockShop.SS_products;\n\n";
+print "DELETE FROM ClockShop.SS_products;\n\n";
 
 while ($line = <>) # read a file
 { 
@@ -88,31 +88,6 @@ while ($line = <>) # read a file
 	# skip 'Not in stock'
 	 if($stock =~ "да")
 	 {
-		if($codeExists == 1)
-		{
-
-			print "UPDATE ClockShop.SS_products SET 
-				categoryID = $categoryID, 
-				name = '$name',
-				brief_description = '$brief_description', 
-				description = '$description', 
-				color = '$color',
-		       		enabled = $enabled, 
-				customers_rating = $customers_rating, 
-				customer_votes = $customer_votes, 
-				in_stock = $in_stock, 
-			        Price = $price, 
-                                stock_price = $stock_price,
-				list_price = $list_price,
-			        thumbnail = '$thumbnail', 
-                                picture = '$picture', 
-                                big_picture = '$big_picture'
-			       WHERE 
-  			        product_code = '$code'; \n\n"
-
-		}
-		else
-		{
 			print "INSERT INTO ClockShop.SS_products (product_code, categoryID, name, brief_description, description, color,
 		       		enabled, customers_rating, customer_votes, in_stock, items_sold,
 			       Price, stock_price, list_price,
@@ -122,12 +97,8 @@ while ($line = <>) # read a file
 			       $enabled, $customers_rating, $customer_votes, $in_stock, $items_sold,
 			       $price, $stock_price, $list_price,
 			       '$thumbnail', '$picture', '$big_picture'); \n\n"
-		}
 	 }
-	 else
-	 {
-			print "DELETE FROM ClockShop.SS_products WHERE product_code = '$code'; \n\n"
-	 } 
+
     }
 
 
