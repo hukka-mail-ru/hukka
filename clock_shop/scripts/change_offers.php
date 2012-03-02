@@ -27,14 +27,14 @@ function removeDiscounts($table)
 	//print_r($words);
 
 	$key	= array();
-	$ids    = array();
+	$codes  = array();
 	$prices = array();
 
 	$ii = 0;
 	for ($i = 0; $i < count($words) - 3; $i = $i+3) 
 	{
 		$key[$ii] = $words[$i];
-		$ids[$ii] = $words[$i + 1];
+		$codes[$ii] = $words[$i + 1];
 		$prices[$ii] = $words[$i + 2];
 		$ii++;
 	}
@@ -57,25 +57,28 @@ function removeDiscounts($table)
 	printf("DELETE FROM SS_new_offers;\n\n");
 
 	// create updated offers
-	foreach ($ids as $i => $value) 
+	foreach ($codes as $i => $value) 
 	{
+
+		$qq = mysql_query("SELECT productID, list_price FROM SS_products WHERE product_code='$codes[$i]'") or die (mysql_error());
+		while ($rrow = mysql_fetch_row($qq))
+		{
+			$id = $rrow[0];
+			$list_price = $rrow[1];
+		}
+
 		if($key[$i] == "special")
 		{
-			printf("INSERT INTO SS_special_offers (productID) VALUES ($ids[$i]);\n");
+			printf("INSERT INTO SS_special_offers (productID) VALUES ($id);\n");
 		}
 		if($key[$i] == "new")
 		{
-			printf("INSERT INTO SS_new_offers (productID) VALUES ($ids[$i]);\n");
+			printf("INSERT INTO SS_new_offers (productID) VALUES ($id);\n");
 		}
 
-		$qq = mysql_query("SELECT list_price FROM SS_products WHERE productID=$ids[$i]") or die (db_error());
-		while ($rrow = mysql_fetch_row($qq))
-		{
-			$list_price = $rrow[0];
-		}
 
 		$discouted_price = $list_price - $prices[$i];
-		printf("UPDATE SS_products SET price=$discouted_price WHERE productID=$ids[$i]; \n\n");
+		printf("UPDATE SS_products SET price=$discouted_price WHERE productID=$id; \n\n");
 
 	}
 
