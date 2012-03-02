@@ -88,8 +88,8 @@ while ($line = <>) # read a file
 
 
 	# skip 'Not in stock'
-	 if($stock =~ "да")
-	 {
+	# if($stock =~ "да")
+	# {
 			print "INSERT INTO ClockShop.SS_products (product_code, categoryID, name, brief_description, description, color,
 		       		enabled, customers_rating, customer_votes, in_stock, items_sold,
 			       Price, stock_price, list_price,
@@ -99,7 +99,7 @@ while ($line = <>) # read a file
 			       $enabled, $customers_rating, $customer_votes, $in_stock, $items_sold,
 			       $price, $stock_price, $list_price,
 			       '$thumbnail', '$picture', '$big_picture'); \n\n"
-	 }
+	# }
 
     }
 
