@@ -16,17 +16,17 @@ $discount = 10;# RUB
 $expencies = ($transport + $transport_insurance + $gurantee_insurance + $refuse_insurance) * $kurs + $advertising;
 $total_margin = $expencies +  $my_interest;
 
-print "# CALC: transport:\t $transport EUR\n";
+print "# CALC: transport:\t\t $transport EUR\n";
 print "# CALC: transport insurance:\t $transport_insurance EUR\n";
 print "# CALC: refuse insurance:\t $refuse_insurance EUR\n";
 print "# CALC: gurantee insurance:\t $gurantee_insurance EUR\n";
-print "# CALC: advertising:\t $advertising RUB\n";
-print "# CALC: ====================\n";
-print "# CALC: kurs:\t $kurs RUB/EUR\n";
-print "# CALC: expencies:\t $expencies RUB\n";
-print "# CALC: ====================\n";
-print "# CALC: my interest:\t $my_interest RUB\n";
-print "# CALC: TOTAL MARGIN:\t $total_margin RUB\n";
+print "# CALC: advertising:\t\t $advertising RUB\n";
+print "# CALC: ================================\n";
+print "# CALC: kurs:\t\t\t $kurs RUB/EUR\n";
+print "# CALC: expencies:\t\t $expencies RUB\n";
+print "# CALC: ================================\n";
+print "# CALC: my interest:\t\t $my_interest RUB\n";
+print "# CALC: TOTAL MARGIN:\t\t $total_margin RUB\n";
 
 
 print "\n\n";
@@ -88,8 +88,8 @@ while ($line = <>) # read a file
 
 
 	# skip 'Not in stock'
-	# if($stock =~ "да")
-	# {
+	 if($stock =~ "да")
+	 {
 			print "INSERT INTO ClockShop.SS_products (product_code, categoryID, name, brief_description, description, color,
 		       		enabled, customers_rating, customer_votes, in_stock, items_sold,
 			       Price, stock_price, list_price,
@@ -99,7 +99,7 @@ while ($line = <>) # read a file
 			       $enabled, $customers_rating, $customer_votes, $in_stock, $items_sold,
 			       $price, $stock_price, $list_price,
 			       '$thumbnail', '$picture', '$big_picture'); \n\n"
-	# }
+	 }
 
     }
 
