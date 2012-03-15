@@ -34,8 +34,8 @@ CREATE TABLE tbParamList
 INSERT INTO tbParamList (ParamID, ParamName, Min, Max, IsPassword, IsPlayerID) VALUES (0, 'IDPlayer0', NULL, NULL, 0, 1);
 INSERT INTO tbParamList (ParamID, ParamName, Min, Max, IsPassword, IsPlayerID) VALUES (1, 'IDPlayer1', NULL, NULL, 0, 1);
 INSERT INTO tbParamList (ParamID, ParamName, Min, Max, IsPassword, IsPlayerID) VALUES (2, 'Password', NULL, NULL, 1, 0);
-INSERT INTO tbParamList (ParamID, ParamName, Min, Max, IsPassword, IsPlayerID) VALUES (3, 'Time2Step', 0, 4200, 0, 0);
-INSERT INTO tbParamList (ParamID, ParamName, Min, Max, IsPassword, IsPlayerID) VALUES (4, 'Time2Game', 0, 7200, 0, 0);
+INSERT INTO tbParamList (ParamID, ParamName, Min, Max, IsPassword, IsPlayerID) VALUES (3, 'Time2Step', 0, 21600, 0, 0);
+INSERT INTO tbParamList (ParamID, ParamName, Min, Max, IsPassword, IsPlayerID) VALUES (4, 'Time2Game', 0, 21600, 0, 0);
 INSERT INTO tbParamList (ParamID, ParamName, Min, Max, IsPassword, IsPlayerID) VALUES (5, 'MinRating', NULL, NULL, 0, 0);
 INSERT INTO tbParamList (ParamID, ParamName, Min, Max, IsPassword, IsPlayerID) VALUES (6, 'MaxRating', NULL, NULL, 0, 0);
 INSERT INTO tbParamList (ParamID, ParamName, Min, Max, IsPassword, IsPlayerID) VALUES (7, 'Bet', NULL, NULL, 0, 0);
