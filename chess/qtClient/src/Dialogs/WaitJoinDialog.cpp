@@ -11,9 +11,9 @@ WaitJoinDialog::WaitJoinDialog(const GameTable& gameTable, QWidget *parent):
     qDebug() << "WaitJoinDialog::WaitJoinDialog";
 
     label = new QLabel(tr("You have created the game:") + "\n\n" +
-                       tr("Bet: ") + QString::number(gameTable.bet) + "\n" +
-                       tr("Move time: ") + QString::number(gameTable.time2step) + "\n" +
-                       tr("Game time: ") + QString::number(gameTable.time2game) + "\n\n" +
+                       tr("Bet (RUR): ") + QString::number(gameTable.bet) + "\n" +
+                       tr("Move time (min)") + ": " + QString::number(gameTable.time2step/SECONDS_IN_MINUTE) + "\n" +
+                       tr("Game time (min)") + ": " + QString::number(gameTable.time2game/SECONDS_IN_MINUTE) + "\n\n" +
                        tr("Please wait until an opponent joins your game..."), this);
     label->setWordWrap(true);
 
