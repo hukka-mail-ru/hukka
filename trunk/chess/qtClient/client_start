@@ -1,3 +1,6 @@
+export PLATFORM="LINUX"
+export QTPATH="/usr/include/qt4"
+
 if [ "$PLATFORM" = "" ] ; then
     echo "Please set PLATFORM variable first!"
 	exit
