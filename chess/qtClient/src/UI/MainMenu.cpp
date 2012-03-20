@@ -193,6 +193,7 @@ void MainMenu::onConnectedToHost()
 
         UI::instance()->setPlayerName(PT_ME, login);
 
+	connect(Client::instance(), SIGNAL(registered()), this, SLOT(onAuthorized()));
         connect(Client::instance(), SIGNAL(authorized()), this, SLOT(onAuthorized()));
         connect(Client::instance(), SIGNAL(notAuthorized(const QString&)), this, SLOT(onNotAuthorized(const QString&)));
 

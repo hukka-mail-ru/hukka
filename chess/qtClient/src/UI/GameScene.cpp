@@ -127,8 +127,13 @@ void GameScene::onGotPosition(const Position& position)
 
     // Show game state
     QString gameState = "";
-    if((position.status == Check && position.w_check && position.iAmWhite) ||
-       (position.status == Check && position.b_check && !position.iAmWhite))
+
+// "Check!" is shown only if I'm being checked.
+//    if((position.status == Check && position.w_check && position.iAmWhite) ||
+//       (position.status == Check && position.b_check && !position.iAmWhite))
+
+    // "Check!" is shown if either I'm checking or I'm being checked.
+    if ((position.w_check || position.b_check) && position.status == Check)
     {
         gameState = tr("Check!");
     }

@@ -4,9 +4,8 @@
 <context>
     <name></name>
     <message>
-        <location filename="../src/Base/Defines.h" line="94"/>
         <source>all</source>
-        <translation>всем</translation>
+        <translation type="obsolete">всем</translation>
     </message>
     <message>
         <source>Internal server error</source>
@@ -675,7 +674,7 @@
     <name>GameScene</name>
     <message>
         <location filename="../src/UI/GameScene.cpp" line="41"/>
-        <location filename="../src/UI/GameScene.cpp" line="187"/>
+        <location filename="../src/UI/GameScene.cpp" line="192"/>
         <source>Game menu</source>
         <translation>Меню игры</translation>
     </message>
@@ -685,17 +684,17 @@
         <translation>Неправильный ход</translation>
     </message>
     <message>
-        <location filename="../src/UI/GameScene.cpp" line="133"/>
+        <location filename="../src/UI/GameScene.cpp" line="138"/>
         <source>Check!</source>
         <translation>Шах!</translation>
     </message>
     <message>
-        <location filename="../src/UI/GameScene.cpp" line="137"/>
+        <location filename="../src/UI/GameScene.cpp" line="142"/>
         <source>Mate.</source>
         <translation>Мат.</translation>
     </message>
     <message>
-        <location filename="../src/UI/GameScene.cpp" line="141"/>
+        <location filename="../src/UI/GameScene.cpp" line="146"/>
         <source>Stalemate.</source>
         <translation>Пат.</translation>
     </message>
@@ -784,27 +783,27 @@
         <translation>Кошелек</translation>
     </message>
     <message>
-        <location filename="../src/UI/MainMenu.cpp" line="255"/>
+        <location filename="../src/UI/MainMenu.cpp" line="256"/>
         <source>Rating: not available</source>
         <translation>Рейтинг: не включен</translation>
     </message>
     <message>
-        <location filename="../src/UI/MainMenu.cpp" line="256"/>
+        <location filename="../src/UI/MainMenu.cpp" line="257"/>
         <source>Rating: </source>
         <translation>Рейтинг: </translation>
     </message>
     <message>
-        <location filename="../src/UI/MainMenu.cpp" line="265"/>
+        <location filename="../src/UI/MainMenu.cpp" line="266"/>
         <source>Balance: </source>
         <translation>Баланс (руб.): </translation>
     </message>
     <message>
-        <location filename="../src/UI/MainMenu.cpp" line="302"/>
+        <location filename="../src/UI/MainMenu.cpp" line="303"/>
         <source>The last game has been finished.</source>
         <translation>Предыдущая игра была завершена</translation>
     </message>
     <message>
-        <location filename="../src/UI/MainMenu.cpp" line="331"/>
+        <location filename="../src/UI/MainMenu.cpp" line="332"/>
         <source>You have an unfinished game. Please finish it.</source>
         <translation>Пожалуйста завершите предыдущую игру.</translation>
     </message>
@@ -1064,7 +1063,7 @@ Please visit www.site.com to learn how to enable it.</source>
 <context>
     <name>UI</name>
     <message>
-        <location filename="../src/UI/UI.cpp" line="102"/>
+        <location filename="../src/UI/UI.cpp" line="103"/>
         <source>Your opponent has offered a draw. Agree?</source>
         <translation>Ваш противник предлагает ничью. Согласны?</translation>
     </message>
@@ -1118,19 +1117,31 @@ Please visit www.site.com to learn how to enable it.</source>
         <translation>Вы создали игру:</translation>
     </message>
     <message>
-        <location filename="../src/Dialogs/WaitJoinDialog.cpp" line="14"/>
         <source>Bet: </source>
-        <translation>Ставка: </translation>
+        <translation type="obsolete">Ставка: </translation>
+    </message>
+    <message>
+        <source>Move time: </source>
+        <translation type="obsolete">Время хода: </translation>
+    </message>
+    <message>
+        <source>Game time: </source>
+        <translation type="obsolete">Время игры: </translation>
+    </message>
+    <message>
+        <location filename="../src/Dialogs/WaitJoinDialog.cpp" line="14"/>
+        <source>Bet (RUR): </source>
+        <translation>Ставка (руб.): </translation>
     </message>
     <message>
         <location filename="../src/Dialogs/WaitJoinDialog.cpp" line="15"/>
-        <source>Move time: </source>
-        <translation>Время хода: </translation>
+        <source>Move time (min)</source>
+        <translation type="unfinished">Время хода (в минутах)</translation>
     </message>
     <message>
         <location filename="../src/Dialogs/WaitJoinDialog.cpp" line="16"/>
-        <source>Game time: </source>
-        <translation>Время игры: </translation>
+        <source>Game time (min)</source>
+        <translation type="unfinished">Время игры (в минутах)</translation>
     </message>
     <message>
         <location filename="../src/Dialogs/WaitJoinDialog.cpp" line="17"/>

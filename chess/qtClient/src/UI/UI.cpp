@@ -71,7 +71,7 @@ void UI::onGameOver(int status, int rating)
     disconnect(Client::instance(), SIGNAL(drawOffered()), this, SLOT(onDrawOffered()));
 
     // getPosition must be earlier than showMessage because the clocks must not tick while
-    // user looks at the message box.
+    // the user is looking at the message box.
     Client::instance()->getPosition(mGameTable); // player must see the victory move
     Client::instance()->deleteLastGameResult();
 
@@ -80,8 +80,8 @@ void UI::onGameOver(int status, int rating)
     mGameState = GS_GAME_OVER;
     MainWindow::instance()->updateGameScene();
 
-    // a timeout before showing the GameDialog,
-    // user must enjoy his victory:)
+    // a timeout before showing the GameDialog -
+    // so the user can enjoy the victory:)
     mGameOverTimer->start(GAME_OVER_TIMEOUT * 1000);
     connect(mGameOverTimer, SIGNAL(timeout()), this, SLOT(onGameOverTimeout()));
 }

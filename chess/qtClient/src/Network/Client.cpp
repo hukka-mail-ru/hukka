@@ -1016,7 +1016,7 @@ void Client::processMessageREG(const MessageHeader& header, const QByteArray& bu
     if(header.cmd == REG_STATUS)
     {
         switch(buffer[0]) {
-            case NOERR:          emit registered(); break;
+            case NOERR:          mClientAuthorized = true; emit registered(); break;
             case ERRBADLOGIN:    emit error(tr("Incorrect user name")); break;
             case ERRBADPASS:     emit error(tr("Incorrect password")); break;
             case ERRLOGINEXIST:  emit error(tr("User already exists.")); break;
