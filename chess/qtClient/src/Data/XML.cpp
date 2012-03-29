@@ -7,7 +7,7 @@
 #include <Exception.h>
 
 
-QString XML::readValue(QString filename, const QList<QString>& nodenames)
+QString XML::readValue(const QString& filename, const QList<QString>& nodenames)
 {
     QFile file(filename);
 
@@ -41,7 +41,7 @@ QString XML::readValue(QString filename, const QList<QString>& nodenames)
 }
 
 
-void XML::writeValue(QString filename, const QList<QString>& nodenames, const QString& value)
+void XML::writeValue(const QString& filename, const QList<QString>& nodenames, const QString& value)
 {
     QDomNode node = mConfig.documentElement();
     for(int i=0; i<nodenames.size(); i++)
