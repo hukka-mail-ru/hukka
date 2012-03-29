@@ -69,8 +69,9 @@ void Client::connectToHost(const QNetworkProxy& proxy, const QString& hostName, 
     {
      //     mSocket.setProxy(proxy);
 
+    	// Don't disable this timer, because user needs to get a feedback if there's no network connection
         mTimer = new QTimer(this);
-     //   connect(mTimer, SIGNAL(timeout()), this, SLOT(onTimeout()));
+        connect(mTimer, SIGNAL(timeout()), this, SLOT(onTimeout()));
         mTimer->start(WAIT_CONNECT_TIMEOUT * 1000);
 
         mSocket.connectToHost (hostName, port);
@@ -1609,7 +1610,7 @@ void Client::onTimeout()
     mSocket.abort();
 
     //qDebug() << "onTimeout";
-    emit error(tr("Server doesn't respond"));
+    emit error(tr("Connection refused. Please check the server name and port."));
 }
 
 
