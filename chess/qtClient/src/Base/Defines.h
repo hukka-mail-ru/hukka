@@ -27,7 +27,7 @@ const int WAIT_CONNECT_TIMEOUT           = 3; // seconds
 const int WAIT_RESPONSE_TIMEOUT          = 10000; // milliseconds
 const int MESSAGE_POOL_QUERY_DELAY       = 1000;  // milliseconds
 
-const int GAME_OVER_TIMEOUT              = 5; // seconds, delay between Game Over event and showing the GameDialog
+const int GAME_OVER_TIMEOUT              = 2; // seconds, delay between Game Over event and showing the GameDialog
 
 #define PROTOCOL_SIGNATURE              'Z'
 const int PROTOCOL_VERSION               = 2;
