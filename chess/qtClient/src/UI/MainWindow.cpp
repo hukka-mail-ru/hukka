@@ -197,12 +197,20 @@ void MainWindow::showJoinGameDialog(const QList<GameTable>& tables)
 
 void MainWindow::showGameDialog(const QString& text)
 {
-    if(!mGameDialogActivated)
-    {
+	//qDebug() << "MainWindow::showGameDialog: mGameDialogActivated " << mGameDialogActivated;
+
+	// Don't use "if(!mGameDialogActivated)"  because this dialog
+	// won't be shown after the end of the game in the following use case:
+	// - Game over. Return to main menu or Return to game?
+	// - User selects Return to game.
+	// - User unable to press GameMenu button again.
+ //   if(!mGameDialogActivated)
+ //   {
+
         setCurrentDialog(new GameDialog(text, this));
-        mGameDialogActivated = true;
+    //    mGameDialogActivated = true;
         setMode(MW_NORMAL);
-    }
+//    }
 }
 
 void MainWindow::showOptionsDialog()
