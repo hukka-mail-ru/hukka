@@ -102,8 +102,8 @@ public:
         return xml;
     }
 
-    QString readValue(QString filename, const QList<QString>& nodenames);
-    void writeValue(QString filename, const QList<QString>& nodenames, const QString& value);
+    QString readValue(const QString& filename, const QList<QString>& nodenames);
+    void writeValue(const QString& filename, const QList<QString>& nodenames, const QString& value);
 
 private:
 

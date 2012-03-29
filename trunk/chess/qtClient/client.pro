@@ -18,6 +18,8 @@ WAPSERVERPATH = ../wapserver3/src
 DEPENDPATH += .
 DEPENDPATH += $$NETWORK  $$UI  $$BASE  $$DATA $$DIALOGS
 
+QT           += network xml
+
 INCLUDEPATH += $$SRC  $$NETWORK  $$UI  $$BASE  $$DATA
 INCLUDEPATH += $$(QTPATH) $$(QTPATH)/QtCore $$(QTPATH)/QtNetwork $$(QTPATH)/QtXml $$(QTPATH)/QtGui
 INCLUDEPATH += $$WAPSERVERPATH $$WAPSERVERPATH/libs $$WAPSERVERPATH/libs/header $$WAPSERVERPATH/chessserver $$WAPSERVERPATH/chessserver/engine
@@ -26,7 +28,7 @@ INCLUDEPATH += $$WAPSERVERPATH $$WAPSERVERPATH/libs $$WAPSERVERPATH/libs/header 
 DESTDIR = bin
 OBJECTS_DIR = obj
 MOC_DIR = obj
-LIBS = -lQtNetwork -lQtXml
+
 
 HEADERS += $$BASE/Animation.h $$BASE/Board.h $$BASE/CaptureBox.h $$BASE/Chat.h $$BASE/Clock.h $$BASE/Button.h $$BASE/MoveBox.h $$BASE/MyDialog.h $$BASE/MyMessageBox.h $$BASE/Exception.h $$BASE/Defines.h $$BASE/Global.h   $$BASE/Cell.h $$BASE/orientation.h $$BASE/orientthread.h
 HEADERS += $$DATA/XML.h $$DATA/Pixmaps.h  
