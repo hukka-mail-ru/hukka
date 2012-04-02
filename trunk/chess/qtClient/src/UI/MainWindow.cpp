@@ -271,6 +271,7 @@ void MainWindow::showGameScene()
     if(mGraphicsView->scene() == mMainMenu)
         mMainMenu->close();
 
+
     mGameScene->showChat();
 
     mGraphicsView->setScene(mGameScene);
@@ -278,6 +279,13 @@ void MainWindow::showGameScene()
     setMode(MW_NORMAL);
 
 }
+/*
+void MainWindow::showChat()
+{
+	mGameScene->showChat();
+}
+*/
+
 void MainWindow::updateGameScene()
 {
     if(mGraphicsView->scene() != mGameScene)

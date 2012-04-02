@@ -29,6 +29,11 @@ GameDialog::GameDialog(const QString& text, QWidget *parent): MyDialog(parent)
         layout->addWidget(drawButton);
     }
 
+//    chatButton = new QPushButton(tr("Show chat"), this);
+//    connect(chatButton, SIGNAL(clicked()), this, SLOT(onChatClicked()));
+//    layout->addWidget(chatButton);
+
+
     returnButton = new QPushButton(tr("Return to game"), this);
     connect(returnButton, SIGNAL(clicked()), this, SLOT(onReturnClicked()));
     layout->addWidget(returnButton);
@@ -66,7 +71,13 @@ void GameDialog::onDrawClicked()
     }
 }
 
-
+/*
+void GameDialog::onChatClicked()
+{
+	MainWindow::instance()->showChat();
+	close();
+}
+*/
 
 void GameDialog::onReturnClicked()
 {

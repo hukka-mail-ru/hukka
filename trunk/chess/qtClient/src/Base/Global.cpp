@@ -74,7 +74,7 @@ QString Global::paramIdToString(int paramId)
         case  PARAMETER_ID_MINRATING       : res = QObject::tr("Min. rating");  break;
         case  PARAMETER_ID_MAXRATING       : res = QObject::tr("Max. rating");  break;
         case  PARAMETER_ID_BET             : res = QObject::tr("Bet"); break;
-        default : res = QString::number(paramId);
+        default : res = QString::number(paramId); break;
     }
 
     return res;
