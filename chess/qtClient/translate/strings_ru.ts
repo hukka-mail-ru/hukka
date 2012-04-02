@@ -673,28 +673,37 @@
 <context>
     <name>GameScene</name>
     <message>
-        <location filename="../src/UI/GameScene.cpp" line="46"/>
-        <location filename="../src/UI/GameScene.cpp" line="204"/>
+        <location filename="../src/UI/GameScene.cpp" line="219"/>
         <source>Game menu</source>
         <translation>Меню игры</translation>
     </message>
     <message>
-        <location filename="../src/UI/GameScene.cpp" line="79"/>
+        <location filename="../src/UI/GameScene.cpp" line="94"/>
         <source>Invalid move.</source>
         <translation>Неправильный ход</translation>
     </message>
     <message>
-        <location filename="../src/UI/GameScene.cpp" line="150"/>
+        <location filename="../src/UI/GameScene.cpp" line="42"/>
+        <source>CHAT</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/UI/GameScene.cpp" line="47"/>
+        <source>MENU</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/UI/GameScene.cpp" line="165"/>
         <source>Check!</source>
         <translation>Шах!</translation>
     </message>
     <message>
-        <location filename="../src/UI/GameScene.cpp" line="154"/>
+        <location filename="../src/UI/GameScene.cpp" line="169"/>
         <source>Mate.</source>
         <translation>Мат.</translation>
     </message>
     <message>
-        <location filename="../src/UI/GameScene.cpp" line="158"/>
+        <location filename="../src/UI/GameScene.cpp" line="173"/>
         <source>Stalemate.</source>
         <translation>Пат.</translation>
     </message>

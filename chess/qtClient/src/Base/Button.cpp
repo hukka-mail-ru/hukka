@@ -26,29 +26,33 @@ Button::Button(QGraphicsScene* scene, const QPixmap& pixmap, const QString& text
     setZValue(Z_BUTTONS_LAYER);
 
 
-    if(text != "")
-    {
-        QString family = XML::instance().readValue(XML_ITEMS_FILENAME, QList<QString>() << mXMLNodeGroupName << XML_NODE_FONT << XML_NODE_FAMILY);
-        int size =       XML::instance().readValue(XML_ITEMS_FILENAME, QList<QString>() << mXMLNodeGroupName  << XML_NODE_FONT << XML_NODE_SIZE).toInt();
-        QString color  = XML::instance().readValue(XML_ITEMS_FILENAME, QList<QString>() << mXMLNodeGroupName  << XML_NODE_FONT << XML_NODE_COLOR);
-
-        mText = mScene->addText(text, QFont(family, size));
-        mText->setDefaultTextColor( QColor(color) );
-        mText->setZValue(Z_TEXT_LAYER);
-
-        mTextOffset = XML::instance().readValue(XML_ITEMS_FILENAME, QList<QString>() << XML_NODE_BUTTONS << XML_NODE_TEXT_OFFSET).toInt();
-    }
-
     if(mXMLNodeName != "" && mXMLNodeGroupName != "")
     {
         int x = XML::instance().readValue(XML_ITEMS_FILENAME, QList<QString>() << mXMLNodeGroupName << mXMLNodeName << XML_NODE_X).toInt();
         int y = XML::instance().readValue(XML_ITEMS_FILENAME, QList<QString>() << mXMLNodeGroupName << mXMLNodeName << XML_NODE_Y).toInt();
         this->setPos(x, y);
 
-        if(mText)
+        if(text != "")
         {
-            mText->setPos(x + (this->boundingRect().width() - mText->boundingRect().width()) / 2,
-                          y + mTextOffset);
+            QString family = XML::instance().readValue(XML_ITEMS_FILENAME, QList<QString>() << mXMLNodeGroupName << mXMLNodeName << XML_NODE_FONT << XML_NODE_FAMILY);
+            int size =       XML::instance().readValue(XML_ITEMS_FILENAME, QList<QString>() << mXMLNodeGroupName << mXMLNodeName << XML_NODE_FONT << XML_NODE_SIZE).toInt();
+            QString color  = XML::instance().readValue(XML_ITEMS_FILENAME, QList<QString>() << mXMLNodeGroupName << mXMLNodeName << XML_NODE_FONT << XML_NODE_COLOR);
+            int textX      = XML::instance().readValue(XML_ITEMS_FILENAME, QList<QString>() << mXMLNodeGroupName << mXMLNodeName << XML_NODE_FONT << XML_NODE_X).toInt();
+            int textY      = XML::instance().readValue(XML_ITEMS_FILENAME, QList<QString>() << mXMLNodeGroupName << mXMLNodeName << XML_NODE_FONT << XML_NODE_Y).toInt();
+
+            mText = mScene->addText(text, QFont(family, size));
+            mText->setDefaultTextColor( QColor(color) );
+            mText->setZValue(Z_TEXT_LAYER);
+
+
+        	if(textX == -1) // -1 is default
+        	{
+        		textX = x + (this->boundingRect().width() - mText->boundingRect().width()) / 2;
+        	}
+
+        	textY = y + textY;
+
+            mText->setPos(textX, textY);
         }
     }
 }

@@ -23,8 +23,6 @@ protected:
 
 private:
 
-    int mTextOffset;
-
     QGraphicsScene* mScene;
 
     QString mXMLNodeName;

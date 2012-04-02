@@ -39,12 +39,12 @@ GameScene::GameScene(QObject *parent):
 
     //chat
     mChat = new Chat(MainWindow::instance(), CT_TABLE_CHAT);
+    mChatButton = new Button(this, Pixmaps::get(PIX_BUTTON_CHAT), tr("CHAT"), XML_NODE_BUTTONS, XML_NODE_CHAT);
+    QObject::connect(mChatButton, SIGNAL(clicked()), this, SLOT(onChatButtonClicked()));
 
 
     // game menu
-//    mGameMenuButton = new Button(this, Pixmaps::get(PIX_BUTTON_MENU), tr("Game menu"), XML_NODE_BUTTONS, XML_NODE_GAME_MENU);
-    mGameMenuButton = new QPushButton(tr("Game menu"));
-    this->addWidget(mGameMenuButton);
+    mGameMenuButton = new Button(this, Pixmaps::get(PIX_BUTTON_MENU), tr("MENU"), XML_NODE_BUTTONS, XML_NODE_GAME_MENU);
     QObject::connect(mGameMenuButton, SIGNAL(clicked()), this, SLOT(onMenuButtonClicked()));
 
     connect(Client::instance(), SIGNAL(gotPosition(const Position&)), this, SLOT(onGotPosition(const Position&)));
@@ -73,6 +73,21 @@ void GameScene::close()
 	closeChat();
 }
 
+
+void GameScene::onChatButtonClicked()
+{
+	if(mChat)
+	{
+		if(mChat->getState() == CHAT_CLOSED)
+		{
+			showChat();
+		}
+		else
+		{
+			closeChat();
+		}
+	}
+}
 
 void GameScene::onInvalidMove()
 {

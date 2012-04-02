@@ -65,7 +65,7 @@
 
 
   <TableChat>
-	<x value="3" /> <y value="30" />  <width value="153" /> <height value="155" />  
+	<x value="3" /> <y value="35" />  <width value="153" /> <height value="150" />  
 	<font>
  	    <me>             <color value="white" /> </me>
 		<opponent>       <color value="#FFCC00" /> </opponent>
@@ -76,7 +76,7 @@
                   QTableWidget { background: black; color: white; }"/> 
 
 	<history>
-		<x value="0" /> <y value="0" />  <width value="153" /> <height value="155" />  
+		<x value="0" /> <y value="0" />  <width value="153" /> <height value="150" />  
 	</history>
 
 	<userlist>
@@ -87,39 +87,48 @@
 
 
   <Buttons>
-    <width value="120" />  <height value="106" />  <textOffset value="75" />
-    <font>
-      <family value="Helvetica [Cronyx]" /> <size value="12" />  <color value="white" />
-    </font>
-
       <NewGame>
         <x value="0" /> <y value="200" /> 
+        <width value="120" />  <height value="106" />  
+        <font> <family value="Helvetica [Cronyx]" /> <size value="12" />  <color value="white" />  <x value="-1" /> <y value="75" /> </font>
       </NewGame>
 
       <FindGame>
         <x value="120" />  <y value="200" />  
+        <width value="120" />  <height value="106" />  
+        <font> <family value="Helvetica [Cronyx]" /> <size value="12" />  <color value="white" />  <x value="-1" /> <y value="75" /> </font>
       </FindGame>
-<!--
-      <Chat>
-        <x value="240" /> <y value="200" /> 
-      </Chat>
--->
+
       <Options>
         <x value="240" />  <y value="200" /> 
+        <width value="120" />  <height value="106" />  
+        <font> <family value="Helvetica [Cronyx]" /> <size value="12" />  <color value="white" />  <x value="-1" /> <y value="75" /> </font>
       </Options>
 
       <Wallet>
         <x value="360" />  <y value="200" /> 
+        <width value="120" />  <height value="106" />  
+        <font> <family value="Helvetica [Cronyx]" /> <size value="12" />  <color value="white" />  <x value="-1" /> <y value="75" /> </font>
       </Wallet>
 
       <Exit>
         <x value="0" />  <y value="0" /> 
+        <width value="120" />  <height value="106" />  
+        <font> <family value="Helvetica [Cronyx]" /> <size value="12" />  <color value="white" />  <x value="-1" /> <y value="75" /> </font>
       </Exit>
 
 
       <GameMenu>
-        <x value="20" />   <y value="10" />  
+        <x value="5" />   <y value="5" />  
+        <width value="62" />  <height value="26" />  
+        <font> <family value="Helvetica [Cronyx]" /> <size value="10" />  <color value="white" />  <x value="20" /> <y value="4" /> </font>
       </GameMenu>
+
+      <Chat>
+        <x value="90" /> <y value="5" /> 
+        <width value="57" />  <height value="26" />  
+        <font> <family value="Helvetica [Cronyx]" /> <size value="10" />  <color value="white" />  <x value="110" /> <y value="4" /> </font>
+      </Chat>
 
   </Buttons>
 
