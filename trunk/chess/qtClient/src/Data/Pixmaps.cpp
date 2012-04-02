@@ -32,14 +32,25 @@ void Pixmaps::loadPixmaps()
     loadPixmap(PIX_BUTTONS,":/images/buttons.png");
 
     // load items' properities
-    int width = XML::instance().readValue(XML_ITEMS_FILENAME, QList<QString>() << XML_NODE_BUTTONS << XML_NODE_WIDTH).toInt();
-    int height = XML::instance().readValue(XML_ITEMS_FILENAME, QList<QString>() << XML_NODE_BUTTONS << XML_NODE_HEIGHT).toInt();
-
+    int width  = XML::instance().readValue(XML_ITEMS_FILENAME, QList<QString>() << XML_NODE_BUTTONS << XML_NODE_NEW_GAME << XML_NODE_WIDTH).toInt();
+    int height = XML::instance().readValue(XML_ITEMS_FILENAME, QList<QString>() << XML_NODE_BUTTONS << XML_NODE_NEW_GAME << XML_NODE_HEIGHT).toInt();
     mPixmaps.insert(PIX_BUTTON_CREATE_GAME,   mPixmaps[PIX_BUTTONS].copy(width * 0, 0, width, height ));
+
+    width  = XML::instance().readValue(XML_ITEMS_FILENAME, QList<QString>() << XML_NODE_BUTTONS << XML_NODE_FIND_GAME << XML_NODE_WIDTH).toInt();
+    height = XML::instance().readValue(XML_ITEMS_FILENAME, QList<QString>() << XML_NODE_BUTTONS << XML_NODE_FIND_GAME << XML_NODE_HEIGHT).toInt();
     mPixmaps.insert(PIX_BUTTON_FIND_GAME,     mPixmaps[PIX_BUTTONS].copy(width * 1, 0, width, height ));
+
+    width  = XML::instance().readValue(XML_ITEMS_FILENAME, QList<QString>() << XML_NODE_BUTTONS << XML_NODE_OPTIONS << XML_NODE_WIDTH).toInt();
+    height = XML::instance().readValue(XML_ITEMS_FILENAME, QList<QString>() << XML_NODE_BUTTONS << XML_NODE_OPTIONS << XML_NODE_HEIGHT).toInt();
     mPixmaps.insert(PIX_BUTTON_OPTIONS,       mPixmaps[PIX_BUTTONS].copy(width * 2, 0, width, height ));
+
+    width  = XML::instance().readValue(XML_ITEMS_FILENAME, QList<QString>() << XML_NODE_BUTTONS << XML_NODE_WALLET << XML_NODE_WIDTH).toInt();
+    height = XML::instance().readValue(XML_ITEMS_FILENAME, QList<QString>() << XML_NODE_BUTTONS << XML_NODE_WALLET << XML_NODE_HEIGHT).toInt();
     mPixmaps.insert(PIX_BUTTON_WALLET,        mPixmaps[PIX_BUTTONS].copy(width * 3, 0, width, height ));
-    mPixmaps.insert(PIX_BUTTON_MENU,          mPixmaps[PIX_BUTTONS].copy(width * 4, 0, width, height ));
+
+    ////////////////////////////////////////////////////////////////////////////////////
+    loadPixmap(PIX_BUTTON_MENU,":/images/menu.png");
+    loadPixmap(PIX_BUTTON_CHAT,":/images/chat.png");
 
     loadPixmap(PIX_BUTTON_EXIT,":/images/exit.png");
     ////////////////////////////////////////////////////////////////////////////////////

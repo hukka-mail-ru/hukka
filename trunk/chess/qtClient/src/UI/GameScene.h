@@ -38,8 +38,8 @@ private:
 
     void updateMoveBoxes(GameState gameState);
 
-    //Button* mGameMenuButton;
-    QPushButton* mGameMenuButton;
+    Button* mGameMenuButton;
+    Button* mChatButton;
 
     Chat* mChat;
 
@@ -54,6 +54,7 @@ private slots:
     void onGotPosition(const Position& position);
     void onInvalidMove();
     void onMenuButtonClicked();
+    void onChatButtonClicked();
  //   void onExitClicked();
 
 };
