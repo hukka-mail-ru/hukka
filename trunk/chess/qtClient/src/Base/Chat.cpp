@@ -15,6 +15,7 @@
 #include <UI.h>
 #include <MainWindow.h>
 #include <XML.h>
+#include <assert.h>
 #include <chatserver/chatdefs.h>
 
 Chat::~Chat()
@@ -24,6 +25,7 @@ Chat::~Chat()
 Chat::Chat(QWidget* parent, ChatType type):
     QDialog(parent), mChatType(type), mState(CHAT_CLOSED)
 {
+
     // No title, no [X] button, no bottom
     setWindowFlags(Qt::Widget);
 
@@ -63,8 +65,8 @@ Chat::Chat(QWidget* parent, ChatType type):
     mUserlist->move(xUserlist, yUserlist);
     mUserlist->setFixedSize(widthUserlist, heightUserlist);
 */
-
-    this->hide();
+    mHistory->addMessage(tr("Press here to send a message to your opponent"), CS_SERVER);
+    mHistory->addMessage("-----", CS_SERVER);
 }
 
 
@@ -83,33 +85,43 @@ void Chat::show()
     TABLEID tableID = (mChatType == CT_COMMON_CHAT) ?
                       COMMON_CHAT_ID : UI::instance()->getGameTable();
 
-    Client::instance()->joinChat(LOGIC_ID_CHESS, tableID);
-    QDialog::show();
+    if(mState == CHAT_CLOSED)
+    {
+		Client::instance()->joinChat(LOGIC_ID_CHESS, tableID);
+
+
+		QObject::connect(Client::instance(), SIGNAL(chatMessage(const QString&)),    this, SLOT(onChatMessage(const QString&)));
+		QObject::connect(Client::instance(), SIGNAL(chatUserOnline(const QString&)), this, SLOT(onChatUserOnline(const QString&)));
+		QObject::connect(Client::instance(), SIGNAL(chatUserJoined(const QString&)), this, SLOT(onChatUserJoined(const QString&)));
+		QObject::connect(Client::instance(), SIGNAL(chatUserLeft(const QString&)),   this, SLOT(onChatUserLeft(const QString&)));
+    }
 
     mState = CHAT_OPEN;
+    QDialog::show();
+}
 
-    QObject::connect(Client::instance(), SIGNAL(chatMessage(const QString&)),    this, SLOT(onChatMessage(const QString&)));
-    QObject::connect(Client::instance(), SIGNAL(chatUserOnline(const QString&)), this, SLOT(onChatUserOnline(const QString&)));
-    QObject::connect(Client::instance(), SIGNAL(chatUserJoined(const QString&)), this, SLOT(onChatUserJoined(const QString&)));
-    QObject::connect(Client::instance(), SIGNAL(chatUserLeft(const QString&)),   this, SLOT(onChatUserLeft(const QString&)));
-
+void Chat::hide()
+{
+    mState = CHAT_HIDDEN;
+    QDialog::hide();
 }
 
 bool Chat::close()
 {
-	qDebug() << "Chat::close()";
+	if(mState == CHAT_OPEN || mState == CHAT_HIDDEN)
+	{
+		mHistory->clear();
+		//mUserlist->removeAll();
+
+		Client::instance()->leaveChat(LOGIC_ID_CHESS);
+
+		QObject::disconnect(Client::instance(), SIGNAL(chatMessage(const QString&)),    this, SLOT(onChatMessage(const QString&)));
+		QObject::disconnect(Client::instance(), SIGNAL(chatUserOnline(const QString&)), this, SLOT(onChatUserOnline(const QString&)));
+		QObject::disconnect(Client::instance(), SIGNAL(chatUserJoined(const QString&)), this, SLOT(onChatUserJoined(const QString&)));
+		QObject::disconnect(Client::instance(), SIGNAL(chatUserLeft(const QString&)),   this, SLOT(onChatUserLeft(const QString&)));
+	}
+
     mState = CHAT_CLOSED;
-
-    mHistory->clear();
-    //mUserlist->removeAll();
-
-    Client::instance()->leaveChat(LOGIC_ID_CHESS);
-
-    QObject::disconnect(Client::instance(), SIGNAL(chatMessage(const QString&)),    this, SLOT(onChatMessage(const QString&)));
-    QObject::disconnect(Client::instance(), SIGNAL(chatUserOnline(const QString&)), this, SLOT(onChatUserOnline(const QString&)));
-    QObject::disconnect(Client::instance(), SIGNAL(chatUserJoined(const QString&)), this, SLOT(onChatUserJoined(const QString&)));
-    QObject::disconnect(Client::instance(), SIGNAL(chatUserLeft(const QString&)),   this, SLOT(onChatUserLeft(const QString&)));
-
     return QDialog::close();
 }
 

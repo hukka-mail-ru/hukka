@@ -37,6 +37,14 @@ GameScene::GameScene(QObject *parent):
     int scene_height = XML::instance().readValue(XML_ITEMS_FILENAME, QList<QString>() << XML_NODE_SCENE << XML_NODE_HEIGHT).toInt();
     setSceneRect( scene_x, scene_y, scene_width, scene_height );
 
+    // chat backgrond
+    mChatBackground = new QGraphicsPixmapItem(Pixmaps::get(PIX_CHAT_BACKGROUND));
+    this->addItem(mChatBackground);
+    mChatBackground->setZValue(Z_BUTTONS_LAYER);
+    int x  = XML::instance().readValue(XML_ITEMS_FILENAME, QList<QString>() << XML_NODE_TABLE_CHAT << XML_NODE_X).toInt();
+    int y  = XML::instance().readValue(XML_ITEMS_FILENAME, QList<QString>() << XML_NODE_TABLE_CHAT << XML_NODE_Y).toInt();
+    mChatBackground->setPos(x, y);
+
     //chat
     mChat = new Chat(MainWindow::instance(), CT_TABLE_CHAT);
     mChatButton = new Button(this, Pixmaps::get(PIX_BUTTON_CHAT), tr("CHAT"), XML_NODE_BUTTONS, XML_NODE_CHAT);
@@ -55,7 +63,7 @@ GameScene::GameScene(QObject *parent):
 
 void GameScene::showChat()
 {
-	if(mChat && mChat->getState() == CHAT_CLOSED)
+	if(mChat)
 	{
 		mChat->show();
 	}
@@ -63,8 +71,10 @@ void GameScene::showChat()
 
 void GameScene::closeChat()
 {
-   if(mChat && mChat->getState() == CHAT_OPEN)
-	   mChat->close();
+	if(mChat)
+	{
+		mChat->close();
+	}
 }
 
 
@@ -78,13 +88,13 @@ void GameScene::onChatButtonClicked()
 {
 	if(mChat)
 	{
-		if(mChat->getState() == CHAT_CLOSED)
+		if(mChat->getState() == CHAT_HIDDEN)
 		{
-			showChat();
+			mChat->show();
 		}
-		else
+		else if(mChat->getState() == CHAT_OPEN)
 		{
-			closeChat();
+			mChat->hide();
 		}
 	}
 }

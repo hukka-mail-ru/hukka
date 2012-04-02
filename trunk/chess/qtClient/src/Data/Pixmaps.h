@@ -86,6 +86,7 @@ enum PixmapKey
     PIX_BUTTONS,
     PIX_CAPTURED,
     PIX_PROMOTION,
+    PIX_CHAT_BACKGROUND,
 
 
     PIX_CELLS,
