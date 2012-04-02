@@ -37,8 +37,14 @@ GameScene::GameScene(QObject *parent):
     int scene_height = XML::instance().readValue(XML_ITEMS_FILENAME, QList<QString>() << XML_NODE_SCENE << XML_NODE_HEIGHT).toInt();
     setSceneRect( scene_x, scene_y, scene_width, scene_height );
 
+    //chat
+    mChat = new Chat(MainWindow::instance(), CT_TABLE_CHAT);
+
+
     // game menu
-    mGameMenuButton = new Button(this, Pixmaps::get(PIX_BUTTON_MENU), tr("Game menu"), XML_NODE_BUTTONS, XML_NODE_GAME_MENU);
+//    mGameMenuButton = new Button(this, Pixmaps::get(PIX_BUTTON_MENU), tr("Game menu"), XML_NODE_BUTTONS, XML_NODE_GAME_MENU);
+    mGameMenuButton = new QPushButton(tr("Game menu"));
+    this->addWidget(mGameMenuButton);
     QObject::connect(mGameMenuButton, SIGNAL(clicked()), this, SLOT(onMenuButtonClicked()));
 
     connect(Client::instance(), SIGNAL(gotPosition(const Position&)), this, SLOT(onGotPosition(const Position&)));
@@ -49,16 +55,22 @@ GameScene::GameScene(QObject *parent):
 
 void GameScene::showChat()
 {
-    mChat = new Chat(MainWindow::instance(), CT_TABLE_CHAT);
-    //this->addWidget(mChat);
-    mChat->show();
+	if(mChat && mChat->getState() == CHAT_CLOSED)
+	{
+		mChat->show();
+	}
+}
+
+void GameScene::closeChat()
+{
+   if(mChat && mChat->getState() == CHAT_OPEN)
+	   mChat->close();
 }
 
 
 void GameScene::close()
 {
-   if(mChat)
-       mChat->close();
+	closeChat();
 }
 
 

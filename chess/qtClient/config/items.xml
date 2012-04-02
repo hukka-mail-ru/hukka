@@ -65,18 +65,18 @@
 
 
   <TableChat>
-	<x value="5" /> <y value="1000" />  <width value="380" /> <height value="215" />  
+	<x value="3" /> <y value="30" />  <width value="153" /> <height value="155" />  
 	<font>
  	    <me>             <color value="white" /> </me>
 		<opponent>       <color value="#FFCC00" /> </opponent>
  	    <server>         <color value="grey" /> </server>
      </font>
 	<style value="Chat       { background: black; } 
-                  QTextEdit  { background: black; font-size: 18px; font: italic; color: white; }
+                  QTextEdit  { background: black; font-size: 12px; font: italic; color: white; }
                   QTableWidget { background: black; color: white; }"/> 
 
 	<history>
-		<x value="0" /> <y value="0" />  <width value="380" /> <height value="215" />  
+		<x value="0" /> <y value="0" />  <width value="153" /> <height value="155" />  
 	</history>
 
 	<userlist>
@@ -140,7 +140,7 @@
   </Piece>
 
   <CaptureBox>
-	<me>       <x value="3" />   <y value="162" />  </me>
+	<me>       <x value="3" />   <y value="187" />  </me>
 	<opponent> <x value="3" />   <y value="281"/>  </opponent>
     <Piece>  <width value="18" />  <height value="18" />  </Piece>
 	<border>  <width value="1" />  </border> 
@@ -149,12 +149,13 @@
   <MoveBox>
 
     <color> <active value="white" /> <inactive value="grey" />  </color> 
-    <border> <x value="3" />   <y value="203" />  <width value="152" />  <height value="75" /> </border> 
+    <border> <x value="3" />   <y value="228" />  <width value="152" />  <height value="50" /> </border> 
 
-    <player>     <font> <family value="Helvetica [Cronyx]" />  <size value="9" /> </font>  <x value="5" />  <y value="0"  /> </player>
-    <rating>     <font> <family value="Helvetica [Cronyx]" />  <size value="8" /> </font>  <x value="5" />  <y value="15" /> </rating>
-    <MoveClock>  <font> <family value="Helvetica [Cronyx]" />  <size value="15" /> </font>  <x value="5" />  <y value="25" /> </MoveClock>
-    <GameClock>  <font> <family value="Helvetica [Cronyx]" />  <size value="9" /> </font>  <x value="5" />  <y value="50" /> </GameClock>
+    <player>     <font> <family value="Helvetica [Cronyx]" />  <size value="9" /> </font>  <x value="3" />  <y value="2"  /> </player>
+    <MoveClock>  <font> <family value="Helvetica [Cronyx]" />  <size value="15" /> </font>  <x value="77" />  <y value="0" /> </MoveClock>
+    <GameClock>  <font> <family value="Helvetica [Cronyx]" />  <size value="9" /> </font>  <x value="70" />  <y value="25" /> </GameClock>
+
+<!--    <rating>     <font> <family value="Helvetica [Cronyx]" />  <size value="8" /> </font>  <x value="5" />  <y value="15" /> </rating> -->
 
   </MoveBox>
 

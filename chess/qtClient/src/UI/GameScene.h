@@ -29,6 +29,7 @@ public:
     void disableItems();
 
     void showChat();
+    void closeChat();
 
     void close();
 
@@ -37,7 +38,8 @@ private:
 
     void updateMoveBoxes(GameState gameState);
 
-    Button* mGameMenuButton;
+    //Button* mGameMenuButton;
+    QPushButton* mGameMenuButton;
 
     Chat* mChat;
 

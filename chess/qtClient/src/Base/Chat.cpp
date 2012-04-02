@@ -1,4 +1,8 @@
 #include <Chat.h>
+#include <XML.h>
+
+
+#include <Chat.h>
 #include <QScrollArea>
 #include <QScrollBar>
 #include <QVBoxLayout>
@@ -6,6 +10,7 @@
 #include <QTableWidgetItem>
 #include <QHeaderView>
 #include <QWidget>
+#include <QTextOption>
 #include <Client.h>
 #include <UI.h>
 #include <MainWindow.h>
@@ -28,8 +33,6 @@ Chat::Chat(QWidget* parent, ChatType type):
     setStyleSheet(style);
 
 
-    mHistory = new History(this, mChatType);
-    mUserlist = new Userlist(this, mChatType);
 
     int x      = XML::instance().readValue(XML_ITEMS_FILENAME, QList<QString>() << chatNode << XML_NODE_X).toInt();
     int y      = XML::instance().readValue(XML_ITEMS_FILENAME, QList<QString>() << chatNode << XML_NODE_Y).toInt();
@@ -40,6 +43,7 @@ Chat::Chat(QWidget* parent, ChatType type):
     setFixedSize(width, height);
 
     // HISTORY
+    mHistory = new History(this, mChatType);
     int xHistory      = XML::instance().readValue(XML_ITEMS_FILENAME, QList<QString>() << chatNode << XML_NODE_HISTORY << XML_NODE_X).toInt();
     int yHistory      = XML::instance().readValue(XML_ITEMS_FILENAME, QList<QString>() << chatNode << XML_NODE_HISTORY << XML_NODE_Y).toInt();
     int widthHistory  = XML::instance().readValue(XML_ITEMS_FILENAME, QList<QString>() << chatNode << XML_NODE_HISTORY << XML_NODE_WIDTH).toInt();
@@ -49,6 +53,8 @@ Chat::Chat(QWidget* parent, ChatType type):
     mHistory->setFixedSize(widthHistory, heightHistory);
 
     // USERLIST
+    /*
+    mUserlist = new Userlist(this, mChatType);
     int xUserlist      = XML::instance().readValue(XML_ITEMS_FILENAME, QList<QString>() << chatNode << XML_NODE_USERLIST << XML_NODE_X).toInt();
     int yUserlist      = XML::instance().readValue(XML_ITEMS_FILENAME, QList<QString>() << chatNode << XML_NODE_USERLIST << XML_NODE_Y).toInt();
     int widthUserlist  = XML::instance().readValue(XML_ITEMS_FILENAME, QList<QString>() << chatNode << XML_NODE_USERLIST << XML_NODE_WIDTH).toInt();
@@ -56,9 +62,9 @@ Chat::Chat(QWidget* parent, ChatType type):
 
     mUserlist->move(xUserlist, yUserlist);
     mUserlist->setFixedSize(widthUserlist, heightUserlist);
+*/
 
-
-
+    this->hide();
 }
 
 
@@ -91,10 +97,11 @@ void Chat::show()
 
 bool Chat::close()
 {
+	qDebug() << "Chat::close()";
     mState = CHAT_CLOSED;
 
     mHistory->clear();
-    mUserlist->removeAll();
+    //mUserlist->removeAll();
 
     Client::instance()->leaveChat(LOGIC_ID_CHESS);
 
@@ -123,19 +130,19 @@ void Chat::onChatMessage(const QString& message)
 
 void Chat::onChatUserOnline(const QString& userName)
 {
-    mUserlist->addUser(userName);
+    //mUserlist->addUser(userName);
 }
 
 void Chat::onChatUserJoined(const QString& userName)
 {
-    mHistory->addMessage(userName + " has joined the chat", CS_SERVER);
-    mUserlist->addUser(userName);
+   // mHistory->addMessage(userName + " has joined the chat", CS_SERVER);
+   // mUserlist->addUser(userName);
 }
 
 void Chat::onChatUserLeft  (const QString& userName)
 {
-    mHistory->addMessage(userName + " has left the chat", CS_SERVER);
-    mUserlist->removeUser(userName);
+   // mHistory->addMessage(userName + " has left the chat", CS_SERVER);
+   // mUserlist->removeUser(userName);
 }
 
 ////////////  History //////////////////////////////////////
@@ -146,6 +153,9 @@ Chat::History::History(QWidget* parent, ChatType type):
     setAlignment(Qt::AlignLeft | Qt::AlignBottom);
     setReadOnly(true);
 
+
+    setWordWrapMode(QTextOption::WrapAtWordBoundaryOrAnywhere);
+
     QString chatNode = (mChatType == CT_COMMON_CHAT) ? XML_NODE_COMMON_CHAT : XML_NODE_TABLE_CHAT;
 
     mColorMe       = XML::instance().readValue(XML_ITEMS_FILENAME, QList<QString>() << chatNode << XML_NODE_FONT << XML_NODE_ME << XML_NODE_COLOR);
@@ -155,10 +165,13 @@ Chat::History::History(QWidget* parent, ChatType type):
 
 void Chat::History::mouseReleaseEvent(QMouseEvent * event)
 {
-    if(MainWindow::instance()->getMode() == MW_NORMAL)
-    {
+
+	qDebug() << "Chat::History::mouseReleaseEvent" << MainWindow::instance()->getMode();
+
+ //   if(MainWindow::instance()->getMode() == MW_NORMAL)
+ //   {
         MainWindow::instance()->showChatMessageDialog(ADDRESSEE_ALL, mChatType);
-    }
+ //   }
 }
 
 void Chat::History::addMessage(const QString& message, ChatSender chatSender)
@@ -176,11 +189,12 @@ void Chat::History::addMessage(const QString& message, ChatSender chatSender)
     setHtml(htmlText);
     adjustSize();
     verticalScrollBar()->setSliderPosition(verticalScrollBar()->maximum());
+
 }
 
 
 ////////////  Userlist //////////////////////////////////////
-
+/*
 Chat::Userlist::Userlist(QWidget* parent, ChatType type):
     QTableWidget(0, 1, parent), mChatType(type)
 {
@@ -239,5 +253,5 @@ void Chat::Userlist::mouseReleaseEvent(QMouseEvent * event)
         MainWindow::instance()->showChatMessageDialog(currentItem()->text(), mChatType);
     }
 }
-
+*/
 
