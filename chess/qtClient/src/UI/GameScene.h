@@ -46,6 +46,7 @@ private:
     MoveBox mMoveBox;
 
     QGraphicsTextItem* mGameStateText;
+    QGraphicsPixmapItem* mChatBackground;
 
     Board mBoard;
 

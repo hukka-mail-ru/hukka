@@ -114,6 +114,14 @@
     </message>
 </context>
 <context>
+    <name>Chat</name>
+    <message>
+        <location filename="../src/Base/Chat.cpp" line="66"/>
+        <source>Press here to send a message to your opponent</source>
+        <translation type="unfinished">Нажмите сюда, чтобы написать сообщение Вашему противнику</translation>
+    </message>
+</context>
+<context>
     <name>ChatMessageDialog</name>
     <message>
         <location filename="../src/Dialogs/ChatMessageDialog.cpp" line="13"/>
@@ -673,37 +681,37 @@
 <context>
     <name>GameScene</name>
     <message>
-        <location filename="../src/UI/GameScene.cpp" line="219"/>
+        <location filename="../src/UI/GameScene.cpp" line="227"/>
         <source>Game menu</source>
         <translation>Меню игры</translation>
     </message>
     <message>
-        <location filename="../src/UI/GameScene.cpp" line="94"/>
+        <location filename="../src/UI/GameScene.cpp" line="102"/>
         <source>Invalid move.</source>
         <translation>Неправильный ход</translation>
     </message>
     <message>
-        <location filename="../src/UI/GameScene.cpp" line="42"/>
+        <location filename="../src/UI/GameScene.cpp" line="50"/>
         <source>CHAT</source>
-        <translation type="unfinished"></translation>
+        <translation>ЧАТ</translation>
     </message>
     <message>
-        <location filename="../src/UI/GameScene.cpp" line="47"/>
+        <location filename="../src/UI/GameScene.cpp" line="55"/>
         <source>MENU</source>
-        <translation type="unfinished"></translation>
+        <translation>МЕНЮ</translation>
     </message>
     <message>
-        <location filename="../src/UI/GameScene.cpp" line="165"/>
+        <location filename="../src/UI/GameScene.cpp" line="173"/>
         <source>Check!</source>
         <translation>Шах!</translation>
     </message>
     <message>
-        <location filename="../src/UI/GameScene.cpp" line="169"/>
+        <location filename="../src/UI/GameScene.cpp" line="177"/>
         <source>Mate.</source>
         <translation>Мат.</translation>
     </message>
     <message>
-        <location filename="../src/UI/GameScene.cpp" line="173"/>
+        <location filename="../src/UI/GameScene.cpp" line="181"/>
         <source>Stalemate.</source>
         <translation>Пат.</translation>
     </message>

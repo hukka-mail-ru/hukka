@@ -18,6 +18,7 @@
 enum ChatState
 {
     CHAT_OPEN,
+    CHAT_HIDDEN,
     CHAT_CLOSED
 };
 
@@ -33,6 +34,7 @@ public:
 
     // derived from QWidged
     void show();
+    void hide();
     bool close();
 
     void enable();

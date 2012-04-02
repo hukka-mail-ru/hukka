@@ -7,7 +7,7 @@
     <language value="1"/>
   </client>
   <user>
-    <login value="test"/>
-    <password value="test"/>
+    <login value="robot2"/>
+    <password value="robot2"/>
   </user>
 </xml>

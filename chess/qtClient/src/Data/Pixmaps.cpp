@@ -17,6 +17,11 @@ void Pixmaps::loadPixmaps()
 {
     loadPixmap(PIX_SPLASH, ":/images/splash.png");
 
+    // TODO move constants to XML
+    int chatWidth  = XML::instance().readValue(XML_ITEMS_FILENAME, QList<QString>() << XML_NODE_TABLE_CHAT << XML_NODE_WIDTH).toInt();
+    int chatHeight = XML::instance().readValue(XML_ITEMS_FILENAME, QList<QString>() << XML_NODE_TABLE_CHAT << XML_NODE_HEIGHT).toInt();
+
+    mPixmaps.insert(PIX_CHAT_BACKGROUND,    mPixmaps[PIX_SPLASH].copy(160, 0, chatWidth, chatHeight ));
 
     ////////////////////////////////////////////////////////////////////////////////////
     loadPixmap(PIX_CELLS,  ":/images/cells.png");
