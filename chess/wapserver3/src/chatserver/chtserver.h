@@ -34,7 +34,7 @@ private:
     void                joinChat( uint32_t playerID, uint32_t logicID, uint32_t tableID = COMMON_CHAT_ID );
     void                leaveChat( uint32_t playerID, uint32_t logicID );
     void                messageToAll( uint32_t playerID, uint32_t logicID,
-                                       const TVecChar* _vecData, uint32_t tableID = COMMON_CHAT_ID );
+                                      CMyStr& strMsg, uint32_t tableID = COMMON_CHAT_ID );
     void                sendMsgToAll( int cmd, uint32_t logicID, CMyStr* _strMsg, uint32_t tableID = COMMON_CHAT_ID );
     void                sendMsgToOne( int cmd, uint32_t playerID, uint32_t logicID, CMyStr* _strMsg);
 

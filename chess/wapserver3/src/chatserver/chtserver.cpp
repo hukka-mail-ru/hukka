@@ -153,10 +153,24 @@ void CHTServer::newMsg( ClientMsg* _pMsg )
         case CMD_CHAT_MSG:
             if (vecCmd.size() > sizeof(uint32_t)*2)
             {
-                vecCmd.push_back(0);
+              //  vecCmd.push_back(0);
 
-                messageToAll( _pMsg->GetTo(), (uint32_t) vecCmd.at(0),
-                             (TVecChar*)&vecCmd.at(sizeof(uint32_t)*2),
+                CMyStr str;
+
+                for(int i=sizeof(uint32_t)*2; i<vecCmd.size(); i++)
+                {
+                	str.push_back(vecCmd[i]);
+                }
+
+/*
+                std::cout << "--- str ";
+                for ( int i = 0; i < str.size(); ++i )
+                {
+                    std::cout << str[i] << " ";
+                }
+                std::cout << std::endl;
+*/
+                messageToAll( _pMsg->GetTo(), (uint32_t) vecCmd.at(0), str,
                              *(uint32_t*)&vecCmd.at(sizeof(uint32_t)) );
             }
             break;
@@ -325,21 +339,22 @@ void CHTServer::deleteHistory( uint32_t logicID, uint32_t tableID)
 
 
 void CHTServer::messageToAll( uint32_t playerID, uint32_t logicID,
-                                const TVecChar* _vecData, uint32_t tableID )
+                               CMyStr& strMsg, uint32_t tableID )
 {
     if (!checkParticipation(playerID, logicID, tableID) )
     {
+    	std::cout << "CHTServer::messageToAll !checkParticipation" <<   std::endl;
         return;
     }
 
     SqlTable sqlChatTable("");
 
-    if ( _vecData->empty() )
+    if ( strMsg.empty() )
     {
+    	std::cout << "CHTServer::messageToAll _vecData->empty()" <<   std::endl;
         return;
     }
 
-    CMyStr strMsg = CMyStr((char*)_vecData);
 
     // add a user name into the message
     TVecChar vecChar;
@@ -349,10 +364,13 @@ void CHTServer::messageToAll( uint32_t playerID, uint32_t logicID,
         CMyStr strUserName = CMyStr(&vecChar);
         strMsg = strUserName + ": " + strMsg;
     }
+    std::cout << "CHTServer::messageToAll add a user name into the message" <<   std::endl;
 
 
     // save message into the history
     getChatTable( logicID, &sqlChatTable );
+
+    std::cout << "CHTServer::messageToAll save message into the history" <<   std::endl;
 
     TVecMyStr parameters;
     CMyStr tableIDstr = CMyStr( tableID );
