@@ -28,7 +28,7 @@ struct AnsOpponentMessage
     uint32_t rating;
 };
 
-struct AnsEndMessage: public SGameMsg
+struct AnsRatingMessage: public SGameMsg
 {
     uint32_t rating;
     uint32_t balance;
