@@ -72,7 +72,7 @@
  	    <server>         <color value="grey" /> </server>
      </font>
 	<style value="Chat       { background: black; } 
-                  QTextEdit  { background: black; font-size: 12px; font: italic; color: white; }
+                  QTextEdit  { border-width: 1px; border-style:solid; border-color: grey; background: black; font-size: 12px; font: italic; color: white; }
                   QTableWidget { background: black; color: white; }"/> 
 
 	<history>
