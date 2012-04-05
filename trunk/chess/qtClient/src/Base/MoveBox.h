@@ -31,7 +31,7 @@ public:
     void setPlayer(PlayerType type);
 
     void setGameOver();
-
+    void setGameStateText(const QString& gameState);
 
 private:
 
@@ -40,6 +40,7 @@ private:
     // childs of mBorder
     //QGraphicsTextItem* mMoveText;
     QGraphicsTextItem* mPlayerNameText;
+    QGraphicsTextItem* mGameStateText;
   //  QGraphicsTextItem* mRatingText;
 
     // Clock mMoveClock;
