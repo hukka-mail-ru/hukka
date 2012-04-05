@@ -660,7 +660,6 @@ void Client::getMyRating()
     }
 }
 
-/*
 void Client::getMyBalance()
 {
     QT_TRACEOUT;
@@ -676,7 +675,7 @@ void Client::getMyBalance()
         e.add(tr("Can't get my balance ") + tr(" on server: ") + mSocket.peerName() + ". ");
         emit error (e.what());
     }
-}*/
+}
 
 void Client::getLastGameResult()
 {
@@ -1174,8 +1173,7 @@ void Client::processMessageTBM(const MessageHeader& header, const QByteArray& bu
         switch(reply->isValid)
         {
             case ST_VALID:                  emit balanceReplenished(reply->sum);
-                                            emit gotMyRating(UI::instance()->getPlayer(PT_ME).rating,
-                                            		         UI::instance()->getPlayer(PT_ME).balance + reply->sum);
+                                            emit gotMyBalance(UI::instance()->getPlayer(PT_ME).balance + reply->sum);
                                             break;
             case ST_NOTVALID_DB_ERROR:      emit error(cant + tr("Database error.")); break;
             case ST_NOTVALID_NO_SUCH_PIN:   emit error(cant + QString(tr("No such PIN."))) ; break;
@@ -1411,8 +1409,8 @@ void Client::processMessageCHS(const MessageHeader& header, const QByteArray& bu
 
         Reply* reply = (Reply*)buffer.data();
 
-        emit gotMyRating(reply->rating, reply->balance);
-//        emit gotMyBalance(reply->balance);
+        emit gotMyRating(reply->rating);
+        emit gotMyBalance(reply->balance);
         emit gameOver(reply->status, reply->rating);
     }
 
@@ -1467,15 +1465,13 @@ void Client::processMessageCHS(const MessageHeader& header, const QByteArray& bu
         struct Reply {
             TABLEID     tableID;
             qint32      rating;
-            qint32      balance;
         };
 
         Reply* reply = (Reply*)buffer.data();
 
-        emit gotMyRating(reply->rating, reply->balance);
+        emit gotMyRating(reply->rating);
        // qDebug() << "time2game: " << reply->time2game;
     }
-    /*
     else if(header.cmd == ANS_BALANCE)
     {
         struct Reply {
@@ -1487,7 +1483,7 @@ void Client::processMessageCHS(const MessageHeader& header, const QByteArray& bu
 
         emit gotMyBalance(reply->balance);
        // qDebug() << "time2game: " << reply->time2game;
-    }*/
+    }
     else if(header.cmd == ANS_LAST_GAME_RESULT)
     {
         struct Reply {

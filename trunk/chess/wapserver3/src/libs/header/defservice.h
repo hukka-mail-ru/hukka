@@ -91,8 +91,8 @@ const int       ANS_GET_OPPONENT       = 107;
 const int       CMD_LAST_GAME_RESULT   = 108;
 const int       ANS_LAST_GAME_RESULT   = 109;
 const int       CMD_DELETE_LAST_GAME_RESULT = 110;
-//const int       CMD_BALANCE             = 111;
-//const int       ANS_BALANCE             = 112;
+const int       CMD_BALANCE             = 111;
+const int       ANS_BALANCE             = 112;
 
 const int       P_NONE      = 0;
 const int		P_DONE		= 20;
@@ -199,8 +199,8 @@ public:
                 case ANS_OPAGREE_FAILED  : res = "ANS_OPAGREE_FAILED"; break;
                 case CMD_RATING  : res = "CMD_RATING"; break;
                 case ANS_RATING  : res = "ANS_RATING"; break;
-                //case CMD_BALANCE  : res = "CMD_BALANCE"; break;
-                //case ANS_BALANCE  : res = "ANS_BALANCE"; break;
+                case CMD_BALANCE  : res = "CMD_BALANCE"; break;
+                case ANS_BALANCE  : res = "ANS_BALANCE"; break;
                 case CMD_GET_OPPONENT  : res = "CMD_GET_OPPONENT"; break;
                 case ANS_GET_OPPONENT  : res = "ANS_GET_OPPONENT"; break;
                 case CMD_LAST_GAME_RESULT  : res = "CMD_LAST_GAME_RESULT"; break;

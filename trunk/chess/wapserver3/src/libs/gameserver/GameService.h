@@ -182,12 +182,12 @@ private:
 
             cmdRating( _pClientMsg->GetTo() );
         }
- //       else if ( cmd == CMD_BALANCE )
-  //      {
+        else if ( cmd == CMD_BALANCE )
+        {
   //          std::cout << "GameService::newMsg from = " << _pClientMsg->GetTo() << " cmd = CMD_RATING" <<  std::endl;
 
-  //          cmdBalance( _pClientMsg->GetTo() );
-  //      }
+            cmdBalance( _pClientMsg->GetTo() );
+        }
         else if ( cmd == CMD_GET_OPPONENT )
         {
  //           std::cout << "GameService::newMsg from = " << _pClientMsg->GetTo() << " cmd = CMD_GET_OPPONENT" <<  std::endl;
@@ -649,7 +649,7 @@ private:
         uint32_t nStepNum   = 0;
         uint32_t nXPlayer   = 0;
 
-        AnsRatingMessage sCmd0, sCmd1;
+        AnsEndMessage sCmd0, sCmd1;
 	    sCmd0.m_chCmd = sCmd1.m_chCmd = ANS_END;
 	    sCmd0.m_nTableID = sCmd1.m_nTableID = _nTableID;
 	    sCmd0.m_chData = sCmd1.m_chData = (char) P_NO_RES;
@@ -1153,15 +1153,13 @@ private:
 
 	void cmdRating(uint32_t _nPlayerID)
 	{
-		AnsRatingMessage msg;
-		msg.m_chCmd = ANS_RATING;
-		msg.rating = m_RatingTable.getRating( _nPlayerID );
-		msg.balance = m_AccountTable.getBalance( _nPlayerID );
+	    SNGameMsg sCmd;
+	    sCmd.m_chCmd = ANS_RATING;
+	    sCmd.m_nData = m_RatingTable.getRating( _nPlayerID );
 
-	    sendMsg( _nPlayerID, &msg, sizeof( msg ) );
+	    sendMsg( _nPlayerID, &sCmd, sizeof( sCmd ) );
 	}
 
-	/*
    void cmdBalance(uint32_t _nPlayerID)
     {
         SNGameMsg sCmd;
@@ -1170,7 +1168,7 @@ private:
 
         sendMsg( _nPlayerID, &sCmd, sizeof( sCmd ) );
     }
-*/
+
 
 	void cmdLastGameResult(uint32_t _nPlayerID )
     {
