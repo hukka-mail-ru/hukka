@@ -238,17 +238,16 @@ void MainMenu::onAuthorized()
         MainWindow::instance()->setMode(MW_NORMAL);
     }*/
 
-    connect(Client::instance(), SIGNAL(gotMyRating(unsigned, unsigned)), this, SLOT(onGotMyRating(unsigned, unsigned)));
+    connect(Client::instance(), SIGNAL(gotMyRating(unsigned)), this, SLOT(onGotMyRating(unsigned)));
     Client::instance()->getMyRating();
 
-//    connect(Client::instance(), SIGNAL(gotMyBalance(unsigned)), this, SLOT(onGotMyBalance(unsigned)));
-//    Client::instance()->getMyBalance();
+    connect(Client::instance(), SIGNAL(gotMyBalance(unsigned)), this, SLOT(onGotMyBalance(unsigned)));
+    Client::instance()->getMyBalance();
 
 }
 
-void MainMenu::onGotMyRating(unsigned myRating, unsigned myBalance)
+void MainMenu::onGotMyRating(unsigned myRating)
 {
-	// Rating
     UI::instance()->setPlayerRating(PT_ME, myRating);
 
     mPlayerNameText->setPlainText(UI::instance()->getPlayer(PT_ME).name);
@@ -258,20 +257,8 @@ void MainMenu::onGotMyRating(unsigned myRating, unsigned myBalance)
                           tr("Rating: ") + QString::number(myRating);
 
     mPlayerRatingText->setPlainText(ratingText);
-
-    // Balance
-    UI::instance()->setPlayerBalance(PT_ME, myBalance);
-
-    mPlayerBalanceText->setPlainText(tr("Balance: ") + QString::number(myBalance));
-
-    if(mClickedButton == walletButton)
-    {
-        MainWindow::instance()->showWalletDialog();
-        mClickedButton = NULL;
-    }
 }
 
-/*
 void MainMenu::onGotMyBalance(unsigned myBalance)
 {
     UI::instance()->setPlayerBalance(PT_ME, myBalance);
@@ -284,7 +271,7 @@ void MainMenu::onGotMyBalance(unsigned myBalance)
         mClickedButton = NULL;
     }
 }
-*/
+
 void MainMenu::onGotMyGameTable(TABLEID tableID, bool isOwner)
 {
     disconnect(Client::instance(), SIGNAL(gotMyGameTable(TABLEID, bool)), this, SLOT(onGotMyGameTable(TABLEID, bool)));

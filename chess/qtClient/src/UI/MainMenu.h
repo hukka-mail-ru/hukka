@@ -60,8 +60,8 @@ private slots:
     void onWalletClicked();
     void onExitClicked();
     void onGotMyGameTable(TABLEID id, bool isOwner);
-    void onGotMyRating(unsigned myRating, unsigned myBalance);
-    //void onGotMyBalance(unsigned myBalance);
+    void onGotMyRating(unsigned myRating);
+    void onGotMyBalance(unsigned myBalance);
     void onGotOpponent(const Player& opponent);
     void onGotLastGameResult(unsigned result);
 

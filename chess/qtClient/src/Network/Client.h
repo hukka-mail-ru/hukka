@@ -91,7 +91,7 @@ public:
       //  void getTime             (TABLEID tableID);
         void timeout             (TABLEID tableID);
         void getMyRating         ();
-     //   void getMyBalance        ();
+        void getMyBalance        ();
         void getOpponent         (TABLEID tableID);
         void getLastGameResult   ();
         void deleteLastGameResult();
@@ -139,8 +139,8 @@ signals:
         void gotMoveTime(unsigned);
         void gotGameTime(unsigned);
 
-        void gotMyRating(unsigned rating, unsigned balance);
-     //   void gotMyBalance(unsigned);
+        void gotMyRating(unsigned);
+        void gotMyBalance(unsigned);
         void gotLastGameResult(unsigned);
 
         void balanceReplenished(unsigned);
