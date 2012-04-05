@@ -20,16 +20,6 @@ GameScene::GameScene(QObject *parent):
     mBoard(this)
 {
 
-    // GameState (check, mate, etc..)
-    int gameStateX           = XML::instance().readValue(XML_ITEMS_FILENAME, QList<QString>() << XML_NODE_GAME_STATE << XML_NODE_X).toInt();
-    int gameStateY           = XML::instance().readValue(XML_ITEMS_FILENAME, QList<QString>() << XML_NODE_GAME_STATE << XML_NODE_Y).toInt();
-    QString gameStateFamily  = XML::instance().readValue(XML_ITEMS_FILENAME, QList<QString>() << XML_NODE_GAME_STATE << XML_NODE_FONT << XML_NODE_FAMILY);
-    int gameStateSize        = XML::instance().readValue(XML_ITEMS_FILENAME, QList<QString>() << XML_NODE_GAME_STATE << XML_NODE_FONT << XML_NODE_SIZE).toInt();
-    QString gameStateColor   = XML::instance().readValue(XML_ITEMS_FILENAME, QList<QString>() << XML_NODE_GAME_STATE << XML_NODE_FONT << XML_NODE_COLOR);
-    mGameStateText = this->addText("", QFont(gameStateFamily, gameStateSize));
-    mGameStateText->setDefaultTextColor(gameStateColor);
-    mGameStateText->setPos(gameStateX, gameStateY);
-
     // scene
     int scene_x      = XML::instance().readValue(XML_ITEMS_FILENAME, QList<QString>() << XML_NODE_SCENE << XML_NODE_X).toInt();
     int scene_y      = XML::instance().readValue(XML_ITEMS_FILENAME, QList<QString>() << XML_NODE_SCENE << XML_NODE_Y).toInt();
@@ -180,9 +170,9 @@ void GameScene::onGotPosition(const Position& position)
     }
     else if (position.status == Stalemate)
     {
-        mGameStateText->setPlainText(tr("Stalemate."));
+    	gameState = tr("Stalemate.");
     }
-    mGameStateText->setPlainText(gameState);
+    mMoveBox.setGameStateText(gameState);
 
 
     MainWindow::instance()->setMode(MW_NORMAL);

@@ -46,6 +46,18 @@ MoveBox::MoveBox(QGraphicsScene* parentScene):
     mRatingText->setParentItem(mBorder);
     mRatingText->setPos(borderX + ratingX, borderY + ratingY);
 */
+
+    // GameState (check, mate, etc..)
+    int gameStateX           = XML::instance().readValue(XML_ITEMS_FILENAME, QList<QString>() << XML_NODE_MOVE_BOX << XML_NODE_GAME_STATE << XML_NODE_X).toInt();
+    int gameStateY           = XML::instance().readValue(XML_ITEMS_FILENAME, QList<QString>() << XML_NODE_MOVE_BOX << XML_NODE_GAME_STATE << XML_NODE_Y).toInt();
+    QString gameStateFamily  = XML::instance().readValue(XML_ITEMS_FILENAME, QList<QString>() << XML_NODE_MOVE_BOX << XML_NODE_GAME_STATE << XML_NODE_FONT << XML_NODE_FAMILY);
+    int gameStateSize        = XML::instance().readValue(XML_ITEMS_FILENAME, QList<QString>() << XML_NODE_MOVE_BOX << XML_NODE_GAME_STATE << XML_NODE_FONT << XML_NODE_SIZE).toInt();
+    QString gameStateColor   = XML::instance().readValue(XML_ITEMS_FILENAME, QList<QString>() << XML_NODE_MOVE_BOX << XML_NODE_GAME_STATE << XML_NODE_FONT << XML_NODE_COLOR);
+    mGameStateText = parentScene->addText("", QFont(gameStateFamily, gameStateSize));
+    mGameStateText->setDefaultTextColor(gameStateColor);
+    mGameStateText->setPos(borderX + gameStateX, borderY + gameStateY);
+
+
     mMoveClock.moveBy(borderX, borderY);
     mGameClock.moveBy(borderX, borderY);
 }
@@ -61,7 +73,7 @@ void MoveBox::setPlayer(PlayerType type)
     QString text = "";
     if(type == PT_ME)
     {
-        text = QObject::tr("Your move!");
+        text = QObject::tr("Your move");
     }
     else if(type == PT_OPPONENT)
     {
@@ -108,4 +120,9 @@ void MoveBox::setInactive()
 void MoveBox::setGameOver()
 {
     mPlayerNameText->setPlainText(QObject::tr("Game over."));
+}
+
+void MoveBox::setGameStateText(const QString& gameState)
+{
+	mGameStateText->setPlainText(gameState);
 }

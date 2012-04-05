@@ -164,7 +164,8 @@
     <MoveClock>  <font> <family value="Helvetica [Cronyx]" />  <size value="15" /> </font>  <x value="77" />  <y value="0" /> </MoveClock>
     <GameClock>  <font> <family value="Helvetica [Cronyx]" />  <size value="9" /> </font>  <x value="70" />  <y value="25" /> </GameClock>
 
-<!--    <rating>     <font> <family value="Helvetica [Cronyx]" />  <size value="8" /> </font>  <x value="5" />  <y value="15" /> </rating> -->
+    <GameState>   <font> <family value="Helvetica [Cronyx]" />  <size value="13" /> <color value="#FB9D0A" /> </font>  
+                  <x value="3" />  <y value="20" /> </GameState> 
 
   </MoveBox>
 
@@ -174,11 +175,12 @@
     <x value="160" /> <y value="0" /> 
   </Board>
 
+<!--
   <GameState>
     <font> <family value="Helvetica [Cronyx]" />  <size value="14" /> <color value="#FB9D0A" /> </font>
     <x value="50" />  <y value="131" /> 
   </GameState>
-
+-->
 
 
 
