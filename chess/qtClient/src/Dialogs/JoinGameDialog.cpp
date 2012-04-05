@@ -55,6 +55,7 @@ JoinGameDialog::JoinGameDialog(const QList<GameTable>& tables, QWidget *parent):
 
     connect(tableWidget, SIGNAL(cellPressed(int, int)), this, SLOT(onCellPressed(int, int)));
     connect(tableWidget, SIGNAL(cellClicked(int, int)), this, SLOT(onCellClicked(int, int)));
+    connect(tableWidget, SIGNAL(cellDoubleClicked(int, int)), this, SLOT(onCellDoubleClicked(int, int)));
 
     mCurrentTable = 0;
     if(!mGameTables.empty())
@@ -73,6 +74,10 @@ void JoinGameDialog::onCellClicked(int row, int column)
     tableWidget->setRangeSelected(QTableWidgetSelectionRange(row, 0 ,row, tableWidget->columnCount()-1), true);
 }
 
+void JoinGameDialog::onCellDoubleClicked(int row, int column)
+{
+	onOkClicked();
+}
 
 
 void JoinGameDialog::getParams(const GameTable& table)

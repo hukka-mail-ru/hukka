@@ -43,6 +43,7 @@ private slots:
     void onGotGameTableParams(const GameTable& table);
     void onCellPressed(int row, int column);
     void onCellClicked(int row, int column);
+    void onCellDoubleClicked(int row, int column);
 };
 
 #endif /* JOINGAMEDIALOG_H_ */
