@@ -4,7 +4,7 @@
 #include <sstream>
 #include <string>
 
-const int       INVALID_TIME = 0xFFFFFFFF;
+const unsigned  INVALID_TIME = 0xFFFFFFFF;
 const int       DEALER_PERCENT = 10; // PERCENT
 const int       MIN_DEALER_PRIZE = 1; // RUR
 
