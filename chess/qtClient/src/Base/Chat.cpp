@@ -23,7 +23,7 @@ Chat::~Chat()
 }
 
 Chat::Chat(QWidget* parent, ChatType type):
-    QDialog(parent), mChatType(type), mState(CHAT_CLOSED)
+    QDialog(parent), mUserlist(NULL), mChatType(type), mState(CHAT_CLOSED)
 {
 
     // No title, no [X] button, no bottom
@@ -55,17 +55,19 @@ Chat::Chat(QWidget* parent, ChatType type):
     mHistory->setFixedSize(widthHistory, heightHistory);
 
     // USERLIST
-    /*
-    mUserlist = new Userlist(this, mChatType);
-    int xUserlist      = XML::instance().readValue(XML_ITEMS_FILENAME, QList<QString>() << chatNode << XML_NODE_USERLIST << XML_NODE_X).toInt();
-    int yUserlist      = XML::instance().readValue(XML_ITEMS_FILENAME, QList<QString>() << chatNode << XML_NODE_USERLIST << XML_NODE_Y).toInt();
-    int widthUserlist  = XML::instance().readValue(XML_ITEMS_FILENAME, QList<QString>() << chatNode << XML_NODE_USERLIST << XML_NODE_WIDTH).toInt();
-    int heightUserlist = XML::instance().readValue(XML_ITEMS_FILENAME, QList<QString>() << chatNode << XML_NODE_USERLIST << XML_NODE_HEIGHT).toInt();
+    if(mChatType == CT_COMMON_CHAT)
+    {
+		mUserlist = new Userlist(this, mChatType);
+		int xUserlist      = XML::instance().readValue(XML_ITEMS_FILENAME, QList<QString>() << chatNode << XML_NODE_USERLIST << XML_NODE_X).toInt();
+		int yUserlist      = XML::instance().readValue(XML_ITEMS_FILENAME, QList<QString>() << chatNode << XML_NODE_USERLIST << XML_NODE_Y).toInt();
+		int widthUserlist  = XML::instance().readValue(XML_ITEMS_FILENAME, QList<QString>() << chatNode << XML_NODE_USERLIST << XML_NODE_WIDTH).toInt();
+		int heightUserlist = XML::instance().readValue(XML_ITEMS_FILENAME, QList<QString>() << chatNode << XML_NODE_USERLIST << XML_NODE_HEIGHT).toInt();
 
-    mUserlist->move(xUserlist, yUserlist);
-    mUserlist->setFixedSize(widthUserlist, heightUserlist);
-*/
-    mHistory->addMessage(tr("Press here to send a message to your opponent"), CS_SERVER);
+		mUserlist->move(xUserlist, yUserlist);
+		mUserlist->setFixedSize(widthUserlist, heightUserlist);
+    }
+
+    mHistory->addMessage(tr("Press here to send a message"), CS_SERVER);
     mHistory->addMessage("-----", CS_SERVER);
 }
 
@@ -111,7 +113,9 @@ bool Chat::close()
 	if(mState == CHAT_OPEN || mState == CHAT_HIDDEN)
 	{
 		mHistory->clear();
-		//mUserlist->removeAll();
+
+		if(mUserlist)
+			mUserlist->removeAll();
 
 		Client::instance()->leaveChat(LOGIC_ID_CHESS);
 
@@ -142,19 +146,22 @@ void Chat::onChatMessage(const QString& message)
 
 void Chat::onChatUserOnline(const QString& userName)
 {
-    //mUserlist->addUser(userName);
+	if(mUserlist)
+		mUserlist->addUser(userName);
 }
 
 void Chat::onChatUserJoined(const QString& userName)
 {
    // mHistory->addMessage(userName + " has joined the chat", CS_SERVER);
-   // mUserlist->addUser(userName);
+	if(mUserlist)
+		mUserlist->addUser(userName);
 }
 
 void Chat::onChatUserLeft  (const QString& userName)
 {
    // mHistory->addMessage(userName + " has left the chat", CS_SERVER);
-   // mUserlist->removeUser(userName);
+	if(mUserlist)
+		mUserlist->removeUser(userName);
 }
 
 ////////////  History //////////////////////////////////////
@@ -206,7 +213,7 @@ void Chat::History::addMessage(const QString& message, ChatSender chatSender)
 
 
 ////////////  Userlist //////////////////////////////////////
-/*
+
 Chat::Userlist::Userlist(QWidget* parent, ChatType type):
     QTableWidget(0, 1, parent), mChatType(type)
 {
@@ -265,5 +272,5 @@ void Chat::Userlist::mouseReleaseEvent(QMouseEvent * event)
         MainWindow::instance()->showChatMessageDialog(currentItem()->text(), mChatType);
     }
 }
-*/
+
 

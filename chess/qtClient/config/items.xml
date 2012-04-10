@@ -130,6 +130,12 @@
         <font> <family value="Helvetica [Cronyx]" /> <size value="10" />  <color value="white" />  <x value="110" /> <y value="4" /> </font>
       </Chat>
 
+      <CommonChat>
+        <x value="10" /> <y value="100" /> 
+        <width value="57" />  <height value="26" />  
+        <font> <family value="Helvetica [Cronyx]" /> <size value="10" />  <color value="white" />  <x value="110" /> <y value="4" /> </font>
+      </CommonChat>
+
   </Buttons>
 
   <Promotion>
