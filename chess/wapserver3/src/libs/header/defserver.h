@@ -44,8 +44,8 @@ const int LOGIC_ID_CHESS  =              2;
 const int WS_USERS_AUTO_INCREMENT_OFFSET =  100;
 
 // Player rating
-const int           DEFAULT_RATING = 1000;
-const int           RATING_NOT_AVAILABLE = 0xFFFF0000;
-const int           MIN_STEPS_FOR_RATING = 5;
+const unsigned           DEFAULT_RATING = 1000;
+const unsigned           RATING_NOT_AVAILABLE = 0xFFFF0000;
+const unsigned           MIN_STEPS_FOR_RATING = 5;
 
 #endif

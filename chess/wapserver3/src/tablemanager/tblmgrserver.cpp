@@ -170,6 +170,7 @@ void CTblMgrServer::newMsg( ClientMsg* _pMsg )
 			TVecUINT vec;
 
 			STbmCmd sMsg;
+			sMsg.m_Parameter = 0;
 			sMsg.m_chCmd = ANS_MYTBL;
 
 			if ( ! m_TbmCommands.GetMyTable( *pLogicID, _pMsg->GetTo(), &vec ) )
@@ -562,12 +563,12 @@ void CTblMgrServer::sendMsg( uint32_t _nTO, void* _pMsg, int _nSize )
     }
     std::cout << std::endl;
 	//syslog( LOG_INFO | LOG_LOCAL0, "Send to %d CMD: %d TableID: %d Param: %d",_nTO, (int)(( STbmCmd* ) _pMsg)->m_chCmd,(( STbmCmd* ) _pMsg)->m_nTableID, (int)(( STbmCmd* ) _pMsg)->m_chData );
-    for (TVecChar::const_iterator it = vecCmd.begin(); it != vecCmd.end(); ++it)
+/*    for (TVecChar::const_iterator it = vecCmd.begin(); it != vecCmd.end(); ++it)
     {
 
         std::cout << (uint32_t) *it << " ";
     }
-    std::cout << std::endl;
+    std::cout << std::endl;*/
 #endif
 
 	ClientMsg Msg;
