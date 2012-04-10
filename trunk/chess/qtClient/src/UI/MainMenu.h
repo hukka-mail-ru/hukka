@@ -35,6 +35,7 @@ private:
     Button* optionsButton;
     Button* walletButton;
     Button* exitButton;
+    Button* chatButton;
 
     Button* mClickedButton;
 
@@ -55,7 +56,7 @@ private slots:
 
     void onCreateGameClicked();
     void onFindGameClicked();
-    //void onChatClicked();
+    void onChatClicked();
     void onOptionsClicked();
     void onWalletClicked();
     void onExitClicked();

@@ -50,6 +50,8 @@ MainMenu::MainMenu(QObject *parent):
     optionsButton    = newButton(Pixmaps::get(PIX_BUTTON_OPTIONS),     SLOT(onOptionsClicked()), tr("Options"), XML_NODE_OPTIONS);
     walletButton     = newButton(Pixmaps::get(PIX_BUTTON_WALLET),      SLOT(onWalletClicked()), tr("Wallet"), XML_NODE_WALLET);
     exitButton       = newButton(Pixmaps::get(PIX_BUTTON_EXIT),        SLOT(onExitClicked()), tr(""), XML_NODE_EXIT);
+    chatButton       = newButton(Pixmaps::get(PIX_BUTTON_CHAT),        SLOT(onChatClicked()), tr(""), XML_NODE_COMMON_CHAT);
+
 
     // splash
     int x = XML::instance().readValue(XML_ITEMS_FILENAME, QList<QString>() << XML_NODE_SPLASH << XML_NODE_X).toInt();
@@ -140,7 +142,7 @@ void MainMenu::onWalletClicked()
     connectToGameServer();
 }
 
-/*
+
 void MainMenu::onChatClicked()
 {
     if(!mChat)
@@ -149,17 +151,16 @@ void MainMenu::onChatClicked()
         mClickedButton = chatButton;
         connectToGameServer();
     }
-    else if(mChat->getState() == CHAT_CLOSED)
+    else if(mChat->getState() == CHAT_CLOSED || mChat->getState() == CHAT_HIDDEN)
     {
         mChat->show();
     }
     else
     {
-        // toggle chat visibility
-        mChat->setVisible( !mChat->isVisible() );
+    	mChat->hide();
     }
 }
-*/
+
 
 void MainMenu::close()
 {
@@ -229,14 +230,14 @@ void MainMenu::onAuthorized()
         Client::instance()->getMyGameTable(LOGIC_ID_CHESS);
     }
 
-    /*
+
     else if(mClickedButton == chatButton && !mChat)
     {
         mChat = new Chat(MainWindow::instance(), CT_COMMON_CHAT);
         mChat->show();
 
         MainWindow::instance()->setMode(MW_NORMAL);
-    }*/
+    }
 
     connect(Client::instance(), SIGNAL(gotMyRating(unsigned)), this, SLOT(onGotMyRating(unsigned)));
     Client::instance()->getMyRating();

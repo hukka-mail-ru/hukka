@@ -64,7 +64,7 @@ private:
         QString mColorServer;
     };
 
-    /*
+
     class Userlist: public QTableWidget
     {
     public:
@@ -79,13 +79,13 @@ private:
         QList<QString> mNames;
         ChatType mChatType;
     };
-*/
+
 
     QGraphicsTextItem* mHeader;
     QGraphicsScene* mParentScene;
 
     History* mHistory;
- //   Userlist* mUserlist;
+    Userlist* mUserlist;
 
 //    QScrollArea* mScrollArea;
     QGraphicsRectItem* mBorder;
