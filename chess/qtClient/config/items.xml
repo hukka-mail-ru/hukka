@@ -51,6 +51,7 @@
      </font>
 	<style value="Chat      { background: black; } 
                   QTextEdit { background: black; font-size: 12px; font: italic; color: white; }
+                  QLabel    { background: black; font-size: 9px;  font: italic; color: white; }
                   QTableWidget { background: black; color: white; }"/>
 
 	<history>
@@ -58,9 +59,12 @@
 	</history>
 
 	<userlist>
-	    <x value="310" /> <y value="0" />  <width value="110" /> <height value="190" />  
+	    <x value="310" /> <y value="15" />  <width value="110" /> <height value="175" />  
 	</userlist>
 
+	<header>
+		<x value="310" /> <y value="0" />	
+	</header>
   </CommonChat>
 
 

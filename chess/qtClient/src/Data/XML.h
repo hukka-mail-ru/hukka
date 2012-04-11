@@ -89,6 +89,7 @@
 
 #define XML_NODE_HISTORY     "history"
 #define XML_NODE_USERLIST    "userlist"
+#define XML_NODE_HEADER		 "header"
 
 class XML
 {

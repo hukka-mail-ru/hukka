@@ -81,8 +81,7 @@ private:
     };
 
 
-    QGraphicsTextItem* mHeader;
-    QGraphicsScene* mParentScene;
+    QLabel* mHeader;
 
     History* mHistory;
     Userlist* mUserlist;
