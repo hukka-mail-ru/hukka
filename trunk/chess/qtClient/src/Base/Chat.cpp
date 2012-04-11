@@ -8,6 +8,7 @@
 #include <QVBoxLayout>
 #include <QHBoxLayout>
 #include <QTableWidgetItem>
+#include <QGraphicsTextItem>
 #include <QHeaderView>
 #include <QWidget>
 #include <QTextOption>
@@ -54,9 +55,18 @@ Chat::Chat(QWidget* parent, ChatType type):
     mHistory->move(xHistory, yHistory);
     mHistory->setFixedSize(widthHistory, heightHistory);
 
-    // USERLIST
+
     if(mChatType == CT_COMMON_CHAT)
     {
+    	// HEADER
+		mHeader = new QLabel(tr("Players online:"), this);
+		int xHeader           = XML::instance().readValue(XML_ITEMS_FILENAME, QList<QString>() << chatNode << XML_NODE_HEADER << XML_NODE_X).toInt();
+		int yHeader           = XML::instance().readValue(XML_ITEMS_FILENAME, QList<QString>() << chatNode << XML_NODE_HEADER << XML_NODE_Y).toInt();
+
+		mHeader->move(xHeader, yHeader);
+
+
+		// USERLIST
 		mUserlist = new Userlist(this, mChatType);
 		int xUserlist      = XML::instance().readValue(XML_ITEMS_FILENAME, QList<QString>() << chatNode << XML_NODE_USERLIST << XML_NODE_X).toInt();
 		int yUserlist      = XML::instance().readValue(XML_ITEMS_FILENAME, QList<QString>() << chatNode << XML_NODE_USERLIST << XML_NODE_Y).toInt();
@@ -184,7 +194,7 @@ Chat::History::History(QWidget* parent, ChatType type):
 
 void Chat::History::mouseReleaseEvent(QMouseEvent * event)
 {
-
+	Q_UNUSED(event);
 	qDebug() << "Chat::History::mouseReleaseEvent" << MainWindow::instance()->getMode();
 
  //   if(MainWindow::instance()->getMode() == MW_NORMAL)
@@ -265,6 +275,7 @@ void Chat::Userlist::updateTable()
 
 void Chat::Userlist::mouseReleaseEvent(QMouseEvent * event)
 {
+	Q_UNUSED(event);
     if(MainWindow::instance()->getMode() == MW_NORMAL &&
        currentItem() &&
        currentItem()->text() != UI::instance()->getPlayer(PT_ME).name) // prevent sending message to myseff
