@@ -51,7 +51,7 @@ MainMenu::MainMenu(QObject *parent):
     optionsButton    = newButton(Pixmaps::get(PIX_BUTTON_OPTIONS),     SLOT(onOptionsClicked()), tr("Options"), XML_NODE_OPTIONS);
     walletButton     = newButton(Pixmaps::get(PIX_BUTTON_WALLET),      SLOT(onWalletClicked()), tr("Wallet"), XML_NODE_WALLET);
     exitButton       = newButton(Pixmaps::get(PIX_BUTTON_EXIT),        SLOT(onExitClicked()), tr(""), XML_NODE_EXIT);
-    chatButton       = newButton(Pixmaps::get(PIX_BUTTON_CHAT),        SLOT(onChatClicked()), tr(""), XML_NODE_COMMON_CHAT);
+    chatButton       = newButton(Pixmaps::get(PIX_BUTTON_COMMON_CHAT), SLOT(onChatClicked()), tr("Chat"), XML_NODE_COMMON_CHAT);
 
 
     // splash
