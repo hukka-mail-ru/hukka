@@ -56,6 +56,7 @@ void Pixmaps::loadPixmaps()
     ////////////////////////////////////////////////////////////////////////////////////
     loadPixmap(PIX_BUTTON_MENU,":/images/menu.png");
     loadPixmap(PIX_BUTTON_CHAT,":/images/chat.png");
+    loadPixmap(PIX_BUTTON_COMMON_CHAT,":/images/commonChat.png");
 
     loadPixmap(PIX_BUTTON_EXIT,":/images/exit.png");
     ////////////////////////////////////////////////////////////////////////////////////

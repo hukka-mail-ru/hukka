@@ -791,8 +791,9 @@
         <translation>Найти игру</translation>
     </message>
     <message>
+        <location filename="../src/UI/MainMenu.cpp" line="54"/>
         <source>Chat</source>
-        <translation type="obsolete">Чат</translation>
+        <translation type="unfinished">Чат</translation>
     </message>
     <message>
         <location filename="../src/UI/MainMenu.cpp" line="51"/>
@@ -809,27 +810,27 @@
         <translation>Кошелек</translation>
     </message>
     <message>
-        <location filename="../src/UI/MainMenu.cpp" line="269"/>
+        <location filename="../src/UI/MainMenu.cpp" line="272"/>
         <source>Rating: not available</source>
         <translation>Рейтинг: не включен</translation>
     </message>
     <message>
-        <location filename="../src/UI/MainMenu.cpp" line="270"/>
+        <location filename="../src/UI/MainMenu.cpp" line="273"/>
         <source>Rating: </source>
         <translation>Рейтинг: </translation>
     </message>
     <message>
-        <location filename="../src/UI/MainMenu.cpp" line="279"/>
+        <location filename="../src/UI/MainMenu.cpp" line="282"/>
         <source>Balance: </source>
         <translation>Баланс (руб.): </translation>
     </message>
     <message>
-        <location filename="../src/UI/MainMenu.cpp" line="316"/>
+        <location filename="../src/UI/MainMenu.cpp" line="319"/>
         <source>The last game has been finished.</source>
         <translation>Предыдущая игра была завершена</translation>
     </message>
     <message>
-        <location filename="../src/UI/MainMenu.cpp" line="345"/>
+        <location filename="../src/UI/MainMenu.cpp" line="348"/>
         <source>You have an unfinished game. Please finish it.</source>
         <translation>Пожалуйста завершите предыдущую игру.</translation>
     </message>
