@@ -257,6 +257,9 @@ void MainWindow::showMainMenu()
         mGameScene->close();
 
     closeCurrentDialog();
+
+    mMainMenu->showChatIfWasOpen();
+
     mGraphicsView->setScene(mMainMenu);
 
     setMode(MW_NORMAL); // TODO this should be in each show... function

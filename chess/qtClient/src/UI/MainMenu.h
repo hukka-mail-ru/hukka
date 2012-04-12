@@ -19,6 +19,7 @@ public:
     void enableItems();
     void disableItems();
 
+    void showChatIfWasOpen();
     void close();
 
 private:
@@ -46,6 +47,8 @@ private:
     QGraphicsTextItem* mPlayerNameText;
     QGraphicsTextItem* mPlayerRatingText;
     QGraphicsTextItem* mPlayerBalanceText;
+
+    bool mChatWasOpen;
 
 private slots:
 

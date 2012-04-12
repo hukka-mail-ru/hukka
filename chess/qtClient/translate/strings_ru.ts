@@ -116,9 +116,18 @@
 <context>
     <name>Chat</name>
     <message>
-        <location filename="../src/Base/Chat.cpp" line="68"/>
         <source>Press here to send a message to your opponent</source>
-        <translation type="unfinished">Нажмите сюда, чтобы написать сообщение Вашему противнику</translation>
+        <translation type="obsolete">Нажмите сюда, чтобы написать сообщение Вашему противнику</translation>
+    </message>
+    <message>
+        <location filename="../src/Base/Chat.cpp" line="62"/>
+        <source>Players online:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/Base/Chat.cpp" line="80"/>
+        <source>Press here to send a message</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -772,12 +781,12 @@
 <context>
     <name>MainMenu</name>
     <message>
-        <location filename="../src/UI/MainMenu.cpp" line="48"/>
+        <location filename="../src/UI/MainMenu.cpp" line="49"/>
         <source>New Game</source>
         <translation>Новая игра</translation>
     </message>
     <message>
-        <location filename="../src/UI/MainMenu.cpp" line="49"/>
+        <location filename="../src/UI/MainMenu.cpp" line="50"/>
         <source>Find game</source>
         <translation>Найти игру</translation>
     </message>
@@ -786,7 +795,7 @@
         <translation type="obsolete">Чат</translation>
     </message>
     <message>
-        <location filename="../src/UI/MainMenu.cpp" line="50"/>
+        <location filename="../src/UI/MainMenu.cpp" line="51"/>
         <source>Options</source>
         <translation>Настройки</translation>
     </message>
@@ -795,32 +804,32 @@
         <translation type="obsolete">Выход</translation>
     </message>
     <message>
-        <location filename="../src/UI/MainMenu.cpp" line="51"/>
+        <location filename="../src/UI/MainMenu.cpp" line="52"/>
         <source>Wallet</source>
         <translation>Кошелек</translation>
     </message>
     <message>
-        <location filename="../src/UI/MainMenu.cpp" line="256"/>
+        <location filename="../src/UI/MainMenu.cpp" line="269"/>
         <source>Rating: not available</source>
         <translation>Рейтинг: не включен</translation>
     </message>
     <message>
-        <location filename="../src/UI/MainMenu.cpp" line="257"/>
+        <location filename="../src/UI/MainMenu.cpp" line="270"/>
         <source>Rating: </source>
         <translation>Рейтинг: </translation>
     </message>
     <message>
-        <location filename="../src/UI/MainMenu.cpp" line="266"/>
+        <location filename="../src/UI/MainMenu.cpp" line="279"/>
         <source>Balance: </source>
         <translation>Баланс (руб.): </translation>
     </message>
     <message>
-        <location filename="../src/UI/MainMenu.cpp" line="303"/>
+        <location filename="../src/UI/MainMenu.cpp" line="316"/>
         <source>The last game has been finished.</source>
         <translation>Предыдущая игра была завершена</translation>
     </message>
     <message>
-        <location filename="../src/UI/MainMenu.cpp" line="332"/>
+        <location filename="../src/UI/MainMenu.cpp" line="345"/>
         <source>You have an unfinished game. Please finish it.</source>
         <translation>Пожалуйста завершите предыдущую игру.</translation>
     </message>
