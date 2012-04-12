@@ -29,7 +29,8 @@
 
 MainMenu::MainMenu(QObject *parent):
     QGraphicsScene(parent),
-    mChat(NULL)
+    mChat(NULL),
+    mChatWasOpen(false)
 {
     mSplash = addPixmap(Pixmaps::get(PIX_SPLASH));
     mSplash->setZValue(Z_CELLS_LAYER);
@@ -154,10 +155,12 @@ void MainMenu::onChatClicked()
     else if(mChat->getState() == CHAT_CLOSED || mChat->getState() == CHAT_HIDDEN)
     {
         mChat->show();
+        mChatWasOpen = true;
     }
     else
     {
     	mChat->hide();
+    	mChatWasOpen = false;
     }
 }
 
@@ -165,7 +168,18 @@ void MainMenu::onChatClicked()
 void MainMenu::close()
 {
    if(mChat)
+   {
+	   mChatWasOpen = (mChat->getState() == CHAT_OPEN);
        mChat->close();
+   }
+}
+
+void MainMenu::showChatIfWasOpen()
+{
+   if(mChat && mChatWasOpen)
+   {
+       mChat->show();
+   }
 }
 
 
@@ -194,7 +208,7 @@ void MainMenu::onConnectedToHost()
 
         UI::instance()->setPlayerName(PT_ME, login);
 
-	connect(Client::instance(), SIGNAL(registered()), this, SLOT(onAuthorized()));
+        connect(Client::instance(), SIGNAL(registered()), this, SLOT(onAuthorized()));
         connect(Client::instance(), SIGNAL(authorized()), this, SLOT(onAuthorized()));
         connect(Client::instance(), SIGNAL(notAuthorized(const QString&)), this, SLOT(onNotAuthorized(const QString&)));
 
@@ -235,6 +249,7 @@ void MainMenu::onAuthorized()
     {
         mChat = new Chat(MainWindow::instance(), CT_COMMON_CHAT);
         mChat->show();
+        mChatWasOpen = true;
 
         MainWindow::instance()->setMode(MW_NORMAL);
     }
