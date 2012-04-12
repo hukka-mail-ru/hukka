@@ -195,7 +195,7 @@ Chat::History::History(QWidget* parent, ChatType type):
 void Chat::History::mouseReleaseEvent(QMouseEvent * event)
 {
 	Q_UNUSED(event);
-	qDebug() << "Chat::History::mouseReleaseEvent" << MainWindow::instance()->getMode();
+	//qDebug() << "Chat::History::mouseReleaseEvent" << MainWindow::instance()->getMode();
 
  //   if(MainWindow::instance()->getMode() == MW_NORMAL)
  //   {
@@ -276,9 +276,9 @@ void Chat::Userlist::updateTable()
 void Chat::Userlist::mouseReleaseEvent(QMouseEvent * event)
 {
 	Q_UNUSED(event);
-    if(MainWindow::instance()->getMode() == MW_NORMAL &&
+    if(/*MainWindow::instance()->getMode() == MW_NORMAL &&*/
        currentItem() &&
-       currentItem()->text() != UI::instance()->getPlayer(PT_ME).name) // prevent sending message to myseff
+       currentItem()->text() != UI::instance()->getPlayer(PT_ME).name) // prevent sending message to myself
     {
         MainWindow::instance()->showChatMessageDialog(currentItem()->text(), mChatType);
     }
