@@ -1,6 +1,6 @@
 
 #include "Message.h"
-//#include "Log.h"
+#include "Log.h"
 
 using namespace std;
 
@@ -13,19 +13,16 @@ Message Message::Parse(const char* buf)
 	mes.mTextLen = buf[2];
 	mes.mCrc = buf[3];
 
-/*
+	string str(buf);
+
 	Log::Write("Received: " + str);
 	Log::Write("MESSAGE_SIZE: " + to_string(MESSAGE_SIZE));
 
-	string sign = mes.signature;
-	unsigned tel_size =
+	Log::Write(string("mes.signature: ") + mes.mSignature);
+	Log::Write(string("mes.phone_len: ") + to_string(mes.mPhoneLen));
+	Log::Write(string("mes.text_len: ") + to_string(mes.mTextLen));
+	Log::Write(string("mes.crc: ") + to_string(mes.mCrc));
 
-	Log::Write(string("mes.signature: ") + mes.signature);
-	Log::Write(string("mes.phone_len: ") + mes.phone_len);
-	Log::Write(string("mes.text_len: ") + mes.text_len);
-	Log::Write(string("mes.crc: ") + mes.crc);
-
-*/
 	return mes;
 }
 
