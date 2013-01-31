@@ -20,33 +20,22 @@
 #include <string>
 
 #include "Message.h"
+#include "Log.h"
+
 
 using namespace std;
 
 
-string logfile = "/home/hukka/devel/purser/daemon/log.txt";
 
 
-void WriteLog(const string& log)
+Message ReceiveMessage(int client)
 {
-	ofstream file;
-	file.open (logfile.c_str());
-	file << log << endl;
-	file.close();
-}
-
-
-string ReceiveBytes(int client)
-{
-	const int MESSAGE_SIZE = sizeof(Message);
 	char buf[MESSAGE_SIZE] = {'0'};
-
 	recv(client, buf, MESSAGE_SIZE, MSG_WAITALL);
-	string str(buf);
 
-	WriteLog("Received: " + str + ";  MESSAGE_SIZE: " + std::to_string(MESSAGE_SIZE));
+	Message mes = Message::Parse(buf);
 
-	return str;
+	return mes;
 }
 
 
@@ -71,15 +60,14 @@ int Run(int listener)
 		}
 
 		// Get from network
-		string mes = ReceiveBytes(client);
+		Message mes = ReceiveMessage(client);
 
-		SendBytes(client, "ECHO: " + mes + "\n");
-		SendBytes(client, "SUB: " + mes.substr(0, 3) + "\n");
+		SendBytes(client, "Got the message\n");
 
-	    if (mes.substr(0, 3) == "GET")
+/*	    if (mes.substr(0, 3) == "GET")
 		{
 			SendBytes(client, "Reply to GET command \n");
-		}
+		}*/
 
 		close(client);
 	}
@@ -106,7 +94,7 @@ int main(int argc, char** argv)
 		}
 		if (arg == "--logfile" && i+1 < argc)
 		{
-			logfile = argv[i+1];
+			Log::SetLogFile(argv[i+1]);
 		}
 		else if (arg == "--port" && i+1 < argc)
 		{
@@ -166,6 +154,7 @@ int main(int argc, char** argv)
 
 
     // DAEMONIZE
+	Log::Clear();
 
     // make a child
     int pid = fork();
