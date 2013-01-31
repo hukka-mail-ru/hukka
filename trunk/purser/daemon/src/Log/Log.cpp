@@ -23,6 +23,21 @@ void Log::Write(const string& log)
 	file.close();
 }
 
+void Log::WriteBytes(const string& log)
+{
+	fstream file;
+	ios_base::openmode mode = ios_base::app | ios_base::out;
+	file.open (mLogfile, mode);
+
+	for(char c: log)
+	{
+		file << toascii(c) << " ";
+	}
+	file << endl;
+
+	file.close();
+}
+
 
 void Log::Clear()
 {

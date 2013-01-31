@@ -39,9 +39,11 @@ Message ReceiveMessage(int client)
 }
 
 
-void SendBytes(int client, const string& mes)
+void SendMessage(int client, const Message& mes)
 {
-	send(client, mes.c_str(), mes.length(), 0);
+	string str = mes.Serialize();
+
+	send(client, str.c_str(), str.length(), 0);
 }
 
 
@@ -62,7 +64,10 @@ int Run(int listener)
 		// Get from network
 		Message mes = ReceiveMessage(client);
 
-		SendBytes(client, "Got the message\n");
+		Message reply;
+		reply.setPhone("+79119089209");
+		reply.setText("This is reply");
+		SendMessage(client, reply);
 
 /*	    if (mes.substr(0, 3) == "GET")
 		{

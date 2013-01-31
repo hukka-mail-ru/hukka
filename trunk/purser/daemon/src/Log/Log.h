@@ -13,9 +13,11 @@
 class Log {
 public:
 
-	static void SetLogFile(const std::string& logfile);
 	static void Write(const std::string& log);
+	static void WriteBytes(const std::string& log);
+
 	static void Clear();
+	static void SetLogFile(const std::string& logfile);
 
 private:
 
