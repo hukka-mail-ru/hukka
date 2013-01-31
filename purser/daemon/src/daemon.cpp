@@ -66,7 +66,7 @@ int Run(int listener)
 
 		Message reply;
 		reply.setPhone("+79119089209");
-		reply.setText("This is reply");
+		reply.setText("This is a normal reply");
 		SendMessage(client, reply);
 
 /*	    if (mes.substr(0, 3) == "GET")
