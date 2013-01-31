@@ -22,7 +22,7 @@
 
 #include "Socket.h"
 #include "Log.h"
-
+#include "Message.h"
 
 using namespace std;
 
