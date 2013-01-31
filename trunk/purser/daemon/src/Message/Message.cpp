@@ -40,7 +40,7 @@ string Message::Serialize() const
 	str += mPhone;
 	str += string(MAX_PHONE_LEN - mPhone.length(), '\0');
 	str += mText;
-	str += string(MAX_TEXT_LEN - mPhone.length(), '\0');
+	str += string(MAX_TEXT_LEN - mText.length(), '\0');
 
 	Log::Write("==============");
 	Log::Write("Phone: " + mPhone + "; Len " + to_string(mPhone.length()));
