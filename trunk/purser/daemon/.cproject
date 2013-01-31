@@ -30,9 +30,9 @@
 									<listOptionValue builtIn="false" value="__GXX_EXPERIMENTAL_CXX0X__=1"/>
 								</option>
 								<option id="gnu.cpp.compiler.option.include.paths.851098166" name="Include paths (-I)" superClass="gnu.cpp.compiler.option.include.paths" valueType="includePath">
-									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/protocol/src/Socket}&quot;"/>
-									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/protocol/src/Message}&quot;"/>
-									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/protocol/src/Log}&quot;"/>
+									<listOptionValue builtIn="false" value="&quot;${ProjDirPath}/../protocol/src/Socket&quot;"/>
+									<listOptionValue builtIn="false" value="&quot;${ProjDirPath}/../protocol/src/Log&quot;"/>
+									<listOptionValue builtIn="false" value="&quot;${ProjDirPath}/../protocol/src/Message&quot;"/>
 								</option>
 								<inputType id="cdt.managedbuild.tool.gnu.cpp.compiler.input.756542531" superClass="cdt.managedbuild.tool.gnu.cpp.compiler.input"/>
 							</tool>
@@ -44,10 +44,10 @@
 							</tool>
 							<tool id="cdt.managedbuild.tool.gnu.c.linker.exe.debug.340027686" name="GCC C Linker" superClass="cdt.managedbuild.tool.gnu.c.linker.exe.debug"/>
 							<tool id="cdt.managedbuild.tool.gnu.cpp.linker.exe.debug.1005570404" name="GCC C++ Linker" superClass="cdt.managedbuild.tool.gnu.cpp.linker.exe.debug">
-								<option id="gnu.cpp.link.option.paths.586902834" superClass="gnu.cpp.link.option.paths" valueType="libPaths">
+								<option id="gnu.cpp.link.option.paths.586902834" name="Library search path (-L)" superClass="gnu.cpp.link.option.paths" valueType="libPaths">
 									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/protocol/Debug}&quot;"/>
 								</option>
-								<option id="gnu.cpp.link.option.libs.384078169" superClass="gnu.cpp.link.option.libs" valueType="libs">
+								<option id="gnu.cpp.link.option.libs.384078169" name="Libraries (-l)" superClass="gnu.cpp.link.option.libs" valueType="libs">
 									<listOptionValue builtIn="false" value="protocol"/>
 								</option>
 								<inputType id="cdt.managedbuild.tool.gnu.cpp.linker.input.1367867938" superClass="cdt.managedbuild.tool.gnu.cpp.linker.input">
