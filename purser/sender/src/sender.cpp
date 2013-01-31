@@ -10,9 +10,12 @@
 #include <errno.h>
 #include <string.h>
 #include <stdlib.h>
+#include <sys/types.h>
 #include <sys/socket.h>
 #include <sys/stat.h>
 #include <arpa/inet.h>
+#include <netdb.h>
+
 
 #include <iostream>
 #include <sstream>
@@ -22,12 +25,15 @@
 #include <stdlib.h>
 
 #include "Socket.h"
+#include "Log.h"
 
 using namespace std;
 
 
 int main(int argc, char** argv)
 {
+	cout << "hello" << endl;
+
 	// READ COMMAND LINE
     int port = 1234;
 
@@ -43,51 +49,52 @@ int main(int argc, char** argv)
 
 
 	// PREPARE SOCKET
-    int listener = socket(AF_INET, SOCK_STREAM, 0);
+	 struct hostent     *he;
+	 struct sockaddr_in  server;
+	 int                 sockfd;
 
-	if (listener < 0) {
-		std::cout << "Error socket create\n";
-		cout << strerror(errno) << "\n";
-		return 1;
-	}
+	 sockfd=socket(AF_INET,SOCK_STREAM,0);
+	  if (sockfd==-1)
+	    perror("Can't Create socket");
 
-	struct sockaddr_in addr;
-	addr.sin_family = AF_INET;
-	addr.sin_port = htons(port);
-	addr.sin_addr.s_addr = htonl(INADDR_ANY);
+	  cout << "socket ready" << endl;
 
-	const int MAX_BIND_ATTEMPTS = 100;
-	bool please_wait = true;
+	/* resolve localhost to an IP (should be 127.0.0.1) */
+	  if ((he = gethostbyname("localhost")) == NULL) {
+	    puts("error resolving hostname..");
+	    exit(1);
+	  }
 
-	for(int i=1; i<=MAX_BIND_ATTEMPTS; i++)
-	{
-		int res = bind(listener, (struct sockaddr*)&addr, sizeof(addr));
-		if (res < 0)
-		{
-			if(errno == EADDRINUSE && i < MAX_BIND_ATTEMPTS)
-			{
-				if(please_wait)
-				{
-					cout << "Binding to socket, please wait..." << endl;
-					please_wait = false;
-				}
+	  cout << "gethostbyname" << endl;
 
-				sleep(1);
-				continue;
-			}
-			else
-			{
-				cout << "Error socket bind\n";
-				cout << strerror(errno) << "\n";
-				return 1;
-			}
-		}
-		else
-		{
-			break;
-		}
-	}
+	/*
+	 * copy the network address part of the structure to the
+	 * sockaddr_in structure which is passed to connect()
+	 */
+	  memcpy(&server.sin_addr, he->h_addr_list[0], he->h_length);
+	  server.sin_family = AF_INET;
+	  server.sin_port = htons(1234);
 
-	cout << "Ready: port " << port << endl;
+	/* connect */
+	  if (connect(sockfd, (struct sockaddr *)&server, sizeof(server)))
+	  {
+	    puts("error connecting..");
+	    exit(1);
+	  }
+
+	    cout << "connected" << endl;
+
+	    Log::Clear();
+	    Log::SetLogFile("/home/hukka/devel/purser/sender/Debug/sender_log.txt");
+
+	    cout << "done" << endl;
+
+	    Message mes;
+	    mes.setPhone("+79115361051");
+	    mes.setText("Hello from home");
+
+	    Socket::SendMessage(sockfd, mes);
+
+
 
 }
