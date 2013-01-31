@@ -16,7 +16,8 @@ Message Message::Parse(const char* buf)
 
 	string str(buf);
 
-	Log::Write("Received: " + str);
+	Log::Write("======= INCOMING  =======");
+	//Log::Write("Received: " + str);
 	Log::Write("MESSAGE_SIZE: " + to_string(MESSAGE_SIZE));
 
 	Log::Write(string("mes.signature: ") + signature);
@@ -42,7 +43,7 @@ string Message::Serialize() const
 	str += mText;
 	str += string(MAX_TEXT_LEN - mText.length(), '\0');
 
-	Log::Write("==============");
+	Log::Write("======= OUTGOING  =======");
 	Log::Write("Phone: " + mPhone + "; Len " + to_string(mPhone.length()));
 	Log::Write("Text: " + mText + "; Len " + to_string(mText.length()));
 	Log::Write("CRC: " + to_string(toascii(crc)));
