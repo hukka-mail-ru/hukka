@@ -19,32 +19,13 @@
 #include <fstream>
 #include <string>
 
-#include "Message.h"
+
+#include "Socket.h"
 #include "Log.h"
 
 
 using namespace std;
 
-
-
-
-Message ReceiveMessage(int client)
-{
-	char buf[MESSAGE_SIZE] = {'0'};
-	recv(client, buf, MESSAGE_SIZE, MSG_WAITALL);
-
-	Message mes = Message::Parse(buf);
-
-	return mes;
-}
-
-
-void SendMessage(int client, const Message& mes)
-{
-	string str = mes.Serialize();
-
-	send(client, str.c_str(), str.length(), 0);
-}
 
 
 // LISTEN
@@ -62,12 +43,12 @@ int Run(int listener)
 		}
 
 		// Get from network
-		Message mes = ReceiveMessage(client);
+		Message mes = Socket::ReceiveMessage(client);
 
 		Message reply;
 		reply.setPhone("+79119089209");
 		reply.setText("This is a normal reply");
-		SendMessage(client, reply);
+		Socket::SendMessage(client, reply);
 
 /*	    if (mes.substr(0, 3) == "GET")
 		{
