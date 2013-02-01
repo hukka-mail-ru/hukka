@@ -15,7 +15,7 @@ void Message::Parse(const char* buf)
 {
 	char signature = buf[0];
 
-	if(signature != PROTOCOL_SIGNATURE+1)
+	if(signature != PROTOCOL_SIGNATURE)
 	{
 		throw ExceptionProtocolError("Wrong protocol signature");
 	}
