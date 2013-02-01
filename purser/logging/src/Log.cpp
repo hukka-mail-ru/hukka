@@ -11,7 +11,7 @@
 
 using namespace std;
 
-string Log::mLogfile = "/home/hukka/devel/purser/daemon/log.txt";
+string Log::mLogfile = "/var/log/log.txt";
 
 
 void Log::Write(const string& log)
