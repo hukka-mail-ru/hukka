@@ -20,6 +20,7 @@
 
 #include "Socket.h"
 #include "Log.h"
+#include "MyException.h"
 
 
 using namespace std;
@@ -33,7 +34,7 @@ void Socket::ConnectToHost(const string& host, unsigned port)
 	mSockfd = socket(AF_INET, SOCK_STREAM, 0);
 	if (mSockfd==-1)
 	{
-		perror("Can't Create socket");
+		throw ExceptionSocketError("Can't create socket", host, port);
 	}
 
 	cout << "socket ready" << endl;
@@ -41,8 +42,7 @@ void Socket::ConnectToHost(const string& host, unsigned port)
 	/* resolve host */
 	if ((he = gethostbyname(host.c_str())) == NULL)
 	{
-		puts("error resolving hostname..");
-		exit(1);
+		throw ExceptionSocketError("Error resolving hostname", host, port);
 	}
 
 	cout << "gethostbyname" << endl;
@@ -58,8 +58,7 @@ void Socket::ConnectToHost(const string& host, unsigned port)
 	/* connect */
 	if (connect(mSockfd, (struct sockaddr *)&server, sizeof(server)))
 	{
-		puts("error connecting..");
-		exit(1);
+		throw ExceptionSocketError("Connect error", host, port);
 	}
 
 	cout << "connected" << endl;
@@ -74,12 +73,11 @@ void Socket::Listen(int port)
 {
 	// PREPARE SOCKET
     mListener = socket(AF_INET, SOCK_STREAM, 0);
+    mPort = port;
 
 	if (mListener < 0)
 	{
-		//throw
-		Log::Write("Error socket create");
-		return;
+		throw ExceptionSocketError("Erorr creating socket", "-", port);
 	}
 
 	struct sockaddr_in addr;
@@ -108,10 +106,7 @@ void Socket::Listen(int port)
 			}
 			else
 			{
-				// throw
-				Log::Write("Error socket bind");
-				Log::Write(strerror(errno));
-				return;
+				throw ExceptionSocketError("Error binding socket", "-", port);
 			}
 		}
 		else
@@ -131,7 +126,7 @@ void Socket::Open()
 	if (mSockfd < 0)
 	{
 		// throw exception
-		Log::Write("Error socket accept");
+		throw ExceptionSocketError("Error opening socket", "-", mPort);
 	}
 }
 

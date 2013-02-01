@@ -33,6 +33,7 @@
 									<listOptionValue builtIn="false" value="&quot;${ProjDirPath}/../protocol/src/Log&quot;"/>
 									<listOptionValue builtIn="false" value="&quot;${ProjDirPath}/../protocol/src/Message&quot;"/>
 									<listOptionValue builtIn="false" value="&quot;${ProjDirPath}/../protocol/src/Socket&quot;"/>
+									<listOptionValue builtIn="false" value="&quot;${ProjDirPath}/../protocol/src/MyException&quot;"/>
 								</option>
 								<inputType id="cdt.managedbuild.tool.gnu.cpp.compiler.input.756542531" superClass="cdt.managedbuild.tool.gnu.cpp.compiler.input"/>
 							</tool>
