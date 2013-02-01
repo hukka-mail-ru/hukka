@@ -123,10 +123,17 @@ void Socket::Open()
 
 Message Socket::ReceiveMessage() const
 {
+	Log() << " === INCOMING === \n";
+
 	char buf[MESSAGE_SIZE] = {'0'};
 	recv(mSockfd, buf, MESSAGE_SIZE, MSG_WAITALL);
 
-	Message mes = Message::Parse(buf);
+	Message mes(buf);
+
+	Log() << "MESSAGE_SIZE: " << MESSAGE_SIZE << "\n";
+	Log() << "mes.phone: "     << mes.GetPhone() << "\n";
+	Log() << "mes.text: "      << mes.GetText() << "\n";
+
 
 	return mes;
 }
@@ -134,9 +141,16 @@ Message Socket::ReceiveMessage() const
 
 void Socket::SendMessage(const Message& mes) const
 {
+	Log() << "======= OUTGOING  =======" << "\n";
+
 	string str = mes.Serialize();
 
 	send(mSockfd, str.c_str(), str.length(), 0);
+
+	Log() << "Phone: " << mes.GetPhone() << "; Len " << mes.GetPhone().length() << "\n";
+	Log() << "Text: "  << mes.GetText() << "; Len " << mes.GetText().length() << "\n";
+	Log::WriteBytes(str);
+	Log() << "Len: "   << str.length() << "\n";
 }
 
 void Socket::Close() const

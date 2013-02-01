@@ -29,9 +29,9 @@ using namespace std;
 // LISTEN
 int Run(Socket& socket)
 {
-	try
+	while (true)
 	{
-		while (true)
+		try
 		{
 			socket.Open();
 
@@ -45,14 +45,23 @@ int Run(Socket& socket)
 
 			socket.Close();
 		}
+		catch (MyException& e)
+		{
+			Log() << e.what() << "\n";
+		}
+	}
 
+	// STOPPING
+	try
+	{
 		socket.StopListen();
 	}
 	catch (MyException& e)
 	{
-		Log::Write(e.what());
+		Log() << e.what() << "\n";
 		return -1;
 	}
+
 
 	return 0;
 }

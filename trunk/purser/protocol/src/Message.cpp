@@ -2,40 +2,44 @@
 
 #include "Message.h"
 #include "Log.h"
+#include "MyException.h"
 
 using namespace std;
 
-Message Message::Parse(const char* buf)
+Message::Message(const char* buf)
 {
-	Message mes;
-	char signature = buf[0];
-	mes.mPhoneLen = buf[1];
-	mes.mTextLen = buf[2];
-	char crc = buf[3];
+	Parse(buf);
+}
 
-	for(unsigned i = PHONE_OFFSET; i < PHONE_OFFSET + mes.mPhoneLen; i++)
+void Message::Parse(const char* buf)
+{
+	char signature = buf[0];
+
+	if(signature != PROTOCOL_SIGNATURE+1)
 	{
-	   mes.mPhone += buf[i];
+		throw ExceptionProtocolError("Wrong protocol signature");
 	}
 
-	for(unsigned i = TEXT_OFFSET; i < TEXT_OFFSET + mes.mTextLen; i++)
+	mPhoneLen = buf[1];
+	mTextLen = buf[2];
+	char crc = buf[3];
+
+	for(unsigned i = PHONE_OFFSET; i < PHONE_OFFSET + mPhoneLen; i++)
 	{
-	   mes.mText += buf[i];
+	   mPhone += buf[i];
+	}
+
+	for(unsigned i = TEXT_OFFSET; i < TEXT_OFFSET + mTextLen; i++)
+	{
+	   mText += buf[i];
+	}
+
+	if(crc != GetCRC(mText))
+	{
+		throw ExceptionProtocolError("Wrong CRC");
 	}
 
 	string str(buf);
-
-	Log() << " === INCOMING === \n";
-	Log() << "MESSAGE_SIZE: " << MESSAGE_SIZE << "\n";
-
-	Log() << "mes.sign ature: " << signature << "\n";
-	Log() << "mes.phone_len: " << mes.mPhoneLen << "\n";
-	Log() << "mes.text_len: " << mes.mTextLen << "\n";
-	Log() << "mes.crc: " << toascii(crc) << "\n";
-	Log() << "mes.phone: " << mes.mPhone << "\n";
-	Log() << "mes.text: " << mes.mText << "\n";
-
-	return mes;
 }
 
 string Message::Serialize() const
@@ -52,13 +56,6 @@ string Message::Serialize() const
 	str += string(MAX_PHONE_LEN - mPhone.length(), '\0');
 	str += mText;
 	str += string(MAX_TEXT_LEN - mText.length(), '\0');
-
-	Log() << "======= OUTGOING  =======" << "\n";
-	Log() << "Phone: " << mPhone << "; Len " << mPhone.length() << "\n";
-	Log() << "Text: " << mText << "; Len " << mText.length() << "\n";
-	Log() << "CRC: " << toascii(crc) << "\n";
-	Log::WriteBytes(str);
-	Log() << "Len: " + to_string(str.length()) << "\n";
 
 	return str;
 }
