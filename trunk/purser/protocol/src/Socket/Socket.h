@@ -34,6 +34,7 @@ private:
 
 	int mSockfd;
 	int mListener;
+	int mPort; // just for logs
 };
 
 #endif /* CLIENT_H_ */

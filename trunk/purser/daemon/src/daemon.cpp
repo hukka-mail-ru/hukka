@@ -21,6 +21,7 @@
 #include "Socket.h"
 #include "Log.h"
 #include "Message.h"
+#include "MyException.h"
 
 using namespace std;
 
@@ -28,28 +29,36 @@ using namespace std;
 // LISTEN
 int Run(Socket& socket)
 {
-	while (true)
+	//Log::Write("RUN");
+	try
 	{
-		socket.Open();
-
-		// Get from network
-		Message mes = socket.ReceiveMessage();
-
-		Message reply;
-		reply.setPhone("+79119089209");
-		reply.setText("This is a normal reply");
-		socket.SendMessage(reply);
-
-/*	    if (mes.substr(0, 3) == "GET")
+		while (true)
 		{
-			SendBytes(client, "Reply to GET command \n");
-		}*/
+			socket.Open();
 
-		socket.Close();
+			// Get from network
+			Message mes = socket.ReceiveMessage();
+
+			Message reply;
+			reply.setPhone("+79119089209");
+			reply.setText("This is a normal reply");
+			socket.SendMessage(reply);
+
+	/*	    if (mes.substr(0, 3) == "GET")
+			{
+				SendBytes(client, "Reply to GET command \n");
+			}*/
+
+			socket.Close();
+		}
+
+		socket.StopListen();
 	}
-
-	socket.StopListen();
-
+	catch (MyException& e)
+	{
+		Log::Write(e.what());
+		return -1;
+	}
 
 	return 0;
 }
@@ -79,66 +88,77 @@ int main(int argc, char** argv)
 		}
 	}
 
+
 	Socket socket;
-	socket.Listen(port);
+	try
+	{
+		socket.Listen(port);
+	}
+	catch (MyException& e)
+	{
+		cout << e.what() << endl;
+		return -1;
+	}
 
 
 	cout << "Ready: port " << port << endl;
 
 
 
-    // DAEMONIZE
+	// DAEMONIZE
 	Log::Clear();
 
-    // make a child
-    int pid = fork();
+	// make a child
+	int pid = fork();
 
-    if (pid == -1)
-    {
-    	cout << "Error: Start Daemon failed (%s)\n" << strerror(errno);
-        return -1;
-    }
-    else if (!pid) // child
-    {
-    	// rights for the files
-        umask(0);
+	if (pid == -1)
+	{
+		cout << "Error: Start Daemon failed (%s)\n" << strerror(errno);
+		return -1;
+	}
+	else if (!pid) // child
+	{
+		// rights for the files
+		umask(0);
 
-        // create a new session
-        setsid();
+		// create a new session
+		setsid();
 
-        // change dir to root
-        chdir("/");
+		// change dir to root
+		chdir("/");
 
-        /* Ensure only one copy */
-        int pidFilehandle = open(pidfile.c_str(), O_RDWR|O_CREAT, 0600);
-        if (pidFilehandle == -1 )
-        {
-            cout << "Could not open PID file " << pidfile <<", exit" << endl;
-            return -1;
-        }
+		/* Ensure only one copy */
+		int pidFilehandle = open(pidfile.c_str(), O_RDWR|O_CREAT, 0600);
+		if (pidFilehandle == -1 )
+		{
+			cout << "Could not open PID file " << pidfile <<", exit" << endl;
+			return -1;
+		}
 
 		/* Try to lock file */
 		if (lockf(pidFilehandle,F_TLOCK,0) == -1)
 		{
-		    cout << "Could not lock PID file " << pidfile <<", exit" << endl;
-		    return -1;
+			cout << "Could not lock PID file " << pidfile <<", exit" << endl;
+			return -1;
 		}
 
 		// write PID to file
 		char str[10];
-        sprintf(str,"%d\n", getpid());
-        write(pidFilehandle, str, strlen(str));
+		sprintf(str,"%d\n", getpid());
+		write(pidFilehandle, str, strlen(str));
 
-        // close descriptors
-        close(STDIN_FILENO);
-        close(STDOUT_FILENO);
-        close(STDERR_FILENO);
+		// close descriptors
+		close(STDIN_FILENO);
+		close(STDOUT_FILENO);
+		close(STDERR_FILENO);
 
-        // daemon loop
-        return Run(socket);
-    }
-    else // parent: just ends
-    {
-        return 0;
-    }
+		// daemon loop
+		return Run(socket);
+	}
+	else // parent: just ends
+	{
+		return 0;
+	}
+
+
 }
