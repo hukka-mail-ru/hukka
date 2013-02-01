@@ -13,8 +13,24 @@
 
 class Socket {
 public:
-	static Message ReceiveMessage(int client);
-	static void SendMessage(int client, const Message& mes);
+
+	void ConnectToHost(const std::string& host, unsigned port);
+
+	void Listen(int port);
+	void StopListen() const;
+
+	void OpenAndWaitForConnection();
+	void Close() const;
+
+	Message ReceiveMessage() const;
+	void SendMessage(const Message& mes) const;
+
+
+
+private:
+
+	int mSockfd;
+	int mListener;
 };
 
 #endif /* CLIENT_H_ */

@@ -30,9 +30,9 @@
 									<listOptionValue builtIn="false" value="__GXX_EXPERIMENTAL_CXX0X__=1"/>
 								</option>
 								<option id="gnu.cpp.compiler.option.include.paths.851098166" name="Include paths (-I)" superClass="gnu.cpp.compiler.option.include.paths" valueType="includePath">
-									<listOptionValue builtIn="false" value="&quot;${ProjDirPath}/../protocol/src/Socket&quot;"/>
 									<listOptionValue builtIn="false" value="&quot;${ProjDirPath}/../protocol/src/Log&quot;"/>
 									<listOptionValue builtIn="false" value="&quot;${ProjDirPath}/../protocol/src/Message&quot;"/>
+									<listOptionValue builtIn="false" value="&quot;${ProjDirPath}/../protocol/src/Socket&quot;"/>
 								</option>
 								<inputType id="cdt.managedbuild.tool.gnu.cpp.compiler.input.756542531" superClass="cdt.managedbuild.tool.gnu.cpp.compiler.input"/>
 							</tool>
