@@ -60,7 +60,7 @@ int Run(Socket& socket)
 
 int main(int argc, char** argv)
 {
-	Log::SetLogFile("/home/hukka/devel/purser/log_daemon.txt");
+	Log::SetLogFile("/home/hukka/devel/purser/daemon/log_daemon.txt");
 
 	// READ COMMAND LINE
     string pidfile = "/var/run/daemon.pid";
@@ -102,7 +102,6 @@ int main(int argc, char** argv)
 
 
 	// DAEMONIZE
-	Log::Clear();
 
 	// make a child
 	int pid = fork();

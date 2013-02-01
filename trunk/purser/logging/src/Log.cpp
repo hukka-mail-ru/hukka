@@ -5,6 +5,7 @@
  *      Author: hukka
  */
 #include <fstream>
+#include <iostream>
 #include <stdio.h>
 
 #include "Log.h"
@@ -19,7 +20,7 @@ void Log::Write(const string& log)
 	fstream file;
 	ios_base::openmode mode = ios_base::app | ios_base::out;
 	file.open (mLogfile, mode);
-	file << log << endl;
+	file << log;
 	file.close();
 }
 
@@ -41,14 +42,14 @@ void Log::WriteBytes(const string& log)
 
 void Log::Clear()
 {
-	if(remove(mLogfile.c_str()) != 0)
-	{
-	    Write("Error deleting file: " + mLogfile);
-	}
+	remove(mLogfile.c_str());
 }
 
 
 void Log::SetLogFile(const std::string& logfile)
 {
 	mLogfile = logfile;
+	cout << "Log: " << logfile << endl;
+
+	Clear();
 }

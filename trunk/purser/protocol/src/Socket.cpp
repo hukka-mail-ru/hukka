@@ -58,9 +58,6 @@ void Socket::ConnectToHost(const string& host, unsigned port)
 	}
 
 	cout << "connected to host" << endl;
-
-	Log::Clear();
-	Log::SetLogFile("/home/hukka/devel/purser/sender/Debug/sender_log.txt");
 }
 
 void Socket::Listen(int port)
