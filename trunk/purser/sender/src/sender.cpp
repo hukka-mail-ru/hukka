@@ -21,6 +21,7 @@ using namespace std;
 
 int main(int argc, char** argv)
 {
+
 	cout << "hello" << endl;
 
 	// READ COMMAND LINE
@@ -38,13 +39,16 @@ int main(int argc, char** argv)
 
 	try
 	{
+		Log::SetLogFile("/home/hukka/devel/purser/log_sender.txt");
+		Log::Clear();
+
 		Socket socket;
 		socket.ConnectToHost("localhost", port);
 
 
 		Message mes;
-		mes.setPhone("+79115361051");
-		mes.setText("Hello from home");
+		mes.setPhone("+79111112233867867");
+		mes.setText("Hello from sender");
 
 		socket.SendMessage(mes);
 	}
