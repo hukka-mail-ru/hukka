@@ -14,17 +14,20 @@
 class Socket {
 public:
 
+	// client
 	void ConnectToHost(const std::string& host, unsigned port);
 
+	// server
 	void Listen(int port);
 	void StopListen() const;
 
-	void OpenAndWaitForConnection();
+	// server
+	void Open();
 	void Close() const;
 
+	// both
 	Message ReceiveMessage() const;
 	void SendMessage(const Message& mes) const;
-
 
 
 private:

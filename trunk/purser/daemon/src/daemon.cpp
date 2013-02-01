@@ -10,9 +10,7 @@
 #include <errno.h>
 #include <string.h>
 #include <stdlib.h>
-#include <sys/socket.h>
-#include <sys/stat.h>
-#include <arpa/inet.h>
+#include <sys/stat.h> // umask
 
 #include <iostream>
 #include <sstream>
@@ -32,7 +30,7 @@ int Run(Socket& socket)
 {
 	while (true)
 	{
-		socket.OpenAndWaitForConnection();
+		socket.Open();
 
 		// Get from network
 		Message mes = socket.ReceiveMessage();
