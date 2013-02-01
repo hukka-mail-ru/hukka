@@ -52,4 +52,12 @@ public:
 };
 
 
+class ExceptionProtocolError: public MyException
+{
+public:
+	ExceptionProtocolError(const std::string& what):
+		MyException(MyException()
+		    << what) {}
+};
+
 #endif /* EXCEPTION_H_ */

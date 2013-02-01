@@ -26,18 +26,20 @@ class Message
 {
 public:
 
-	static Message Parse(const char* buf);
+	Message() {}
+	Message(const char* buf);
 
 	std::string Serialize() const;
 
-	std::string getPhone() const { return mPhone; }
-	std::string getText() const { return mText; }
+	std::string GetPhone() const { return mPhone; }
+	std::string GetText() const { return mText; }
 
-	void setPhone(const std::string& phone) { mPhone = phone; }
-	void setText(const std::string& text) { mText = text; }
+	void SetPhone(const std::string& phone) { mPhone = phone; }
+	void SetText(const std::string& text) { mText = text; }
 
 private:
 
+	void Parse(const char* buf);
 	char GetCRC(const std::string& str) const;
 
 	unsigned mPhoneLen;
