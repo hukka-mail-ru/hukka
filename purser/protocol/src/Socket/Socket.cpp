@@ -124,7 +124,7 @@ void Socket::Listen(int port)
 }
 
 
-void Socket::OpenAndWaitForConnection()
+void Socket::Open()
 {
 	mSockfd = accept(mListener, NULL, NULL);
 
