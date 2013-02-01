@@ -29,7 +29,6 @@ using namespace std;
 // LISTEN
 int Run(Socket& socket)
 {
-	//Log::Write("RUN");
 	try
 	{
 		while (true)
@@ -61,7 +60,7 @@ int Run(Socket& socket)
 
 int main(int argc, char** argv)
 {
-	Log::SetLogFile("/home/hukka/devel/purser/daemon/log.txt");
+	Log::SetLogFile("/home/hukka/devel/purser/log_daemon.txt");
 
 	// READ COMMAND LINE
     string pidfile = "/var/run/daemon.pid";

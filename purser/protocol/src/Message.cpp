@@ -7,23 +7,33 @@ using namespace std;
 
 Message Message::Parse(const char* buf)
 {
-
 	Message mes;
 	char signature = buf[0];
 	mes.mPhoneLen = buf[1];
 	mes.mTextLen = buf[2];
 	char crc = buf[3];
 
+	for(unsigned i = PHONE_OFFSET; i < PHONE_OFFSET + mes.mPhoneLen; i++)
+	{
+	   mes.mPhone += buf[i];
+	}
+
+	for(unsigned i = TEXT_OFFSET; i < TEXT_OFFSET + mes.mTextLen; i++)
+	{
+	   mes.mText += buf[i];
+	}
+
 	string str(buf);
 
 	Log::Write("======= INCOMING  =======");
-	//Log::Write("Received: " + str);
 	Log::Write("MESSAGE_SIZE: " + to_string(MESSAGE_SIZE));
 
 	Log::Write(string("mes.signature: ") + signature);
 	Log::Write(string("mes.phone_len: ") + to_string(mes.mPhoneLen));
 	Log::Write(string("mes.text_len: ") + to_string(mes.mTextLen));
 	Log::Write(string("mes.crc: ") + to_string(crc));
+	Log::Write(string("mes.phone: ") + mes.mPhone);
+	Log::Write(string("mes.text: ") + mes.mText);
 
 	return mes;
 }
