@@ -27,38 +27,31 @@
 using namespace std;
 
 
-
 // LISTEN
-int Run(int listener)
+int Run(Socket& socket)
 {
-	listen(listener, 1);
-
 	while (true)
 	{
-		int client = accept(listener, NULL, NULL);
-
-		if (client < 0) {
-			std::cout << "Error socket accept\n";
-			return 1;
-		}
+		socket.OpenAndWaitForConnection();
 
 		// Get from network
-		Message mes = Socket::ReceiveMessage(client);
+		Message mes = socket.ReceiveMessage();
 
 		Message reply;
 		reply.setPhone("+79119089209");
 		reply.setText("This is a normal reply");
-		Socket::SendMessage(client, reply);
+		socket.SendMessage(reply);
 
 /*	    if (mes.substr(0, 3) == "GET")
 		{
 			SendBytes(client, "Reply to GET command \n");
 		}*/
 
-		close(client);
+		socket.Close();
 	}
 
-	close(listener);
+	socket.StopListen();
+
 
 	return 0;
 }
@@ -88,52 +81,9 @@ int main(int argc, char** argv)
 		}
 	}
 
+	Socket socket;
+	socket.Listen(port);
 
-	// PREPARE SOCKET
-   int listener = socket(AF_INET, SOCK_STREAM, 0);
-
-	if (listener < 0) {
-		std::cout << "Error socket create\n";
-		cout << strerror(errno) << "\n";
-		return 1;
-	}
-
-	struct sockaddr_in addr;
-	addr.sin_family = AF_INET;
-	addr.sin_port = htons(port);
-	addr.sin_addr.s_addr = htonl(INADDR_ANY);
-
-	const int MAX_BIND_ATTEMPTS = 100;
-	bool please_wait = true;
-
-	for(int i=1; i<=MAX_BIND_ATTEMPTS; i++)
-	{
-		int res = bind(listener, (struct sockaddr*)&addr, sizeof(addr));
-		if (res < 0)
-		{
-			if(errno == EADDRINUSE && i < MAX_BIND_ATTEMPTS)
-			{
-				if(please_wait)
-				{
-					cout << "Binding to socket, please wait..." << endl;
-					please_wait = false;
-				}
-
-				sleep(1);
-				continue;
-			}
-			else
-			{
-				cout << "Error socket bind\n";
-				cout << strerror(errno) << "\n";
-				return 1;
-			}
-		}
-		else
-		{
-			break;
-		}
-	}
 
 	cout << "Ready: port " << port << endl;
 
@@ -187,7 +137,7 @@ int main(int argc, char** argv)
         close(STDERR_FILENO);
 
         // daemon loop
-        return Run(listener);
+        return Run(socket);
     }
     else // parent: just ends
     {
