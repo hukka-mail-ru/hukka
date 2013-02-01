@@ -25,15 +25,15 @@ Message Message::Parse(const char* buf)
 
 	string str(buf);
 
-	Log::Write("======= INCOMING  =======");
-	Log::Write("MESSAGE_SIZE: " + to_string(MESSAGE_SIZE));
+	Log() << " === INCOMING === \n";
+	Log() << "MESSAGE_SIZE: " << MESSAGE_SIZE << "\n";
 
-	Log::Write(string("mes.signature: ") + signature);
-	Log::Write(string("mes.phone_len: ") + to_string(mes.mPhoneLen));
-	Log::Write(string("mes.text_len: ") + to_string(mes.mTextLen));
-	Log::Write(string("mes.crc: ") + to_string(crc));
-	Log::Write(string("mes.phone: ") + mes.mPhone);
-	Log::Write(string("mes.text: ") + mes.mText);
+	Log() << "mes.sign ature: " << signature << "\n";
+	Log() << "mes.phone_len: " << mes.mPhoneLen << "\n";
+	Log() << "mes.text_len: " << mes.mTextLen << "\n";
+	Log() << "mes.crc: " << toascii(crc) << "\n";
+	Log() << "mes.phone: " << mes.mPhone << "\n";
+	Log() << "mes.text: " << mes.mText << "\n";
 
 	return mes;
 }
@@ -53,12 +53,12 @@ string Message::Serialize() const
 	str += mText;
 	str += string(MAX_TEXT_LEN - mText.length(), '\0');
 
-	Log::Write("======= OUTGOING  =======");
-	Log::Write("Phone: " + mPhone + "; Len " + to_string(mPhone.length()));
-	Log::Write("Text: " + mText + "; Len " + to_string(mText.length()));
-	Log::Write("CRC: " + to_string(toascii(crc)));
+	Log() << "======= OUTGOING  =======" << "\n";
+	Log() << "Phone: " << mPhone << "; Len " << mPhone.length() << "\n";
+	Log() << "Text: " << mText << "; Len " << mText.length() << "\n";
+	Log() << "CRC: " << toascii(crc) << "\n";
 	Log::WriteBytes(str);
-	Log::Write("Len: " + to_string(str.length()));
+	Log() << "Len: " + to_string(str.length()) << "\n";
 
 	return str;
 }

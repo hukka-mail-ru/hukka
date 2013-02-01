@@ -35,12 +35,15 @@ int main(int argc, char** argv)
 		{
 			port = atoi(argv[i+1]);
 		}
+		else if (arg == "--logfile" && i+1 < argc)
+		{
+			Log::SetLogFile(argv[i+1]);
+		}
 	}
 
 	try
 	{
-		Log::SetLogFile("/home/hukka/devel/purser/log_sender.txt");
-		Log::Clear();
+		Log::SetLogFile("/home/hukka/devel/purser/sender/log_sender.txt");
 
 		Socket socket;
 		socket.ConnectToHost("localhost", port);
