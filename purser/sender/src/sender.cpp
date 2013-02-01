@@ -24,7 +24,7 @@ int main(int argc, char** argv)
 	cout << "hello" << endl;
 
 	// READ COMMAND LINE
-    int port = 1235;
+    int port = 1234;
 
 	for (int i = 0; i < argc; i++)
 	{

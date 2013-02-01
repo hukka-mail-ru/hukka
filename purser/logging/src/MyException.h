@@ -12,21 +12,7 @@
 #include <sstream>
 #include <stdexcept>
 
-/*
-class MyException: public std::runtime_error
-{
-public:
-	MyException(const std::string what): std::runtime_error(what) {}
-};
 
-
-class ExceptionSocketError: public MyException
-{
-public:
-	ExceptionSocketError(const std::string what, int port):
-		MyException(std::string("Socket error: ") + what + "; port" + std::to_string(port)) {}
-};
-*/
 
 class MyException : public std::exception
 {

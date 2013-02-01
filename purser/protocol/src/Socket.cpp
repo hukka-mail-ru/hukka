@@ -37,15 +37,11 @@ void Socket::ConnectToHost(const string& host, unsigned port)
 		throw ExceptionSocketError("Can't create socket", host, port);
 	}
 
-	cout << "socket ready" << endl;
-
 	/* resolve host */
 	if ((he = gethostbyname(host.c_str())) == NULL)
 	{
-		throw ExceptionSocketError("Error resolving hostname", host, port);
+		throw ExceptionSocketError("Error resolving host name", host, port);
 	}
-
-	cout << "gethostbyname" << endl;
 
 	/*
 	* copy the network address part of the structure to the
@@ -61,12 +57,10 @@ void Socket::ConnectToHost(const string& host, unsigned port)
 		throw ExceptionSocketError("Connect error", host, port);
 	}
 
-	cout << "connected" << endl;
+	cout << "connected to host" << endl;
 
 	Log::Clear();
 	Log::SetLogFile("/home/hukka/devel/purser/sender/Debug/sender_log.txt");
-
-	cout << "done" << endl;
 }
 
 void Socket::Listen(int port)
@@ -77,7 +71,7 @@ void Socket::Listen(int port)
 
 	if (mListener < 0)
 	{
-		throw ExceptionSocketError("Erorr creating socket", "-", port);
+		throw ExceptionSocketError("Error creating socket", "-", port);
 	}
 
 	struct sockaddr_in addr;
