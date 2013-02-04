@@ -143,7 +143,6 @@ Message Socket::ReceiveMessage() const
 void Socket::SendMessage(const Message& mes) const
 {
 
-
 	PRINT_LOG << "======= OUTGOING  =======" << "\n";
 
 	string str = mes.Serialize();
