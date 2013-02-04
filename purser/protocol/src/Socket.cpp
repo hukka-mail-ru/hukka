@@ -121,18 +121,19 @@ void Socket::Open()
 	}
 }
 
+
 Message Socket::ReceiveMessage() const
 {
-	Log() << " === INCOMING === \n";
+	PRINT_LOG << " === INCOMING === \n";
 
 	char buf[MESSAGE_SIZE] = {'0'};
 	recv(mSockfd, buf, MESSAGE_SIZE, MSG_WAITALL);
 
 	Message mes(buf);
 
-	Log() << "MESSAGE_SIZE: " << MESSAGE_SIZE << "\n";
-	Log() << "mes.phone: "     << mes.GetPhone() << "\n";
-	Log() << "mes.text: "      << mes.GetText() << "\n";
+	PRINT_LOG << "MESSAGE_SIZE: " << MESSAGE_SIZE << "\n";
+	PRINT_LOG << "mes.phone: "    << mes.GetPhone() << "\n";
+	PRINT_LOG << "mes.text: "     << mes.GetText() << "\n";
 
 
 	return mes;
@@ -141,16 +142,16 @@ Message Socket::ReceiveMessage() const
 
 void Socket::SendMessage(const Message& mes) const
 {
-	Log() << "======= OUTGOING  =======" << "\n";
+	PRINT_LOG << "======= OUTGOING  =======" << "\n";
 
 	string str = mes.Serialize();
 
 	send(mSockfd, str.c_str(), str.length(), 0);
 
-	Log() << "Phone: " << mes.GetPhone() << "; Len " << mes.GetPhone().length() << "\n";
-	Log() << "Text: "  << mes.GetText() << "; Len " << mes.GetText().length() << "\n";
+	PRINT_LOG << "Phone: " << mes.GetPhone() << "; Len " << mes.GetPhone().length() << "\n";
+	PRINT_LOG << "Text: "  << mes.GetText() << "; Len " << mes.GetText().length() << "\n";
 	Log::WriteBytes(str);
-	Log() << "Len: "   << str.length() << "\n";
+	PRINT_LOG << "Len: "   << str.length() << "\n";
 }
 
 void Socket::Close() const

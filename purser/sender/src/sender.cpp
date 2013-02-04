@@ -50,8 +50,8 @@ int main(int argc, char** argv)
 
 
 		Message mes;
-		mes.setPhone("+79111112233867867");
-		mes.setText("Hello from sender");
+		mes.SetPhone("+79111112233867867");
+		mes.SetText("Hello from sender");
 
 		socket.SendMessage(mes);
 	}

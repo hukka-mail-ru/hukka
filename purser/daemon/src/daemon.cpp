@@ -39,8 +39,8 @@ int Run(Socket& socket)
 			Message mes = socket.ReceiveMessage();
 
 			Message reply;
-			reply.setPhone("+79119089209");
-			reply.setText("This is a normal reply");
+			reply.SetPhone("+79119089209");
+			reply.SetText("This is a normal reply");
 			socket.SendMessage(reply);
 
 			socket.Close();

@@ -11,9 +11,18 @@
 #include <string>
 #include <sstream>
 
+#define PRINT_LOG 	Log() << Log::Filename(__FILE__) << " " \
+                    << "[" << __LINE__  << "]" \
+                    << __FUNCTION__ << "\t"
+
+
+
+
 
 class Log {
 public:
+
+	static std::string Filename(std::string pathname);
 
 	static void SetLogFile(const std::string& logfile);
 
