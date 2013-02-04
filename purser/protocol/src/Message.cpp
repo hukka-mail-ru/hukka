@@ -17,7 +17,7 @@ void Message::Parse(const char* buf)
 
 	if(signature != PROTOCOL_SIGNATURE)
 	{
-		throw ExceptionProtocolError("Wrong protocol signature");
+		throw ExceptionProtocolError(PRINT_WHERE, "Wrong protocol signature");
 	}
 
 	mPhoneLen = buf[1];
@@ -36,7 +36,7 @@ void Message::Parse(const char* buf)
 
 	if(crc != GetCRC(mText))
 	{
-		throw ExceptionProtocolError("Wrong CRC");
+		throw ExceptionProtocolError(PRINT_WHERE, "Wrong CRC");
 	}
 
 	string str(buf);
