@@ -126,12 +126,12 @@ Message Socket::ReceiveMessage() const
 {
 	PRINT_LOG << " === INCOMING === \n";
 
-	char buf[MESSAGE_SIZE] = {'0'};
-	recv(mSockfd, buf, MESSAGE_SIZE, MSG_WAITALL);
+	char buf[MessageSize] = {'0'};
+	recv(mSockfd, buf, MessageSize, MSG_WAITALL);
 
 	Message mes(buf);
 
-	PRINT_LOG << "MESSAGE_SIZE: " << MESSAGE_SIZE << "\n";
+	PRINT_LOG << "MESSAGE_SIZE: " << MessageSize << "\n";
 	PRINT_LOG << "mes.phone: "    << mes.GetPhone() << "\n";
 	PRINT_LOG << "mes.text: "     << mes.GetText() << "\n";
 
