@@ -41,6 +41,11 @@ void Log::Write(const string& log)
 	file.close();
 }
 
+void Log::Write(const MyException& exception)
+{
+	Write(string("EXCEPTION!\n") + exception.what() + "\n");
+}
+
 void Log::WriteBytes(const string& log)
 {
 	fstream file;

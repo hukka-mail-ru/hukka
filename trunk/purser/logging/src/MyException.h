@@ -12,11 +12,12 @@
 #include <sstream>
 #include <stdexcept>
 
-
+#define EXC_OUT MyException() << where << "\t"
 
 class MyException : public std::exception
 {
 public :
+  //MyException(const std::string& where): mWhere(where) {};
   MyException() {};
   MyException( const MyException &rhs )
   {
@@ -38,26 +39,28 @@ public :
     return *this;
   }
 
+ // std::string where() const { return mWhere; }
+
 private:
   std::string msg;
+//  std::string mWhere;
 };
 
 
 class ExceptionSocketError: public MyException
 {
 public:
-	ExceptionSocketError(const std::string& what, const std::string& host, int port):
-		MyException(MyException()
-		    << what << ": host " << host << "; port " << port) {}
+	ExceptionSocketError(const std::string& where, const std::string& what,
+			             const std::string& host, int port):
+		MyException(EXC_OUT << what << ": host " << host << "; port " << port) {}
 };
 
 
 class ExceptionProtocolError: public MyException
 {
 public:
-	ExceptionProtocolError(const std::string& what):
-		MyException(MyException()
-		    << what) {}
+	ExceptionProtocolError(const std::string& where, const std::string& what):
+		MyException(EXC_OUT << what) {}
 };
 
 #endif /* EXCEPTION_H_ */

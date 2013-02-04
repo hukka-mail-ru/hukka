@@ -47,7 +47,7 @@ int Run(Socket& socket)
 		}
 		catch (MyException& e)
 		{
-			Log() << e.what() << "\n";
+			Log::Write(e);
 		}
 	}
 
@@ -58,7 +58,7 @@ int Run(Socket& socket)
 	}
 	catch (MyException& e)
 	{
-		Log() << e.what() << "\n";
+		Log::Write(e);
 		return -1;
 	}
 

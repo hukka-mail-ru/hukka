@@ -11,9 +11,13 @@
 #include <string>
 #include <sstream>
 
-#define PRINT_LOG 	Log() << Log::Filename(__FILE__) << " " \
-                    << "[" << __LINE__  << "]" \
-                    << __FUNCTION__ << "\t"
+#include "MyException.h"
+
+#define PRINT_WHERE Log::Filename(__FILE__) + std::string(" ") \
+                    + std::string("[") + std::to_string(__LINE__)  + std::string("] ") \
+                    + std::string(__FUNCTION__) + std::string("\t")
+
+#define PRINT_LOG 	Log() << PRINT_WHERE
 
 
 
@@ -22,11 +26,13 @@
 class Log {
 public:
 
+	// helper: extracts file name from path name
 	static std::string Filename(std::string pathname);
 
 	static void SetLogFile(const std::string& logfile);
 
 	static void Write(const std::string& log);
+	static void Write(const MyException& exception);
 	static void WriteBytes(const std::string& log);
 
 	template<typename T>
