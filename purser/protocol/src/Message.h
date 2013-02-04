@@ -11,15 +11,15 @@
 #include <string>
 
 
-const char PROTOCOL_SIGNATURE = 'Z';
+const char ProtocolSignature = 'Z';
 
-const unsigned MAX_PHONE_LEN = 32;
-const unsigned MAX_TEXT_LEN = 220;
+const unsigned MaxPhoneLen = 32;
+const unsigned MaxTextLen = 220;
 
-const unsigned PHONE_OFFSET = 4;
-const unsigned TEXT_OFFSET = PHONE_OFFSET + MAX_PHONE_LEN;
+const unsigned PhoneOffset = 4;
+const unsigned TextOffset = PhoneOffset + MaxPhoneLen;
 
-const unsigned MESSAGE_SIZE = PHONE_OFFSET + MAX_PHONE_LEN + MAX_TEXT_LEN;
+const unsigned MessageSize = PhoneOffset + MaxPhoneLen + MaxTextLen;
 
 
 class Message

@@ -15,7 +15,7 @@ void Message::Parse(const char* buf)
 {
 	char signature = buf[0];
 
-	if(signature != PROTOCOL_SIGNATURE)
+	if(signature != ProtocolSignature)
 	{
 		throw ExceptionProtocolError(PRINT_WHERE, "Wrong protocol signature");
 	}
@@ -24,12 +24,12 @@ void Message::Parse(const char* buf)
 	mTextLen = buf[2];
 	char crc = buf[3];
 
-	for(unsigned i = PHONE_OFFSET; i < PHONE_OFFSET + mPhoneLen; i++)
+	for(unsigned i = PhoneOffset; i < PhoneOffset + mPhoneLen; i++)
 	{
 	   mPhone += buf[i];
 	}
 
-	for(unsigned i = TEXT_OFFSET; i < TEXT_OFFSET + mTextLen; i++)
+	for(unsigned i = TextOffset; i < TextOffset + mTextLen; i++)
 	{
 	   mText += buf[i];
 	}
@@ -48,14 +48,14 @@ string Message::Serialize() const
 
 	char crc = GetCRC(mText);
 
-	str += PROTOCOL_SIGNATURE;
+	str += ProtocolSignature;
     str += char(mPhone.length());
 	str += char(mText.length());
 	str += crc;
 	str += mPhone;
-	str += string(MAX_PHONE_LEN - mPhone.length(), '\0');
+	str += string(MaxPhoneLen - mPhone.length(), '\0');
 	str += mText;
-	str += string(MAX_TEXT_LEN - mText.length(), '\0');
+	str += string(MaxTextLen - mText.length(), '\0');
 
 	return str;
 }
