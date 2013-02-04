@@ -13,11 +13,11 @@
 
 #include "MyException.h"
 
-#define PRINT_WHERE Log::Filename(__FILE__) + std::string(" ") \
+#define __WHERE__   Log::Filename(__FILE__) + std::string(" ") \
                     + std::string("[") + std::to_string(__LINE__)  + std::string("] ") \
                     + std::string(__FUNCTION__) + std::string("\t")
 
-#define PRINT_LOG 	Log() << PRINT_WHERE
+#define PRINT_LOG 	Log() << __WHERE__
 
 
 
