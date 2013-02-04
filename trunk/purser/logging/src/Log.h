@@ -31,9 +31,8 @@ public:
 
 	static void SetLogFile(const std::string& logfile);
 
-	static void Write(const std::string& log);
 	static void Write(const MyException& exception);
-	static void WriteBytes(const std::string& log);
+	static void WriteBytes(const std::string& bytes);
 
 	template<typename T>
 	Log& operator<<( const T& t )
@@ -46,6 +45,7 @@ public:
 
 private:
 
+	static void Write(const std::string& str);
 	static void Clear();
 
 	static std::string mLogfile;

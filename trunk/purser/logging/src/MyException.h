@@ -12,7 +12,7 @@
 #include <sstream>
 #include <stdexcept>
 
-#define EXC_OUT MyException() << where << "\t"
+#define WHERE_WHAT MyException() << where << "\t" << what
 
 class MyException : public std::exception
 {
@@ -52,7 +52,7 @@ class ExceptionSocketError: public MyException
 public:
 	ExceptionSocketError(const std::string& where, const std::string& what,
 			             const std::string& host, int port):
-		MyException(EXC_OUT << what << ": host " << host << "; port " << port) {}
+		MyException(WHERE_WHAT << ": host " << host << "; port " << port) {}
 };
 
 
@@ -60,7 +60,7 @@ class ExceptionProtocolError: public MyException
 {
 public:
 	ExceptionProtocolError(const std::string& where, const std::string& what):
-		MyException(EXC_OUT << what) {}
+		MyException(WHERE_WHAT) {}
 };
 
 #endif /* EXCEPTION_H_ */

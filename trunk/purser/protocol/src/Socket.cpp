@@ -135,6 +135,7 @@ Message Socket::ReceiveMessage() const
 	PRINT_LOG << "mes.phone: "    << mes.GetPhone() << "\n";
 	PRINT_LOG << "mes.text: "     << mes.GetText() << "\n";
 
+	throw ExceptionSocketError(PRINT_WHERE, "Error opening socket", "-", mPort);
 
 	return mes;
 }
