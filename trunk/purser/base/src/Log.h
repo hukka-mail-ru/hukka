@@ -15,7 +15,7 @@
 #include "Base.h"
 
 
-#define PRINT_LOG 	Log() << Base::GetCurrentTime() << " " << __WHERE__
+#define PRINT_LOG 	Log() << __WHEN__ << " " << __WHERE__
 
 
 class Log {

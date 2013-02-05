@@ -21,29 +21,28 @@ using namespace std;
 
 int main(int argc, char** argv)
 {
-
-	cout << "hello" << endl;
-
-	// READ COMMAND LINE
-    int port = 1234;
-
-	for (int i = 0; i < argc; i++)
-	{
-		string arg = argv[i];
-
-		if (arg == "--port" && i+1 < argc)
-		{
-			port = atoi(argv[i+1]);
-		}
-		else if (arg == "--logfile" && i+1 < argc)
-		{
-			Log::SetLogFile(argv[i+1]);
-		}
-	}
-
 	try
 	{
-		Log::SetLogFile("/home/hukka/devel/purser/sender/log_sender.txt");
+		Log::SetLogFile("/var/log/sender.log");
+
+		cout << "hello" << endl;
+
+		// READ COMMAND LINE
+		int port = 1234;
+
+		for (int i = 0; i < argc; i++)
+		{
+			string arg = argv[i];
+
+			if (arg == "--port" && i+1 < argc)
+			{
+				port = atoi(argv[i+1]);
+			}
+			else if (arg == "--logfile" && i+1 < argc)
+			{
+				Log::SetLogFile(argv[i+1]);
+			}
+		}
 
 		Socket socket;
 		socket.ConnectToHost("localhost", port);
