@@ -26,7 +26,7 @@
 								<option id="gnu.cpp.compiler.exe.debug.option.optimization.level.728575705" name="Optimization Level" superClass="gnu.cpp.compiler.exe.debug.option.optimization.level" value="gnu.cpp.compiler.optimization.level.none" valueType="enumerated"/>
 								<option id="gnu.cpp.compiler.exe.debug.option.debugging.level.1615295233" name="Debug Level" superClass="gnu.cpp.compiler.exe.debug.option.debugging.level" value="gnu.cpp.compiler.debugging.level.max" valueType="enumerated"/>
 								<option id="gnu.cpp.compiler.option.include.paths.68853036" name="Include paths (-I)" superClass="gnu.cpp.compiler.option.include.paths" valueType="includePath">
-									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/logging/src}&quot;"/>
+									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/base/src}&quot;"/>
 									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/protocol/src}&quot;"/>
 								</option>
 								<inputType id="cdt.managedbuild.tool.gnu.cpp.compiler.input.349181037" superClass="cdt.managedbuild.tool.gnu.cpp.compiler.input"/>
@@ -40,10 +40,10 @@
 							<tool id="cdt.managedbuild.tool.gnu.cpp.linker.exe.debug.373044842" name="GCC C++ Linker" superClass="cdt.managedbuild.tool.gnu.cpp.linker.exe.debug">
 								<option id="gnu.cpp.link.option.libs.90124310" name="Libraries (-l)" superClass="gnu.cpp.link.option.libs" valueType="libs">
 									<listOptionValue builtIn="false" value="protocol"/>
-									<listOptionValue builtIn="false" value="logging"/>
+									<listOptionValue builtIn="false" value="base"/>
 								</option>
 								<option id="gnu.cpp.link.option.paths.448455082" name="Library search path (-L)" superClass="gnu.cpp.link.option.paths" valueType="libPaths">
-									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/logging/Debug}&quot;"/>
+									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/base/Debug}&quot;"/>
 									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/protocol/Debug}&quot;"/>
 								</option>
 								<inputType id="cdt.managedbuild.tool.gnu.cpp.linker.input.287594875" superClass="cdt.managedbuild.tool.gnu.cpp.linker.input">

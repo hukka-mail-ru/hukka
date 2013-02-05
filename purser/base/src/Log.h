@@ -12,22 +12,14 @@
 #include <sstream>
 
 #include "MyException.h"
+#include "Base.h"
 
-#define __WHERE__   Log::Filename(__FILE__) + std::string(" ") \
-                    + std::string("[") + std::to_string(__LINE__)  + std::string("] ") \
-                    + std::string(__FUNCTION__) + std::string("\t")
 
 #define PRINT_LOG 	Log() << __WHERE__
 
 
-
-
-
 class Log {
 public:
-
-	// helper: extracts file name from path name
-	static std::string Filename(std::string pathname);
 
 	static void SetLogFile(const std::string& logfile);
 
