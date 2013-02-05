@@ -14,6 +14,8 @@
 
 #define WHERE_WHAT MyException() << where << "\t" << what
 
+#define THROW_EX(EXTYPE)	throw EXTYPE() << __WHERE__
+
 class MyException : public std::exception
 {
 public :
@@ -56,9 +58,6 @@ public:
 
 class ExceptionProtocolError: public MyException
 {
-public:
-	ExceptionProtocolError(const std::string& where, const std::string& what):
-		MyException(WHERE_WHAT) {}
 };
 
 #endif /* EXCEPTION_H_ */
