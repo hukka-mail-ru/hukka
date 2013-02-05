@@ -34,13 +34,13 @@ void Socket::ConnectToHost(const string& host, unsigned port)
 	mSockfd = socket(AF_INET, SOCK_STREAM, 0);
 	if (mSockfd==-1)
 	{
-		throw ExceptionSocketError(__WHERE__, "Can't create socket", host, port);
+		THROW_EX(ExceptionSocketError(host, port)) << "Can't create socket";
 	}
 
 	/* resolve host */
 	if ((he = gethostbyname(host.c_str())) == NULL)
 	{
-		throw ExceptionSocketError(__WHERE__, "Error resolving host name", host, port);
+		THROW_EX(ExceptionSocketError(host, port)) << "Error resolving host name";
 	}
 
 	/*
@@ -54,7 +54,7 @@ void Socket::ConnectToHost(const string& host, unsigned port)
 	/* connect */
 	if (connect(mSockfd, (struct sockaddr *)&server, sizeof(server)))
 	{
-		throw ExceptionSocketError(__WHERE__, "Connect error", host, port);
+		THROW_EX(ExceptionSocketError(host, port)) << "Connect error";
 	}
 
 	cout << "connected to host" << endl;
@@ -68,7 +68,7 @@ void Socket::Listen(int port)
 
 	if (mListener < 0)
 	{
-		throw ExceptionSocketError(__WHERE__, "Error creating socket", "-", port);
+		THROW_EX(ExceptionSocketError("-", port)) << "Error creating socket";
 	}
 
 	struct sockaddr_in addr;
@@ -97,7 +97,7 @@ void Socket::Listen(int port)
 			}
 			else
 			{
-				throw ExceptionSocketError(__WHERE__, "Error binding socket", "-", port);
+				THROW_EX(ExceptionSocketError("-", port)) << "Error binding socket";
 			}
 		}
 		else
@@ -116,8 +116,8 @@ void Socket::Open()
 
 	if (mSockfd < 0)
 	{
-		// throw exception
-		throw ExceptionSocketError(__WHERE__, "Error opening socket", "-", mPort);
+		// THROW_EX(exception
+		THROW_EX(ExceptionSocketError("-", mPort)) << "Error opening socket";
 	}
 }
 
