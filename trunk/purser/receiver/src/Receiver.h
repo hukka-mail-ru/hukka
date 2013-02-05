@@ -16,7 +16,6 @@ class Receiver: public Daemon
 public:
 	Receiver(const std::string& pidfile): Daemon(pidfile) {}
 
-
 	virtual int Run();
 
 	void ListenPort(int port);
