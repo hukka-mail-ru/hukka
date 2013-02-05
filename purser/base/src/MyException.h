@@ -12,23 +12,29 @@
 #include <sstream>
 #include <stdexcept>
 
+
 #define WHERE_WHAT MyException() << where << "\t" << what
 
-#define THROW_EX(EXTYPE)	throw EXTYPE() << __WHERE__
+#define THROW_EX(EXTYPE)	throw EXTYPE << __WHERE__
 
-class MyException : public std::exception
+
+
+class MyException
 {
 public :
-  MyException() {};
+  MyException(): mMsg(""), mInfo("") {};
   MyException( const MyException &rhs )
   {
-    msg = rhs.msg;
+    mMsg = rhs.mMsg;
+    mInfo = rhs.mInfo;
   }
+
   virtual ~MyException() throw(){};
 
-  virtual const char * what() const throw()
+  virtual std::string what() const throw()
   {
-    return msg.c_str();
+	  std::string res = mMsg + "; " + mInfo;
+      return res;
   }
 
   template<typename T>
@@ -36,23 +42,31 @@ public :
   {
     std::stringstream ss;
     ss << t;
-    msg +=ss.str();
+    mMsg +=ss.str();
     return *this;
   }
 
-private:
-  std::string msg;
-};
+  void AddInfo(const std::string& text)
+  {
+	  mInfo += text;
+  }
 
+private:
+  std::string mMsg;
+  std::string mInfo;
+};
 
 
 
 class ExceptionSocketError: public MyException
 {
 public:
-	ExceptionSocketError(const std::string& where, const std::string& what,
-			             const std::string& host, int port):
-		MyException(WHERE_WHAT << ": host " << host << "; port " << port) {}
+	ExceptionSocketError(const std::string& host, int port)
+	{
+	    std::stringstream ss;
+	    ss << "host " << host << "; port " << port;
+	    AddInfo(ss.str());
+	}
 };
 
 

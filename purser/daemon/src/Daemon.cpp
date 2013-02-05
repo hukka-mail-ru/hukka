@@ -32,7 +32,7 @@ int Daemon::Daemonize()
 
 	if (pid == -1)
 	{
-		THROW_EX(MyException) << " Start Daemon failed: " << strerror(errno);
+		THROW_EX(MyException()) << " Start Daemon failed: " << strerror(errno);
 	}
 	else if (!pid) // child
 	{
@@ -52,13 +52,13 @@ int Daemon::Daemonize()
 		int pidFilehandle = open(mPidfile.c_str(), O_RDWR|O_CREAT, 0600);
 		if (pidFilehandle == -1 )
 		{
-			THROW_EX(MyException) << "Could not open PID file " << mPidfile <<", exit\n";
+			THROW_EX(MyException()) << "Could not open PID file " << mPidfile <<", exit\n";
 		}
 
 		/* Try to lock file */
 		if (lockf(pidFilehandle,F_TLOCK,0) == -1)
 		{
-			THROW_EX(MyException) << "Could not lock PID file " << mPidfile <<", exit\n";
+			THROW_EX(MyException()) << "Could not lock PID file " << mPidfile <<", exit\n";
 		}
 
 		// write PID to file
