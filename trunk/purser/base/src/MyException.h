@@ -17,7 +17,6 @@
 class MyException : public std::exception
 {
 public :
-  //MyException(const std::string& where): mWhere(where) {};
   MyException() {};
   MyException( const MyException &rhs )
   {
@@ -39,12 +38,11 @@ public :
     return *this;
   }
 
- // std::string where() const { return mWhere; }
-
 private:
   std::string msg;
-//  std::string mWhere;
 };
+
+
 
 
 class ExceptionSocketError: public MyException

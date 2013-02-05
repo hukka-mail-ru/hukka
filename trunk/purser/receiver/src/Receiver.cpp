@@ -94,7 +94,6 @@ int main(int argc, char** argv)
 		Log::SetLogFile(logfile);
 
 		Receiver receiver(pidfile);
-
 		receiver.ListenPort(port);
 
 		cout << "Log: " << logfile << endl;
@@ -105,7 +104,7 @@ int main(int argc, char** argv)
 	}
 	catch (MyException& e)
 	{
-		cout << e.what() << endl;
+		Log::Write(e);
 		return -1;
 	}
 }

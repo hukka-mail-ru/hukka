@@ -19,6 +19,8 @@
 
 
 #include "Daemon.h"
+#include "MyException.h"
+#include "Base.h"
 
 using namespace std;
 
@@ -30,8 +32,7 @@ int Daemon::Daemonize()
 
 	if (pid == -1)
 	{
-		cout << "Error:  Start Daemon failed (%s)\n" << strerror(errno);
-		return -1;
+		throw MyException() << __WHERE__ << " Start Daemon failed: " << strerror(errno);
 	}
 	else if (!pid) // child
 	{
@@ -46,19 +47,18 @@ int Daemon::Daemonize()
 		// change dir to root
 		chdir("/");
 
+
 		/* Ensure only one copy */
 		int pidFilehandle = open(mPidfile.c_str(), O_RDWR|O_CREAT, 0600);
 		if (pidFilehandle == -1 )
 		{
-			cout << "Could not open PID file " << mPidfile <<", exit" << endl;
-			return -1;
+			throw MyException() << __WHERE__ << "Could not open PID file " << mPidfile <<", exit\n";
 		}
 
 		/* Try to lock file */
 		if (lockf(pidFilehandle,F_TLOCK,0) == -1)
 		{
-			cout << "Could not lock PID file " << mPidfile <<", exit" << endl;
-			return -1;
+			throw MyException() << __WHERE__ << "Could not lock PID file " << mPidfile <<", exit\n";
 		}
 
 		// write PID to file
