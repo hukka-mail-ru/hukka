@@ -31,7 +31,7 @@
 								<option id="gnu.cpp.compiler.lib.debug.option.optimization.level.541823206" name="Optimization Level" superClass="gnu.cpp.compiler.lib.debug.option.optimization.level" value="gnu.cpp.compiler.optimization.level.none" valueType="enumerated"/>
 								<option id="gnu.cpp.compiler.lib.debug.option.debugging.level.1825256675" name="Debug Level" superClass="gnu.cpp.compiler.lib.debug.option.debugging.level" value="gnu.cpp.compiler.debugging.level.max" valueType="enumerated"/>
 								<option id="gnu.cpp.compiler.option.include.paths.1154773487" name="Include paths (-I)" superClass="gnu.cpp.compiler.option.include.paths" valueType="includePath">
-									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/logging/src}&quot;"/>
+									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/base/src}&quot;"/>
 								</option>
 								<option id="gnu.cpp.compiler.option.other.other.1119460113" name="Other flags" superClass="gnu.cpp.compiler.option.other.other" value="-c -fmessage-length=0 -std=c++0x" valueType="string"/>
 								<option id="gnu.cpp.compiler.option.preprocessor.def.596004457" name="Defined symbols (-D)" superClass="gnu.cpp.compiler.option.preprocessor.def" valueType="definedSymbols">
@@ -57,7 +57,7 @@
 							<tool id="cdt.managedbuild.tool.gnu.archiver.lib.debug.1542828496" name="GCC Archiver" superClass="cdt.managedbuild.tool.gnu.archiver.lib.debug.1996010457"/>
 							<tool id="cdt.managedbuild.tool.gnu.cpp.compiler.lib.debug.1239120506" name="GCC C++ Compiler" superClass="cdt.managedbuild.tool.gnu.cpp.compiler.lib.debug.832324447">
 								<option id="gnu.cpp.compiler.option.include.paths.662444957" name="Include paths (-I)" superClass="gnu.cpp.compiler.option.include.paths" valueType="includePath">
-									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/logging/src}&quot;"/>
+									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/base/src}&quot;"/>
 								</option>
 								<inputType id="cdt.managedbuild.tool.gnu.cpp.compiler.input.510941543" superClass="cdt.managedbuild.tool.gnu.cpp.compiler.input"/>
 							</tool>

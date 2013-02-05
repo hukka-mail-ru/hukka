@@ -6,9 +6,6 @@
  */
 #include <fstream>
 #include <iostream>
-
-#include <algorithm>
-#include <cstdlib>
 #include <stdio.h>
 
 #include "Log.h"
@@ -18,19 +15,6 @@ using namespace std;
 string Log::mLogfile = "/var/log/log.txt";
 
 
-string Log::Filename(string pathname)
-{
-	string::iterator it = find_if(
-			pathname.rbegin(),
-		    pathname.rend(),
-			  [] (char c)
-			  {
-				  return c == '/';
-			  }
-			).base();
-
-	return string(it, pathname.end());
-}
 
 void Log::Write(const string& log)
 {

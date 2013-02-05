@@ -9,7 +9,7 @@
 #define MESSAGE_H_
 
 #include <string>
-
+#include "Base.h"
 
 const char ProtocolSignature = 'Z';
 
@@ -31,11 +31,8 @@ public:
 
 	std::string Serialize() const;
 
-	std::string GetPhone() const { return mPhone; }
-	std::string GetText() const { return mText; }
-
-	void SetPhone(const std::string& phone) { mPhone = phone; }
-	void SetText(const std::string& text) { mText = text; }
+	GETTER_SETTER(std::string, Phone);
+	GETTER_SETTER(std::string, Text);
 
 private:
 
