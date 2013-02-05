@@ -43,8 +43,7 @@
 									<listOptionValue builtIn="false" value="base"/>
 								</option>
 								<option id="gnu.cpp.link.option.paths.448455082" name="Library search path (-L)" superClass="gnu.cpp.link.option.paths" valueType="libPaths">
-									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/base/Debug}&quot;"/>
-									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/protocol/Debug}&quot;"/>
+									<listOptionValue builtIn="false" value="&quot;${WorkspaceDirPath}/lib&quot;"/>
 								</option>
 								<inputType id="cdt.managedbuild.tool.gnu.cpp.linker.input.287594875" superClass="cdt.managedbuild.tool.gnu.cpp.linker.input">
 									<additionalInput kind="additionalinputdependency" paths="$(USER_OBJS)"/>

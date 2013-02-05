@@ -1,9 +1,10 @@
 #! /bin/sh
 
-NAME=example_daemon
-DAEMON=/home/hukka/devel/purser/daemon/Debug/$NAME
+NAME=receiver
+DAEMON=/home/hukka/devel/purser/receiver/Debug/$NAME
 #PIDFILE=/var/run/$NAME.pid
-PIDFILE=/home/hukka/devel/purser/daemon/$NAME.pid
+PIDFILE=/home/hukka/devel/purser/log/$NAME.pid
+LOGFILE=/home/hukka/devel/purser/log/$NAME.log
 
 
 #
@@ -11,7 +12,7 @@ PIDFILE=/home/hukka/devel/purser/daemon/$NAME.pid
 #
 case "$1" in
   start)
-	$DAEMON --pidfile $PIDFILE
+	$DAEMON --pidfile $PIDFILE --logfile $LOGFILE
 	;;
   stop)
 	PID=`cat $PIDFILE 2>/dev/null`
