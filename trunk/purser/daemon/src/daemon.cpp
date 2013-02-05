@@ -95,6 +95,7 @@ int main(int argc, char** argv)
 	}
 
 
+	// PREPARE SOCKET
 	Socket socket;
 	try
 	{

@@ -31,6 +31,8 @@ public:
 
 	// helper: extracts file name from path name
 	static std::string Filename(std::string pathname);
+
+	static std::string GetCurrentTime();
 };
 
 #endif /* BASE_H_ */
