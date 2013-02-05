@@ -57,7 +57,6 @@ void Log::Clear()
 void Log::SetLogFile(const std::string& logfile)
 {
 	mLogfile = logfile;
-	cout << "Log: " << logfile << endl;
 
 	Clear();
 }

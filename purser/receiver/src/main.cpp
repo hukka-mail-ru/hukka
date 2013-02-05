@@ -17,7 +17,7 @@ int main(int argc, char** argv)
 {
 	try
 	{
-		Log::SetLogFile("/var/log/receiver.log");
+		string logfile = "/var/log/receiver.log";
 
 		// READ COMMAND LINE
 		string pidfile = "/var/run/receiver.pid";
@@ -33,7 +33,7 @@ int main(int argc, char** argv)
 			}
 			if (arg == "--logfile" && i+1 < argc)
 			{
-				Log::SetLogFile(argv[i+1]);
+				logfile = argv[i+1];
 			}
 			else if (arg == "--port" && i+1 < argc)
 			{
@@ -41,11 +41,13 @@ int main(int argc, char** argv)
 			}
 		}
 
+		Log::SetLogFile(logfile);
 
 		Receiver receiver(pidfile);
 
 		receiver.ListenPort(port);
 
+		cout << "Log: " << logfile << endl;
 		cout << "Ready - port " << port << endl;
 
 		// daemon loop
