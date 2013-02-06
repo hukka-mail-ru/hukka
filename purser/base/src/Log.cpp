@@ -12,17 +12,26 @@
 
 using namespace std;
 
-string Log::mLogfile = "/var/log/log.txt";
+// by default, the log is printed to Console
+const string OutputToConsole = "OutputToConsole";
+string Log::mLogfile = OutputToConsole;
 
 
 
 void Log::Write(const string& log)
 {
-	fstream file;
-	ios_base::openmode mode = ios_base::app | ios_base::out;
-	file.open (mLogfile, mode);
-	file << log;
-	file.close();
+	if(mLogfile == OutputToConsole)
+	{
+		cout << log;
+	}
+	else
+	{
+		fstream file;
+		ios_base::openmode mode = ios_base::app | ios_base::out;
+		file.open (mLogfile, mode);
+		file << log;
+		file.close();
+	}
 }
 
 void Log::Write(const MyException& exception)
@@ -34,23 +43,37 @@ void Log::Write(const MyException& exception)
 
 void Log::WriteBytes(const string& log)
 {
-	fstream file;
-	ios_base::openmode mode = ios_base::app | ios_base::out;
-	file.open (mLogfile, mode);
-
-	for(char c: log)
+	if(mLogfile == OutputToConsole)
 	{
-		file << toascii(c) << " ";
+		for(char c: log)
+		{
+			cout << toascii(c) << " ";
+		}
+		cout << endl;
 	}
-	file << endl;
+	else
+	{
+		fstream file;
+		ios_base::openmode mode = ios_base::app | ios_base::out;
+		file.open (mLogfile, mode);
 
-	file.close();
+		for(char c: log)
+		{
+			file << toascii(c) << " ";
+		}
+		file << endl;
+
+		file.close();
+	}
 }
 
 
 void Log::Clear()
 {
-	remove(mLogfile.c_str());
+	if(mLogfile != OutputToConsole)
+	{
+		remove(mLogfile.c_str());
+	}
 }
 
 

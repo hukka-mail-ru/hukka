@@ -38,17 +38,10 @@ int main(int argc, char** argv)
 			{
 				port = atoi(argv[i+1]);
 			}
-			else if (arg == "--logfile" && i+1 < argc)
-			{
-				logfile = argv[i+1];
-			}
 		}
-
-		cout << "Log : " << logfile << endl;
 		cout << "Port: " << port << endl;
 		cout << "Ready." << endl;
 
-		Log::SetLogFile(logfile);
 
 		Socket socket;
 		socket.ConnectToHost("localhost", port);
@@ -63,7 +56,6 @@ int main(int argc, char** argv)
 	catch (MyException& e)
 	{
 		Log::Write(e);
-		cout << "EXCEPTION: " << e.what() << endl;
 	}
 
 
