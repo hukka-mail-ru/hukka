@@ -11,6 +11,7 @@
 #include "Receiver.h"
 #include "MyException.h"
 #include "Log.h"
+#include "Config.h"
 
 using namespace std;
 
@@ -73,29 +74,34 @@ int main(int argc, char** argv)
 		string pidfile = "/var/run/receiver.pid";
 		int port = 1234;
 
+		string configfile = "/etc/config.conf";
+
 		for (int i = 0; i < argc; i++)
 		{
 			string arg = argv[i];
 
+			if (arg == "--configfile" && i+1 < argc)
+			{
+				configfile = argv[i+1];
+			}
 			if (arg == "--pidfile" && i+1 < argc)
 			{
 				pidfile = argv[i+1];
 			}
-			if (arg == "--logfile" && i+1 < argc)
-			{
-				logfile = argv[i+1];
-			}
-			else if (arg == "--port" && i+1 < argc)
-			{
-				port = atoi(argv[i+1]);
-			}
 		}
+
+		// Read config
+		Config::ReadConfigFile(configfile);
+		port = Config::Port;
+		logfile = Config::Logfile;
+
 
 		Log::SetLogFile(logfile);
 
 		Receiver receiver(pidfile);
 		receiver.ListenPort(port);
 
+		cout << "Config : " << configfile << endl;
 		cout << "Log : " << logfile << endl;
 		cout << "PID : " << pidfile << endl;
 		cout << "Port: " << port << endl;

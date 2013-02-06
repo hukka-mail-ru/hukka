@@ -2,10 +2,9 @@
 
 NAME=receiverd
 DAEMON=/home/hukka/devel/purser/bin/$NAME
-#PIDFILE=/var/run/$NAME.pid
+
+CONFIGFILE=/home/hukka/devel/purser/bin/$NAME.conf
 PIDFILE=/home/hukka/devel/purser/log/$NAME.pid
-LOGFILE=/home/hukka/devel/purser/log/$NAME.log
-PORT=1233
 
 
 #
@@ -13,7 +12,7 @@ PORT=1233
 #
 case "$1" in
   start)
-	$DAEMON --pidfile $PIDFILE --logfile $LOGFILE --port $PORT
+	$DAEMON --configfile $CONFIGFILE --pidfile $PIDFILE
 	;;
   stop)
 	PID=`cat $PIDFILE 2>/dev/null`
