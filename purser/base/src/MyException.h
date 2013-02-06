@@ -11,6 +11,7 @@
 #include <string>
 #include <sstream>
 
+#include "Base.h"
 
 #define WHERE_WHAT MyException() << where << "\t" << what
 
