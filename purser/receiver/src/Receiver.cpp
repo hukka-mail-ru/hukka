@@ -6,7 +6,6 @@
 // Description : Hello World in C++, Ansi-style
 //============================================================================
 
-#include <iostream>
 
 #include "Receiver.h"
 #include "MyException.h"
@@ -94,15 +93,15 @@ int main(int argc, char** argv)
 		port = atoi(receiver.GetConfigValue("port").c_str());
 		logfile = receiver.GetConfigValue("logfile");
 
-		Log::SetLogFile(logfile);
-
 		receiver.ListenPort(port);
 
-		cout << "Config : " << configfile << endl;
-		cout << "Log : " << logfile << endl;
-		cout << "PID : " << pidfile << endl;
-		cout << "Port: " << port << endl;
-		cout << "Ready." << endl;
+		PRINT_LOG << "Config : " << configfile << "\n";
+		PRINT_LOG << "Log : " << logfile <<  "\n";
+		PRINT_LOG << "PID : " << pidfile <<  "\n";
+		PRINT_LOG << "Port: " << port <<  "\n";
+		PRINT_LOG << "Ready." <<  "\n";
+
+		Log::SetLogFile(logfile);
 
 		// daemon loop
 		return receiver.Daemonize();

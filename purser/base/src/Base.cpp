@@ -11,6 +11,7 @@
 #include <algorithm>
 #include <cstdlib>
 #include <sstream>
+#include <iomanip>
 
 #include "Base.h"
 
@@ -39,8 +40,10 @@ string Base::GetCurrentTime()
     gettimeofday(&tv, &tz);
     tm=localtime(&tv.tv_sec);
 
-	std::stringstream ss;
-	ss << tm->tm_hour << ":" << tm->tm_min << ":" << tm->tm_sec << "."<< tv.tv_usec;
+	stringstream ss;
+	ss << setfill('0') << setw(2) << tm->tm_hour << ":" <<
+	      setfill('0') << setw(2) << tm->tm_min << ":" <<
+	      setfill('0') << setw(2) << tm->tm_sec << "."<< tv.tv_usec;
 
 	return ss.str();
 }
