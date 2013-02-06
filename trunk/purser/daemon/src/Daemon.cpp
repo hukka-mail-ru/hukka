@@ -24,6 +24,38 @@
 
 using namespace std;
 
+void Daemon::ReadConfigFile(const string& configfile)
+{
+
+	ifstream file;
+	file.open(configfile.c_str());
+
+	if(!file)
+	{
+		THROW_EX(MyException()) << "Can't open config file: " << configfile;
+	}
+
+	string line;
+	while( getline(file, line) )
+	{
+	  istringstream iss_line(line);
+	  string key;
+	  if( getline(iss_line, key, '=') )
+	  {
+	    string value;
+	    if( getline(iss_line, value) )
+	    {
+	    	mConfig[key] = value;
+	    }
+	  }
+	}
+}
+
+std::string Daemon::GetConfigValue(const std::string& key)
+{
+	return mConfig[key];
+}
+
 int Daemon::Daemonize()
 {
 
