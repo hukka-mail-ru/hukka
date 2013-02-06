@@ -10,6 +10,7 @@
 
 #include <string>
 #include <sstream>
+#include <iomanip>
 
 #include "MyException.h"
 #include "Base.h"

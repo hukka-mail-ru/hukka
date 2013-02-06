@@ -57,7 +57,7 @@ void Socket::ConnectToHost(const string& host, unsigned port)
 		THROW_EX(SocketException(host, port)) << "Connect error";
 	}
 
-	cout << "connected to host: " << host << ":" << port << endl;
+	PRINT_LOG << "connected to host: " << host << ":" << port << "\n";
 }
 
 void Socket::Listen(int port)

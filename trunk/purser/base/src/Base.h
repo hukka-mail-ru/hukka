@@ -12,9 +12,8 @@
 
 #define __WHEN__	Base::GetCurrentTime()
 
-#define __WHERE__   Base::Filename(__FILE__) + std::string(" ") \
-                    + std::string("[") + std::to_string(__LINE__)  + std::string("] ") \
-                    + std::string(__FUNCTION__) + std::string("\t")
+#define __WHERE__   Base::Filename(__FILE__) << \
+          " ["  << __LINE__  << "] " << __FUNCTION__<< "\t\t"
 
 
 #define GETTER_(TYPE, VAR) \

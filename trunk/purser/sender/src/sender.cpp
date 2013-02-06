@@ -7,9 +7,6 @@
 //============================================================================
 
 
-#include <iostream>
-#include <string>
-
 #include <stdlib.h>
 
 #include "Socket.h"
@@ -25,7 +22,7 @@ int main(int argc, char** argv)
 	{
 		string logfile = "/var/log/sender.log";
 
-		cout << "Hello!" << endl;
+		PRINT_LOG << "Hello!\n";
 
 		// READ COMMAND LINE
 		int port = 1234;
@@ -39,8 +36,9 @@ int main(int argc, char** argv)
 				port = atoi(argv[i+1]);
 			}
 		}
-		cout << "Port: " << port << endl;
-		cout << "Ready." << endl;
+
+		PRINT_LOG << "Port: " << port << "\n";
+		PRINT_LOG << "Ready.\n";
 
 
 		Socket socket;
