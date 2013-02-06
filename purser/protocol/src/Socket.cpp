@@ -149,8 +149,8 @@ void Socket::SendMessage(const Message& mes) const
 
 	PRINT_LOG << "Phone: " << mes.GetPhone() << "; Len " << mes.GetPhone().length() << "\n";
 	PRINT_LOG << "Text: "  << mes.GetText() << "; Len " << mes.GetText().length() << "\n";
-	Log::WriteBytes(str);
 	PRINT_LOG << "Len: "   << str.length() << "\n";
+	Log::WriteBytes(str);
 }
 
 void Socket::Close() const
