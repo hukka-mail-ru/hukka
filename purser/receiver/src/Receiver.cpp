@@ -11,7 +11,6 @@
 #include "Receiver.h"
 #include "MyException.h"
 #include "Log.h"
-#include "Config.h"
 
 using namespace std;
 
@@ -91,14 +90,12 @@ int main(int argc, char** argv)
 		}
 
 		// Read config
-		Config::ReadConfigFile(configfile);
-		port = Config::Port;
-		logfile = Config::Logfile;
-
+		Receiver receiver(pidfile, configfile);
+		port = atoi(receiver.GetConfigValue("port").c_str());
+		logfile = receiver.GetConfigValue("logfile");
 
 		Log::SetLogFile(logfile);
 
-		Receiver receiver(pidfile);
 		receiver.ListenPort(port);
 
 		cout << "Config : " << configfile << endl;
