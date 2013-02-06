@@ -51,7 +51,7 @@ void Daemon::ReadConfigFile(const string& configfile)
 	}
 }
 
-std::string Daemon::GetConfigValue(const std::string& key)
+ConfigValue Daemon::GetConfigValue(const ConfigKey& key)
 {
 	return mConfig[key];
 }

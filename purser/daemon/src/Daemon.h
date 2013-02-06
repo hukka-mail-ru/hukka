@@ -11,6 +11,9 @@
 #include <string>
 #include <map>
 
+typedef std::string ConfigKey;
+typedef std::string ConfigValue;
+
 class Daemon
 {
 public:
@@ -25,14 +28,14 @@ public:
 
 	int Daemonize();
 
-	std::string GetConfigValue(const std::string& key);
+	ConfigValue GetConfigValue(const ConfigKey& key);
 
 private:
 	void ReadConfigFile(const std::string& configfile);
 
 	std::string mPidfile;
 
-	std::map<std::string, std::string> mConfig;
+	std::map<ConfigKey, ConfigValue> mConfig;
 };
 
 
