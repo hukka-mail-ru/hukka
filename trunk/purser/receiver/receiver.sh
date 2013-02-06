@@ -5,6 +5,7 @@ DAEMON=/home/hukka/devel/purser/receiver/Debug/$NAME
 #PIDFILE=/var/run/$NAME.pid
 PIDFILE=/home/hukka/devel/purser/log/$NAME.pid
 LOGFILE=/home/hukka/devel/purser/log/$NAME.log
+PORT=1233
 
 
 #
@@ -12,7 +13,7 @@ LOGFILE=/home/hukka/devel/purser/log/$NAME.log
 #
 case "$1" in
   start)
-	$DAEMON --pidfile $PIDFILE --logfile $LOGFILE
+	$DAEMON --pidfile $PIDFILE --logfile $LOGFILE --port $PORT
 	;;
   stop)
 	PID=`cat $PIDFILE 2>/dev/null`

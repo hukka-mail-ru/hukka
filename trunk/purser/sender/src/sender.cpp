@@ -23,9 +23,9 @@ int main(int argc, char** argv)
 {
 	try
 	{
-		Log::SetLogFile("/var/log/sender.log");
+		string logfile = "/var/log/sender.log";
 
-		cout << "hello" << endl;
+		cout << "Hello!" << endl;
 
 		// READ COMMAND LINE
 		int port = 1234;
@@ -40,9 +40,15 @@ int main(int argc, char** argv)
 			}
 			else if (arg == "--logfile" && i+1 < argc)
 			{
-				Log::SetLogFile(argv[i+1]);
+				logfile = argv[i+1];
 			}
 		}
+
+		cout << "Log : " << logfile << endl;
+		cout << "Port: " << port << endl;
+		cout << "Ready." << endl;
+
+		Log::SetLogFile(logfile);
 
 		Socket socket;
 		socket.ConnectToHost("localhost", port);
@@ -57,7 +63,7 @@ int main(int argc, char** argv)
 	catch (MyException& e)
 	{
 		Log::Write(e);
-		cout << e.what() << endl;
+		cout << "EXCEPTION: " << e.what() << endl;
 	}
 
 

@@ -2,9 +2,9 @@
 
 NAME=sender
 PROG=/home/hukka/devel/purser/bin/$NAME
-PIDFILE=/home/hukka/devel/purser/log/$NAME.pid
 LOGFILE=/home/hukka/devel/purser/log/$NAME.log
+PORT=1233
 
 
-$PROG --pidfile $PIDFILE --logfile $LOGFILE
+$PROG --logfile $LOGFILE --port $PORT
 

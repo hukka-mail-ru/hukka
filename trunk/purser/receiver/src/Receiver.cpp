@@ -96,8 +96,10 @@ int main(int argc, char** argv)
 		Receiver receiver(pidfile);
 		receiver.ListenPort(port);
 
-		cout << "Log: " << logfile << endl;
-		cout << "Ready - port " << port << endl;
+		cout << "Log : " << logfile << endl;
+		cout << "PID : " << pidfile << endl;
+		cout << "Port: " << port << endl;
+		cout << "Ready." << endl;
 
 		// daemon loop
 		return receiver.Daemonize();
