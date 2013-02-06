@@ -1,2 +1,2 @@
 pwd
-./receiver/receiver.sh restart
+./bin/receiver.sh restart

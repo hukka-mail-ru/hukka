@@ -1,1 +1,1 @@
-sender/send.sh
+bin/send.sh

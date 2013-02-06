@@ -1,7 +1,7 @@
 #! /bin/sh
 
-NAME=receiver
-DAEMON=/home/hukka/devel/purser/receiver/Debug/$NAME
+NAME=receiverd
+DAEMON=/home/hukka/devel/purser/bin/$NAME
 #PIDFILE=/var/run/$NAME.pid
 PIDFILE=/home/hukka/devel/purser/log/$NAME.pid
 LOGFILE=/home/hukka/devel/purser/log/$NAME.log
@@ -26,9 +26,8 @@ case "$1" in
 	;;
 
   force-stop)
-	PID=`cat $PIDFILE 2>/dev/null`
-        echo "Killing daemon: PID $PID"
-	kill -9 $PID
+        echo "Killing all: $NAME"
+	killall -9 $NAME
 	;;
   *)
 	echo "Usage: $0 {start|stop|restart|force-stop}"
