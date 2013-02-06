@@ -10,7 +10,6 @@
 
 #include <string>
 #include <sstream>
-#include <stdexcept>
 
 
 #define WHERE_WHAT MyException() << where << "\t" << what
@@ -58,10 +57,10 @@ private:
 
 
 
-class ExceptionSocketError: public MyException
+class SocketException: public MyException
 {
 public:
-	ExceptionSocketError(const std::string& host, int port)
+	SocketException(const std::string& host, int port)
 	{
 	    std::stringstream ss;
 	    ss << "host " << host << "; port " << port;
@@ -70,7 +69,7 @@ public:
 };
 
 
-class ExceptionProtocolError: public MyException
+class ProtocolException: public MyException
 {
 };
 
