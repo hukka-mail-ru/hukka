@@ -41,8 +41,8 @@ int main(int argc, char** argv)
 		PRINT_LOG << "Port: " << port << "\n";
 		PRINT_LOG << "Ready.\n";
 
-	////	for(int i=0; i<10; i++)
-	//	{
+		//for(int i=0; i<10; i++)
+		//{
 
 			Socket socket;
 			socket.ConnectToHost("localhost", port);

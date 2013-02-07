@@ -22,14 +22,16 @@ int Responder::Run()
 	{
 		try
 		{
-			mSocket.Open();
+			Socket insocket = GetListeningSocket();
+
+			insocket.Open();
 
 			// Get new message
-			Message mes = mSocket.ReceiveMessage();
+			Message mes = insocket.ReceiveMessage();
 
 			PRINT_LOG << "Phone: " << mes.GetPhone() << "  Responce: " << mes.GetText() << "\n";
 
-			mSocket.Close();
+			insocket.Close();
 		}
 		catch (MyException& e)
 		{
@@ -37,25 +39,12 @@ int Responder::Run()
 		}
 	}
 
-	// STOP LISTENING
-	try
-	{
-		mSocket.StopListen();
-	}
-	catch (MyException& e)
-	{
-		Log::Write(e);
-		return -1;
-	}
+
+	StopListen();
 
 	return 0;
 }
 
-void Responder::ListenPort(int port)
-{
-	mSocket.Listen(port);
-	PRINT_LOG << "Listen: " << port << "\n";
-}
 
 
 int main(int argc, char** argv)
@@ -63,11 +52,7 @@ int main(int argc, char** argv)
 	try
 	{
 		string logfile = "/var/log/Responder.log";
-
-		// READ COMMAND LINE
 		string pidfile = "/var/run/Responder.pid";
-		int inport = 1111;
-
 		string configfile = "/etc/config.conf";
 
 		for (int i = 0; i < argc; i++)
@@ -86,7 +71,7 @@ int main(int argc, char** argv)
 
 		// Read config
 		Responder Responder(pidfile, configfile);
-		inport = atoi(Responder.GetConfigValue("inport").c_str());
+		int inport = atoi(Responder.GetConfigValue("inport").c_str());
 		logfile = Responder.GetConfigValue("logfile");
 
 		Responder.ListenPort(inport);
