@@ -7,14 +7,15 @@
 //============================================================================
 
 
-#include "Receiver.h"
+#include "Responder.h"
 #include "MyException.h"
 #include "Log.h"
 
 using namespace std;
 
 
-int Receiver::Run()
+
+int Responder::Run()
 {
 	// LISTEN
 	while (true)
@@ -26,18 +27,9 @@ int Receiver::Run()
 			// Get new message
 			Message mes = mSocket.ReceiveMessage();
 
+			PRINT_LOG << "Phone: " << mes.GetPhone() << "  Responce: " << mes.GetText() << "\n";
+
 			mSocket.Close();
-
-			// send response
-			Socket outsocket;
-			outsocket.ConnectToHost("localhost", mOutport);
-
-			Message reply;
-			reply.SetPhone(mes.GetPhone());
-			reply.SetText("This is a reply");
-
-			outsocket.SendMessage(reply);
-
 		}
 		catch (MyException& e)
 		{
@@ -59,7 +51,7 @@ int Receiver::Run()
 	return 0;
 }
 
-void Receiver::ListenPort(int port)
+void Responder::ListenPort(int port)
 {
 	mSocket.Listen(port);
 	PRINT_LOG << "Listen: " << port << "\n";
@@ -70,12 +62,11 @@ int main(int argc, char** argv)
 {
 	try
 	{
-		string logfile = "/var/log/receiver.log";
+		string logfile = "/var/log/Responder.log";
 
 		// READ COMMAND LINE
-		string pidfile = "/var/run/receiver.pid";
+		string pidfile = "/var/run/Responder.pid";
 		int inport = 1111;
-		int outport = 1111;
 
 		string configfile = "/etc/config.conf";
 
@@ -94,25 +85,22 @@ int main(int argc, char** argv)
 		}
 
 		// Read config
-		Receiver receiver(pidfile, configfile);
-		inport = atoi(receiver.GetConfigValue("inport").c_str());
-		outport = atoi(receiver.GetConfigValue("outport").c_str());
-		logfile = receiver.GetConfigValue("logfile");
+		Responder Responder(pidfile, configfile);
+		inport = atoi(Responder.GetConfigValue("inport").c_str());
+		logfile = Responder.GetConfigValue("logfile");
 
-		receiver.SetOutport(outport);
-		receiver.ListenPort(inport);
+		Responder.ListenPort(inport);
 
 		PRINT_LOG << "Config : " << configfile << "\n";
 		PRINT_LOG << "Log : " << logfile <<  "\n";
 		PRINT_LOG << "PID : " << pidfile <<  "\n";
 		PRINT_LOG << "IN Port: " << inport <<  "\n";
-		PRINT_LOG << "OUT Port: " << outport <<  "\n";
 		PRINT_LOG << "Ready." <<  "\n";
 
 		Log::SetLogFile(logfile);
 
 		// daemon loop
-		return receiver.Daemonize();
+		return Responder.Daemonize();
 	}
 	catch (MyException& e)
 	{

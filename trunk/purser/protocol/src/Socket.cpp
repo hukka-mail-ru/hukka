@@ -60,6 +60,11 @@ void Socket::ConnectToHost(const string& host, unsigned port)
 	PRINT_LOG << "connected to host: " << host << ":" << port << "\n";
 }
 
+void Socket::DisconnectFromHost()
+{
+	shutdown(mSockfd, SHUT_RDWR);
+}
+
 void Socket::Listen(int port)
 {
 	// PREPARE SOCKET

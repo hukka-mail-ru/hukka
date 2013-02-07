@@ -16,6 +16,7 @@ public:
 
 	// client
 	void ConnectToHost(const std::string& host, unsigned port);
+	void DisconnectFromHost();
 
 	// server
 	void Listen(int port);
