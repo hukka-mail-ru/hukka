@@ -8,6 +8,7 @@
 
 
 #include <stdlib.h>
+#include <string>
 
 #include "Socket.h"
 #include "Log.h"
@@ -40,16 +41,21 @@ int main(int argc, char** argv)
 		PRINT_LOG << "Port: " << port << "\n";
 		PRINT_LOG << "Ready.\n";
 
+	////	for(int i=0; i<10; i++)
+	//	{
 
-		Socket socket;
-		socket.ConnectToHost("localhost", port);
+			Socket socket;
+			socket.ConnectToHost("localhost", port);
 
 
-		Message mes;
-		mes.SetPhone("+79111112233867867");
-		mes.SetText("Hello from sender");
+			Message mes;
+			mes.SetPhone("+7911 908 92 09 ");
+			mes.SetText("Hello from sender");
 
-		socket.SendMessage(mes);
+			socket.SendMessage(mes);
+
+		//	socket.DisconnectFromHost();
+		//}
 	}
 	catch (MyException& e)
 	{
