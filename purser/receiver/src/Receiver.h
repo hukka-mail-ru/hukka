@@ -10,8 +10,9 @@
 
 #include "Socket.h"
 #include "Daemon.h"
+#include "Listener.h"
 
-class Receiver: public Daemon
+class Receiver: public Daemon, public Listener
 {
 public:
 	Receiver(const std::string& pidfile, const std::string& configfile):
@@ -19,12 +20,10 @@ public:
 
 	virtual int Run();
 
-	void ListenPort(int port);
-
 	SETTER_(int, Outport);
 
 private:
-	Socket mSocket;
+
 	int mOutport;
 };
 

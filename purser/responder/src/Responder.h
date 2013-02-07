@@ -10,19 +10,15 @@
 
 #include "Socket.h"
 #include "Daemon.h"
+#include "Listener.h"
 
-class Responder: public Daemon
+class Responder: public Daemon, public Listener
 {
 public:
 	Responder(const std::string& pidfile, const std::string& configfile):
 		Daemon(pidfile, configfile) {}
 
 	virtual int Run();
-
-	void ListenPort(int port);
-
-private:
-	Socket mSocket;
 };
 
 

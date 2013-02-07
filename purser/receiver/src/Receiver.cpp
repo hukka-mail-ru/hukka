@@ -21,12 +21,13 @@ int Receiver::Run()
 	{
 		try
 		{
-			mSocket.Open();
+			Socket insocket = GetListeningSocket();
+			insocket.Open();
 
 			// Get new message
-			Message mes = mSocket.ReceiveMessage();
+			Message mes = insocket.ReceiveMessage();
 
-			mSocket.Close();
+			insocket.Close();
 
 			// send response
 			Socket outsocket;
@@ -45,24 +46,9 @@ int Receiver::Run()
 		}
 	}
 
-	// STOP LISTENING
-	try
-	{
-		mSocket.StopListen();
-	}
-	catch (MyException& e)
-	{
-		Log::Write(e);
-		return -1;
-	}
+	StopListen();
 
 	return 0;
-}
-
-void Receiver::ListenPort(int port)
-{
-	mSocket.Listen(port);
-	PRINT_LOG << "Listen: " << port << "\n";
 }
 
 
@@ -71,12 +57,7 @@ int main(int argc, char** argv)
 	try
 	{
 		string logfile = "/var/log/receiver.log";
-
-		// READ COMMAND LINE
 		string pidfile = "/var/run/receiver.pid";
-		int inport = 1111;
-		int outport = 1111;
-
 		string configfile = "/etc/config.conf";
 
 		for (int i = 0; i < argc; i++)
@@ -95,8 +76,8 @@ int main(int argc, char** argv)
 
 		// Read config
 		Receiver receiver(pidfile, configfile);
-		inport = atoi(receiver.GetConfigValue("inport").c_str());
-		outport = atoi(receiver.GetConfigValue("outport").c_str());
+		int inport = atoi(receiver.GetConfigValue("inport").c_str());
+		int outport = atoi(receiver.GetConfigValue("outport").c_str());
 		logfile = receiver.GetConfigValue("logfile");
 
 		receiver.SetOutport(outport);
