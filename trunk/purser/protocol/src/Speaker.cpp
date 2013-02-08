@@ -17,11 +17,11 @@ Speaker::~Speaker() {
 	// TODO Auto-generated destructor stub
 }
 
-void Speaker::Speak(const std::string& host, const Message& message)
+void Speaker::Speak(const Message& message)
 {
 	// send response
 	Socket socket;
-	socket.ConnectToHost(host, mPort);
+	socket.ConnectToHost(mHost, mPort);
 
 	socket.SendMessage(message);
 }

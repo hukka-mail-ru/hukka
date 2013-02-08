@@ -17,11 +17,13 @@ public:
 	Speaker();
 	virtual ~Speaker();
 
+	SETTER_(std::string, Host);
 	SETTER_(unsigned, Port);
 
-	void Speak(const std::string& host, const Message& message);
+	void Speak(const Message& message);
 
 private:
+	std::string mHost;
 	unsigned mPort;
 };
 
