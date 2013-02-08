@@ -13,7 +13,22 @@
 
 using namespace std;
 
+Responder::Responder(const std::string& pidfile, const std::string& configfile):
+	Daemon(pidfile, configfile)
+{
+	int inport = atoi(GetConfigValue("inport").c_str());
+	string logfile = GetConfigValue("logfile");
 
+	mListener.ListenPort(inport);
+
+	PRINT_LOG << "Config : " << configfile << "\n";
+	PRINT_LOG << "Log : " << logfile <<  "\n";
+	PRINT_LOG << "PID : " << pidfile <<  "\n";
+	PRINT_LOG << "IN Port: " << inport <<  "\n";
+	PRINT_LOG << "Ready." <<  "\n";
+
+	Log::SetLogFile(logfile);
+}
 
 int Responder::Run()
 {
@@ -22,16 +37,9 @@ int Responder::Run()
 	{
 		try
 		{
-			Socket insocket = GetListeningSocket();
+			Message mes = mListener.WaitForMessage();
 
-			insocket.Open();
-
-			// Get new message
-			Message mes = insocket.ReceiveMessage();
-
-			PRINT_LOG << "Phone: " << mes.GetPhone() << "  Responce: " << mes.GetText() << "\n";
-
-			insocket.Close();
+			PRINT_LOG << "Phone: " << mes.GetPhone() << "  Response: " << mes.GetText() << "\n";
 		}
 		catch (MyException& e)
 		{
@@ -40,7 +48,7 @@ int Responder::Run()
 	}
 
 
-	StopListen();
+	mListener.StopListen();
 
 	return 0;
 }
@@ -51,7 +59,6 @@ int main(int argc, char** argv)
 {
 	try
 	{
-		string logfile = "/var/log/Responder.log";
 		string pidfile = "/var/run/Responder.pid";
 		string configfile = "/etc/config.conf";
 
@@ -71,18 +78,6 @@ int main(int argc, char** argv)
 
 		// Read config
 		Responder Responder(pidfile, configfile);
-		int inport = atoi(Responder.GetConfigValue("inport").c_str());
-		logfile = Responder.GetConfigValue("logfile");
-
-		Responder.ListenPort(inport);
-
-		PRINT_LOG << "Config : " << configfile << "\n";
-		PRINT_LOG << "Log : " << logfile <<  "\n";
-		PRINT_LOG << "PID : " << pidfile <<  "\n";
-		PRINT_LOG << "IN Port: " << inport <<  "\n";
-		PRINT_LOG << "Ready." <<  "\n";
-
-		Log::SetLogFile(logfile);
 
 		// daemon loop
 		return Responder.Daemonize();

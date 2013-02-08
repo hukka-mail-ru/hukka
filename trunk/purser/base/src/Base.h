@@ -8,7 +8,7 @@
 #ifndef BASE_H_
 #define BASE_H_
 
-#include <string.h>
+#include <string>
 
 #define __WHEN__	Base::GetCurrentTime()
 

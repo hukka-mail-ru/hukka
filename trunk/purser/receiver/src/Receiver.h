@@ -8,23 +8,21 @@
 #ifndef RECEIVER_H_
 #define RECEIVER_H_
 
-#include "Socket.h"
 #include "Daemon.h"
 #include "Listener.h"
+#include "Speaker.h"
 
-class Receiver: public Daemon, public Listener
+class Receiver: public Daemon
 {
 public:
-	Receiver(const std::string& pidfile, const std::string& configfile):
-		Daemon(pidfile, configfile) {}
+	Receiver(const std::string& pidfile, const std::string& configfile);
 
 	virtual int Run();
 
-	SETTER_(int, Outport);
-
 private:
 
-	int mOutport;
+    Listener mListener;
+    Speaker mSpeaker;
 };
 
 

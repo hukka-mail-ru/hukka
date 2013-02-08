@@ -13,6 +13,26 @@
 
 using namespace std;
 
+Receiver::Receiver(const std::string& pidfile, const std::string& configfile):
+	Daemon(pidfile, configfile)
+{
+	int inport = atoi(GetConfigValue("inport").c_str());
+	int outport = atoi(GetConfigValue("outport").c_str());
+	string logfile = GetConfigValue("logfile");
+
+	mListener.ListenPort(inport);
+	mSpeaker.SetPort(outport);
+
+	PRINT_LOG << "Config : " << configfile << "\n";
+	PRINT_LOG << "Log : " << logfile <<  "\n";
+	PRINT_LOG << "PID : " << pidfile <<  "\n";
+	PRINT_LOG << "IN Port: " << inport <<  "\n";
+	PRINT_LOG << "OUT Port: " << outport <<  "\n";
+	PRINT_LOG << "Ready." <<  "\n";
+
+	Log::SetLogFile(logfile);
+}
+
 
 int Receiver::Run()
 {
@@ -21,23 +41,13 @@ int Receiver::Run()
 	{
 		try
 		{
-			Socket insocket = GetListeningSocket();
-			insocket.Open();
-
-			// Get new message
-			Message mes = insocket.ReceiveMessage();
-
-			insocket.Close();
-
-			// send response
-			Socket outsocket;
-			outsocket.ConnectToHost("localhost", mOutport);
+			Message mes = mListener.WaitForMessage();
 
 			Message reply;
 			reply.SetPhone(mes.GetPhone());
 			reply.SetText("This is a reply");
 
-			outsocket.SendMessage(reply);
+			mSpeaker.Speak("localhost", reply);
 
 		}
 		catch (MyException& e)
@@ -46,7 +56,7 @@ int Receiver::Run()
 		}
 	}
 
-	StopListen();
+	mListener.StopListen();
 
 	return 0;
 }
@@ -56,7 +66,6 @@ int main(int argc, char** argv)
 {
 	try
 	{
-		string logfile = "/var/log/receiver.log";
 		string pidfile = "/var/run/receiver.pid";
 		string configfile = "/etc/config.conf";
 
@@ -76,21 +85,6 @@ int main(int argc, char** argv)
 
 		// Read config
 		Receiver receiver(pidfile, configfile);
-		int inport = atoi(receiver.GetConfigValue("inport").c_str());
-		int outport = atoi(receiver.GetConfigValue("outport").c_str());
-		logfile = receiver.GetConfigValue("logfile");
-
-		receiver.SetOutport(outport);
-		receiver.ListenPort(inport);
-
-		PRINT_LOG << "Config : " << configfile << "\n";
-		PRINT_LOG << "Log : " << logfile <<  "\n";
-		PRINT_LOG << "PID : " << pidfile <<  "\n";
-		PRINT_LOG << "IN Port: " << inport <<  "\n";
-		PRINT_LOG << "OUT Port: " << outport <<  "\n";
-		PRINT_LOG << "Ready." <<  "\n";
-
-		Log::SetLogFile(logfile);
 
 		// daemon loop
 		return receiver.Daemonize();
