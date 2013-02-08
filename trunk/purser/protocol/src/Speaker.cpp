@@ -7,6 +7,7 @@
 
 #include "Speaker.h"
 #include "Socket.h"
+#include "MyException.h"
 
 Speaker::Speaker() {
 	// TODO Auto-generated constructor stub

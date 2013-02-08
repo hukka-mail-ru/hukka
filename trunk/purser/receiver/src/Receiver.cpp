@@ -55,7 +55,7 @@ int Receiver::Run()
 		}
 		catch (MyException& e)
 		{
-			Log::Write(e);
+			PRINT_EX(e);
 		}
 	}
 
@@ -94,7 +94,7 @@ int main(int argc, char** argv)
 	}
 	catch (MyException& e)
 	{
-		Log::Write(e);
+		PRINT_EX(e);
 		return -1;
 	}
 }

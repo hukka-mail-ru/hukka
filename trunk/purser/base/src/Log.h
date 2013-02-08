@@ -17,6 +17,7 @@
 
 
 #define PRINT_LOG 	Log() << __WHEN__ << " " << __WHERE__
+#define PRINT_EX(EXCEPTION) 	Log() << __WHEN__ << " " << __WHERE__ << "Catch exception!\n"; Log::Write(EXCEPTION);
 
 
 class Log {
