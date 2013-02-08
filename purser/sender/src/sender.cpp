@@ -59,7 +59,7 @@ int main(int argc, char** argv)
 	}
 	catch (MyException& e)
 	{
-		Log::Write(e);
+		PRINT_EX(e);
 	}
 
 
