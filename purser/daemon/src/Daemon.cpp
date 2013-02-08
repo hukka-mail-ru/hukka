@@ -53,6 +53,13 @@ void Daemon::ReadConfigFile(const string& configfile)
 
 ConfigValue Daemon::GetConfigValue(const ConfigKey& key)
 {
+	map<ConfigKey, ConfigValue>::iterator it = mConfig.find(key);
+
+	if(it == mConfig.end())
+	{
+		THROW_EX(MyException()) << "Can't find config entry: '" << key <<"'";
+	}
+
 	return mConfig[key];
 }
 

@@ -18,9 +18,12 @@ Receiver::Receiver(const std::string& pidfile, const std::string& configfile):
 {
 	int inport = atoi(GetConfigValue("inport").c_str());
 	int outport = atoi(GetConfigValue("outport").c_str());
+	string outhost = GetConfigValue("outhost");
 	string logfile = GetConfigValue("logfile");
 
 	mListener.ListenPort(inport);
+
+	mSpeaker.SetHost(outhost);
 	mSpeaker.SetPort(outport);
 
 	PRINT_LOG << "Config : " << configfile << "\n";
@@ -47,7 +50,7 @@ int Receiver::Run()
 			reply.SetPhone(mes.GetPhone());
 			reply.SetText("This is a reply");
 
-			mSpeaker.Speak("localhost", reply);
+			mSpeaker.Speak(reply);
 
 		}
 		catch (MyException& e)
