@@ -9,6 +9,7 @@
 #define LISTENER_H_
 
 #include "Socket.h"
+#include "Message.h"
 
 class Listener {
 public:
@@ -19,7 +20,8 @@ public:
 
 	void StopListen();
 
-	Socket GetListeningSocket() { return mSocket; }
+	Message WaitForMessage();
+
 
 private:
 	Socket mSocket;

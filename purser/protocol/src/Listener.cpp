@@ -28,3 +28,16 @@ void Listener::ListenPort(int port)
 	mSocket.Listen(port);
 	PRINT_LOG << "Listen: " << port << "\n";
 }
+
+
+Message Listener::WaitForMessage()
+{
+	mSocket.Open();
+
+	// Get new message
+	Message mes = mSocket.ReceiveMessage();
+
+	mSocket.Close();
+
+	return mes;
+}

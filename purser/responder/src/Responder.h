@@ -8,17 +8,18 @@
 #ifndef Responder_H_
 #define Responder_H_
 
-#include "Socket.h"
 #include "Daemon.h"
 #include "Listener.h"
 
-class Responder: public Daemon, public Listener
+class Responder: public Daemon
 {
 public:
-	Responder(const std::string& pidfile, const std::string& configfile):
-		Daemon(pidfile, configfile) {}
+	Responder(const std::string& pidfile, const std::string& configfile);
 
 	virtual int Run();
+private:
+
+    Listener mListener;
 };
 
 
