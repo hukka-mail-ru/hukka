@@ -1,5 +1,7 @@
 #! /bin/sh
 
+export LD_LIBRARY_PATH=../lib
+
 NAME=receiverd
 DAEMON=/home/hukka/devel/purser/bin/$NAME
 
