@@ -47,7 +47,6 @@ int Responder::Run()
 		}
 	}
 
-
 	mListener.StopListen();
 
 	return 0;
