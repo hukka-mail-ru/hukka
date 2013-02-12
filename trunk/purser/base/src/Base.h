@@ -9,11 +9,13 @@
 #define BASE_H_
 
 #include <string>
+#include <iomanip>
 
 #define __WHEN__	Base::GetCurrentTime()
 
-#define __WHERE__   Base::Filename(__FILE__) << \
-          " ["  << __LINE__  << "] " << __FUNCTION__<< "\t\t"
+#define __WHERE__ "["  << std::right << std::setw(4) << __LINE__  << "] " << \
+                 std::left << std::setw(16) << Base::Filename(__FILE__) << \
+                 std::left << std::setw(16) << __FUNCTION__
 
 
 #define GETTER_(TYPE, VAR) \
