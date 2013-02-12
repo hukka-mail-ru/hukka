@@ -44,7 +44,7 @@ string Base::GetCurrentTime()
 	ss << setfill('0') << setw(2) << tm->tm_hour << ":" <<
 	      setfill('0') << setw(2) << tm->tm_min << ":" <<
 	      setfill('0') << setw(2) << tm->tm_sec << "." <<
-	      setfill('0') << setw(4) << tv.tv_usec;
+	      setfill('0') << setw(4) << tv.tv_usec/100;
 
 	return ss.str();
 }
