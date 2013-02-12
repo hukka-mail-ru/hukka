@@ -15,6 +15,10 @@
 #include "MyException.h"
 #include "Base.h"
 
+const std::string __BLACK__  = "\033[0m";
+const std::string __BLUE__   = "\033[1;34m";
+const std::string __RED__    = "\033[1;31m";
+
 
 #define PRINT_LOG 	{ std::stringstream ss; \
                       ss << __WHEN__ << " " << __WHERE__; \
@@ -22,7 +26,7 @@
                     Log()
 
 #define PRINT_LOG_HI { std::stringstream ss; \
-                      ss << "\033[1;34m" << __WHEN__ << " " << __WHERE__ << "\033[0m"; \
+                      ss << __BLUE__ << __WHEN__ << " " << __WHERE__ << __BLACK__; \
 	                  Log::Write(ss.str()); } \
                     Log()
 
