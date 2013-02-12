@@ -36,9 +36,9 @@ void Log::Write(const string& log)
 
 void Log::Write(const MyException& exception)
 {
-	Write(__RED__ + "\n"); // red
+	Write("\033[1;31m\n"); // red
 	Write(string("EXCEPTION!\n") + exception.what() + "\n");
-	Write(__BLACK__  + "\n"); // black again
+	Write("\033[0m\n"); // black again
 }
 
 void Log::WriteBytes(const string& log)
