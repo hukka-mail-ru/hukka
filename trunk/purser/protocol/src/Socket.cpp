@@ -129,7 +129,7 @@ void Socket::Open()
 
 Message Socket::ReceiveMessage() const
 {
-	PRINT_LOG << " === INCOMING === \n";
+	PRINT_LOG_HI << " === INCOMING === \n";
 
 	char buf[MessageSize] = {'0'};
 	recv(mSockfd, buf, MessageSize, MSG_WAITALL);
@@ -146,7 +146,7 @@ Message Socket::ReceiveMessage() const
 
 void Socket::SendMessage(const Message& mes) const
 {
-	PRINT_LOG << "======= OUTGOING  =======" << "\n";
+	PRINT_LOG_HI << "======= OUTGOING  =======" << "\n";
 
 	string str = mes.Serialize();
 
