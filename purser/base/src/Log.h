@@ -16,8 +16,13 @@
 #include "Base.h"
 
 
-#define PRINT_LOG 	Log() << __WHEN__ << " " << __WHERE__
-#define PRINT_EX(EXCEPTION) 	Log() << __WHEN__ << " " << __WHERE__ << "Catch exception!\n"; Log::Write(EXCEPTION);
+#define PRINT_LOG 	{ std::stringstream ss; \
+                      ss << __WHEN__ << " " << __WHERE__; \
+	                  Log::Write(ss.str()); } \
+                    Log()
+
+#define PRINT_EX(EXCEPTION) PRINT_LOG << "Catch exception!\n";  \
+                            Log::Write(EXCEPTION);
 
 
 class Log {
@@ -25,6 +30,7 @@ public:
 
 	static void SetLogFile(const std::string& logfile);
 
+	static void Write(const std::string& str);
 	static void Write(const MyException& exception);
 	static void WriteBytes(const std::string& bytes);
 
@@ -39,7 +45,6 @@ public:
 
 private:
 
-	static void Write(const std::string& str);
 	static void Clear();
 
 	static std::string mLogfile;

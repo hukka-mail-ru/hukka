@@ -15,7 +15,8 @@
 
 #define WHERE_WHAT MyException() << where << "\t" << what
 
-#define THROW_EX(EXTYPE)	throw EXTYPE << __WHERE__
+#define THROW_EX(EXTYPE)	throw EXTYPE << "at [" << __LINE__  << "] " \
+                            << Base::Filename(__FILE__) << " " << __FUNCTION__ << ": "
 
 
 
