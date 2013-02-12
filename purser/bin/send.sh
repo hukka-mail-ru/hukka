@@ -1,6 +1,6 @@
 #! /bin/sh
 
-export LD_LIBRARY_PATH=../lib
+#export LD_LIBRARY_PATH=../lib
 
 NAME=sender
 PROG=/home/hukka/devel/purser/bin/$NAME

@@ -1,6 +1,6 @@
 #! /bin/sh
 
-export LD_LIBRARY_PATH=../lib
+#export LD_LIBRARY_PATH=../lib
 
 NAME=responderd
 DAEMON=/home/hukka/devel/purser/bin/$NAME
