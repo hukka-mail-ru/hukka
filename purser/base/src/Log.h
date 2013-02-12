@@ -21,6 +21,11 @@
 	                  Log::Write(ss.str()); } \
                     Log()
 
+#define PRINT_LOG_HI { std::stringstream ss; \
+                      ss << "\033[1;34m" << __WHEN__ << " " << __WHERE__ << "\033[0m"; \
+	                  Log::Write(ss.str()); } \
+                    Log()
+
 #define PRINT_EX(EXCEPTION) PRINT_LOG << "Catch exception!\n";  \
                             Log::Write(EXCEPTION);
 
