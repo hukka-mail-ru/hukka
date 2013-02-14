@@ -22,23 +22,43 @@ int main(int argc, char** argv)
 	try
 	{
 		string logfile = "/var/log/sender.log";
+		string phone = "default";
+		string text = "default";
 
-		PRINT_LOG << "Hello!\n";
+		PRINT_LOG << "Hello !\n";
 
 		// READ COMMAND LINE
 		int port = 1234;
 
 		for (int i = 0; i < argc; i++)
 		{
+
 			string arg = argv[i];
+
+			PRINT_LOG << "arg " <<  arg << " \n";
 
 			if (arg == "--port" && i+1 < argc)
 			{
+				PRINT_LOG << "--port " << " \n";
 				port = atoi(argv[i+1]);
+			}
+			if (arg == "--phone" && i+1 < argc)
+			{
+				PRINT_LOG << "--phone " << " \n";
+				phone = argv[i+1];
+			}
+			if (arg == "--text" && i+1 < argc)
+			{
+				PRINT_LOG << "--text " << " \n";
+				text = argv[i+1];
 			}
 		}
 
+		Log::SetLogFile("/home/hukka/devel/purser/log/sender.log");
+
 		PRINT_LOG << "Port: " << port << "\n";
+		PRINT_LOG << "Phone: " << phone << "\n";
+		PRINT_LOG << "Text: " << text << "\n";
 		PRINT_LOG << "Ready.\n";
 
 		//for(int i=0; i<10; i++)
@@ -49,8 +69,8 @@ int main(int argc, char** argv)
 
 
 			Message mes;
-			mes.SetPhone("+7911 908 92 09 ");
-			mes.SetText("Hello from sender");
+			mes.SetPhone(phone);
+			mes.SetText(text);
 
 			socket.SendMessage(mes);
 
