@@ -1,0 +1,124 @@
+#!/usr/bin/php
+<?php
+ 
+/**
+ * SMS file parser
+ *
+ */
+class SMS {
+ 
+    /**
+     * File's name containing SMS message
+     * (see http://smstools3.kekekasvi.com/index.php?p=fileformat)
+     * @var string
+     */
+    private $_filename;
+ 
+    /**
+     * SMS sender's phone number. International number format w/o "+" sign
+     * @var string
+     */
+    private $_from;
+ 
+    /**
+     * The SMS service centre, that sent this message
+     * @var string
+     */
+    private $_smscenter;
+ 
+    /**
+     * Time when the message was sent
+     * @var string
+     */
+    private $_sent;
+ 
+    /**
+     * Time when the message was received
+     * @var string
+     */
+    private $_received;
+ 
+    /**
+     * SMS message
+     * @var string
+     */
+    private $_message;
+ 
+ 
+    /**
+     * Constructor
+     * @param string $filename
+     */
+    public function __construct($filename) {
+        if(!file_exists($filename))
+            throw new Exception('File does not exist');
+ 
+        $this->parse($filename);
+    }
+ 
+    /**
+     * Parse SMS file
+     * @param string $filename
+     */
+    protected function parse($filename) {
+        $this->_filename = $filename;
+ 
+        $contents = file_get_contents($filename);
+        $matches = array();
+ 
+        preg_match("~From\:\s+(\d{11})~", $contents, $matches);
+        $this->_from = isset($matches[1]) ? $matches[1] : '';
+ 
+        preg_match("~\n\n(.*)~", $contents, $matches);
+        $this->_message = isset($matches[1]) ? trim($matches[1]) : '';
+    }
+ 
+    /**
+     * Get From header
+     * @return string
+     */
+    public function getFrom() {
+        return $this->_from;
+    }
+ 
+    /**
+     * Get message body
+     * @return string
+     */
+    public function getMessage() {
+        return $this->_message;
+    }
+}
+
+ 
+/**
+ * Display usage message
+ */
+function usage() {
+    echo <<<USAGE
+Usage: {$_SERVER['argv'][0]} RECEIVED <sms file>
+ 
+USAGE;
+}
+ 
+/* ======================================================================
+ * Main function
+ */
+if( $_SERVER['argc'] != 3) {
+    usage();
+    exit(1);
+}
+ 
+$event = $_SERVER['argv'][1];
+if( 'RECEIVED' !== $event ) {
+    usage();
+    exit(2);
+}
+ 
+$sms = new SMS($_SERVER['argv'][2]);
+ 
+$command = './sender --port 1233 --phone ' . $sms->getFrom() .' --text "' . $sms->getMessage() . '"';
+echo $command;
+
+$output = shell_exec($command);
+
