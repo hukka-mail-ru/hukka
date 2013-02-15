@@ -6,6 +6,7 @@
 // Description : Hello World in C++, Ansi-style
 //============================================================================
 
+#include <iostream>
 
 #include "Responder.h"
 #include "MyException.h"
@@ -32,6 +33,8 @@ Responder::Responder(const std::string& pidfile, const std::string& configfile):
 
 int Responder::Run()
 {
+	string sendsms = GetConfigValue("sendsms");
+
 	// LISTEN
 	while (true)
 	{
@@ -39,7 +42,17 @@ int Responder::Run()
 		{
 			Message mes = mListener.WaitForMessage();
 
-			PRINT_LOG << "Phone: " << mes.GetPhone() << "  Response: " << mes.GetText() << "\n";
+			string command = sendsms + " " + mes.GetPhone() + " '" + mes.GetText() + "'";
+
+			PRINT_LOG << "Run: " << command << "\n";
+
+			int status = system(command.c_str());
+
+			if(status < 1)
+			{
+				THROW_EX(MyException()) << "Error sending SMS";
+			}
+
 		}
 		catch (MyException& e)
 		{

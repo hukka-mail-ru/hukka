@@ -117,7 +117,7 @@ if( 'RECEIVED' !== $event ) {
  
 $sms = new SMS($_SERVER['argv'][2]);
  
-$command = './sender --port 1233 --phone ' . $sms->getFrom() .' --text "' . $sms->getMessage() . '"';
+$command = '/home/hukka/devel/purser/bin/sender --port 1233 --phone ' . $sms->getFrom() .' --text "' . $sms->getMessage() . '"';
 echo $command;
 
 $output = shell_exec($command);
