@@ -47,10 +47,9 @@ int Responder::Run()
 			PRINT_LOG << "Run: " << command << "\n";
 
 			int status = system(command.c_str());
-
-			if(status < 1)
+			if(status < 0)
 			{
-				THROW_EX(MyException()) << "Error sending SMS";
+				THROW_EX(MyException()) << "Error sending SMS: " << status;
 			}
 
 		}
