@@ -48,7 +48,10 @@ int Receiver::Run()
 
 			Message reply;
 			reply.SetPhone(mes.GetPhone());
-			reply.SetText("This is a reply");
+
+			std::stringstream text;
+			text << "You wrote: " << mes.GetText() << " - Automatic answer: ku-ku :)";
+			reply.SetText(text.str());
 
 			mSpeaker.Speak(reply);
 
