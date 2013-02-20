@@ -35,26 +35,25 @@ int main(int argc, char** argv)
 
 			string arg = argv[i];
 
-			PRINT_LOG << "arg " <<  arg << " \n";
-
 			if (arg == "--port" && i+1 < argc)
 			{
-				PRINT_LOG << "--port " << " \n";
 				port = atoi(argv[i+1]);
 			}
 			if (arg == "--phone" && i+1 < argc)
 			{
-				PRINT_LOG << "--phone " << " \n";
 				phone = argv[i+1];
 			}
 			if (arg == "--text" && i+1 < argc)
 			{
-				PRINT_LOG << "--text " << " \n";
 				text = argv[i+1];
+			}
+			if (arg == "--log" && i+1 < argc)
+			{
+				logfile = argv[i+1];
 			}
 		}
 
-		Log::SetLogFile("/home/hukka/devel/purser/log/sender.log");
+		Log::SetLogFile(logfile);
 
 		PRINT_LOG << "Port: " << port << "\n";
 		PRINT_LOG << "Phone: " << phone << "\n";

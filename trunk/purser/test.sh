@@ -12,7 +12,8 @@ echo "--------- responder ------------"
 
 echo "--------- send ------------"
 
-./send.sh
+./send.sh --phone 777 --text "Hello world!"
+cat ../log/sender.log
 
 echo "--------- responder log ------------"
 

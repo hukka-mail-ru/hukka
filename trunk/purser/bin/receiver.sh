@@ -3,10 +3,11 @@
 #export LD_LIBRARY_PATH=../lib
 
 NAME=receiverd
-DAEMON=/home/hukka/devel/purser/bin/$NAME
+DAEMON=./$NAME
+DIR=`pwd`
 
-CONFIGFILE=/home/hukka/devel/purser/bin/$NAME.conf
-PIDFILE=/home/hukka/devel/purser/log/$NAME.pid
+CONFIGFILE=$DIR/../config/$NAME.conf
+PIDFILE=$DIR/../log/$NAME.pid
 
 
 #

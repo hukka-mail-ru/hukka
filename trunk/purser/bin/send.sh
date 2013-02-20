@@ -3,9 +3,10 @@
 #export LD_LIBRARY_PATH=../lib
 
 NAME=sender
-PROG=/home/hukka/devel/purser/bin/$NAME
 PORT=1233
+DIR=`pwd`
+LOG=$DIR/../log/$NAME.log
 
-$PROG --port $PORT
+./$NAME --port $PORT --log $LOG
 
 
