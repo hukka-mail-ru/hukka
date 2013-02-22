@@ -1,0 +1,247 @@
+/*
+ * To change this template, choose Tools | Templates
+ * and open the template in the editor.
+ */
+
+package com.example.helloworld;
+
+import javax.microedition.midlet.*;
+import javax.microedition.lcdui.*;
+import java.util.Date;
+import java.util.TimeZone;
+
+/**
+ * @author 
+ */
+public class HelloWorldMidlet  extends MIDlet implements CommandListener, ItemCommandListener {
+
+    private boolean midletPaused = false;
+                    
+    private Command exitCommand;
+    private Command okCommand;
+    private Command exitCommand1;
+    private Form form;
+    private TextField name = new TextField("Name/ID:", "", 32, TextField.ANY);
+    private TextField flight = new TextField("Flight:", "", 32, TextField.ANY); 
+    private DateField calendar = new DateField("Date:", DateField.DATE, TimeZone.getTimeZone("GMT"));
+    private ChoiceGroup purser = new ChoiceGroup("", Choice.MULTIPLE);
+   // private StringItem lblPassword;
+    //private TextField txtPassword;
+   // private StringItem lblBlankSpace;
+    private StringItem buttonOK = new StringItem("", "Send Request", Item.BUTTON);  
+    private StringItem stringItem;
+                  
+
+    public HelloWorldMidlet () 
+    {
+    	purser.append("Purser", null);
+    	                             
+        buttonOK.addCommand(getOkCommand());
+        buttonOK.setItemCommandListener(this);   
+        buttonOK.setLayout(ImageItem.LAYOUT_CENTER);
+    }
+
+    public Form createForm() 
+    {
+        if (form == null) 
+        {                                 
+            // write pre-init user code here
+            form = new Form("Purser");
+            
+            form.append(name); 
+            form.append(flight);
+            form.append(calendar); 
+            form.append(purser); 
+            form.append(buttonOK); 
+                                  
+            form.addCommand(getExitCommand());
+            form.setCommandListener(this);             
+        }                         
+        return form;
+    }
+
+
+    private void initialize() 
+    {                                         
+        // write pre-initialize user code here
+    }                            
+
+    public void startMIDlet() 
+    {                                      
+        switchDisplayable(null, createForm());  
+    }                             
+
+    public void resumeMIDlet() 
+    {                                       
+        // write pre-action user code here
+    }                              
+
+    public void switchDisplayable(Alert alert, Displayable nextDisplayable) {                                            
+        // write pre-switch user code here
+        Display display = getDisplay();                                               
+        if (alert == null) {
+            display.setCurrent(nextDisplayable);
+        } else {
+            display.setCurrent(alert, nextDisplayable);
+        }                                             
+        // write post-switch user code here
+    }                                   
+
+    public void commandAction(Command command, Displayable displayable) {                                               
+        // write pre-action user code here
+        if (displayable == form) {                                           
+            if (command == exitCommand) {                                         
+                // write pre-action user code here
+                exitMIDlet();                                           
+                // write post-action user code here
+            }                                                  
+        }                                                
+        // write post-action user code here
+    }                               
+
+    
+    public Command getExitCommand() {
+        if (exitCommand == null) {                                 
+            // write pre-init user code here
+            exitCommand = new Command("Exit", Command.EXIT, 0);                                   
+            // write post-init user code here
+        }                         
+        return exitCommand;
+    }
+
+    
+    
+    public void commandAction(Command command, Item item) {                                                         
+        // write pre-action user code here
+        if (item == buttonOK) {                                                
+            if (command == okCommand) {                                              
+                // write pre-action user code here
+
+                // write post-action user code here
+            }                                                
+        } else if (item == stringItem) {
+            if (command == exitCommand1) {                                              
+                // write pre-action user code here
+                exitMIDlet();                                                
+                // write post-action user code here
+            }                                                            
+        }                                                          
+        // write post-action user code here
+    }                                    
+    //</editor-fold>                                  
+
+    //<editor-fold defaultstate="collapsed" desc=" Generated Getter: okCommand ">                                   
+    /**
+     * Returns an initiliazed instance of okCommand component.
+     * @return the initialized component instance
+     */
+    public Command getOkCommand() {
+        if (okCommand == null) {                                 
+            // write pre-init user code here
+            okCommand = new Command("Ok", Command.OK, 0);                                   
+            // write post-init user code here
+        }                         
+        return okCommand;
+    }
+    //</editor-fold>                       
+
+                    
+
+    //<editor-fold defaultstate="collapsed" desc=" Generated Getter: exitCommand1 ">                                   
+    /**
+     * Returns an initiliazed instance of exitCommand1 component.
+     * @return the initialized component instance
+     */
+    public Command getExitCommand1() {
+        if (exitCommand1 == null) {                                 
+            // write pre-init user code here
+            exitCommand1 = new Command("Exit", Command.EXIT, 0);                                   
+            // write post-init user code here
+        }                         
+        return exitCommand1;
+    }
+    //</editor-fold>                       
+
+    /**
+     * Returns a display instance.
+     * @return the display instance.
+     */
+    public Display getDisplay () {
+        return Display.getDisplay(this);
+    }
+
+    /**
+     * Exits MIDlet.
+     */
+    public void exitMIDlet() {
+        switchDisplayable (null, null);
+        destroyApp(true);
+        notifyDestroyed();
+    }
+
+    /**
+     * Called when MIDlet is started.
+     * Checks whether the MIDlet have been already started and initialize/starts or resumes the MIDlet.
+     */
+    public void startApp() {
+        if (midletPaused) {
+            resumeMIDlet ();
+        } else {
+            initialize ();
+            startMIDlet ();
+        }
+        midletPaused = false;
+    }
+
+    /**
+     * Called when MIDlet is paused.
+     */
+    public void pauseApp() {
+        midletPaused = true;
+    }
+
+    /**
+     * Called to signal the MIDlet to terminate.
+     * @param unconditional if true, then the MIDlet has to be unconditionally terminated and all resources has to be released.
+     */
+    public void destroyApp(boolean unconditional) {
+    }
+
+}
+
+
+
+/*
+
+package com.example.helloworld;
+
+import javax.microedition.lcdui.*;
+import javax.microedition.midlet.MIDlet;
+import java.util.Date;
+import java.util.TimeZone;
+
+public class HelloWorldMidlet  extends MIDlet{
+  private Form form;
+  private Display display;
+  private DateField calender;  
+  private static final int DATE = 0;
+
+  public HelloWorldMidlet()
+  {
+	  calender = new DateField("Date:", DateField.DATE, TimeZone.getTimeZone("GMT"));
+  }
+
+  public void startApp()
+  {
+	  display = Display.getDisplay(this);
+	  Form form = new Form("Calender");
+	  form.append(calender);
+	  display.setCurrent(form);
+  }
+
+  public void pauseApp(){}
+
+  public void destroyApp(boolean destroy){
+  notifyDestroyed();
+  }
+} */
