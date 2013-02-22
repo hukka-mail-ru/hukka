@@ -22,6 +22,7 @@ public class HelloWorldMidlet  extends MIDlet implements CommandListener, ItemCo
     private Command exitCommand = new Command("Exit", Command.EXIT, 0);    
     private Command okCommand = new Command("Ok", Command.OK, 0);   
 
+    private UserData userData = new UserData();
 
     public HelloWorldMidlet () 
     {
@@ -90,7 +91,9 @@ public class HelloWorldMidlet  extends MIDlet implements CommandListener, ItemCo
     {                                                 
         if (item == buttonOK) {                                                
             if (command == okCommand) 
-            {              
+            {  
+            	userData.write("Sergey", "ZX23");
+            	userData.read();
             }                                                
         }
                                          
