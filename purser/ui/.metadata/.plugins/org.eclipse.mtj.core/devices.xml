@@ -1,0 +1,245 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<deviceRegistry version="1.2.1.v201009031435">
+   <defaultDeviceSdkName value="Series 40 6th Edition SDK"/>
+   <defaultDevicename value="S40_6th_Edition_SDK"/>
+   <device0 bundle="org.eclipse.mtj.toolkit.uei" class="org.eclipse.mtj.internal.toolkit.uei.UEIDeviceInternal" id="0">
+      <classpath class="org.eclipse.mtj.internal.core.sdk.device.DeviceClasspath" id="1">
+         <entryCount value="19"/>
+         <entry0 class="org.eclipse.mtj.internal.core.sdk.device.midp.MIDPLibrary" id="2">
+            <file value="C:\Nokia\Devices\S40_6th_Edition_SDK\lib\midp21.jar"/>
+            <apiCount value="1"/>
+            <entry0 class="org.eclipse.mtj.internal.core.sdk.device.midp.MIDPAPI" id="3">
+               <identifier value="MIDP"/>
+               <name value="Mobile Information Device Profile"/>
+               <type value="1"/>
+               <version value="2.1"/>
+            </entry0>
+         </entry0>
+         <entry1 class="org.eclipse.mtj.internal.core.sdk.device.midp.MIDPLibrary" id="4">
+            <file value="C:\Nokia\Devices\S40_6th_Edition_SDK\lib\midp20.jar"/>
+            <apiCount value="1"/>
+            <entry0 class="org.eclipse.mtj.internal.core.sdk.device.midp.MIDPAPI" id="5">
+               <identifier value="MIDP"/>
+               <name value="Mobile Information Device Profile"/>
+               <type value="1"/>
+               <version value="2.0"/>
+            </entry0>
+         </entry1>
+         <entry2 class="org.eclipse.mtj.internal.core.sdk.device.midp.MIDPLibrary" id="6">
+            <file value="C:\Nokia\Devices\S40_6th_Edition_SDK\lib\midp10.jar"/>
+            <apiCount value="1"/>
+            <entry0 class="org.eclipse.mtj.internal.core.sdk.device.midp.MIDPAPI" id="7">
+               <identifier value="MIDP"/>
+               <name value="Mobile Information Device Profile"/>
+               <type value="1"/>
+               <version value="1.0"/>
+            </entry0>
+         </entry2>
+         <entry3 class="org.eclipse.mtj.internal.core.sdk.device.midp.MIDPLibrary" id="8">
+            <file value="C:\Nokia\Devices\S40_6th_Edition_SDK\lib\cldc11.jar"/>
+            <apiCount value="1"/>
+            <entry0 class="org.eclipse.mtj.internal.core.sdk.device.midp.MIDPAPI" id="9">
+               <identifier value="CLDC"/>
+               <name value="Connected Limited Device Configuration"/>
+               <type value="0"/>
+               <version value="1.1"/>
+            </entry0>
+         </entry3>
+         <entry4 class="org.eclipse.mtj.internal.core.sdk.device.midp.MIDPLibrary" id="10">
+            <file value="C:\Nokia\Devices\S40_6th_Edition_SDK\lib\cldc10.jar"/>
+            <apiCount value="1"/>
+            <entry0 class="org.eclipse.mtj.internal.core.sdk.device.midp.MIDPAPI" id="11">
+               <identifier value="CLDC"/>
+               <name value="Connected Limited Device Configuration"/>
+               <type value="0"/>
+               <version value="1.0"/>
+            </entry0>
+         </entry4>
+         <entry5 class="org.eclipse.mtj.internal.core.sdk.device.midp.MIDPLibrary" id="12">
+            <file value="C:\Nokia\Devices\S40_6th_Edition_SDK\lib\jsr82.jar"/>
+            <apiCount value="1"/>
+            <entry0 class="org.eclipse.mtj.internal.core.sdk.device.midp.MIDPAPI" id="13">
+               <identifier value="JSR82"/>
+               <name value="Java APIs for Bluetooth Wireless Technology"/>
+               <type value="2"/>
+               <version value="1.1"/>
+            </entry0>
+         </entry5>
+         <entry6 class="org.eclipse.mtj.internal.core.sdk.device.midp.MIDPLibrary" id="14">
+            <file value="C:\Nokia\Devices\S40_6th_Edition_SDK\lib\3dapi.jar"/>
+            <apiCount value="1"/>
+            <entry0 class="org.eclipse.mtj.internal.core.sdk.device.midp.MIDPAPI" id="15">
+               <identifier value="3D API"/>
+               <name value="Mobile 3D Graphics"/>
+               <type value="2"/>
+               <version value="1.1"/>
+            </entry0>
+         </entry6>
+         <entry7 class="org.eclipse.mtj.internal.core.sdk.device.midp.MIDPLibrary" id="16">
+            <file value="C:\Nokia\Devices\S40_6th_Edition_SDK\lib\amms.jar"/>
+            <apiCount value="1"/>
+            <entry0 class="org.eclipse.mtj.internal.core.sdk.device.midp.MIDPAPI" id="17">
+               <identifier value="AMMS"/>
+               <name value="Advanced Multimedia Supplements API"/>
+               <type value="2"/>
+               <version value="1.0"/>
+            </entry0>
+         </entry7>
+         <entry8 class="org.eclipse.mtj.internal.core.sdk.device.midp.MIDPLibrary" id="18">
+            <file value="C:\Nokia\Devices\S40_6th_Edition_SDK\lib\jsr172.jar"/>
+            <apiCount value="1"/>
+            <entry0 class="org.eclipse.mtj.internal.core.sdk.device.midp.MIDPAPI" id="19">
+               <identifier value="J2ME-XMLRPC"/>
+               <name value="J2ME XML/RPC"/>
+               <type value="2"/>
+               <version value="1.0"/>
+            </entry0>
+         </entry8>
+         <entry9 class="org.eclipse.mtj.internal.core.sdk.device.midp.MIDPLibrary" id="20">
+            <file value="C:\Nokia\Devices\S40_6th_Edition_SDK\lib\jsr75.jar"/>
+            <apiCount value="1"/>
+            <entry0 class="org.eclipse.mtj.internal.core.sdk.device.midp.MIDPAPI" id="21">
+               <identifier value="JSR75"/>
+               <name value="File Connection and PIM Optional Packages"/>
+               <type value="2"/>
+               <version value="1.0"/>
+            </entry0>
+            <javadocURL value="file:/C:/Nokia/Devices/S40_6th_Edition_SDK/doc/WebHelp/UserGuide/jsr75fileconnection/"/>
+         </entry9>
+         <entry10 class="org.eclipse.mtj.internal.core.sdk.device.midp.MIDPLibrary" id="22">
+            <file value="C:\Nokia\Devices\S40_6th_Edition_SDK\lib\mmapi12.jar"/>
+            <apiCount value="1"/>
+            <entry0 class="org.eclipse.mtj.internal.core.sdk.device.midp.MIDPAPI" id="23">
+               <identifier value="MMAPI"/>
+               <name value="Mobile Media API"/>
+               <type value="2"/>
+               <version value="1.2"/>
+            </entry0>
+         </entry10>
+         <entry11 class="org.eclipse.mtj.internal.core.sdk.device.midp.MIDPLibrary" id="24">
+            <file value="C:\Nokia\Devices\S40_6th_Edition_SDK\lib\satsa-apdu.jar"/>
+            <apiCount value="1"/>
+            <entry0 class="org.eclipse.mtj.internal.core.sdk.device.midp.MIDPAPI" id="25">
+               <identifier value="SATSA-APDU"/>
+               <name value="Application Protocol Data Unit API "/>
+               <type value="2"/>
+               <version value="1.0"/>
+            </entry0>
+         </entry11>
+         <entry12 class="org.eclipse.mtj.internal.core.sdk.device.midp.MIDPLibrary" id="26">
+            <file value="C:\Nokia\Devices\S40_6th_Edition_SDK\lib\satsa-crypto.jar"/>
+            <apiCount value="1"/>
+            <entry0 class="org.eclipse.mtj.internal.core.sdk.device.midp.MIDPAPI" id="27">
+               <identifier value="SATSA-CRYPTO"/>
+               <name value="Java Cryptographics Extension API"/>
+               <type value="2"/>
+               <version value="1.0"/>
+            </entry0>
+         </entry12>
+         <entry13 class="org.eclipse.mtj.internal.core.sdk.device.midp.MIDPLibrary" id="28">
+            <file value="C:\Nokia\Devices\S40_6th_Edition_SDK\lib\svg11.jar"/>
+            <apiCount value="1"/>
+            <entry0 class="org.eclipse.mtj.internal.core.sdk.device.midp.MIDPAPI" id="29">
+               <identifier value="SVG"/>
+               <name value="Scalable 2D Vector Graphics API"/>
+               <type value="2"/>
+               <version value="1.1"/>
+            </entry0>
+         </entry13>
+         <entry14 class="org.eclipse.mtj.internal.core.sdk.device.midp.MIDPLibrary" id="30">
+            <file value="C:\Nokia\Devices\S40_6th_Edition_SDK\lib\wma20.jar"/>
+            <apiCount value="1"/>
+            <entry0 class="org.eclipse.mtj.internal.core.sdk.device.midp.MIDPAPI" id="31">
+               <identifier value="WMA"/>
+               <name value="Wireless Messaging API"/>
+               <type value="2"/>
+               <version value="2.0"/>
+            </entry0>
+         </entry14>
+         <entry15 class="org.eclipse.mtj.internal.core.sdk.device.midp.MIDPLibrary" id="32">
+            <file value="C:\Nokia\Devices\S40_6th_Edition_SDK\lib\wma11.jar"/>
+            <apiCount value="1"/>
+            <entry0 class="org.eclipse.mtj.internal.core.sdk.device.midp.MIDPAPI" id="33">
+               <identifier value="WMA"/>
+               <name value="Wireless Messaging API"/>
+               <type value="2"/>
+               <version value="1.1"/>
+            </entry0>
+         </entry15>
+         <entry16 class="org.eclipse.mtj.internal.core.sdk.device.midp.MIDPLibrary" id="34">
+            <file value="C:\Nokia\Devices\S40_6th_Edition_SDK\lib\nokiaui.jar"/>
+            <apiCount value="1"/>
+            <entry0 class="org.eclipse.mtj.internal.core.sdk.device.midp.MIDPAPI" id="35">
+               <identifier value="NOKIAUI"/>
+               <name value="Nokia User Interface API"/>
+               <type value="2"/>
+               <version value="1.1"/>
+            </entry0>
+         </entry16>
+         <entry17 class="org.eclipse.mtj.internal.core.sdk.device.midp.MIDPLibrary" id="36">
+            <file value="C:\Nokia\Devices\S40_6th_Edition_SDK\lib\jsr211.jar"/>
+            <apiCount value="1"/>
+            <entry0 class="org.eclipse.mtj.internal.core.sdk.device.midp.MIDPAPI" id="37">
+               <identifier value="JSR211"/>
+               <name value="ContentHandler APIs"/>
+               <type value="2"/>
+               <version value="1.0"/>
+            </entry0>
+         </entry17>
+         <entry18 class="org.eclipse.mtj.internal.core.sdk.device.midp.MIDPLibrary" id="38">
+            <file value="C:\Nokia\Devices\S40_6th_Edition_SDK\lib\jsr179.jar"/>
+            <apiCount value="1"/>
+            <entry0 class="org.eclipse.mtj.internal.core.sdk.device.midp.MIDPAPI" id="39">
+               <identifier value="JSR179"/>
+               <name value="Location API for J2ME"/>
+               <type value="2"/>
+               <version value="1.0"/>
+            </entry0>
+         </entry18>
+      </classpath>
+      <debugServer value="true"/>
+      <description value="Series 40 6th Edition SDK"/>
+      <deviceProperties>
+         <property key="screen.height" value="480"/>
+         <property key="screen.width" value="320"/>
+         <property key="security.domains" value="trusted,untrusted"/>
+         <property key="screen.bitDepth" value="16"/>
+         <property key="screen.canvas.width" value="320"/>
+         <property key="model" value="Series 40 6th Edition SDK"/>
+         <property key="screen.isColor" value="true"/>
+         <property key="bootclasspath" value="C:/Nokia/Devices/S40_6th_Edition_SDK/lib/midp21.jar,C:/Nokia/Devices/S40_6th_Edition_SDK/lib/midp20.jar,C:/Nokia/Devices/S40_6th_Edition_SDK/lib/midp10.jar,C:/Nokia/Devices/S40_6th_Edition_SDK/lib/cldc11.jar,C:/Nokia/Devices/S40_6th_Edition_SDK/lib/cldc10.jar,C:/Nokia/Devices/S40_6th_Edition_SDK/lib/jsr82.jar,C:/Nokia/Devices/S40_6th_Edition_SDK/lib/3dapi.jar,C:/Nokia/Devices/S40_6th_Edition_SDK/lib/amms.jar,C:/Nokia/Devices/S40_6th_Edition_SDK/lib/jsr172.jar,C:/Nokia/Devices/S40_6th_Edition_SDK/lib/jsr75.jar,C:/Nokia/Devices/S40_6th_Edition_SDK/lib/mmapi12.jar,C:/Nokia/Devices/S40_6th_Edition_SDK/lib/satsa-apdu.jar,C:/Nokia/Devices/S40_6th_Edition_SDK/lib/satsa-crypto.jar,C:/Nokia/Devices/S40_6th_Edition_SDK/lib/svg11.jar,C:/Nokia/Devices/S40_6th_Edition_SDK/lib/wma20.jar,C:/Nokia/Devices/S40_6th_Edition_SDK/lib/wma11.jar,C:/Nokia/Devices/S40_6th_Edition_SDK/lib/nokiaui.jar,C:/Nokia/Devices/S40_6th_Edition_SDK/lib/jsr211.jar,C:/Nokia/Devices/S40_6th_Edition_SDK/lib/jsr179.jar"/>
+         <property key="apis" value="C:/Nokia/Devices/S40_6th_Edition_SDK/lib/midp21.jar,C:/Nokia/Devices/S40_6th_Edition_SDK/lib/midp20.jar,C:/Nokia/Devices/S40_6th_Edition_SDK/lib/midp10.jar,C:/Nokia/Devices/S40_6th_Edition_SDK/lib/cldc11.jar,C:/Nokia/Devices/S40_6th_Edition_SDK/lib/cldc10.jar,C:/Nokia/Devices/S40_6th_Edition_SDK/lib/jsr82.jar,C:/Nokia/Devices/S40_6th_Edition_SDK/lib/3dapi.jar,C:/Nokia/Devices/S40_6th_Edition_SDK/lib/amms.jar,C:/Nokia/Devices/S40_6th_Edition_SDK/lib/jsr172.jar,C:/Nokia/Devices/S40_6th_Edition_SDK/lib/jsr75.jar,C:/Nokia/Devices/S40_6th_Edition_SDK/lib/mmapi12.jar,C:/Nokia/Devices/S40_6th_Edition_SDK/lib/satsa-apdu.jar,C:/Nokia/Devices/S40_6th_Edition_SDK/lib/satsa-crypto.jar,C:/Nokia/Devices/S40_6th_Edition_SDK/lib/svg11.jar,C:/Nokia/Devices/S40_6th_Edition_SDK/lib/wma20.jar,C:/Nokia/Devices/S40_6th_Edition_SDK/lib/wma11.jar,C:/Nokia/Devices/S40_6th_Edition_SDK/lib/nokiaui.jar,C:/Nokia/Devices/S40_6th_Edition_SDK/lib/jsr211.jar,C:/Nokia/Devices/S40_6th_Edition_SDK/lib/jsr179.jar"/>
+         <property key="version.configuration" value="CDLC-1.1"/>
+         <property key="screen.isTouch" value="false"/>
+         <property key="screen.canvas.height" value="328"/>
+         <property key="screen.canvas.y" value="40"/>
+         <property key="screen.canvas.x" value="0"/>
+         <property key="description" value="Series 40 6th Edition SDK"/>
+         <property key="version.profile" value="MIDP-2.1"/>
+      </deviceProperties>
+      <name value="S40_6th_Edition_SDK"/>
+      <protectionDomainsCount value="2"/>
+      <protectionDomain0 value="trusted"/>
+      <protectionDomain1 value="untrusted"/>
+      <groupName value="Series 40 6th Edition SDK"/>
+      <preverifier class="org.eclipse.mtj.internal.core.build.preverifier.StandardPreverifier" id="40">
+         <preverifierExecutable value="C:\Nokia\Devices\S40_6th_Edition_SDK\bin\preverify"/>
+         <parameters class="org.eclipse.mtj.internal.core.build.preverifier.StandardPreverifierParameters" id="41">
+            <cldc10_count value="5"/>
+            <cldc10_0 value="-target"/>
+            <cldc10_1 value="CLDC1.0"/>
+            <cldc10_2 value="-nofp"/>
+            <cldc10_3 value="-nofinalize"/>
+            <cldc10_4 value="-nonative"/>
+            <cldc11_count value="4"/>
+            <cldc11_0 value="-target"/>
+            <cldc11_1 value="CLDC1.1"/>
+            <cldc11_2 value="-nofinalize"/>
+            <cldc11_3 value="-nonative"/>
+         </parameters>
+      </preverifier>
+      <rawLaunchCommand value="%executable% [%debugPort%|-Xdebug -Xrunjdwp:transport=dt_socket,suspend=y,server=y,address=%debugPort%] [%classpath%|-classpath &quot;%classpath%&quot;] -Xdevice:%device% [%jadfile%|&quot;-Xdescriptor:%jadfile%&quot;] [%verbose%|-Xverbose:%verbose%] [%heapsize%|-Xheapsize:%heapsize%] [%securityDomain%|-Xdomain:%securityDomain%] %userSpecifiedArguments% [%target%|%target%] [%otaurl%|-Xjam:transient=%otaurl%]"/>
+      <executable value="C:\Nokia\Devices\S40_6th_Edition_SDK\bin\emulator.exe"/>
+   </device0>
+   <deviceCount value="1"/>
+</deviceRegistry>
