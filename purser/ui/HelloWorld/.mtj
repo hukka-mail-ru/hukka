@@ -1,8 +1,12 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <mtjMetadata jad="HelloWorld.jad" version="1.2.1.v201009031435">
    <device group="Series 40 6th Edition SDK" name="S40_6th_Edition_SDK"/>
-   <signing projectSpecific="false" signProject="false">
-      <alias/>
+   <signing projectSpecific="true" signProject="true">
+      <alias>mykey</alias>
+      <keystore>D:\Devel\purser\ui\HelloWorld\purser.ks</keystore>
+      <provider/>
+      <keystoreType/>
+      <passwords storePasswords="1"/>
    </signing>
    <configurations>
       <configuration active="true" name="S40_6th_Edition_SDK">

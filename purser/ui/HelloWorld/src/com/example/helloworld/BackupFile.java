@@ -16,6 +16,100 @@ public class BackupFile
 	}
 	
 
+	 public UserData load()
+     { 
+         InputStream is = null;
+         FileConnection fc = null;
+         UserData userData = new UserData();
+         try
+         {
+        	 System.out.println("- Filename: " + mFilename); 
+             fc = (FileConnection)Connector.open(mFilename, Connector.READ_WRITE);
+
+             if(fc.exists()) 
+             {
+                 is = fc.openInputStream();                 
+                
+                 userData.name = readLine(is);
+                 userData.flight = readLine(is);
+                 userData.date = readLine(is);
+                 userData.purser = readLine(is);
+             }
+         } 
+         catch (IOException e) 
+         {
+        	 System.out.println("Can't read file");
+        	 System.out.println(e.getMessage()); 
+        	 e.printStackTrace();        	 
+         } 
+         finally 
+         { 
+             try 
+             {
+                 if (null != is) 
+                     is.close(); 
+                 if (null != fc) 
+                     fc.close(); 
+             } 
+             catch (IOException e) 
+             { 
+            	 Log.write(e);                 
+             } 
+         } 
+         return userData;
+     }  
+
+	 
+	public void save(UserData data)
+	{
+		 delete();
+
+         OutputStream os = null; 
+         FileConnection fconn = null; 
+         try 
+         {  
+             fconn = (FileConnection) Connector.open(mFilename, Connector.READ_WRITE); 
+             if (!fconn.exists()) 
+                 fconn.create();
+
+             os = fconn.openDataOutputStream();
+             
+             String endl = "\n";
+             
+             os.write(data.name.getBytes()); 
+             os.write(endl.getBytes());
+             os.write(data.flight.getBytes()); 
+             os.write(endl.getBytes());
+             os.write(data.date.getBytes());             
+             os.write(endl.getBytes());
+             os.write(data.purser.getBytes()); 
+             os.write(endl.getBytes());
+             
+             fconn.setHidden(false);
+//	           fconn.setReadable(true);
+         } 
+
+         catch (IOException e) 
+         { 
+        	 Log.write(e);
+         } 
+         finally 
+         { 
+             try 
+             { 
+                 if (null != os) 
+                     os.close(); 
+                 if (null != fconn) 
+                     fconn.close(); 
+             } 
+             catch (IOException e) 
+             { 
+            	 Log.write(e);
+             } 
+         } 
+     }
+
+	
 	
 	private void delete()
 	{
@@ -56,100 +150,5 @@ public class BackupFile
 
         return line.toString();
     }
-
-
-	 public UserData read()
-     {
-         InputStream is = null;
-         FileConnection fc = null;
-         UserData userData = new UserData();
-         try
-         {
-        	 System.out.println("- Filename: " + mFilename); 
-             fc = (FileConnection)Connector.open(mFilename, Connector.READ_WRITE);
-
-             if(fc.exists()) 
-             {
-                 is = fc.openInputStream();                 
-                
-                 userData.name = readLine(is);
-                 userData.flight = readLine(is);
-                 userData.date = readLine(is);
-                 userData.purser = readLine(is);
-             }
-         } 
-         catch (IOException e) 
-         {
-        	 System.out.println("Can't read file");
-        	 System.out.println(e.getMessage()); 
-        	 e.printStackTrace();        	 
-         } 
-         finally 
-         { 
-             try 
-             {
-                 if (null != is) 
-                     is.close(); 
-                 if (null != fc) 
-                     fc.close(); 
-             } 
-             catch (IOException e) 
-             { 
-            	 e.printStackTrace();
-                // System.out.println(e.getMessage()); 
-             } 
-         } 
-         return userData;
-     }  
-
-	 
-	public void write(UserData data)
-	{
-		 delete();
-
-         OutputStream os = null; 
-         FileConnection fconn = null; 
-         try 
-         {  
-             fconn = (FileConnection) Connector.open(mFilename, Connector.READ_WRITE); 
-             if (!fconn.exists()) 
-                 fconn.create();
-
-             os = fconn.openDataOutputStream();
-             
-             String endl = "\n";
-             
-             os.write(data.name.getBytes()); 
-             os.write(endl.getBytes());
-             os.write(data.flight.getBytes()); 
-             os.write(endl.getBytes());
-             os.write(data.date.getBytes());             
-             os.write(endl.getBytes());
-             os.write(data.purser.getBytes()); 
-             os.write(endl.getBytes());
-             
-             fconn.setHidden(false);
-//	           fconn.setReadable(true);
-         } 
-
-         catch (IOException e) 
-         { 
-             System.out.println(e.getMessage()); 
-         } 
-         finally 
-         { 
-             try 
-             { 
-                 if (null != os) 
-                     os.close(); 
-                 if (null != fconn) 
-                     fconn.close(); 
-             } 
-             catch (IOException e) 
-             { 
-                 System.out.println(e.getMessage()); 
-             } 
-         } 
-     }
 
 }

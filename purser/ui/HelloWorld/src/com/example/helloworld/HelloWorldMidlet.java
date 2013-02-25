@@ -54,12 +54,18 @@ public class HelloWorldMidlet  extends MIDlet implements CommandListener, ItemCo
 
     private void initialize() 
     {     
-    	UserData userData = backupFile.read();   
+    	UserData userData = backupFile.load();   
     	
     	System.out.println("userData.name " + userData.name); 
     	System.out.println("userData.flight " + userData.flight); 
     	System.out.println("userData.date " + userData.date); 
     	System.out.println("userData.purser " + userData.purser); 
+    	
+    	name.setString(userData.name);
+    	flight.setString(userData.flight);
+    	//name.setString(userData.name);
+    	//name.setString(userData.name);
+    	
     }                            
 
     
@@ -70,13 +76,21 @@ public class HelloWorldMidlet  extends MIDlet implements CommandListener, ItemCo
     
     public void exitMIDlet() 
     {
-    	UserData userData = new UserData();
-    	userData.name = name.getString();
-    	userData.flight = flight.getString();
-
-    	
-    	backupFile.write(userData);
-    	
+    	try
+    	{
+	    	UserData userData = new UserData();
+	    	userData.name = name.getString();
+	    	userData.flight = flight.getString();
+	    	userData.date = calendar.getDate().toString();
+	    	userData.purser = "" + purser.getSelectedIndex();
+	    	
+	    	backupFile.save(userData);
+    	}
+    	catch(Exception e)
+    	{
+    		Log.write(e);
+    	}
+	    	
     	
         switchDisplayable (null, null);
         destroyApp(true);
