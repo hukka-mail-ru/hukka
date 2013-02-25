@@ -67,8 +67,11 @@ public class HelloWorldMidlet  extends MIDlet implements CommandListener, ItemCo
 	    	
 	    	name.setString(userData.name);
 	    	flight.setString(userData.flight);
-	    	//name.setString(userData.name);
-	    	//name.setString(userData.name);
+	    	
+	    	if(userData.purser.equals("true"))
+	    	{
+	    		purser.setSelectedIndex(0, true);
+	    	}
     	}
     	catch(Exception e)
     	{
@@ -88,14 +91,16 @@ public class HelloWorldMidlet  extends MIDlet implements CommandListener, ItemCo
     	userData.name = name.getString();
     	userData.flight = flight.getString();
     	userData.date = calendar.getDate().toString();
-    	userData.purser = "" + purser.getSelectedIndex();
+    	
+    	boolean[] selected = new boolean[purser.size()];  
+    	purser.getSelectedFlags(selected);
+    	userData.purser = "" + selected[0];
     	
     	backupFile.save(userData);
     	
         switchDisplayable (null, null);
         destroyApp(true);
-        notifyDestroyed();
-     
+        notifyDestroyed();     
     }
 
     public void resumeMIDlet() 
@@ -156,6 +161,10 @@ public class HelloWorldMidlet  extends MIDlet implements CommandListener, ItemCo
             	}
 
             	Log.show(display, form, "Sending SMS!");
+            	boolean[] selected = new boolean[purser.size()];
+            	purser.getSelectedFlags(selected);
+            	
+            	Log.write("purser: " + selected[0]);
             	// send SMS
             	
             }                                                
