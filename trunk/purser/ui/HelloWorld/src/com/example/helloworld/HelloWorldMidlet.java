@@ -22,7 +22,7 @@ public class HelloWorldMidlet  extends MIDlet implements CommandListener, ItemCo
     private Command exitCommand = new Command("Exit", Command.EXIT, 0);    
     private Command okCommand = new Command("Ok", Command.OK, 0);   
 
-    private UserData userData = new UserData();
+    private BackupFile backupFile = new BackupFile("BackupFile.txt");
 
     public HelloWorldMidlet () 
     {
@@ -30,7 +30,7 @@ public class HelloWorldMidlet  extends MIDlet implements CommandListener, ItemCo
     	                             
         buttonOK.addCommand(okCommand);
         buttonOK.setItemCommandListener(this);   
-        buttonOK.setLayout(ImageItem.LAYOUT_CENTER);
+        buttonOK.setLayout(ImageItem.LAYOUT_CENTER);            
     }
 
     public Form createForm() 
@@ -53,13 +53,35 @@ public class HelloWorldMidlet  extends MIDlet implements CommandListener, ItemCo
 
 
     private void initialize() 
-    {                                         
+    {     
+    	UserData userData = backupFile.read();   
+    	
+    	System.out.println("userData.name " + userData.name); 
+    	System.out.println("userData.flight " + userData.flight); 
+    	System.out.println("userData.date " + userData.date); 
+    	System.out.println("userData.purser " + userData.purser); 
     }                            
 
+    
     public void startMIDlet() 
-    {                                      
+    {                	
         switchDisplayable(null, createForm());  
-    }                             
+    }  
+    
+    public void exitMIDlet() 
+    {
+    	UserData userData = new UserData();
+    	userData.name = name.getString();
+    	userData.flight = flight.getString();
+
+    	
+    	backupFile.write(userData);
+    	
+    	
+        switchDisplayable (null, null);
+        destroyApp(true);
+        notifyDestroyed();
+    }
 
     public void resumeMIDlet() 
     {                                       
@@ -92,8 +114,8 @@ public class HelloWorldMidlet  extends MIDlet implements CommandListener, ItemCo
         if (item == buttonOK) {                                                
             if (command == okCommand) 
             {  
-            	userData.write("Sergey", "ZX23");
-            	userData.read();
+            	// send SMS
+            	
             }                                                
         }
                                          
@@ -108,14 +130,6 @@ public class HelloWorldMidlet  extends MIDlet implements CommandListener, ItemCo
         return Display.getDisplay(this);
     }
 
-    /**
-     * Exits MIDlet.
-     */
-    public void exitMIDlet() {
-        switchDisplayable (null, null);
-        destroyApp(true);
-        notifyDestroyed();
-    }
 
     /**
      * Called when MIDlet is started.
