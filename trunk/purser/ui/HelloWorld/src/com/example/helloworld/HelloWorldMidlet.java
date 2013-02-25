@@ -23,6 +23,8 @@ public class HelloWorldMidlet  extends MIDlet implements CommandListener, ItemCo
     private Command okCommand = new Command("Ok", Command.OK, 0);   
 
     private BackupFile backupFile = new BackupFile("BackupFile.txt");
+    
+    private Display display = Display.getDisplay(this); 
 
     public HelloWorldMidlet () 
     {
@@ -30,7 +32,7 @@ public class HelloWorldMidlet  extends MIDlet implements CommandListener, ItemCo
     	                             
         buttonOK.addCommand(okCommand);
         buttonOK.setItemCommandListener(this);   
-        buttonOK.setLayout(ImageItem.LAYOUT_CENTER);            
+        buttonOK.setLayout(ImageItem.LAYOUT_CENTER);   
     }
 
     public Form createForm() 
@@ -54,18 +56,24 @@ public class HelloWorldMidlet  extends MIDlet implements CommandListener, ItemCo
 
     private void initialize() 
     {     
-    	UserData userData = backupFile.load();   
-    	
-    	System.out.println("userData.name " + userData.name); 
-    	System.out.println("userData.flight " + userData.flight); 
-    	System.out.println("userData.date " + userData.date); 
-    	System.out.println("userData.purser " + userData.purser); 
-    	
-    	name.setString(userData.name);
-    	flight.setString(userData.flight);
-    	//name.setString(userData.name);
-    	//name.setString(userData.name);
-    	
+    	try
+    	{
+	    	UserData userData = backupFile.load();   
+	    	
+	    	System.out.println("userData.name " + userData.name); 
+	    	System.out.println("userData.flight " + userData.flight); 
+	    	System.out.println("userData.date " + userData.date); 
+	    	System.out.println("userData.purser " + userData.purser); 
+	    	
+	    	name.setString(userData.name);
+	    	flight.setString(userData.flight);
+	    	//name.setString(userData.name);
+	    	//name.setString(userData.name);
+    	}
+    	catch(Exception e)
+    	{
+    		Log.write(e);
+    	}
     }                            
 
     
@@ -74,27 +82,20 @@ public class HelloWorldMidlet  extends MIDlet implements CommandListener, ItemCo
         switchDisplayable(null, createForm());  
     }  
     
-    public void exitMIDlet() 
-    {
-    	try
-    	{
-	    	UserData userData = new UserData();
-	    	userData.name = name.getString();
-	    	userData.flight = flight.getString();
-	    	userData.date = calendar.getDate().toString();
-	    	userData.purser = "" + purser.getSelectedIndex();
-	    	
-	    	backupFile.save(userData);
-    	}
-    	catch(Exception e)
-    	{
-    		Log.write(e);
-    	}
-	    	
+    public void exitMIDlet() throws Exception
+    {  	
+    	UserData userData = new UserData();
+    	userData.name = name.getString();
+    	userData.flight = flight.getString();
+    	userData.date = calendar.getDate().toString();
+    	userData.purser = "" + purser.getSelectedIndex();
+    	
+    	backupFile.save(userData);
     	
         switchDisplayable (null, null);
         destroyApp(true);
         notifyDestroyed();
+     
     }
 
     public void resumeMIDlet() 
@@ -112,27 +113,53 @@ public class HelloWorldMidlet  extends MIDlet implements CommandListener, ItemCo
     }                                   
 
     public void commandAction(Command command, Displayable displayable) 
-    {                                               
-        if (displayable == form) {                                           
-            if (command == exitCommand) 
-            {                                         
-                exitMIDlet();                                           
-            }                                                  
-        }                                                
+    {      
+    	try
+    	{
+	        if (displayable == form) {                                           
+	            if (command == exitCommand) 
+	            {                                         
+	                exitMIDlet();                                           
+	            }                                                  
+	        }
+    	}
+    	catch(Exception e)
+    	{
+    		Log.show(display, form, e);
+    	}
     }                               
 
     
     
     public void commandAction(Command command, Item item) 
-    {                                                 
-        if (item == buttonOK) {                                                
-            if (command == okCommand) 
-            {  
-            	// send SMS
-            	
-            }                                                
-        }
-                                         
+    {   
+    	try
+    	{
+	        if (item == buttonOK) 
+	        {    
+	        	Log.write("buttonOK");
+	            if (command == okCommand) 
+	            {       
+	            	Log.write("okCommand");
+	            	Log.write("name.getString(): '" + name.getString() + "'");
+	            	if(name.getString() == null || name.getString().length() == 0)
+	            	{
+	            		Log.write("here");
+	            		throw new Exception("Please provide Name/ID");
+	            	}
+	
+	            	if(flight.getString() == null || flight.getString().length() == 0)
+	            		throw new Exception("Please provide flight number");
+	            	
+	            	// send SMS
+	            	
+	            }                                                
+	        }
+    	}
+    	catch(Exception e)
+    	{
+    		Log.show(display, form, e);
+    	}                                  
     }                                    
                                      
 
