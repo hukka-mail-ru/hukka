@@ -19,9 +19,13 @@ public class Log
 	public static void show(Display display, Form form, Exception e)
 	{	
 		Log.write(e);
-		
+		Log.show(display, form, e.getMessage());
+	}
+	
+	public static void show(Display display, Form form, String str)
+	{				
 		Alert alert = new Alert("Error");
-		alert.setString(e.getMessage());
+		alert.setString(str);
 		display.setCurrent(alert, form);
 	}
 }

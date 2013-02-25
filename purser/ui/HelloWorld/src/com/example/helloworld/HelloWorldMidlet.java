@@ -135,26 +135,30 @@ public class HelloWorldMidlet  extends MIDlet implements CommandListener, ItemCo
     {   
     	try
     	{
-	        if (item == buttonOK) 
-	        {    
-	        	Log.write("buttonOK");
-	            if (command == okCommand) 
-	            {       
-	            	Log.write("okCommand");
-	            	Log.write("name.getString(): '" + name.getString() + "'");
-	            	if(name.getString() == null || name.getString().length() == 0)
-	            	{
-	            		Log.write("here");
-	            		throw new Exception("Please provide Name/ID");
-	            	}
-	
-	            	if(flight.getString() == null || flight.getString().length() == 0)
-	            		throw new Exception("Please provide flight number");
-	            	
-	            	// send SMS
-	            	
-	            }                                                
-	        }
+	        if (item == buttonOK && command == okCommand) 
+            {       
+            	if(name.getString() == null || name.getString().length() == 0)
+            	{
+            		throw new Exception("Please provide Name/ID");
+            	}
+
+            	if(flight.getString() == null || flight.getString().length() == 0)
+            	{
+            		throw new Exception("Please provide flight number");
+            	}
+
+            	if(calendar == null ||  
+            	   calendar.getDate() == null ||
+            	   calendar.getDate().toString() == null || 
+            	   calendar.getDate().toString().length() == 0)
+            	{
+            		throw new Exception("Please provide flight date");
+            	}
+
+            	Log.show(display, form, "Sending SMS!");
+            	// send SMS
+            	
+            }                                                
     	}
     	catch(Exception e)
     	{
