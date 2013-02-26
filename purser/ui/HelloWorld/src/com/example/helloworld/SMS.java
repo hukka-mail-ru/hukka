@@ -7,8 +7,15 @@ import javax.wireless.messaging.TextMessage;
 
 public class SMS 
 {
-    public static void send(String number, String message)
+    public static void send(String number, String message) throws Exception
     {
+    	Log.write("SEND: " + number + " " + message);
+    	
+    	if(number == null || number.length() == 0 || number.equals(UserData.Nothing))
+    	{
+    		throw new Exception("Please provide call center number");
+    	}
+    	
         try 
         {
           //sets address to send message
