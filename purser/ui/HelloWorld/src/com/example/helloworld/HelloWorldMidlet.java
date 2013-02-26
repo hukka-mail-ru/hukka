@@ -8,20 +8,22 @@ import java.util.TimeZone;
 /**
  * @author 
  */
-public class HelloWorldMidlet  extends MIDlet implements CommandListener, ItemCommandListener {
+public class HelloWorldMidlet extends MIDlet implements CommandListener, ItemCommandListener {
 
     private boolean midletPaused = false;
                     
     private Form form;
     
-    private TextField nameField = new TextField("Name/ID:", "", 32, TextField.ANY);
-    private TextField flightField = new TextField("Flight:", "", 32, TextField.ANY); 
-    private DateField dateField = new DateField("Date:", DateField.DATE, TimeZone.getTimeZone("GMT"));
-    private ChoiceGroup purserField = new ChoiceGroup("", Choice.MULTIPLE);
-    private StringItem buttonOK = new StringItem("", "Send Request", Item.BUTTON);  
+    private TextField fieldName = new TextField("Name/ID:", "", 32, TextField.ANY);
+    private TextField fieldFlight = new TextField("Flight:", "", 32, TextField.ANY); 
+    private DateField fieldDate = new DateField("", DateField.DATE, TimeZone.getTimeZone("GMT"));
+    private ChoiceGroup fieldPurser = new ChoiceGroup("", Choice.MULTIPLE);
+    private StringItem buttonCancel = new StringItem("", "Cancel", Item.BUTTON);  
+    private StringItem buttonSend = new StringItem("", "Send Request", Item.BUTTON);  
 
-    private Command exitCommand = new Command("Exit", Command.EXIT, 0);    
-    private Command okCommand = new Command("Ok", Command.OK, 0);   
+    private Command commandExit = new Command("Exit", Command.EXIT, 0);    
+    private Command commandCancel = new Command("Cancel", Command.OK, 0);   
+    private Command commandSend = new Command("Send", Command.OK, 0);   
 
     private BackupFile backupFile = new BackupFile("BackupFile.txt");
     
@@ -29,11 +31,15 @@ public class HelloWorldMidlet  extends MIDlet implements CommandListener, ItemCo
 
     public HelloWorldMidlet () 
     {
-    	purserField.append("Purser", null);
+    	fieldPurser.append("Purser", null);
     	                             
-        buttonOK.addCommand(okCommand);
-        buttonOK.setItemCommandListener(this);   
-        buttonOK.setLayout(ImageItem.LAYOUT_CENTER);   
+        buttonCancel.addCommand(commandCancel);
+        buttonCancel.setItemCommandListener(this);   
+        buttonCancel.setLayout(ImageItem.LAYOUT_CENTER);   
+
+        buttonSend.addCommand(commandSend);
+        buttonSend.setItemCommandListener(this);   
+        buttonSend.setLayout(ImageItem.LAYOUT_CENTER);       
     }
 
     public Form createForm() 
@@ -42,13 +48,15 @@ public class HelloWorldMidlet  extends MIDlet implements CommandListener, ItemCo
         {                                 
             form = new Form("Crew Member Request");
             
-            form.append(nameField); 
-            form.append(flightField);
-            form.append(dateField); 
-            form.append(purserField); 
-            form.append(buttonOK); 
+            form.append(fieldName); 
+            form.append(fieldFlight);
+            form.append(fieldDate); 
+            form.append(fieldPurser); 
+            form.append(buttonSend);
+            form.append(buttonCancel);
+            
                                   
-            form.addCommand(exitCommand);
+            form.addCommand(commandExit);
             form.setCommandListener(this);             
         }                         
         return form;
@@ -64,24 +72,25 @@ public class HelloWorldMidlet  extends MIDlet implements CommandListener, ItemCo
     	Log.write("userData.date " + userData.date); 
     	Log.write("userData.purser " + userData.purser); 
     	
-    	nameField.setString(userData.name);
-    	flightField.setString(userData.flight);	
+    	fieldName.setString(userData.name);
+    	fieldFlight.setString(userData.flight);	
     	
     	try
     	{
 	    	Date d = new Date(Long.parseLong(userData.date));
-	    	dateField.setDate(d);
+	    	fieldDate.setDate(d);
     	}
     	catch(Exception e)
     	{
     		Log.write(e);
     	}
-	
-    	
+	    	
     	if(userData.purser.equals("true"))
     	{
-    		purserField.setSelectedIndex(0, true);
+    		fieldPurser.setSelectedIndex(0, true);
     	}
+    	
+    	
     }                            
 
     
@@ -93,12 +102,12 @@ public class HelloWorldMidlet  extends MIDlet implements CommandListener, ItemCo
     public void exitMIDlet() throws Exception
     {  	
     	UserData userData = new UserData();
-    	userData.name = nameField.getString();
-    	userData.flight = flightField.getString();
-    	userData.date = "" + dateField.getDate().getTime();
+    	userData.name = fieldName.getString();
+    	userData.flight = fieldFlight.getString();
+    	userData.date = "" + fieldDate.getDate().getTime();
     	
-    	boolean[] selected = new boolean[purserField.size()];  
-    	purserField.getSelectedFlags(selected);
+    	boolean[] selected = new boolean[fieldPurser.size()];  
+    	fieldPurser.getSelectedFlags(selected);
     	userData.purser = "" + selected[0];
     	
     	backupFile.save(userData);
@@ -113,8 +122,7 @@ public class HelloWorldMidlet  extends MIDlet implements CommandListener, ItemCo
     }                              
 
     public void switchDisplayable(Alert alert, Displayable nextDisplayable) 
-    {                                            
-        Display display = getDisplay();                                               
+    {                                                                                
         if (alert == null) {
             display.setCurrent(nextDisplayable);
         } else {
@@ -127,7 +135,7 @@ public class HelloWorldMidlet  extends MIDlet implements CommandListener, ItemCo
     	try
     	{
 	        if (displayable == form) {                                           
-	            if (command == exitCommand) 
+	            if (command == commandExit) 
 	            {                                         
 	                exitMIDlet();                                           
 	            }                                                  
@@ -145,29 +153,29 @@ public class HelloWorldMidlet  extends MIDlet implements CommandListener, ItemCo
     {   
     	try
     	{
-	        if (item == buttonOK && command == okCommand) 
+	        if (item == buttonSend && command == commandSend) 
             {       
-            	if(nameField.getString() == null || nameField.getString().length() == 0)
+            	if(fieldName.getString() == null || fieldName.getString().length() == 0)
             	{
             		throw new Exception("Please provide Name/ID");
             	}
 
-            	if(flightField.getString() == null || flightField.getString().length() == 0)
+            	if(fieldFlight.getString() == null || fieldFlight.getString().length() == 0)
             	{
             		throw new Exception("Please provide flight number");
             	}
 
-            	if(dateField == null ||  
-            	   dateField.getDate() == null ||
-            	   dateField.getDate().toString() == null || 
-            	   dateField.getDate().toString().length() == 0)
+            	if(fieldDate == null ||  
+            	   fieldDate.getDate() == null ||
+            	   fieldDate.getDate().toString() == null || 
+            	   fieldDate.getDate().toString().length() == 0)
             	{
             		throw new Exception("Please provide flight date");
             	}
 
             	Log.show(display, form, "Sending SMS!");
-            	boolean[] selected = new boolean[purserField.size()];
-            	purserField.getSelectedFlags(selected);
+            	boolean[] selected = new boolean[fieldPurser.size()];
+            	fieldPurser.getSelectedFlags(selected);
             	
             	Log.write("purser: " + selected[0]);
             	// send SMS
@@ -181,15 +189,6 @@ public class HelloWorldMidlet  extends MIDlet implements CommandListener, ItemCo
     	}                                  
     }                                    
                                      
-
-    /**
-     * Returns a display instance.
-     * @return the display instance.
-     */
-    public Display getDisplay () {
-        return Display.getDisplay(this);
-    }
-
 
     /**
      * Called when MIDlet is started.
