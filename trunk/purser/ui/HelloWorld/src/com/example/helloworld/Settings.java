@@ -1,7 +1,6 @@
 package com.example.helloworld;
 
 
-//import java.util.Date;
 import javax.microedition.lcdui.*;
 
 public class Settings implements CommandListener 
@@ -44,7 +43,9 @@ public class Settings implements CommandListener
             {      
             	if(fieldCallCenter.getString() == null || fieldCallCenter.getString().length() == 0)
             	{
-            		throw new Exception("Please provide call center number");
+            		//throw new Exception("Please provide call center number");
+            		midlet.showMain();
+            		return;
             	}
             	
 	        	callCenter = fieldCallCenter.getString();

@@ -41,7 +41,6 @@ public class HelloWorldMidlet extends MIDlet
     	main.setData(userData); 
     	settings.setData(userData);
     	
-    	Log.write("startMIDlet");
     	showMain();   
         
         main.setCurrentItem();
