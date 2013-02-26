@@ -56,11 +56,21 @@ public class HelloWorldMidlet extends MIDlet implements CommandListener, ItemCom
         return form;
     }
 
+    public void startMIDlet() 
+    {                	
+        switchDisplayable(null, createForm());
+        
+        if(fieldName.getString() != null && fieldName.getString().length() != 0)
+    	{        	
+        	display.setCurrentItem(fieldDate);
+    	}
+    }  
 
     private void initialize() 
     {     
     	UserData userData = backupFile.load();   
     	
+    	Log.write("LOAD:"); 
     	Log.write("userData.name " + userData.name); 
     	Log.write("userData.flight " + userData.flight); 
     	Log.write("userData.date " + userData.date); 
@@ -68,17 +78,17 @@ public class HelloWorldMidlet extends MIDlet implements CommandListener, ItemCom
     	    	
     	try
     	{
-    		if(userData.name.compareTo(Nothing) != 0)
+    		if(!userData.name.equals(Nothing))
     		{
     			fieldName.setString(userData.name);
     		}
     		
-    		if(userData.flight.compareTo(Nothing) != 0)
+    		if(!userData.flight.equals(Nothing))
     		{
     			fieldFlight.setString(userData.flight);
     		}
     		
-        	if(userData.date.compareTo(Nothing) != 0)
+        	if(!userData.date.equals(Nothing))
         	{
         		Date d = new Date(Long.parseLong(userData.date));
         		fieldDate.setDate(d);
@@ -95,17 +105,7 @@ public class HelloWorldMidlet extends MIDlet implements CommandListener, ItemCom
     	}	        	    	
     }                            
 
-    
-    public void startMIDlet() 
-    {                	
-        switchDisplayable(null, createForm());
         
-        if(fieldName.getString() != null && fieldName.getString().length() != 0)
-    	{        	
-        	display.setCurrentItem(fieldDate);
-    	}
-    }  
-    
     public void exitMIDlet() throws Exception
     {  	
     	UserData userData = new UserData();
@@ -116,6 +116,13 @@ public class HelloWorldMidlet extends MIDlet implements CommandListener, ItemCom
     	boolean[] selected = new boolean[fieldPurser.size()];  
     	fieldPurser.getSelectedFlags(selected);
     	userData.purser = "" + selected[0];
+    	
+    	Log.write("SAVE:"); 
+    	Log.write("userData.name " + userData.name); 
+    	Log.write("userData.flight " + userData.flight); 
+    	Log.write("userData.date " + userData.date); 
+    	Log.write("userData.purser " + userData.purser); 
+
     	
     	backupFile.save(userData);
     	
