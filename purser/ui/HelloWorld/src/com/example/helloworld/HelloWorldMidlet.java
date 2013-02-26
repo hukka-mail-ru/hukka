@@ -18,25 +18,21 @@ public class HelloWorldMidlet extends MIDlet implements CommandListener, ItemCom
     private TextField fieldFlight = new TextField("Flight:", "", 32, TextField.ANY); 
     private DateField fieldDate = new DateField("", DateField.DATE, TimeZone.getTimeZone("GMT"));
     private ChoiceGroup fieldPurser = new ChoiceGroup("", Choice.MULTIPLE);
-    private StringItem buttonCancel = new StringItem("", "Cancel", Item.BUTTON);  
     private StringItem buttonSend = new StringItem("", "Send Request", Item.BUTTON);  
 
     private Command commandExit = new Command("Exit", Command.EXIT, 0);    
-    private Command commandCancel = new Command("Cancel", Command.OK, 0);   
     private Command commandSend = new Command("Send", Command.OK, 0);   
 
     private BackupFile backupFile = new BackupFile("BackupFile.txt");
     
     private Display display = Display.getDisplay(this); 
+    
+    private String Nothing = "__Nothing__";
 
     public HelloWorldMidlet () 
     {
     	fieldPurser.append("Purser", null);
     	                             
-        buttonCancel.addCommand(commandCancel);
-        buttonCancel.setItemCommandListener(this);   
-        buttonCancel.setLayout(ImageItem.LAYOUT_CENTER);   
-
         buttonSend.addCommand(commandSend);
         buttonSend.setItemCommandListener(this);   
         buttonSend.setLayout(ImageItem.LAYOUT_CENTER);       
@@ -49,12 +45,10 @@ public class HelloWorldMidlet extends MIDlet implements CommandListener, ItemCom
             form = new Form("Crew Member Request");
             
             form.append(fieldName); 
-            form.append(fieldFlight);
             form.append(fieldDate); 
+            form.append(fieldFlight);
             form.append(fieldPurser); 
             form.append(buttonSend);
-            form.append(buttonCancel);
-            
                                   
             form.addCommand(commandExit);
             form.setCommandListener(this);             
@@ -71,40 +65,53 @@ public class HelloWorldMidlet extends MIDlet implements CommandListener, ItemCom
     	Log.write("userData.flight " + userData.flight); 
     	Log.write("userData.date " + userData.date); 
     	Log.write("userData.purser " + userData.purser); 
-    	
-    	fieldName.setString(userData.name);
-    	fieldFlight.setString(userData.flight);	
-    	
+    	    	
     	try
     	{
-	    	Date d = new Date(Long.parseLong(userData.date));
-	    	fieldDate.setDate(d);
+    		if(userData.name.compareTo(Nothing) != 0)
+    		{
+    			fieldName.setString(userData.name);
+    		}
+    		
+    		if(userData.flight.compareTo(Nothing) != 0)
+    		{
+    			fieldFlight.setString(userData.flight);
+    		}
+    		
+        	if(userData.date.compareTo(Nothing) != 0)
+        	{
+        		Date d = new Date(Long.parseLong(userData.date));
+        		fieldDate.setDate(d);
+        	}
+	    	
+	    	if(userData.purser.equals("true"))
+	    	{
+	    		fieldPurser.setSelectedIndex(0, true);
+	    	}
     	}
     	catch(Exception e)
     	{
     		Log.write(e);
-    	}
-	    	
-    	if(userData.purser.equals("true"))
-    	{
-    		fieldPurser.setSelectedIndex(0, true);
-    	}
-    	
-    	
+    	}	        	    	
     }                            
 
     
     public void startMIDlet() 
     {                	
-        switchDisplayable(null, createForm());  
+        switchDisplayable(null, createForm());
+        
+        if(fieldName.getString() != null && fieldName.getString().length() != 0)
+    	{        	
+        	display.setCurrentItem(fieldDate);
+    	}
     }  
     
     public void exitMIDlet() throws Exception
     {  	
     	UserData userData = new UserData();
-    	userData.name = fieldName.getString();
-    	userData.flight = fieldFlight.getString();
-    	userData.date = "" + fieldDate.getDate().getTime();
+    	userData.name = fieldName.getString().length() == 0 ? Nothing : fieldName.getString();
+    	userData.flight = fieldFlight.getString().length() == 0  ? Nothing : fieldFlight.getString();
+    	userData.date = fieldDate.getDate() == null ? Nothing : "" + fieldDate.getDate().getTime();
     	
     	boolean[] selected = new boolean[fieldPurser.size()];  
     	fieldPurser.getSelectedFlags(selected);
