@@ -48,7 +48,7 @@ public class Settings implements CommandListener
             		return;
             	}
             	
-	        	callCenter = fieldCallCenter.getString();
+            	midlet.getUserData().callCenter = fieldCallCenter.getString();
 	        		
             	midlet.showMain();                                           
             }                                                  

@@ -150,14 +150,13 @@ public class Main implements ItemCommandListener, CommandListener
             		throw new Exception("Please provide flight date");
             	}
 
-            	Log.show(midlet.getDisplay(), form, "Sending SMS!");
             	boolean[] selected = new boolean[fieldPurser.size()];
             	fieldPurser.getSelectedFlags(selected);
             	            	
             	// send SMS
-            	//SMS.send(fieldCallCenter.getString(), fieldName.getString());
+            	SMS.send(midlet.getUserData().callCenter, fieldName.getString());
             	
-            	midlet.exitMIDlet();
+            	//midlet.exitMIDlet();
             }  
 	        else if (item == buttonSettings && command == commandSettings)
             {  
