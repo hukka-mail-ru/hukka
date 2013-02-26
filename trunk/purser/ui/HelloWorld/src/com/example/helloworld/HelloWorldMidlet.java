@@ -2,6 +2,7 @@ package com.example.helloworld;
 
 import javax.microedition.midlet.*;
 import javax.microedition.lcdui.*;
+import java.util.Date;
 import java.util.TimeZone;
 
 /**
@@ -13,10 +14,10 @@ public class HelloWorldMidlet  extends MIDlet implements CommandListener, ItemCo
                     
     private Form form;
     
-    private TextField name = new TextField("Name/ID:", "", 32, TextField.ANY);
-    private TextField flight = new TextField("Flight:", "", 32, TextField.ANY); 
-    private DateField calendar = new DateField("Date:", DateField.DATE, TimeZone.getTimeZone("GMT"));
-    private ChoiceGroup purser = new ChoiceGroup("", Choice.MULTIPLE);
+    private TextField nameField = new TextField("Name/ID:", "", 32, TextField.ANY);
+    private TextField flightField = new TextField("Flight:", "", 32, TextField.ANY); 
+    private DateField dateField = new DateField("Date:", DateField.DATE, TimeZone.getTimeZone("GMT"));
+    private ChoiceGroup purserField = new ChoiceGroup("", Choice.MULTIPLE);
     private StringItem buttonOK = new StringItem("", "Send Request", Item.BUTTON);  
 
     private Command exitCommand = new Command("Exit", Command.EXIT, 0);    
@@ -28,7 +29,7 @@ public class HelloWorldMidlet  extends MIDlet implements CommandListener, ItemCo
 
     public HelloWorldMidlet () 
     {
-    	purser.append("Purser", null);
+    	purserField.append("Purser", null);
     	                             
         buttonOK.addCommand(okCommand);
         buttonOK.setItemCommandListener(this);   
@@ -41,10 +42,10 @@ public class HelloWorldMidlet  extends MIDlet implements CommandListener, ItemCo
         {                                 
             form = new Form("Crew Member Request");
             
-            form.append(name); 
-            form.append(flight);
-            form.append(calendar); 
-            form.append(purser); 
+            form.append(nameField); 
+            form.append(flightField);
+            form.append(dateField); 
+            form.append(purserField); 
             form.append(buttonOK); 
                                   
             form.addCommand(exitCommand);
@@ -56,26 +57,30 @@ public class HelloWorldMidlet  extends MIDlet implements CommandListener, ItemCo
 
     private void initialize() 
     {     
+    	UserData userData = backupFile.load();   
+    	
+    	Log.write("userData.name " + userData.name); 
+    	Log.write("userData.flight " + userData.flight); 
+    	Log.write("userData.date " + userData.date); 
+    	Log.write("userData.purser " + userData.purser); 
+    	
+    	nameField.setString(userData.name);
+    	flightField.setString(userData.flight);	
+    	
     	try
     	{
-	    	UserData userData = backupFile.load();   
-	    	
-	    	System.out.println("userData.name " + userData.name); 
-	    	System.out.println("userData.flight " + userData.flight); 
-	    	System.out.println("userData.date " + userData.date); 
-	    	System.out.println("userData.purser " + userData.purser); 
-	    	
-	    	name.setString(userData.name);
-	    	flight.setString(userData.flight);
-	    	
-	    	if(userData.purser.equals("true"))
-	    	{
-	    		purser.setSelectedIndex(0, true);
-	    	}
+	    	Date d = new Date(Long.parseLong(userData.date));
+	    	dateField.setDate(d);
     	}
     	catch(Exception e)
     	{
     		Log.write(e);
+    	}
+	
+    	
+    	if(userData.purser.equals("true"))
+    	{
+    		purserField.setSelectedIndex(0, true);
     	}
     }                            
 
@@ -88,12 +93,12 @@ public class HelloWorldMidlet  extends MIDlet implements CommandListener, ItemCo
     public void exitMIDlet() throws Exception
     {  	
     	UserData userData = new UserData();
-    	userData.name = name.getString();
-    	userData.flight = flight.getString();
-    	userData.date = calendar.getDate().toString();
+    	userData.name = nameField.getString();
+    	userData.flight = flightField.getString();
+    	userData.date = "" + dateField.getDate().getTime();
     	
-    	boolean[] selected = new boolean[purser.size()];  
-    	purser.getSelectedFlags(selected);
+    	boolean[] selected = new boolean[purserField.size()];  
+    	purserField.getSelectedFlags(selected);
     	userData.purser = "" + selected[0];
     	
     	backupFile.save(userData);
@@ -142,31 +147,32 @@ public class HelloWorldMidlet  extends MIDlet implements CommandListener, ItemCo
     	{
 	        if (item == buttonOK && command == okCommand) 
             {       
-            	if(name.getString() == null || name.getString().length() == 0)
+            	if(nameField.getString() == null || nameField.getString().length() == 0)
             	{
             		throw new Exception("Please provide Name/ID");
             	}
 
-            	if(flight.getString() == null || flight.getString().length() == 0)
+            	if(flightField.getString() == null || flightField.getString().length() == 0)
             	{
             		throw new Exception("Please provide flight number");
             	}
 
-            	if(calendar == null ||  
-            	   calendar.getDate() == null ||
-            	   calendar.getDate().toString() == null || 
-            	   calendar.getDate().toString().length() == 0)
+            	if(dateField == null ||  
+            	   dateField.getDate() == null ||
+            	   dateField.getDate().toString() == null || 
+            	   dateField.getDate().toString().length() == 0)
             	{
             		throw new Exception("Please provide flight date");
             	}
 
             	Log.show(display, form, "Sending SMS!");
-            	boolean[] selected = new boolean[purser.size()];
-            	purser.getSelectedFlags(selected);
+            	boolean[] selected = new boolean[purserField.size()];
+            	purserField.getSelectedFlags(selected);
             	
             	Log.write("purser: " + selected[0]);
             	// send SMS
             	
+            	exitMIDlet();
             }                                                
     	}
     	catch(Exception e)
