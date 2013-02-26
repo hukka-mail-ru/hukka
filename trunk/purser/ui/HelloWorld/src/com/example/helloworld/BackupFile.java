@@ -16,15 +16,15 @@ public class BackupFile
 	}
 	
 
-	 public UserData load()
-     { 
-         InputStream is = null;
-         FileConnection fc = null;
-         UserData userData = new UserData();
-         try
-         {
-        	 System.out.println("- Filename: " + mFilename); 
-             fc = (FileConnection)Connector.open(mFilename, Connector.READ_WRITE);
+	public UserData load()
+    {     	
+        InputStream is = null;
+        FileConnection fc = null;
+        UserData userData = new UserData();
+        try
+        {
+        	System.out.println("- Filename: " + mFilename); 
+            fc = (FileConnection)Connector.open(mFilename, Connector.READ_WRITE);
 
              if(fc.exists()) 
              {
@@ -34,6 +34,7 @@ public class BackupFile
                  userData.flight = readLine(is);
                  userData.date = readLine(is);
                  userData.purser = readLine(is);
+                 userData.callCenter = readLine(is);
              }
          } 
          catch (IOException e) 
@@ -56,18 +57,33 @@ public class BackupFile
             	 Log.write(e);                 
              } 
          } 
-         return userData;
-     }  
+         
+    	Log.write("LOAD:"); 
+    	Log.write("userData.name " + userData.name); 
+    	Log.write("userData.flight " + userData.flight); 
+    	Log.write("userData.date " + userData.date); 
+    	Log.write("userData.purser " + userData.purser); 
+    	Log.write("userData.callCenter " + userData.callCenter); 
+	    	
+        return userData;
+    }  
 
 	 
-	public void save(UserData data)
+	public void save(UserData userData)
 	{
-		 delete();
+    	Log.write("SAVE:"); 
+    	Log.write("userData.name " + userData.name); 
+    	Log.write("userData.flight " + userData.flight); 
+    	Log.write("userData.date " + userData.date); 
+    	Log.write("userData.purser " + userData.purser); 
+    	Log.write("userData.callCenter " + userData.callCenter); 
+    	
+		delete();
 
-         OutputStream os = null; 
-         FileConnection fconn = null; 
-         try 
-         {  
+        OutputStream os = null; 
+        FileConnection fconn = null; 
+        try 
+        {  
              fconn = (FileConnection) Connector.open(mFilename, Connector.READ_WRITE); 
              if (!fconn.exists()) 
                  fconn.create();
@@ -76,13 +92,15 @@ public class BackupFile
              
              String endl = "\n";
              
-             os.write(data.name.getBytes()); 
+             os.write(userData.name.getBytes()); 
              os.write(endl.getBytes());
-             os.write(data.flight.getBytes()); 
+             os.write(userData.flight.getBytes()); 
              os.write(endl.getBytes());
-             os.write(data.date.getBytes());             
+             os.write(userData.date.getBytes());             
              os.write(endl.getBytes());
-             os.write(data.purser.getBytes()); 
+             os.write(userData.purser.getBytes()); 
+             os.write(endl.getBytes());
+             os.write(userData.callCenter.getBytes()); 
              os.write(endl.getBytes());
              
              fconn.setHidden(false);
