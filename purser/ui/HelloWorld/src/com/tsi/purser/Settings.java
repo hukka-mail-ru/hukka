@@ -1,4 +1,4 @@
-package com.example.helloworld;
+package com.tsi.purser;
 
 
 import javax.microedition.lcdui.*;
@@ -14,12 +14,12 @@ public class Settings implements CommandListener
        
     public Form getForm() { return form; }
     
-    private HelloWorldMidlet midlet; 
+    private Midlet midlet; 
     private String callCenter;
     
     public String getCallCenter() { return callCenter; }
     
-    public Settings (HelloWorldMidlet m) 
+    public Settings (Midlet m) 
     {
     	midlet = m; 
        

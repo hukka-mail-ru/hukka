@@ -1,4 +1,4 @@
-package com.example.helloworld;
+package com.tsi.purser;
 
 import java.util.Date;
 import java.util.TimeZone;
@@ -20,9 +20,9 @@ public class Main implements ItemCommandListener, CommandListener
 	private Command commandSend = new Command("Send", Command.OK, 0);   
 	private Command commandSettings = new Command("Settings", Command.OK, 0);   
 	
-	private HelloWorldMidlet midlet; 
+	private Midlet midlet; 
 	
-	public Main(HelloWorldMidlet m)
+	public Main(Midlet m)
 	{
 		midlet = m;
 		

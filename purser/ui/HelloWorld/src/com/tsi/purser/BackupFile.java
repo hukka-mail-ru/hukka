@@ -1,4 +1,4 @@
-package com.example.helloworld;
+package com.tsi.purser;
 
 import java.io.*;
 import javax.microedition.io.Connector;

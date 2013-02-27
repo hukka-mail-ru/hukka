@@ -1,4 +1,4 @@
-package com.example.helloworld;
+package com.tsi.purser;
 
 import javax.microedition.midlet.*;
 import javax.microedition.lcdui.*;
@@ -6,7 +6,7 @@ import javax.microedition.lcdui.*;
 /**
  * @author 
  */
-public class HelloWorldMidlet extends MIDlet
+public class Midlet extends MIDlet
 {
 
     private boolean midletPaused = false;
