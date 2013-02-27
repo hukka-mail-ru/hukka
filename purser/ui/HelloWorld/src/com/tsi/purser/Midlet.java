@@ -23,10 +23,8 @@ public class Midlet extends MIDlet
 	private BackupFile backupFile = new BackupFile("BackupFile.txt");
  
     private Display display = Display.getDisplay(this); 
-   
-    
+      
     public UserData getUserData() { return userData; }
-    public Display getDisplay() { return display; } 
 
     
     public void showLogo() 
@@ -37,7 +35,7 @@ public class Midlet extends MIDlet
     public void showDone() 
     { 
     	display.setCurrent(done.getForm());
-    	done.setCurrentItem();
+    	display.setCurrentItem(done.getDefaultItem());
     }    
     
     public void showSettings() 
@@ -48,6 +46,7 @@ public class Midlet extends MIDlet
     public void showMain() 
     { 
     	display.setCurrent(main.getForm());
+    	display.setCurrentItem(main.getDefaultItem());
     }
 
     public void showMessage(String message) 
@@ -78,9 +77,7 @@ public class Midlet extends MIDlet
     	main.setData(userData); 
     	settings.setData(userData);
     	
-    	showMain();           
-        main.setCurrentItem();
-        
+    	showMain();         
     }  
 
     public void exitMIDlet() throws Exception

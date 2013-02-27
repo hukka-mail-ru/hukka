@@ -43,13 +43,12 @@ public class Done implements ItemCommandListener, CommandListener
 	
 	public Form getForm() 
 	{     
-		midlet.getDisplay().setCurrentItem(buttonExit);
 		return form; 
 	}
 	
-	public void setCurrentItem()
+	public Item getDefaultItem()
 	{
-		midlet.getDisplay().setCurrentItem(buttonExit);
+		return buttonExit;
 	}
 	
     

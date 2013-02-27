@@ -55,12 +55,16 @@ public class Main implements ItemCommandListener, CommandListener
 		return form; 
 	}
 	
-	public void setCurrentItem()
+	public Item getDefaultItem()
 	{
         if(fieldName.getString() != null && fieldName.getString().length() != 0)
     	{        	
-        	midlet.getDisplay().setCurrentItem(fieldDate);
+        	return fieldDate;
     	}
+        else
+        {
+        	return fieldName;
+        }
 	}
 	
 	
