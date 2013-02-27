@@ -1,4 +1,4 @@
-MIDlet-1: HelloWorldMidlet,,com.example.helloworld.HelloWorldMidlet
+MIDlet-1: HelloWorldMidlet,,com.tsi.helloworld.HelloWorldMidlet
 MIDlet-Jar-URL: Purser.jar
 MIDlet-Name: Purser MIDlet Suite
 MIDlet-Permissions: javax.microedition.io.Connector.file.write,javax.microedition.io.Connector.file.read
