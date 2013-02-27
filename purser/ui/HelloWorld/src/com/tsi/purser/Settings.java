@@ -3,7 +3,7 @@ package com.tsi.purser;
 
 import javax.microedition.lcdui.*;
 
-public class Settings implements CommandListener 
+class Settings implements CommandListener 
 {
 	private Form form = new Form("Settings");
 	

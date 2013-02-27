@@ -4,7 +4,7 @@ import java.io.*;
 import javax.microedition.io.Connector;
 import javax.microedition.io.file.FileConnection;
 
-public class BackupFile
+class BackupFile
 {
 	private String mFilename;
 	

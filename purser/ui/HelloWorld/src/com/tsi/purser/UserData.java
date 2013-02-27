@@ -1,6 +1,6 @@
 package com.tsi.purser;
 
-public class UserData 
+class UserData 
 {
 	public static final String Nothing = "__Nothing__";
 		
