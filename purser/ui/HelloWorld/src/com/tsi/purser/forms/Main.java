@@ -10,7 +10,7 @@ import com.tsi.purser.data.*;
 
 public class Main implements ItemCommandListener, CommandListener 
 {
-	private Form form = new Form("Crew Member Request");
+	private Form form = new Form(UserData.Header);
 		    
 	private TextField fieldName = new TextField("Name/ID:", "", 32, TextField.ANY);
 	private TextField fieldFlight = new TextField("Flight:", "", 32, TextField.ANY); 
@@ -159,7 +159,8 @@ public class Main implements ItemCommandListener, CommandListener
             	// send SMS
             	SMS.send(midlet.getUserData().callCenter, fieldName.getString());
             	
-            	//midlet.exitMIDlet();
+            	Thread.sleep(1500);
+            	midlet.showDone();
             }  
 	        else if (item == buttonSettings && command == commandSettings)
             {  

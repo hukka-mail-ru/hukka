@@ -16,6 +16,7 @@ public class Midlet extends MIDlet
                     
     private Main main = new Main(this);
 	private Settings settings = new Settings(this);
+	private Done done = new Done(this);
 	private Logo logo = new Logo();
 	
     private UserData userData;
@@ -31,8 +32,13 @@ public class Midlet extends MIDlet
     public void showLogo() 
     { 
     	display.setCurrent(logo.getForm());
-    }
+    }    
     
+    public void showDone() 
+    { 
+    	display.setCurrent(done.getForm());
+    	done.setCurrentItem();
+    }    
     
     public void showSettings() 
     { 
@@ -62,7 +68,7 @@ public class Midlet extends MIDlet
     	
     	try 
     	{
-			Thread.sleep(5000);
+			Thread.sleep(4000);
 		} 
     	catch (InterruptedException e) 
     	{

@@ -2,6 +2,7 @@ package com.tsi.purser.data;
 
 public class UserData 
 {
+	public static final String Header = "Crew Member Request";
 	public static final String Nothing = "__Nothing__";
 		
 	public String name;
