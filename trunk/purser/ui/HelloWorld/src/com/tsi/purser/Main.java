@@ -5,7 +5,7 @@ import java.util.TimeZone;
 
 import javax.microedition.lcdui.*;
 
-public class Main implements ItemCommandListener, CommandListener 
+class Main implements ItemCommandListener, CommandListener 
 {
 	private Form form = new Form("Crew Member Request");
 		    

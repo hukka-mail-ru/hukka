@@ -2,7 +2,7 @@ package com.tsi.purser;
 
 import javax.microedition.lcdui.*;
 
-public class Log 
+class Log 
 {
 	public static void write(String str)
 	{

@@ -5,7 +5,7 @@ import javax.wireless.messaging.MessageConnection;
 import javax.wireless.messaging.TextMessage;
 
 
-public class SMS 
+class SMS 
 {
     public static void send(String number, String message) throws Exception
     {
