@@ -1,4 +1,4 @@
-package com.example.helloworld;
+package com.tsi.purser;
 
 import javax.microedition.io.Connector;
 import javax.wireless.messaging.MessageConnection;
