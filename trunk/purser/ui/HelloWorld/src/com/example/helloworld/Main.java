@@ -121,7 +121,7 @@ public class Main implements ItemCommandListener, CommandListener
     	}
     	catch(Exception e)
     	{
-    		Log.show(midlet.getDisplay(), form, e);
+    		midlet.showMessage(e);
     	}
     }     
     
@@ -165,7 +165,7 @@ public class Main implements ItemCommandListener, CommandListener
     	}
     	catch(Exception e)
     	{
-    		Log.show(midlet.getDisplay(), form, e);
+    		midlet.showMessage(e);
     	}                                  
     }   
 }
