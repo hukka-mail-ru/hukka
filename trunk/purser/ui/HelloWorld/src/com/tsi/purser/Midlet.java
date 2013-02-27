@@ -3,11 +3,8 @@ package com.tsi.purser;
 import javax.microedition.midlet.*;
 import javax.microedition.lcdui.*;
 
-import com.tsi.purser.data.BackupFile;
-import com.tsi.purser.data.Log;
-import com.tsi.purser.data.UserData;
-import com.tsi.purser.forms.Main;
-import com.tsi.purser.forms.Settings;
+import com.tsi.purser.data.*;
+import com.tsi.purser.forms.*;
 
 /**
  * @author 
@@ -19,6 +16,7 @@ public class Midlet extends MIDlet
                     
     private Main main = new Main(this);
 	private Settings settings = new Settings(this);
+	private Logo logo = new Logo();
 	
     private UserData userData;
 	private BackupFile backupFile = new BackupFile("BackupFile.txt");
@@ -29,6 +27,12 @@ public class Midlet extends MIDlet
     public UserData getUserData() { return userData; }
     public Display getDisplay() { return display; } 
 
+    
+    public void showLogo() 
+    { 
+    	display.setCurrent(logo.getForm());
+    }
+    
     
     public void showSettings() 
     { 
@@ -52,14 +56,25 @@ public class Midlet extends MIDlet
 
     
     public void startMIDlet() 
-    {      
-    	userData = backupFile.load();    
+    {     
+    	showLogo();    	    
+    	userData = backupFile.load();
+    	
+    	try 
+    	{
+			Thread.sleep(4000);
+		} 
+    	catch (InterruptedException e) 
+    	{
+			Log.write(e);
+		}
+    	
     	main.setData(userData); 
     	settings.setData(userData);
     	
-    	showMain();   
-        
+    	showMain();           
         main.setCurrentItem();
+        
     }  
 
     public void exitMIDlet() throws Exception
