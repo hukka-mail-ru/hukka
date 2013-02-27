@@ -12,8 +12,8 @@
       <configuration active="true" name="S40_6th_Edition_SDK">
          <device group="Series 40 6th Edition SDK" name="S40_6th_Edition_SDK"/>
          <symbolSet name="S40_6th_Edition_SDK">
-            <symbol name="MMAPI" value="1.2"/>
             <symbol name="screen.isColor" value="true"/>
+            <symbol name="MMAPI" value="1.2"/>
             <symbol name="model" value="Series 40 6th Edition SDK"/>
             <symbol name="screen.bitDepth" value="16"/>
             <symbol name="JSR82" value="1.1"/>
