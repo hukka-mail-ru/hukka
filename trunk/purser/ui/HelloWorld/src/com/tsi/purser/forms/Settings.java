@@ -1,9 +1,12 @@
-package com.tsi.purser;
+package com.tsi.purser.forms;
 
 
 import javax.microedition.lcdui.*;
 
-class Settings implements CommandListener 
+import com.tsi.purser.Midlet;
+import com.tsi.purser.data.*;
+
+public class Settings implements CommandListener 
 {
 	private Form form = new Form("Settings");
 	

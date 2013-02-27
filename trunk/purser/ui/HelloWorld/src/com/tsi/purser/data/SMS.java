@@ -1,11 +1,12 @@
-package com.tsi.purser;
+package com.tsi.purser.data;
 
 import javax.microedition.io.Connector;
 import javax.wireless.messaging.MessageConnection;
 import javax.wireless.messaging.TextMessage;
 
 
-class SMS 
+
+public class SMS 
 {
     public static void send(String number, String message) throws Exception
     {

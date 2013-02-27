@@ -1,8 +1,8 @@
-package com.tsi.purser;
+package com.tsi.purser.data;
 
 import javax.microedition.lcdui.*;
 
-class Log 
+public class Log 
 {
 	public static void write(String str)
 	{
