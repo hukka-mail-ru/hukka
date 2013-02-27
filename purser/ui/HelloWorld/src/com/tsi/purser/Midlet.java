@@ -3,6 +3,12 @@ package com.tsi.purser;
 import javax.microedition.midlet.*;
 import javax.microedition.lcdui.*;
 
+import com.tsi.purser.data.BackupFile;
+import com.tsi.purser.data.Log;
+import com.tsi.purser.data.UserData;
+import com.tsi.purser.forms.Main;
+import com.tsi.purser.forms.Settings;
+
 /**
  * @author 
  */

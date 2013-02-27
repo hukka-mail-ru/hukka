@@ -1,11 +1,14 @@
-package com.tsi.purser;
+package com.tsi.purser.forms;
 
 import java.util.Date;
 import java.util.TimeZone;
 
 import javax.microedition.lcdui.*;
 
-class Main implements ItemCommandListener, CommandListener 
+import com.tsi.purser.Midlet;
+import com.tsi.purser.data.*;
+
+public class Main implements ItemCommandListener, CommandListener 
 {
 	private Form form = new Form("Crew Member Request");
 		    

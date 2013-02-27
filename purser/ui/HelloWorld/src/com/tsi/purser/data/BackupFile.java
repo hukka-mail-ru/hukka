@@ -1,10 +1,11 @@
-package com.tsi.purser;
+package com.tsi.purser.data;
 
 import java.io.*;
 import javax.microedition.io.Connector;
 import javax.microedition.io.file.FileConnection;
 
-class BackupFile
+
+public class BackupFile
 {
 	private String mFilename;
 	
