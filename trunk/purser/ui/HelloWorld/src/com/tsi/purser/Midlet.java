@@ -62,7 +62,7 @@ public class Midlet extends MIDlet
     	
     	try 
     	{
-			Thread.sleep(4000);
+			Thread.sleep(5000);
 		} 
     	catch (InterruptedException e) 
     	{
