@@ -16,9 +16,9 @@ public class HelloWorldMidlet extends MIDlet
 	
     private UserData userData;
 	private BackupFile backupFile = new BackupFile("BackupFile.txt");
-
+ 
     private Display display = Display.getDisplay(this); 
-    
+   
     
     public UserData getUserData() { return userData; }
     public Display getDisplay() { return display; } 
@@ -32,6 +32,16 @@ public class HelloWorldMidlet extends MIDlet
     public void showMain() 
     { 
     	display.setCurrent(main.getForm());
+    }
+
+    public void showMessage(String message) 
+    { 
+    	Log.show(display, (Form)display.getCurrent(), message);
+    }
+    
+    public void showMessage(Exception e) 
+    { 
+    	Log.show(display, (Form)display.getCurrent(), e);
     }
 
     
