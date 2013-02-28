@@ -25,12 +25,7 @@ public class Midlet extends MIDlet
     private Display display = Display.getDisplay(this); 
       
     public UserData getUserData() { return userData; }
-
-    
-    public void showLogo() 
-    { 
-    	display.setCurrent(logo.getForm());
-    }    
+  
     
     public void showDone() 
     { 
@@ -62,22 +57,15 @@ public class Midlet extends MIDlet
     
     public void startMIDlet() 
     {     
-    	showLogo();    	    
-    	userData = backupFile.load();
+    	display.setCurrent(logo.getForm());
+    	logo.animate(); 
     	
-    	try 
-    	{
-			Thread.sleep(4000);
-		} 
-    	catch (InterruptedException e) 
-    	{
-			Log.write(e);
-		}
+    	userData = backupFile.load();
     	
     	main.setData(userData); 
     	settings.setData(userData);
     	
-    	showMain();         
+    	showMain();     	        
     }  
 
     public void exitMIDlet() throws Exception

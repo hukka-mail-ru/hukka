@@ -11,12 +11,15 @@ import com.tsi.purser.data.Log;
 public class Logo extends Canvas 
 {
 	private Image image;
+	private Image progress;
+	private int left = 33;
 	
 	public Logo()
 	{
 		try 
 		{
 			image = Image.createImage("/logo.png");
+			progress = Image.createImage("/progress.png");
 		} 
 		catch (IOException e) 
 		{
@@ -27,11 +30,30 @@ public class Logo extends Canvas
 	protected void paint(Graphics g) 
 	{
 		g.drawImage(image, 0, 0, Graphics.TOP | Graphics.LEFT);
-		
+		g.drawImage(progress, left, 290, Graphics.TOP | Graphics.LEFT);
 	}
 	
 	public Displayable getForm() 
 	{        
 		return this; 
 	}
+	
+	public void animate() 
+	{
+		try
+		{
+			for(int i=0; i<255; i++)
+			{
+				left += 1;
+				repaint();
+				Thread.sleep(10);
+			}
+		}
+		catch(Exception e)
+		{
+			Log.write(e);
+		}
+			
+	}
+
 }
