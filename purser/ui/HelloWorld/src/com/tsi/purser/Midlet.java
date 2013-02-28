@@ -14,10 +14,10 @@ public class Midlet extends MIDlet
 
     private boolean midletPaused = false;
                     
-    private Main main = new Main(this);
-	private Settings settings = new Settings(this);
-	private Done done = new Done(this);
-	private Logo logo = new Logo();
+    private Main main;
+	private Settings settings;
+	private Done done;
+	private Logo logo;
 	
     private UserData userData;
 	private BackupFile backupFile = new BackupFile("BackupFile.txt");
@@ -25,8 +25,7 @@ public class Midlet extends MIDlet
     private Display display = Display.getDisplay(this); 
       
     public UserData getUserData() { return userData; }
-  
-    
+      
     public void showDone() 
     { 
     	display.setCurrent(done.getWidget());
@@ -58,26 +57,45 @@ public class Midlet extends MIDlet
     
     public void startMIDlet() 
     {     
-    	display.setCurrent(logo.getWidget());
-    	logo.animate(); 
-    	
-    	userData = backupFile.load();
-    	
-    	main.setData(userData); 
-    	settings.setData(userData);
-    	
-    	showMain();     	        
+    	try
+    	{   
+	        main = new Main(this);
+	    	settings = new Settings(this);
+	    	done = new Done(this);
+	    	logo = new Logo();
+	    	
+	    	display.setCurrent(logo.getWidget());
+	    	logo.animate(); 
+	    	
+	    	userData = backupFile.load();
+	    	
+	    	main.setData(userData); 
+	    	settings.setData(userData);
+	    	
+	    	showMain();
+    	}
+    	catch(Exception e)
+    	{
+    		Log.write(e);
+    	}
     }  
 
-    public void exitMIDlet() throws Exception
-    {  	  
-    	main.getData(userData);
-    	settings.getData(userData);
-    	backupFile.save(userData);
-    	
-        display.setCurrent(null);
-        destroyApp(true);
-        notifyDestroyed();     
+    public void exitMIDlet()
+    {  	 
+    	try
+    	{
+	    	main.getData(userData);
+	    	settings.getData(userData);
+	    	backupFile.save(userData);
+	    	
+	        display.setCurrent(null);
+	        destroyApp(true);
+	        notifyDestroyed(); 
+    	}
+    	catch(Exception e)
+    	{
+    		Log.write(e);
+    	}
     }
        
     /**
