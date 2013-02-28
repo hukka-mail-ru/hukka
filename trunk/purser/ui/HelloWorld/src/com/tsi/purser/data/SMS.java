@@ -27,9 +27,16 @@ public class SMS
 		TextMessage msg = (TextMessage)conn.newMessage(MessageConnection.TEXT_MESSAGE);
 		//set text
 		msg.setPayloadText(message);
-		// send message
-		conn.send(msg);
-		conn.close();
-      }
+		
+    	try
+    	{
+			// send message
+			conn.send(msg);
+    	}
+    	finally
+    	{
+    		conn.close();
+    	}
+    }
 
 }
