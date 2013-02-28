@@ -19,23 +19,24 @@ public class SMS
     		throw new NoDataException("call center number");
     	}
     	
-		//sets address to send message
-		String addr = "sms://"+number;
-		// opens connection
-		MessageConnection conn = (MessageConnection) Connector.open(addr);
-		// prepares text message
-		TextMessage msg = (TextMessage)conn.newMessage(MessageConnection.TEXT_MESSAGE);
-		//set text
-		msg.setPayloadText(message);
-		
+    	MessageConnection conn = null;
     	try
     	{
+			//sets address to send message
+			String addr = "sms://"+number;
+			// opens connection
+			conn = (MessageConnection) Connector.open(addr);
+			// prepares text message
+			TextMessage msg = (TextMessage)conn.newMessage(MessageConnection.TEXT_MESSAGE);
+			//set text
+			msg.setPayloadText(message);
 			// send message
 			conn.send(msg);
     	}
     	finally
     	{
-    		conn.close();
+    		if(conn != null)
+    			conn.close();
     	}
     }
 
