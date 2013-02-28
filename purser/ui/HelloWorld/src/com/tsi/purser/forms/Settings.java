@@ -68,17 +68,10 @@ public class Settings implements Widget, CommandListener
 
     public void setData(UserData userData)
     {  	
-    	try
-    	{
-    		if(!userData.callCenter.equals(UserData.Nothing))
-    		{
-    			fieldCallCenter.setString(userData.callCenter);
-    		}
-    	}
-    	catch(Exception e)
-    	{
-    		Log.write(e);
-    	}	
+		if(!userData.callCenter.equals(UserData.Nothing))
+		{
+			fieldCallCenter.setString(userData.callCenter);
+		}
     }
 
 	public Displayable getWidget() 
