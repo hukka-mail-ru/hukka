@@ -4,6 +4,8 @@ import javax.microedition.io.Connector;
 import javax.wireless.messaging.MessageConnection;
 import javax.wireless.messaging.TextMessage;
 
+import com.tsi.purser.exceptions.NoDataException;
+
 
 
 public class SMS 
@@ -14,7 +16,7 @@ public class SMS
     	
     	if(number == null || number.length() == 0 || number.equals(UserData.Nothing))
     	{
-    		throw new Exception("Please provide call center number");
+    		throw new NoDataException("call center number");
     	}
     	
 		//sets address to send message

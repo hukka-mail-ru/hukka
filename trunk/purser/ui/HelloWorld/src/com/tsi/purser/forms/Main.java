@@ -7,6 +7,7 @@ import javax.microedition.lcdui.*;
 
 import com.tsi.purser.Midlet;
 import com.tsi.purser.data.*;
+import com.tsi.purser.exceptions.NoDataException;
 
 public class Main implements Widget, ItemCommandListener, CommandListener 
 {
@@ -122,12 +123,12 @@ public class Main implements Widget, ItemCommandListener, CommandListener
             {       
             	if(fieldName.getString() == null || fieldName.getString().length() == 0)
             	{
-            		throw new Exception("Please provide Name/ID");
+            		throw new NoDataException("Name/ID");
             	}
 
             	if(fieldFlight.getString() == null || fieldFlight.getString().length() == 0)
             	{
-            		throw new Exception("Please provide flight number");
+            		throw new NoDataException("flight number");
             	}
 
             	if(fieldDate == null ||  
@@ -135,7 +136,7 @@ public class Main implements Widget, ItemCommandListener, CommandListener
             	   fieldDate.getDate().toString() == null || 
             	   fieldDate.getDate().toString().length() == 0)
             	{
-            		throw new Exception("Please provide flight date");
+            		throw new NoDataException("flight date");
             	}
 
             	boolean[] selected = new boolean[fieldPurser.size()];
