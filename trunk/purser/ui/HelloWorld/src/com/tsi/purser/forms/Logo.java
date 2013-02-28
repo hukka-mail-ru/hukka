@@ -5,10 +5,11 @@ import javax.microedition.lcdui.Canvas;
 import javax.microedition.lcdui.Displayable;
 import javax.microedition.lcdui.Graphics;
 import javax.microedition.lcdui.Image;
+import javax.microedition.lcdui.Item;
 
 import com.tsi.purser.data.Log;
 
-public class Logo extends Canvas 
+public class Logo extends Canvas implements Widget
 {
 	private Image image;
 	private Image progress;
@@ -33,9 +34,14 @@ public class Logo extends Canvas
 		g.drawImage(progress, left, 290, Graphics.TOP | Graphics.LEFT);
 	}
 	
-	public Displayable getForm() 
+	public Displayable getWidget() 
 	{        
 		return this; 
+	}
+	
+	public Item getDefaultItem()
+	{
+		return null;
 	}
 	
 	public void animate() 
@@ -44,7 +50,7 @@ public class Logo extends Canvas
 		{
 			for(int i=0; i<255; i++)
 			{
-				left += 1;
+				left++;
 				repaint();
 				Thread.sleep(10);
 			}

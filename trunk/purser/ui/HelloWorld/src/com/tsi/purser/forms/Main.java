@@ -8,7 +8,7 @@ import javax.microedition.lcdui.*;
 import com.tsi.purser.Midlet;
 import com.tsi.purser.data.*;
 
-public class Main implements ItemCommandListener, CommandListener 
+public class Main implements Widget, ItemCommandListener, CommandListener 
 {
 	private Form form = new Form(UserData.Header);
 		    
@@ -48,11 +48,6 @@ public class Main implements ItemCommandListener, CommandListener
                               
         form.addCommand(commandExit);
         form.setCommandListener(this);   
-	}
-	
-	public Form getForm() 
-	{        
-		return form; 
 	}
 	
 	public Item getDefaultItem()
@@ -175,5 +170,10 @@ public class Main implements ItemCommandListener, CommandListener
     	{
     		midlet.showMessage(e);
     	}                                  
-    }   
+    }
+
+	public Displayable getWidget() 
+	{
+		return form;
+	}   
 }
