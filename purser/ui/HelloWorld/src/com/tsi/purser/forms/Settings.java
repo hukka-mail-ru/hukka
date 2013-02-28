@@ -6,17 +6,14 @@ import javax.microedition.lcdui.*;
 import com.tsi.purser.Midlet;
 import com.tsi.purser.data.*;
 
-public class Settings implements CommandListener 
+public class Settings implements Widget, CommandListener 
 {
 	private Form form = new Form("Settings");
 	
     private TextField fieldCallCenter = new TextField("Call Center:", "", 32, TextField.ANY);
 
     private Command commandOK = new Command("OK", Command.OK, 0); 
-    private Command commandExit = new Command("Exit", Command.EXIT, 0);      
-       
-    public Form getForm() { return form; }
-    
+    private Command commandExit = new Command("Exit", Command.EXIT, 0);          
     private Midlet midlet; 
     private String callCenter;
     
@@ -83,5 +80,14 @@ public class Settings implements CommandListener
     		Log.write(e);
     	}	
     }
+
+	public Displayable getWidget() 
+	{		
+		return form;
+	}
     
+	public Item getDefaultItem()
+	{
+		return fieldCallCenter;
+	}
 }

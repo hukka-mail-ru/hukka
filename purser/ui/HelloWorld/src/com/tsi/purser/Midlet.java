@@ -29,18 +29,19 @@ public class Midlet extends MIDlet
     
     public void showDone() 
     { 
-    	display.setCurrent(done.getForm());
+    	display.setCurrent(done.getWidget());
     	display.setCurrentItem(done.getDefaultItem());
     }    
     
     public void showSettings() 
     { 
-    	display.setCurrent(settings.getForm());
+    	display.setCurrent(settings.getWidget());
+    	display.setCurrentItem(settings.getDefaultItem());
     }
     
     public void showMain() 
     { 
-    	display.setCurrent(main.getForm());
+    	display.setCurrent(main.getWidget());
     	display.setCurrentItem(main.getDefaultItem());
     }
 
@@ -57,7 +58,7 @@ public class Midlet extends MIDlet
     
     public void startMIDlet() 
     {     
-    	display.setCurrent(logo.getForm());
+    	display.setCurrent(logo.getWidget());
     	logo.animate(); 
     	
     	userData = backupFile.load();

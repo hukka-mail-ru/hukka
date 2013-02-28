@@ -2,10 +2,11 @@ package com.tsi.purser.forms;
 
 
 import javax.microedition.lcdui.*;
+
 import com.tsi.purser.Midlet;
 import com.tsi.purser.data.*;
 
-public class Done implements ItemCommandListener, CommandListener 
+public class Done implements Widget, ItemCommandListener, CommandListener 
 {
 	private Form form = new Form(UserData.Header);
 		    
@@ -39,11 +40,6 @@ public class Done implements ItemCommandListener, CommandListener
                               
         form.addCommand(commandExit);
         form.setCommandListener(this);   
-	}
-	
-	public Form getForm() 
-	{     
-		return form; 
 	}
 	
 	public Item getDefaultItem()
@@ -86,5 +82,10 @@ public class Done implements ItemCommandListener, CommandListener
     	{
     		midlet.showMessage(e);
     	}                                  
-    }   
+    }
+
+	public Displayable getWidget() 
+	{
+		return form; 
+	}   
 }
