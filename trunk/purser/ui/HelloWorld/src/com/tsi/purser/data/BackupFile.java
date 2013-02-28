@@ -27,7 +27,7 @@ public class BackupFile
         {
         	System.out.println("- Filename: " + mFilename); 
             fc = (FileConnection)Connector.open(mFilename, Connector.READ_WRITE);
-
+                      
              if(fc.exists()) 
              {
                  is = fc.openInputStream();                 
@@ -39,16 +39,13 @@ public class BackupFile
                  userData.callCenter = readLine(is);
              }
          } 
-         catch (IOException e) 
-         {
-        	 Log.write(e);
-         } 
          finally 
          { 
+        	 Log.write("cleanup");
              if (null != is) 
                  is.close(); 
              if (null != fc) 
-                 fc.close(); 
+                 fc.close();             
          } 
          
     	Log.write("LOAD:"); 
@@ -97,12 +94,6 @@ public class BackupFile
              os.write(endl.getBytes());
              
              fconn.setHidden(false);
-//	           fconn.setReadable(true);
-         } 
-
-         catch (IOException e) 
-         { 
-        	 Log.write(e);
          } 
          finally 
          { 
@@ -112,30 +103,21 @@ public class BackupFile
                  fconn.close(); 
          } 
      }
-
 	
 	
-	private void delete()
+	private void delete() throws IOException
 	{
-		try
-		{
-		    // A File object to represent the filename
-		    FileConnection fc = (FileConnection)Connector.open(mFilename, Connector.READ_WRITE);
-		
-		    // Make sure the file or directory exists and isn't write protected
-		    if (!fc.exists())
-		    	return;
-		
-		    if (!fc.canWrite())
-		      throw new IOException("Delete: write protected: " + mFilename);
-		
-		    fc.delete();
-		}
-		catch(Exception e)
-		{
-    		System.out.println("Can't delete file"); 
-    		e.printStackTrace();
-		}
+	    // A File object to represent the filename
+	    FileConnection fc = (FileConnection)Connector.open(mFilename, Connector.READ_WRITE);
+	
+	    // Make sure the file or directory exists and isn't write protected
+	    if (!fc.exists())
+	    	return;
+	
+	    if (!fc.canWrite())
+	      throw new IOException("Delete: write protected: " + mFilename);
+	
+	    fc.delete();
 	}
 	
     private String readLine(InputStream reader) throws IOException 
