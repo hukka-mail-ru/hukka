@@ -82,49 +82,35 @@ public class Main implements Widget, ItemCommandListener, CommandListener
 
     public void setData(UserData userData)
     {  	
-    	try
+		if(!userData.name.equals(UserData.Nothing))
+		{
+			fieldName.setString(userData.name);
+		}
+		
+		if(!userData.flight.equals(UserData.Nothing))
+		{
+			fieldFlight.setString(userData.flight);
+		}
+		
+    	if(!userData.date.equals(UserData.Nothing))
     	{
-    		if(!userData.name.equals(UserData.Nothing))
-    		{
-    			fieldName.setString(userData.name);
-    		}
-    		
-    		if(!userData.flight.equals(UserData.Nothing))
-    		{
-    			fieldFlight.setString(userData.flight);
-    		}
-    		
-        	if(!userData.date.equals(UserData.Nothing))
-        	{
-        		Date d = new Date(Long.parseLong(userData.date));
-        		fieldDate.setDate(d);
-        	}
-	    	
-	    	if(userData.purser.equals("true"))
-	    	{
-	    		fieldPurser.setSelectedIndex(0, true);
-	    	}
+    		Date d = new Date(Long.parseLong(userData.date));
+    		fieldDate.setDate(d);
     	}
-    	catch(Exception e)
+    	
+    	if(userData.purser.equals("true"))
     	{
-    		Log.write(e);
-    	}	
+    		fieldPurser.setSelectedIndex(0, true);
+    	}
     }
     
     
     public void commandAction(Command command, Displayable displayable) 
     {      
-    	try
-    	{
-	        if (displayable == form && command == commandExit) 
-            {                                         
-            	midlet.exitMIDlet();                                           
-            }                                                  
-    	}
-    	catch(Exception e)
-    	{
-    		midlet.showMessage(e);
-    	}
+        if (displayable == form && command == commandExit) 
+        {                                         
+        	midlet.exitMIDlet();                                           
+        }                                                  
     }     
     
     

@@ -7,7 +7,6 @@ import javax.microedition.lcdui.Graphics;
 import javax.microedition.lcdui.Image;
 import javax.microedition.lcdui.Item;
 
-import com.tsi.purser.data.Log;
 
 public class Logo extends Canvas implements Widget
 {
@@ -15,17 +14,10 @@ public class Logo extends Canvas implements Widget
 	private Image progress;
 	private int left = 33;
 	
-	public Logo()
+	public Logo() throws IOException
 	{
-		try 
-		{
-			image = Image.createImage("/logo.png");
-			progress = Image.createImage("/progress.png");
-		} 
-		catch (IOException e) 
-		{
-			Log.write(e);
-		}
+		image = Image.createImage("/logo.png");
+		progress = Image.createImage("/progress.png");
 	}
 	
 	protected void paint(Graphics g) 
@@ -44,22 +36,14 @@ public class Logo extends Canvas implements Widget
 		return null;
 	}
 	
-	public void animate() 
+	public void animate() throws InterruptedException 
 	{
-		try
+		for(int i=0; i<255; i++)
 		{
-			for(int i=0; i<255; i++)
-			{
-				left++;
-				repaint();
-				Thread.sleep(10);
-			}
-		}
-		catch(Exception e)
-		{
-			Log.write(e);
-		}
-			
+			left++;
+			repaint();
+			Thread.sleep(10);
+		}			
 	}
 
 }

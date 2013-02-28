@@ -1,6 +1,7 @@
 package com.tsi.purser.data;
 
 import java.io.*;
+
 import javax.microedition.io.Connector;
 import javax.microedition.io.file.FileConnection;
 
@@ -17,7 +18,7 @@ public class BackupFile
 	}
 	
 
-	public UserData load()
+	public UserData load() throws IOException
     {     	
         InputStream is = null;
         FileConnection fc = null;
@@ -40,23 +41,14 @@ public class BackupFile
          } 
          catch (IOException e) 
          {
-        	 System.out.println("Can't read file");
-        	 System.out.println(e.getMessage()); 
-        	 e.printStackTrace();        	 
+        	 Log.write(e);
          } 
          finally 
          { 
-             try 
-             {
-                 if (null != is) 
-                     is.close(); 
-                 if (null != fc) 
-                     fc.close(); 
-             } 
-             catch (IOException e) 
-             { 
-            	 Log.write(e);                 
-             } 
+             if (null != is) 
+                 is.close(); 
+             if (null != fc) 
+                 fc.close(); 
          } 
          
     	Log.write("LOAD:"); 
@@ -70,7 +62,7 @@ public class BackupFile
     }  
 
 	 
-	public void save(UserData userData)
+	public void save(UserData userData) throws IOException
 	{
     	Log.write("SAVE:"); 
     	Log.write("userData.name " + userData.name); 
@@ -114,17 +106,10 @@ public class BackupFile
          } 
          finally 
          { 
-             try 
-             { 
-                 if (null != os) 
-                     os.close(); 
-                 if (null != fconn) 
-                     fconn.close(); 
-             } 
-             catch (IOException e) 
-             { 
-            	 Log.write(e);
-             } 
+             if (null != os) 
+                 os.close(); 
+             if (null != fconn) 
+                 fconn.close(); 
          } 
      }
 
