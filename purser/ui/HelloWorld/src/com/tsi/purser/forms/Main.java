@@ -7,14 +7,19 @@ import javax.microedition.lcdui.*;
 
 import com.tsi.purser.Midlet;
 import com.tsi.purser.data.*;
+import com.tsi.purser.exceptions.InvalidSymbolException;
 import com.tsi.purser.exceptions.NoDataException;
 
 public class Main implements Widget, ItemCommandListener, CommandListener 
 {
 	private Form form = new Form(UserData.Header);
+	
+	private final String labelName = "Name/ID";
+	private final String labelFlight = "Flight";
+	private final String labelDate = "Date";
 		    
-	private TextField fieldName = new TextField("Name/ID:", "", 32, TextField.ANY);
-	private TextField fieldFlight = new TextField("Flight:", "", 32, TextField.ANY); 
+	private TextField fieldName = new TextField(labelName + ":", "", 32, TextField.ANY);
+	private TextField fieldFlight = new TextField(labelFlight + ":", "", 32, TextField.ANY); 
 	private DateField fieldDate = new DateField("", DateField.DATE, TimeZone.getTimeZone("GMT"));
 	private ChoiceGroup fieldPurser = new ChoiceGroup("", Choice.MULTIPLE);
 	private StringItem buttonSend = new StringItem("", "Send Request", Item.BUTTON);  
@@ -123,12 +128,12 @@ public class Main implements Widget, ItemCommandListener, CommandListener
             {       
             	if(fieldName.getString() == null || fieldName.getString().length() == 0)
             	{
-            		throw new NoDataException("Name/ID");
+            		throw new NoDataException(labelName);
             	}
 
             	if(fieldFlight.getString() == null || fieldFlight.getString().length() == 0)
             	{
-            		throw new NoDataException("flight number");
+            		throw new NoDataException(labelFlight);
             	}
 
             	if(fieldDate == null ||  
@@ -136,14 +141,32 @@ public class Main implements Widget, ItemCommandListener, CommandListener
             	   fieldDate.getDate().toString() == null || 
             	   fieldDate.getDate().toString().length() == 0)
             	{
-            		throw new NoDataException("flight date");
+            		throw new NoDataException(labelDate);
             	}
 
             	boolean[] selected = new boolean[fieldPurser.size()];
             	fieldPurser.getSelectedFlags(selected);
             	            	
+            	// get data from controls
+            	UserData data = new UserData();
+            	getData(data);
+            	
+            	if(data.name.indexOf("|") >= 0)
+            	{
+            		throw new InvalidSymbolException(labelName);
+            	}
+            	if(data.flight.indexOf("|") >= 0)
+            	{
+            		throw new InvalidSymbolException(labelFlight);
+            	}
+            	
             	// send SMS
-            	SMS.send(midlet.getUserData().callCenter, fieldName.getString());
+            	String message = data.name + "|" + 
+            	                 data.flight + "|" +
+            	                 data.date + "|" +
+            	                 data.purser;            	
+            	
+            	SMS.send(midlet.getUserData().callCenter, message);
             	
             	Thread.sleep(1500);
             	midlet.showDone();
