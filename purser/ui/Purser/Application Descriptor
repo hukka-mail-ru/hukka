@@ -1,0 +1,9 @@
+MIDlet-1: PurserMidlet,,com.tsi.purser.Midlet
+MIDlet-Jar-URL: Purser.jar
+MIDlet-Permissions-Opt: javax.microedition.io.Connector.file.write,javax.microedition.io.Connector.file.read
+MicroEdition-Configuration: CLDC-1.0
+MIDlet-Version: 1.0.0
+MIDlet-Name: Purser MIDlet Suite
+MIDlet-Vendor: TSI
+MIDlet-Permissions: javax.microedition.io.Connector.file.write,javax.microedition.io.Connector.file.read
+MicroEdition-Profile: MIDP-2.1
