@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<mtjMetadata jad="Purser.jad" version="1.2.1.v201009031435">
+   <device group="Series 40 6th Edition SDK" name="S40_6th_Edition_SDK"/>
+   <signing projectSpecific="true" signProject="true">
+      <alias>mykey</alias>
+      <keystore>D:\Devel\purser\ui\Purser\purser.ks</keystore>
+      <provider/>
+      <keystoreType/>
+      <passwords storePasswords="1"/>
+   </signing>
+   <configurations>
+      <configuration active="true" name="S40_6th_Edition_SDK">
+         <device group="Series 40 6th Edition SDK" name="S40_6th_Edition_SDK"/>
+         <symbolSet name="S40_6th_Edition_SDK">
+            <symbol name="screen.isColor" value="true"/>
+            <symbol name="MMAPI" value="1.2"/>
+            <symbol name="model" value="Series 40 6th Edition SDK"/>
+            <symbol name="screen.bitDepth" value="16"/>
+            <symbol name="JSR82" value="1.1"/>
+            <symbol name="NOKIAUI" value="1.1"/>
+            <symbol name="MIDP" value="1.0"/>
+            <symbol name="CLDC" value="1.0"/>
+            <symbol name="screen.canvas.height" value="328"/>
+            <symbol name="JSR179" value="1.0"/>
+            <symbol name="WMA" value="1.1"/>
+            <symbol name="a_3D_API" value="1.1"/>
+            <symbol name="screen.width" value="320"/>
+            <symbol name="AMMS" value="1.0"/>
+            <symbol name="screen.isTouch" value="false"/>
+            <symbol name="screen.canvas.width" value="320"/>
+            <symbol name="JSR211" value="1.0"/>
+            <symbol name="screen.canvas.y" value="40"/>
+            <symbol name="screen.canvas.x" value="0"/>
+            <symbol name="SATSA-APDU" value="1.0"/>
+            <symbol name="JSR75" value="1.0"/>
+            <symbol name="SVG" value="1.1"/>
+            <symbol name="J2ME-XMLRPC" value="1.0"/>
+            <symbol name="SATSA-CRYPTO" value="1.0"/>
+            <symbol name="version.configuration" value="CDLC-1.1"/>
+            <symbol name="version.profile" value="MIDP-2.1"/>
+            <symbol name="screen.height" value="480"/>
+         </symbolSet>
+      </configuration>
+   </configurations>
+</mtjMetadata>
