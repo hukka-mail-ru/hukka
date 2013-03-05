@@ -6,4 +6,4 @@ MIDlet-Version: 1.0.0
 MIDlet-Name: Purser MIDlet Suite
 MIDlet-Vendor: TSI
 MIDlet-Permissions: javax.microedition.io.Connector.file.write,javax.microedition.io.Connector.file.read
-MicroEdition-Profile: MIDP-2.1
+MicroEdition-Profile: MIDP-1.0
