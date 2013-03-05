@@ -38,12 +38,12 @@ public class Logo extends Canvas implements Widget
 	
 	public void animate() throws InterruptedException 
 	{
-		for(int i=0; i<255; i++)
-		{
-			left++;
-			repaint();
-			Thread.sleep(10);
-		}			
+		//for(int i=0; i<255; i++)
+		//{
+		//	left++;
+		//	repaint();
+			Thread.sleep(2000);
+		//}			
 	}
 
 }

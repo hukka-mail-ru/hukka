@@ -69,6 +69,8 @@ public class Midlet extends MIDlet
 	    	
 	    	userData = backupFile.load();
 	    	
+	    	display.setCurrent(main.getWidget());
+	    	
 	    	main.setData(userData); 
 	    	settings.setData(userData);
 	    	
