@@ -3,10 +3,13 @@
    <device group="Series 40 5th Edition SDK" name="S40_5th_Edition_SDK"/>
    <signing projectSpecific="true" signProject="true">
       <alias>mykey</alias>
-      <keystore>D:\Devel\purser\ui\Purser\purser.ks</keystore>
+      <keystore>$/purser.ks</keystore>
       <provider/>
       <keystoreType/>
-      <passwords storePasswords="1"/>
+      <passwords storePasswords="2">
+         <keystore>k20HQL1RZFvV0MeTc0A+rg==</keystore>
+         <key>k20HQL1RZFvV0MeTc0A+rg==</key>
+      </passwords>
    </signing>
    <configurations>
       <configuration active="true" name="S40_6th_Edition_SDK">
