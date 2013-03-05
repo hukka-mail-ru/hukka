@@ -20,7 +20,7 @@ public class Midlet extends MIDlet
 	private Logo logo;
 	
     private UserData userData;
-	private BackupFile backupFile = new BackupFile("BackupFile.txt");
+	private BackupFile backupFile = new BackupFile();
  
     private Display display = Display.getDisplay(this); 
       
