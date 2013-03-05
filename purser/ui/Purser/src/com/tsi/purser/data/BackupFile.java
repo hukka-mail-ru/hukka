@@ -2,65 +2,22 @@ package com.tsi.purser.data;
 
 import java.io.*;
 
-import javax.microedition.io.Connector;
-import javax.microedition.io.file.FileConnection;
+
+import javax.microedition.rms.*;
 
 
 public class BackupFile
 {
-	private String mFilename;
+	public BackupFile() {}
+		
+	private RecordStore rs = null;
+	static final String REC_STORE = "ReadWriteRMS";
 	
-	public BackupFile(String filename)
+	  
+	public void save(UserData userData) throws IOException, RecordStoreNotFoundException, RecordStoreException
 	{
-		String dir = System.getProperty("fileconn.dir.private"); 
-		mFilename = dir + filename;
-		System.out.println(filename); 
-	}
-	
-
-	public UserData load() throws IOException
-    {     	
-        InputStream is = null;
-        FileConnection fc = null;
-        UserData userData = new UserData();
-        try
-        {
-        	System.out.println("- Filename: " + mFilename); 
-            fc = (FileConnection)Connector.open(mFilename, Connector.READ_WRITE);
-                      
-             if(fc.exists()) 
-             {
-                 is = fc.openInputStream();                 
-                
-                 userData.name = readLine(is);
-                 userData.flight = readLine(is);
-                 userData.date = readLine(is);
-                 userData.purser = readLine(is);
-                 userData.callCenter = readLine(is);
-             }
-         } 
-         finally 
-         { 
-        	 Log.write("cleanup");
-             if (null != is) 
-                 is.close(); 
-             if (null != fc) 
-                 fc.close();             
-         } 
-         
-    	Log.write("LOAD:"); 
-    	Log.write("userData.name " + userData.name); 
-    	Log.write("userData.flight " + userData.flight); 
-    	Log.write("userData.date " + userData.date); 
-    	Log.write("userData.purser " + userData.purser); 
-    	Log.write("userData.callCenter " + userData.callCenter); 
-	    	
-        return userData;
-    }  
-
-	 
-	public void save(UserData userData) throws IOException
-	{
+		
+		
     	Log.write("SAVE:"); 
     	Log.write("userData.name " + userData.name); 
     	Log.write("userData.flight " + userData.flight); 
@@ -68,73 +25,80 @@ public class BackupFile
     	Log.write("userData.purser " + userData.purser); 
     	Log.write("userData.callCenter " + userData.callCenter); 
     	
-		delete();
-
-        OutputStream os = null; 
-        FileConnection fconn = null; 
-        try 
-        {  
-             fconn = (FileConnection) Connector.open(mFilename, Connector.READ_WRITE); 
-             if (!fconn.exists()) 
-                 fconn.create();
-
-             os = fconn.openDataOutputStream();
-             
-             String endl = "\n";
-             
-             os.write(userData.name.getBytes()); 
-             os.write(endl.getBytes());
-             os.write(userData.flight.getBytes()); 
-             os.write(endl.getBytes());
-             os.write(userData.date.getBytes());             
-             os.write(endl.getBytes());
-             os.write(userData.purser.getBytes()); 
-             os.write(endl.getBytes());
-             os.write(userData.callCenter.getBytes()); 
-             os.write(endl.getBytes());
-             
-             fconn.setHidden(false);
-         } 
-         finally 
-         { 
-             if (null != os) 
-                 os.close(); 
-             if (null != fconn) 
-                 fconn.close(); 
-         } 
+    	deleteRecStore();
+    	
+    	openRecStore();
+    	
+    	writeRecord(userData.name);
+    	writeRecord(userData.flight);
+    	writeRecord(userData.date);
+    	writeRecord(userData.purser);
+    	writeRecord(userData.callCenter);	  
+    	
+    	closeRecStore();
      }
 	
-	
-	private void delete() throws IOException
+	public UserData load() throws IOException, RecordStoreNotOpenException, InvalidRecordIDException, RecordStoreException
+    {     	
+
+		openRecStore();
+		
+		UserData userData = new UserData();
+    	userData.name = readRecord(1);
+    	userData.flight = readRecord(2);
+    	userData.date = readRecord(3);
+    	userData.purser = readRecord(4);
+    	userData.callCenter = readRecord(5);	 
+    		
+    	Log.write("LOAD:"); 
+    	Log.write("userData.name " + userData.name); 
+    	Log.write("userData.flight " + userData.flight); 
+    	Log.write("userData.date " + userData.date); 
+    	Log.write("userData.purser " + userData.purser); 
+    	Log.write("userData.callCenter " + userData.callCenter); 
+		
+		closeRecStore();
+    	
+		
+        return userData;
+    }  
+
+	  
+	private void openRecStore() throws RecordStoreFullException, RecordStoreNotFoundException, RecordStoreException
 	{
-	    // A File object to represent the filename
-	    FileConnection fc = (FileConnection)Connector.open(mFilename, Connector.READ_WRITE);
-	
-	    // Make sure the file or directory exists and isn't write protected
-	    if (!fc.exists())
-	    	return;
-	
-	    if (!fc.canWrite())
-	      throw new IOException("Delete: write protected: " + mFilename);
-	
-	    fc.delete();
+	    rs = RecordStore.openRecordStore(REC_STORE, true );
+	}    
+
+	private void closeRecStore() throws RecordStoreNotOpenException, RecordStoreException
+	{
+		if(rs != null)
+		{
+			rs.closeRecordStore();
+		}
+	}
+	  
+	private void deleteRecStore() throws RecordStoreNotFoundException, RecordStoreException
+	{
+		if (RecordStore.listRecordStores() != null)
+		{
+			RecordStore.deleteRecordStore(REC_STORE);
+		}      
+	}
+
+
+	private void writeRecord(String str) throws RecordStoreNotOpenException, RecordStoreFullException, RecordStoreException
+	{
+	    byte[] rec = str.getBytes();
+	    rs.addRecord(rec, 0, rec.length);
+	}
+
+	private String readRecord(int i) throws RecordStoreNotOpenException, InvalidRecordIDException, RecordStoreException
+	{
+		byte[] recData = new byte[rs.getRecordSize(i)];
+        int len = rs.getRecord(i, recData, 0);
+        
+		return new String(recData, 0, len);                        
 	}
 	
-    private String readLine(InputStream reader) throws IOException 
-    {
-        StringBuffer line = new StringBuffer();
-        int c = reader.read();
-
-        while (c != -1 && c != '\n') {
-            line.append((char)c);
-            c = reader.read();
-        }
-
-        if (line.length() == 0) {
-            return null;
-        }
-
-        return line.toString();
-    }
 
 }
