@@ -92,12 +92,21 @@ public class BackupFile
 	    rs.addRecord(rec, 0, rec.length);
 	}
 
-	private String readRecord(int i) throws RecordStoreNotOpenException, InvalidRecordIDException, RecordStoreException
+	private String readRecord(int i) throws RecordStoreNotOpenException, RecordStoreException
 	{
-		byte[] recData = new byte[rs.getRecordSize(i)];
-        int len = rs.getRecord(i, recData, 0);
+		String res = null;
+		try
+		{
+			byte[] recData = new byte[rs.getRecordSize(i)];
+			int len = rs.getRecord(i, recData, 0);
+			res = new String(recData, 0, len);
+		}
+		catch(InvalidRecordIDException e)
+		{
+			res = UserData.Nothing;
+		}
         
-		return new String(recData, 0, len);                        
+		return res;                        
 	}
 	
 
