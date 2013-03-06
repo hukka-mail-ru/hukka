@@ -68,9 +68,19 @@ class SMS {
  
         preg_match("~From\:\s+(\d{11})~", $contents, $matches);
         $this->_from = isset($matches[1]) ? $matches[1] : '';
- 
-        preg_match("~\n\n(.*)~", $contents, $matches);
-        $this->_message = isset($matches[1]) ? trim($matches[1]) : '';
+
+        preg_match("~Alphabet\:\s+(\w+)~", $contents, $matches);
+        $alphabet = isset($matches[1]) ? $matches[1] : '';
+
+	if($alphabet != "ISO")
+	{
+		$this->_message = "Alphabet " + $alphabet + " is not supported";
+	}
+	else
+	{
+	        preg_match("~\n\n(.*)~", $contents, $matches);
+        	$this->_message = isset($matches[1]) ? trim($matches[1]) : '';
+	}
     }
  
     /**
@@ -94,12 +104,16 @@ class SMS {
 /* ======================================================================
  * Main function
  */
-if( $_SERVER['argc'] != 3) {
-    exit(0);
+if( $_SERVER['argc'] != 3) 
+{
+	print "argc != 3";
+	exit(0);
 }
  
 $event = $_SERVER['argv'][1];
-if( 'RECEIVED' !== $event ) {
+if( 'RECEIVED' !== $event ) 
+{
+    print "argv[1] != RECEIVED";
     exit(0);
 }
  
