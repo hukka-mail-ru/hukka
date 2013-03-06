@@ -18,7 +18,7 @@ class SMS {
      * SMS sender's phone number. International number format w/o "+" sign
      * @var string
      */
-    private $_from;
+    private $_from = "0";
  
     /**
      * The SMS service centre, that sent this message
@@ -42,7 +42,7 @@ class SMS {
      * SMS message
      * @var string
      */
-    private $_message;
+    private $_message = "Default";
  
  
     /**
@@ -67,16 +67,12 @@ class SMS {
         $matches = array();
  
         preg_match("~From\:\s+(\d{11})~", $contents, $matches);
-        $this->_from = isset($matches[1]) ? $matches[1] : '';
+        $this->_from = isset($matches[1]) ? $matches[1] : '0';
 
         preg_match("~Alphabet\:\s+(\w+)~", $contents, $matches);
         $alphabet = isset($matches[1]) ? $matches[1] : '';
 
-	if($alphabet != "ISO")
-	{
-		$this->_message = "Alphabet " + $alphabet + " is not supported";
-	}
-	else
+	if($alphabet == "ISO")
 	{
 	        preg_match("~\n\n(.*)~", $contents, $matches);
         	$this->_message = isset($matches[1]) ? trim($matches[1]) : '';
