@@ -49,4 +49,19 @@ string Base::GetCurrentTime()
 	return ss.str();
 }
 
+string Base::GetTime(float milliseconds_since_epoch)
+{
+	float seconds = milliseconds_since_epoch / 1000;
+
+    time_t t=(time_t) seconds;
+    tm* tm = localtime(&t);
+
+	stringstream ss;
+	ss << setfill('0') << setw(2) << tm->tm_mday << "." <<
+	      setfill('0') << setw(2) << tm->tm_mon + 1 << "." <<
+	      setfill('0') << setw(4) << tm->tm_year + 1900;
+
+    return ss.str();
+}
+
 

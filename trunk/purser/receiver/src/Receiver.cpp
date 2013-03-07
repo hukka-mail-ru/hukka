@@ -37,8 +37,22 @@ Receiver::Receiver(const std::string& pidfile, const std::string& configfile):
 }
 
 
+
+void Receiver::Parse(const string& initial, string& parsed, int& start)
+{
+	unsigned found = initial.find('|', start);
+	if (found != std::string::npos)
+	{
+		parsed = initial.substr(start, found - start);
+		start = found + 1;
+	}
+
+}
+
 int Receiver::Run()
 {
+	PRINT_LOG << "Started" << "\n";
+
 	// LISTEN
 	while (true)
 	{
@@ -49,8 +63,20 @@ int Receiver::Run()
 			Message reply;
 			reply.SetPhone(mes.GetPhone());
 
+			string name;
+			string flight;
+			string date;
+			string purser;
+			int start = 0;
+			Parse(mes.GetText(), name, start);
+			Parse(mes.GetText(), flight, start);
+			Parse(mes.GetText(), date, start);
+			Parse(mes.GetText(), purser, start);
+
+			date = Base::GetTime( atof(date.c_str()) );
+
 			std::stringstream text;
-			text << "You wrote: " << mes.GetText() << " - Automatic answer: ku-ku :)";
+			text << "Hi, " << name << "! Your flight #" << flight << " on " << date << " confirmed. Purser: " << purser;
 			reply.SetText(text.str());
 
 			mSpeaker.Speak(reply);

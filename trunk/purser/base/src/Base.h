@@ -36,6 +36,8 @@ public:
 	static std::string Filename(std::string pathname);
 
 	static std::string GetCurrentTime();
+
+	static std::string GetTime(float milliseconds_since_epoch);
 };
 
 #endif /* BASE_H_ */
