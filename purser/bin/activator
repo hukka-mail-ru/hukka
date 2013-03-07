@@ -102,7 +102,6 @@ class SMS {
  */
 if( $_SERVER['argc'] != 3) 
 {
-	print "argc != 3";
 	exit(0);
 }
  

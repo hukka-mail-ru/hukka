@@ -21,6 +21,8 @@ public:
 
 private:
 
+	void Parse(const std::string& initial, std::string& parsed, int& start);
+
     Listener mListener;
     Speaker mSpeaker;
 };

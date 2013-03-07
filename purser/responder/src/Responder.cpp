@@ -33,6 +33,8 @@ Responder::Responder(const std::string& pidfile, const std::string& configfile):
 
 int Responder::Run()
 {
+	PRINT_LOG << "Started" << "\n";
+
 	string sendsms = GetConfigValue("sendsms");
 
 	// LISTEN
