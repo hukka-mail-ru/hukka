@@ -4,8 +4,8 @@ public class Log
 {	
 	public static void write(String str)
 	{
-		Error error = new Error("");
-		System.out.println(error.getStackTrace()[1] + "\t" + str);
+		//Error error = new Error("");
+		System.out.println(Thread.currentThread().getStackTrace()[1] + "\t" + str);
 	}
 	
 	public static void write(Exception e)
