@@ -1,0 +1,79 @@
+﻿<Window x:Class="Setup.UI.ServerDialog"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        Title="ServerDialog" Height="300" Width="300">
+    <Grid>
+
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"></RowDefinition>
+            <RowDefinition Height="Auto"></RowDefinition>
+            <RowDefinition Height="Auto"></RowDefinition>
+            <RowDefinition Height="Auto"></RowDefinition>
+            <RowDefinition Height="Auto"></RowDefinition>
+            <RowDefinition Height="70"></RowDefinition>
+            <RowDefinition Height="Auto"></RowDefinition>
+        </Grid.RowDefinitions>
+
+
+
+
+
+        <Grid Grid.Row="0">
+            <Label Margin="3">Select network connection parameters:</Label>
+        </Grid>
+
+
+        <Grid Grid.Row="1">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition></ColumnDefinition>
+                <ColumnDefinition></ColumnDefinition>
+            </Grid.ColumnDefinitions>
+
+            <Label Grid.Column="0" Margin="3">Server address</Label>
+            <TextBox Grid.Column="1" Margin="3" Name="NetServerTextBox" Height="23"></TextBox>
+
+        </Grid>
+
+
+        <Grid Grid.Row="2" Grid.Column="0">
+
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition></ColumnDefinition>
+                <ColumnDefinition></ColumnDefinition>
+            </Grid.ColumnDefinitions>
+
+            <Label Grid.Column="0" Margin="3">Server port</Label>
+            <TextBox Grid.Column="1" Margin="3" Name="NetPortTextBox" Height="23"></TextBox>
+        </Grid>
+
+        <Grid Grid.Row="3" Grid.Column="0">
+
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition></ColumnDefinition>
+                <ColumnDefinition></ColumnDefinition>
+            </Grid.ColumnDefinitions>
+
+            <Label Grid.Column="0" Margin="3">User name</Label>
+            <TextBox Grid.Column="1" Margin="3"  Name="NetUserTextBox"></TextBox>
+        </Grid>
+
+
+        <Grid Grid.Row="4" Grid.Column="0">
+
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition></ColumnDefinition>
+                <ColumnDefinition></ColumnDefinition>
+            </Grid.ColumnDefinitions>
+
+            <Label Grid.Column="0" Margin="3">Domain name</Label>
+            <TextBox Grid.Column="1" Margin="3"  Name="NetDomainTextBox"></TextBox>
+        </Grid>
+
+
+        <WrapPanel Grid.Row="6">
+            <Button Width="50" Margin="3" Name="CancelButton" Click="CancelButton_Click">_Cancel</Button>
+            <Button Width="50" Margin="3" Name="BackButton" Click="BackButton_Click">_Back</Button>
+            <Button Width="50" Margin="3" Name="NextButton" Click="NextButton_Click">_Next</Button>
+        </WrapPanel>
+    </Grid>
+</Window>

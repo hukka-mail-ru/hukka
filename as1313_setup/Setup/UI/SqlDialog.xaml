@@ -1,0 +1,71 @@
+﻿<Window x:Class="Setup.UI.SqlDialog"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        Title="SQL connection" Height="300" Width="300">
+    
+    
+    <Grid>
+    
+
+
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"></RowDefinition>
+            <RowDefinition Height="Auto"></RowDefinition>
+            <RowDefinition Height="Auto"></RowDefinition>
+            <RowDefinition Height="Auto"></RowDefinition>
+            <RowDefinition Height="100"></RowDefinition>
+            <RowDefinition Height="Auto"></RowDefinition>
+        </Grid.RowDefinitions>
+
+
+
+
+
+        <Grid Grid.Row="0">
+            <Label Margin="3">Select database server and your credentials:</Label>
+        </Grid>
+        
+
+        <Grid Grid.Row="1">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition></ColumnDefinition>
+                <ColumnDefinition></ColumnDefinition>
+            </Grid.ColumnDefinitions>
+            
+            <Label Grid.Column="0" Margin="3">SQL Server</Label>
+            <TextBox Grid.Column="1" Margin="3" Name="SQLServerTextBox" Height="23"></TextBox>
+
+        </Grid>
+
+
+        <Grid Grid.Row="2" Grid.Column="0">
+
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition></ColumnDefinition>
+                <ColumnDefinition></ColumnDefinition>
+            </Grid.ColumnDefinitions>
+            
+            <Label Grid.Column="0" Margin="3">User Name</Label>
+            <TextBox Grid.Column="1" Margin="3" Name="SQLUserTextBox" Height="23"></TextBox>
+        </Grid>
+
+        <Grid Grid.Row="3" Grid.Column="0">
+
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition></ColumnDefinition>
+                <ColumnDefinition></ColumnDefinition>
+            </Grid.ColumnDefinitions>
+            
+            <Label Grid.Column="0" Margin="3">Password</Label>
+            <PasswordBox Grid.Column="1" Margin="3"  Name="SQLPasswordTextBox"></PasswordBox>
+        </Grid>
+
+  
+
+        <WrapPanel Grid.Row="5">
+                <Button Width="50" Margin="3" Name="BackButton" Click="BackButton_Click">_Back</Button>
+                <Button Width="50" Margin="3" Name="NextButton" Click="NextButton_Click">_Next</Button>
+                <Button Width="50" Margin="3" Name="CancelButton" Click="CancelButton_Click">_Cancel</Button>
+        </WrapPanel>
+    </Grid>
+</Window>
