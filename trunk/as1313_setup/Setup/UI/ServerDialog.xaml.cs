@@ -32,10 +32,7 @@ namespace Setup.UI
 
         private void CancelButton_Click(object sender, RoutedEventArgs e)
         {
-            if (General.SureToExit())
-            {
-                this.Close();
-            }
+            General.CloseDialog(this);
         }
 
         private void NextButton_Click(object sender, RoutedEventArgs e)
@@ -47,21 +44,14 @@ namespace Setup.UI
                 return;
             }
 
-            ReadyToInstallDialog dialog = new ReadyToInstallDialog();
-            dialog.Show();
-
-            this.Close();
-
+            General.ShowDialog(this, new ReadyToInstallDialog());
         }
 
         private void BackButton_Click(object sender, RoutedEventArgs e)
         {
             SaveSettings();
 
-            SqlDialog dialog = new SqlDialog();
-            dialog.Show();
-
-            this.Close();
+            General.ShowDialog(this, new SqlDialog());
         }
 
         private void SaveSettings()

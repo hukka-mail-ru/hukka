@@ -25,10 +25,7 @@ namespace Setup.UI
 
         private void CancelButton_Click(object sender, RoutedEventArgs e)
         {
-            if (General.SureToExit())
-            {
-                this.Close();
-            }
+            General.CloseDialog(this);
         }
     }
 }
