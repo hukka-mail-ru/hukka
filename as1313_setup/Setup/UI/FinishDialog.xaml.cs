@@ -25,7 +25,7 @@ namespace Setup.UI
 
         private void FinishButton_Click(object sender, RoutedEventArgs e)
         {
-            this.Close();
+             this.Close();
         }
     }
 }

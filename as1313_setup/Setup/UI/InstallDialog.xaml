@@ -1,16 +1,18 @@
 ﻿<Window x:Class="Setup.UI.InstallDialog"
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-        Title="InstallDialog" Height="300" Width="300">
+        WindowStartupLocation="CenterScreen"
+        Title="Install Wizard" Height="300" Width="500">
     <Grid>
         <Grid.RowDefinitions>
-            <RowDefinition Height="Auto"></RowDefinition>
-            <RowDefinition Height="200"></RowDefinition>
+            <RowDefinition Height="80"></RowDefinition>
+            <RowDefinition Height="*"></RowDefinition>
             <RowDefinition Height="Auto"></RowDefinition>
         </Grid.RowDefinitions>
 
         <Grid Grid.Row="0">
-            <Label Margin="3">The program features you seleceted are being installed.</Label>
+            <Label Grid.Column="1" Margin="0,3,3,3" FontSize="18" >Installing</Label>
+            <Label Grid.Column="1" Margin="0,40,3,3">The program features you seleceted are being installed.</Label>
         </Grid>
 
         <Grid Grid.Row="1">
@@ -18,10 +20,10 @@
         </Grid>
 
         <Grid Grid.Row="2">
-            <WrapPanel>
-                <Button Width="50" Margin="3" Name="BackButton" IsEnabled="False">_Back</Button>
-                <Button Width="50" Margin="3" Name="NextButton" IsEnabled="False">_Next</Button>
-                <Button Width="50" Margin="3" Name="CancelButton" Click="CancelButton_Click">_Cancel</Button>
+            <WrapPanel Background="Gray">
+                <Button Width="80" Margin="3" Name="BackButton" IsEnabled="False">_Back</Button>
+                <Button Width="80" Margin="3" Name="NextButton" IsEnabled="False">_Next</Button>
+                <Button Width="80" Margin="3" Name="CancelButton" Click="CancelButton_Click">_Cancel</Button>
             </WrapPanel>
         </Grid>
     </Grid>

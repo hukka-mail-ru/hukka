@@ -26,7 +26,10 @@ namespace Setup.UI
 
         private void CancelButton_Click(object sender, RoutedEventArgs e)
         {
-            this.Close();
+            if (General.SureToExit())
+            {
+                this.Close();
+            }
         }
 
         private void BackButton_Click(object sender, RoutedEventArgs e)
