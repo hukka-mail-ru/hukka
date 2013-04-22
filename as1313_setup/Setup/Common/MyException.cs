@@ -40,4 +40,19 @@ namespace Setup.Common
         {
         }
     }
+
+    /// <summary>
+    /// Item Not Expandable
+    /// </summary>
+    public class ExceptionSqlError : MyException
+    {
+        /// <summary>
+        /// Initializes a new instance of the <see cref="ExceptionItemNotExpandable" /> class.
+        /// </summary>
+        /// <param name="item">the item</param>
+        public ExceptionSqlError(string what) :
+            base("SQL Error. Please check your DB credentials and permissions.\n\n" + what)
+        {
+        }
+    }
 }
