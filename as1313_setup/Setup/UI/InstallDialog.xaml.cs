@@ -22,5 +22,10 @@ namespace Setup.UI
         {
             InitializeComponent();
         }
+
+        private void CancelButton_Click(object sender, RoutedEventArgs e)
+        {
+
+        }
     }
 }

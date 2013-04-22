@@ -37,6 +37,11 @@ namespace Setup.UI
         {
             SaveSettings();
 
+            if (!CheckSettings())
+            {
+                return;
+            }
+
             ServerDialog dialog = new ServerDialog();
             dialog.Show();
 
@@ -60,6 +65,23 @@ namespace Setup.UI
             Settings.SQLServer = this.SQLServerTextBox.Text;
             Settings.SQLUser = this.SQLUserTextBox.Text;
             Settings.SQLPassword = this.SQLPasswordTextBox.Password;
+        }
+
+        bool CheckSettings()
+        {
+            if (Settings.SQLServer == "")
+            {
+                MessageBox.Show("Please input SQL server instance name.");
+                return false;
+            }
+
+            if (Settings.SQLUser == "")
+            {
+                MessageBox.Show("Please input SQL user name.");
+                return false;
+            }
+
+            return true;
         }
     }
 }
