@@ -1,0 +1,344 @@
+//===========================================================================
+#include "ifx.h"
+
+       
+     
+
+//===========================================================================
+prototype SetProperty(HWND, STRING, STRING);  
+
+function SetProperty(hMSI, name, value)  
+begin
+   	  if ( MsiSetProperty(hMSI, name, value) != ERROR_SUCCESS ) 
+      then  
+        MessageBox ("Failed to set property: " + name + " = " + value, SEVERE);
+	  endif;   	 	 
+end;  
+
+
+//===========================================================================
+prototype GetProperty(HWND, STRING, BYREF STRING);  
+
+function GetProperty(hMSI, name, value)  
+NUMBER size;
+begin
+   	  if ( MsiGetProperty(hMSI, name, value, size) != ERROR_SUCCESS ) 
+      then  
+        MessageBox ("Failed to get property: " + name, SEVERE);
+	  endif;   
+end;   
+
+//===========================================================================
+prototype Log(HWND, STRING);  
+function Log(hMSI, message) 
+	NUMBER handle, res, dummy;
+	STRING dir, file, date, time; 
+begin    
+        
+      GetSystemInfo(DATE, dummy, date);
+      GetSystemInfo(TIME, dummy, time);
+                                    
+      GetProperty(hMSI, "SOURCEDIR", dir);                  	           
+	  file = "AS1313 Installer Log.txt";                
+	        
+	  res = Is(FILE_EXISTS, dir ^ file);
+	     
+	  
+      OpenFileMode (FILE_MODE_APPEND);
+	        
+      if (res = FALSE)
+	  then 
+	  	if (CreateFile(handle, dir, file) < 0) 
+	  	then
+			MessageBox ("CreateFile failed.", SEVERE);
+			abort;
+		endif;
+	  else          
+	   	  if OpenFile(handle, dir, file) < 0 
+	   	  then
+	      		SprintfBox(SEVERE, "Error",
+	                 "Can't open file %s\%s", dir, file);
+	      		abort;
+		  endif;	      		
+	  endif;		                      
+	  
+	  if (WriteLine(handle, date + "  " + time + " " + message) < 0) 
+      then        
+          SprintfBox(SEVERE, "Error",
+                 "Can't write to file %s\%s", dir, file);
+          abort;
+     endif; 
+     
+     CloseFile(handle);
+end; 
+
+//===========================================================================
+prototype Error(HWND, STRING); 
+function Error(hMSI, message)    
+begin    
+    MessageBox (message, SEVERE);   
+	Log(hMSI, message);
+end;       
+
+//===========================================================================
+export prototype Hello(HWND); 
+function Hello(hMSI)    
+begin  
+	Log(hMSI, "Hello! The AS1313 Client installer has been started.");    
+end; 
+      
+//===========================================================================
+prototype FindReplace(HWND, STRING, STRING, STRING, STRING);
+function FindReplace(hMSI, szPath, szFile, szFind, szReplace)
+NUMBER nvFileHandle, nvResult;
+STRING svString, szResult;
+ 
+begin
+  OpenFileMode (FILE_MODE_BINARY);
+  GetFileInfo ( szPath ^ szFile, FILE_SIZE, nvResult, szResult);
+  if OpenFile(nvFileHandle, szPath, szFile) < 0 then 
+      Error(hMSI, "Can't open file: " + szPath + szFile);
+      abort;
+  endif;
+ 
+  SeekBytes (nvFileHandle, 0, FILE_BIN_START);
+  if (ReadBytes (nvFileHandle, svString, 0, nvResult) < 0) 
+  then
+     Error(hMSI, "Can't read file: " + szPath + szFile);
+     abort;
+  else
+    StrReplace(svString, szFind, szReplace, 0);
+    CloseFile (nvFileHandle);
+    DeleteFile(szPath ^ szFile);
+    OpenFileMode (FILE_MODE_BINARY);
+    CreateFile(nvFileHandle, szPath, szFile);
+
+    if (WriteBytes(nvFileHandle, svString, 0, StrLength(svString)) < 0) 
+    then   
+    	 Error(hMSI, "Can't write to file: " + szPath + szFile);     
+         abort;
+    endif;
+  endif; 
+ 
+  // Close the file.
+  CloseFile (nvFileHandle);
+end;               
+
+
+//===========================================================================
+export prototype ReplaceConfig(HWND); 
+function ReplaceConfig(hMSI)  
+NUMBER nvSize;
+STRING dir, clientDir, version, libsDir, logsDir, configFile, sqlServer,
+		netServer, netPort, netUserName, netDomain,
+		clientsConfigDir, clientsConfigFile;
+begin   
+         
+      Log(hMSI, "Adjusting configuration...");    
+      
+      GetProperty(hMSI, "CLIENT", clientDir);  
+      GetProperty(hMSI, "VERSION", version);
+      dir = clientDir + version + "\\";
+            
+      GetProperty(hMSI, "LIBSDIR", libsDir);     
+      GetProperty(hMSI, "IS_SQLSERVER_SERVER", sqlServer);  
+      
+
+      //SprintfBox(INFORMATION, "Replace",
+      //           "InstallDir = %s;  LIBSDIR = %s", clientDir, libsDir);
+      
+      configFile = "TuevSued.AS1313.exe.config"; 
+      logsDir = dir + "logs\\";
+         
+      Log(hMSI, "Destination folder: " + dir); 
+      Log(hMSI, "Configuration file to adjust: " + configFile); 
+      Log(hMSI, "Libraries: " + libsDir);
+      Log(hMSI, "Logs: " + logsDir);
+          
+      FindReplace(hMSI, dir, configFile, "data source=localhost;", "data source=" + sqlServer + ";");               
+      FindReplace(hMSI, dir, configFile, "d:\\Argetp21\\", libsDir);
+      FindReplace(hMSI, dir, configFile, "D:\\Argetp21\\", libsDir);     
+      FindReplace(hMSI, dir, configFile, "c:\\logs\\", logsDir);
+        
+      // NETWORK  
+      GetProperty(hMSI, "NET_SERVER_ADDRESS", netServer);  
+      GetProperty(hMSI, "NET_SERVER_PORT", netPort);  
+      GetProperty(hMSI, "NET_USER_NAME", netUserName);  
+      GetProperty(hMSI, "NET_DOMAIN", netDomain);     
+      
+      Log(hMSI, "Network server: " + netServer + ":" + netPort);
+      Log(hMSI, "Network user: " + netUserName + "@" + netDomain);
+        
+      clientsConfigDir = dir + "Config\\";  
+      clientsConfigFile = "clients.config";  
+       
+      Log(hMSI, "Client config. file: " + clientsConfigDir + "\\" + clientsConfigFile);
+      
+      FindReplace(hMSI, clientsConfigDir, clientsConfigFile, "localhost", netServer);
+      FindReplace(hMSI, clientsConfigDir, clientsConfigFile, "9080", netPort);
+      FindReplace(hMSI, clientsConfigDir, clientsConfigFile, "ozavorot", netUserName);
+      FindReplace(hMSI, clientsConfigDir, clientsConfigFile, "t-systems.ru", netDomain);
+         
+end;  
+
+
+//===========================================================================
+prototype Launch(HWND, STRING, STRING); 
+   
+function Launch(hMSI, cmd, params) 
+begin  
+
+	Log(hMSI, "Launch application: " + cmd);
+
+    if (LaunchApplication( 
+      cmd, params, "", 
+      0,
+      //LAAW_STARTUPINFO.wShowWindow,
+      LAAW_PARAMETERS.nTimeOut, 
+      LAAW_OPTION_WAIT | LAAW_OPTION_CHANGEDIRECTORY | LAAW_OPTION_FIXUP_PROGRAM) < 0)
+           
+    //if (LaunchAppAndWait (cmd, params, WAIT) < 0) 
+    then
+        Error (hMSI, "Unable to launch " + cmd + ". params: " + params);
+        abort;
+    endif;  
+    
+    Log(hMSI, "Application " + cmd + " exited OK.");
+    
+end;
+//===========================================================================
+
+   
+export prototype CheckSqlAuthLevel(HWND); 
+   
+function CheckSqlAuthLevel(hMSI)
+NUMBER nvSize, nBufferLength, nReturn;      
+NUMBER nvFileHandle, nvResult, len; 
+POINTER pBuffer;
+STRING svString, szResult, outputFile;
+STRING status, query, sqlServer, sqlUser, sqlPassword, version, dir, clientDir, scriptsDir, cmd, params;  
+begin      
+      Log(hMSI, "Checking SQL authothisation...");    
+                                      
+      GetProperty(hMSI, "SOURCEDIR", dir);            
+      GetProperty(hMSI, "IS_SQLSERVER_SERVER", sqlServer);  
+      GetProperty(hMSI, "IS_SQLSERVER_USERNAME", sqlUser);  
+	  GetProperty(hMSI, "IS_SQLSERVER_PASSWORD", sqlPassword);  
+	  
+	  Log(hMSI, "SQL server: " + sqlServer);   
+	  Log(hMSI, "SQL user: " + sqlUser);     
+	           
+	  outputFile = "output.txt";                
+	       
+	  query = "IF EXISTS (SELECT name FROM sys.databases WHERE name = N'TEST_DB') DROP DATABASE TEST_DB; ";
+	   // Run test sqript                   	  
+      cmd = "sqlcmd.exe";
+      params = " -b -S " + sqlServer + 
+               " -U " + sqlUser +
+               " -P " + sqlPassword +
+               " -Q \"" + query + " CREATE DATABASE TEST_DB; " + query + "\"" +
+               " -o " + dir + outputFile;        
+               
+      Launch(hMSI, cmd, params);         
+                      
+      // check results
+	  OpenFileMode (FILE_MODE_BINARY);
+	  GetFileInfo ( dir ^ outputFile, FILE_SIZE, nvResult, szResult);
+	  if OpenFile(nvFileHandle, dir, outputFile) < 0 then 
+	      Error (hMSI, "Can't open file: " +  dir + outputFile);
+	      abort;
+	  endif;
+	 
+	  SeekBytes (nvFileHandle, 0, FILE_BIN_START);
+	  if (ReadBytes (nvFileHandle, svString, 0, nvResult) < 0) 
+	  then     
+	     Error (hMSI, "Can't read file: " +  dir + outputFile);
+	     abort;
+	  endif;
+            
+      len = StrLength(svString); 
+      
+      SetProperty(hMSI, "SQL_AUTH_LEVEL_OK", "1");
+      if(len > 0)
+      then  
+      		Error (hMSI, "Please check permissions of your SQL account.  Full error text: " +  svString); 
+            SetProperty(hMSI, "SQL_AUTH_LEVEL_OK", "0");           
+      endif;                                                          
+end;       
+
+
+//===========================================================================
+   
+export prototype RunSqlScript(HWND); 
+   
+function RunSqlScript(hMSI)
+NUMBER nvSize;   
+STRING sqlServer, sqlUser, sqlPassword, version, dir, clientDir, 
+       scriptsDir, cmd, params;  
+begin      
+                     
+      GetProperty(hMSI, "CLIENT", clientDir); 
+      GetProperty(hMSI, "VERSION", version); 
+      dir = clientDir + version + "\\";
+      
+      	  
+      GetProperty(hMSI, "IS_SQLSERVER_SERVER", sqlServer);  
+      GetProperty(hMSI, "IS_SQLSERVER_USERNAME", sqlUser);  
+	  GetProperty(hMSI, "IS_SQLSERVER_PASSWORD", sqlPassword);        
+	                      
+                   
+	  scriptsDir = dir + "Scripts\\";  
+	  
+
+	  Log(hMSI, "Running SQL script...");
+	 
+	  
+      cmd = "sqlcmd.exe";
+      params = " -S " + sqlServer + 
+               " -i \"" + scriptsDir + "databaseAs1313.sql\"" +
+               " -v DirParam=\"" + scriptsDir + "\"" +
+               " -U " + sqlUser +
+               " -P " + sqlPassword;        
+       
+       Log(hMSI, "Scripts dir: " + scriptsDir);  
+         
+       Launch(hMSI, cmd, params);     
+end;       
+
+         
+//===========================================================================
+   
+
+prototype CheckProperty(HWND, STRING, STRING); 
+   
+function CheckProperty(hMSI, propName, message)
+STRING propValue;
+begin        
+     GetProperty(hMSI, propName, propValue); 
+     if(propValue == "") then
+         Error (hMSI, "Please input " + message + ".");
+         abort;
+     endif;
+end;          
+         
+         
+         
+//===========================================================================
+   
+  
+export prototype CheckServerPort(HWND); 
+   
+function CheckServerPort(hMSI)
+begin     
+	  Log(hMSI, "Checking server properties...");
+
+      SetProperty(hMSI, "SERVER_PORT_OK", "0");
+ 
+      CheckProperty(hMSI, "NET_SERVER_ADDRESS", "server address");  
+      CheckProperty(hMSI, "NET_SERVER_PORT", "server port");  
+      CheckProperty(hMSI, "NET_USER_NAME", "user name");  
+      CheckProperty(hMSI, "NET_DOMAIN", "domain name");     
+       
+      Log(hMSI, "Server properties OK.");
+      SetProperty(hMSI, "SERVER_PORT_OK", "1");
+end;      
