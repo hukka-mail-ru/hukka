@@ -56,6 +56,7 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="Common\MyException.cs" />
     <Compile Include="Common\Settings.cs" />
     <Compile Include="UI\DestinationFolderDialog.xaml.cs">
       <DependentUpon>DestinationFolderDialog.xaml</DependentUpon>

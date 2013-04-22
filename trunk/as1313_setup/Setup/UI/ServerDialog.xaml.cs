@@ -37,14 +37,17 @@ namespace Setup.UI
 
         private void NextButton_Click(object sender, RoutedEventArgs e)
         {
-            SaveSettings();
-
-            if (!CheckSettings())
+            try
             {
-                return;
-            }
+                SaveSettings();
+                CheckSettings();
 
-            General.ShowDialog(this, new ReadyToInstallDialog());
+                General.ShowDialog(this, new ReadyToInstallDialog());
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message);
+            }
         }
 
         private void BackButton_Click(object sender, RoutedEventArgs e)
@@ -62,33 +65,27 @@ namespace Setup.UI
             Settings.NetDomain = this.NetDomainTextBox.Text;
         }
 
-        bool CheckSettings()
+        void CheckSettings()
         {
             if (Settings.NetServer == "")
             {
-                MessageBox.Show("Please input server address.");
-                return false;
+                throw new ExceptionNoUserInput("server address");
             }
 
             if (Settings.NetPort == "")
             {
-                MessageBox.Show("Please input server port.");
-                return false;
+                throw new ExceptionNoUserInput("server port");
             }
 
             if (Settings.NetUser == "")
             {
-                MessageBox.Show("Please input user name.");
-                return false;
+                throw new ExceptionNoUserInput("user name");
             }
 
             if (Settings.NetDomain == "")
             {
-                MessageBox.Show("Please input domain name.");
-                return false;
+                throw new ExceptionNoUserInput("domain name");
             }
-
-            return true;
         }
     }
 }
