@@ -39,6 +39,11 @@ namespace Setup.UI
         {
             SaveSettings();
 
+            if (!CheckSettings())
+            {
+                return;
+            }
+
             ReadyToInstallDialog dialog = new ReadyToInstallDialog();
             dialog.Show();
 
@@ -62,6 +67,35 @@ namespace Setup.UI
             Settings.NetPort = this.NetPortTextBox.Text;
             Settings.NetUser = this.NetUserTextBox.Text;
             Settings.NetDomain = this.NetDomainTextBox.Text;
+        }
+
+        bool CheckSettings()
+        {
+            if (Settings.NetServer == "")
+            {
+                MessageBox.Show("Please input server address.");
+                return false;
+            }
+
+            if (Settings.NetPort == "")
+            {
+                MessageBox.Show("Please input server port.");
+                return false;
+            }
+
+            if (Settings.NetUser == "")
+            {
+                MessageBox.Show("Please input user name.");
+                return false;
+            }
+
+            if (Settings.NetDomain == "")
+            {
+                MessageBox.Show("Please input domain name.");
+                return false;
+            }
+
+            return true;
         }
     }
 }

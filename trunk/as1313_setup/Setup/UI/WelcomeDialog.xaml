@@ -14,8 +14,9 @@
 
         <Grid Grid.Row="1">
             <WrapPanel>
-                <Button Width="50" Margin="3" Name="CancelButton" Click="CancelButton_Click">_Cancel</Button>
+                <Button Width="50" Margin="3" Name="BackButton" IsEnabled="False">_Back</Button>
                 <Button Width="50" Margin="3" Name="NextButton" Click="NextButton_Click">_Next</Button>
+                <Button Width="50" Margin="3" Name="CancelButton" Click="CancelButton_Click">_Cancel</Button>
             </WrapPanel>
         </Grid>
         
