@@ -30,27 +30,17 @@ namespace Setup.UI
 
         private void CancelButton_Click(object sender, RoutedEventArgs e)
         {
-            if (General.SureToExit())
-            {
-                this.Close();
-            }
+            General.CloseDialog(this);
         }
 
         private void NextButton_Click(object sender, RoutedEventArgs e)
         {
-            LibsFolderDialog dialog = new LibsFolderDialog();
-            dialog.Show();
-
-            this.Close();
+            General.ShowDialog(this, new LibsFolderDialog());
         }
-
 
         private void BackButton_Click(object sender, RoutedEventArgs e)
         {
-            WelcomeDialog dialog = new WelcomeDialog();
-            dialog.Show();
-
-            this.Close();
+            General.ShowDialog(this, new WelcomeDialog());
         }
 
 

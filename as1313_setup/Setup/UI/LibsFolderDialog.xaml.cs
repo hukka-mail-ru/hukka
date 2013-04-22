@@ -30,27 +30,18 @@ namespace Setup.UI
 
         private void CancelButton_Click(object sender, RoutedEventArgs e)
         {
-            if (General.SureToExit())
-            {
-                this.Close();
-            }
+            General.CloseDialog(this);
         }
 
         private void NextButton_Click(object sender, RoutedEventArgs e)
         {
-            SqlDialog dialog = new SqlDialog();
-            dialog.Show();
-
-            this.Close();
+            General.ShowDialog(this, new SqlDialog());
         }
 
 
         private void BackButton_Click(object sender, RoutedEventArgs e)
         {
-            DestinationFolderDialog dialog = new DestinationFolderDialog();
-            dialog.Show();
-
-            this.Close();
+            General.ShowDialog(this, new DestinationFolderDialog());
         }
 
 

@@ -26,18 +26,12 @@ namespace Setup.UI
 
         private void CancelButton_Click(object sender, RoutedEventArgs e)
         {
-            if (General.SureToExit())
-            {
-                this.Close();
-            }
+            General.CloseDialog(this);
         }
 
         private void BackButton_Click(object sender, RoutedEventArgs e)
         {
-            ServerDialog dialog = new ServerDialog();
-            dialog.Show();
-
-            this.Close();
+            General.ShowDialog(this, new ServerDialog());
         }
 
         private void InstallButton_Click(object sender, RoutedEventArgs e)

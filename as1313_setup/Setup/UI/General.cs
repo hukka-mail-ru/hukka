@@ -17,11 +17,21 @@ namespace Setup.UI
     /// </summary>
     public class General
     {
-        public static bool SureToExit()
+        public static void ShowDialog(System.Windows.Window thisDialog, System.Windows.Window nextDialog)
         {
-            return MessageBox.Show(
+            nextDialog.Show();
+            thisDialog.Close();
+        }
+
+
+        public static void CloseDialog(System.Windows.Window dialog)
+        {
+            if(MessageBox.Show(
                 "Are you sure you want to cancel the AS1313 Client Installation?", 
-                "QUESTION", MessageBoxButtons.YesNo) == DialogResult.Yes;
+                "QUESTION", MessageBoxButtons.YesNo) == DialogResult.Yes)
+            {
+                dialog.Close();
+            }
         }
     }
 }
