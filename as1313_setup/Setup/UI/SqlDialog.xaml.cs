@@ -35,14 +35,17 @@ namespace Setup.UI
 
         private void NextButton_Click(object sender, RoutedEventArgs e)
         {
-            SaveSettings();
-
-            if (!CheckSettings())
+            try
             {
-                return;
-            }
+                SaveSettings();
+                CheckSettings();
 
-            General.ShowDialog(this, new ServerDialog());
+                General.ShowDialog(this, new ServerDialog());
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message);
+            }
         }
 
         private void BackButton_Click(object sender, RoutedEventArgs e)
@@ -61,21 +64,17 @@ namespace Setup.UI
             Settings.SQLPassword = this.SQLPasswordTextBox.Password;
         }
 
-        bool CheckSettings()
+        void CheckSettings()
         {
             if (Settings.SQLServer == "")
             {
-                MessageBox.Show("Please input SQL server instance name.");
-                return false;
+                throw new ExceptionNoUserInput("SQL server instance name");
             }
 
             if (Settings.SQLUser == "")
             {
-                MessageBox.Show("Please input SQL user name.");
-                return false;
+                throw new ExceptionNoUserInput("SQL user name");
             }
-
-            return true;
         }
     }
 }
