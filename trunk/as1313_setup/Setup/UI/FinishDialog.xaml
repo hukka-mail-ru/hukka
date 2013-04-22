@@ -1,0 +1,28 @@
+﻿<Window x:Class="Setup.UI.FinishDialog"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        Title="Done" Height="300" Width="300">
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"></RowDefinition>
+            <RowDefinition Height="200"></RowDefinition>
+            <RowDefinition Height="Auto"></RowDefinition>
+        </Grid.RowDefinitions>
+
+        <Grid Grid.Row="0">
+            <Label Margin="3">The AS1313 Client was successfully installed.</Label>
+        </Grid>
+
+        <Grid Grid.Row="1">
+            <Label Margin="3">Click Finish to exit the wizard.</Label>
+        </Grid>
+
+        <Grid Grid.Row="2">
+            <WrapPanel>
+                <Button Width="50" Margin="3" Name="BackButton" IsEnabled="False">_Back</Button>
+                <Button Width="50" Margin="3" Name="FinishButton" Click="FinishButton_Click">_Finish</Button>
+                <Button Width="50" Margin="3" Name="CancelButton" IsEnabled="False">_Cancel</Button>
+            </WrapPanel>
+        </Grid>
+    </Grid>
+</Window>
