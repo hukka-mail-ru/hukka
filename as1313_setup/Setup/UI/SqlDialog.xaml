@@ -33,7 +33,7 @@
             </Grid.ColumnDefinitions>
             
             <Label Grid.Column="0" Margin="3">SQL Server</Label>
-            <TextBox Grid.Column="1" Margin="3" Name="SQLServerTextBox" Height="23"></TextBox>
+            <TextBox Grid.Column="1" Margin="3" Name="mSQLServerTextBox" Height="23"></TextBox>
 
         </Grid>
 
@@ -46,7 +46,7 @@
             </Grid.ColumnDefinitions>
             
             <Label Grid.Column="0" Margin="3">User Name</Label>
-            <TextBox Grid.Column="1" Margin="3" Name="SQLUserTextBox" Height="23"></TextBox>
+            <TextBox Grid.Column="1" Margin="3" Name="mSQLUserTextBox" Height="23"></TextBox>
         </Grid>
 
         <Grid Grid.Row="3" Grid.Column="0">
@@ -57,7 +57,7 @@
             </Grid.ColumnDefinitions>
             
             <Label Grid.Column="0" Margin="3">Password</Label>
-            <PasswordBox Grid.Column="1" Margin="3"  Name="SQLPasswordTextBox"></PasswordBox>
+            <PasswordBox Grid.Column="1" Margin="3"  Name="mSQLPasswordTextBox"></PasswordBox>
         </Grid>
 
 

@@ -24,10 +24,10 @@ namespace Setup.UI
         public ServerDialog()
         {
             InitializeComponent();
-            NetServerTextBox.Text = Settings.NetServer;
-            NetPortTextBox.Text = Settings.NetPort;
-            NetUserTextBox.Text = Settings.NetUser;
-            NetDomainTextBox.Text = Settings.NetDomain;
+            mNetServerTextBox.Text = Settings.NetServer;
+            mNetPortTextBox.Text = Settings.NetPort;
+            mNetUserTextBox.Text = Settings.NetUser;
+            mNetDomainTextBox.Text = Settings.NetDomain;
         }
 
         private void CancelButton_Click(object sender, RoutedEventArgs e)
@@ -74,10 +74,10 @@ namespace Setup.UI
 
         private void SaveSettings()
         {
-            Settings.NetServer = this.NetServerTextBox.Text;
-            Settings.NetPort = this.NetPortTextBox.Text;
-            Settings.NetUser = this.NetUserTextBox.Text;
-            Settings.NetDomain = this.NetDomainTextBox.Text;
+            Settings.NetServer = this.mNetServerTextBox.Text;
+            Settings.NetPort = this.mNetPortTextBox.Text;
+            Settings.NetUser = this.mNetUserTextBox.Text;
+            Settings.NetDomain = this.mNetDomainTextBox.Text;
         }
 
         void CheckSettings()

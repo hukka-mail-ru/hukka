@@ -23,7 +23,7 @@ namespace Setup.UI
         public DestinationFolderDialog()
         {
             InitializeComponent();
-            FolderLabel.Content = Common.Settings.DestinationFolder;
+            mFolderLabel.Content = Common.Settings.DestinationFolder;
         }
            
 
@@ -73,7 +73,7 @@ namespace Setup.UI
 
                 if (result == System.Windows.Forms.DialogResult.OK)
                 {
-                    FolderLabel.Content = dialog.SelectedPath;
+                    mFolderLabel.Content = dialog.SelectedPath;
                     Settings.DestinationFolder = dialog.SelectedPath;
                 }
             }

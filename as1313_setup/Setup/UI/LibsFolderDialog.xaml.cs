@@ -23,7 +23,7 @@ namespace Setup.UI
         public LibsFolderDialog()
         {
             InitializeComponent();
-            FolderLabel.Content = Common.Settings.LibsFolder;
+            mFolderLabel.Content = Common.Settings.LibsFolder;
         }
 
 
@@ -74,7 +74,7 @@ namespace Setup.UI
 
                 if (result == System.Windows.Forms.DialogResult.OK)
                 {
-                    FolderLabel.Content = dialog.SelectedPath;
+                    mFolderLabel.Content = dialog.SelectedPath;
                     Settings.LibsFolder = dialog.SelectedPath;
                 }
             }

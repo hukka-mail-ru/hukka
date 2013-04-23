@@ -25,9 +25,9 @@ namespace Setup.UI
         public SqlDialog()
         {
             InitializeComponent();
-            SQLServerTextBox.Text = Settings.SQLServer;
-            SQLUserTextBox.Text = Settings.SQLUser;
-            SQLPasswordTextBox.Password = Settings.SQLPassword;
+            mSQLServerTextBox.Text = Settings.SQLServer;
+            mSQLUserTextBox.Text = Settings.SQLUser;
+            mSQLPasswordTextBox.Password = Settings.SQLPassword;
         }
 
         private void CancelButton_Click(object sender, RoutedEventArgs e)
@@ -77,9 +77,9 @@ namespace Setup.UI
 
         private void SaveSettings()
         {
-            Settings.SQLServer = this.SQLServerTextBox.Text;
-            Settings.SQLUser = this.SQLUserTextBox.Text;
-            Settings.SQLPassword = this.SQLPasswordTextBox.Password;
+            Settings.SQLServer = this.mSQLServerTextBox.Text;
+            Settings.SQLUser = this.mSQLUserTextBox.Text;
+            Settings.SQLPassword = this.mSQLPasswordTextBox.Password;
         }
 
         void CheckSettings()

@@ -19,8 +19,9 @@ namespace Setup.Common
         public static string CompanyName = @"T-Systems";
         public static string ProductName = @"AS1313";
 
-        public static string ClientDir = @"Client";
-        public static string ClientExecutable = @"TuevSued.AS1313.exe";
+        public static string SourceDir = @"Client";
+        public static string ScriptsDir = @"Scripts";
+        public static string SourceExecutable = @"TuevSued.AS1313.exe";
 
         public static string DestinationFolder = @"D:\TEMP";
         public static string LibsFolder = @"C:\Program Files\Libs";
