@@ -64,9 +64,10 @@ namespace Setup.UI
         /// </summary>
         private void OnError()
         {
+            Mouse.OverrideCursor = null;
+            Message.Show(lastException);
             Message.Show("Rolling back");
             Install.Rollback();
-            Mouse.OverrideCursor = null;
             General.ShowDialog(this, new FinishDialog());
         }
     }
