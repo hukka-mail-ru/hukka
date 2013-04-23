@@ -56,10 +56,16 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="Common\Install.cs" />
+    <Compile Include="Common\Message.cs" />
     <Compile Include="Common\MyException.cs" />
     <Compile Include="Common\Settings.cs" />
+    <Compile Include="Messages\MessageWindow.cs" />
     <Compile Include="UI\DestinationFolderDialog.xaml.cs">
       <DependentUpon>DestinationFolderDialog.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Messages\ErrorWindow.xaml.cs">
+      <DependentUpon>ErrorWindow.xaml</DependentUpon>
     </Compile>
     <Compile Include="UI\FinishDialog.xaml.cs">
       <DependentUpon>FinishDialog.xaml</DependentUpon>
@@ -88,6 +94,10 @@
       <SubType>Code</SubType>
     </Compile>
     <Page Include="UI\DestinationFolderDialog.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Messages\ErrorWindow.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

@@ -10,7 +10,8 @@ namespace Setup.UI
     using System.Collections.Generic;
     using System.Linq;
     using System.Text;
-    using System.Windows.Forms;
+
+    using Setup.Common;
 
     /// <summary>
     /// TODO: Update summary.
@@ -26,9 +27,7 @@ namespace Setup.UI
 
         public static void CloseDialog(System.Windows.Window dialog)
         {
-            if(MessageBox.Show(
-                "Are you sure you want to cancel the AS1313 Client Installation?", 
-                "QUESTION", MessageBoxButtons.YesNo) == DialogResult.Yes)
+            if (Message.Question("Are you sure you want to cancel the AS1313 Client Installation?"))
             {
                 dialog.Close();
             }

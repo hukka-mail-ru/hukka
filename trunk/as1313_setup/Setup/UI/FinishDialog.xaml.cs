@@ -11,6 +11,8 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
 
+using Setup.Common;
+
 namespace Setup.UI
 {
     /// <summary>
@@ -25,7 +27,14 @@ namespace Setup.UI
 
         private void FinishButton_Click(object sender, RoutedEventArgs e)
         {
-             this.Close();
+            try
+            { 
+                this.Close();
+            }
+            catch (Exception ex)
+            {
+                Message.Show(ex);
+            }
         }
     }
 }
