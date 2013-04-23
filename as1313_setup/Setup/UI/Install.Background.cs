@@ -30,15 +30,39 @@ namespace Setup.UI
         /// </summary>
         /// <param name="sender">not used</param>
         /// <param name="e">the arguments </param>
-        private void BackgroundWorker_DoWork(object sender, System.ComponentModel.DoWorkEventArgs e)
+        private void BackgroundWorker_DoWork(object sender, 
+            System.ComponentModel.DoWorkEventArgs e)
         {
+            
             BackgroundWorker worker = sender as BackgroundWorker;
-            for (int i = 0; i < 100; i++)
-            {
-                Thread.Sleep(100);
-            }
             // exceptions are catched by BackgroundWorker_RunWorkerCompleted
-            Install.Go();
+
+            Install.CreateFolders();
+            Thread.Sleep(1000);
+            if (backgroundWorker.CancellationPending)
+            {
+                e.Cancel = true;
+                return;
+            }
+
+            Install.CopyFiles();
+            Thread.Sleep(1000);
+            if (backgroundWorker.CancellationPending)
+            {
+                e.Cancel = true;
+                return;
+            }
+
+            Install.RunSqlScript();
+            Thread.Sleep(1000);
+            if (backgroundWorker.CancellationPending)
+            {
+                e.Cancel = true;
+                return;
+            }
+
+            Install.ReplaceConfig();
+            Thread.Sleep(1000);
         }
 
         /// <summary>
@@ -48,10 +72,9 @@ namespace Setup.UI
         /// <param name="e">a status</param>
         private void BackgroundWorker_RunWorkerCompleted(object sender, System.ComponentModel.RunWorkerCompletedEventArgs e)
         {
-            Mouse.OverrideCursor = null;
-
+            
             if (e.Cancelled == true)
-            {
+            {                
                 Message.Show("Operation cancelled by user");
                 this.OnError();
             }

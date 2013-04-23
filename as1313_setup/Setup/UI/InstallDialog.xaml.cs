@@ -37,10 +37,11 @@ namespace Setup.UI
         {
             try
             {
-                this.backgroundWorker.CancelAsync();
-
-              //  Message.Show("Rollback needed.");
-               // OnError();
+                if (Message.Question("Are you sure to abort installation?"))
+                {
+                    this.backgroundWorker.CancelAsync();
+                    this.CancelButton.IsEnabled = false;
+                }
             }
             catch (Exception ex)
             {
@@ -63,7 +64,10 @@ namespace Setup.UI
         /// </summary>
         private void OnError()
         {
+            Message.Show("Rolling back");
+            Install.Rollback();
             Mouse.OverrideCursor = null;
+            General.ShowDialog(this, new FinishDialog());
         }
     }
 }
