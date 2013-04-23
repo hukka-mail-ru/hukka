@@ -3,6 +3,7 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         WindowStartupLocation="CenterScreen"
         Title="Install Wizard" Height="300" Width="500">
+   
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="*"></RowDefinition>
@@ -10,8 +11,8 @@
         </Grid.RowDefinitions>
 
         <Grid Grid.Row="0">
-            <Label Grid.Column="1" Margin="0,3,3,3" FontSize="18" >Ready to install</Label>
-            <Label Grid.Column="1" Margin="0,40,3,3">Click Install to begin the installation.</Label>
+            <Label Name="HeaderLabel" Grid.Column="1" Margin="0,3,3,3" FontSize="18" >Ready to install</Label>
+            <Label Name="TextLabel" Grid.Column="1" Margin="0,40,3,3">Click Install to begin the installation.</Label>
 
         </Grid>
 
