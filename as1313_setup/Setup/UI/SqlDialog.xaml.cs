@@ -32,7 +32,14 @@ namespace Setup.UI
 
         private void CancelButton_Click(object sender, RoutedEventArgs e)
         {
-            General.CloseDialog(this);
+            try
+            { 
+                General.CloseDialog(this);
+            }
+            catch (Exception ex)
+            {
+                Message.Show(ex);
+            }
         }
 
         private void NextButton_Click(object sender, RoutedEventArgs e)
@@ -48,15 +55,22 @@ namespace Setup.UI
             }
             catch (Exception ex)
             {
-                MessageBox.Show(ex.Message);
+                Message.Show(ex);
             }
         }
 
         private void BackButton_Click(object sender, RoutedEventArgs e)
         {
-            SaveSettings();
+            try
+            { 
+                SaveSettings();
 
-            General.ShowDialog(this, new LibsFolderDialog());
+                General.ShowDialog(this, new LibsFolderDialog());
+            }
+            catch (Exception ex)
+            {
+                Message.Show(ex);
+            }
         }
 
 

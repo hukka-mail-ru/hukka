@@ -11,6 +11,8 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
 
+using Setup.Common;
+
 namespace Setup.UI
 {
     /// <summary>
@@ -25,12 +27,26 @@ namespace Setup.UI
 
         private void CancelButton_Click(object sender, RoutedEventArgs e)
         {
-            General.CloseDialog(this);
+            try
+            { 
+                General.CloseDialog(this);
+            }
+            catch (Exception ex)
+            {
+                Message.Show(ex);
+            }
         }
 
         private void NextButton_Click(object sender, RoutedEventArgs e)
         {
-            General.ShowDialog(this, new DestinationFolderDialog());
+            try
+            { 
+                General.ShowDialog(this, new DestinationFolderDialog());
+            }
+            catch (Exception ex)
+            {
+                Message.Show(ex);
+            }
         }
     }
 }

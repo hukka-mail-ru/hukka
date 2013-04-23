@@ -11,6 +11,8 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
 
+using Setup.Common;
+
 namespace Setup.UI
 {
     /// <summary>
@@ -26,18 +28,38 @@ namespace Setup.UI
 
         private void CancelButton_Click(object sender, RoutedEventArgs e)
         {
-            General.CloseDialog(this);
+            try
+            { 
+                General.CloseDialog(this);
+            }
+            catch (Exception ex)
+            {
+                Message.Show(ex);
+            }
         }
 
         private void BackButton_Click(object sender, RoutedEventArgs e)
         {
-            General.ShowDialog(this, new ServerDialog());
+            try
+            { 
+                General.ShowDialog(this, new ServerDialog());
+            }
+            catch (Exception ex)
+            {
+                Message.Show(ex);
+            }
         }
 
         private void InstallButton_Click(object sender, RoutedEventArgs e)
         {
-
-            this.Close();
+            try
+            {             
+                General.ShowDialog(this, new InstallDialog());
+            }
+            catch (Exception ex)
+            {
+                Message.Show(ex);
+            }
         }
     }
 }

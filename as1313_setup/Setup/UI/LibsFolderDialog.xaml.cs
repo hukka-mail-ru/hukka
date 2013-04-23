@@ -6,7 +6,6 @@ using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Data;
 using System.Windows.Documents;
-using System.Windows.Forms;
 using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
@@ -30,30 +29,58 @@ namespace Setup.UI
 
         private void CancelButton_Click(object sender, RoutedEventArgs e)
         {
-            General.CloseDialog(this);
+            try
+            { 
+                General.CloseDialog(this);
+            }
+            catch (Exception ex)
+            {
+                Message.Show(ex);
+            }
         }
 
         private void NextButton_Click(object sender, RoutedEventArgs e)
         {
-            General.ShowDialog(this, new SqlDialog());
+            try
+            { 
+                General.ShowDialog(this, new SqlDialog());
+            }
+            catch (Exception ex)
+            {
+                Message.Show(ex);
+            }
         }
 
 
         private void BackButton_Click(object sender, RoutedEventArgs e)
         {
-            General.ShowDialog(this, new DestinationFolderDialog());
+            try
+            { 
+                General.ShowDialog(this, new DestinationFolderDialog());
+            }
+            catch (Exception ex)
+            {
+                Message.Show(ex);
+            }
         }
 
 
         private void BrowseButton_Click(object sender, RoutedEventArgs e)
         {
-            FolderBrowserDialog dialog = new FolderBrowserDialog();
-            System.Windows.Forms.DialogResult result = dialog.ShowDialog();
-
-            if (result == System.Windows.Forms.DialogResult.OK)
+            try
             {
-                FolderLabel.Content = dialog.SelectedPath;
-                Settings.LibsFolder = dialog.SelectedPath;
+                System.Windows.Forms.FolderBrowserDialog dialog = new System.Windows.Forms.FolderBrowserDialog();
+                System.Windows.Forms.DialogResult result = dialog.ShowDialog();
+
+                if (result == System.Windows.Forms.DialogResult.OK)
+                {
+                    FolderLabel.Content = dialog.SelectedPath;
+                    Settings.LibsFolder = dialog.SelectedPath;
+                }
+            }
+            catch (Exception ex)
+            {
+                Message.Show(ex);
             }
         }
     }
