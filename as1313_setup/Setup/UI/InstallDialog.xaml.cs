@@ -1,4 +1,5 @@
 ﻿using System;
+using System.ComponentModel;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -20,25 +21,49 @@ namespace Setup.UI
     /// </summary>
     public partial class InstallDialog : Window
     {
+
         public InstallDialog()
         {
             InitializeComponent();
 
-            Install.Go();
+            // background thread
+            this.backgroundWorker = (BackgroundWorker)this.FindResource("backgroundWoker");
 
-           // General.ShowDialog(this, new FinishDialog());
+            this.backgroundWorker.RunWorkerAsync();
+            Mouse.OverrideCursor = Cursors.Wait;
         }
 
         private void CancelButton_Click(object sender, RoutedEventArgs e)
         {
             try
-            { 
-                General.CloseDialog(this);
+            {
+                this.backgroundWorker.CancelAsync();
+
+              //  Message.Show("Rollback needed.");
+               // OnError();
             }
             catch (Exception ex)
             {
                 Message.Show(ex);
             }
+        }
+
+
+        /// <summary>
+        ///  All operations completed successfully
+        /// </summary>
+        private void OnSuccess()
+        {
+            Mouse.OverrideCursor = null;
+            General.ShowDialog(this, new FinishDialog());
+        }
+
+        /// <summary>
+        ///  All operations completed with an error     
+        /// </summary>
+        private void OnError()
+        {
+            Mouse.OverrideCursor = null;
         }
     }
 }

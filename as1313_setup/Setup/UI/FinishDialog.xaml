@@ -12,7 +12,7 @@
 
         <Grid Grid.Row="0">
             <Label Grid.Column="1" Margin="0,3,3,3" FontSize="18" >Done</Label>
-            <Label Grid.Column="1" Margin="0,40,3,3">The AS1313 Client was successfully installed. Click Finish to exit the wizard.</Label>
+            <Label Grid.Column="1" Margin="0,40,3,3">All operations were successfully completed. Click Finish to exit the wizard.</Label>
         </Grid>
 
         <Grid Grid.Row="2">

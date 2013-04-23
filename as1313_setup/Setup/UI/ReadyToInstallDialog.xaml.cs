@@ -11,6 +11,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
 
+
 using Setup.Common;
 
 namespace Setup.UI
@@ -29,7 +30,7 @@ namespace Setup.UI
         private void CancelButton_Click(object sender, RoutedEventArgs e)
         {
             try
-            { 
+            {
                 General.CloseDialog(this);
             }
             catch (Exception ex)
@@ -50,15 +51,17 @@ namespace Setup.UI
             }
         }
 
+
         private void InstallButton_Click(object sender, RoutedEventArgs e)
         {
             try
-            {             
+            {
                 General.ShowDialog(this, new InstallDialog());
             }
             catch (Exception ex)
             {
                 Message.Show(ex);
+                Mouse.OverrideCursor = null;
             }
         }
     }
