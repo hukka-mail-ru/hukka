@@ -38,7 +38,7 @@ namespace Setup.Common
 
             // version dir
             FileVersionInfo fvi = FileVersionInfo.GetVersionInfo(
-                     Path.Combine(Settings.SourceDir, Settings.SourceExecutable));
+                     Path.Combine(Settings.SourceDir, Settings.MainExecutable));
 
             mVersionDir = Path.Combine(productDir, fvi.FileVersion);
 
@@ -81,7 +81,21 @@ namespace Setup.Common
 
         public static void ReplaceConfig()
         {
+            string mainConfig = Path.Combine(mVersionDir, Settings.MainConfig);
+            string logsDir = Path.Combine(mVersionDir, Settings.LogsDir);
 
+            FindReplace(mainConfig, "data source=localhost;", "data source=" + Settings.SQLServer + ";");
+            FindReplace(mainConfig, @"d:\Argetp21", Settings.LibsFolder);
+            FindReplace(mainConfig, @"D:\Argetp21", Settings.LibsFolder);
+            FindReplace(mainConfig, @"c:\logs", logsDir);
+
+            // NETWORK  
+            string clientConfig = Path.Combine(mVersionDir, Settings.ConfigDir, "clients.config");
+
+            FindReplace(clientConfig, "localhost", Settings.NetServer);
+            FindReplace(clientConfig, "9080", Settings.NetPort);
+            FindReplace(clientConfig, "ozavorot", Settings.NetUser);
+            FindReplace(clientConfig, "t-systems.ru", Settings.NetDomain);     
         }
 
 
@@ -90,6 +104,15 @@ namespace Setup.Common
 
         }
 
+
+        private static void FindReplace(string file, string find, string replace)
+        {
+            var fileContents = System.IO.File.ReadAllText(file);
+
+            fileContents = fileContents.Replace(find, replace);
+
+            System.IO.File.WriteAllText(file, fileContents);
+        }
 
         private class Folders
         {

@@ -20,8 +20,12 @@ namespace Setup.Common
         public static string ProductName = @"AS1313";
 
         public static string SourceDir = @"Client";
+        public static string ConfigDir = @"Config";
+        public static string LogsDir = @"Logs";
         public static string ScriptsDir = @"Scripts";
-        public static string SourceExecutable = @"TuevSued.AS1313.exe";
+
+        public static string MainExecutable = @"TuevSued.AS1313.exe";
+        public static string MainConfig = "TuevSued.AS1313.exe.config"; 
 
         public static string DestinationFolder = @"D:\TEMP";
         public static string LibsFolder = @"C:\Program Files\Libs";
