@@ -13,13 +13,25 @@
         </Grid.RowDefinitions>
 
         <Grid Grid.Row="0" Margin="5">
-            <TextBlock TextWrapping="Wrap" Name="tbGeneralInfo" Margin="5" Padding="5"></TextBlock>
+            <ScrollViewer CanContentScroll="True"  
+                          HorizontalScrollBarVisibility="Auto" 
+                          VerticalScrollBarVisibility="Auto">
+                
+                <TextBlock TextWrapping="Wrap" Name="tbGeneralInfo" Margin="5" Padding="5"></TextBlock>
+
+            </ScrollViewer>
         </Grid>
 
         <StackPanel Grid.Row="1" Margin="5">
-            <Expander Margin="5" Header="Details" Padding="5" BorderBrush="LightGray" BorderThickness="2">
+            <ScrollViewer CanContentScroll="True"  
+                          HorizontalScrollBarVisibility="Auto" 
+                          VerticalScrollBarVisibility="Auto">
+                
+                <Expander Margin="5" Header="Details" Padding="5" BorderBrush="LightGray" BorderThickness="2">
                 <TextBlock TextWrapping="Wrap" Name="tbDetailInfo"></TextBlock>
             </Expander>
+
+            </ScrollViewer>
 
             <Button Width="80" Margin="3" Name="OKButton" Click="OKButton_Click">_OK</Button>
 

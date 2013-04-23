@@ -33,7 +33,7 @@
             </Grid.ColumnDefinitions>
 
             <Label Grid.Column="0" Margin="3">Server address</Label>
-            <TextBox Grid.Column="1" Margin="3" Name="NetServerTextBox" Height="23"></TextBox>
+            <TextBox Grid.Column="1" Margin="3" Name="mNetServerTextBox" Height="23"></TextBox>
 
         </Grid>
 
@@ -46,7 +46,7 @@
             </Grid.ColumnDefinitions>
 
             <Label Grid.Column="0" Margin="3">Server port</Label>
-            <TextBox Grid.Column="1" Margin="3" Name="NetPortTextBox" Height="23"></TextBox>
+            <TextBox Grid.Column="1" Margin="3" Name="mNetPortTextBox" Height="23"></TextBox>
         </Grid>
 
         <Grid Grid.Row="3" Grid.Column="0">
@@ -57,7 +57,7 @@
             </Grid.ColumnDefinitions>
 
             <Label Grid.Column="0" Margin="3">User name</Label>
-            <TextBox Grid.Column="1" Margin="3"  Name="NetUserTextBox"></TextBox>
+            <TextBox Grid.Column="1" Margin="3"  Name="mNetUserTextBox"></TextBox>
         </Grid>
 
 
@@ -69,7 +69,7 @@
             </Grid.ColumnDefinitions>
 
             <Label Grid.Column="0" Margin="3">Domain name</Label>
-            <TextBox Grid.Column="1" Margin="3"  Name="NetDomainTextBox"></TextBox>
+            <TextBox Grid.Column="1" Margin="3"  Name="mNetDomainTextBox"></TextBox>
         </Grid>
 
 
