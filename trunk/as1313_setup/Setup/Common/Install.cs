@@ -16,33 +16,31 @@ namespace Setup.Common
     /// </summary>
     public class Install
     {
-        public static void Go()
-        {
-            CreateFolders();
-            CopyFiles();
-            RunSqlScript();
-            ReplaceConfig();
-        }
-
-        private static void CreateFolders()
+        public static void CreateFolders()
         {
 
         }
 
 
-        private static void CopyFiles()
+        public static void CopyFiles()
         {
 
         }
 
 
-        private static void RunSqlScript()
+        public static void RunSqlScript()
         {
 
         }
 
 
-        private static void ReplaceConfig()
+        public static void ReplaceConfig()
+        {
+
+        }
+
+
+        public static void Rollback()
         {
 
         }
