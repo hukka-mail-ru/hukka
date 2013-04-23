@@ -25,6 +25,8 @@ namespace Setup.UI
         /// </summary>
         private BackgroundWorker backgroundWorker;
 
+        private Exception lastException; 
+
         /// <summary>
         /// A handler to backgroundWorker.RunWorkerAsync
         /// </summary>
@@ -33,36 +35,40 @@ namespace Setup.UI
         private void BackgroundWorker_DoWork(object sender, 
             System.ComponentModel.DoWorkEventArgs e)
         {
-            
-            BackgroundWorker worker = sender as BackgroundWorker;
-            // exceptions are catched by BackgroundWorker_RunWorkerCompleted
+            try
+            {
+                BackgroundWorker worker = sender as BackgroundWorker;
+                // exceptions are catched by BackgroundWorker_RunWorkerCompleted
 
-            Install.CreateFolders();
-            Thread.Sleep(1000);
-            if (backgroundWorker.CancellationPending)
+                Install.CreateFolders();
+                if (backgroundWorker.CancellationPending)
+                {
+                    e.Cancel = true;
+                    return;
+                }
+
+                Install.CopyFiles();
+                if (backgroundWorker.CancellationPending)
+                {
+                    e.Cancel = true;
+                    return;
+                }
+
+                Install.RunSqlScript();
+                if (backgroundWorker.CancellationPending)
+                {
+                    e.Cancel = true;
+                    return;
+                }
+
+                Install.ReplaceConfig();
+            }
+            catch (Exception ex)
             {
                 e.Cancel = true;
+                lastException = ex;
                 return;
             }
-
-            Install.CopyFiles();
-            Thread.Sleep(1000);
-            if (backgroundWorker.CancellationPending)
-            {
-                e.Cancel = true;
-                return;
-            }
-
-            Install.RunSqlScript();
-            Thread.Sleep(1000);
-            if (backgroundWorker.CancellationPending)
-            {
-                e.Cancel = true;
-                return;
-            }
-
-            Install.ReplaceConfig();
-            Thread.Sleep(1000);
         }
 
         /// <summary>
@@ -74,8 +80,7 @@ namespace Setup.UI
         {
             
             if (e.Cancelled == true)
-            {                
-                Message.Show("Operation cancelled by user");
+            {           
                 this.OnError();
             }
             else if (!(e.Error == null))

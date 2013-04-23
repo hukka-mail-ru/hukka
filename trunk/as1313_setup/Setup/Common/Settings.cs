@@ -18,10 +18,12 @@ namespace Setup.Common
     {
         public static string CompanyName = @"T-Systems";
         public static string ProductName = @"AS1313";
-        public static string ProductFolder = CompanyName + @"\" + ProductName + @"\";
 
-        public static string DestinationFolder = @"C:\Program Files\" + ProductFolder;
-        public static string LibsFolder = @"C:\Program Files\" + ProductFolder + @"Libs";
+        public static string ClientDir = @"Client";
+        public static string ClientExecutable = @"TuevSued.AS1313.exe";
+
+        public static string DestinationFolder = @"D:\TEMP";
+        public static string LibsFolder = @"C:\Program Files\Libs";
 
         public static string SQLServer = @"localhost\SQLExpress";
         public static string SQLUser = @"sa";
