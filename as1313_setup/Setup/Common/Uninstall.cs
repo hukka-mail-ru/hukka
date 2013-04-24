@@ -20,59 +20,132 @@ namespace Setup.Common
     /// </summary>
     public class Uninstall
     {
+        private static string RegUninstallLocation = @"SOFTWARE\Microsoft\Windows\CurrentVersion\Uninstall";
 
-        public static void CreateUninstaller()
+
+        public static bool IsAppInstalled()
         {
-            using (RegistryKey parent = Registry.LocalMachine.OpenSubKey(
-                         @"SOFTWARE\Microsoft\Windows\CurrentVersion\Uninstall", true))
+            RegistryKey key = null;
+            using (RegistryKey parent = Registry.LocalMachine.OpenSubKey(RegUninstallLocation, true))
             {
                 if (parent == null)
                 {
-                    throw new ExceptionInUninstaller("Uninstall registry key not found.");
+                    throw new ExceptionInUninstaller("Uninstall registry key not found: " + RegUninstallLocation);
                 }
+
                 try
                 {
-                    RegistryKey key = null;
-                    try
+                    key = parent.OpenSubKey(Settings.ProductName, true);
+                    if (key != null)
                     {
-                        key = parent.OpenSubKey(Settings.ProductName, true) ??
-                              parent.CreateSubKey(Settings.ProductName);
-
-                        if (key == null)
-                        {
-                            throw new ExceptionInUninstaller("Unable to create uninstaller");
-                        }
-
-                        Message.Show("Creating uninstaller " + key.ToString());
-
-                     //   Assembly asm = GetType().Assembly;
-                        string version = General.GetAppVersion();
-                        string exe = Path.Combine(Settings.VersionDir, Settings.MainExecutable);
-                     //   string exe = "\"" + asm.CodeBase.Substring(8).Replace("/", "\\\\") + "\"";
-
-                        key.SetValue("DisplayName", Settings.ProductName);
-                        key.SetValue("ApplicationVersion", version);
-                        key.SetValue("Publisher", Settings.CompanyName);
-                      //  key.SetValue("DisplayIcon", exe);
-                        key.SetValue("DisplayVersion", version);
-                        // key.SetValue("URLInfoAbout", "http://www.blinemedical.com");
-                        // key.SetValue("Contact", "support@mycompany.com");
-                        key.SetValue("InstallDate", DateTime.Now.ToString("yyyyMMdd"));
-                        key.SetValue("UninstallString", exe + " /uninstallprompt");
-                    }
-                    finally
-                    {
-                        if (key != null)
-                        {
-                            key.Close();
-                        }
+                        Settings.VersionDir = (string)key.GetValue("VersionDir");
                     }
                 }
-                catch (Exception ex)
+                catch(Exception ex)
                 {
-                    throw new ExceptionInUninstaller(ex.Message);
+                    Message.Show(ex);
+                }
+                finally
+                {
+                    if (key != null)
+                    {
+                        key.Close();
+                    }
                 }
             }
+
+            return (key != null);
         }
+
+
+
+        public static void Register()
+        {
+ 
+            using (RegistryKey parent = Registry.LocalMachine.OpenSubKey(RegUninstallLocation, true))
+            {
+                if (parent == null)
+                {
+                    throw new ExceptionInUninstaller("Uninstall registry key not found: " + RegUninstallLocation);
+                }
+
+                RegistryKey key = null;
+                try
+                {
+                    key = parent.OpenSubKey(Settings.ProductName, true) ??
+                            parent.CreateSubKey(Settings.ProductName);
+
+                    if (key == null)
+                    {
+                        throw new ExceptionInUninstaller("Unable to create uninstaller");
+                    }
+
+
+                    //   Assembly asm = GetType().Assembly;
+                    string version = General.GetAppVersion();
+                    string exe = Path.Combine(Settings.VersionDir, Settings.MainExecutable);
+                    //   string exe = "\"" + asm.CodeBase.Substring(8).Replace("/", "\\\\") + "\"";
+
+                    key.SetValue("DisplayName", Settings.ProductName);
+                    key.SetValue("ApplicationVersion", version);
+                    key.SetValue("Publisher", Settings.CompanyName);
+                    //  key.SetValue("DisplayIcon", exe);
+                    key.SetValue("DisplayVersion", version);
+                    // key.SetValue("URLInfoAbout", "http://www.blinemedical.com");
+                    // key.SetValue("Contact", "support@mycompany.com");
+                    key.SetValue("InstallDate", DateTime.Now.ToString("yyyyMMdd"));
+                    key.SetValue("VersionDir", Settings.VersionDir);
+                    key.SetValue("UninstallString", exe + " /uninstallprompt");
+                }
+                finally
+                {
+                    if (key != null)
+                    {
+                        key.Close();
+                    }
+                }
+
+            }
+        }
+
+
+        public static void Unregiser()
+        {
+            using (RegistryKey parent = Registry.LocalMachine.OpenSubKey(RegUninstallLocation, true))
+            {
+                if (parent == null)
+                {
+                    throw new ExceptionInUninstaller("Uninstall registry key not found: " + RegUninstallLocation);
+                }
+
+                parent.DeleteSubKeyTree(Settings.ProductName, true); 
+            }
+        }
+
+
+        public static void DeleteFolders()
+        {
+            DeleteFilesAndDirectory(Settings.VersionDir);
+        }
+
+        public static void DeleteFilesAndDirectory(string target_dir)
+        {
+            string[] files = Directory.GetFiles(target_dir);
+            string[] dirs = Directory.GetDirectories(target_dir);
+
+            foreach (string file in files)
+            {
+                File.SetAttributes(file, FileAttributes.Normal);
+                File.Delete(file);
+            }
+
+            foreach (string dir in dirs)
+            {
+                DeleteFilesAndDirectory(dir);
+            }
+
+            Directory.Delete(target_dir, false);
+        }
+
     }
 }

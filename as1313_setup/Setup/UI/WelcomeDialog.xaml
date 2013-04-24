@@ -18,7 +18,7 @@
             <Image  HorizontalAlignment="Left" Name="image1" VerticalAlignment="Top" Source="logo.gif" MaxWidth="640" />
 
             <Label Grid.Column="1" Margin="0,3,3,3" FontSize="18" >Welcome to AS1313 Client Installator</Label>
-            <Label Grid.Column="1" Margin="0,50,3,3">Click Next to install AS1313 Client to you computer.</Label>
+            <Label Grid.Column="1" Margin="0,50,3,3">Click Next to continue.</Label>
         </Grid>
 
         <Grid Grid.Row="1" Grid.Column="0" Background="Gray"></Grid>

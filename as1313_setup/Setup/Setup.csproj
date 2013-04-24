@@ -92,6 +92,9 @@
     <Compile Include="UI\SqlDialog.xaml.cs">
       <DependentUpon>SqlDialog.xaml</DependentUpon>
     </Compile>
+    <Compile Include="UI\UninstallDialog.xaml.cs">
+      <DependentUpon>UninstallDialog.xaml</DependentUpon>
+    </Compile>
     <Compile Include="UI\WelcomeDialog.xaml.cs">
       <DependentUpon>WelcomeDialog.xaml</DependentUpon>
     </Compile>
@@ -128,6 +131,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="UI\SqlDialog.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="UI\UninstallDialog.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

@@ -66,7 +66,7 @@ namespace Setup.UI
 
                 this.backgroundWorker.ReportProgress(100, "Replacing config...");
                 Install.ReplaceConfig();
-                Uninstall.CreateUninstaller();
+                Uninstall.Register();
 
             }
             catch (Exception ex)
