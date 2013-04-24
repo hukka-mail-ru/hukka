@@ -55,8 +55,15 @@ namespace Setup.UI
         /// </summary>
         private void OnSuccess()
         {
-            Mouse.OverrideCursor = null;
-            UI.ShowDialog(this, new FinishDialog());
+            try
+            {
+                Mouse.OverrideCursor = null;
+                UI.ShowDialog(this, new FinishDialog());
+            }
+            catch (Exception ex)
+            {
+                Message.Show(ex);
+            }
         }
 
         /// <summary>
@@ -64,11 +71,35 @@ namespace Setup.UI
         /// </summary>
         private void OnError()
         {
-            Mouse.OverrideCursor = null;
-            Message.Show(lastException);
-            Message.Show("Rolling back");
-            General.Rollback();
-            UI.ShowDialog(this, new FinishDialog());
+            try
+            {
+                Mouse.OverrideCursor = null;
+                Message.Show(lastException);
+                Message.Show("Rolling back");
+            }
+            catch (Exception ex)
+            {
+                Message.Show(ex);
+            }
+
+            try
+            {
+                General.Rollback();               
+            }
+            catch (Exception)
+            {
+                // here can be exceptions, but we just doing the rollback anyway
+            }
+
+            try
+            {
+                UI.ShowDialog(this, new FinishDialog());
+            }
+            catch (Exception ex)
+            {
+                Message.Show(ex);
+            }
+
         }
     }
 }

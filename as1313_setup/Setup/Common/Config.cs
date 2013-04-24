@@ -19,6 +19,8 @@ namespace Setup.Common
     {
         public static void ReplaceAll()
         {
+throw new Exception("EXCEPTION!");
+
             string mainConfig = Path.Combine(Settings.VersionDir, Settings.MainConfig);
             string logsDir = Path.Combine(Settings.VersionDir, Settings.LogsDir);
 
