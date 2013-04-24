@@ -17,12 +17,15 @@ namespace Setup.Common
     public class Settings
     {
         public static string CompanyName = @"T-Systems";
-        public static string ProductName = @"AS1313";
+        public static string SolutionName = @"AS1313";
+        public static string ProductName = @"AS1313 Client";
 
         public static string SourceDir = @"Client";
         public static string ConfigDir = @"Config";
         public static string LogsDir = @"Logs";
         public static string ScriptsDir = @"Scripts";
+
+        public static string VersionDir = @""; // pupulated in Install.CreateFolders
 
         public static string MainExecutable = @"TuevSued.AS1313.exe";
         public static string MainConfig = "TuevSued.AS1313.exe.config"; 
