@@ -66,6 +66,7 @@ namespace Setup.UI
 
                 this.backgroundWorker.ReportProgress(100, "Replacing config...");
                 Install.ReplaceConfig();
+                Uninstall.CreateUninstaller();
 
             }
             catch (Exception ex)
@@ -76,7 +77,7 @@ namespace Setup.UI
             }
         }
 
-                /// <summary>
+        /// <summary>
         /// A handler to event backgroundWorker.ReportProgress
         /// Accepts an Item as its argument
         /// </summary>

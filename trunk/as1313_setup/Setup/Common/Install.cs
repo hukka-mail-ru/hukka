@@ -18,8 +18,7 @@ namespace Setup.Common
     /// </summary>
     public class Install
     {
-        private static string mVersionDir;
-
+ 
         public static void CreateFolders()
         {
             // company dir
@@ -30,28 +29,25 @@ namespace Setup.Common
             }
 
             // product dir
-            string productDir = Path.Combine(companyDir, Settings.ProductName);
+            string productDir = Path.Combine(companyDir, Settings.SolutionName);
             if (!Directory.Exists(productDir))
             {
                 Directory.CreateDirectory(productDir);
             }
 
             // version dir
-            FileVersionInfo fvi = FileVersionInfo.GetVersionInfo(
-                     Path.Combine(Settings.SourceDir, Settings.MainExecutable));
+            Settings.VersionDir = Path.Combine(productDir, General.GetAppVersion());
 
-            mVersionDir = Path.Combine(productDir, fvi.FileVersion);
-
-            if (!Directory.Exists(mVersionDir))
+            if (!Directory.Exists(Settings.VersionDir))
             {
-                Directory.CreateDirectory(mVersionDir);
+                Directory.CreateDirectory(Settings.VersionDir);
             }
         }
 
 
         public static void CopyFiles()
         {
-            CopyDirectory(Settings.SourceDir, mVersionDir);
+            CopyDirectory(Settings.SourceDir, Settings.VersionDir);
         }
 
 
@@ -81,8 +77,8 @@ namespace Setup.Common
 
         public static void ReplaceConfig()
         {
-            string mainConfig = Path.Combine(mVersionDir, Settings.MainConfig);
-            string logsDir = Path.Combine(mVersionDir, Settings.LogsDir);
+            string mainConfig = Path.Combine(Settings.VersionDir, Settings.MainConfig);
+            string logsDir = Path.Combine(Settings.VersionDir, Settings.LogsDir);
 
             FindReplace(mainConfig, "data source=localhost;", "data source=" + Settings.SQLServer + ";");
             FindReplace(mainConfig, @"d:\Argetp21", Settings.LibsFolder);
@@ -90,7 +86,7 @@ namespace Setup.Common
             FindReplace(mainConfig, @"c:\logs", logsDir);
 
             // NETWORK  
-            string clientConfig = Path.Combine(mVersionDir, Settings.ConfigDir, "clients.config");
+            string clientConfig = Path.Combine(Settings.VersionDir, Settings.ConfigDir, "clients.config");
 
             FindReplace(clientConfig, "localhost", Settings.NetServer);
             FindReplace(clientConfig, "9080", Settings.NetPort);
