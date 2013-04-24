@@ -40,16 +40,9 @@ namespace Setup.UI
                 BackgroundWorker worker = sender as BackgroundWorker;
                 // exceptions are catched by BackgroundWorker_RunWorkerCompleted
 
-                this.backgroundWorker.ReportProgress(0, "Creating folders...");
-                Install.CreateFolders();
-                if (backgroundWorker.CancellationPending)
-                {
-                    e.Cancel = true;
-                    return;
-                }
 
                 this.backgroundWorker.ReportProgress(33, "Copying files...");
-                Install.CopyFiles();
+                Files.Copy();
                 if (backgroundWorker.CancellationPending)
                 {
                     e.Cancel = true;
@@ -57,7 +50,7 @@ namespace Setup.UI
                 }
 
                 this.backgroundWorker.ReportProgress(66, "Running SQL script...");
-                Install.RunSqlScript();
+                Database.Create();
                 if (backgroundWorker.CancellationPending)
                 {
                     e.Cancel = true;
@@ -65,8 +58,9 @@ namespace Setup.UI
                 }
 
                 this.backgroundWorker.ReportProgress(100, "Replacing config...");
-                Install.ReplaceConfig();
-                Uninstall.Register();
+                Config.ReplaceAll();
+
+                WinRegistry.Register();
 
             }
             catch (Exception ex)

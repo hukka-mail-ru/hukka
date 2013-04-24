@@ -1,5 +1,5 @@
 ﻿// -----------------------------------------------------------------------
-// <copyright file="Uninstall.cs" company="">
+// <copyright file="Registry.cs" company="">
 // TODO: Update copyright text.
 // </copyright>
 // -----------------------------------------------------------------------
@@ -10,23 +10,17 @@ namespace Setup.Common
     using System.Collections.Generic;
     using System.IO;
     using System.Linq;
-    using Microsoft.Win32;
-    using System.Text;
     using System.Reflection;
-
+    using System.Text;
+    using Microsoft.Win32;
 
     /// <summary>
     /// TODO: Update summary.
     /// </summary>
-    public class Uninstall
+    public class WinRegistry
     {
         private static string RegUninstallLocation = @"SOFTWARE\Microsoft\Windows\CurrentVersion\Uninstall";
 
-
-        public static void DropDatabase()
-        {
-            General.SqlQuery("DROP DATABASE TUEV_SUED");
-        }
 
         public static bool IsAppInstalled()
         {
@@ -46,7 +40,7 @@ namespace Setup.Common
                         Settings.VersionDir = (string)key.GetValue("VersionDir");
                     }
                 }
-                catch(Exception ex)
+                catch (Exception ex)
                 {
                     Message.Show(ex);
                 }
@@ -66,7 +60,7 @@ namespace Setup.Common
 
         public static void Register()
         {
- 
+
             using (RegistryKey parent = Registry.LocalMachine.OpenSubKey(RegUninstallLocation, true))
             {
                 if (parent == null)
@@ -123,33 +117,8 @@ namespace Setup.Common
                     throw new ExceptionInUninstaller("Uninstall registry key not found: " + RegUninstallLocation);
                 }
 
-                parent.DeleteSubKeyTree(Settings.ProductName, true); 
+                parent.DeleteSubKeyTree(Settings.ProductName, true);
             }
-        }
-
-
-        public static void DeleteFolders()
-        {
-            DeleteFilesAndDirectory(Settings.VersionDir);
-        }
-
-        public static void DeleteFilesAndDirectory(string target_dir)
-        {
-            string[] files = Directory.GetFiles(target_dir);
-            string[] dirs = Directory.GetDirectories(target_dir);
-
-            foreach (string file in files)
-            {
-                File.SetAttributes(file, FileAttributes.Normal);
-                File.Delete(file);
-            }
-
-            foreach (string dir in dirs)
-            {
-                DeleteFilesAndDirectory(dir);
-            }
-
-            Directory.Delete(target_dir, false);
         }
 
     }

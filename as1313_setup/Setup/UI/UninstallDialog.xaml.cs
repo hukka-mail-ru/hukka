@@ -29,9 +29,7 @@ namespace Setup.UI
         {
             try
             {
-                Uninstall.DeleteFolders();
-                Uninstall.Unregiser();
-                Uninstall.DropDatabase();
+                General.Rollback();
                 UI.ShowDialog(this, new FinishDialog());
             }
             catch (Exception ex)
