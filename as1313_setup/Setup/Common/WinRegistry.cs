@@ -19,17 +19,17 @@ namespace Setup.Common
     /// </summary>
     public class WinRegistry
     {
-        private static string RegUninstallLocation = @"SOFTWARE\Microsoft\Windows\CurrentVersion\Uninstall";
+        private static string RegLocation = @"SOFTWARE\Microsoft\Windows\CurrentVersion\Uninstall";
 
 
         public static bool IsAppInstalled()
         {
             RegistryKey key = null;
-            using (RegistryKey parent = Registry.LocalMachine.OpenSubKey(RegUninstallLocation, true))
+            using (RegistryKey parent = Registry.LocalMachine.OpenSubKey(RegLocation, true))
             {
                 if (parent == null)
                 {
-                    throw new ExceptionInUninstaller("Uninstall registry key not found: " + RegUninstallLocation);
+                    throw new ExceptionInUninstaller("Uninstall registry key not found: " + RegLocation);
                 }
 
                 try
@@ -61,11 +61,11 @@ namespace Setup.Common
         public static void Register()
         {
 
-            using (RegistryKey parent = Registry.LocalMachine.OpenSubKey(RegUninstallLocation, true))
+            using (RegistryKey parent = Registry.LocalMachine.OpenSubKey(RegLocation, true))
             {
                 if (parent == null)
                 {
-                    throw new ExceptionInUninstaller("Uninstall registry key not found: " + RegUninstallLocation);
+                    throw new ExceptionInUninstaller("Uninstall registry key not found: " + RegLocation);
                 }
 
                 RegistryKey key = null;
@@ -110,11 +110,11 @@ namespace Setup.Common
 
         public static void Unregiser()
         {
-            using (RegistryKey parent = Registry.LocalMachine.OpenSubKey(RegUninstallLocation, true))
+            using (RegistryKey parent = Registry.LocalMachine.OpenSubKey(RegLocation, true))
             {
                 if (parent == null)
                 {
-                    throw new ExceptionInUninstaller("Uninstall registry key not found: " + RegUninstallLocation);
+                    throw new ExceptionInUninstaller("Uninstall registry key not found: " + RegLocation);
                 }
 
                 parent.DeleteSubKeyTree(Settings.ProductName, true);

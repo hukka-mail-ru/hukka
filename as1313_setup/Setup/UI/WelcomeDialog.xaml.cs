@@ -23,6 +23,18 @@ namespace Setup.UI
         public WelcomeDialog()
         {
             InitializeComponent();
+
+            try
+            {
+                if (WinRegistry.IsAppInstalled())
+                {
+                    UI.ShowDialog(this, new UninstallDialog());
+                }
+            }
+            catch (Exception ex)
+            {
+                Message.Show(ex);
+            }
         }
 
         private void CancelButton_Click(object sender, RoutedEventArgs e)
@@ -41,14 +53,7 @@ namespace Setup.UI
         {
             try
             {
-                if (WinRegistry.IsAppInstalled())
-                {
-                    UI.ShowDialog(this, new UninstallDialog());
-                }
-                else
-                {
-                    UI.ShowDialog(this, new DestinationFolderDialog());
-                }
+                 UI.ShowDialog(this, new DestinationFolderDialog());
             }
             catch (Exception ex)
             {
