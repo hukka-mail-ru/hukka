@@ -27,7 +27,7 @@ namespace Setup.UI
 
         public static void CloseDialog(System.Windows.Window dialog)
         {
-            if (Message.Question("Are you sure you want to cancel the AS1313 Client Installation?"))
+            if (Message.Question("Are you sure you want to exit the Install Wizard?"))
             {
                 dialog.Close();
             }

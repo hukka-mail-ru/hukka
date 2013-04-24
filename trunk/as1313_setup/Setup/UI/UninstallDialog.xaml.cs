@@ -16,39 +16,36 @@ using Setup.Common;
 namespace Setup.UI
 {
     /// <summary>
-    /// Interaction logic for Welcome.xaml
+    /// Interaction logic for UninstallDialog.xaml
     /// </summary>
-    public partial class WelcomeDialog : Window
+    public partial class UninstallDialog : Window
     {
-        public WelcomeDialog()
+        public UninstallDialog()
         {
             InitializeComponent();
         }
 
-        private void CancelButton_Click(object sender, RoutedEventArgs e)
+        private void UninstallButton_Click(object sender, RoutedEventArgs e)
         {
             try
-            { 
-                General.CloseDialog(this);
+            {
+
+                Uninstall.DeleteFolders();
+                Uninstall.Unregiser();
+                General.ShowDialog(this, new FinishDialog());
             }
             catch (Exception ex)
             {
                 Message.Show(ex);
             }
+
         }
 
-        private void NextButton_Click(object sender, RoutedEventArgs e)
+        private void CancelButton_Click(object sender, RoutedEventArgs e)
         {
             try
             {
-                if (Uninstall.IsAppInstalled())
-                {
-                    General.ShowDialog(this, new UninstallDialog());
-                }
-                else
-                {
-                    General.ShowDialog(this, new DestinationFolderDialog());
-                }
+                General.CloseDialog(this);
             }
             catch (Exception ex)
             {
