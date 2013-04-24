@@ -11,7 +11,7 @@
         </Grid.RowDefinitions>
 
         <Grid Grid.Row="0">
-            <Label Name="HeaderLabel" Grid.Column="1" Margin="0,3,3,3" FontSize="18" >Uninstall</Label>
+            <Label Name="HeaderLabel" Grid.Column="1" Margin="0,3,3,3" FontSize="18" >AS1313 Client Uninstall</Label>
             <Label Name="TextLabel" Grid.Column="1" Margin="0,40,3,3">The application has been installed. Click Uninstall if you want to remove it.</Label>
 
         </Grid>
