@@ -40,6 +40,7 @@ namespace Setup.UI
                 BackgroundWorker worker = sender as BackgroundWorker;
                 // exceptions are catched by BackgroundWorker_RunWorkerCompleted
 
+                this.backgroundWorker.ReportProgress(0, "Creating folders...");
                 Install.CreateFolders();
                 if (backgroundWorker.CancellationPending)
                 {
@@ -47,6 +48,7 @@ namespace Setup.UI
                     return;
                 }
 
+                this.backgroundWorker.ReportProgress(33, "Copying files...");
                 Install.CopyFiles();
                 if (backgroundWorker.CancellationPending)
                 {
@@ -54,6 +56,7 @@ namespace Setup.UI
                     return;
                 }
 
+                this.backgroundWorker.ReportProgress(66, "Running SQL script...");
                 Install.RunSqlScript();
                 if (backgroundWorker.CancellationPending)
                 {
@@ -61,7 +64,9 @@ namespace Setup.UI
                     return;
                 }
 
+                this.backgroundWorker.ReportProgress(100, "Replacing config...");
                 Install.ReplaceConfig();
+
             }
             catch (Exception ex)
             {
@@ -69,6 +74,18 @@ namespace Setup.UI
                 lastException = ex;
                 return;
             }
+        }
+
+                /// <summary>
+        /// A handler to event backgroundWorker.ReportProgress
+        /// Accepts an Item as its argument
+        /// </summary>
+        /// <param name="sender">sender object</param>
+        /// <param name="e">an Item</param>
+        private void BackgroundWorker_ProgressChanged(object sender, System.ComponentModel.ProgressChangedEventArgs e)
+        {
+            this.mProgressBar.Value = e.ProgressPercentage;
+            this.mStatusLabel.Content = (string)e.UserState;
         }
 
         /// <summary>

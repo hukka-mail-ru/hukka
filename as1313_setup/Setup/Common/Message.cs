@@ -77,7 +77,7 @@ namespace Setup.Common
 
             StackFrame callStack = new StackFrame(skipFrames, true);
             message = string.Format(
-                            "ARINX {0:HH:mm:ss} [{2,4}] {1,-18}\t{3,-30}\t{4}",
+                            "{0:HH:mm:ss} [{2,4}] {1,-18}\t{3,-30}\t{4}",
                             DateTime.Now,
                             Path.GetFileName(callStack.GetFileName()),
                             callStack.GetFileLineNumber(),
