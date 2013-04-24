@@ -31,7 +31,7 @@ namespace Setup.UI
         {
             try
             { 
-                General.CloseDialog(this);
+                UI.CloseDialog(this);
             }
             catch (Exception ex)
             {
@@ -43,7 +43,7 @@ namespace Setup.UI
         {
             try
             { 
-                General.ShowDialog(this, new LibsFolderDialog());
+                UI.ShowDialog(this, new LibsFolderDialog());
             }
             catch (Exception ex)
             {
@@ -55,7 +55,7 @@ namespace Setup.UI
         {
             try
             { 
-                General.ShowDialog(this, new WelcomeDialog());
+                UI.ShowDialog(this, new WelcomeDialog());
             }
             catch (Exception ex)
             {

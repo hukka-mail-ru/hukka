@@ -31,7 +31,7 @@ namespace Setup.UI
         {
             try
             {
-                General.CloseDialog(this);
+                UI.CloseDialog(this);
             }
             catch (Exception ex)
             {
@@ -43,7 +43,7 @@ namespace Setup.UI
         {
             try
             { 
-                General.ShowDialog(this, new ServerDialog());
+                UI.ShowDialog(this, new ServerDialog());
             }
             catch (Exception ex)
             {
@@ -56,7 +56,7 @@ namespace Setup.UI
         {
             try
             {
-                General.ShowDialog(this, new InstallDialog());
+                UI.ShowDialog(this, new InstallDialog());
             }
             catch (Exception ex)
             {

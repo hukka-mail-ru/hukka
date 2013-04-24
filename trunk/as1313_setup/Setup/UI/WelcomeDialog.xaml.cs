@@ -29,7 +29,7 @@ namespace Setup.UI
         {
             try
             { 
-                General.CloseDialog(this);
+                UI.CloseDialog(this);
             }
             catch (Exception ex)
             {
@@ -43,11 +43,11 @@ namespace Setup.UI
             {
                 if (Uninstall.IsAppInstalled())
                 {
-                    General.ShowDialog(this, new UninstallDialog());
+                    UI.ShowDialog(this, new UninstallDialog());
                 }
                 else
                 {
-                    General.ShowDialog(this, new DestinationFolderDialog());
+                    UI.ShowDialog(this, new DestinationFolderDialog());
                 }
             }
             catch (Exception ex)
