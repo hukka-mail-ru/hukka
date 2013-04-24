@@ -75,7 +75,7 @@
     <Compile Include="UI\FinishDialog.xaml.cs">
       <DependentUpon>FinishDialog.xaml</DependentUpon>
     </Compile>
-    <Compile Include="UI\General.cs" />
+    <Compile Include="UI\UI.cs" />
     <Compile Include="UI\InstallDialog.xaml.cs">
       <DependentUpon>InstallDialog.xaml</DependentUpon>
     </Compile>

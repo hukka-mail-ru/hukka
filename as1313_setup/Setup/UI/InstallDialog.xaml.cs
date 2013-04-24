@@ -56,7 +56,7 @@ namespace Setup.UI
         private void OnSuccess()
         {
             Mouse.OverrideCursor = null;
-            General.ShowDialog(this, new FinishDialog());
+            UI.ShowDialog(this, new FinishDialog());
         }
 
         /// <summary>
@@ -68,7 +68,7 @@ namespace Setup.UI
             Message.Show(lastException);
             Message.Show("Rolling back");
             Install.Rollback();
-            General.ShowDialog(this, new FinishDialog());
+            UI.ShowDialog(this, new FinishDialog());
         }
     }
 }

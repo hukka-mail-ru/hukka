@@ -34,7 +34,7 @@ namespace Setup.UI
         {
             try 
             { 
-                General.CloseDialog(this);
+                UI.CloseDialog(this);
             }
             catch (Exception ex)
             {
@@ -49,7 +49,7 @@ namespace Setup.UI
                 SaveSettings();
                 CheckSettings();
 
-                General.ShowDialog(this, new ReadyToInstallDialog());
+                UI.ShowDialog(this, new ReadyToInstallDialog());
             }
             catch (Exception ex)
             {
@@ -63,7 +63,7 @@ namespace Setup.UI
             { 
                 SaveSettings();
 
-                General.ShowDialog(this, new SqlDialog());
+                UI.ShowDialog(this, new SqlDialog());
             }
             catch (Exception ex)
             {

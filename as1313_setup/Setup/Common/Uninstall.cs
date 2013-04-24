@@ -23,6 +23,11 @@ namespace Setup.Common
         private static string RegUninstallLocation = @"SOFTWARE\Microsoft\Windows\CurrentVersion\Uninstall";
 
 
+        public static void DropDatabase()
+        {
+            General.SqlQuery("DROP DATABASE TUEV_SUED");
+        }
+
         public static bool IsAppInstalled()
         {
             RegistryKey key = null;

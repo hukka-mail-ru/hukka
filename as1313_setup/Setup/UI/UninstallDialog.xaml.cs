@@ -29,10 +29,10 @@ namespace Setup.UI
         {
             try
             {
-
                 Uninstall.DeleteFolders();
                 Uninstall.Unregiser();
-                General.ShowDialog(this, new FinishDialog());
+                Uninstall.DropDatabase();
+                UI.ShowDialog(this, new FinishDialog());
             }
             catch (Exception ex)
             {
@@ -45,7 +45,7 @@ namespace Setup.UI
         {
             try
             {
-                General.CloseDialog(this);
+                UI.CloseDialog(this);
             }
             catch (Exception ex)
             {

@@ -16,7 +16,7 @@ namespace Setup.UI
     /// <summary>
     /// TODO: Update summary.
     /// </summary>
-    public class General
+    public class UI
     {
         public static void ShowDialog(System.Windows.Window thisDialog, System.Windows.Window nextDialog)
         {
