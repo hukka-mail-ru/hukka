@@ -19,7 +19,28 @@ namespace Setup.Common
     {
         public static void Copy()
         {
-            CreateFolders();
+            // create company dir
+            string companyDir = Path.Combine(Settings.DestinationFolder, Settings.CompanyName);
+            if (!Directory.Exists(companyDir))
+            {
+                Directory.CreateDirectory(companyDir);
+            }
+
+            // create product dir
+            string productDir = Path.Combine(companyDir, Settings.SolutionName);
+            if (!Directory.Exists(productDir))
+            {
+                Directory.CreateDirectory(productDir);
+            }
+
+            // create version dir
+            Settings.VersionDir = Path.Combine(productDir, General.GetAppVersion());
+            if (!Directory.Exists(Settings.VersionDir))
+            {
+                Directory.CreateDirectory(Settings.VersionDir);
+            }
+
+            //copy
             CopyDirectory(Settings.SourceDir, Settings.VersionDir);
         }
 
@@ -49,31 +70,6 @@ namespace Setup.Common
             Directory.Delete(target_dir, false);
         }
 
-
-        private static void CreateFolders()
-        {
-            // company dir
-            string companyDir = Path.Combine(Settings.DestinationFolder, Settings.CompanyName);
-            if (!Directory.Exists(companyDir))
-            {
-                Directory.CreateDirectory(companyDir);
-            }
-
-            // product dir
-            string productDir = Path.Combine(companyDir, Settings.SolutionName);
-            if (!Directory.Exists(productDir))
-            {
-                Directory.CreateDirectory(productDir);
-            }
-
-            // version dir
-            Settings.VersionDir = Path.Combine(productDir, General.GetAppVersion());
-
-            if (!Directory.Exists(Settings.VersionDir))
-            {
-                Directory.CreateDirectory(Settings.VersionDir);
-            }
-        }
 
 
         private class Folders
