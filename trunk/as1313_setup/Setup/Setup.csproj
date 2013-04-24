@@ -59,12 +59,14 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="Common\Config.cs" />
+    <Compile Include="Common\Database.cs" />
+    <Compile Include="Common\Files.cs" />
     <Compile Include="Common\General.cs" />
-    <Compile Include="Common\Install.cs" />
     <Compile Include="Common\Message.cs" />
     <Compile Include="Common\MyException.cs" />
+    <Compile Include="Common\WinRegistry.cs" />
     <Compile Include="Common\Settings.cs" />
-    <Compile Include="Common\Uninstall.cs" />
     <Compile Include="Messages\MessageWindow.cs" />
     <Compile Include="UI\DestinationFolderDialog.xaml.cs">
       <DependentUpon>DestinationFolderDialog.xaml</DependentUpon>
@@ -161,7 +163,9 @@
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
     </EmbeddedResource>
-    <None Include="app.manifest" />
+    <None Include="app.manifest">
+      <SubType>Designer</SubType>
+    </None>
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
       <LastGenOutput>Settings.Designer.cs</LastGenOutput>

@@ -102,7 +102,7 @@ namespace Setup.UI
             string fullQuery = query + " CREATE DATABASE TEST_DB; " + query;
 
             
-            General.SqlQuery(fullQuery);
+            Database.SqlQuery(fullQuery);
         }
     }
 }

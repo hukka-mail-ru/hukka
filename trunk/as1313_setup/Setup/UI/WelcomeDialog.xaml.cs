@@ -41,7 +41,7 @@ namespace Setup.UI
         {
             try
             {
-                if (Uninstall.IsAppInstalled())
+                if (WinRegistry.IsAppInstalled())
                 {
                     UI.ShowDialog(this, new UninstallDialog());
                 }

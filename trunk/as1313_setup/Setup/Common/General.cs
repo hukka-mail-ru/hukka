@@ -26,30 +26,13 @@ namespace Setup.Common
             return fvi.FileVersion;
         }
 
-        public static void SqlQuery(string query)
+
+        public static void Rollback()
         {
-            string outputFile = Directory.GetCurrentDirectory() + @"\output.txt";
-            string cmd = "sqlcmd.exe";
-            string args = " -b -S " + Settings.SQLServer +
-            " -U " + Settings.SQLUser +
-            " -P " + Settings.SQLPassword +
-            " -Q \"" + query + "\"" +
-            " -o " + outputFile;
-
-
-            Process ExternalProcess = new Process();
-            ExternalProcess.StartInfo.FileName = cmd;
-            ExternalProcess.StartInfo.Arguments = args;
-            ExternalProcess.StartInfo.WindowStyle = ProcessWindowStyle.Hidden;
-            ExternalProcess.Start();
-            ExternalProcess.WaitForExit();
-
-            string text = System.IO.File.ReadAllText(outputFile);
-
-            if (text != "")
-            {
-                throw new ExceptionSqlError(text);
-            }
+            Files.Delete();
+            WinRegistry.Unregiser();
+            Database.Drop();
         }
+   
     }
 }

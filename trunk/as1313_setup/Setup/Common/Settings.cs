@@ -35,7 +35,7 @@ namespace Setup.Common
 
         public static string SQLServer = @"localhost\SQLExpress";
         public static string SQLUser = @"sa";
-        public static string SQLPassword = @"";
+        public static string SQLPassword = @"111";
 
         public static string NetServer = @"10.11.12.13";
         public static string NetPort = @"1234";
