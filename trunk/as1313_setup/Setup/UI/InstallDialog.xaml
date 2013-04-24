@@ -11,6 +11,7 @@
           WorkerReportsProgress="True"
           WorkerSupportsCancellation="True"            
           DoWork="BackgroundWorker_DoWork"
+          ProgressChanged="BackgroundWorker_ProgressChanged"
           RunWorkerCompleted="BackgroundWorker_RunWorkerCompleted"
           >
         </my:BackgroundWorker>
@@ -29,7 +30,9 @@
         </Grid>
 
         <Grid Grid.Row="1">
-            <Label Margin="3">Status:</Label>
+            <Label Name="mStatusLabel" Margin="3">Status:</Label>
+            <ProgressBar Name="mProgressBar" Height="25" MinHeight="10" Margin="6,31,6,98" />
+
         </Grid>
 
         <Grid Grid.Row="2">
