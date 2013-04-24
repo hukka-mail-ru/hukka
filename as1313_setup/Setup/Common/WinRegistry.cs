@@ -94,7 +94,7 @@ namespace Setup.Common
                     // key.SetValue("Contact", "support@mycompany.com");
                     key.SetValue("InstallDate", DateTime.Now.ToString("yyyyMMdd"));
                     key.SetValue("VersionDir", Settings.VersionDir);
-                    key.SetValue("UninstallString", exe + " /uninstallprompt");
+                    //key.SetValue("UninstallString", exe + " /uninstallprompt");
                 }
                 finally
                 {
