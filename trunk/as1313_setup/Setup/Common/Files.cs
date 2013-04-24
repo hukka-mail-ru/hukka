@@ -19,26 +19,17 @@ namespace Setup.Common
     {
         public static void Copy()
         {
-            // create company dir
+            // company dir
             string companyDir = Path.Combine(Settings.DestinationFolder, Settings.CompanyName);
-            if (!Directory.Exists(companyDir))
-            {
-                Directory.CreateDirectory(companyDir);
-            }
+            CreateDirectoryIfNotExists(companyDir);
 
-            // create product dir
+            // product dir
             string productDir = Path.Combine(companyDir, Settings.SolutionName);
-            if (!Directory.Exists(productDir))
-            {
-                Directory.CreateDirectory(productDir);
-            }
+            CreateDirectoryIfNotExists(productDir);
 
-            // create version dir
+            // version dir
             Settings.VersionDir = Path.Combine(productDir, General.GetAppVersion());
-            if (!Directory.Exists(Settings.VersionDir))
-            {
-                Directory.CreateDirectory(Settings.VersionDir);
-            }
+            CreateDirectoryIfNotExists(Settings.VersionDir);
 
             //copy
             CopyDirectory(Settings.SourceDir, Settings.VersionDir);
@@ -48,6 +39,15 @@ namespace Setup.Common
         public static void Delete()
         {
             DeleteFilesAndDirectory(Settings.VersionDir);
+        }
+
+
+        private static void CreateDirectoryIfNotExists(string dir)
+        {
+            if (!Directory.Exists(dir))
+            {
+                Directory.CreateDirectory(dir);
+            }
         }
 
 
