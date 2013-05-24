@@ -14,7 +14,7 @@
 class Responder: public Daemon
 {
 public:
-	Responder(const std::string& pidfile, const std::string& configfile);
+	Responder(const std::string& pidfile);
 
 	virtual int Run();
 private:

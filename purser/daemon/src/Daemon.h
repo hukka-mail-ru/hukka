@@ -9,18 +9,12 @@
 #define DAEMON_H_
 
 #include <string>
-#include <map>
 
-typedef std::string ConfigKey;
-typedef std::string ConfigValue;
 
 class Daemon
 {
 public:
-	Daemon(const std::string& pidfile, const std::string& configfile): mPidfile(pidfile)
-	{
-		ReadConfigFile(configfile);
-	}
+	Daemon(const std::string& pidfile): mPidfile(pidfile) {}
 
 	virtual ~Daemon() {}
 
@@ -28,14 +22,11 @@ public:
 
 	int Daemonize();
 
-	ConfigValue GetConfigValue(const ConfigKey& key);
 
 private:
-	void ReadConfigFile(const std::string& configfile);
 
 	std::string mPidfile;
 
-	std::map<ConfigKey, ConfigValue> mConfig;
 };
 
 
