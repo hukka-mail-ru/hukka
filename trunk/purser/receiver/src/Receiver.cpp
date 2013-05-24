@@ -9,24 +9,24 @@
 
 #include "Receiver.h"
 #include "MyException.h"
-#include "Config.h"
 #include "Log.h"
 
 using namespace std;
 
-Receiver::Receiver(const std::string& pidfile):
-	Daemon(pidfile)
+Receiver::Receiver(const std::string& pidfile, const std::string& configfile):
+	Daemon(pidfile, configfile)
 {
-	int inport = atoi(Config::GetConfigValue("inport").c_str());
-	int outport = atoi(Config::GetConfigValue("outport").c_str());
-	string outhost = Config::GetConfigValue("outhost");
-	string logfile = Config::GetConfigValue("logfile");
+	int inport = atoi(GetConfigValue("inport").c_str());
+	int outport = atoi(GetConfigValue("outport").c_str());
+	string outhost = GetConfigValue("outhost");
+	string logfile = GetConfigValue("logfile");
 
 	mListener.ListenPort(inport);
 
 	mSpeaker.SetHost(outhost);
 	mSpeaker.SetPort(outport);
 
+	PRINT_LOG << "Config : " << configfile << "\n";
 	PRINT_LOG << "Log : " << logfile <<  "\n";
 	PRINT_LOG << "PID : " << pidfile <<  "\n";
 	PRINT_LOG << "IN Port: " << inport <<  "\n";
@@ -116,9 +116,7 @@ int main(int argc, char** argv)
 		}
 
 		// Read config
-		Config::ReadConfigFile(configfile);
-
-		Receiver receiver(pidfile);
+		Receiver receiver(pidfile, configfile);
 
 		// daemon loop
 		return receiver.Daemonize();
