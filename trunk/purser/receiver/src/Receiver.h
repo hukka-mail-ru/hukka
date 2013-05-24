@@ -15,7 +15,7 @@
 class Receiver: public Daemon
 {
 public:
-	Receiver(const std::string& pidfile, const std::string& configfile);
+	Receiver(const std::string& pidfile);
 
 	virtual int Run();
 
