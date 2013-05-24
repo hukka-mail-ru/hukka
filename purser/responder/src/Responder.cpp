@@ -10,19 +10,19 @@
 
 #include "Responder.h"
 #include "MyException.h"
-#include "Config.h"
 #include "Log.h"
 
 using namespace std;
 
-Responder::Responder(const std::string& pidfile):
-	Daemon(pidfile)
+Responder::Responder(const std::string& pidfile, const std::string& configfile):
+	Daemon(pidfile, configfile)
 {
-	int inport = atoi(Config::GetConfigValue("inport").c_str());
-	string logfile = Config::GetConfigValue("logfile");
+	int inport = atoi(GetConfigValue("inport").c_str());
+	string logfile = GetConfigValue("logfile");
 
 	mListener.ListenPort(inport);
 
+	PRINT_LOG << "Config : " << configfile << "\n";
 	PRINT_LOG << "Log : " << logfile <<  "\n";
 	PRINT_LOG << "PID : " << pidfile <<  "\n";
 	PRINT_LOG << "IN Port: " << inport <<  "\n";
@@ -35,7 +35,7 @@ int Responder::Run()
 {
 	PRINT_LOG << "Started" << "\n";
 
-	string sendsms = Config::GetConfigValue("sendsms");
+	string sendsms = GetConfigValue("sendsms");
 
 	// LISTEN
 	while (true)
@@ -90,9 +90,7 @@ int main(int argc, char** argv)
 		}
 
 		// Read config
-		Config::ReadConfigFile(configfile);
-
-		Responder Responder(pidfile);
+		Responder Responder(pidfile, configfile);
 
 		// daemon loop
 		return Responder.Daemonize();
