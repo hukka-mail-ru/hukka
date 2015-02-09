@@ -3,15 +3,17 @@
 -export([start/0]).
 
 
-start() -> nano_client_eval("Hello").
+start() -> nano_client_eval("Real").
+
 
 
 
 nano_client_eval(Str) -> 
-    {ok, Socket} = 
-        gen_tcp:connect("localhost", 2345, 
+    {ok, Socket} = gen_tcp:connect("localhost", 2345, 
                         [binary, {packet, 4}]), 
+
     ok = gen_tcp:send(Socket, term_to_binary(Str)), 
+
 receive 
     {tcp,Socket,Bin} -> 
         io:format("Client received binary = ~p~n",[Bin]),

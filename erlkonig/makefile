@@ -13,7 +13,7 @@ ERL = erl -boot start_clean
 # to the end of the line and continue on the next line
 
 # Edit the lines below
-MODS = erlkonig server client
+MODS = erlkonig server parser client
 
 # The first target in any makefile is the default target.
 # If you just type "make" then "make all" is assumed (because
