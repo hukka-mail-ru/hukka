@@ -3,6 +3,14 @@
 -export([parse/1]).
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-parse(Command) ->
-            [H|T] = Command,
-            io:format("Command Head: ~p~n",[H]).
+parse(Message) ->
+            [Protocol|Command] = Message,
+            io:format("Head: ~p~n",[H]),
+	case Protocol of
+		90 -> io:format("Protocol valid ~n"),
+                      execute(Command);
+		_ -> io:format("Protocol invalid ~n")
+	end.
+
+
+execute(Command) ->
