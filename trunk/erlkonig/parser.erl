@@ -4,8 +4,8 @@
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 parse(Message) ->
-            [Protocol|Command] = Message,
-            io:format("Head: ~p~n",[H]),
+	[Protocol|Command] = Message,
+	io:format("Head: ~p~n",[H]),
 	case Protocol of
 		90 -> io:format("Protocol valid ~n"),
                       execute(Command);

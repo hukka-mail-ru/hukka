@@ -14,9 +14,14 @@ start_client(Str) ->
                         [binary, {packet, 4}]), 
 
 %%    BinPacket = term_to_binary(Str),
-    Protocol = [91],
-    Command =  [01, 02],
-    Packet = [Protocol] ++ [Command],
+    Protocol = [90],
+    Size =  [00, 00, 00, 00],
+    Version = [77],
+    Service = [88],
+    Command = [01],
+    Packet = [Protocol] ++ [Size] ++ [Version] ++ [Service] ++ [Command],
+io:format("Client sends packet = ~p~n", [Packet]),
+
     BinPacket = list_to_binary(Packet),
 
     io:format("Client sends binary = ~p~n", [BinPacket]),
