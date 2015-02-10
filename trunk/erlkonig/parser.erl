@@ -4,8 +4,9 @@
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 parse(Message) ->
+
 	[Protocol|Command] = Message,
-	io:format("Head: ~p~n",[H]),
+	io:format("Protocol: ~p~n",[Protocol]),
 	case Protocol of
 		90 -> io:format("Protocol valid ~n"),
                       execute(Command);
@@ -13,4 +14,10 @@ parse(Message) ->
 	end.
 
 
+
+
 execute(Command) ->
+
+	{Size, Rest} = lists:split(4, Command).
+
+	
