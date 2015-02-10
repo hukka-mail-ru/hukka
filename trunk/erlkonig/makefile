@@ -13,15 +13,17 @@ ERL = erl -boot start_clean
 # to the end of the line and continue on the next line
 
 # Edit the lines below
-MODS = erlkonig server parser client
+MODS_SERVER = erlkonig server parser
+MODS_CLIENT = client
 
 # The first target in any makefile is the default target.
 # If you just type "make" then "make all" is assumed (because
 # "all" is the first target in this makefile)
 
-all: compile
+all: server client
+server: ${MODS_SERVER:%=%.beam} subdirs
+client: ${MODS_CLIENT:%=%.beam} subdirs
 
-compile: ${MODS:%=%.beam} subdirs
 
 ## special compilation requirements are added here
 
