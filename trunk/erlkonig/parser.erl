@@ -9,7 +9,7 @@
 parse(Bin) ->
 	<<Protocol:8, Size:32, Version:8, Service:8, Command:8, Data/binary>> = Bin,
 
-	io:format("Protocol ~p~n", [Protocol]),
+	io:fwrite("Protocol ~p~n", [Protocol]),
 	io:format("Size ~p~n", [Size]),
 	io:format("Version ~p~n", [Version]),
 	io:format("Service ~p~n", [Service]),
