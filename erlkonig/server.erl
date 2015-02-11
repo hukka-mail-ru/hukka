@@ -35,10 +35,11 @@ loop(Socket) ->
     receive 
         {tcp, Socket, Bin} ->
             io:format("Server received binary = ~p~n",[Bin]),
+        
+
+	    parser:parse(Bin),
+
             Str = binary_to_list(Bin), %% (9)
-
-	    parser:parse(Str),
-
             Reply = [Str | " World"], %% lib_misc:string2value(Str), %% (10)
             io:format("Server replying = ~p~n", [Reply]),
             gen_tcp:send(Socket, term_to_binary(Reply)),

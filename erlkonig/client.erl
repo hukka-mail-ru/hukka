@@ -12,17 +12,18 @@ start_client(Str) ->
 
     {ok, Socket} = gen_tcp:connect("localhost", 2345, 
                         [binary, {packet, 4}]), 
-    Protocol = [90],
-    Size =     [00, 00, 00, 00],
-    Version =  [77],
-    Service =  [88],
-    Command =  [01], %% CMD_LOGIN
-    Username = "Hukka",
-    Delimiter = [00],
-    Pwd =       "Pwd",
-    Packet = [Protocol] ++ [Size] ++ [Version] ++ [Service] ++ [Command] ++ [Username] ++ [Delimiter] ++ [Pwd],
+    
+    Protocol =  <<90>>,
+    Size =      <<00, 00, 00, 00>>,
+    Version =   <<77>>,
+    Service =   <<88>>,
+    Command =   <<01>>, %% CMD_LOGIN
+    Username =  <<"Hukka">>,
+    Delimiter = <<00>>,
+    Pwd =       <<"Pwd">>,
 
-    BinPacket = list_to_binary(Packet),
+    BinPacket = [Protocol, Size, Version, Service, Command], 
+               %%  Username, Delimiter, Pwd],
 
     io:format("Client sends binary = ~p~n", [BinPacket]),
 
