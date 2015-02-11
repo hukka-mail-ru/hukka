@@ -16,14 +16,14 @@ start_client(Str) ->
     Protocol =  <<90>>,
     Size =      <<00, 00, 00, 00>>,
     Version =   <<77>>,
-    Service =   <<88>>,
+    Service =   <<01>>,
     Command =   <<01>>, %% CMD_LOGIN
     Username =  <<"Hukka">>,
-    Delimiter = <<00>>,
+    Delimiter = <<09>>,
     Pwd =       <<"Pwd">>,
 
-    BinPacket = [Protocol, Size, Version, Service, Command], 
-               %%  Username, Delimiter, Pwd],
+    BinPacket = [Protocol, Size, Version, Service, Command, 
+                Username, Delimiter, Pwd],
 
     io:format("Client sends binary = ~p~n", [BinPacket]),
 
