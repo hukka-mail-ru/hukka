@@ -32,7 +32,7 @@ start_client(Str) ->
 receive 
     {tcp,Socket,Bin} -> 
         io:format("Client received binary = ~p~n",[Bin]),
-        Val = binary_to_term(Bin), 
-        io:format("Client result = ~p~n",[Val]), 
+        %%Val = binary_to_term(Bin), 
+        %%io:format("Client result = ~p~n",[Val]), 
         gen_tcp:close(Socket) 
 end. 

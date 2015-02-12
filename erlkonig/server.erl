@@ -15,9 +15,9 @@ start_parallel_server() ->
                                          {active, true}]), 
     spawn(fun() ->  par_connect(Listen) end),
 
-	receive
-		die -> void
-	end.
+    receive
+        die -> void
+    end.
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
