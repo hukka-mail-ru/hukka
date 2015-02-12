@@ -49,24 +49,3 @@ loop(Socket) ->
     end. 
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-
-sendMessage(Socket, Serv, Res) ->
-
-	    Protocol =  <<90>>,
-	    Size =      <<00, 00, 00, 00>>,
-	    Version =   <<65>>,
-	    Service =   <<Serv>>,
-	    Command =   <<Res>>,
-
-	    BinPacket = [Protocol, Size, Version, Service, Command],
-
-	    io:format("Reply = ~p~n", [BinPacket]),
-
-	    ok = gen_tcp:send(Socket, BinPacket)
-
-
-          %%  Str = binary_to_list(Bin), %% (9)
-          %%  Reply = [Str | " World"], %% lib_misc:string2value(Str), %% (10)
-          %%  io:format("Server replying = ~p~n", [Reply]),
-          %%  gen_tcp:send(Socket, term_to_binary(Reply)),
-.

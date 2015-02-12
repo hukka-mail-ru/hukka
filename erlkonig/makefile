@@ -13,7 +13,7 @@ ERL = erl -boot start_clean
 # to the end of the line and continue on the next line
 
 # Edit the lines below
-MODS_SERVER = parser server 
+MODS_SERVER = reg parser server 
 MODS_CLIENT = client
 
 # The first target in any makefile is the default target.
