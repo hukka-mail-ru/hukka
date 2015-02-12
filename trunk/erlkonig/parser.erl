@@ -1,10 +1,15 @@
 -module(parser).
 
+-define(SRV_REG, 01).
+-define(CMD_LOGIN, 01).
+
+-define(PROTOCOL, 90).
+-define(VERSION, 65).
 
 -export([parse/2]).
+
+
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-
-
 
 parse(Bin, Socket) ->
 	<<Protocol:8, Size:32, Version:8, Service:8, Command:8, Data/binary>> = Bin,
@@ -16,14 +21,11 @@ parse(Bin, Socket) ->
 	io:format("Command ~p~n", [Command]),
 	io:format("Rest ~p~n", [Data]),
 
-	SRV_SRV = 01,
-	CMD_LOGIN = 01,
-
 	case Service of
-	SRV_REG -> io:format("Service SRV_SRV ~n"),
+	?SRV_REG -> io:format("Service SRV_SRV ~n"),
 		case Command of
-		CMD_LOGIN -> io:format("Command CMD_LOGIN ~n"),
-                             Res = login(Data),
+		?CMD_LOGIN -> io:format("Command CMD_LOGIN ~n"),
+                             Res = reg:login(Data),
 			     sendMessage(Socket, Service, Res);
 
 		_  -> io:format("Command unknown ~n")
@@ -34,20 +36,22 @@ parse(Bin, Socket) ->
 
 
 
-login(Data) ->
-	io:format("login ~n"),
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-	[User, Pwd] = re:split(Data,"\t"),
-	io:format("user ~p~n", [binary_to_list(User)]),
-	io:format("pwd ~p~n", [binary_to_list(Pwd)]),
+sendMessage(Socket, Serv, Res) ->
 
-%% TODO check name/pwd
+	    Protocol =  <<?PROTOCOL>>,
+	    Size =      <<00, 00, 00, 00>>,
+	    Version =   <<?VERSION>>,
+	    Service =   <<Serv>>,
+	    Command =   <<Res>>,
 
-	NOERR = 0,
+	    BinPacket = [Protocol, Size, Version, Service, Command],
 
-	NOERR
+	    io:format("Reply = ~p~n", [BinPacket]),
+
+	    ok = gen_tcp:send(Socket, BinPacket)
 .
-
 
 
 
