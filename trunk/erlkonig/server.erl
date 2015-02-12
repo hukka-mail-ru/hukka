@@ -27,6 +27,9 @@ par_connect(Listen) ->
     io:fwrite("Connection from ~p~n", [Address]),
     
     spawn(fun() -> par_connect(Listen) end), 
+
+    io:fwrite("To Add: ~p~n", [Socket]),
+    %% TODO add Socket to Table 	
     loop(Socket).
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -45,7 +48,9 @@ loop(Socket) ->
            %% gen_tcp:send(Socket, term_to_binary(Reply)),
             loop(Socket);
         {tcp_closed, Socket} ->
-            io:format("Server socket closed~n")
+            io:format("Server socket closed~n"),
+	    io:fwrite("To Remove: ~p~n", [Socket])
+            %% TODO remove Socket from Table 		
     end. 
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
