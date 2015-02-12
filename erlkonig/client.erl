@@ -29,10 +29,16 @@ start_client(Str) ->
 
     ok = gen_tcp:send(Socket, BinPacket), 
 
+    loop(Socket).
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+loop(Socket) -> 
 receive 
     {tcp,Socket,Bin} -> 
         io:format("Client received binary = ~p~n",[Bin]),
         %%Val = binary_to_term(Bin), 
         %%io:format("Client result = ~p~n",[Val]), 
-        gen_tcp:close(Socket) 
+       %% gen_tcp:close(Socket) 
+    loop(Socket)
 end. 
