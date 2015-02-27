@@ -18,7 +18,9 @@ my $searchdir = "L:/backend/LW_SERVERAPP";
 my $destdir = "E:/amest_dev/servers";
  
 # Calling the Subroutine, which searches the File
+my $i = 0;
 readDirectory($searchdir, $file);
+print("\n\n ----  $i files copied ----- \n\n");
  
 # We need an Subroutine, which can be called on every sub-directory
 sub readDirectory
@@ -48,8 +50,19 @@ sub readDirectory
           {
                # We found the right file, now we can do somthing with it,
                # in this case, we only print a text
-               print "Found the file: $searchdir/$currentFile \n";
-               copy("$searchdir/$currentFile", "$destdir/$currentFile") or die "Copy failed: $!";
+			   my $modtime1 = (stat("$searchdir/$currentFile"))[9];
+			   my $modtime2 = (stat("$destdir/$currentFile"))[9];
+			   
+			   if($modtime1 != $modtime2)
+			   {
+					print "Copy the file: $searchdir/$currentFile \n";
+					copy("$searchdir/$currentFile", "$destdir/$currentFile") or die "Copy failed: $!";
+					$i++;
+			   }
+			   else
+			   {
+					print("skipped.. \n");
+			   }
           }
           if ( -d "$searchdir/$currentFile" && $searchdir !~ /.*0.*/)
           {
