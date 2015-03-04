@@ -19,3 +19,6 @@ copy %SHARED%\Compiled_FML\fml.tbl.h %SERVER%\FML
 
 
 call tmboot -y
+
+cd %SERVER%
+bulk-ssadovni_pwd_gilliche.bat
