@@ -1,5 +1,7 @@
 @echo off
 
+call setenv
+
 echo stopping...
 tmshutdown -y -w 20
 
