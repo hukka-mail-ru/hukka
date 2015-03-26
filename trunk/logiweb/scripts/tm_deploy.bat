@@ -4,6 +4,8 @@ set SHARED="L:\backend\LW_SERVERAPP\Tuxedo Shared Files"
 set SERVER=E:\amest_dev
 set SCRIPTS="L:\backend\scripts"
 
+pushd %SERVER%
+
 copy %SCRIPTS%\* %SERVER%
 
 call setenv
@@ -20,5 +22,5 @@ copy %SHARED%\Compiled_FML\fml.tbl.h %SERVER%\FML
 
 call tmboot -y
 
-cd %SERVER%
+
 %SERVER%\bulk-ssadovni_pwd_gilliche.bat
