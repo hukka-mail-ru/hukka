@@ -81,7 +81,7 @@ USIGNAL		SIGUSR2
 	TMSNAME="TMS" 
 	TMSCOUNT=2
 "GRP_DBTEST"	LMID="master"	GRPNO=12
-	OPENINFO="Oracle_XA:Oracle_XA+Acc=P/VM_13/VM_13+sqlnet=ORA29+sestm=60+LogDir=g:\amest_dev\LogFile"
+	OPENINFO="Oracle_XA:Oracle_XA+Acc=P/VM_6/VM_6+sqlnet=ORA29+sestm=60+LogDir=g:\amest_dev\LogFile"
 	TMSNAME="oraxa" 
 	TMSCOUNT=6
 
@@ -237,7 +237,7 @@ USIGNAL		SIGUSR2
 #  Low-level communication servers connecting to external resources. SEQUENCE=40.
 #
 "txs_smsc_http"	SRVGRP="GRP_PROTOCOL"	SRVID=7600
-	CLOPT="-A -- -SmsLogFilePfx smsc-http-send/smsc-http-send- 10.33.144.242 13013 smsuser SMSTestSend 10.33.106.21 81 31" 
+	CLOPT="-A -- -SmsLogFilePfx smsc-http-send/smsc-http-send- 10.33.144.242 13013 smsuser SMSTestSend 10.0.2.15 81 31" 
 	SEQUENCE=40
 	RQPERM=0666	REPLYQ=N	RPPERM=0666	MIN=1	MAX=1	CONV=N
 	SYSTEM_ACCESS=FASTPATH
@@ -1033,15 +1033,6 @@ USIGNAL		SIGUSR2
 
 "INT_SYSSTAT" AUTOTRAN=Y TRANTIME=60
 
-# ******** Aber hier neu fuer Customer Administration (24.11.2014) ********
-
-"CA_USER_LIST"   AUTOTRAN=Y TRANTIME=600
-"CA_USER_CREA"   AUTOTRAN=Y TRANTIME=600
-"CA_USER_CHGE"   AUTOTRAN=Y TRANTIME=600
-"CA_USER_DEL"    AUTOTRAN=Y TRANTIME=600
-
-"CA_VEH_CHGE"    AUTOTRAN=Y TRANTIME=600
-
 # ******** Aber hier neu fuer CCS Stufe II (03.03.2002) ********
 
 "DUMMY"
@@ -1283,12 +1274,24 @@ USIGNAL		SIGUSR2
 
 "DB_LWMF_CREATE"     AUTOTRAN=Y TRANTIME=60
 
-# ******** Aber hier neu fuer VZE (24.02.2015) ********
+# ******** Aber hier neu fuer Customer Administration (24.11.2014) ********
+
+"CA_USER_LIST"   AUTOTRAN=Y TRANTIME=60
+"CA_USER_CREA"   AUTOTRAN=Y TRANTIME=60
+"CA_USER_CHGE"   AUTOTRAN=Y TRANTIME=60
+"CA_USER_DEL"    AUTOTRAN=Y TRANTIME=60
+"CA_VEH_CHGE"    AUTOTRAN=Y TRANTIME=60
+
+# ******** Aber hier neu fuer VZE ********
 
 "DB_SYS_TIME"    AUTOTRAN=Y TRANTIME=60
+"DB_RAWDATA_LIST"    AUTOTRAN=Y TRANTIME=60
 "DATAHUB_HANDLER"    AUTOTRAN=Y TRANTIME=60
-*ROUTING
 
-# ********* Q3  ST 20
+# ******** Aber hier neu fuer Q3/15 Sufe 2 ********
 "DB_LIST_BKDN"    AUTOTRAN=Y TRANTIME=60
-"DB_LIST_DPCTL"    AUTOTRAN=Y TRANTIME=60
+"DB_LIST_DRCL"    AUTOTRAN=Y TRANTIME=60
+
+
+
+*ROUTING
